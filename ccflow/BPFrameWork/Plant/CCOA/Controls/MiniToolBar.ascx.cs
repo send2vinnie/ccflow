@@ -72,7 +72,7 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     {
         StringBuilder sbrHtml = new StringBuilder();
         sbrHtml.Append(this.ButtonContainers.InnerHtml);
-        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' href='{1}'>{2}</a> ", new string[] { icon, url, name });
+        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' plain='true' href='{1}'>{2}</a> ", new string[] { icon, url, name });
 
         this.ButtonContainers.InnerHtml = sbrHtml.ToString();
     }
@@ -81,7 +81,7 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     {
         StringBuilder sbrHtml = new StringBuilder();
         sbrHtml.Append(this.ButtonContainers.InnerHtml);
-        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' onclick='{1}'>{2}</a> ",
+        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' plain='true' onclick='{1}'>{2}</a> ",
             new string[] { icon, clickevent, name });
 
         this.ButtonContainers.InnerHtml = sbrHtml.ToString();
@@ -90,7 +90,7 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     {
         StringBuilder sbrHtml = new StringBuilder();
         sbrHtml.Append(this.ButtonContainers.InnerHtml);
-        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' href='{1}' enabled='{3}'>{2}</a> ",
+        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' plain='true' href='{1}' enabled='{3}'>{2}</a> ",
             new string[] { icon, url, name, isEnable });
 
         this.ButtonContainers.InnerHtml = sbrHtml.ToString();

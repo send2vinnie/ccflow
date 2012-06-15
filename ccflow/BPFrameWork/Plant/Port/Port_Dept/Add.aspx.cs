@@ -48,11 +48,7 @@ namespace BP.EIP.Web.Port_Dept
             {
                 strErr += "FullName不能为空！\\n";
             }
-            if (!PageValidate.IsNumber(txtStatus.Text))
-            {
-                strErr += "Status格式错误！\\n";
-            }
-
+            
             if (strErr != "")
             {
                 MessageBox.Show(this, strErr);
@@ -62,16 +58,16 @@ namespace BP.EIP.Web.Port_Dept
             string Name = this.txtName.Text;
             string FullName = this.txtFullName.Text;
             string Pid = this.ddlPid.SelectedValue;
-            int Status = int.Parse(this.txtStatus.Text);
 
             BP.EIP.Port_Dept model = new EIP.Port_Dept();
             //BP.EIP.Model.Port_Dept model = new BP.EIP.Model.Port_Dept();
-            model.No = Guid.NewGuid().ToString();
+            //model.No = Guid.NewGuid().ToString();
+            model.No = Code;
             model.Code = Code;
             model.Name = Name;
             model.FullName = FullName;
             model.Pid = Pid;
-            model.Status = Status;
+            model.Status = 1;
 
             model.Insert();
 

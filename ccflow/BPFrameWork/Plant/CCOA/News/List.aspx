@@ -2,7 +2,7 @@
     Inherits="Lizard.OA.Web.OA_News.List" %>
 
 <%@ Register Src="~/CCOA/Controls/MiniPager.ascx" TagPrefix="xuc" TagName="MiniPager" %>
-<%@ Register Src="~/Comm/Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
+<%@ Register Src="~/CCOA/Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,13 +17,12 @@
                 var e = frm.elements[i];
                 if ((e.name != 'allbox') && (e.type == 'checkbox')) {
                     e.checked = frm.allbox.checked;
-                    alert('ddd');
-                    //                    if (frm.allbox.checked) {
-                    //                        hL(e);
-                    //                    } 
-                    //                    else {
-                    //                        dL(e);
-                    //                    } 
+                    if (frm.allbox.checked) {
+                        hL(e);
+                    }
+                    else {
+                        dL(e);
+                    }
                 }
             }
         }
@@ -44,10 +43,8 @@
                         TO++;
                 }
             }
-            //frm.allbox.checked = (TO == TB) ? true : false;
-            //alert(TO);
+            frm.allbox.checked = (TO == TB) ? true : false;
         }
-
 
         function hL(E) {
             while (E.tagName != "TR")
@@ -62,7 +59,7 @@
         }
     </script>
 </head>
-<body>
+<body style="margin: 0px;">
     <form runat="server">
     <div>
         <uc1:MiniToolBar ID="MiniToolBar1" runat="server" PopAddUrl="News/Add.aspx" />

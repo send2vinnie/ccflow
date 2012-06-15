@@ -7,15 +7,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title></title>
-    <script src="../../Comm/Scripts/CheckBox.js" type="text/javascript"></script>
+ <script src="../../Comm/Scripts/CheckBox.js" type="text/javascript"></script>
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body style="margin: 0px;">
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="Inbox.aspx" DeleteUrl="Delete.aspx?EmailType=0"
         IsDeleteUrlHaveParamerter="true" />
-    <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
+   <div class="subtoolbar">  <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
         <asp:ListItem Text="未读邮件" Value="1" />
         <asp:ListItem Text="已读邮件" Value="2" />
         <asp:ListItem Text="全部邮件" Value="3" />
@@ -25,7 +26,7 @@
     &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
     &nbsp;
     <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
-    <br />
+   </div>
     <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
         borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
         pagesize="10" rowstyle-horizontalalign="Center" onrowcreated="gridView_OnRowCreated"

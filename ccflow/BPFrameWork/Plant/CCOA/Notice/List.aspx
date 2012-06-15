@@ -7,24 +7,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title></title>
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
+    <script src="../../Comm/Scripts/CheckBox.js" type="text/javascript"></script>
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/main.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body  style="margin: 0px;">
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
-    <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100">
-        <asp:ListItem Text="未读通告" Value="1" />
-        <asp:ListItem Text="已读通告" Value="2" />
-        <asp:ListItem Text="全部通告" Value="3" />
-    </lizard:XDropDownList>
-    &nbsp; 发布日期：
-    <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
-    &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
-    &nbsp;
-    <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
-    <br />
+    <div class="subtoolbar">
+        <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100">
+            <asp:ListItem Text="未读通告" Value="1" />
+            <asp:ListItem Text="已读通告" Value="2" />
+            <asp:ListItem Text="全部通告" Value="3" />
+        </lizard:XDropDownList>
+        &nbsp; 发布日期：
+        <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
+        &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
+        &nbsp;
+        <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
+    </div>
     <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
         BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
         PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated"

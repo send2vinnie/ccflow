@@ -1,5 +1,5 @@
-//CheckBox全选
-function CA() {
+//全选
+function CheckAll() {
     var frm = document.forms[0];
     for (var i = 0; i < frm.elements.length; i++) {
         var e = frm.elements[i];
@@ -7,19 +7,16 @@ function CA() {
             e.checked = frm.allbox.checked;
             if (frm.allbox.checked) {
                 hL(e);
-            } //endif
+            }
             else {
                 dL(e);
-            } //endelse
-
-        } //endif
-    } //endfor
+            }
+        }
+    }
 }
-
-
 //CheckBox选择项
 function CCA(CB) {
-    var frm = document.Form1;
+    var frm = document.forms[0];
     if (CB.checked)
         hL(CB);
     else
@@ -36,7 +33,6 @@ function CCA(CB) {
     }
     frm.allbox.checked = (TO == TB) ? true : false;
 }
-
 
 function hL(E) {
     while (E.tagName != "TR")

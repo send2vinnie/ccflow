@@ -7,22 +7,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title></title>
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
-    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <script src="../../Comm/Scripts/CheckBox.js" type="text/javascript"></script>
+   <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/main.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body  style="margin: 0px;">
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="DraftBox.aspx" />
-    保存日期：
-    <lizard:xdatepicker id="xdpCreateDate" runat="server" />
-    &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
-    <br />
-    <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
-        borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
-        pagesize="10" rowstyle-horizontalalign="Center" onrowcreated="gridView_OnRowCreated"
-        cssclass="lizard-grid">
-        <columns>
+    <div class="subtoolbar">
+        保存日期：
+        <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
+        &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
+    </div>
+    <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
+        BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
+        PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated"
+        CssClass="lizard-grid">
+        <Columns>
             <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
@@ -38,29 +40,30 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="Addresser" HeaderText="发件人" SortExpression="Addresser"
-                ItemStyle-HorizontalAlign="Center" Visible="false"/>
+                ItemStyle-HorizontalAlign="Center" Visible="false" />
             <asp:BoundField DataField="Addressee" HeaderText="收件人" SortExpression="Addressee"
                 ItemStyle-HorizontalAlign="Center" Visible="false" />
-            
-              <asp:TemplateField   HeaderText="邮件类型" SortExpression="PriorityLevel" ItemStyle-HorizontalAlign="Center" >
+            <asp:TemplateField HeaderText="邮件类型" SortExpression="PriorityLevel" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                  <asp:Label id="lblEmailType" runat="server" text='<%# XEmailTool.GetEmailTypeByCode(Eval("PriorityLevel")) %>' />
+                    <asp:Label ID="lblEmailType" runat="server" Text='<%# XEmailTool.GetEmailTypeByCode(Eval("PriorityLevel")) %>' />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="SendTime" HeaderText="保存时间" SortExpression="SendTime" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="SendTime" HeaderText="保存时间" SortExpression="SendTime"
+                ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Category" HeaderText="分类" SortExpression="Category" ItemStyle-HorizontalAlign="Center"
                 Visible="false" />
-            <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center" Visible="false"/>
+            <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center"
+                Visible="false" />
             <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
-                DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" Visible="false"/>
+                DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" Visible="false" />
             <asp:TemplateField ControlStyle-Width="50" HeaderText="删除" Visible="false">
                 <ItemTemplate>
                     <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete"
                         Text="删除"></asp:LinkButton>
                 </ItemTemplate>
             </asp:TemplateField>
-        </columns>
-    </lizard:xgridview>
+        </Columns>
+    </lizard:XGridView>
     <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
     &nbsp;<table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
         <tr>

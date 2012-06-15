@@ -75,14 +75,12 @@ namespace BP.EIP.Web.Port_Emp
             //}
             #endregion
 
-
             string searchValue = Request.QueryString["searchvalue"];
             BP.EIP.Port_Emp Port_Emp = new BP.EIP.Port_Emp();
             DataTable Port_EmpTable = XQueryTool.Query<BP.EIP.Port_Emp>(Port_Emp, columns, searchValue, m_PageIndex, m_PageSize, null);
 
             gridView.DataSource = Port_EmpTable;
             gridView.DataBind();
-
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -94,7 +92,7 @@ namespace BP.EIP.Web.Port_Emp
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                //e.Row.Cells[0].Text = "<input id='Checkbox2' type='checkbox' onclick='CheckAll()'/><label></label>";
+                e.Row.Cells[0].Text = "<input name='allbox' type='checkbox' onclick='CheckAll()'/><label></label>";
             }
         }
         protected void gridView_RowDataBound(object sender, GridViewRowEventArgs e)

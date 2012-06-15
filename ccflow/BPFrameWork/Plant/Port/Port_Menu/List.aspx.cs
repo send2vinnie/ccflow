@@ -16,6 +16,7 @@ namespace BP.EIP.Web.Port_Menu
     {
         private int m_PageIndex = 1;
         //private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
+
         BP.EIP.Port_Menu Port_Menu = new BP.EIP.Port_Menu();
         string[] columns = { 
                    Port_MenuAttr.MenuNo,
@@ -39,8 +40,10 @@ namespace BP.EIP.Web.Port_Menu
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            m_PageSize = 10;
             if (!Page.IsPostBack)
             {
+
                 if (Request.QueryString["app"] != null)
                 {
                     dicApp = new Dictionary<string, object>();
@@ -115,7 +118,7 @@ namespace BP.EIP.Web.Port_Menu
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                //e.Row.Cells[0].Text = "<input id='Checkbox2' type='checkbox' onclick='CheckAll()'/><label></label>";
+                e.Row.Cells[0].Text = "<input name='allbox' type='checkbox' onclick='CheckAll()'/><label></label>";
             }
         }
         protected void gridView_RowDataBound(object sender, GridViewRowEventArgs e)

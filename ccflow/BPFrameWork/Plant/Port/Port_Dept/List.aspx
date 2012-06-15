@@ -29,8 +29,7 @@
                                 <asp:HiddenField ID="DeleteNo" runat="server" Value='<%#Eval("No") %>' />
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="No" HeaderText="No" SortExpression="No" ItemStyle-HorizontalAlign="Center"
-                            Visible="false" />
+                        <asp:BoundField DataField="No" HeaderText="编号" SortExpression="No" ItemStyle-HorizontalAlign="Center" />
                         <asp:BoundField DataField="Name" HeaderText="名称" SortExpression="Name" ItemStyle-HorizontalAlign="Center" />
                         <asp:BoundField DataField="FullName" HeaderText="全称" SortExpression="FullName" ItemStyle-HorizontalAlign="Center" />
                         <asp:BoundField DataField="Pid" HeaderText="上级部门" SortExpression="Pid" ItemStyle-HorizontalAlign="Center" />

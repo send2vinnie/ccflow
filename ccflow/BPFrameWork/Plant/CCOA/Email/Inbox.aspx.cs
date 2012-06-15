@@ -118,7 +118,7 @@ namespace Lizard.OA.Web.OA_Email
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                //e.Row.Cells[0].Text = "<input id='Checkbox2' type='checkbox' onclick='CheckAll()'/><label></label>";
+                e.Row.Cells[0].Text = "<input name='allbox' type='checkbox' onclick='CheckAll()'/><label></label>";
             }
         }
         protected void gridView_RowDataBound(object sender, GridViewRowEventArgs e)

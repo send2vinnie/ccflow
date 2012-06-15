@@ -24,20 +24,27 @@ namespace BP.EIP.Web.Port_Dept
                 if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
                 {
                     id = Request.Params["id"];
-
+                    BindDropDownList();
                     ShowInfo(id);
                 }
             }
         }
+        //public override void BindDropDownList()
+        //{
+        //    DataTable dt = new DataTable();
+        //    IDepartment iDal = BP.EIP.DALFactory.DataAccess.CreateDepartment();
+        //    if (!string.IsNullOrEmpty(id))
+        //    {
+        //        dt = iDal.GetParentDepartments(id);
+        //        this.ddlPid.BindDataSource(dt, "Name", "No");
+        //    }
+        //}
         public override void BindDropDownList()
         {
             DataTable dt = new DataTable();
             IDepartment iDal = BP.EIP.DALFactory.DataAccess.CreateDepartment();
-            if (!string.IsNullOrEmpty(id))
-            {
-                dt = iDal.GetParentDepartments(id);
-                this.ddlPid.BindDataSource(dt, "Name", "No");
-            }
+            dt = iDal.GetDT();
+            this.ddlPid.BindDataSource(dt, "Name", "No");
         }
 
         private void ShowInfo(string No)

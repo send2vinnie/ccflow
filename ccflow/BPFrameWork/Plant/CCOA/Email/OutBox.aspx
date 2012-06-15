@@ -7,18 +7,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title></title>
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
-    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <script src="../../Comm/Scripts/CheckBox.js" type="text/javascript"></script>
+     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/main.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body  style="margin: 0px;">
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="OutBox.aspx" />
-    发送日期：
+    <div class="subtoolbar"> 发送日期：
     <lizard:xdatepicker id="xdpCreateDate" runat="server" />
     &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
     &nbsp;
-    <br />
+    </div>
     <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
         borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
         pagesize="10" rowstyle-horizontalalign="Center" onrowcreated="gridView_OnRowCreated"

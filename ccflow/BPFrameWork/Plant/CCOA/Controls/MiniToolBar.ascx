@@ -94,9 +94,9 @@
             <td style="width: 100%;">
                 <div id="ButtonContainers" runat="server" style="float: left;">
                 </div>
-                <span class="separator"></span><a class="mini-button" iconcls="icon-reload" plain="false"
-                    href="<%=RefreshUrl %>">刷新</a> <a class="mini-button" iconcls="icon-download" plain="false">
-                        下载</a>
+                <span class="separator"></span><a class="mini-button" iconcls="icon-reload" plain="true"
+                    href="<%=RefreshUrl %>">刷新</a> <a style="display: none;" class="mini-button" iconcls="icon-download"
+                        plain="false">下载</a>
             </td>
             <td style="white-space: nowrap;">
                 <input id="txtValue" class="mini-textbox" />

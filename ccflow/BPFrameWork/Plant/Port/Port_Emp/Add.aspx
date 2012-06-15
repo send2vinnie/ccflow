@@ -20,6 +20,14 @@
                             用户名 ：
                         </td>
                         <td height="25" width="*" align="left">
+                            <asp:TextBox ID="txtNo" runat="server" Width="200px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            姓名 ：
+                        </td>
+                        <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtName" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
@@ -36,10 +44,10 @@
                             部门：
                         </td>
                         <td height="25" width="*" align="left">
-                            <lizard:XDropDownList ID="ddlFK_Dept" runat="server" Width="200" />
+                            <lizard:XDropDownList ID="ddlFK_Dept" runat="server" Width="100" />
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none;">
                         <td height="25" width="30%" align="right">
                             PID ：
                         </td>
@@ -47,7 +55,7 @@
                             <asp:TextBox ID="txtPID" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none;">
                         <td height="25" width="30%" align="right">
                             PIN ：
                         </td>
@@ -60,7 +68,7 @@
                             USB认证登录 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtIsUSBKEY" runat="server" Width="200px"></asp:TextBox>
+                            <asp:CheckBox ID="chkIsUSBKEY" runat="server" Checked="False" />
                         </td>
                     </tr>
                     <tr>
@@ -73,13 +81,13 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            员工姓名 ：
+                            对应员工 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtFK_Emp" runat="server" Width="200px"></asp:TextBox>
+                            <lizard:XDropDownList ID="ddlEmp" runat="server"  Width="100"/>
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none;">
                         <td height="25" width="30%" align="right">
                             状态 ：
                         </td>

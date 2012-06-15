@@ -7,9 +7,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    <script src="../../Comm/Scripts/CheckBox.js" type="text/javascript"></script>
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
 </head>
 <body>
     <form id="Form1" runat="server">
@@ -26,7 +26,7 @@
                      <asp:HiddenField ID="DeleteNo" runat="server" Value='<%#Eval("No") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="No" HeaderText="主键Id" SortExpression="No" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="No" HeaderText="主键Id" SortExpression="No" ItemStyle-HorizontalAlign="Center" Visible="false" />
             <asp:BoundField DataField="MessageName" HeaderText="消息名称（标题）" SortExpression="MessageName"
                 ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="MeaageType" HeaderText="消息类型" SortExpression="MeaageType"
@@ -36,9 +36,9 @@
                 ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="UpDT" HeaderText="最后更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Status" HeaderText="状态：1-有效0-无效" SortExpression="Status"
-                ItemStyle-HorizontalAlign="Center" />
+                ItemStyle-HorizontalAlign="Center"  Visible="false"/>
             <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="No"
-                DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细" />
+                DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细"  Visible="false"/>
             <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
                 DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" />
             <asp:TemplateField ControlStyle-Width="50" HeaderText="删除" Visible="false">
