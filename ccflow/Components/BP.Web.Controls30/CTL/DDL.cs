@@ -1273,9 +1273,7 @@ namespace BP.Web.Controls
                 this.Items.Add(new ListItem("全部", "all"));
 
             foreach (EntityOIDName en in ens)
-            {
                 this.Items.Add(new ListItem(en.Name, en.OID.ToString()));
-            }
 
             if (where == AddAllLocation.End || where == AddAllLocation.TopAndEnd)
                 this.Items.Add(new ListItem("全部", "all"));
