@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Show.aspx.cs" Inherits="CCOA_Email_Show"
     Title="显示页" %>
 
+<%@ Register Src="../Controls/Attachment.ascx" TagName="Attachment" TagPrefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -116,6 +117,11 @@
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:Label ID="lblUpDT" runat="server"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <uc1:Attachment ID="Attachment1" runat="server" EnumType="email" />
                         </td>
                     </tr>
                     <tr>

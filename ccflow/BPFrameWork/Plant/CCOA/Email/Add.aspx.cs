@@ -20,6 +20,7 @@ public partial class CCOA_Email_Add : BasePage
         if (!Page.IsPostBack)
         {
             string currentUser = BP.Web.WebUser.Name;
+            currentUser = "wss";
             this.txtAddresser.Text = currentUser;
         }
     }
@@ -80,6 +81,22 @@ public partial class CCOA_Email_Add : BasePage
         model.UpDT = UpDT;
 
         model.Insert();
+
+        //保存附件
+        if (this.FileUpload1.HasFile)
+        {
+            string fileName = this.FileUpload1.FileName;
+            string saveFilePath = XAttachmentTool.UploadFile(this.FileUpload1, Request.PhysicalApplicationPath, this, Server.HtmlEncode(fileName));
+            string attachNo = string.Empty;
+            XAttachmentTool.InsertAttachment(fileName, fileName, saveFilePath, CurrentUser.No, out attachNo);
+
+            //插入公告附件表
+            BP.CCOA.OA_EmailAttach emailAttach = new BP.CCOA.OA_EmailAttach();
+            emailAttach.No = Guid.NewGuid().ToString();
+            emailAttach.Email_Id = EmailId;
+            emailAttach.Attachment_Id = attachNo;
+            emailAttach.Insert();
+        }
 
         //插入接收人
         XEmailTool.InsertEmailAuths(EmailId, this.txtSelectedIds.Value);

@@ -109,8 +109,8 @@
                         <td height="25" width="*" align="left">
                             <lizard:xtextbox id="txtAddressee" readonly="true" runat="server" width="200px">
                             </lizard:xtextbox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                                ErrorMessage="收件人不能为空！" ControlToValidate="txtAddressee"></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="收件人不能为空！"
+                                ControlToValidate="txtAddressee"></asp:RequiredFieldValidator>
                             <asp:HiddenField ID="txtSelectedIds" runat="server" />
                             <%--<asp:TextBox ID="txtAddressee" runat="server" class="mini-textbox" Width="200px"></asp:TextBox>--%>
                         </td>
@@ -121,6 +121,14 @@
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtContent" runat="server" Width="100%" TextMode="MultiLine" Height="300px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            附件 ：
+                        </td>
+                        <td height="25" width="*" align="left">
+                            <asp:FileUpload ID="FileUpload1" runat="server" />
                         </td>
                     </tr>
                     <tr>
