@@ -46,8 +46,10 @@
             </asp:TemplateField>
             <asp:BoundField DataField="NoticeSubTitle" HeaderText="副标题" SortExpression="NoticeSubTitle"
                 ItemStyle-HorizontalAlign="Center" Visible="false" />
-            <asp:BoundField DataField="NoticeType" HeaderText="通告类型" SortExpression="NoticeType"
-                ItemStyle-HorizontalAlign="Center" />
+            <asp:TemplateField   HeaderText="通告类型" SortExpression="NoticeType" ItemStyle-HorizontalAlign="Center" >
+                <ItemTemplate>
+                  <asp:Label id="lblNoticeType" runat="server" text='<%# XTool.GetCatelogyByCode(Eval("NoticeType")) %>' />
+                </ItemTemplate>
             <asp:BoundField DataField="Author" HeaderText="发布人" SortExpression="Author" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="CreateTime" HeaderText="发布时间" SortExpression="CreateTime"
                 ItemStyle-HorizontalAlign="Center" />
