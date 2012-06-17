@@ -6,7 +6,6 @@ using System.Collections;
 using System.Data;
 using BP.Port;
 using BP.Sys;
-using BP.Port;
 
 namespace BP.WF
 {
@@ -584,11 +583,11 @@ namespace BP.WF
         /// <returns></returns>
         public string DoFlowOver(string stopMsg)
         {
-            string msg = this.BeforeFlowOver();
+            string msg = "";
             if (this.IsMainFlow == false)
             {
                 /* 处理子流程完成*/
-                return this.DoFlowSubOver();
+               return  this.DoFlowSubOver();
             }
 
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
@@ -687,7 +686,8 @@ namespace BP.WF
 
             // 记录日志 thanks for itdos ,提出了这个bug.
             WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
-            wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "执行流程结束");
+            wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                "执行流程结束");
             return msg;
         }
         /// <summary>
@@ -988,54 +988,6 @@ namespace BP.WF
             //chf.WorkID = this.WorkID;
             //chf.Update("WFState", (int)sw.WFState);
             // +"@" + this.ToEP2("WF5", "工作流程{0},{1}任务完成。", this.HisFlow.Name, this.HisStartWork.Title);  // 工作流程[" + HisFlow.Name + "] [" + HisStartWork.Title + "]任务完成。;
-        }
-        /// <summary>
-        /// 流程完成之后要做的工作。
-        /// </summary>
-        private string BeforeFlowOver()
-        {
-            string ccmsg = "";
-            if (this.HisFlow.IsCCAll == true)
-            {
-                ccmsg += "@抄送流程参与人员：";
-                /*如果在流程结束后自动的发送给全体参与人员*/
-                ccmsg += this.CCTo(BP.DA.DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.WorkID + " AND IsEnable=1"));
-            }
-
-
-            #region 执行流程抄送
-            if (this.HisFlow.CCStas.Length > 2)
-            {
-                //ccmsg += "@按照岗位抄送如下人员：";
-                ///* 如果设置了抄送人员的岗位。*/
-                //string sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
-                //DataTable dt = DBAccess.RunSQLReturnTable(sql);
-                //if (dt.Rows.Count == 0 || Web.WebUser.FK_Dept.Length > 3)
-                //{
-                //    sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 2) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
-                //    dt = DBAccess.RunSQLReturnTable(sql);
-                //}
-
-                //if (dt.Rows.Count == 0 || Web.WebUser.FK_Dept.Length > 5)
-                //{
-                //    sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 4) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
-                //    dt = DBAccess.RunSQLReturnTable(sql);
-                //}
-
-                //if (dt.Rows.Count == 0 || Web.WebUser.FK_Dept.Length > 7)
-                //{
-                //    sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 6) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
-                //    dt = DBAccess.RunSQLReturnTable(sql);
-                //}
-
-                //if (dt.Rows.Count == 0)
-                //{
-                //    ccmsg += "@系统没有获取到要抄送的人员。管理员设置的信息如下：" + this.HisFlow.CCStas + "，请确定该岗位下是否有此人员。";
-                //}
-                //ccmsg += this.CCTo(dt);
-            }
-            #endregion
-            return ccmsg;
         }
         /// <summary>
         ///  抄送到

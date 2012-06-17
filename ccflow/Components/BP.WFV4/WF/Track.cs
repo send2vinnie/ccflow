@@ -139,6 +139,10 @@ namespace BP.WF
         /// EmpToT
         /// </summary>
         public const string EmpToT = "EmpToT";
+        /// <summary>
+        /// 实际执行人员
+        /// </summary>
+        public const string Exer = "Exer";
     }
     /// <summary>
     /// 轨迹
@@ -325,6 +329,17 @@ namespace BP.WF
                 this.SetValByKey(TrackAttr.NodeData, value);
             }
         }
+        public string Exer
+        {
+            get
+            {
+                return this.GetValStringByKey(TrackAttr.Exer);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.Exer, value);
+            }
+        }
         /// <summary>
         /// 审核意见
         /// </summary>
@@ -414,8 +429,7 @@ namespace BP.WF
                 #region 字段
                 map.AddMyPK();
                 map.AddTBString(TrackAttr.FK_Flow, null, "流程", true, false, 0, 100, 100);
-                map.AddDDLSysEnum(TrackAttr.ActionType, 0, "操作类型", true, false, TrackAttr.ActionType,
-                  "@0=发起@1=前进@2=后退@3=移交@4=删除");
+                map.AddTBInt(TrackAttr.ActionType, 0, "操作类型", true, false);
 
                 map.AddTBInt(TrackAttr.FID, 0, "流程ID", true, false);
                 map.AddTBInt(TrackAttr.WorkID, 0, "工作ID", true, false);
@@ -426,18 +440,19 @@ namespace BP.WF
                 map.AddTBInt(TrackAttr.NDTo, 0, "到节点", true, false);
                 map.AddTBString(TrackAttr.NDToT, null, "到节点(名称)", true, false, 0, 100, 100);
 
-
                 map.AddTBString(TrackAttr.EmpFrom, null, "从人员", true, false, 0, 100, 100);
                 map.AddTBString(TrackAttr.EmpFromT, null, "从人员(名称)", true, false, 0, 100, 100);
 
                 map.AddTBString(TrackAttr.EmpTo, null, "到人员", true, false, 0, 4000, 100);
                 map.AddTBString(TrackAttr.EmpToT, null, "到人员(名称)", true, false, 0, 100, 100);
 
-                map.AddTBString(TrackAttr.RDT, null, "到人员", true, false, 0, 30, 100);
+                map.AddTBString(TrackAttr.RDT, null, "日期", true, false, 0, 30, 100);
 
                 map.AddTBFloat(TrackAttr.WorkTimeSpan, 0, "时间跨度(天)", true, false);
                 map.AddTBStringDoc(TrackAttr.Msg, null, "消息", true, false);
                 map.AddTBStringDoc(TrackAttr.NodeData, null, "节点数据(日志信息)", true, false);
+
+                map.AddTBString(TrackAttr.Exer, null, "执行人", true, false, 0, 30, 100);
                 #endregion 字段
 
                 this._enMap = map;
@@ -459,7 +474,18 @@ namespace BP.WF
         public Track()
         {
         }
-       
+        /// <summary>
+        /// 增加授权人
+        /// </summary>
+        /// <returns></returns>
+        protected override bool beforeInsert()
+        {
+            if (BP.Web.WebUser.IsAuthorize)
+                this.Exer = BP.Web.WebUser.AuthorizerEmpID + "," + BP.Web.WebUser.Auth;
+            else
+                this.Exer = BP.Web.WebUser.No + "," + BP.Web.WebUser.Name;
+            return base.beforeInsert();
+        }
         #endregion attrs
     }
     /// <summary>

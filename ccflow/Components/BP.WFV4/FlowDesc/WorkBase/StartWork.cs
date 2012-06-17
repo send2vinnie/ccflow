@@ -29,6 +29,11 @@ namespace BP.WF
         /// 工作流程状态( 0, 进行中,1 完成任务, 2强制终止) 
         /// </summary>
         public const string WFState = "WFState";
+        /// <summary>
+        /// PRI
+        /// </summary>
+        public const string PRI = "PRI";
+
     }
 	/// <summary>	 
 	/// 开始工作基类,所有开始工作都要从这里继承

@@ -1137,6 +1137,16 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 是否为工作增加一个优先级
+        /// </summary>
+        public static bool IsEnablePRI
+        {
+            get
+            {
+                return BP.SystemConfig.GetValByKeyBoolen("IsEnablePRI", false);
+            }
+        }
+        /// <summary>
         /// 是否启用消息系统消息。
         /// </summary>
         public static bool IsEnableSysMessage

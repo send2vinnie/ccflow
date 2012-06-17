@@ -96,6 +96,10 @@ namespace BP.WF
         /// 流程类别
         /// </summary>
         public const string FK_FlowSort = "FK_FlowSort";
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public const string PRI = "PRI";
         #endregion
     }
 	/// <summary>
@@ -111,16 +115,6 @@ namespace BP.WF
                 return GenerWorkFlowAttr.WorkID;
             }
         }
-        ///// <summary>
-        ///// HisFlow
-        ///// </summary>
-        //public Flow HisFlow
-        //{
-        //    get
-        //    {
-        //        return new Flow(this.FK_Flow); 
-        //    }
-        //}
 		/// <summary>
 		/// 工作流程编号
 		/// </summary>
@@ -147,6 +141,20 @@ namespace BP.WF
             set
             {
                 SetValByKey(GenerWorkFlowAttr.FlowName, value);
+            }
+        }
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public int PRI
+        {
+            get
+            {
+                return this.GetValIntByKey(GenerWorkFlowAttr.PRI);
+            }
+            set
+            {
+                SetValByKey(GenerWorkFlowAttr.PRI, value);
             }
         }
         /// <summary>
@@ -350,37 +358,6 @@ namespace BP.WF
             if (qo.DoQuery() == 0)
                 throw new Exception("工作 GenerWorkFlow [" + workId + "]不存在，可能是已经完成。");
         }
-        ///// <summary>
-        ///// 产生的工作流程
-        ///// </summary>
-        ///// <param name="workId">工作流程ID</param>
-        ///// <param name="flowNo">流程编号</param>
-        //public GenerWorkFlow(Int64 workId, string flowNo)
-        //{
-        //    try
-        //    {
-        //        this.WorkID = workId;
-        //        this.FK_Flow = flowNo;
-        //        this.Retrieve();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        WorkFlow wf = new WorkFlow(new Flow(flowNo), workId, this.FID);
-        //        StartWork wk = wf.HisStartWork;
-        //        if (wk.WFState == BP.WF.WFState.Complete)
-        //        {
-        //            throw new Exception("@已经完成流程，不存在于当前工作集合里，如果要得到此流程的详细信请查看历史工作。技术信息:" + ex.Message);
-        //        }
-        //        else
-        //        {
-        //            this.Copy(wk);
-        //            //string msg = "@流程内部错误，给您带来的不便，深表示抱歉，请把此情况通知给系统管理员。error code:0001更多的信息:" + ex.Message;
-        //            string msg = "@流程内部错误，给您带来的不便，深表示抱歉，请把此情况通知给系统管理员。error code:0001更多的信息:" + ex.Message;
-        //            Log.DefaultLogWriteLine(LogType.Error, "@工作完成后在使用它抛出的异常：" + msg);
-        //            //throw new Exception(msg);
-        //        }
-        //    }
-        //}
         /// <summary>
         /// 执行修复
         /// </summary>
@@ -390,18 +367,17 @@ namespace BP.WF
 		/// <summary>
 		/// 重写基类方法
 		/// </summary>
-		public override Map EnMap
-		{
+        public override Map EnMap
+        {
             get
             {
                 if (this._enMap != null)
                     return this._enMap;
 
                 Map map = new Map("WF_GenerWorkFlow");
-                map.EnDesc =  "未完成流程";
+                map.EnDesc = "未完成流程";
 
                 map.AddTBIntPK(GenerWorkFlowAttr.WorkID, 0, "WorkID", true, true);
-
                 map.AddTBInt(GenerWorkFlowAttr.FID, 0, "流程ID", true, true);
 
                 map.AddTBString(GenerWorkFlowAttr.FK_FlowSort, null, "流程类别", true, false, 0, 500, 10);
@@ -420,6 +396,7 @@ namespace BP.WF
 
                 map.AddTBString(GenerWorkFlowAttr.FK_Dept, null, "部门", true, false, 0, 500, 10);
                 map.AddTBString(GenerWorkFlowAttr.DeptName, null, "部门名称", true, false, 0, 500, 10);
+                map.AddTBInt(GenerWorkFlowAttr.PRI, 1, "优先级", true, true);
 
 
                 RefMethod rm = new RefMethod();
@@ -442,7 +419,7 @@ namespace BP.WF
                 this._enMap = map;
                 return this._enMap;
             }
-		}
+        }
 		#endregion 
 
 		#region 重载基类方法

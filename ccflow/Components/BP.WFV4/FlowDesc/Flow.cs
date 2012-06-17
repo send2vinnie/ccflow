@@ -240,7 +240,6 @@ namespace BP.WF
         /// </summary>
         public const string IsMD5 = "IsMD5";
         public const string CCStas = "CCStas";
-        public const string IsCCAll = "IsCCAll";
         public const string Note = "Note";
         public const string RunSQL = "RunSQL";
         public const string StartListUrl = "StartListUrl";
@@ -2394,9 +2393,14 @@ namespace BP.WF
             if (SystemConfig.AppCenterDBType != DBType.Informix)
                 sql += "\r\n GO ";
 
-            if (DBAccess.IsExitsObject(viewName) == true)
-                DBAccess.RunSQL("DROP VIEW " + viewName);
-
+            try
+            {
+                if (DBAccess.IsExitsObject(viewName) == true)
+                    DBAccess.RunSQL("DROP VIEW " + viewName);
+            }
+            catch
+            {
+            }
             DBAccess.RunSQL(sql);
         }
         private void CheckRpt(Nodes nds)
@@ -2733,17 +2737,17 @@ namespace BP.WF
         }
 
         #region 基本属性
-        public bool IsCCAll
-        {
-            get
-            {
-                return this.GetValBooleanByKey(FlowAttr.IsCCAll);
-            }
-            set
-            {
-                this.SetValByKey(FlowAttr.IsCCAll, value);
-            }
-        }
+        //public bool IsCCAll
+        //{
+        //    get
+        //    {
+        //        return this.GetValBooleanByKey(FlowAttr.IsCCAll);
+        //    }
+        //    set
+        //    {
+        //        this.SetValByKey(FlowAttr.IsCCAll, value);
+        //    }
+        //}
         /// <summary>
         /// 是否是MD5加密流程
         /// </summary>
@@ -2867,7 +2871,7 @@ namespace BP.WF
         /// <summary>
         /// 要抄送的岗位
         /// </summary>
-        public string CCStas
+        public string CCStas_del
         {
             get
             {
@@ -3152,9 +3156,7 @@ namespace BP.WF
                 map.AddTBInt(FlowAttr.NumOfBill, 0, "是否有单据", false, false);
                 map.AddTBInt(FlowAttr.NumOfDtl, 0, "NumOfDtl", false, false);
                 map.AddBoolean(FlowAttr.IsOK, true, this.ToE("IsEnable", "是否起用"), true, true);
-                map.AddBoolean(FlowAttr.IsCCAll, false, "流程完成后抄送参与人员", true, true);
                 map.AddBoolean(FlowAttr.IsCanStart, true, "可以独立启动否？", true, true, true);
-                map.AddTBString(FlowAttr.CCStas, null, "要抄送的岗位", false, false, 0, 2000, 10);
                 map.AddTBDecimal(FlowAttr.AvgDay, 0, "平均运行用天", false, false);
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
                 map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
@@ -4453,6 +4455,20 @@ namespace BP.WF
             //lab.FontStyle = "Normal";
             //lab.FontWeight = "normal";
             //lab.Insert();
+
+            lab = new FrmLab();
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 1;
+            lab.Text = "优先级";
+            lab.FK_MapData = "ND" + int.Parse(this.No + "01");
+            lab.X = (float)109.05;
+            lab.Y = (float)58.1;
+            lab.FontSize = 11;
+            lab.FontColor = "black";
+            lab.FontName = "Portable User Interface";
+            lab.FontStyle = "Normal";
+            lab.FontWeight = "normal";
+            lab.Insert();
+
 
             lab = new FrmLab();
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 2;

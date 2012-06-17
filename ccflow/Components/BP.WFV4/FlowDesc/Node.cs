@@ -738,7 +738,7 @@ namespace BP.WF
             {
                 mystas += dr[0].ToString() + ",";
             }
-            fl.CCStas = mystas;
+         //   fl.CCStas = mystas;
 
 
             // 处理岗位分组.
@@ -3007,6 +3007,29 @@ namespace BP.WF
                     attr.Insert();
                 }
 
+                if (Glo.IsEnablePRI && this.IsStartNode
+                    && attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.PRI, MapAttrAttr.FK_MapData, md.No) == false)
+                {
+                    /* 如果有优先级 */
+                    attr = new BP.Sys.MapAttr();
+                    attr.FK_MapData = md.No;
+                    attr.HisEditType = BP.En.EditType.UnDel;
+                    attr.KeyOfEn = StartWorkAttr.PRI;
+                    attr.UIBindKey = attr.KeyOfEn;
+                    attr.Name = "优先级";
+                    attr.MyDataType = BP.DA.DataType.AppInt;
+                    attr.UIContralType = UIContralType.DDL;
+                    attr.LGType = FieldTypeS.Enum;
+                    attr.UIIsEnable = true;
+                    attr.UIIsLine = false;
+                    attr.MinLen = 0;
+                    attr.MaxLen = 200;
+                    attr.IDX = -100;
+                    attr.DefVal = "0";
+                    attr.X = (float)174.76;
+                    attr.Y = (float)56.19;
+                    attr.Insert();
+                }
 
                 
                 if (attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.Title, MapAttrAttr.FK_MapData, md.No) == false)
@@ -3260,6 +3283,7 @@ namespace BP.WF
             attr.MaxLen = 20;
             attr.Insert();
 
+
             if (this.NodePosType == NodePosType.Start)
             {
                 //开始节点信息.
@@ -3297,6 +3321,29 @@ namespace BP.WF
                 attr.X = (float)174.83;
                 attr.Y = (float)54.4;
                 attr.Insert();
+
+                if (Glo.IsEnablePRI)
+                {
+                    /* 如果有优先级 */
+                    attr = new BP.Sys.MapAttr();
+                    attr.FK_MapData = md.No;
+                    attr.HisEditType = BP.En.EditType.UnDel;
+                    attr.KeyOfEn = "PRI";
+                    attr.UIBindKey = attr.KeyOfEn;
+                    attr.Name = "优先级";
+                    attr.MyDataType = BP.DA.DataType.AppInt;
+                    attr.UIContralType = UIContralType.DDL;
+                    attr.LGType = FieldTypeS.Enum;
+                    attr.UIIsEnable = true;
+                    attr.UIIsLine = false;
+                    attr.MinLen = 0;
+                    attr.MaxLen = 200;
+                    attr.IDX = -100;
+                    attr.DefVal = "0";
+                    attr.X = (float)174.76;
+                    attr.Y = (float)56.19;
+                    attr.Insert();
+                }
 
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = md.No;

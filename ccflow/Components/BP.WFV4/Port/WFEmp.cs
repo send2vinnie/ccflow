@@ -63,7 +63,7 @@ namespace BP.WF.Port
         /// <summary>
         /// 是否处于授权状态
         /// </summary>
-        public const string AuthorIsOK = "AuthorIsOK";
+        public const string AuthorWay = "AuthorWay";
         /// <summary>
         /// 授权自动收回日期
         /// </summary>
@@ -78,6 +78,10 @@ namespace BP.WF.Port
         public const string Msg = "Msg";
         public const string TM = "TM";
         public const string UserSta = "UserSta";
+        /// <summary>
+        /// 授权的人员
+        /// </summary>
+        public const string AuthorFlows = "AuthorFlows";
         #endregion
     }
 	/// <summary>
@@ -237,6 +241,22 @@ namespace BP.WF.Port
                 SetValByKey(WFEmpAttr.AuthorToDate, value);
             }
         }
+        /// <summary>
+        /// 授权的流程
+        /// </summary>
+        public string AuthorFlows
+        {
+            get
+            {
+                string s= this.GetValStringByKey(WFEmpAttr.AuthorFlows);
+                s = s.Replace(",", "','");
+                return "('"+s+"')";
+            }
+            set
+            {
+                SetValByKey(WFEmpAttr.AuthorFlows, value.Substring(1));
+            }
+        }
         public string FtpUrl
         {
             get
@@ -280,26 +300,36 @@ namespace BP.WF.Port
                 SetValByKey(WFEmpAttr.Stas, value);
             }
         }
+        /// <summary>
+        /// 授权方式
+        /// </summary>
+        public int AuthorWay
+        {
+            get
+            {
+                return this.GetValIntByKey(WFEmpAttr.AuthorWay);
+            }
+            set
+            {
+                SetValByKey(WFEmpAttr.AuthorWay, value);
+            }
+        }
         public bool AuthorIsOK
         {
             get
             {
-                bool b= this.GetValBooleanByKey(WFEmpAttr.AuthorIsOK);
-                if (b == false)
+                int b= this.GetValIntByKey(WFEmpAttr.AuthorWay);
+                if (b == 0)
                     return false;
 
                 if (this.AuthorToDate.Length < 4)
-                    return true;
+                    return false; /*没有填写时间*/
 
                 DateTime dt = DataType.ParseSysDateTime2DateTime(this.AuthorToDate);
-                if (dt > DateTime.Now)
+                if (dt < DateTime.Now)
                     return false;
 
                 return true;
-            }
-            set
-            {
-                SetValByKey(WFEmpAttr.AuthorIsOK, value);
             }
         }
         #endregion
@@ -358,8 +388,12 @@ namespace BP.WF.Port
                     WFEmpAttr.AlertWay);
                 map.AddTBString(WFEmpAttr.Author, null, "授权人", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.AuthorDate, null, "授权日期", true, true, 0, 50, 20);
-                map.AddTBInt(WFEmpAttr.AuthorIsOK, 0, "是否授权成功", true, true);
+
+                //0不授权， 1完全授权，2，指定流程范围授权. 
+                map.AddTBInt(WFEmpAttr.AuthorWay, 0, "授权方式", true, true);
                 map.AddTBDate(WFEmpAttr.AuthorToDate, null, "授权到日期", true, true);
+                map.AddTBString(WFEmpAttr.AuthorFlows, null, "可以执行的授权流程", true, true, 0, 1000, 20);
+
                 map.AddTBString(WFEmpAttr.Stas, null, "岗位s", true, true, 0, 3000, 20);
                 map.AddTBString(WFEmpAttr.FtpUrl, null, "FtpUrl", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.Msg, null, "Msg", true, true, 0, 4000, 20);
@@ -425,57 +459,11 @@ namespace BP.WF.Port
         {
             this.DoOrderUp("FK_Dept", this.FK_Dept, "Idx");
             return;
-
-            //string sql = "SELECT No,Idx FROM WF_Emp WHERE FK_Dept='" + this.FK_Dept + "' order by IDX";
-            //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            //int idx = 0;
-            //string beforeNo = "";
-            //string myNo = "";
-            //bool isMeet = false;
-            //foreach (DataRow dr in dt.Rows)
-            //{
-            //    idx++;
-            //    myNo = dr["No"].ToString();
-            //    if (myNo == this.No)
-            //        isMeet = true;
-
-            //    if (isMeet == false)
-            //        beforeNo = myNo;
-            //    DBAccess.RunSQL("UPDATE WF_Emp SET idx=" + idx + " WHERE No='" + myNo + "'");
-            //}
-            //DBAccess.RunSQL("UPDATE WF_Emp SET Idx=Idx+1 WHERE No='" + beforeNo + "'");
-            //DBAccess.RunSQL("UPDATE WF_Emp SET Idx=Idx-1 WHERE No='" + this.No + "'");
         }
         public void DoDown()
         {
             this.DoOrderDown("FK_Dept", this.FK_Dept, "Idx");
             return;
-            //string sql = "SELECT No,Idx FROM WF_Emp WHERE FK_Dept='" + this.FK_Dept + "' order by IDX";
-            //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            //int idx = 0;
-            //string nextNo = "";
-            //string myNo = "";
-            //bool isMeet = false;
-            //foreach (DataRow dr in dt.Rows)
-            //{
-            //    myNo = dr["No"].ToString();
-            //    if (isMeet == true)
-            //    {
-            //        nextNo = myNo;
-            //        isMeet = false;
-            //    }
-
-            //    idx++;
-
-            //    if (myNo == this.No)
-            //        isMeet = true;
-
-               
-            //    DBAccess.RunSQL("UPDATE WF_Emp SET idx=" + idx + " WHERE No='" + myNo + "'");
-            //}
-
-            //DBAccess.RunSQL("UPDATE WF_Emp SET Idx=Idx-1 WHERE No='" + nextNo + "'");
-            //DBAccess.RunSQL("UPDATE WF_Emp SET Idx=Idx+1 WHERE No='" + this.No + "'");
         }
     }
 	/// <summary>

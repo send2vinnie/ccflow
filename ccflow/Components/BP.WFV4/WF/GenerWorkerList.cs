@@ -90,6 +90,10 @@ namespace BP.WF
         /// 谁执行它?
         /// </summary>
         public const string WhoExeIt = "WhoExeIt";
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public const string PRI = "PRI";
         #endregion
     }
     /// <summary>
@@ -98,6 +102,20 @@ namespace BP.WF
     public class WorkerList : Entity
     {
         #region 基本属性
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public int PRI
+        {
+            get
+            {
+                return this.GetValIntByKey(GenerWorkFlowAttr.PRI);
+            }
+            set
+            {
+                SetValByKey(GenerWorkFlowAttr.PRI, value);
+            }
+        }
         /// <summary>
         /// WorkID
         /// </summary>
@@ -399,6 +417,9 @@ namespace BP.WF
 
                 //发送人. 2011-11-12 为天津用户增加。
                 map.AddTBString(WorkerListAttr.Sender, null, "发送人", true, false, 0, 100, 100);
+
+                //优先级，2012-06-15 为青岛用户增加。
+                map.AddTBInt(GenerWorkFlowAttr.PRI, 1, "优先级", true, true);
 
                 this._enMap = map;
                 return this._enMap;

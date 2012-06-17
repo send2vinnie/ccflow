@@ -179,8 +179,6 @@ namespace BP.WF
             }
         }
         #endregion
-
-        
     }
     /// <summary>
     /// 节点数据汇总集合

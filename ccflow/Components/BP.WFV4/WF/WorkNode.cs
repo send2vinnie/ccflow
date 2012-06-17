@@ -2236,7 +2236,6 @@ namespace BP.WF
 
                 msg += AfterNodeSave_Do();
                 DBAccess.DoTransactionCommit(); //提交事务.
-
                 try
                 {
                     // 调起发送成功后的事务。
@@ -2830,26 +2829,29 @@ namespace BP.WF
             /* 产生开始工作流程记录. */
             GenerWorkFlow gwf = new GenerWorkFlow();
             gwf.WorkID = this.HisWork.OID;
-
-           //this.HisWork.SetValByKey(StartWorkAttr.Title, title);
-
             gwf.Title = this.GenerTitle(this.HisWork);
             gwf.WFState = 0;
             gwf.RDT = this.HisWork.RDT;
             gwf.Rec = Web.WebUser.No;
             gwf.RecName = Web.WebUser.Name;
-
             gwf.FK_Flow = this.HisNode.FK_Flow;
             gwf.FlowName = this.HisNode.FlowName;
-
             gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
-            
             gwf.FK_Node = this.HisNode.NodeID;
             gwf.NodeName = this.HisNode.Name;
-
-            //  gwf.FK_Station = this.HisStationOfUse.No;
             gwf.FK_Dept = this.HisWork.RecOfEmp.FK_Dept;
             gwf.DeptName = this.HisWork.RecOfEmp.FK_DeptText;
+            if (Glo.IsEnablePRI)
+            {
+                try
+                {
+                    gwf.PRI = this.HisWork.GetValIntByKey("PRI");
+                }
+                catch (Exception ex)
+                {
+                    this.HisNode.RepareMap();
+                }
+            }
 
             try
             {
@@ -2897,16 +2899,10 @@ namespace BP.WF
             wl.WorkID = this.HisWork.OID;
             wl.FK_Node = this.HisNode.NodeID;
             wl.FK_NodeText = this.HisNode.Name;
-
             wl.FK_Emp = WebUser.No;
             wl.FK_EmpText = WebUser.Name;
-
             wl.FK_Flow = this.HisNode.FK_Flow;
             wl.FK_Dept = WebUser.FK_Dept;
-
-            // wl.UseDept = this.HisDeptOfUse.No;
-            // wl.UseStation = this.HisStationOfUse.No;
-
             wl.WarningDays = this.HisNode.WarningDays;
             wl.SDT = DataType.CurrentData;
             wl.DTOfWarning = DataType.CurrentData;
@@ -2917,7 +2913,6 @@ namespace BP.WF
             }
             catch (Exception ex)
             {
-                //  throw ex;
                 wl.Update();
             }
             #endregion
@@ -4007,19 +4002,25 @@ namespace BP.WF
                 }
                 nearHLNodes = nearHLNodes.Substring(1);
 
-                string sqlOK = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE FK_Node IN (" + nearHLNodes + ") AND FID=" + this.HisWork.FID + " AND IsPass=1";
-                decimal ok = (decimal)DBAccess.RunSQLReturnValInt(sqlOK);
+                string sqlOK = "SELECT FK_Emp,FK_EmpText FROM WF_GenerWorkerList WHERE FK_Node IN (" + nearHLNodes + ") AND FID=" + this.HisWork.FID + " AND IsPass=1";
+                DataTable dt_worker = BP.DA.DBAccess.RunSQLReturnTable(sqlOK);
+                string numStr = "@如下分流人员已执行完成:";
+                foreach (DataRow dr in dt_worker.Rows)
+                    numStr += "@" + dr[0] + "," + dr[1];
+                decimal ok = (decimal)dt_worker.Rows.Count;
 
                 string sqlAll = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sqlAll);
                 decimal passRate = ok / all * 100;
-                string numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
+                 numStr += "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
                 if (nd.PassRate <= passRate)
                 {
                     /*说明全部的人员都完成了，就让合流点显示它。*/
                     DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0  WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.FID);
                     numStr += "@下一步工作(" + nd.Name + ")已经启动。";
                 }
+
+
                 #endregion 处理完成率
 
                 string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
@@ -4261,15 +4262,18 @@ namespace BP.WF
                     WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
 
                 #region 处理完成率
-                string sql = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID + " AND IsPass=1";
-                decimal ok = (decimal)DBAccess.RunSQLReturnValInt(sql);
 
-                // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
-                // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
-                sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE   IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
+                string sqlOK = "SELECT FK_Emp,FK_EmpText FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID + " AND IsPass=1";
+                DataTable dt_worker = BP.DA.DBAccess.RunSQLReturnTable(sqlOK);
+                string numStr = "@如下分流人员已执行完成:";
+                foreach (DataRow dr in dt_worker.Rows)
+                    numStr += "@" + dr[0] + "," + dr[1];
+                decimal ok = (decimal)dt_worker.Rows.Count;
+
+                string sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE   IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sql);
                 decimal passRate = ok / all * 100;
-                string numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
+                  numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
                 if (nd.PassRate <= passRate)
                 {
                     /*说明全部的人员都完成了，就让合流点显示它。*/

@@ -221,6 +221,14 @@ namespace BP.WF
             qo.AddWhere(FlowAttr.IsOK, true);
             qo.addAnd();
             qo.AddWhere(FlowAttr.IsCanStart, true);
+            if (WebUser.IsAuthorize)
+            {
+                /*如果是授权状态*/
+                qo.addAnd();
+                WF.Port.WFEmp wfEmp = new Port.WFEmp(WebUser.No);
+                qo.AddWhereIn("No", wfEmp.AuthorFlows);
+            }
+
             qo.addOrderBy("FK_FlowSort", "No");
             qo.DoQuery();
             return fls;
@@ -305,7 +313,13 @@ namespace BP.WF
         }
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
-            return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT DESC ");
+            if (WebUser.IsAuthorize==false)
+                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT DESC ");
+            else
+            {
+                WF.Port.WFEmp emp=new Port.WFEmp(WebUser.No);
+                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows+ "  ORDER BY ADT DESC ");
+            }
         }
         #endregion 获取当前操作员的待办工作
 
@@ -427,7 +441,16 @@ namespace BP.WF
         }
         public static GenerWorkFlows DB_GenerRuningOfEntities(string userNo)
         {
-            string sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 ";
+            string sql;
+            if (WebUser.IsAuthorize)
+            {
+                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+                sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+            }
+            else
+            {
+                sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 ";
+            }
             GenerWorkFlows gwfs = new GenerWorkFlows();
             gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
             return gwfs;
