@@ -129,8 +129,8 @@ public partial class Comm_Dtl : WebPage
     {
         this.Page.RegisterClientScriptBlock("s",
          "<link href='../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-        MapDtl mdtl = new MapDtl(this.EnsName);
 
+        MapDtl mdtl = new MapDtl(this.EnsName);
         if (this.IsReadonly == 1)
         {
             mdtl._IsReadonly = 1;
@@ -1026,7 +1026,7 @@ public partial class Comm_Dtl : WebPage
             try
             {
                 this.Pub1.Copy(dtl, dtl.OID.ToString(), map);
-                
+
                 if (dtl.OID < mdtl.RowsOfList + 2)
                 {
                     int myOID = dtl.OID;
@@ -1068,9 +1068,10 @@ public partial class Comm_Dtl : WebPage
                             err += ex.Message;
                             continue;
                         }
-                        dtl.Update();
                     }
+                    dtl.Update();
                 }
+
                 if (isHaveEnd)
                 {
                     /* 如果有保存后的事件。*/

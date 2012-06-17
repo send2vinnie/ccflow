@@ -26,25 +26,16 @@ public partial class WF_Frm : WebPage
             }
         }
     }
-    public int WorkID
+    public int OID
     {
         get
         {
-            try
-            {
-                return int.Parse(this.Request.QueryString["WorkID"]);
-            }
-            catch
-            {
-                try
-                {
-                    return int.Parse(this.Request.QueryString["OID"]);
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
+            string oid = this.Request.QueryString["WorkID"];
+            if (oid == null || oid=="" )
+                oid = this.Request.QueryString["OID"];
+            if (oid==null || oid=="")
+                oid="0";
+            return int.Parse(oid);
         }
     }
     public int FID
@@ -111,7 +102,6 @@ public partial class WF_Frm : WebPage
             {
                 md.RepairMap();
                 this.Response.Redirect(this.Request.RawUrl, true);
-                //  this.UCEn1.AddMsgOfWarning("提示", "<h2>明细表单没有字段无法预览。</h2>");
                 return;
             }
             int i = dtlEn.RetrieveFromDBSources();
@@ -135,8 +125,8 @@ public partial class WF_Frm : WebPage
             if (this.FID != 0)
                 en.SetValByKey("OID", this.FID);
 
-            if (this.WorkID != 0)
-                en.SetValByKey("OID", this.WorkID);
+            if (this.OID != 0)
+                en.SetValByKey("OID", this.OID);
 
             if (en.EnMap.Attrs.Count < 2)
             {
@@ -161,28 +151,22 @@ public partial class WF_Frm : WebPage
             }
             en.ResetDefaultVal();
 
+            if (en.ToString() == "0")
+            {
+                en.SetValByKey("OID", this.OID);
+            }
+
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);
         }
 
         Session["Count"] = null;
-        this.Btn_Save.Click+=new EventHandler(Btn_Save_Click);
-
-        //if (this.IsEdit)
-        //{
-        //    this.UCEn1.AddHR();
-        //    Button btn = new Button();
-        //    btn.ID = "Btn_Save";
-        //    btn.Click+=new EventHandler(Btn_Save_Click);
-        //    btn.Text = "Save";
-        //    this.UCEn1.Add(btn);
-        //}
-
+        this.Btn_Save.Click += new EventHandler(Btn_Save_Click);
         this.Btn_Save.Visible = this.IsEdit;
         this.Btn_Save.Enabled = this.IsEdit;
         this.Btn_Print.Visible = this.IsPrint;
         this.Btn_Print.Enabled = this.IsPrint;
-        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
+        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID=" + this.OID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
     }
     public void AddJSEvent(Entity en)
     {
@@ -206,7 +190,7 @@ public partial class WF_Frm : WebPage
         Work wk = nd.HisWork;
         wk.OID = this.FID;
         if (wk.OID == 0)
-            wk.OID = this.WorkID;
+            wk.OID = this.OID;
         wk.RetrieveFromDBSources();
         wk = this.UCEn1.Copy(wk) as Work;
         try
@@ -245,7 +229,7 @@ public partial class WF_Frm : WebPage
             this.UCEn1.AlertMsg_Warning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
             return;
         }
-        this.Response.Redirect("Frm.aspx?OID=" + wk.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
+        this.Response.Redirect("Frm.aspx?OID=" + wk.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
         // wk.RetrieveFromDBSources();
         // this.UCEn1.ResetEnVal(wk);
         return;
@@ -262,7 +246,7 @@ public partial class WF_Frm : WebPage
 
             MapData md = new MapData(this.FK_MapData);
             GEEntity en = md.HisGEEn;
-            en.SetValByKey("OID", this.WorkID);
+            en.SetValByKey("OID", this.OID);
             int i = en.RetrieveFromDBSources();
             en = this.UCEn1.Copy(en) as GEEntity;
 
@@ -279,10 +263,10 @@ public partial class WF_Frm : WebPage
             //    || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
             //{
             //    /*如果包含保存*/
-            //    this.Response.Redirect("Frm.aspx?OID=" + this.RefOID + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData,true);
+            //    this.Response.Redirect("Frm.aspx?OID=" + this.RefOID + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData,true);
             //}
 
-            this.Response.Redirect("Frm.aspx?OID=" + en.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
+            this.Response.Redirect("Frm.aspx?OID=" + en.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
         }
         catch (Exception ex)
         {

@@ -66,7 +66,18 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
 
-        string sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
+        string sql;
+        if (BP.Web.WebUser.IsAuthorize)
+        {
+            BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(BP.Web.WebUser.No);
+            sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows;
+        }
+        else
+        {
+            sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
+        }
+
+
         int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
         string msg = this.ToE("PendingWork", "待办");
         if (num != 0)

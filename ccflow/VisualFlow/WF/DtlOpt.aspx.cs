@@ -41,8 +41,8 @@ public partial class WF_DtlOpt : WebPage
             switch (item.No)
             {
                 case "UnPass":
-                    //if (dtl.IsEnablePass == false)
-                    //    continue;
+                    if (dtl.IsEnablePass == false)
+                        continue;
                     break;
                 default:
                     break;

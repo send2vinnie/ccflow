@@ -204,7 +204,7 @@ namespace BP.Web.WF
                         BP.WF.Port.WFEmp myau = new BP.WF.Port.WFEmp(WebUser.No);
                         BP.DA.Log.DefaultLogWriteLineInfo("取消授权:" + WebUser.No + "取消了对(" + myau.Author + ")的授权。");
                         myau.Author = "";
-                        myau.AuthorIsOK = false;
+                        myau.AuthorWay=0;
                         myau.Update();
                         //myau.Update(BP.WF.Port.WFEmpAttr.Author, "",BP.WF.Port.WFEmpAttr.AuthorIsOK, 0);
                         this.WinClose();
@@ -215,7 +215,7 @@ namespace BP.Web.WF
                         au.RetrieveFromDBSources();
                         au.AuthorDate = BP.DA.DataType.CurrentData;
                         au.Author = this.FK_Emp;
-                        au.AuthorIsOK = true;
+                        au.AuthorWay = 1;
                         au.Save();
                         BP.DA.Log.DefaultLogWriteLineInfo("执行授权:" + WebUser.No + "执行了对(" + au.Author + ")的授权。");
                         this.WinClose();

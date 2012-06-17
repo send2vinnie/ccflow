@@ -30,6 +30,9 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         }
         switch (this.RefNo)
         {
+            case "AthFlows":
+                this.AthFlows();
+                break;
             case "Skin":
                 this.Skin();
                 break;
@@ -68,6 +71,85 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                 BindPer();
                 break;
         }
+    }
+    public void AthFlows()
+    {
+        FlowSorts sorts = new FlowSorts();
+        sorts.RetrieveAll();
+        Flows fls = new Flows();
+        fls.RetrieveAll();
+
+        BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
+
+        this.AddTable();
+        this.AddCaptionLeft("授权流程范围");
+        this.AddTR();
+        this.AddTDTitle("IDX");
+        this.AddTDTitle("类别");
+        this.AddTDTitle("流程");
+        this.AddTREnd();
+        int i = 0;
+        foreach (FlowSort sort in sorts)
+        {
+            i++;
+            this.AddTRSum();
+            this.AddTDIdx(i);
+            this.AddTDB(sort.Name);
+            CheckBox cbAll = new CheckBox();
+            cbAll.Text = "选择类别下全部";
+            cbAll.ID = "CB_d" + sort.No;
+            this.AddTD(cbAll);
+            this.AddTREnd();
+
+            string ctlIDs = "";
+            foreach (Flow fl in fls)
+            {
+                if (fl.FK_FlowSort != sort.No)
+                    continue;
+
+                i++;
+                this.AddTR();
+                this.AddTDIdx(i);
+                this.AddTD("");
+                CheckBox cb = new CheckBox();
+                cb.ID = "CB_" + fl.No;
+                cb.Text = fl.Name;
+                if (emp.AuthorFlows.Contains(fl.No))
+                    cb.Checked = true;
+                ctlIDs += cb.ID + ",";
+                this.AddTD(cb);
+                this.AddTREnd();
+            }
+            cbAll.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
+        }
+
+        this.AddTR();
+        this.AddTDTitle("");
+        Button btnSaveAthFlows = new Button();
+        btnSaveAthFlows.ID = "Btn_Save";
+        btnSaveAthFlows.Text = "Save";
+        btnSaveAthFlows.Click += new EventHandler(btnSaveAthFlows_Click);
+        this.Add(btnSaveAthFlows);
+        this.AddTD("colspan=2", btnSaveAthFlows);
+        this.AddTREnd();
+        this.AddTableEnd();
+    }
+    void btnSaveAthFlows_Click(object sender, EventArgs e)
+    {
+        Flows fls = new Flows();
+        fls.RetrieveAll();
+        string strs = "";
+        foreach (Flow fl in fls)
+        {
+            if (this.GetCBByID("CB_" + fl.No).Checked == false)
+                continue;
+            strs += "," + fl.No;
+        }
+
+        BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
+        emp.AuthorFlows = strs;
+        emp.Update();
+        this.WinCloseWithMsg("保存成功.");
     }
     public void MyWorks()
     {
@@ -872,7 +954,9 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         else
             this.AddFieldSet("授权详细信息");
 
-        Emp emp = new Emp(this.Request["FK_Emp"]);
+        BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
+        BP.WF.Port.WFEmp empAu = new BP.WF.Port.WFEmp(this.Request["FK_Emp"]);
+
         this.AddBR();
         this.AddTable();
         this.AddTR();
@@ -882,7 +966,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         this.AddTR();
         this.AddTD("授权给:");
-        this.AddTD(emp.No+"    "+emp.Name);
+        this.AddTD(empAu.No + "    " + empAu.Name);
         this.AddTREnd();
 
         this.AddTR();
@@ -891,10 +975,19 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         tb.ID = "TB_DT";
         System.DateTime dtNow = System.DateTime.Now;
         dtNow = dtNow.AddDays(14);
-        tb.Text = dtNow.ToString(DataType.SysDataTimeFormat );
+        tb.Text = dtNow.ToString(DataType.SysDataTimeFormat);
         tb.ShowType = TBType.DateTime;
         tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
         this.AddTD(tb);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("授权方式:");
+        DDL ddl = new DDL();
+        ddl.ID = "DDL_AuthorWay";
+        ddl.BindSysEnum(BP.WF.Port.WFEmpAttr.AuthorWay);
+        ddl.SetSelectItem(emp.AuthorWay);
+        this.AddTD(ddl);
         this.AddTREnd();
 
         Button btnSaveIt = new Button();
@@ -902,13 +995,14 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         btnSaveIt.Text = "Save";
         btnSaveIt.Click += new EventHandler(btnSaveIt_Click);
         this.AddTR();
-        this.AddTD("colspan=2", btnSaveIt);
+        this.AddTD("colspan=1", "<b><a href=\"javascript:WinShowModalDialog('ToolsSet.aspx?RefNo=AthFlows&d=" + DateTime.Now.ToString() + "')\" >设置要授权的流程范围</a></b>");
+        this.AddTD("colspan=1", btnSaveIt);
         this.AddTREnd();
 
         this.AddTR();
         this.AddTDBigDoc("colspan=2", "说明:在您确定了收回授权日期后，被授权人不能再以您的身份登陆，<br>如果未到指定的日期您可以取回授权。");
         this.AddTREnd();
-        this.AddTableEnd();
+        this.AddTableEndWithBR();
         this.AddFieldSetEnd();
     }
     void btnSaveIt_Click(object sender, EventArgs e)
@@ -917,9 +1011,14 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         emp.AuthorDate = BP.DA.DataType.CurrentData;
         emp.Author = this.Request["FK_Emp"];
         emp.AuthorToDate = this.GetTBByID("TB_DT").Text;
-        emp.AuthorIsOK = true;
+        emp.AuthorWay = this.GetDDLByID("DDL_AuthorWay").SelectedItemIntVal;
+        if (emp.AuthorWay == 2 && emp.AuthorFlows.Length < 3)
+        {
+            this.Alert("您指定授权方式是按指定的流程范围授权，但是您没有指定流程的授权范围.");
+            return;
+        }
         emp.Update();
-        this.Response.Redirect( this.PageID+ ".aspx", true);
+        this.Response.Redirect(this.PageID + ".aspx", true);
     }
     public void BindPer()
     {
@@ -960,17 +1059,20 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddBR();
 
         BP.WF.Port.WFEmp au = new BP.WF.Port.WFEmp(WebUser.No);
-        if (au.RetrieveFromDBSources() == 0 || au.AuthorIsOK == false)
-        {
-            this.Add(this.ToE("To1", "授权情况：未授权") + " - <a href='"+this.PageID+".aspx?RefNo=Auto' >" + this.ToE("To2", "执行授权") + "</a>。");
-        }
+       // this.Add(au.AuthorIsOK.ToString());
+        if (au.AuthorIsOK == false)
+            this.Add(this.ToE("To1", "授权情况：未授权") + " - <a href='" + this.PageID + ".aspx?RefNo=Auto' >" + this.ToE("To2", "执行授权") + "</a>。");
         else
         {
-            this.Add(this.ToE("To11", "授权情况：授权给") + "：<font color=green>" + au.Author + "</font>，" + this.ToE("Date", "授权日期") + " : <font color=green>" + au.AuthorDate + "</font>，收回授权日期： <font color=green>" + au.AuthorToDate + "</font>。<br>我要<a href=\"javascript:TakeBack('" + au.Author + "')\" >" + this.ToE("CelAu", "取消授权") + "</a>");
+            string way = "";
+            if (au.AuthorWay == 1)
+                way = "全部授权";
+            else
+                way = "指定流程范围授权";
+            this.Add("授权情况：授权给：<font color=green>" + au.Author + "</font>，" + this.ToE("Date", "授权日期") + " : <font color=green>" + au.AuthorDate + "</font>，收回授权日期:<font color=green>" + au.AuthorToDate + "</font>。<br>我要:<a href=\"javascript:TakeBack('" + au.Author + "')\" >" + this.ToE("CelAu", "取消授权") + "</a>；授权方式：<font color=green>" + way + "</font>，<a href=\""+this.PageID+".aspx?RefNo=AutoDtl&FK_Emp="+au.Author+"\">我要修改授权信息</a>。");
         }
 
-
-        this.Add("   我要<a href='" + this.PageID + ".aspx?RefNo=Pass'>" + this.ToE("ChangePass", "修改密码") + "</a>");
+        this.Add("&nbsp;我要:<a href='" + this.PageID + ".aspx?RefNo=Pass'>" + this.ToE("ChangePass", "修改密码") + "</a>");
 
         this.AddBR("<hr><b>" + this.ToE("InfoAlert", "信息提示") + "：</b><a href='" + this.PageID + ".aspx?RefNo=Profile'>" + this.ToE("Edit", "设置/修改") + "</a>");
         this.Add("<br>" + this.ToE("ToAlert1", "接受短消息提醒手机号") + " : <font color=green>" + au.TelHtml + "</font>");

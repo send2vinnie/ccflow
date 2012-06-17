@@ -312,7 +312,8 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.AddTDTitle("人员");
         this.AddTDTitle("活动");
         this.AddTDTitle("信息");
-        this.AddTDTitle("日志");
+        this.AddTDTitle("表单");
+        this.AddTDTitle("执行人");
         this.AddTREnd();
 
         Tracks tks = new Tracks();
@@ -358,7 +359,8 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTD(item.HisActionTypeT);
             this.AddTD(item.MsgHtml);
 
-            this.AddTD("<a href=\"javascript:WinOpen('" + this.Request.ApplicationPath + "/WF/WFRpt.aspx?WorkID="+item.WorkID+"&FK_Flow="+item.FK_Flow+"&DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">日志</a>");
+            this.AddTD("<a href=\"javascript:WinOpen('" + this.Request.ApplicationPath + "/WF/WFRpt.aspx?WorkID=" + item.WorkID + "&FK_Flow=" + item.FK_Flow + "&DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">表单</a>");
+            this.AddTD(item.Exer);
             this.AddTREnd();
         }
         this.AddTableEnd();
