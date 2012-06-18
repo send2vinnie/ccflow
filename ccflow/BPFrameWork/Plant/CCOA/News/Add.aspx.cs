@@ -82,6 +82,19 @@ namespace Lizard.OA.Web.OA_News
             //DateTime UpDT = XTool.Now();
             string UpUser = BP.Web.WebUser.No;
             bool Status = true;
+            string AccessType = this.hfAccessType.Value;
+            if (AccessType=="dept")
+            {
+                AccessType = "部门";
+            }
+            if (AccessType == "user")
+            {
+                AccessType = "用户";
+            }
+            if (AccessType == "role")
+            {
+                AccessType = "角色";
+            }
 
             BP.CCOA.OA_News model = new BP.CCOA.OA_News();
             model.No = NewsId;
@@ -96,6 +109,7 @@ namespace Lizard.OA.Web.OA_News
             model.UpDT = XTool.Now();
             model.UpUser = UpUser;
             model.Status = Status ? 1 : 0;
+            model.AccessType = AccessType;
             model.Insert();
 
             string selectIds = hfSelects.Value;

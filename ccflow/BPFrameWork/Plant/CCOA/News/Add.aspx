@@ -56,6 +56,8 @@
             else {
                 dataUrl = "../CCOA/Common/ListSelect.aspx?type=" + arg;
             }
+            var hfAccessType = $("#hfSelects");
+            hfAccessType.val(arg);
 
             mini.openTop({
                 url: dataUrl,
@@ -123,6 +125,7 @@
                                 角色</a> <a href="#" onclick="onSelect('emp')">人员</a><br />
                             <lizard:XTextBox ID="xtxtReader" runat="server" Width="400px" Height="40px" />
                             <asp:HiddenField ID="hfSelects" runat="server" />
+                            <asp:HiddenField ID="hfAccessType" runat="server" />
                         </td>
                     </tr>
                     <tr>
