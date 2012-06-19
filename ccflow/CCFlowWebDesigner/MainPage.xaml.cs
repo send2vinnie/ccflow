@@ -45,9 +45,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         private List<ToolbarButton> ToolBarButtonList = new List<ToolbarButton>();
         private const string ToolBarEnableIsFlowSensitived = "EnableIsFlowSensitived";
-
-        private FrmShareFlow frmShareFlow;
-        WF.CYFtpClient.CYFtpSoapClient ftpClient = null;
         #endregion
 
         #region 属性
@@ -94,8 +91,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public MainPage()
         {
             InitializeComponent();
-            ftpClient = Glo.GetFtpServiceInstance();
-
             adminLogin.Closed += new EventHandler(frmlogin_Closed);
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
@@ -699,125 +694,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 MessageBox.Show("请先打开流程图");
                 return;
             }
-
-            if (string.IsNullOrEmpty(flowShareRoot))
-            {
-                ftpClient.GetFlowShareRootCompleted += GetFlowShareRoot_Completed;
-                ftpClient.GetFlowShareRootAsync();
-            }
-            else
-            {
-                GetFlowShareRoot_Completed(null, null);
-            }
         }
-
-        private void GetFlowShareRoot_Completed(object sender, GetFlowShareRootCompletedEventArgs e)
-        {
-            ftpClient.GetFlowShareRootCompleted -= GetFlowShareRoot_Completed;
-            if (string.IsNullOrEmpty(flowShareRoot) && e != null)
-            {
-                flowShareRoot = e.Result;
-            }
-
-            if (SessionManager.Session.ContainsKey("user"))
-            {
-                FrmTemNote temNote = new FrmTemNote();
-                temNote.Closed += (sender2, e2) =>
-                {
-                    temDes = temNote.TemDescription;
-                    ShareFlow_Start(flowShareRoot);
-                };
-                temNote.Show();
-            }
-            else
-            {
-                FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
-                loginTemLib.Closed += (sender1, e1) =>
-                {
-                    if (loginTemLib.LoginSuccess)
-                    {
-                        FrmTemNote temNote = new FrmTemNote();
-                        temNote.Closed += (sender2, e2) =>
-                        {
-                            temDes = temNote.TemDescription;
-                            ShareFlow_Start(flowShareRoot);
-                        };
-                        temNote.Show();
-                    }
-                };
-                loginTemLib.Show();
-            }
-        }
-
-        /// <summary>
-        /// 上传工作流
-        /// </summary>
-        /// <param name="path"></param>
-        private void ShareFlow_Start(string path)
-        {
-            loadingWin(true);
-            ElementToPNG eleToPng = new ElementToPNG();
-
-            bitmap_str = StringHandler.ToString(eleToPng.GetPNGStream(tbDesigner.SelectedContent as UIElement));
-            if (bitmap_str.Length > bitmap_part_length)
-            {
-                bitmap_part = bitmap_str.Substring(0, bitmap_part_length);
-                bitmap_str = bitmap_str.Substring(bitmap_part_length);
-            }
-            else
-            {
-                bitmap_part = bitmap_str;
-                bitmap_str = "";
-            }
-            ftpClient.SaveFlowBitmapCompleted += SaveFlowBitmap_Completed;
-
-            ftpClient.SaveFlowBitmapAsync(SelectedContainer.FlowID, bitmap_part, false);
-        }
-
-        /// <summary>
-        /// 保存流程模板图片
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SaveFlowBitmap_Completed(object sender, SaveFlowBitmapCompletedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(bitmap_str))
-            {
-                if (bitmap_str.Length > bitmap_part_length)
-                {
-                    bitmap_part = bitmap_str.Substring(0, bitmap_part_length);
-                    bitmap_str = bitmap_str.Substring(bitmap_part_length);
-                }
-                else
-                {
-                    bitmap_part = bitmap_str;
-                    bitmap_str = "";
-                }
-
-                ftpClient.SaveFlowBitmapAsync(SelectedContainer.FlowID, bitmap_part, true);
-            }
-            else//保存流程模板图片完成,开始上传模板
-            {
-                ftpClient.SaveFlowBitmapCompleted -= SaveFlowBitmap_Completed;
-
-                ftpClient.UploadFlowCompleted += UploadFlow_Completed;
-                ftpClient.UploadFlowAsync(SelectedContainer.FlowID, flowShareRoot, temDes);
-            }
-        }
-
-        /// <summary>
-        /// 上传流程模板完成
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UploadFlow_Completed(object sender, UploadFlowCompletedEventArgs e)
-        {
-            ftpClient.UploadFlowCompleted -= UploadFlow_Completed;
-            loadingWin(false);
-
-            MessageBox.Show("模板共享成功！");
-        }
-
         #endregion
 
         public string CurrFK_FrmSort = "01";
@@ -1501,23 +1378,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
                 case "Btn_ToolBarShareModel":
                     {
-                        if (SessionManager.Session.ContainsKey("user"))
-                        {
-                            ShowTemplateLib();
-                        }
-                        else
-                        {
-                            FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
-                            loginTemLib.Closed += (sender1, e1) =>
-                            {
-                                if (loginTemLib.LoginSuccess)
-                                {
-                                    ShowTemplateLib();
-                                }
-                            };
-                            loginTemLib.Show();
-                        }
-
+                       
                         break;
                     }
                 case "Btn_ToolBarLoadModel":
@@ -1538,37 +1399,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
-
-        /// <summary>
-        /// 显示模板库
-        /// </summary>
-        private void ShowTemplateLib()
-        {
-            frmShareFlow = new FrmShareFlow();
-            frmShareFlow.FlowID = SelectedContainer.FlowID;
-            frmShareFlow.fileView.FlowTempleteLoadCompeleted += (sender1, eArgs) =>
-            {
-                try
-                {
-                    var result = eArgs.Result.Split(',');
-                    // 返回值的格式为FlowSortID,FlowId,FlowName  
-                    if (3 != result.Length)
-                    {
-                        MessageBox.Show(eArgs.Result, "错误", MessageBoxButton.OK);
-                        return;
-                    }
-
-                    this.BindFlowAndFlowSort();
-                    OpenFlow(result[0], result[1], result[2]);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "错误", MessageBoxButton.OK);
-                }
-            };
-            frmShareFlow.Show();
-        }
-
         #endregion
 
         /// <summary>
