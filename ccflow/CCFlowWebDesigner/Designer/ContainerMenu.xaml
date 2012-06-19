@@ -71,8 +71,8 @@
                 <liquidMenu:MenuItem ID="menuCheckFlow" Text="检查流程" Icon="../Images/MenuItem/Check.png"  />
                 <liquidMenu:MenuItem ID="menuFlowDefination" Text="流程报表定义" Icon="../Images/MenuItem/Report.png"/>
                 <liquidMenu:MenuDivider />
-                <liquidMenu:MenuItem ID="menuDelete" Text="删除选择项" Icon="../Images/MenuItem/Delete.png" />
-                <liquidMenu:MenuDivider />
+                <!--<liquidMenu:MenuItem ID="menuDelete" Text="删除选择项" Icon="../Images/MenuItem/Delete.png" />
+                <liquidMenu:MenuDivider />-->
                 <!--<liquidMenu:MenuItem ID="menuExp" Text="导出/共享:流程模板"  Icon="../Images/MenuItem/Download.png"  />
                 <liquidMenu:MenuItem ID="menuImp" Text="导入/查找:流程模板"  Icon="../Images/MenuItem/Upload.png"  />-->
                 

@@ -20,7 +20,6 @@ namespace WF.Controls
     public partial class FrmNewFlow : ChildWindow
     {
         #region Private Variables
-        WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
         private LoadingWindow loadingWindow = new LoadingWindow();
         OpenFileDialog dialog = new OpenFileDialog();
         private byte[] buffer;
@@ -47,9 +46,48 @@ namespace WF.Controls
         public FrmNewFlow()
         {
             InitializeComponent();
-            _service.DoAsync("GetFlows", string.Empty, true);
-            _service.DoCompleted += _service_GetFlowsCompleted;
-        } 
+
+            WSDesignerSoapClient  da= Glo.GetDesignerServiceInstance();
+            da.RunSQLReturnTableAsync("SELECT no,name FROM WF_FlowSort ");
+            da.RunSQLReturnTableCompleted += new EventHandler<RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
+        }
+        void da_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
+        {
+            DataSet ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            // 得到默认的流程类别
+            int defaultFlowSort = 0;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                if (ds.Tables[0].Rows[i]["name"] == CurrentFlowSortName)
+                {
+                    defaultFlowSort = i;
+                }
+            }
+
+            DataTable dt=ds.Tables[0];
+
+            //foreach (DataRow dr in  dt.Rows)
+            //{
+            //    ListBoxItem lb =new ListBoxItem();
+            //    lb.Name =dr["Name"].ToString();
+            //    lb. =dr["No"];
+            //    cbxFlowSortImport.Items.Add(
+            //}
+
+            IList list = ds.Tables[0].GetBindableData(new Connector());
+            if (list.Count > 0)
+            {
+                cbxFlowSortImport.ItemsSource = list;
+                cbxFlowSortImport.DisplayMemberPath = "name";
+                cbxFlowSortImport.SelectedIndex = defaultFlowSort;
+
+                cbxFlowSortStandard.ItemsSource = list;
+                cbxFlowSortStandard.DisplayMemberPath = "name";
+                cbxFlowSortStandard.SelectedIndex = defaultFlowSort;
+            }
+        }
         #endregion
 
 
@@ -87,8 +125,10 @@ namespace WF.Controls
                 try
                 {
                     loadingWindow.Show();
-                    _service.UploadfileAsync(buffer, file.Name);
-                    _service.UploadfileCompleted += _Service_UploadfileCompleted;
+
+                    WSDesignerSoapClient daUpload = Glo.GetDesignerServiceInstance();
+                    daUpload.UploadfileAsync(buffer, file.Name);
+                    daUpload.UploadfileCompleted += _Service_UploadfileCompleted;
 
                     this.DialogResult = true;
                 }
@@ -127,39 +167,6 @@ namespace WF.Controls
                 MessageBox.Show("请选择文件！", "提示", MessageBoxButton.OK);
             }
         }
-
-        void _service_GetFlowsCompleted(object sender, DoCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            // 得到默认的流程类别
-            int defaultFlowSort = 0;
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
-                if(ds.Tables[0].Rows[i]["NAME"] == CurrentFlowSortName)
-                {
-                    defaultFlowSort = i;
-                }
-            }
-
-            IList list = ds.Tables[0].GetBindableData(new Connector());
-
-            if (list.Count > 0)
-            {
-                cbxFlowSortImport.ItemsSource = list;
-                cbxFlowSortImport.DisplayMemberPath = "NAME";
-                cbxFlowSortImport.SelectedIndex = defaultFlowSort;
-
-                cbxFlowSortStandard.ItemsSource = list;
-                cbxFlowSortStandard.DisplayMemberPath = "NAME";
-                cbxFlowSortStandard.SelectedIndex = defaultFlowSort;
-            }
-
-            _service.DoCompleted -= _service_GetFlowsCompleted;
-
-        }
-        
         void _Service_UploadfileCompleted(object sender, UploadfileCompletedEventArgs e)
         {
             if (e.Result.Contains("Error:"))
@@ -168,9 +175,11 @@ namespace WF.Controls
                 MessageBox.Show(e.Result, "Error", MessageBoxButton.OK);
                 return;
             }
-            _service.FlowTemplete_LoadCompleted += _service_FlowTemplete_LoadCompleted;
-            _service.FlowTemplete_LoadAsync((cbxFlowSortImport.SelectedItem as BindableObject).GetValue("NO"), e.Result, true);
 
+            WSDesignerSoapClient daLoadIt = Glo.GetDesignerServiceInstance();
+            daLoadIt.FlowTemplete_LoadAsync((cbxFlowSortImport.SelectedItem as BindableObject).GetValue("NO"),
+                e.Result, true);
+            daLoadIt.FlowTemplete_LoadCompleted += _service_FlowTemplete_LoadCompleted;
         }
 
         void _service_FlowTemplete_LoadCompleted(object sender, FlowTemplete_LoadCompletedEventArgs e)
