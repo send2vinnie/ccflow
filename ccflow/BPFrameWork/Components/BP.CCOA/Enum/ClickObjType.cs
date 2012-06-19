@@ -9,6 +9,7 @@ namespace BP.CCOA.Enum
     {
         News = 0,
         Notice = 1,
-        Email = 2
+        Email = 2,
+        Message = 3
     }
 }

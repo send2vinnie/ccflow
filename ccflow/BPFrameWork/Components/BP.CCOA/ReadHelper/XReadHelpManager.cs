@@ -18,6 +18,8 @@ namespace BP.CCOA
                     return new XNewsReadHelper();
                 case ClickObjType.Notice:
                     return new XNoticeReadHelper();
+                case ClickObjType.Message:
+                    return new XMessageReadHelper();
                 default:
                     throw new Exception(objType.ToString() + "尚未实现查询方法！");
             }

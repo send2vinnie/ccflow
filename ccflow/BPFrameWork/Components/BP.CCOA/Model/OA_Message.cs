@@ -13,9 +13,11 @@ namespace BP.CCOA
         public const string MeaageType = "MeaageType";
         public const string Author = "Author";
         public const string MessageName = "MessageName";
+        public const string MessageContent = "MessageContent";
         public const string CreateTime = "CreateTime";
         public const string UpDT = "UpDT";
         public const string Status = "Status";
+        public const string AccessType = "AccessType";
     }
 
     public partial class OA_Message : EntityNoName
@@ -85,6 +87,21 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
+        public String MessageContent
+        {
+            get
+            {
+                return this.GetValStringByKey(OA_MessageAttr.MessageContent);
+            }
+            set
+            {
+                this.SetValByKey(OA_MessageAttr.MessageContent, value);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime CreateTime
         {
             get
@@ -127,6 +144,22 @@ namespace BP.CCOA
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public String AccessType
+        {
+            get
+            {
+                return this.GetValStringByKey(OA_MessageAttr.AccessType);
+            }
+            set
+            {
+                this.SetValByKey(OA_MessageAttr.AccessType, value);
+            }
+        }
+
+
         #endregion
 
         #region 构造方法
@@ -164,10 +197,11 @@ namespace BP.CCOA
                 map.AddTBString(OA_MessageAttr.MeaageType, null, "消息类型", true, false, 0, 50, 50);
                 map.AddTBString(OA_MessageAttr.Author, null, "发布人", true, false, 0, 50, 50);
                 map.AddTBString(OA_MessageAttr.MessageName, null, "", true, false, 0, 100, 100);
+                map.AddTBString(OA_MessageAttr.MessageContent, null, "", true, false, 0, 500, 500);
                 map.AddTBString(OA_MessageAttr.CreateTime, null, "", true, false, 0, 50, 50);
                 map.AddTBString(OA_MessageAttr.UpDT, null, "", true, false, 0, 50, 50);
                 map.AddTBInt(OA_MessageAttr.Status, 0, "", true, false);
-
+                map.AddTBString(OA_MessageAttr.AccessType, null, "", true, false, 0, 50, 50);
                 this._enMap = map;
                 return this._enMap;
             }

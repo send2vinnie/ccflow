@@ -74,6 +74,7 @@
     <Compile Include="Interface\IClick.cs" />
     <Compile Include="Model\OA_ClickRecords.cs" />
     <Compile Include="Model\OA_EmailAuth.cs" />
+    <Compile Include="Model\OA_MessageAuth.cs" />
     <Compile Include="Model\OA_NewsAuth.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Model\APP_ChangeLog.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Model\Extend\OA_TodoWork.cs" />
     <Compile Include="ProcessObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadHelper\XMessageReadHelper.cs" />
     <Compile Include="SSOCustomerModule.cs" />
     <Compile Include="SSOModule.cs" />
     <Compile Include="Utility\ArticleHelper.cs" />
