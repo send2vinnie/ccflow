@@ -603,6 +603,7 @@ namespace BP.WF
             geRpt.SetValByKey("FK_NY", DataType.CurrentYearMonth);
 
             string emps = "";
+
             WorkerLists wlss = new WorkerLists();
             QueryObject qo = new QueryObject(wlss);
 
@@ -688,6 +689,9 @@ namespace BP.WF
             WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
             wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
                 "执行流程结束");
+
+          
+
             return msg;
         }
         /// <summary>

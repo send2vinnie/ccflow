@@ -11,11 +11,52 @@ using BP.Sys;
 using BP.DA;
 using BP.En;
 using BP;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BP.WF
 {
     public class Glo
     {
+        /// <summary>
+        /// 加密MD5
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string GenerMD5(BP.WF.Work wk)
+        {
+            string s = null;
+            foreach (Attr attr in wk.EnMap.Attrs)
+            {
+                switch (attr.Key)
+                {
+                    case WorkAttr.MD5:
+                    case WorkAttr.RDT:
+                    case WorkAttr.CDT:
+                    case WorkAttr.Rec:
+                    case WorkAttr.Sender:
+                        continue;
+                    default:
+                        break;
+                }
+
+                string obj = attr.DefaultVal as string;
+                if (obj == null)
+                    continue;
+                if (obj.Contains("@"))
+                    continue;
+
+                s += wk.GetValStrByKey(attr.Key);
+            }
+            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5").ToLower();
+
+            //MD5 md5 = new MD5CryptoServiceProvider();'
+            //return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5").ToLower().Substring(8, 16);
+
+            //byte[] result = md5.ComputeHash(System.Text.Encoding.Default.GetBytes(s));
+            //string mys= System.Text.Encoding.Default.GetString(result);
+            //return mys;
+        }
         /// <summary>
         /// 装载流程数据 
         /// </summary>
@@ -78,7 +119,6 @@ namespace BP.WF
                 Work wk = fl.NewWork();
 
                 Attrs attrs = wk.EnMap.Attrs;
-
                 //foreach (Attr attr in wk.EnMap.Attrs)
                 //{
                 //}

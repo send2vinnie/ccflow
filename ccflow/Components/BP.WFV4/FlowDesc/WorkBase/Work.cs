@@ -70,6 +70,10 @@ namespace BP.WF
         /// MyNum
         /// </summary>
         public const string MyNum = "MyNum";
+        /// <summary>
+        /// MD5
+        /// </summary>
+        public const string MD5 = "MD5";
         #endregion
     }
     /// <summary>
@@ -79,21 +83,16 @@ namespace BP.WF
     abstract public class Work : Entity
     {
         /// <summary>
-        /// md5
+        /// 检查MD5值是否通过
         /// </summary>
-        /// <returns></returns>
-        public string GenerHisMD5()
+        /// <returns>true/false</returns>
+        public bool IsPassCheckMD5()
         {
-            string str = "";
-            foreach (Attr attr in this.EnMap.Attrs)
-            {
-
-                object o = attr.DefaultVal;
-
-
-                 
-            }
-            return null;
+            string md51 = this.GetValStrByKey(WorkAttr.MD5);
+            string md52 = Glo.GenerMD5(this);
+            if (md51 != md52)
+                return false;
+            return true;
         }
 
         #region 基本属性(必须的属性)

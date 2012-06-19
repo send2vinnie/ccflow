@@ -1589,6 +1589,11 @@ namespace BP.WF
             this.HisWork.NodeState = NodeState.Complete;
             this.HisWork.SetValByKey("CDT", DataType.CurrentDataTime);
             this.HisWork.Rec = Web.WebUser.No;
+
+            //判断是不是MD5流程？
+            if (this.HisFlow.IsMD5)
+                this.HisWork.SetValByKey("MD5", Glo.GenerMD5(this.HisWork));
+
             this.HisWork.DirectUpdate();
 
             // 清除其他的工作者.
@@ -2455,6 +2460,11 @@ namespace BP.WF
                         mywk.Rec = wl.FK_Emp;
                         mywk.Emps = wl.FK_Emp;
                         mywk.BeforeSave();
+
+                        //判断是不是MD5流程？
+                        if (this.HisFlow.IsMD5)
+                            mywk.SetValByKey("MD5", Glo.GenerMD5(mywk));
+
                         mywk.InsertAsOID(mywk.OID);
 
                         #region  复制附件信息
@@ -4441,6 +4451,10 @@ namespace BP.WF
                 wk.Rec = BP.Web.WebUser.No;
                 try
                 {
+                    //判断是不是MD5流程？
+                    if (this.HisFlow.IsMD5)
+                        wk.SetValByKey("MD5", Glo.GenerMD5(wk));
+
                     wk.Insert();
                 }
                 catch (Exception ex)

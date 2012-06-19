@@ -1177,13 +1177,18 @@ namespace BP.WF
             }
             #endregion
 
-            #region 检查焦点字段设置是否还有效.
+            #region 检查焦点字段设置是否还有效
             foreach (Node nd in nds)
             {
                 if (nd.FocusField.Trim() == "")
                     continue;
                 if (nd.HisWork.EnMap.Attrs.Contains(nd.FocusField) == false)
                     msg += "<font color=red><br>@焦点字段（" + nd.FocusField + "）在节点(step:" + nd.Step + " 名称:" + nd.Name + ")属性里的设置已无效，表单里不存在该字段。</font>";
+                if (this.IsMD5)
+                {
+                    if (nd.HisWork.EnMap.Attrs.Contains(WorkAttr.MD5) == false)
+                        nd.RepareMap();
+                }
             }
             #endregion
 

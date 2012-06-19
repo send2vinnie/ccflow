@@ -2988,6 +2988,28 @@ namespace BP.WF
                 attr.Insert();
             }
 
+            if (this.HisFlow.IsMD5
+                && attr.IsExit(MapAttrAttr.KeyOfEn, WorkAttr.MD5, MapAttrAttr.FK_MapData, md.No) == false)
+            {
+                /* 如果是MD5加密流程. */
+                attr = new BP.Sys.MapAttr();
+                attr.FK_MapData = md.No;
+                attr.HisEditType = BP.En.EditType.UnDel;
+                attr.KeyOfEn = StartWorkAttr.MD5;
+                attr.UIBindKey = attr.KeyOfEn;
+                attr.Name = "MD5";
+                attr.MyDataType = BP.DA.DataType.AppString;
+                attr.UIContralType = UIContralType.TB;
+                attr.LGType = FieldTypeS.Normal;
+                attr.UIIsEnable = false;
+                attr.UIIsLine = false;
+                attr.UIVisible = false;
+                attr.MinLen = 0;
+                attr.MaxLen = 40;
+                attr.IDX = -100;
+                attr.Insert();
+            }
+
             if (this.NodePosType == NodePosType.Start)
             {
                 //开始节点信息 

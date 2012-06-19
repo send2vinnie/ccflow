@@ -903,7 +903,24 @@ namespace BP.Web.UC
         {
             return (ImageButton)this.FindControl(key);
         }
-        
+        public void EnableAllBtn(bool isEnable)
+        {
+            foreach (System.Web.UI.Control c  in this.Controls)
+            {
+                Btn btn = c as Btn;
+                if (btn != null)
+                {
+                    btn.Enabled = isEnable;
+                    continue;
+                }
+                Button myBtn = c as Button;
+                if (myBtn != null)
+                {
+                    myBtn.Enabled = isEnable;
+                    continue;
+                }
+            }
+        }
         public Btn GetBtnByID(string key)
         {
             return (Btn)this.FindControl(key);
