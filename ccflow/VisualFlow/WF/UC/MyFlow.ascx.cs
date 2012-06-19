@@ -670,9 +670,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// </summary>
     public void BindWork(BP.WF.Node nd, Work wk)
     {
-        if (nd.HisFlow.IsMD5)
+        if (nd.HisFlow.IsMD5 && nd.IsStartNode == false && wk.IsPassCheckMD5() == false)
         {
-            this.UCEn1.AddMsgOfWarning("错误","数据已经被非法篡改，请通知管理员解决问题。");
+            this.UCEn1.AddMsgOfWarning("错误", "数据已经被非法篡改，请通知管理员解决问题。");
+            this.ToolBar1.EnableAllBtn(false);
+            this.ToolBar1.Clear();
             return;
         }
 

@@ -859,19 +859,15 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                 sql = "SELECT a.No + a.Name as Empstr,AuthorDate, a.No ,AuthorToDate FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorWay >= 1";
                 break;
         }
-        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
+        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
         {
             if (WebUser.IsWap)
             {
                 this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("ChangPass", "密码修改"));
-
                 this.AddBR();
-
                 this.AddMsgGreen(this.ToE("Note", "提示"), this.ToE("To6", "没有同事授权给您，您不能使用授权方式登陆。"));
-
-
                 this.AddFieldSetEnd();
             }
             else

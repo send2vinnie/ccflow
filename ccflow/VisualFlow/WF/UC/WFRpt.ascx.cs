@@ -150,6 +150,14 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             return;
         }
 
+        if (nd.HisFlow.IsMD5 && wk.IsPassCheckMD5()==false)
+        {
+            this.UCEn1.AddFieldSet("打开(" + nd.Name + ")错误");
+            this.UCEn1.AddH1("当前的节点数据已经被篡改，请报告管理员。");
+            this.UCEn1.AddFieldSetEnd();
+            return;
+        }
+
         this.UCEn1.IsReadonly = true;
         Frms frms = nd.HisFrms;
         if (frms.Count == 0)
