@@ -135,33 +135,6 @@
     <Compile Include="Controls\FrmRegTemLib.xaml.cs">
       <DependentUpon>FrmRegTemLib.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FtpFlow\DirNavBar.xaml.cs">
-      <DependentUpon>DirNavBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\DirNavBarItem.xaml.cs">
-      <DependentUpon>DirNavBarItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\FlowFileItem.xaml.cs">
-      <DependentUpon>FlowFileItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\FrmFlowPreview.xaml.cs">
-      <DependentUpon>FrmFlowPreview.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\FrmSelectFlowType.xaml.cs">
-      <DependentUpon>FrmSelectFlowType.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\FrmShareFlow.xaml.cs">
-      <DependentUpon>FrmShareFlow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\FrmTemNote.xaml.cs">
-      <DependentUpon>FrmTemNote.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\FtpFileView.xaml.cs">
-      <DependentUpon>FtpFileView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FtpFlow\FtpFolderView.xaml.cs">
-      <DependentUpon>FtpFolderView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
@@ -381,42 +354,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\FrmRegTemLib.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\DirNavBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\DirNavBarItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\FlowFileItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\FrmFlowPreview.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\FrmSelectFlowType.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\FrmShareFlow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\FrmTemNote.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\FtpFileView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FtpFlow\FtpFolderView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -644,9 +581,9 @@
     <Folder Include="Images\Logo\SQ\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Components\BP.SL.CY\BP.SL.CY.csproj">
-      <Project>{5F87398E-1346-48AB-9735-8D8B1BD0DC89}</Project>
-      <Name>BP.SL.CY</Name>
+    <ProjectReference Include="..\Components\BP.SL\BP.SL.csproj">
+      <Project>{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}</Project>
+      <Name>BP.SL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

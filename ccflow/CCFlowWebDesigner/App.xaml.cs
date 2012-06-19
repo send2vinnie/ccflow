@@ -114,15 +114,25 @@ namespace BP
         /// <returns></returns>
         private string GetHostUrl()
         {
-            var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
-            var hrefObject = location.GetProperty("href");
-            string url = hrefObject.ToString();
-            string[] strs = url.Split('/');
+            try
+            {
+                var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
+                var hrefObject = location.GetProperty("href");
+                string url = hrefObject.ToString();
+                string[] strs = url.Split('/');
 
-            if (strs[3].ToLower().Contains("flow") == false)
-                throw new Exception("@您没有把ccflow安装在虚拟目录上，导致无法工作。请参考安装常见问题与安装步骤，位于D:\\ccflow\\Documents。");
+                if (strs[3].ToLower().Contains("flow") == false)
+                    throw new Exception("@您没有把ccflow安装在虚拟目录上，导致无法工作。请参考安装常见问题与安装步骤，位于D:\\ccflow\\Documents。");
 
-            return strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
+                return strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("1，必须放在80端口下。\t\n2、必须建立应用程序虚拟目录ccflow。\t\n3、如果http://localhost/ccflow/WF/Login.aspx 可以运行就说明你的安装没有问题。\t\n4，请仔细检查安装步骤，免得在碰鼻子。",
+                    "安装步骤错误", MessageBoxButton.OK);
+                throw ex;
+            }
+
             //string url = hrefObject.ToString().Substring(0, hrefObject.ToString().IndexOf("Flow/") + 5);
             //return url;
         }
