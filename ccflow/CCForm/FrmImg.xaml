@@ -3,7 +3,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            Width="403" Height="341" 
-           Title="FrmImg" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+           Title="此功能在开发过程中" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <Grid x:Name="LayoutRoot" Margin="2" Height="293">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -17,7 +17,7 @@
         <Button Content="浏览..." Height="23" HorizontalAlignment="Right" Margin="0,34,36,0" Name="Btn_B" VerticalAlignment="Top" Width="75" />
         <sdk:Label Height="55" HorizontalAlignment="Left" Margin="41,61,0,0" Name="label2" VerticalAlignment="Top" Width="304"
                    Content="帮助: 
- 1，系统仅支持png格式的文件，非png格式的文件请转换后上传。
+ 1，系统仅支持png格式的文件，非png格式的文件请转换后上传。\n
  2，改变图片的高度与宽度，请使用shift+方向键。" />
         <sdk:Label Height="18" HorizontalAlignment="Left" Margin="40,147,0,0" Name="label3" VerticalAlignment="Top" Width="305" Content="图片连接到:(可以不填)" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="41,167,0,0" Name="TB_Url" VerticalAlignment="Top" Width="307" />
