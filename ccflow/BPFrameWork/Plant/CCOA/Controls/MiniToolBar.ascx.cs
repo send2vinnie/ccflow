@@ -74,8 +74,30 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
         //AddLinkButton("icon-download", "下载", AddUrl);
     }
 
-    public bool ShowAddBtn { get; set; }
-    public bool ShowDelBtn { get; set; }
+    private bool showAddBtn = true;
+    public bool ShowAddBtn
+    {
+        get
+        {
+            return showAddBtn;
+        }
+        set
+        {
+            showAddBtn = value;
+        }
+    }
+    private bool showDelBtn = true;
+    public bool ShowDelBtn
+    {
+        get
+        {
+            return showDelBtn;
+        }
+        set
+        {
+            showDelBtn = value;
+        }
+    }
 
     public void AddLinkButton(string icon, string name, string url)
     {
