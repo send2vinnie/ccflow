@@ -412,8 +412,8 @@ namespace BP.Web
                         sfDel.DirectDelete();
                         return null;
                     case "SaveSFTable":
-                        string enName = v1;
-                        string chName = v2;
+                        string enName = v2;
+                        string chName = v1;
                         if (string.IsNullOrEmpty(v1) || string.IsNullOrEmpty(v2))
                             return "视图中的中英文名称不能为空。";
 
