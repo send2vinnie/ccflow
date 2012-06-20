@@ -16,7 +16,7 @@
             <td class="tdbg">
                 <asp:TextBox ID="txtKeyword" runat="server"></asp:TextBox>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click"></asp:Button>
+                <lizard:XButton ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click"></lizard:XButton>
             </td>
             <td class="tdbg">
             </td>
@@ -57,7 +57,7 @@
             <td style="width: 1px;">
             </td>
             <td align="left">
-                <asp:Button ID="btnDelete" runat="server" Text="删除" OnClick="btnDelete_Click" />
+                <lizard:XButton ID="btnDelete" runat="server" Text="删除" OnClick="btnDelete_Click" />
             </td>
         </tr>
     </table>

@@ -13,11 +13,11 @@ public partial class CCOA_AddressBook_AddrBook : System.Web.UI.UserControl
 
     }
 
-    public AddrBooks AddrBooks
+    public OA_AddrBooks AddrBooks
     {
         get
         {
-            AddrBooks addrbooks = new AddrBooks();
+            OA_AddrBooks addrbooks = new OA_AddrBooks();
             addrbooks.RetrieveAllFromDBSource();
 
             return addrbooks;

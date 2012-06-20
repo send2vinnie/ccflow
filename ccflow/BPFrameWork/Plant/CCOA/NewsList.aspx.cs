@@ -10,7 +10,6 @@ public partial class EIP_NewsList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 
     public OA_Newss NewsList

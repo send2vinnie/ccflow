@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Lizard.Common;
-using BP.CCOA;
+using BP.EIP;
 public partial class Controls_XMenu : BaseUC
 {
     protected void Page_Load(object sender, EventArgs e)
@@ -35,12 +35,12 @@ public partial class Controls_XMenu : BaseUC
         }
     }
 
-    public List<EIP_Menu> GetChildList(string pid, List<EIP_Menu> LstMenu)
+    public List<Port_Menu> GetChildList(string pid, List<Port_Menu> LstMenu)
     {
         var result = from l in LstMenu
                      where l.Pid == pid
                      select l;
 
-        return result.ToList<EIP_Menu>();
+        return result.ToList<Port_Menu>();
     }
 }

@@ -86,7 +86,7 @@ public partial class CCOA_Email_Modify : BasePage
         string Addressee = this.txtAddressee.Text;
         string Content = this.txtContent.Text;
         string PriorityLevel = this.txtPriorityLevel.Text;
-        DateTime SendTime = DateTime.Parse(this.txtSendTime.Text);
+        string SendTime = this.txtSendTime.Text;
 
         BP.CCOA.OA_Email model = new BP.CCOA.OA_Email(EmailId);
        
@@ -96,7 +96,7 @@ public partial class CCOA_Email_Modify : BasePage
         model.Content = Content;
         model.PriorityLevel = PriorityLevel;
         model.SendTime = SendTime;
-        model.UpDT = DateTime.Now;
+        model.UpDT = XTool.Now();
 
         model.Update();
         Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "Inbox.aspx");

@@ -156,7 +156,19 @@
 {
     font-size: 18px;
     float: left;
-    list-style-type:none;
+    list-style-type: none;
+}
+
+.lizard-button
+{
+    background: url(images/button/button.gif) repeat-x 0px 50%;
+    border: solid 1px #b5afaf;
+    color: #222;
+}
+.lizard-button-hover
+{
+    background: #e2f2fe url(images/button/hover.gif) repeat-x 0px 50%;
+    border: solid 1px #80a4d0;
 }
 
 

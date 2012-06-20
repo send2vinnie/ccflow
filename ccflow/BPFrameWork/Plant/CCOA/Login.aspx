@@ -16,7 +16,7 @@
     <form id="form1" runat="server">
     <div id="loginBody" style="background: url('Images/login.jpg') no-repeat;">
         <div id="theme">
-            <div class="login">
+            <div class="login" style="position:absolute;">
                 <div style="height:24px;">
                     <asp:TextBox ID="txtUser" runat="server" CssClass="inputText" Width="223px" Height="14px"></asp:TextBox>
                 </div>

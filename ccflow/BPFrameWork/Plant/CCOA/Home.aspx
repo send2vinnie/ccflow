@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CCOA/WinOpen.master" AutoEventWireup="true"
     CodeFile="Home.aspx.cs" Inherits="CCOA_Home" %>
 
-<%@ Register Src="~/CCOA/Controls/Article_Newest.ascx" TagName="Article_Newest" TagPrefix="uc" %>
 <%@ Register Src="~/CCOA/Controls/Email.ascx" TagName="Email" TagPrefix="uc" %>
 <%@ Register Src="Controls/SystemAstrisk.ascx" TagName="SystemAstrisk" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
@@ -21,7 +20,7 @@
 
             portal = new mini.ux.Portal();
             portal.set({
-                style: "width: 100%;height:825px",
+                style: "width: 100%;height:625px",
                 columns: ["100%", 360]
             });
             portal.render(content);
@@ -111,7 +110,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
-    <div id="tabs1" class="mini-tabs" activeindex="0" style="width: 100%; height: 675px;">
+    <div id="tabs1" class="mini-tabs" activeindex="0" style="width: 100%; height: 595px;">
         <div title="工作台" iconcls="icon-add">
             <uc1:SystemAstrisk ID="SystemAstrisk1" runat="server" />
             <div id="content">

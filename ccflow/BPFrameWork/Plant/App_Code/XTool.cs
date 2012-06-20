@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Xml;
 
 /// <summary>
 ///XTool 的摘要说明
@@ -42,5 +43,20 @@ public static class XTool
         {
             return string.Empty;
         }
+    }
+
+    public static int GetListCount(string listType)
+    {
+        XmlDocument xml = new XmlDocument();
+        string path = HttpContext.Current.Request.ApplicationPath + "/CCOA/Config/desktop.xml";
+        xml.Load(path);
+
+        string nodeValue = xml.SelectSingleNode("/" + listType + "/count").Value.ToString();
+        if (!string.IsNullOrEmpty(nodeValue))
+        {
+            return int.Parse(nodeValue);
+        }
+
+        return 5;
     }
 }

@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         body
         {
@@ -141,9 +142,11 @@
                 </td>
             </tr>
             <tr>
-                <td style="text-align:center;" class="NoticeBottom" colspan="3">
-                    <input id="Button1" type="button" value="转发" />&nbsp;<input id="Button2" type="button"
-                        value="关闭" onclick="javascript:self.close()" />
+                <td style="text-align: center;" class="NoticeBottom" colspan="3">
+                    <input id="Button1" type="button" value="转发" class="lizard-button" onmouseover="this.className='lizard-button-hover'"
+                        onmouseout="this.className='lizard-button'" />&nbsp;<input id="Button2" type="button"
+                            value="关闭" onclick="javascript:self.close()" class="lizard-button" onmouseover="this.className='lizard-button-hover'"
+                            onmouseout="this.className='lizard-button'" />
                 </td>
             </tr>
         </table>

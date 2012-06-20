@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<list>
+  <news>
+    <count>10</count>
+  </news>
+  <notice>
+    <count>10</count>
+  </notice>
+  <email>
+    <count>10</count>
+  </email>
+</list>

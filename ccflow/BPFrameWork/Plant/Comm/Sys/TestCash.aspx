@@ -17,8 +17,8 @@
 				cellPadding="1" width="300" border="1">
 				<TR>
 					<TD>
-						<asp:Button id="Button1" runat="server" Text="Button" onclick="Button1_Click"></asp:Button>
-						<asp:Button id="Button2" runat="server" Text="Button" onclick="Button2_Click"></asp:Button></TD>
+						<lizard:XButton id="Button1" runat="server" Text="Button" onclick="Button1_Click"></lizard:XButton>
+						<lizard:XButton id="Button2" runat="server" Text="Button" onclick="Button2_Click"></lizard:XButton></TD>
 				</TR>
 				<TR>
 					<TD>

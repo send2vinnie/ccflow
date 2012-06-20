@@ -34,8 +34,8 @@ topMargin=0 >
 						<TD  Class="toolbar" width="90%">
                             <strong>选择分组</strong>:<asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                             </asp:DropDownList>
-                            <asp:Button ID="Btn_OK" Visible=false runat="server" OnClick="Btn_OK_Click" Text="确定选择项目" />
-                            <asp:Button ID="Btn_Close1" runat="server" Visible=false Text="关闭窗口" />
+                            <lizard:XButton ID="Btn_OK" Visible=false runat="server" OnClick="Btn_OK_Click" Text="确定选择项目" />
+                            <lizard:XButton ID="Btn_Close1" runat="server" Visible=false Text="关闭窗口" />
                             提示:您可点击选中并返回。</TD>
 					</TR>
 					<TR   valign=top  align=left  >

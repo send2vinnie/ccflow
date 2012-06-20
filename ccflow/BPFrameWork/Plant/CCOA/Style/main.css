@@ -95,7 +95,6 @@
 }
 .newslist ul li
 {
-    height: 20px;
     line-height: 24px;
     list-style-type: none;
     border-style: none;
@@ -105,9 +104,13 @@
 .newslist ul li a
 {
     text-decoration: none;
-    color: #772533;
+    color: #5A90CE;
 }
-
+.newslist ul li a:hover
+{
+    text-decoration: none;
+    color: #cc0000;
+}
 .subtoolbar
 {
     background:#DEF1F1;

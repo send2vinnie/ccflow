@@ -93,7 +93,7 @@
                     </tr>
                     <tr>
                         <td class="appData" align="center">
-                            <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="butt" 
+                            <lizard:XButton ID="btnSubmit" runat="server" Text="提交" CssClass="butt" 
                                 onclick="btnSubmit_Click"/>
                         </td>
                         <td width="2">

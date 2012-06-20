@@ -23,6 +23,15 @@
             border-bottom-color: #333300;
             border-bottom-style: solid;
             padding: 5px;
+            font:#1D60FF;
+        }
+         .emailTitle tr td
+        {
+            font:#1D60FF;
+        }
+        .emailTitle .style1
+        {
+            width: 10%;
         }
         .emailBottom
         {
@@ -126,8 +135,8 @@
                     </tr>
                     <tr>
                         <td align="center" valign="bottom" colspan="4">
-                            <asp:Button ID="btnSave" runat="server" Text="发送" class="inputbutton" onmouseover="this.className='inputbutton_hover'"
-                                onmouseout="this.className='inputbutton'" OnClick="btnSave_Click"></asp:Button>
+                            <lizard:XButton ID="btnSave" runat="server" Text="发送"  onmouseover="this.className='lizard-button-hover'"
+                                onmouseout="this.className='lizard-button'" OnClick="btnSave_Click"></lizard:XButton>
                         </td>
                     </tr>
                 </table>

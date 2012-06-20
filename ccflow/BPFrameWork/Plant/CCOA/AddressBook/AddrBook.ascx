@@ -14,7 +14,7 @@
             手机号码
         </td>
     </tr>
-    <%foreach (BP.CCOA.AddrBook item in AddrBooks)
+    <%foreach (BP.CCOA.OA_AddrBook item in AddrBooks)
       {%>
     <tr>
         <td>
@@ -27,7 +27,7 @@
             <%=item.Email%>
         </td>
         <td>
-            <%=item.Tel%>
+            <%=item.WorkPhone%>
         </td>
     </tr>
     <%  } %>

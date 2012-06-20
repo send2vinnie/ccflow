@@ -157,11 +157,11 @@
         </tr>
         <tr>
             <td class="tdbg" align="center" valign="bottom">
-                <lizard:xbutton id="btnSave" runat="server" text="保存" onclick="btnSave_Click" class="inputbutton"
-                    onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
+                <lizard:xbutton id="btnSave" runat="server" text="保存" onclick="btnSave_Click" 
+                    onmouseover="this.className='lizard-button-hover'" onmouseout="this.className='lizard-button'">
                 </lizard:xbutton>
                 <lizard:xbutton id="btnCancle" runat="server" text="取消" onclick="btnCancle_Click"
-                    class="inputbutton" onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
+                     onmouseover="this.className='lizard-button-hover'" onmouseout="this.className='lizard-button'">
                 </lizard:xbutton>
             </td>
         </tr>

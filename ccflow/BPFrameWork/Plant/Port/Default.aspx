@@ -18,7 +18,7 @@
         
         <asp:TextBox ID="txtPass"  runat="server"></asp:TextBox>
 
-        <asp:Button ID="Button1" runat="server" Text="登录" OnClientClick="return checkpwd();" />
+        <lizard:XButton ID="Button1" runat="server" Text="登录" OnClientClick="return checkpwd();" />
     </div>
     </form>
 </body>

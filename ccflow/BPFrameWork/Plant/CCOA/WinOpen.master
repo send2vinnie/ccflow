@@ -1,6 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="WinOpen.master.cs" Inherits="Model_WinOpen" %>
 
-<%@ Register Src="~/CCOA/Controls/Menu.ascx" TagName="Menu" TagPrefix="uc" %>
 <%@ Register Src="~/CCOA/Controls/Header.ascx" TagName="Header" TagPrefix="uc" %>
 <%@ Register Src="Controls/NavBar.ascx" TagName="NavBar" TagPrefix="uc1" %>
 <%@ Register Src="Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc2" %>
@@ -38,7 +37,7 @@
             <tr>
                 <td>
                     <div id="divBody">
-                        <div class="mini-splitter" style="width: 100%; height: 680px;">
+                        <div class="mini-splitter" style="width: 100%; height: 600px;">
                             <div size="16%" showcollapsebutton="true">
                                 <uc1:NavBar ID="NavBar1" runat="server" MenuUrl="AjaxMenu.aspx" />
                             </div>

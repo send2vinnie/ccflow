@@ -130,9 +130,9 @@
         <tr>
         <td ></td>
             <td >
-                <asp:Button ID="btnCommit" runat="server" Text="保存" 
+                <lizard:XButton ID="btnCommit" runat="server" Text="保存" 
                     onclick="btnCommit_Click" />
-                <asp:Button ID="btnCancle" runat="server" Text="取消" 
+                <lizard:XButton ID="btnCancle" runat="server" Text="取消" 
                     onclick="btnCancle_Click" />
             </td> <td ></td>
         </tr>

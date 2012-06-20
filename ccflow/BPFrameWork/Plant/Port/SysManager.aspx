@@ -39,7 +39,7 @@
             <td>显示排序：</td><td><asp:TextBox ID="txtSysOrder" runat="server"></asp:TextBox></td>
         </tr>
         <tr>
-            <td colspan="2"><asp:Button ID="btnAdd" runat="server" Text="添加" 
+            <td colspan="2"><lizard:XButton ID="btnAdd" runat="server" Text="添加" 
                     onclick="btnAdd_Click" /></td>
         </tr>
     </table>

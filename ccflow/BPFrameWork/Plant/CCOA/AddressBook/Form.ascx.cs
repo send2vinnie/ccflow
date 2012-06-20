@@ -15,12 +15,11 @@ public partial class CCOA_AddressBook_Form : System.Web.UI.UserControl
     }
     protected void btnCommit_Click(object sender, EventArgs e)
     {
-        AddrBook addrbook = new AddrBook();
+        OA_AddrBook addrbook = new OA_AddrBook();
         addrbook.No = Guid.NewGuid().ToString();
-        addrbook.Tel = txtTel.Text;
+        addrbook.WorkPhone = txtTel.Text;
         addrbook.Email = txtEmail.Text;
-        addrbook.Duty = txtDuty.Text;
-        addrbook.Addr = txtAddress.Text;
+        addrbook.HomeAddress = txtAddress.Text;
         addrbook.Name = txtTitle.Text;
 
         addrbook.Insert();

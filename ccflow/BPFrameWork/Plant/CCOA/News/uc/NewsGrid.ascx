@@ -6,7 +6,7 @@
             <uc:XSearch ID="xSearch" runat="server" ShowDateRange="true" />
         </td>
         <td>
-            <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click" />
+            <lizard:XButton ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click" />
         </td>
     </tr>
 </table>

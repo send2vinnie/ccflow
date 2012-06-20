@@ -18,7 +18,7 @@ namespace BP.Web.Comm
 	/// <summary>
 	/// Style 的摘要说明。
 	/// </summary>
-	public partial class UIMsg: BasePageBase
+	public partial class UIMsg:PageBase
 	{
 		protected BP.Web.Controls.DDL DDL1;
 	
@@ -27,10 +27,7 @@ namespace BP.Web.Comm
 			if (this.IsPostBack==false)
 			{
 				this.BPToolBar1.AddLab("msg","系统消息");
-
-
 			}
-			 
 		}
 
 		#region Web 窗体设计器生成的代码
@@ -52,6 +49,5 @@ namespace BP.Web.Comm
 
 		}
 		#endregion
- 
 	}
 }

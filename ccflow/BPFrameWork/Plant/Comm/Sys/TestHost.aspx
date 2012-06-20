@@ -32,8 +32,8 @@
 						<asp:TextBox id="TextBox_SQL" runat="server" Width="344px">SELECT * FROM DS_TAXPAYER</asp:TextBox><BR>
 						Ö´ÐÐ´ÎÊý:&nbsp;
 						<asp:TextBox id="TextBox_RunTime" runat="server" Width="344px">10</asp:TextBox><BR>
-						<asp:Button id="Button1_Do" runat="server" Text="Do" Width="80px" onclick="Button1_Do_Click"></asp:Button>
-						<asp:Button id="Button2_Help" runat="server" Text="Help" Width="80px"></asp:Button></TD>
+						<lizard:XButton id="Button1_Do" runat="server" Text="Do" Width="80px" onclick="Button1_Do_Click"></lizard:XButton>
+						<lizard:XButton id="Button2_Help" runat="server" Text="Help" Width="80px"></lizard:XButton></TD>
 				</TR>
 				<TR>
 					<TD height='100%' valign="top">

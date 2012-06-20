@@ -16,7 +16,7 @@
 </TR>
 <TR class='TRSum' >
 <TD  colspan=3 align=center nowrap >
-    <asp:Button ID="btnLogin" runat="server" Text="登录" onclick="btnLogin_Click" /><asp:Button ID="btn1" runat="server" style="display:none" Text="登录" onclick="btn1_Click" />- <a href='Tools.aspx?RefNo=AutoLog' >授权方式登录</a> - <a href='Login.aspx?DoType=Logout' ><font color=green><b>安全退出</b></a>
+    <lizard:XButton ID="btnLogin" runat="server" Text="登录" onclick="btnLogin_Click" /><lizard:XButton ID="btn1" runat="server" style="display:none" Text="登录" onclick="btn1_Click" />- <a href='Tools.aspx?RefNo=AutoLog' >授权方式登录</a> - <a href='Login.aspx?DoType=Logout' ><font color=green><b>安全退出</b></a>
 </TD>
 </TR></Table><BR><BR>
 </TD>

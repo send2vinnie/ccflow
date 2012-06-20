@@ -71,8 +71,8 @@
         <td>
         </td>
         <td>
-            <asp:Button ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
-            <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
+            <lizard:XButton ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
+            <lizard:XButton ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
         </td>
         <td>
         </td>

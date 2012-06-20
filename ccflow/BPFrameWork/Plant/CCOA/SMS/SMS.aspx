@@ -38,7 +38,7 @@
                         <th>
                         </th>
                         <td>
-                            <asp:Button ID="btnSend" runat="server" Text="发送" OnClick="btnSend_Click" />
+                            <lizard:XButton ID="btnSend" runat="server" Text="发送" OnClick="btnSend_Click" />
                         </td>
                     </tr>
                 </table>

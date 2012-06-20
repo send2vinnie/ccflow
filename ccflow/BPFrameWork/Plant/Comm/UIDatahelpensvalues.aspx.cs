@@ -18,7 +18,7 @@ namespace BP.Web.Comm.UI
 	/// <summary>
 	/// HelperOfTB 的摘要说明。
 	/// </summary>
-	public partial class UIDataHelpEnsValues : BasePageBase
+	public partial class UIDataHelpEnsValues : PageBase
 	{
 		protected System.Web.UI.WebControls.Label Label1;
 		  

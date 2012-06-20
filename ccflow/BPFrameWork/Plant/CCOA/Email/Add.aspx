@@ -149,15 +149,15 @@
         </tr>
         <tr>
             <td class="tdbg" align="center" valign="bottom">
-                <asp:Button ID="btnSave" runat="server" Text="发送" OnClick="btnSave_Click" class="inputbutton"
-                    onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
-                </asp:Button>
-                <asp:Button ID="btnSaveDraft" runat="server" Text="存草稿" OnClick="btnSaveDraft_Click"
-                    class="inputbutton" onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
-                </asp:Button>
-                <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" class="inputbutton"
-                    onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
-                </asp:Button>
+                <lizard:XButton ID="btnSave" runat="server" Text="发送" OnClick="btnSave_Click" 
+                    onmouseover="this.className='lizard-button-hover'" onmouseout="this.className='lizard-button'">
+                </lizard:XButton>
+                <lizard:XButton ID="btnSaveDraft" runat="server" Text="存草稿" OnClick="btnSaveDraft_Click"
+                     onmouseover="this.className='lizard-button-hover'" onmouseout="this.className='lizard-button'">
+                </lizard:XButton>
+                <lizard:XButton ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" 
+                    onmouseover="this.className='lizard-button-hover'" onmouseout="this.className='lizard-button'">
+                </lizard:XButton>
             </td>
         </tr>
     </table>

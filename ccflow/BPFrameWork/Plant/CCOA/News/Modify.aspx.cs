@@ -101,7 +101,7 @@ namespace Lizard.OA.Web.OA_News
             model.NewsType = NewsType;
             model.NewsContent = NewsContent;
             model.Author = Author;
-            model.UpDT = UpDT;
+            model.UpDT = XTool.Now();
             model.UpUser = BP.Web.WebUser.No;
 
             model.Update();

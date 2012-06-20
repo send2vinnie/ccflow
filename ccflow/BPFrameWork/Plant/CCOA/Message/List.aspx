@@ -11,7 +11,7 @@
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body style="margin:0">
     <form id="Form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
     &nbsp;<!--Search end--><br />
