@@ -60,13 +60,22 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     private void InitToolBar()
     {
         //AddLinkButton("icon-reload", "返回", RetrunUrl);
-        AddLinkButton("icon-addfolder", "增加", AddUrl, CanAdd.ToString().ToLower());
-        AddClickButton("icon-addfolder", "增加（弹窗）", "add()");
-        AddClickButton("icon-remove", "删除", "getSelectedIdList()");
+        if (ShowAddBtn)
+        {
+            AddLinkButton("icon-addfolder", "增加", AddUrl, CanAdd.ToString().ToLower());
+        }
+        if (ShowDelBtn)
+        {
+            AddClickButton("icon-remove", "删除", "getSelectedIdList()");
+        }
+        //AddClickButton("icon-addfolder", "增加（弹窗）", "add()");
         //AddSeparator();
         //AddLinkButton("icon-reload", "刷新", RefreshUrl);
         //AddLinkButton("icon-download", "下载", AddUrl);
     }
+
+    public bool ShowAddBtn { get; set; }
+    public bool ShowDelBtn { get; set; }
 
     public void AddLinkButton(string icon, string name, string url)
     {
