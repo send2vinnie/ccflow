@@ -1313,7 +1313,18 @@ namespace BP.Web.Comm.UC.WF
                 {
                     case AutoFullWay.Way1_JS:
                         js += "\t\n <script type='text/javascript' >";
-                        TB tb = this.GetTBByID("TB_" + attr.KeyOfEn);
+                        TB tb = null;
+                        try
+                        {
+                            tb = this.GetTBByID("TB_" + attr.KeyOfEn);
+                            if (tb == null)
+                                continue;
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+
                         string left = "\n  document.forms[0]." + tb.ClientID + ".value = ";
                         string right = attr.AutoFullDoc;
                         foreach (MapAttr mattr in mattrs)

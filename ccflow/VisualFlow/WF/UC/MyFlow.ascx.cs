@@ -373,6 +373,19 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// <param name="e"></param>
     protected void Page_Load(object sender, System.EventArgs e)
     {
+        // 校验用户是否被禁用。
+        if (Glo.IsEnableCheckUseSta == true)
+        {
+            if (Glo.CheckIsEnableWFEmp() == false)
+            {
+                this.UCEn1.AddFieldSetGreen("错误");
+                this.UCEn1.AddB("<font color=red>您的帐号已经被禁用，如果有问题请与管理员联系。</font>");
+                this.UCEn1.AddFieldSetEnd();
+                BP.Web.WebUser.Exit();
+                return;
+            }
+        }
+
         if (this.DoType != null)
         {
             DoDoType();

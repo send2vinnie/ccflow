@@ -24,6 +24,15 @@ public partial class Designer : System.Web.UI.Page
             rw1.CheckPhysicsTable();
             #endregion 
 
+            #region 升级用户禁用. 2012-06-19
+            //int num = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM WF_Emp WHERE UseSta=0");
+            //int num1 = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM WF_Emp");
+            //if (num == num1)
+            //    DBAccess.RunSQL("UPDATE WF_Emp SET UseSta=1");
+            #endregion 升级用户禁用
+
+
+
             #region 测试数据库是否连接成功。
             try
             {
