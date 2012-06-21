@@ -587,7 +587,7 @@ namespace BP.WF
             if (this.IsMainFlow == false)
             {
                 /* 处理子流程完成*/
-               return  this.DoFlowSubOver();
+                return this.DoFlowSubOver();
             }
 
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
@@ -685,13 +685,22 @@ namespace BP.WF
             // 清除其他的工作者。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Node IN (SELECT NodeId FROM WF_Node WHERE FK_Flow='" + this.HisFlow.No + "') ");
 
-            // 记录日志 thanks for itdos ,提出了这个bug.
+            //记录日志 thanks for itdos and 888 , 提出了这个bug.
             WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
-            wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
-                "执行流程结束");
+            if (wn.HisNode.FocusField.Length > 2)
+            {
+                /* 写入日志. */
+                wn.AddToTrack(ActionType.Forward, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                    wn.HisWork.GetValStrByKey(wn.HisNode.FocusField));
+            }
+            else
+            {
+                wn.AddToTrack(ActionType.Forward, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                  wn.HisWork.GetValStrByKey(wn.HisNode.FocusField) + "\t\n 执行流程结束");
 
-          
-
+                // wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                //  "执行流程结束");
+            }
             return msg;
         }
         /// <summary>

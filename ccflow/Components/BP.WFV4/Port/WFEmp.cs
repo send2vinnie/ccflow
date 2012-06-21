@@ -77,7 +77,7 @@ namespace BP.WF.Port
         public const string Style = "Style";
         public const string Msg = "Msg";
         public const string TM = "TM";
-        public const string UserSta = "UserSta";
+        public const string UseSta = "UseSta";
         /// <summary>
         /// 授权的人员
         /// </summary>
@@ -111,15 +111,15 @@ namespace BP.WF.Port
         /// <summary>
         /// 用户状态
         /// </summary>
-        public int UserSta
+        public int UseSta
         {
             get
             {
-                return this.GetValIntByKey(WFEmpAttr.UserSta);
+                return this.GetValIntByKey(WFEmpAttr.UseSta);
             }
             set
             {
-                SetValByKey(WFEmpAttr.UserSta, value);
+                SetValByKey(WFEmpAttr.UseSta, value);
             }
         }
         public string FK_Dept
@@ -377,7 +377,7 @@ namespace BP.WF.Port
 
                 map.AddTBStringPK(WFEmpAttr.No, null, "No", true, true, 1, 50, 20);
                 map.AddTBString(WFEmpAttr.Name, null, "Name", true,false, 0, 50, 20);
-                map.AddTBInt(WFEmpAttr.UserSta, 0, "用户状态", true, true);
+                map.AddTBInt(WFEmpAttr.UseSta, 1, "用户状态0禁用,1正常.", true, true);
 
                 map.AddTBString(WFEmpAttr.Tel, null, "Tel", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.FK_Dept, null, "FK_Dept", true, true, 0, 50, 20);
@@ -435,11 +435,16 @@ namespace BP.WF.Port
 
             return base.beforeUpdate();
         }
+        protected override bool beforeInsert()
+        {
+            this.UseSta = 1;
+            return base.beforeInsert();
+        }
         #endregion
 
         public static void DTSData()
         {
-            string sql = "select No from port_emp where No not in (select no from wf_emp ) ";
+            string sql = "select No from port_emp where No not in (select no from wf_emp)";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             foreach (DataRow dr in dt.Rows)
             {
@@ -448,6 +453,7 @@ namespace BP.WF.Port
                 empWF.Copy(emp1);
                 try
                 {
+                    empWF.UseSta = 1;
                     empWF.DirectInsert();
                 }
                 catch

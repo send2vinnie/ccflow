@@ -29,6 +29,10 @@ namespace BP.Sys
         /// IsEdit
         /// </summary>
         public const string IsEdit = "IsEdit";
+        /// <summary>
+        /// 数据源
+        /// </summary>
+        public const string DBSrc = "DBSrc";
     }
 	/// <summary>
 	/// 用户自定义表

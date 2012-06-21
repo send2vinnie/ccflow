@@ -123,11 +123,13 @@
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicWebService.cs" />
     <Compile Include="WF\Dev2Interface.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -291,6 +293,7 @@
     <Compile Include="Xml\MapDef\FrmEventXml.cs" />
     <Compile Include="TestNDRpt.cs" />
     <Compile Include="Xml\OneWorkXml.cs" />
+    <Compile Include="Xml\DBSrc.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

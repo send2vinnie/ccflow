@@ -84,7 +84,6 @@ namespace BP
             catch
             {
             }
-
             try
             {
                 BP.DA.ClassFactory.Htable_Ens.Clear();

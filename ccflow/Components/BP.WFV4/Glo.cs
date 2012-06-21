@@ -1153,6 +1153,34 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 是否启用检查用户的状态?
+        /// 如果启用了:在MyFlow.aspx中每次都会检查当前的用户状态是否被禁
+        /// 用，如果禁用了就不能执行任何操作了。启用后，就意味着每次都要
+        /// 访问数据库。
+        /// </summary>
+        public static bool IsEnableCheckUseSta
+        {
+            get
+            {
+                string s = BP.SystemConfig.AppSettings["IsEnableCheckUseSta"] as string;
+                if (s == null || s == "0")
+                    return false;
+                return true;
+            }
+        }
+        /// <summary>
+        /// 检查一下当前的用户是否仍旧有效使用？
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckIsEnableWFEmp()
+        {
+            string sql = "SELECT UseSta FROM WF_Emp WHERE No='" + Web.WebUser.No + "'";
+            string s = DBAccess.RunSQLReturnStringIsNull(sql, "1");
+            if (s == "1" || s==null)
+                return true;
+            return false;
+        }
+        /// <summary>
         /// 语言
         /// </summary>
         public static string Language = "CH";

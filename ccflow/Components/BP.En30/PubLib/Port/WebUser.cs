@@ -176,15 +176,15 @@ namespace BP.Web
                 SystemConfig.IsBSsystem = true;
 
             if (BP.SystemConfig.IsBSsystem && System.Web.HttpContext.Current.Session != null)
-            {
                 System.Web.HttpContext.Current.Session.Clear();
-            }
 
             if (em.No == "admin")
             {
                 if (em.FK_Dept.Length != 2)
                     throw new Exception("@您没有把admin设置成最高的部门，这样会造成数据查询权限的错误，当然部门编号是("+em.FK_Dept+")");
             }
+
+         
 
             WebUser.Auth = auth;
             WebUser.No = em.No;
@@ -665,9 +665,6 @@ namespace BP.Web
                 {
                     if (IsBSMode == false)
                         return "admin";
-
-                    //if (IsBSMode == false)
-                    //    throw new Exception("d no ddddddddd");
 
                     string key = "CCS";
                     HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies[key];

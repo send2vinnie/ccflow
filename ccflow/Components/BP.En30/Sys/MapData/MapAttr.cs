@@ -1180,6 +1180,16 @@ namespace BP.Sys
             this.MyPK = this.FK_MapData + "_" + this.KeyOfEn;
             return base.beforeInsert();
         }
+        /// <summary>
+        /// 删除之前
+        /// </summary>
+        /// <returns></returns>
+        protected override bool beforeDelete()
+        {
+            string sql = "DELETE Sys_MapExt WHERE (AttrOfOper='"+this.KeyOfEn+"' OR AttrsOfActive='"+this.KeyOfEn+"' ) AND (FK_MapData='')";
+            BP.DA.DBAccess.RunSQL(sql);
+            return base.beforeDelete();
+        }
     }
     /// <summary>
     /// 实体属性s

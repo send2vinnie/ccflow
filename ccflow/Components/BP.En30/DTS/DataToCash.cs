@@ -36,7 +36,7 @@ namespace BP.DTS
                 BP.Sys.SysEnums ses = new BP.Sys.SysEnums(str);
             }
             #endregion
-
+          
             #region 调度单据
             //if (SystemConfig.SysNo == SysNoList.WF)
             //{

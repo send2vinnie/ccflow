@@ -194,6 +194,7 @@ namespace BP.WF.Port
                 map.AttrsOfOneVSM.Add(new DeptSearchScorps(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "查询权限");
                 #endregion
 
+
                 RefMethod rm = new RefMethod();
                 rm.Title = "禁用";
                 rm.Warning = "您确定要执行吗?";
@@ -213,14 +214,14 @@ namespace BP.WF.Port
         public string DoDisableIt()
         {
             WFEmp emp = new WFEmp(this.No);
-            emp.UserSta = 0;
+            emp.UseSta = 0;
             emp.Update();
             return "已经执行成功";
         }
         public string DoEnableIt()
         {
             WFEmp emp = new WFEmp(this.No);
-            emp.UserSta = 1;
+            emp.UseSta = 1;
             emp.Update();
             return "已经执行成功";
         }

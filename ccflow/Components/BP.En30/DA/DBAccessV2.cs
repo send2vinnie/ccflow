@@ -2535,7 +2535,10 @@ namespace BP.DA
         {
             try
             {
-                return RunSQLReturnString(sql, new Paras());
+                string s= RunSQLReturnString(sql, new Paras());
+                if (s == null)
+                    return isNullAsVal;
+                return s;
             }
             catch (Exception ex)
             {

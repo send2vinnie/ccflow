@@ -889,17 +889,6 @@ namespace BP
 			return str;
 		}
 		/// <summary>
-		/// 得到一个表从xml 数据里面
-		/// </summary>
-		/// <param name="tbname">物理表</param>
-		/// <returns></returns>
-		public static DataTable GetTableFromXmlByTBName(string xmlname, string tbname)
-		{
-			DataSet ds = new DataSet();
-			ds.ReadXml("D:\\WebApp\\WF\\Data\\XML\\KHZB.xml");
-			return  ds.Tables[tbname];
-		}
-		/// <summary>
 		/// 产生临时文件名称
 		/// </summary>
 		/// <param name="hz"></param>
