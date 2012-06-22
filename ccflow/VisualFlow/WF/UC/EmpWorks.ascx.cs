@@ -144,7 +144,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (this.GroupBy != "Starter")
                     this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
 
-                if ( isPRI && this.GroupBy != "PRI" )
+                if (isPRI && this.GroupBy != "PRI")
                 {
                     switch (dr["PRI"].ToString())
                     {
@@ -160,7 +160,6 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                             break;
                     }
                 }
-
 
                 this.Pub1.AddTD(dr["RDT"].ToString());
                 this.Pub1.AddTD(dr["ADT"].ToString());
@@ -252,17 +251,15 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (this.GroupBy != "FlowName")
                 {
                     if (isRead == false)
-                    this.Pub1.AddTDB(dr["FlowName"].ToString());
+                        this.Pub1.AddTDB(dr["FlowName"].ToString());
                     else
-                    this.Pub1.AddTD(dr["FlowName"].ToString());
-
-
+                        this.Pub1.AddTD(dr["FlowName"].ToString());
                 }
 
                 if (this.GroupBy != "NodeName")
                 {
                     if (isRead == false)
-                    this.Pub1.AddTDB(dr["NodeName"].ToString());
+                        this.Pub1.AddTDB(dr["NodeName"].ToString());
                     else
                         this.Pub1.AddTD(dr["NodeName"].ToString());
                 }

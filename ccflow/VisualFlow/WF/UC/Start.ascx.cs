@@ -103,9 +103,20 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
 
         int colspan = 5;
         this.AddTable("width='960px' align=center");
+        //this.AddTable();
+        //"width='960px' align=center");
+
         this.AddTR();
-        this.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b></TD>");
+        this.Add("<TD class=Caption colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b></TD>");
         this.AddTREnd();
+
+        //this.AddTR();
+        //this.AddTH(this.ToE("IDX", "序"));
+        //this.AddTH(this.ToE("FlowSort", "流程类别"));
+        //this.AddTH(this.ToE("Name", "名称"));
+        //this.AddTH(this.ToE("FlowPict", "流程图"));
+        //this.AddTH(this.ToE("Desc", "描述"));
+        //this.AddTREnd();
 
         this.AddTR();
         this.AddTDTitle(this.ToE("IDX", "序"));
@@ -114,7 +125,6 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("FlowPict", "流程图"));
         this.AddTDTitle(this.ToE("Desc", "描述"));
         this.AddTREnd();
-
       
 
         int i = 0;

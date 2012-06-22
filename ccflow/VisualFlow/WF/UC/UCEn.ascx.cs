@@ -1729,7 +1729,6 @@ namespace BP.Web.Comm.UC.WF
             {
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + btn.X + "px;top:" + btn.Y + "px;text-align:left;' >");
                 this.Add("\t\n<span >");
-
                 switch (btn.HisBtnEventType)
                 {
                     case BtnEventType.Disable:
