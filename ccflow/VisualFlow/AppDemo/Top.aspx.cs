@@ -41,10 +41,15 @@ public partial class AppDemo_Top : System.Web.UI.Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        if (BP.Web.WebUser.No == null)
         {
-            this.imgBtn.Attributes.Add("onclick", "return relogin();");
+            this.Response.Write("");
+            return;
         }
+        
+        if (!Page.IsPostBack)
+            this.imgBtn.Attributes.Add("onclick", "return relogin();");
+        
         getnews();
     }
     void getnews()

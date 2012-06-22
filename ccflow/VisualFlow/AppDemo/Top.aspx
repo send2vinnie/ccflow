@@ -5,7 +5,6 @@
     <title></title>
     <link href="./css/basic.css" rel="stylesheet" type="text/css" />
     <link href="./css/base.css" rel="stylesheet" type="text/css" />
-    <script src="../Comm/JS/jquery-1.4.1.js" type="text/javascript"></script>
     <script language="javascript">
         function relogin() {
             //if(confirm("是否确定要重新登陆？"))
@@ -16,12 +15,8 @@
     <script type="text/javascript" language="javascript">
         var timer;
         function startTimer() {
-
             timer = setInterval("alert()", 60000);  //1分执行一次
-
         }
-
-
         function alert() {
             var arr = " <%=tempcount%>";
             //            var sname = "<%=sname%>";
@@ -48,7 +43,6 @@
                 //闪烁几下提示用户有信息
                 var cdemo = window.setTimeout("window.focus()", 1000);
             }
-
         }
         var posx = screen.width - 330;
         var posy = screen.height - 300;
