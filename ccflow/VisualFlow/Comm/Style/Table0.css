@@ -7,32 +7,42 @@ body
 /*  table 类型风格 */
 table
 {
-    border: 1px solid #C2D5E3;
+    border: 2px solid #C2D5E3;
     border-collapse: collapse;
-		margin:0 auto;
+    margin: 0 auto;
 }
-
 
 th, .Title
 {
-    background-color: #E5EDF2;
     font-size: 14px;
     border: 1px solid #C2D5E3;
     text-align: center;
-	height:25px;
-	line-height:25px;
-	color:#336699;
-	white-space:nowrap;
-	 padding: 0 2px;
+    height: 25px;
+    line-height: 25px;
+    color: #336699;
+    white-space: nowrap;
+    padding: 0 2px;
+    background-image: url('BG_Title.png');
 }
 
-th .idx
+.Idx
 {
-	background-color:#eee;
-	font-size:14px;
-	border:1px solid #ccc;
-	text-align: center;
+    background-color: #eee;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-weight: bold;
 }
+
+.Sum
+{
+    background-color: #E6F7FF;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-weight: bold;
+}
+
 
 td
 {

@@ -92,6 +92,7 @@
 
 <div id=tabForm >
 <uc4:ToolBar ID="ToolBar1" runat="server" />
+<hr>
 </div>
 <div id="D" >
   <uc5:Pub ID="FlowMsg" runat="server" />
