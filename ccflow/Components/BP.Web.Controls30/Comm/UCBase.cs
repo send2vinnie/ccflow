@@ -1393,7 +1393,7 @@ namespace BP.Web.UC
         public void AddTable(string attr)
         {
             //this.Add("<Table id='table_01' "+attr+" >");
-            this.Add("<Table class='Table' border='0' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0' " + attr + " >");
+            this.Add("<Table " + attr + " >");
         }
         public void AddTable(string id, string styleClass)
         {
@@ -1621,13 +1621,13 @@ namespace BP.Web.UC
         }
         public void AddTDIdx(int idx)
         {
-            this.Add("\n<TH class='Idx' nowrap>" + idx + "</TH>");
+            this.Add("\n<TD class='Idx' nowrap>" + idx + "</TD>");
         }
         public void AddTDIdx(System.Web.UI.Control ctl)
         {
-            this.Add("\n<TH class='Idx' nowrap>");
+            this.Add("\n<TD class='Idx' nowrap>");
             this.Add(ctl);
-            this.Add("</TH>");
+            this.Add("</TD>");
         }
         public void AddTDIdx(int idx, System.Web.UI.Control ctl)
         {
@@ -1929,7 +1929,7 @@ namespace BP.Web.UC
 
         public void AddTH(string str)
         {
-            this.Add("\n<TH class='TH' >" + str + "</TH>");
+            this.Add("\n<TH >" + str + "</TH>");
         }
         public void AddTH(string attr, string str)
         {
