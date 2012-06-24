@@ -31,8 +31,6 @@ public partial class Designer : System.Web.UI.Page
             //    DBAccess.RunSQL("UPDATE WF_Emp SET UseSta=1");
             #endregion 升级用户禁用
 
-
-
             #region 测试数据库是否连接成功。
             try
             {
@@ -292,7 +290,7 @@ public partial class Designer : System.Web.UI.Page
             catch
             {
             }
-            sql = "CREATE VIEW  WF_EmpWorks AS SELECT A.PRI, A.WorkID, A.Rec AS Starter, A.RecName as StarterName, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FK_EmpText, B.FID ,A.FK_FlowSort FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE     (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
+            sql = "CREATE VIEW  WF_EmpWorks AS SELECT A.PRI, A.WorkID, A.Rec AS Starter, A.RecName as StarterName, A.FK_Dept,A.DeptName, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FK_EmpText, B.FID ,A.FK_FlowSort FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
             BP.DA.DBAccess.RunSQLs(sql);
 
             //// 更新老版本的字段长度。
