@@ -56,7 +56,11 @@ namespace BP.WF
         /// <summary>
         /// 子线程前进
         /// </summary>
-        SubFlowForward
+        SubFlowForward,
+        /// <summary>
+        /// 取回
+        /// </summary>
+        Tackback
     }
     /// <summary>
     ///  属性

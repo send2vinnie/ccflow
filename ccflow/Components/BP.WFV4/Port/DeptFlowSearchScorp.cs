@@ -119,6 +119,7 @@ namespace BP.WF.Port
                 map.AddTBStringPK(DeptSearchScorpAttr.FK_Emp, null, "操作员", true, true, 1, 50, 11);
                 map.AddDDLEntitiesPK(DeptSearchScorpAttr.FK_Dept, null, "部门", new BP.WF.Port.Depts(), true);
                 // map.AddDDLEntitiesPK(DeptSearchScorpAttr.FK_Emp, null, "操作员", new Emps(), true);
+
                 this._enMap = map;
                 return this._enMap;
             }

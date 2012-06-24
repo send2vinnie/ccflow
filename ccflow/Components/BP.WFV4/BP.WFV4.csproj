@@ -242,6 +242,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\RepariDB.cs" />
+    <Compile Include="WF\Personalize\GetTask.cs" />
     <Compile Include="WF\ReturnWork.cs">
       <SubType>Code</SubType>
     </Compile>

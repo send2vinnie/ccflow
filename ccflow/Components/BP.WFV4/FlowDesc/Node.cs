@@ -1391,6 +1391,7 @@ namespace BP.WF
                 SetValByKey(NodeAttr.JumpSQL, value);
             }
         }
+     
         public string FlowName
         {
             get
@@ -2376,7 +2377,6 @@ namespace BP.WF
                 map.AddTBString(NodeAttr.FK_FlowSortT, null, "FK_FlowSortT", false, true, 0, 100, 10);
                 map.AddTBString(NodeAttr.FrmAttr, null, "FrmAttr", false, true, 0, 500, 10);
 
-
                 //map.AddTBString(NodeAttr.EnsName, null, "工作s", false, false, 0, 100, 10);
                 //map.AddTBString(NodeAttr.EnName, null, "工作", false, false, 0, 100, 10);
 
@@ -2400,8 +2400,6 @@ namespace BP.WF
 
                 map.AddTBInt(NodeAttr.ReturnRole, 2, "退回规则", true, true);
                 map.AddTBInt(NodeAttr.DeliveryWay, 0, "访问规则", true, true);
-
-
                 map.AddTBInt(NodeAttr.CCRole, 0, "抄送规则", true, true);
 
 
@@ -2531,6 +2529,17 @@ namespace BP.WF
                 return this._enMap;
             }
         }
+        /// <summary>
+        /// 我能处理当前的节点吗？
+        /// </summary>
+        /// <returns></returns>
+        public bool CanIdoIt()
+        {
+
+
+            return false;
+        }
+
         public string DoListen()
         {
             PubClass.WinOpen("./../WF/Admin/Listen.aspx?CondType=0&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.NodeID + "&FK_Attr=&DirType=&ToNodeID=", "单据", "cdn",
@@ -2553,14 +2562,7 @@ namespace BP.WF
             PubClass.WinOpen("./../WF/Admin/Cond.aspx?CondType=" + (int)CondType.Flow + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.NodeID + "&FK_Node=" + this.NodeID + "&FK_Attr=&DirType=&ToNodeID=", "单据", "cdn", 400, 400, 200, 300);
             return null;
         }
-        //public string DoCondFL()
-        //{
-        //    //if (this.IsCheckNode)
-        //    //    return "审核节点不能设置 分流完成规则 。";
-
-        //    PubClass.WinOpen("./../WF/Admin/Cond.aspx?CondType=" + (int)CondType.FLRole + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.NodeID + "&FK_Node=" + this.NodeID + "&FK_Attr=&DirType=", "分流完成规则", "cdn", 400, 400, 200, 300);
-        //    return null;
-        //}
+        
         public string DoMapData()
         {
             switch (this.HisFormType)

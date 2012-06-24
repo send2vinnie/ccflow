@@ -689,15 +689,22 @@ namespace BP.WF
             WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
             if (wn.HisNode.FocusField.Length > 2)
             {
-                /* 写入日志. */
-                wn.AddToTrack(ActionType.Forward, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
-                    wn.HisWork.GetValStrByKey(wn.HisNode.FocusField));
+                try
+                {
+                    /* 写入日志. */
+                    wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                        wn.HisWork.GetValStrByKey(wn.HisNode.FocusField));
+                }
+                catch
+                {
+                    wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                     "执行流程结束");
+                }
             }
             else
             {
-                wn.AddToTrack(ActionType.Forward, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
-                  wn.HisWork.GetValStrByKey(wn.HisNode.FocusField) + "\t\n 执行流程结束");
-
+                wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                   "执行流程结束");
                 // wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
                 //  "执行流程结束");
             }

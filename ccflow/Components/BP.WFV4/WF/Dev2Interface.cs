@@ -58,7 +58,7 @@ namespace BP.WF
 
             if (dtMain.Columns.Contains("MainPK") == false)
                 errMsg += "@配值的主表中没有MainPK列.";
-           
+
             if (errMsg.Length > 2)
             {
                 BP.DA.Log.DefaultLogWriteLineError("流程(" + fl.Name + ")的开始节点设置发起数据,不完整." + errMsg);
@@ -67,8 +67,8 @@ namespace BP.WF
             #endregion 检查数据源是否正确.
 
             #region 处理流程发起.
-            
-            string nodeTable = "ND" + int.Parse(fl.No) + "01";            
+
+            string nodeTable = "ND" + int.Parse(fl.No) + "01";
             foreach (DataRow dr in dtMain.Rows)
             {
                 string mainPK = dr["MainPK"].ToString();
@@ -84,7 +84,7 @@ namespace BP.WF
                     emp.No = starter;
                     if (emp.RetrieveFromDBSources() == 0)
                     {
-                        BP.DA.Log.DefaultLogWriteLineInfo("@数据驱动方式发起流程("+fl.Name+")设置的发起人员:" + emp.No + "不存在。");
+                        BP.DA.Log.DefaultLogWriteLineInfo("@数据驱动方式发起流程(" + fl.Name + ")设置的发起人员:" + emp.No + "不存在。");
                         continue;
                     }
 
@@ -212,11 +212,11 @@ namespace BP.WF
         {
             string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
             string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
-         //   string sql3 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
-           // System.Web.cont
+            //   string sql3 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+            // System.Web.cont
             Flows fls = new Flows();
             BP.En.QueryObject qo = new BP.En.QueryObject(fls);
-            qo.AddWhereInSQL("No", sql + sql2 );
+            qo.AddWhereInSQL("No", sql + sql2);
             qo.addAnd();
             qo.AddWhere(FlowAttr.IsOK, true);
             qo.addAnd();
@@ -313,12 +313,12 @@ namespace BP.WF
         }
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
-            if (WebUser.IsAuthorize==false)
+            if (WebUser.IsAuthorize == false)
                 return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT DESC ");
             else
             {
-                WF.Port.WFEmp emp=new Port.WFEmp(WebUser.No);
-                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows+ "  ORDER BY ADT DESC ");
+                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY ADT DESC ");
             }
         }
         #endregion 获取当前操作员的待办工作
@@ -395,7 +395,7 @@ namespace BP.WF
                     break;
                 case ReturnRole.ReturnPreviousNode:
                     WorkNode mywnP = wn.GetPreviousWorkNode();
-                  //  turnTo = mywnP.HisWork.Rec + mywnP.HisWork.RecText;
+                    //  turnTo = mywnP.HisWork.Rec + mywnP.HisWork.RecText;
                     DataRow dr1 = dt.NewRow();
                     dr1["No"] = mywnP.HisNode.NodeID.ToString();
                     dr1["Name"] = mywnP.HisWork.RecText + "=>" + mywnP.HisNode.Name;
@@ -479,7 +479,7 @@ namespace BP.WF
         /// <returns>返回按钮状态</returns>
         public static ButtonState UI_GetButtonState(string fk_flow, int fk_node, Int64 workid)
         {
-            ButtonState bs = new ButtonState(fk_flow,fk_node, workid);
+            ButtonState bs = new ButtonState(fk_flow, fk_node, workid);
             return bs;
         }
         /// <summary>
@@ -498,12 +498,12 @@ namespace BP.WF
         /// <param name="sid">安全ID</param>
         public static void Port_Login(string userNo, string sid)
         {
-            string sql = "select sid from port_emp where no='"+userNo+"'";
+            string sql = "select sid from port_emp where no='" + userNo + "'";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             if (dt.Rows.Count == 0)
                 throw new Exception("用户不存在或者SID错误。");
 
-            if (dt.Rows[0]["SID"].ToString()!=sid)
+            if (dt.Rows[0]["SID"].ToString() != sid)
                 throw new Exception("用户不存在或者SID错误。");
 
             BP.Port.Emp emp = new BP.Port.Emp(userNo);
@@ -516,7 +516,7 @@ namespace BP.WF
         /// </summary>
         public static void Port_SigOut()
         {
-            WebUser.Exit(); 
+            WebUser.Exit();
         }
         /// <summary>
         /// 发送邮件与消息
@@ -528,7 +528,7 @@ namespace BP.WF
         {
             WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(userNo);
             BP.TA.SMS.AddMsg(DateTime.Now.ToString(), userNo, BP.WF.Port.AlertWay.Email, emp.Tel, msgTitle,
-                emp.Email,msgTitle,msgDoc);
+                emp.Email, msgTitle, msgDoc);
         }
         /// <summary>
         /// 发送SMS
@@ -575,7 +575,7 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="msg">原因</param>
         /// <returns>执行信息</returns>
-        public static void Flow_DoComeBackWrokFlow(string flowNo, Int64 workID,string msg)
+        public static void Flow_DoComeBackWrokFlow(string flowNo, Int64 workID, string msg)
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
             wf.DoComeBackWrokFlow(msg);
@@ -610,10 +610,10 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="msg">原因</param>
         /// <returns></returns>
-        public static void Flow_DoDeleteWorkFlowByFlag(string flowNo, Int64 workID,string msg)
+        public static void Flow_DoDeleteWorkFlowByFlag(string flowNo, Int64 workID, string msg)
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
-             wf.DoDeleteWorkFlowByFlag(msg);
+            wf.DoDeleteWorkFlowByFlag(msg);
         }
         /// <summary>
         /// 执行流程结束
@@ -622,7 +622,7 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="msg">流程结束原因</param>
         /// <returns>执行信息</returns>
-        public static string Flow_DoFlowOver(string flowNo, Int64 workID,string msg)
+        public static string Flow_DoFlowOver(string flowNo, Int64 workID, string msg)
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
             return wf.DoFlowOver(msg);
@@ -663,7 +663,7 @@ namespace BP.WF
         /// <param name="ht">开始节点数据</param>
         /// <param name="fk_nodeOfJumpTo">将要跳转的节点</param>
         /// <returns>执行信息</returns>
-        public static string Node_StartWork(string flowNo, Hashtable ht,int fk_nodeOfJumpTo)
+        public static string Node_StartWork(string flowNo, Hashtable ht, int fk_nodeOfJumpTo)
         {
             Node nd = new Node(int.Parse(flowNo + "01"));
             StartWork sw = nd.HisWork as StartWork;
@@ -693,7 +693,7 @@ namespace BP.WF
         /// <returns>返回执行信息</returns>
         public static string Node_SendWork(string fk_flow, Int64 workID)
         {
-            return Node_SendWork(fk_flow,workID, new Hashtable());
+            return Node_SendWork(fk_flow, workID, new Hashtable());
         }
         /// <summary>
         /// 发送工作
@@ -778,11 +778,10 @@ namespace BP.WF
         /// <param name="nodeID">节点ID</param>
         /// <param name="workID">工作ID</param>
         /// <returns>返回保存的信息</returns>
-        public static string Node_SaveWork(string fk_flow,Int64 workID)
+        public static string Node_SaveWork(string fk_flow, Int64 workID)
         {
             return Node_SaveWork(fk_flow, workID, new Hashtable());
         }
-
         /// <summary>
         /// 保存
         /// </summary>
@@ -790,7 +789,7 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="htWork">工作数据</param>
         /// <returns>返回执行信息</returns>
-        public static string Node_SaveWork(string fk_flow,Int64 workID, Hashtable htWork)
+        public static string Node_SaveWork(string fk_flow, Int64 workID, Hashtable htWork)
         {
             try
             {
@@ -925,7 +924,7 @@ namespace BP.WF
         public static void Node_ReturnWork(string fk_flow, Int64 workID, string msg, int returnToNode)
         {
             WorkNode wn = new WorkNode(workID, Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
-            wn.DoReturnWork(returnToNode,msg);
+            wn.DoReturnWork(returnToNode, msg);
         }
         /// <summary>
         /// 执行工作退回(退回上一个点)
@@ -934,16 +933,16 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="msg">信息</param>
         /// <returns>返回执行信息</returns>
-        public static void Node_ReturnWork(string fk_flow,Int64 workID, string msg)
+        public static void Node_ReturnWork(string fk_flow, Int64 workID, string msg)
         {
             WorkNode wn = new WorkNode(workID, Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
             wn.DoReturnWork(msg);
         }
-        public static int Node_GetCurrentNodeID(string fk_flow,Int64 workid)
+        public static int Node_GetCurrentNodeID(string fk_flow, Int64 workid)
         {
-            int nodeID = BP.DA.DBAccess.RunSQLReturnValInt("SELECT FK_Node FROM WF_GenerWorkFlow WHERE WorkID=" + workid+" AND FK_Flow='"+fk_flow+"'", 0);
+            int nodeID = BP.DA.DBAccess.RunSQLReturnValInt("SELECT FK_Node FROM WF_GenerWorkFlow WHERE WorkID=" + workid + " AND FK_Flow='" + fk_flow + "'", 0);
             if (nodeID == 0)
-                return int.Parse(fk_flow + "01"); 
+                return int.Parse(fk_flow + "01");
             return nodeID;
         }
         /// <summary>
@@ -985,7 +984,7 @@ namespace BP.WF
         /// <param name="fid">流程ID</param>
         /// <param name="workid">子线程ID</param>
         /// <param name="msg">驳回消息</param>
-        public static string  Node_FHL_DoReject(string fk_flow,int nodeOfReject, Int64 fid, Int64 workid, string msg)
+        public static string Node_FHL_DoReject(string fk_flow, int nodeOfReject, Int64 fid, Int64 workid, string msg)
         {
             WorkFlow wkf = new WorkFlow(fk_flow, workid);
             return wkf.DoReject(fid, nodeOfReject, msg);
@@ -1008,6 +1007,37 @@ namespace BP.WF
             // 调用退回事件.
             mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
             return "@任务被你成功退回到【{" + mywn.HisNode.Name + "}】，退回给【{" + mywn.HisWork.Rec + "}】。";
+        }
+        /// <summary>
+        /// 跳转审核取回
+        /// </summary>
+        /// <param name="fromNodeID">从节点ID</param>
+        /// <param name="workid">工作ID</param>
+        /// <param name="tackToNodeID">取回到的节点ID</param>
+        /// <returns></returns>
+        public static string Node_Tackback(int fromNodeID, Int64 workid, int tackToNodeID)
+        {
+            /*
+             * 1,首先检查是否有此权限.
+             * 2, 执行工作跳转.
+             * 3, 执行写入日志.
+             */
+            Node nd = new Node(tackToNodeID);
+            switch (nd.HisDeliveryWay)
+            {
+                case DeliveryWay.ByEmp:
+                    break;
+            }
+
+
+
+            WorkNode wn = new WorkNode(workid, fromNodeID);
+            wn.JumpToEmp = WebUser.No;
+            wn.JumpToNode = new Node(tackToNodeID);
+            string msg = wn.AfterNodeSave();
+
+            wn.AddToTrack(ActionType.Tackback, WebUser.No, WebUser.Name, tackToNodeID, nd.Name, "执行跳转审核的取回.");
+            return msg;
         }
         #endregion 工作有关接口
     }
