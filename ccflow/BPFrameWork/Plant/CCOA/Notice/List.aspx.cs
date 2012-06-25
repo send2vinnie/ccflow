@@ -52,8 +52,13 @@ namespace Lizard.OA.Web.OA_Notice
         private int GetQueryRowsCount()
         {
             string searchValue = Request.QueryString["searchvalue"];
+            IDictionary<string, object> whereConditions = this.GetWhereConditon();
+            XReadHelperBase readHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.Notice);
+            string userId = CurrentUser.No;
+            string type = this.ddlCategory.SelectedValue.ToString();
 
-            return XQueryTool.GetRowCount<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue);
+            return readHelper.QueryRowCountByType(type, CurrentUser.No, columns, searchValue, whereConditions);
+            //return XQueryTool.GetRowCount<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -74,49 +79,29 @@ namespace Lizard.OA.Web.OA_Notice
 
         public void BindData()
         {
-            #region
-            //if (!Context.User.Identity.IsAuthenticated)
-            //{
-            //    return;
-            //}
-            //AccountsPrincipal user = new AccountsPrincipal(Context.User.Identity.Name);
-            //if (user.HasPermissionID(PermId_Modify))
-            //{
-            //    gridView.Columns[6].Visible = true;
-            //}
-            //if (user.HasPermissionID(PermId_Delete))
-            //{
-            //    gridView.Columns[7].Visible = true;
-            //}
-            #endregion
-            //string searchValue = Request.QueryString["searchvalue"];
-
-            //DataTable OA_NoticeTable = bll.QueryNotice(CurrentUser.No, columns, searchValue,
-            //    m_PageIndex, m_PageSize, null);
-
-            //gridView.DataSource = OA_NoticeTable;
-            //gridView.DataBind();
-
             string searchValue = Request.QueryString["searchvalue"];
             DataTable OA_NoticeTable = new DataTable();
 
-            string noticeTime = this.xdpCreateDate.Text;
-
-            IDictionary<string, object> whereConditions = new Dictionary<string, object>();
-
-            if (noticeTime != string.Empty)
-            {
-                whereConditions.Add("SUBSTR(" + OA_NoticeAttr.CreateTime + ",1,10)", noticeTime);
-            }
-
+            IDictionary<string, object> whereConditions = this.GetWhereConditon();
             XReadHelperBase readHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.Notice);
-
             string userId = CurrentUser.No;
             string type = this.ddlCategory.SelectedValue.ToString();
             OA_NoticeTable = readHelper.QueryByType(type, userId, columns, searchValue, m_PageIndex, m_PageSize, whereConditions);
             gridView.DataSource = OA_NoticeTable;
             gridView.DataBind();
+        }
 
+        private IDictionary<string, object> GetWhereConditon()
+        {
+            IDictionary<string, object> whereConditions = new Dictionary<string, object>();
+
+            string noticeTime = this.xdpCreateDate.Text;
+            if (noticeTime != string.Empty)
+            {
+                whereConditions.Add("SUBSTR(" + OA_NoticeAttr.CreateTime + ",1,10)", noticeTime);
+            }
+
+            return whereConditions;
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
