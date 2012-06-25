@@ -240,7 +240,7 @@ namespace BP.EIP.DAL
                 statusMessage = "原始密码输入不正确，请重新输入！";
                 return 0;
             }
-            string strSQL = "UPDATE PORT_EMP SET PASS = '{0}' WHERE NO=‘{1}’";
+            string strSQL = "UPDATE PORT_EMP SET PASS = '{0}' WHERE NO='{1}'";
             strSQL = string.Format(strSQL, newPassword, userId);
 
             try
