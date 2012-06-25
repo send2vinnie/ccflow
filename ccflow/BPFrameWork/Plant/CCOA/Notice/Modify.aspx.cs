@@ -101,12 +101,12 @@ namespace Lizard.OA.Web.OA_Notice
             //插入新的接收方信息
             XNoticeTool.InsertNoticeAuths(NoticeId, this.txtSelectedIds.Value);
 
-            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "list.aspx");
+            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "MyNotice.aspx");
         }
 
         public void btnCancle_Click(object sender, EventArgs e)
         {
-            Response.Redirect("list.aspx");
+            Response.Redirect("MyNotice.aspx");
         }
     }
 }
