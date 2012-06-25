@@ -191,7 +191,7 @@ namespace BP.WF.Port
                 //他的部门权限
                 map.AttrsOfOneVSM.Add(new EmpStations(), new Stations(), EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "岗位权限");
                 map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "工作部门");
-                map.AttrsOfOneVSM.Add(new DeptSearchScorps(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "查询权限");
+                map.AttrsOfOneVSM.Add(new DeptFlowScorps(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "查询权限");
                 #endregion
 
 

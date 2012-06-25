@@ -224,7 +224,7 @@
     <Compile Include="Port\EmpDept.cs" />
     <Compile Include="Port\EmpStation.cs" />
     <Compile Include="Port\Station.cs" />
-    <Compile Include="Port\DeptSearchScorp.cs" />
+    <Compile Include="Port\DeptFlowScorp.cs" />
     <Compile Include="Port\SMS.cs" />
     <Compile Include="WF.cs" />
     <Compile Include="WF\GERpt.cs" />

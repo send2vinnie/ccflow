@@ -8,7 +8,7 @@ namespace BP.WF.Port
     /// <summary>
     /// 部门数据查询权限
     /// </summary>
-    public class DeptSearchScorpAttr
+    public class DeptFlowScorpAttr
     {
         #region 基本属性
         /// <summary>
@@ -24,7 +24,7 @@ namespace BP.WF.Port
     /// <summary>
     /// 部门数据查询权限 的摘要说明。
     /// </summary>
-    public class DeptSearchScorp : Entity
+    public class DeptFlowScorp : Entity
     {
         public override UAC HisUAC
         {
@@ -51,18 +51,18 @@ namespace BP.WF.Port
         {
             get
             {
-                return this.GetValStringByKey(DeptSearchScorpAttr.FK_Emp);
+                return this.GetValStringByKey(DeptFlowScorpAttr.FK_Emp);
             }
             set
             {
-                SetValByKey(DeptSearchScorpAttr.FK_Emp, value);
+                SetValByKey(DeptFlowScorpAttr.FK_Emp, value);
             }
         }
         public string FK_DeptT
         {
             get
             {
-                return this.GetValRefTextByKey(DeptSearchScorpAttr.FK_Dept);
+                return this.GetValRefTextByKey(DeptFlowScorpAttr.FK_Dept);
             }
         }
         /// <summary>
@@ -72,11 +72,11 @@ namespace BP.WF.Port
         {
             get
             {
-                return this.GetValStringByKey(DeptSearchScorpAttr.FK_Dept);
+                return this.GetValStringByKey(DeptFlowScorpAttr.FK_Dept);
             }
             set
             {
-                SetValByKey(DeptSearchScorpAttr.FK_Dept, value);
+                SetValByKey(DeptFlowScorpAttr.FK_Dept, value);
             }
         }
         #endregion
@@ -89,13 +89,13 @@ namespace BP.WF.Port
         /// <summary>
         /// 部门数据查询权限
         /// </summary> 
-        public DeptSearchScorp() { }
+        public DeptFlowScorp() { }
         /// <summary>
         /// 部门数据查询权限
         /// </summary>
         /// <param name="_empoid">工作人员ID</param>
         /// <param name="wsNo">部门编号</param> 	
-        public DeptSearchScorp(string _empoid, string wsNo)
+        public DeptFlowScorp(string _empoid, string wsNo)
         {
             this.FK_Emp = _empoid;
             this.FK_Dept = wsNo;
@@ -116,9 +116,9 @@ namespace BP.WF.Port
                 map.EnDesc = "部门数据查询权限";
                 map.EnType = EnType.Dot2Dot;
 
-                map.AddTBStringPK(DeptSearchScorpAttr.FK_Emp, null, "操作员", true, true, 1, 50, 11);
-                map.AddDDLEntitiesPK(DeptSearchScorpAttr.FK_Dept, null, "部门", new BP.WF.Port.Depts(), true);
-                // map.AddDDLEntitiesPK(DeptSearchScorpAttr.FK_Emp, null, "操作员", new Emps(), true);
+                map.AddTBStringPK(DeptFlowScorpAttr.FK_Emp, null, "操作员", true, true, 1, 50, 11);
+                map.AddDDLEntitiesPK(DeptFlowScorpAttr.FK_Dept, null, "部门", new BP.WF.Port.Depts(), true);
+                // map.AddDDLEntitiesPK(DeptFlowScorpAttr.FK_Emp, null, "操作员", new Emps(), true);
                 this._enMap = map;
                 return this._enMap;
             }
@@ -155,21 +155,21 @@ namespace BP.WF.Port
     /// <summary>
     /// 部门数据查询权限 
     /// </summary>
-    public class DeptSearchScorps : Entities
+    public class DeptFlowScorps : Entities
     {
         #region 构造
         /// <summary>
         /// 部门数据查询权限
         /// </summary>
-        public DeptSearchScorps() { }
+        public DeptFlowScorps() { }
         /// <summary>
         /// 部门数据查询权限
         /// </summary>
         /// <param name="FK_Emp">FK_Emp</param>
-        public DeptSearchScorps(string FK_Emp)
+        public DeptFlowScorps(string FK_Emp)
         {
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(DeptSearchScorpAttr.FK_Emp, FK_Emp);
+            qo.AddWhere(DeptFlowScorpAttr.FK_Emp, FK_Emp);
             qo.DoQuery();
         }
         #endregion
@@ -182,7 +182,7 @@ namespace BP.WF.Port
         {
             get
             {
-                return new DeptSearchScorp();
+                return new DeptFlowScorp();
             }
         }
         #endregion
