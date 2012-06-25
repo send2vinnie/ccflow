@@ -106,13 +106,13 @@ namespace Lizard.OA.Web.OA_Notice
 
             //BP.CCOA.OA_Notice bll = new BP.CCOA.OA_Notice();
             //bll.Add(model);
-            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "list.aspx");
+            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "MyNotice.aspx");
 
         }
 
         public void btnCancle_Click(object sender, EventArgs e)
         {
-            Response.Redirect("list.aspx");
+            Response.Redirect("MyNotice.aspx");
         }
     }
 }
