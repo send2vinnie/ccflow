@@ -58,9 +58,19 @@ public class XEmailTool
         }
     }
 
-    public int GetQueryRowsCount(string searchValue)
+    public int GetQueryRowsCount(string queryType, string userId, string searchValue, IDictionary<string, object> whereCondition = null)
     {
-        return XQueryTool.GetRowCount<BP.CCOA.OA_Email>(email, columns, searchValue, this.m_Dict);
+        //return XQueryTool.GetRowCount<BP.CCOA.OA_Email>(email, columns, searchValue, this.m_Dict);
+
+        XReadHelperBase readerHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.Email, m_Type.ToString());
+        if (whereCondition != null && whereCondition.Count > 0)
+        {
+            foreach (KeyValuePair<string, object> keyAndValue in whereCondition)
+            {
+                this.m_Dict.Add(keyAndValue.Key, keyAndValue.Value);
+            }
+        }
+        return readerHelper.QueryRowCountByType(queryType, userId, columns, searchValue, this.m_Dict);
     }
 
     public DataTable Query(string queryType, string userId, string searchValue, int pageIndex, int pageSize, IDictionary<string, object> whereCondition = null)

@@ -56,7 +56,7 @@ public class XNoticeTool
         foreach (OA_NoticeAuth auth in auths)
         {
             loopNo += 1;
-            string name = GetAuthNameByAuthId(auth.FK_Id, accessType);
+            string name = XAuthTool.GetAuthNameByAuthId(auth.FK_Id, accessType);
             sb.Append(name);
             if (loopNo != auths.Count)
             {
@@ -66,24 +66,6 @@ public class XNoticeTool
 
         return sb.ToString();
 
-    }
-
-    private static string GetAuthNameByAuthId(string authId, string accessType)
-    {
-        switch (accessType)
-        {
-            case "部门":
-                Port_Dept portDept = new Port_Dept(authId);
-                return portDept.Name;
-            case "角色":
-                Port_Station portStation = new Port_Station(authId);
-                return portStation.Name;
-            case "人员":
-                Port_Emp portEmp = new Port_Emp(authId);
-                return portEmp.Name;
-            default:
-                return string.Empty;
-        }
     }
 
     /// <summary>
