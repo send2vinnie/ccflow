@@ -45,9 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddrBookDept.cs" />
-    <Compile Include="Article.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Article.cs" />
     <Compile Include="ArticleType.cs" />
     <Compile Include="Base\FrontBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -62,7 +60,10 @@
     <Compile Include="Factory\Oracle\OA_NoticeOracleTool.cs" />
     <Compile Include="Factory\Oracle\XOracleFactory.cs" />
     <Compile Include="Factory\XToolBase.cs" />
+    <Compile Include="Model\EIP_Layout.cs" />
+    <Compile Include="Model\EIP_LayoutDetail.cs" />
     <Compile Include="Model\Extend\OA_Email.ext.cs" />
+    <Compile Include="Model\Extend\OA_Favorite.ext.cs" />
     <Compile Include="Model\Extend\OA_Message.ext.cs" />
     <Compile Include="Model\Extend\OA_Notice.ext.cs" />
     <Compile Include="Factory\Sqlserver\OA_NoticeSqlServerTool.cs" />
@@ -78,20 +79,6 @@
     <Compile Include="Model\OA_MessageAuth.cs" />
     <Compile Include="Model\OA_NewsAuth.cs" />
     <Compile Include="Menu.cs" />
-    <Compile Include="Model\APP_ChangeLog.cs" />
-    <Compile Include="Model\APP_Domain.cs" />
-    <Compile Include="Model\APP_Function.cs" />
-    <Compile Include="Model\APP_FunctionOperate.cs" />
-    <Compile Include="Model\APP_StationDomain.cs" />
-    <Compile Include="Model\APP_Rule.cs" />
-    <Compile Include="Model\APP_EmpDomain.cs" />
-    <Compile Include="Model\EIP_Dept.cs" />
-    <Compile Include="Model\EIP_Emp.cs" />
-    <Compile Include="Model\EIP_EmpPost.cs" />
-    <Compile Include="Model\EIP_Layout.cs" />
-    <Compile Include="Model\EIP_LayoutDetail.cs" />
-    <Compile Include="Model\EIP_Menu.cs" />
-    <Compile Include="Model\EIP_MenuOperate.cs" />
     <Compile Include="Model\Extend\EIP_LayoutDetail.ext.cs" />
     <Compile Include="Model\Extend\EIP_Menu.ext.cs" />
     <Compile Include="Model\OA_AddrBook.cs" />
@@ -109,8 +96,10 @@
     <Compile Include="Model\OA_Notice.cs" />
     <Compile Include="Model\OA_NoticeAttach.cs" />
     <Compile Include="Model\OA_NoticeAuth.cs" />
+    <Compile Include="Model\OA_PersonalConfig.cs" />
     <Compile Include="Model\OA_SMS.cs" />
     <Compile Include="Model\Extend\OA_TodoWork.cs" />
+    <Compile Include="Model\OA_Favorite.cs" />
     <Compile Include="ProcessObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadHelper\XMessageReadHelper.cs" />
@@ -139,10 +128,6 @@
     <ProjectReference Include="..\BP.EIP\BP.EIP.csproj">
       <Project>{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}</Project>
       <Name>BP.EIP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BP.GPM\BP.GPM.csproj">
-      <Project>{88E210E2-1877-40D8-B669-EC08CA80DC34}</Project>
-      <Name>BP.GPM</Name>
     </ProjectReference>
     <ProjectReference Include="D:\ccflow\Components\BP.En30\BP.En30.csproj">
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>

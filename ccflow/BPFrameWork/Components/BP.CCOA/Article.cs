@@ -1116,9 +1116,9 @@ namespace BP.CCOA
                     ArticleAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员@4=按SQL");
 
 
-                map.AttrsOfOneVSM.Add(new BP.GPM.ByStations(), new BP.Port.Stations(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByStationAttr.FK_Station, BP.Port.StationAttr.Name, BP.Port.StationAttr.No, "可访问的岗位");
-                map.AttrsOfOneVSM.Add(new BP.GPM.ByDepts(), new BP.Port.Depts(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByDeptAttr.FK_Dept, BP.Port.DeptAttr.Name, BP.Port.DeptAttr.No, "可访问的部门");
-                map.AttrsOfOneVSM.Add(new BP.GPM.ByEmps(), new BP.Port.Emps(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByEmpAttr.FK_Emp, BP.Port.EmpAttr.Name, BP.Port.EmpAttr.No, "可访问的人员");
+                //map.AttrsOfOneVSM.Add(new BP.GPM.ByStations(), new BP.Port.Stations(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByStationAttr.FK_Station, BP.Port.StationAttr.Name, BP.Port.StationAttr.No, "可访问的岗位");
+                //map.AttrsOfOneVSM.Add(new BP.GPM.ByDepts(), new BP.Port.Depts(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByDeptAttr.FK_Dept, BP.Port.DeptAttr.Name, BP.Port.DeptAttr.No, "可访问的部门");
+                //map.AttrsOfOneVSM.Add(new BP.GPM.ByEmps(), new BP.Port.Emps(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByEmpAttr.FK_Emp, BP.Port.EmpAttr.Name, BP.Port.EmpAttr.No, "可访问的人员");
 
                 this._enMap = map;
                 return this._enMap;
