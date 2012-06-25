@@ -50,7 +50,11 @@ namespace Lizard.OA.Web.OA_Email
         private int GetQueryRowsCount()
         {
             string searchValue = Request.QueryString["searchvalue"];
-            return this.m_EmailTool.GetQueryRowsCount(searchValue);
+            IDictionary<string, object> whereConditions = this.GetWhereConditon();
+            string queryType = this.ddlCategory.SelectedValue.ToString();
+            string user = CurrentUser.No;
+            return this.m_EmailTool.GetQueryRowsCount(queryType, user, searchValue, whereConditions);
+            //return this.m_EmailTool.GetQueryRowsCount(searchValue);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -99,7 +103,7 @@ namespace Lizard.OA.Web.OA_Email
         private IDictionary<string, object> GetWhereConditon()
         {
             IDictionary<string, object> whereConditions = new Dictionary<string, object>();
-        
+
             string sendTime = this.xdpCreateDate.Text;
             if (sendTime != string.Empty)
             {
