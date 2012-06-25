@@ -46,10 +46,20 @@ namespace Lizard.OA.Web.OA_Email
             this.BindData();
         }
 
+        //private int GetQueryRowsCount()
+        //{
+        //    string searchValue = Request.QueryString["searchvalue"];
+        //    return this.m_EmailTool.GetQueryRowsCount(searchValue);
+        //}
+
         private int GetQueryRowsCount()
         {
             string searchValue = Request.QueryString["searchvalue"];
-            return this.m_EmailTool.GetQueryRowsCount(searchValue);
+            IDictionary<string, object> whereConditions = this.GetWhereConditon();
+            string queryType = "3";
+            string user = CurrentUser.No;
+            return this.m_EmailTool.GetQueryRowsCount(queryType, user, searchValue, whereConditions);
+            //return this.m_EmailTool.GetQueryRowsCount(searchValue);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
