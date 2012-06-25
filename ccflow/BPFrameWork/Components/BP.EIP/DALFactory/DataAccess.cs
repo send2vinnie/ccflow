@@ -96,6 +96,11 @@ namespace BP.EIP.DALFactory
             return new StaffDAL();
         }
 
+        public static BP.EIP.Interface.IPermission CreatePermission()
+        {
+            return new PermissionDAL();
+        }
+
         #endregion
     }
 }
