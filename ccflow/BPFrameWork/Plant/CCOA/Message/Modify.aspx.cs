@@ -20,6 +20,7 @@ namespace Lizard.OA.Web.OA_Message
         {
             if (!Page.IsPostBack)
             {
+                this.BindCombobox();
                 if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
                 {
                     string MessageId = (Request.Params["id"]);
@@ -28,19 +29,23 @@ namespace Lizard.OA.Web.OA_Message
             }
         }
 
+        private void BindCombobox()
+        {
+            XBindCategoryComboTool.BindCategory(XCategory.Message, this.ddlMessageType);
+        }
+
         private void ShowInfo(string MessageId)
         {
             //BP.CCOA.OA_Message model = new BP.CCOA.OA_Message(MessageId);
             BP.CCOA.OA_Message model = new BP.CCOA.OA_Message(MessageId);
             //Lizard.OA.Model.OA_Message model=bll.GetModel(MessageId);
-            this.lblMessageId.Text = model.No.ToString();
             this.txtMessageName.Text = model.MessageName;
-            this.txtMeaageType.Text = model.MeaageType.ToString();
-            this.txtAuthor.Text = model.Author.ToString();
+            this.ddlMessageType.SelectedValue = model.MeaageType.ToString();
             this.txtCreateTime.Text = model.CreateTime.ToString();
-            this.txtUpDT.Text = model.UpDT.ToString();
-            this.chkStatus.Checked = model.Status;
-
+            this.txtMessageContent.Text = model.MessageContent;
+            this.ddlAccessType.Text = model.AccessType;
+            this.xtxtReader.Text = XMessageTool.GetSelecedNames(MessageId, model.AccessType);
+            this.hfSelects.Value = XMessageTool.GetSelectedIds(MessageId);
         }
 
         public void btnSave_Click(object sender, EventArgs e)
@@ -51,36 +56,22 @@ namespace Lizard.OA.Web.OA_Message
             {
                 strErr += "消息名称（标题）不能为空！\\n";
             }
-            if (!PageValidate.IsNumber(txtMeaageType.Text))
-            {
-                strErr += "消息类型格式错误！\\n";
-            }
-            if (!PageValidate.IsNumber(txtAuthor.Text))
-            {
-                strErr += "发布人格式错误！\\n";
-            }
             if (!PageValidate.IsDateTime(txtCreateTime.Text))
             {
                 strErr += "发布时间格式错误！\\n";
             }
-            if (!PageValidate.IsDateTime(txtUpDT.Text))
-            {
-                strErr += "最后更新时间格式错误！\\n";
-            }
-
             if (strErr != "")
             {
                 MessageBox.Show(this, strErr);
                 return;
             }
-            string MessageId = this.lblMessageId.Text;
+            string MessageId = Request.Params["id"];
             string MessageName = this.txtMessageName.Text;
-            string MeaageType = this.txtMeaageType.Text;
-            string Author = this.txtAuthor.Text;
-            DateTime CreateTime = DateTime.Now;
-            DateTime UpDT = DateTime.Parse(this.txtUpDT.Text);
-            bool Status = this.chkStatus.Checked;
-
+            string MeaageType = this.ddlMessageType.SelectedValue.ToString();
+            string Author = CurrentUser.No;
+            string UpDT = XTool.Now();
+            string accessType = this.ddlAccessType.Text.Trim();
+            string messageContent = this.txtMessageContent.Text.Trim();
 
             //Lizard.OA.Model.OA_Message model = new Lizard.OA.Model.OA_Message();
             BP.CCOA.OA_Message model = new BP.CCOA.OA_Message(MessageId);
@@ -90,11 +81,19 @@ namespace Lizard.OA.Web.OA_Message
             model.Author = Author;
             //model.CreateTime = CreateTime;
             model.UpDT = UpDT;
-            model.Status = Status;
+            model.AccessType = accessType;
+            model.MessageContent = messageContent;
 
             model.Update();
             //BP.CCOA.OA_Message bll = new BP.CCOA.OA_Message();
             //bll.Update(model);
+
+            ///删除接收方信息
+            XMessageTool.DeleteMessgaeAuths(MessageId);
+
+            //插入新的接收方信息
+            XMessageTool.InsertMessageAuths(MessageId, this.hfSelects.Value);
+         
             Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "list.aspx");
 
         }

@@ -17,7 +17,15 @@ namespace Lizard.OA.Web.OA_Message
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                this.BindCombobox();
+            }
+        }
 
+        private void BindCombobox()
+        {
+            XBindCategoryComboTool.BindCategory(XCategory.Message, this.ddlMessageType);
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -26,30 +34,35 @@ namespace Lizard.OA.Web.OA_Message
             string strErr = "";
             if (this.txtMessageName.Text.Trim().Length == 0)
             {
-                strErr += "消息名称（标题）不能为空！\\n";
+                strErr += "消息标题不能为空！\\n";
+            }
+            if (this.ddlAccessType.Text.Trim().Length == 0)
+            {
+                strErr += "发布类别不能为空！\\n";
+            }
+            if (this.txtMessageContent.Text.Trim().Length == 0)
+            {
+                strErr += "消息内容不能为空！\\n";
             }
             if (!PageValidate.IsDateTime(txtCreateTime.Text))
             {
                 strErr += "发布时间格式错误！\\n";
             }
-            if (!PageValidate.IsDateTime(txtUpDT.Text))
-            {
-                strErr += "最后更新时间格式错误！\\n";
-            }
-
             if (strErr != "")
             {
                 MessageBox.Show(this, strErr);
                 return;
             }
-            string MessageId = this.txtMessageId.Text;
+            string MessageId = Guid.NewGuid().ToString();
             string MessageName = this.txtMessageName.Text;
-            string MeaageType = this.txtMeaageType.Text;
-            string Author = this.txtAuthor.Text;
-            DateTime CreateTime = DateTime.Now;
-            DateTime UpDT = DateTime.Now;
-            bool Status = this.chkStatus.Checked;
+            string MeaageType = this.ddlMessageType.SelectedValue;
+            string Author = CurrentUser.No;
+            string accessType = this.ddlAccessType.Text;
+            string messageContent = this.txtMessageContent.Text;
 
+            string CreateTime = XTool.Now();
+            string UpDT = XTool.Now();
+            bool Status = true;
             //Lizard.OA.Model.OA_Message model=new Lizard.OA.Model.OA_Message();
             BP.CCOA.OA_Message model = new BP.CCOA.OA_Message();
             model.No = MessageId;
@@ -59,17 +72,22 @@ namespace Lizard.OA.Web.OA_Message
             model.CreateTime = CreateTime;
             model.UpDT = UpDT;
             model.Status = Status;
+            model.AccessType = accessType;
+            model.MessageContent = messageContent;
 
             model.Insert();
 
-            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "add.aspx");
+            //插入接收方信息
+            XMessageTool.InsertMessageAuths(MessageId, this.hfSelects.Value);
+
+            Lizard.Common.MessageBox.ShowAndRedirect(this, "发送成功！", "Manage.aspx");
 
         }
 
 
         public void btnCancle_Click(object sender, EventArgs e)
         {
-            Response.Redirect("list.aspx");
+            Response.Redirect("Manage.aspx");
         }
     }
 }

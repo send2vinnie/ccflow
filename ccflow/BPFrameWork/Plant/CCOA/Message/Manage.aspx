@@ -1,5 +1,5 @@
-﻿<%@ Page Title="OA_Message" Language="C#" AutoEventWireup="true" CodeFile="List.aspx.cs"
-    Inherits="Lizard.OA.Web.OA_Message.List" %>
+﻿<%@ Page Title="OA_Message" Language="C#" AutoEventWireup="true" CodeFile="Manage.aspx.cs"
+    Inherits="Lizard.OA.Web.OA_Message.Manage" %>
 
 <%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
 <%@ Register Src="../Controls/MiniPager.ascx" TagName="MiniPager" TagPrefix="uc2" %>
@@ -13,18 +13,12 @@
 </head>
 <body style="margin: 0px;">
     <form id="form1" runat="server">
-    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="List.aspx" DeleteUrl="Delete.aspx?EmailType=0"
-        IsDeleteUrlHaveParamerter="true" ShowAddBtn="false" ShowDelBtn="false" />
-    <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
-        <asp:ListItem Text="未读消息" Value="1" />
-        <asp:ListItem Text="已读消息" Value="2" />
-        <asp:ListItem Text="全部消息" Value="3" />
-    </lizard:xdropdownlist>
+    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="Manage.aspx" DeleteUrl="Delete.aspx?EmailType=0"
+        IsDeleteUrlHaveParamerter="true" />
     &nbsp; 发送日期：
     <lizard:xdatepicker id="xdpCreateDate" runat="server" />
     &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
     &nbsp;
-    <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
     <br />
     <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
         borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="False"
@@ -53,18 +47,22 @@
             <asp:BoundField DataField="Author" HeaderText="发布人" SortExpression="Author" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="CreateTime" HeaderText="发布时间" SortExpression="CreateTime"
                 ItemStyle-HorizontalAlign="Center" />
-                <asp:TemplateField HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center">
+                <asp:BoundField DataField="CreateTime" HeaderText="发布时间" SortExpression="CreateTime"
+                ItemStyle-HorizontalAlign="Center" />
+                  <asp:BoundField DataField="AccessType" HeaderText="发布类别" SortExpression="AccessType"
+                ItemStyle-HorizontalAlign="Center" />
+                <%--asp:TemplateField HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
                     <asp:Label ID="lblClicks" runat="server" Text='<%# XTool.ConvertBooleanText(Eval("ReadFlag")) %>' />
                 </ItemTemplate>
-            </asp:TemplateField>
+            </asp:TemplateField>--%>
             <asp:BoundField DataField="UpDT" HeaderText="最后更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center" Visible="false"/>
             <asp:BoundField DataField="Status" HeaderText="状态：1-有效0-无效" SortExpression="Status"
                 ItemStyle-HorizontalAlign="Center" Visible="false"/>
             <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="No"
                 DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细" Visible="false"/>
-            <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
-                DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" Visible="false" />
+            <%--<asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
+                DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" />--%>
             <asp:TemplateField ControlStyle-Width="50" HeaderText="删除" Visible="false">
                 <ItemTemplate>
                     <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete"

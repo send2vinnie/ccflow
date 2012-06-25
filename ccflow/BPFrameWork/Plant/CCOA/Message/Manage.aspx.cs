@@ -12,13 +12,12 @@ using BP.DA;
 using BP.CCOA;
 namespace Lizard.OA.Web.OA_Message
 {
-    public partial class List : BasePage
+    public partial class Manage : BasePage
     {
         private int m_PageIndex = 1;
 
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
 
-    
         string[] columns = { 
                    OA_MessageAttr.MeaageType,
                    OA_MessageAttr.Author
@@ -32,7 +31,7 @@ namespace Lizard.OA.Web.OA_Message
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
 
-                this.MiniToolBar1.AddLinkButton("icon-add", "标记为已读", "Show.aspx");
+                //this.MiniToolBar1.AddLinkButton("icon-add", "标记为已读", "Show.aspx");
 
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
@@ -51,14 +50,9 @@ namespace Lizard.OA.Web.OA_Message
         private int GetQueryRowsCount()
         {
             string searchValue = Request.QueryString["searchvalue"];
-            XReadHelperBase readerHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.Message);
-
             IDictionary<string, object> whereConditions = this.GetWhereConditon();
-            string queryType = this.ddlCategory.SelectedValue.ToString();
-
-            return readerHelper.QueryRowCountByType(queryType, CurrentUser.No, columns, searchValue, whereConditions);
-
-            //return XQueryTool.GetRowCount<BP.CCOA.OA_Message>(OA_Message, columns, searchValue);
+            string user = CurrentUser.No;
+            return XQueryTool.GetRowCount<BP.CCOA.OA_Message>(OA_Message, columns, searchValue, whereConditions);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -84,14 +78,14 @@ namespace Lizard.OA.Web.OA_Message
 
             //gridView.DataSource = OA_MessageTable;
             //gridView.DataBind();
-            XReadHelperBase readerHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.Message);
 
             string searchValue = Request.QueryString["searchvalue"];
             IDictionary<string, object> whereConditions = this.GetWhereConditon();
-            string queryType = this.ddlCategory.SelectedValue.ToString();
             string user = CurrentUser.No;
 
-            DataTable messageTable = readerHelper.QueryByType(queryType, user, columns, searchValue, m_PageIndex, m_PageSize, whereConditions);
+            //XReadHelperBase readerHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.Message);
+            //DataTable messageTable = readerHelper.QueryByType(queryType, user, columns, searchValue, m_PageIndex, m_PageSize, whereConditions);
+            DataTable messageTable = XQueryTool.Query(OA_Message, columns, searchValue, m_PageIndex, m_PageSize, whereConditions);
             gridView.DataSource = messageTable;
             gridView.DataBind();
         }
@@ -105,6 +99,8 @@ namespace Lizard.OA.Web.OA_Message
             {
                 whereConditions.Add("SUBSTR(" + OA_MessageAttr.CreateTime + ",1,10)", sendTime);
             }
+
+            whereConditions.Add(OA_MessageAttr.Author, CurrentUser.No);
 
             return whereConditions;
         }
