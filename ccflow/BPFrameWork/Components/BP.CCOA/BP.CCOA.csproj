@@ -63,6 +63,7 @@
     <Compile Include="Factory\Oracle\XOracleFactory.cs" />
     <Compile Include="Factory\XToolBase.cs" />
     <Compile Include="Model\Extend\OA_Email.ext.cs" />
+    <Compile Include="Model\Extend\OA_Message.ext.cs" />
     <Compile Include="Model\Extend\OA_Notice.ext.cs" />
     <Compile Include="Factory\Sqlserver\OA_NoticeSqlServerTool.cs" />
     <Compile Include="Factory\OA_NoticeTool.cs" />

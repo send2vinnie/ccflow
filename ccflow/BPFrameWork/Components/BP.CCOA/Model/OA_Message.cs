@@ -18,6 +18,7 @@ namespace BP.CCOA
         public const string UpDT = "UpDT";
         public const string Status = "Status";
         public const string AccessType = "AccessType";
+        public const string Clicks = "Clicks";
     }
 
     public partial class OA_Message : EntityNoName
@@ -102,11 +103,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime CreateTime
+        public string CreateTime
         {
             get
             {
-                return this.GetValDateTime(OA_MessageAttr.CreateTime);
+                return this.GetValStringByKey(OA_MessageAttr.CreateTime);
             }
             set
             {
@@ -117,11 +118,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime UpDT
+        public string UpDT
         {
             get
             {
-                return this.GetValDateTime(OA_MessageAttr.UpDT);
+                return this.GetValStringByKey(OA_MessageAttr.UpDT);
             }
             set
             {
@@ -159,6 +160,20 @@ namespace BP.CCOA
             }
         }
 
+        /// <summary>
+        /// 点击量
+        /// </summary>
+        public int Clicks
+        {
+            get
+            {
+                return this.GetValIntByKey(OA_NewsAttr.Clicks);
+            }
+            set
+            {
+                this.SetValByKey(OA_NewsAttr.Clicks, value);
+            }
+        }
 
         #endregion
 
@@ -202,6 +217,8 @@ namespace BP.CCOA
                 map.AddTBString(OA_MessageAttr.UpDT, null, "", true, false, 0, 50, 50);
                 map.AddTBInt(OA_MessageAttr.Status, 0, "", true, false);
                 map.AddTBString(OA_MessageAttr.AccessType, null, "", true, false, 0, 50, 50);
+                map.AddTBInt(OA_NewsAttr.Clicks, 0, "点击量", true, false);
+
                 this._enMap = map;
                 return this._enMap;
             }

@@ -11,7 +11,7 @@ namespace BP.CCOA
         {
             if (objValue == null)
             {
-                return "";
+                return " AND {0}='{1}'";
             }
             string type = objValue.GetType().ToString();
             string where = " AND {0}='{1}'";

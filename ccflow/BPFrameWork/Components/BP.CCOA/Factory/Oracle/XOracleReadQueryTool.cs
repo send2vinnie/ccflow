@@ -29,10 +29,6 @@ namespace BP.CCOA
         {
             string sql = "SELECT T.*, FUN_IS_READ(T." + pkColumnName + ",'" + userId + "') ReadFlag FROM " + tableName + " T WHERE 1=1 ";
             sql = string.Format(sql, rowNumFieldName);
-            //if (authonQueryCondition.Trim() != string.Empty)
-            //{
-            //    sql += " AND " + authonQueryCondition;
-            //}
             if (readType != ReadType.All)
             {
                 sql += " AND FUN_IS_READ(T." + pkColumnName + ",'" + userId + "')=" + (int)readType;

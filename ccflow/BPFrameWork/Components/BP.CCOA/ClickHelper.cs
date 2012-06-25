@@ -71,6 +71,9 @@ namespace BP.CCOA
                 case ClickObjType.Email:
                     tableName = "OA_Email";
                     break;
+                case ClickObjType.Message:
+                    tableName = "OA_MESSAGE";
+                    break;
             }
             string sql = @"INSERT INTO OA_CLICKRECORDS(NO,OBJECTTYPE,OBJECTID,VISITDATE,CLICKS,VISITID) 
                            SELECT {0},{1},NO,{2},1,'{3}' 

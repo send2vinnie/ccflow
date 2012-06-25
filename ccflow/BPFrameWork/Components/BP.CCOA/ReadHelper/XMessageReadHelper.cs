@@ -19,7 +19,7 @@ namespace BP.CCOA
 
         protected override void AddOtherConditions(string userId, IDictionary<string, object> whereValues)
         {
-            
+            whereValues.Add("FUN_IS_HAVE_MESSAGE_AUTHON(NO,ACCESSTYPE,'" + userId + "')", "1");
         }
     }
 }

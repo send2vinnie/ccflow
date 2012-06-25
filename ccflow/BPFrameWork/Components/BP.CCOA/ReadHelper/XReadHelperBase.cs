@@ -72,7 +72,7 @@ namespace BP.CCOA
         /// <param name="whereValues"></param>
         /// <param name="rowNumFieldName"></param>
         /// <returns></returns>
-        public virtual DataTable QueryReaded(string userId, string[] columnNames, string value, int pageIndex, int pageSize, 
+        public virtual DataTable QueryReaded(string userId, string[] columnNames, string value, int pageIndex, int pageSize,
             IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
@@ -118,6 +118,49 @@ namespace BP.CCOA
             return "NO";
         }
 
+        /// <summary>
+        /// 获取记录数
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="userId"></param>
+        /// <param name="columnNames"></param>
+        /// <param name="value"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="whereValues"></param>
+        /// <param name="rowNumFieldName"></param>
+        /// <returns></returns>
+        public virtual int QueryRowCountByType(string type, string userId, string[] columnNames, string value, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        {
+            XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
+            string tableName = this.GetTableName();
+            string pkColumnName = this.GetPkColumnName();
+
+            this.AddOtherConditions(userId, whereValues);
+            Enum.ReadType readType = Enum.ReadType.All;
+            switch (type)
+            {
+                case "1":
+                    readType = Enum.ReadType.NotRead;
+                    break;
+                case "2":
+                    readType = Enum.ReadType.Readed;
+                    break;
+                case "3":
+                    readType = Enum.ReadType.All;
+                    break;
+            }
+            return readQueryTool.GetReadCount(tableName, pkColumnName, userId, columnNames, value,
+            Enum.ReadType.NotRead, whereValues, rowNumFieldName);
+        }
+
+        protected virtual void AddConditionValue(IDictionary<string, object> dict, string key, string value)
+        {
+            if (!dict.ContainsKey(key))
+            {
+                dict.Add(key, value);
+            }
+        }
 
     }
 }

@@ -128,7 +128,7 @@ namespace BP.CCOA
     {
         public override Entity GetNewEntity
         {
-            get { return new OA_EmailAuth(); }
+            get { return new OA_MessageAuth(); }
         }
     }
 }
