@@ -61,7 +61,7 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
         int colspan = 10;
         this.AddTable("width='960px' align=center");
         this.AddTR();
-        this.Add("<TD  colspan=" + colspan + " align=left><a href='GetTask"+pageid+".aspx'><img src='./Img/Start.gif' > <b>跳转审批</b></a></TD>");
+        this.Add("<TD  colspan=" + colspan + " align=left><a href='GetTask"+pageid+".aspx'><img src='./Img/Start.gif' > <b>取回处理</b></a></TD>");
         this.AddTREnd();
 
         this.AddTR();
@@ -160,7 +160,7 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
         int colspan = 5;
         this.AddTable("width='960px' align=center");
         this.AddTR();
-        this.Add("<TD class=Caption colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b>跳转审批</b></TD>");
+        this.Add("<TD class=Caption colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b>取回处理</b></TD>");
         this.AddTREnd();
 
         this.AddTR();

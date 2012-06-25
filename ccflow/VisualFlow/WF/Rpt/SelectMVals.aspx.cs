@@ -103,7 +103,7 @@ public partial class Comm_SelectMValsWF : WebPage
             if (WebUser.No == "admin")
                 dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept ");
             else
-                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "')");
+                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -191,7 +191,7 @@ public partial class Comm_SelectMValsWF : WebPage
                 if (WebUser.No == "admin")
                     dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept ");
                 else
-                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "')");
+                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
 
                 foreach (DataRow dr in dt.Rows)
                 {

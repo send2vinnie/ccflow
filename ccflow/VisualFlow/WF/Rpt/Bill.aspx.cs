@@ -140,7 +140,7 @@ public partial class WF_Rpt_Bill : WebPage
                         mydll.SetSelectItem(defVal);
                         break;
                     case "FlowStarter":
-                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM WF_Bill WHERE FlowStarter!='')");
+                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM WF_Bill WHERE FlowStarter!='')");
                         mydll.Items.Clear();
                         mydll.Items.Add(new ListItem("=>发起人", "all"));
                         foreach (DataRow dr in dt.Rows)
@@ -153,7 +153,7 @@ public partial class WF_Rpt_Bill : WebPage
                     case "FK_Dept":
                         if (WebUser.No != "admin")
                         {
-                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "')");
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
                             if (dt.Rows.Count == 0)
                             {
                                 this.Pub2.AddMsgOfWarning("提示", "<h2>系统管理员没有给您设置查询权限。</h2>");
