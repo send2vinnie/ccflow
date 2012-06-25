@@ -102,7 +102,7 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
             foreach (DataRow dr in dt.Rows)
             {
                 this.AddTR();
-                this.AddTDIdx(idx);
+                this.AddTDIdx(idx++);
                 this.AddTD(dr["Title"].ToString());
                 this.AddTD(dr["Starter"].ToString());
                 this.AddTD(dr["RDT"].ToString());

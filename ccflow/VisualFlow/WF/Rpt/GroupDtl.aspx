@@ -24,17 +24,15 @@
 	</HEAD>
 	<body  onkeypress=Esc() leftMargin=0    topMargin=0 >
 		<form id="Form1" method="post" runat="server">
-			<FONT face="ËÎÌו">
-				<TABLE id="Table1" class="Table"  bgcolor=Window cellSpacing="1" cellPadding="1" width="98%" border="1">
-					 
-						<caption>	<asp:Label id="Label1" runat="server">Label</asp:Label></caption>
+				<TABLE id="Table1"  width="98%" border="0">
+					<TR>
+                    <TD class=Toolbar><asp:Label id="Label1" runat="server">Label</asp:Label></TD>
+					</TR>
 					<TR>
 						<TD>
 							<uc1:UCSys id="UCSys1" runat="server"></uc1:UCSys></TD>
 					</TR>
 				</TABLE>
-			</FONT>
-			 
 		</form>
 	</body>
 </HTML>

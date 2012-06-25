@@ -39,7 +39,7 @@ th, .Title
     background-color: #E6F7FF;
     font-size: 12px;
     border: 1px solid #ccc;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
 }
 
@@ -301,15 +301,7 @@ legend
     font-weight: bold;
 }
  
-ul
-{
-  padding-left:15px;
-}
 
-li
-{
-    margin-bottom:3px;
-}
 
 Img
 {

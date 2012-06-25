@@ -1175,7 +1175,7 @@ namespace BP.Web.Comm
             else  /* 没有合计的情况 */
             {
                 this.UCSys1.AddTR();
-                this.UCSys1.AddTDTitle("ID");
+                this.UCSys1.AddTDTitle("IDX");
 
                 // 分组条件
                 foreach (Attr attr in AttrsOfGroup)
@@ -1218,25 +1218,25 @@ namespace BP.Web.Comm
                         {
                             case "Down":
                                 if (this.NumKey == attr.Key)
-                                    this.UCSys1.AddTDGroupTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                                    this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
                                 else
-                                    this.UCSys1.AddTDGroupTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
                                 break;
                             case "Up":
                             default:
                                 if (this.NumKey == attr.Key)
-                                    this.UCSys1.AddTDGroupTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                                    this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
                                 else
-                                    this.UCSys1.AddTDGroupTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
                                 break;
                         }
                     }
                     else
                     {
                         if (this.NumKey == attr.Key)
-                            this.UCSys1.AddTDGroupTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
+                            this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
                         else
-                            this.UCSys1.AddTDGroupTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
+                            this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
 
                     }
                 }

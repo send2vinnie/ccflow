@@ -143,9 +143,13 @@ public partial class WF_Rpt_Search : WebPage
                             dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
                             if (dt.Rows.Count == 0)
                             {
-                                this.Pub2.AddMsgOfWarning("提示", "<h2>系统管理员没有给您设置查询权限。</h2>");
-                                this.ToolBar1.Controls.Clear();
-                                return;
+                                BP.WF.Port.DeptFlowScorp dfs = new BP.WF.Port.DeptFlowScorp();
+                                dfs.FK_Dept = WebUser.FK_Dept;
+                                dfs.FK_Emp = WebUser.No;
+                                dfs.Insert();
+
+
+                                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
                             }
                             mydll.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
@@ -357,7 +361,19 @@ public partial class WF_Rpt_Search : WebPage
 
                 if (attr.UIContralType == UIContralType.DDL)
                 {
-                    this.UCSys1.AddTD(en.GetValRefTextByKey(attr.Key));
+                    string s = en.GetValRefTextByKey(attr.Key);
+                    if (s == null || s == "")
+                    {
+                        switch (attr.Key)
+                        {
+                            case "FK_NY":
+                                s = en.GetValStringByKey(attr.Key);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    this.UCSys1.AddTD(s);
                     continue;
                 }
 
@@ -412,9 +428,9 @@ public partial class WF_Rpt_Search : WebPage
             #endregion 输出字段。
 
             //相关功能.
-            string ext = "<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >轨迹图</a>";
-            ext += "-<a href=\"javascript:WinOpen('Attachment.aspx?FK_Flow=" + this.FK_Flow + "&OID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >附件</a>";
-            ext += "-<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" >工作报告</a>";
+            // string ext = "<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >轨迹图</a>";
+            //ext += "-<a href=\"javascript:WinOpen('Attachment.aspx?FK_Flow=" + this.FK_Flow + "&OID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >附件</a>";
+            string ext = "<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" >工作报告</a>";
 
             this.UCSys1.AddTD(ext);
             this.UCSys1.AddTREnd();
@@ -452,7 +468,7 @@ public partial class WF_Rpt_Search : WebPage
 
         if (IsHJ)
         {
-            this.UCSys1.Add("<TR class='TRSum' >");
+            this.UCSys1.Add("<TR class='Sum' >");
             this.UCSys1.AddTD(this.ToE("Sum", "合计"));
             foreach (Attr attr in selectedAttrs)
             {
@@ -494,9 +510,11 @@ public partial class WF_Rpt_Search : WebPage
                 }
             } /*结束循环*/
             this.UCSys1.AddTD();
+            this.UCSys1.AddTD();
             this.UCSys1.AddTREnd();
         }
         #endregion
+
         this.UCSys1.AddTableEnd();
     }
     private void ToolBar1_ButtonClick(object sender, System.EventArgs e)

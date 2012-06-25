@@ -50,19 +50,19 @@ namespace BP.Web.WF.Comm
 				ViewState["FK_Dept"]=value;
 			}
 		}
-		public void BindData()
-		{
-			string ensname=this.Request.QueryString["EnsName"];
-			if (ensname==null)
-				ensname=this.Request.QueryString["EnsName"] ;
+        public void BindData()
+        {
+            string ensname = this.Request.QueryString["EnsName"];
+            if (ensname == null)
+                ensname = this.Request.QueryString["EnsName"];
 
-			Entities ens =DA.ClassFactory.GetEns(ensname);
-			Entity en = ens.GetNewEntity;
+            Entities ens = DA.ClassFactory.GetEns(ensname);
+            Entity en = ens.GetNewEntity;
 
-			QueryObject qo  = new QueryObject(ens);
-			string[] strs=this.Request.RawUrl.Split('&');
-			string[] strs1=this.Request.RawUrl.Split('&');
-			int i = 0 ;
+            QueryObject qo = new QueryObject(ens);
+            string[] strs = this.Request.RawUrl.Split('&');
+            string[] strs1 = this.Request.RawUrl.Split('&');
+            int i = 0;
             foreach (string str in strs)
             {
                 if (str.IndexOf("EnsName") != -1)
@@ -112,14 +112,15 @@ namespace BP.Web.WF.Comm
                 }
             }
 
-			qo.AddHD();
-			int num= qo.DoQuery();
-           // Log.DebugWriteWarning(qo.SQL);
-           // Log.DefaultLogWriteLineError(qo.SQL);
+            qo.AddHD();
+            int num = qo.DoQuery();
+            // Log.DebugWriteWarning(qo.SQL);
+            // Log.DefaultLogWriteLineError(qo.SQL);
+            //    this.Label1.Text =this.GenerCaption( ens.GetNewEntity.EnMap.EnDesc +"，数据："+ num+" 条");
 
-            this.Label1.Text =this.GenerCaption( ens.GetNewEntity.EnMap.EnDesc +"，数据："+ num+" 条");
-			this.UCSys1.DataPanelDtl(ens,null);
-		}
+            this.Label1.Text = ens.GetNewEntity.EnMap.EnDesc + "，数据：" + num + " 条";
+            this.UCSys1.DataPanelDtl(ens, null);
+        }
 
 		#region Web 窗体设计器生成的代码
 		override protected void OnInit(EventArgs e)
