@@ -31,6 +31,19 @@
             return selecedDept;
         }
 
+        function GetSelectedIds() {
+            var tree = mini.get("tree1");
+            var nodes = tree.getCheckedNodes();
+            var selecedDept = "";
+            for (i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                selecedDept += node.id + ",";
+            }
+            selecedDept = selecedDept.substr(0, selecedDept.length - 1);
+            return selecedDept;
+        }
+
+
         function CollapseAll() {
             var tree = mini.get("tree1");
             tree.collapseAll();
