@@ -14,24 +14,23 @@
 </head>
 <body  style="margin: 0px;">
     <form id="form1" runat="server">
-    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
-    <div class="subtoolbar">
-        <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100">
-            <asp:ListItem Text="未读通告" Value="1" />
-            <asp:ListItem Text="已读通告" Value="2" />
-            <asp:ListItem Text="全部通告" Value="3" />
-        </lizard:XDropDownList>
-        &nbsp; 发布日期：
-        <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
-        &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
-        &nbsp;
-        <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
-    </div>
-    <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
-        BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
-        PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated"
-        CssClass="lizard-grid">
-        <Columns>
+    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" ShowAddBtn="false" ShowDelBtn="false" />
+    <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
+        <asp:ListItem Text="未读通告" Value="1" />
+        <asp:ListItem Text="已读通告" Value="2" />
+        <asp:ListItem Text="全部通告" Value="3" />
+    </lizard:xdropdownlist>
+    &nbsp; 发布日期：
+    <lizard:xdatepicker id="xdpCreateDate" runat="server" />
+    &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
+    &nbsp;
+    <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
+    <br />
+    <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
+        borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
+        pagesize="10" rowstyle-horizontalalign="Center" onrowcreated="gridView_OnRowCreated"
+        cssclass="lizard-grid">
+        <columns>
             <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
@@ -78,8 +77,8 @@
                         Text="删除"></asp:LinkButton>
                 </ItemTemplate>
             </asp:TemplateField>
-        </Columns>
-    </lizard:XGridView>
+        </columns>
+    </lizard:xgridview>
     <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
     </form>
 </body>
