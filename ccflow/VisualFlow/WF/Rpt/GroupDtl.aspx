@@ -26,7 +26,7 @@
 		<form id="Form1" method="post" runat="server">
 				<TABLE id="Table1"  width="98%" border="0">
 					<TR>
-                    <TD class=Toolbar><asp:Label id="Label1" runat="server">Label</asp:Label></TD>
+                    <TD class=Toolbar><b><asp:Label id="Label1" runat="server">Label</asp:Label></b></TD>
 					</TR>
 					<TR>
 						<TD>

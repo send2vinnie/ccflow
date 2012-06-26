@@ -79,7 +79,7 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
         // 根据发起人的权限来判断，是否具有操作此人员的权限。
         GetTasks jcs = new GetTasks(this.FK_Flow);
         string canDealNodes = "";
-        int idx = 0;
+        int idx = 1;
         foreach (GetTask jc in jcs)
         {
             /* 判断我是否可以处理当前点数据？ */

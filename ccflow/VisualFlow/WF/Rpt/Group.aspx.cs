@@ -30,7 +30,10 @@ namespace BP.Web.Comm
             {
                 string s = this.Request.QueryString["FK_Flow"];
                 if (s == null)
+                {
+                    throw new Exception("¶ªÊ§FK_Flow²ÎÊý.");
                     s = "021";
+                }
                 s = s.Replace("ND", "");
                 s = s.Replace("Rpt", "");
                 return s;
@@ -1220,14 +1223,14 @@ namespace BP.Web.Comm
                                 if (this.NumKey == attr.Key)
                                     this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
                                 else
-                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up&FK_Flow="+this.FK_Flow+"'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
                                 break;
                             case "Up":
                             default:
                                 if (this.NumKey == attr.Key)
                                     this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
                                 else
-                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
                                 break;
                         }
                     }
@@ -1236,7 +1239,7 @@ namespace BP.Web.Comm
                         if (this.NumKey == attr.Key)
                             this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
                         else
-                            this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
+                            this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&FK_Flow=" + this.FK_Flow + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
 
                     }
                 }
