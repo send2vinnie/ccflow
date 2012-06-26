@@ -62,7 +62,7 @@ td input[type="textbox"]
 
 td .TDNum
 {
-  text-align:right;
+    text-align:right;
     word-break: keep-all;
 }
 
@@ -147,25 +147,24 @@ table input[type="textbox"]
     margin: 0px;
     padding: 0px;
     word-break: keep-all;
-    
 }
 
 /*  input 类型风格 */
 input[type="button"], .Btn, input[type="submit"]
 {
-    padding:0 8px;
-    margin: 0 3px;
-    height: 25px;
-    border-right: #002D96 1px solid;
-    border-top: #002D96 1px solid;
-    font-size: 14px;
-    line-height:25px;
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
-StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
-    border-left: #002D96 1px solid;
-    cursor: hand;
-    color: black;
-    border-bottom: #002D96 1px solid;
+    margin: 2px;
+    font: 14px Tahoma, Verdana;
+    padding: 2px 5px 2px 5px;
+    background-image: url("BG_Title.png");
+    background-repeat: repeat-x;
+    background-position: 0 50%;
+    outline: 1px solid #D3E0E7;
+    border: 1px solid #FFF !important;
+    height: 26px !important;
+    border: 3px solid #D3E0E7;
+    height: 26px;
+    line-height: 17px;
+    font-weight: bold;
 }
 
 /** 其它  */

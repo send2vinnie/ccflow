@@ -7,7 +7,9 @@
   <Menu No="0103" Name="" CH="编码表"  W="700" H="800" Url="/Comm/Sys/SFTableList.aspx" Icon=""  />
   <Menu No="0103" Name="" CH="JS校验库"  W="700" H="800" Url="/Comm/Sys/FuncLib.aspx"  Icon="" />
   <Menu No="0103" Name="" CH="功能执行"  W="700" H="800" Url="/Comm/MethodLink.aspx"  Icon="" />
+  <Menu No="0103" Name="" CH="预先审批权规则设置"  W="700" H="800" Url="../WF/Admin/Personalize/GetTask.aspx"  Icon="" />
     
+
   <Menu No="02" Name="" CH="组织结构"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
   <Menu No="0201" Name="" CH="部门维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts"  Icon="" />
   <Menu No="0202" Name="" CH="岗位维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations" Icon=""  />
@@ -32,6 +34,7 @@
     <FlowData No="0103" Name="" CH="编码表"  W="700" H="800" Url="/Comm/Sys/SFTableList.aspx" Icon=""  />
     <FlowData No="0103" Name="" CH="JS校验库"  W="700" H="800" Url="/Comm/Sys/FuncLib.aspx"  Icon="" />
     <FlowData No="0103" Name="" CH="功能执行"  W="700" H="800" Url="/Comm/MethodLink.aspx"  Icon="" />
+    <FlowData No="0103" Name="" CH="预先审批权设置"  W="700" H="800" Url="/WF/Admin/Personalize/GetTask.aspx"  Icon="" />
 
     <FlowData No="02" Name="" CH="组织结构"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
     <FlowData No="0201" Name="" CH="部门维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts"  Icon="" />
@@ -41,6 +44,5 @@
     <FlowData No="03" Name="" CH="项目管理(需要引用BP.Prj)"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
     <FlowData No="0301" Name="" CH="项目维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.PRJ.Prjs"  Icon="" />
     <FlowData No="0302" Name="" CH="资料树节点访问规则"  W="700" H="800" Url="/PRJ/NodeAccess.aspx"  Icon="" />
-
     
 </NewDataSet>
