@@ -198,6 +198,7 @@ namespace BP.Web.Comm
             this.HisMD = new MapData(this.EnsName);
 
             AttrSearchs searchs = null;
+
             #region 处理查询设的默认.
             if (this.DoType == "My")
             {
@@ -343,7 +344,6 @@ namespace BP.Web.Comm
                 this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
             #endregion 处理查询设的默认。
-
 
             this.CB_IsShowPict.Text = this.ToE("IsShowPict", "显示图形");
             this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", "柱状图");
@@ -561,18 +561,19 @@ namespace BP.Web.Comm
             aas.RetrieveBy(ActiveAttrAttr.For, this.EnsName);
 
             Attrs attrs = this.HisMD.AttrsInTableEns;
+            attrs.AddTBInt("MyNum", 1, "流程数量", true, true);
             this.UCSys2.Add("<table border=0 cellPadding=0 >");
             foreach (Attr attr in attrs)
             {
                 if (attr.UIContralType != UIContralType.TB)
                     continue;
 
-                if (attr.UIVisible == false && attr.Key!="MyNum")
+                if (attr.UIVisible == false)
                     continue;
 
                 if (attr.IsNum == false)
                     continue;
-               
+
                 if (attr.Key == "OID" || attr.Key == "WorkID" || attr.Key == "MID")
                     continue;
 
@@ -622,7 +623,6 @@ namespace BP.Web.Comm
                 DDL ddl = new DDL();
                 ddl.ID = "DDL_" + attr.Key;
                 ddl.Items.Add(new ListItem(this.ToE("ForSum", "求和"), "SUM"));
-
                 ddl.Items.Add(new ListItem(this.ToE("ForAvg", "求平均"), "AVG"));
                 if (this.IsContainsNDYF)
                     ddl.Items.Add(new ListItem(this.ToE("ForAMOUNT", "求累计"), "AMOUNT"));

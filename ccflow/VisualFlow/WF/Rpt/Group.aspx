@@ -58,7 +58,7 @@
 								<TD  style="font-size:12px;"><asp:checkboxlist id="CheckBoxList1" runat="server" AutoPostBack=true ></asp:checkboxlist></TD>
 							</TR>
 							<tr >
-								<TD nowarp=true align=left  style="font-size:12px;"><hr><uc1:ucsys id="UCSys2" runat="server"></uc1:ucsys></TD>
+								<TD nowarp=true align=left  style="font-size:12px;"><uc1:ucsys id="UCSys2" runat="server"></uc1:ucsys></TD>
 							</TR>
 							<TR>
 								<TD class="GroupTitle" >
@@ -67,7 +67,7 @@
 							</TR>
 							<TR>
 								<TD>
-								<table width='100%'>
+								<table width='100%' border="1px;" class='t' >
 								<tr style="font-size:12px;">
 								<TD> <%=BP.Sys.Language.GetValByUserLang("Height", "¸ß¶È")%>:</TD>
 								  <TD class="TD"><cc1:tb id="TB_H" runat="server" ShowType="Num" Width="80px">400</cc1:tb></TD>
@@ -83,19 +83,16 @@
 							</TR>
 						</TABLE>
 					</TD>
-					<TD valign="top" ><cc1:bptabstrip id="BPTabStrip1" Visible=true runat="server"  
-							BorderStyle="None" BorderWidth="2px" TargetID="BPMultiPage1" Height="25px"   
-							TabDefaultStyle="font-size:12px;background:white;padding:3px;text-align:center;text-decoration:none;"   
-  TabHoverStyle="color:red;"
-  TabSelectedStyle="background:white;border-bottom:none"
-							>
-							<iewc:Tab Text=" ±í¸ñ" ID="ShowTable" DefaultImageUrl="../Images/Pub/Table.gif" ></iewc:Tab>
+					<TD valign="top" ><cc1:bptabstrip id="BPTabStrip1" Visible=true runat="server"  Height="30px" Width='600px' 
+							BorderStyle="None" BorderWidth="2px" TargetID="BPMultiPage1" TabDefaultStyle="font-size:12px;background:white;padding:3px;text-align:center;text-decoration:none;"   
+  TabHoverStyle="color:red;"   TabSelectedStyle="background:white;border-bottom:none" >
+							<iewc:Tab Text=" ±í¸ñ" ID="ShowTable" DefaultImageUrl="../../Images/Pub/Table.gif" ></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" Öù×´Í¼"  ID="ShowZZT" DefaultImageUrl="../Images/Pub/Histogram.ico"></iewc:Tab>
+							<iewc:Tab Text=" Öù×´Í¼"  ID="ShowZZT" DefaultImageUrl="../../Images/Pub/Histogram.ico"></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" ±ýÍ¼"  ID="ShowPie" DefaultImageUrl="../Images/Pub/Pie.ico"></iewc:Tab>
+							<iewc:Tab Text=" ±ýÍ¼"  ID="ShowPie" DefaultImageUrl="../../Images/Pub/Pie.ico"></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" ÕÛÏßÍ¼" ID="ShowZXT" DefaultImageUrl="../Images/Pub/ZX.ico"></iewc:Tab>
+							<iewc:Tab Text=" ÕÛÏßÍ¼" ID="ShowZXT" DefaultImageUrl="../../Images/Pub/ZX.ico"></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
 						</cc1:bptabstrip>
 						<cc1:bpmultipage id="BPMultiPage1" runat="server" Width="95%" Height="100%" BorderColor=GhostWhite>
