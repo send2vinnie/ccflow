@@ -271,7 +271,7 @@ namespace BP.DA
 				SqlCommand salesCMD = new SqlCommand(spName, conn);
 				salesCMD.CommandType = CommandType.StoredProcedure;			 
 
-				/// 加上他们的餐数			
+				/// 加上他们的参数			
 				foreach(Para para in paras)
 				{
                     SqlParameter myParm = salesCMD.Parameters.AddWithValue(para.ParaName, para.DAType);

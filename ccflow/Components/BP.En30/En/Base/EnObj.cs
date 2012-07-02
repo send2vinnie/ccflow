@@ -205,8 +205,31 @@ namespace BP.En
             {
                 if (attr.UIIsReadonly == false)
                     continue;
+                string v = attr.DefaultVal.ToString();
+                if (v.Contains("@") == false)
+                    continue;
 
-                this.SetValByKey(attr.Key, attr.DefaultVal);
+                // …Ë÷√ƒ¨»œ÷µ.
+                switch (v)
+                {
+                    case "@WebUser.No":
+                        this.SetValByKey(attr.Key, Web.WebUser.No);
+                        break;
+                    case "@WebUser.Name":
+                        this.SetValByKey(attr.Key, Web.WebUser.Name);
+                        break;
+                    case "@WebUser.FK_Dept":
+                        this.SetValByKey(attr.Key, Web.WebUser.FK_Dept);
+                        break;
+                    case "@WebUser.FK_DeptName":
+                        this.SetValByKey(attr.Key, Web.WebUser.FK_DeptName);
+                        break;
+                    case "@RDT":
+                        this.SetValByKey(attr.Key, DataType.CurrentData);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         #endregion
