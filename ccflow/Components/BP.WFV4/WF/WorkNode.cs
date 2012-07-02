@@ -682,10 +682,25 @@ namespace BP.WF
            }
            #endregion 按照指定节点的岗位来执行。
 
+           #region 按节点岗位与人员部门集合两个纬度计算.
+           if (town.HisNode.HisDeliveryWay == DeliveryWay.ByStationAndEmpDept)
+           {
+               sql = "SELECT No FROM Port_Emp WHERE NO IN "
+                     + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                     + " AND  NO IN "
+                     + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Emp = '" + WebUser.No + "')";
+               dt = DBAccess.RunSQLReturnTable(sql);
+               if (dt.Rows.Count > 0)
+                   return WorkerListWayOfDept(town, dt);
+               else
+                   throw new Exception("@节点访问规则错误:节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + "), 按节点岗位与人员部门集合两个纬度计算，没有找到人员:SQL=" + sql);
+           }
+           #endregion 
+
+
+
            if (town.HisNode.HisDeliveryWay != DeliveryWay.ByStation)
                throw new Exception("@没有判断的执行规则:" + town.HisNode.HisDeliveryWay);
-
-
 
            #region 最后判断 - 按照岗位来执行。
            if (this.HisNode.IsStartNode == false)
@@ -1934,7 +1949,7 @@ namespace BP.WF
                 {
                     info += wl.FK_Emp + "," + wl.FK_EmpText + "\t\n";
                 }
-                this.AddToTrack(at, WebUser.No, WebUser.No, town.HisNode.NodeID, town.HisNode.Name, info);
+                this.AddToTrack(at, WebUser.No, WebUser.Name, town.HisNode.NodeID, town.HisNode.Name, info);
             }
             return this.HisWorkerLists;
         }
@@ -2661,7 +2676,7 @@ namespace BP.WF
             if (this.HisNode.IsStartNode)
             {
                 if (gwls.Count >= 2)
-                    msg += "@<img src='" + this.VirPath + "WF/Img/AllotTask.gif' border=0 /><a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&FID=" + this.WorkID + "&NodeID=" + toNode.NodeID + "')\" >" + this.ToE("W29", "修改接受对象") + "</a>.";
+                    msg += "@<img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0 /><a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&FID=" + this.WorkID + "&NodeID=" + toNode.NodeID + "')\" >" + this.ToE("W29", "修改接受对象") + "</a>.";
             }
 
             if (this.HisNode.IsStartNode)
@@ -2670,7 +2685,7 @@ namespace BP.WF
             }
             else
             {
-                msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
+                msg += "@<a href='" + this.VirPath  + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
                 //  msg += "@<a href=\"javascript:WinOpen('" + this.VirPath + "/" + this.AppType + "/" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
             }
 

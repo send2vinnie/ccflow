@@ -74,7 +74,11 @@ namespace BP.WF
         /// <summary>
         /// 按岗位与部门交集计算
         /// </summary>
-        ByDeptAndStation = 9
+        ByDeptAndStation = 9,
+        /// <summary>
+        /// 按岗位计算(以部门集合为纬度)
+        /// </summary>
+        ByStationAndEmpDept
     }
     /// <summary>
     /// 节点工作退回规则
