@@ -29,7 +29,7 @@
         />
   
     <Item Key="DeliveryWay"
-    CH="@0=按岗位计算@1=按部门计算@2=按SQL计算@3=按设置的人员计算@4=由上一步发送人选择@5=按上一节点表单FK_Emp字段计算@6=按上一步操作人员@7=按上一步操作人员并自动跳转@8=按指定节点岗位计算@9=按岗位与部门交集计算"
+    CH="@0=按岗位计算@1=按部门计算@2=按SQL计算@3=按设置的人员计算@4=由上一步发送人选择@5=按上一节点表单FK_Emp字段计算@6=按上一步操作人员@7=按上一步操作人员并自动跳转@8=按指定节点岗位计算@9=按岗位与部门交集计算@10=按岗位计算(以部门集合为纬度)"
     EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
     JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
     RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
@@ -111,7 +111,7 @@
     
   <!-- 表单类型  -->
 <Item Key="FormType"
-     CH="@0=傻瓜表单@1=自由表单@2=自定义表单@3=SDK表单@9=禁用(对多表单流程有效)"
+     CH="@0=傻瓜表单@1=自由表单@2=自定义表单@3=SDK表单@8=SL表单(开发中)@9=禁用(对多表单流程有效)"
      EN="@0=System Form@1=Custom Form@2=SDK Form"
      JP="@0=System Form@1=Custom Form@2=SDK Form"
      RU="@0=System Form@1=Custom Form@2=SDK Form" />
