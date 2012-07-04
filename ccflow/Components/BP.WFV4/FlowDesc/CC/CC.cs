@@ -72,6 +72,17 @@ namespace BP.WF
                 case CtrlWay.BySQL:
                     sql = this.CCSQL.Clone() as string;
                     sql = sql.Replace("@WebUser.No", Web.WebUser.No);
+                    sql = sql.Replace("@WebUser.Name", Web.WebUser.Name);
+                    sql = sql.Replace("@WebUser.FK_Dept", Web.WebUser.FK_Dept);
+                    if (sql.Contains("@"))
+                    {
+                        foreach (Attr attr in rpt.EnMap.Attrs)
+                        {
+                            if (sql.Contains("@") == false)
+                                break;
+                            sql = sql.Replace("@" + attr.Key, rpt.GetValStrByKey(attr.Key));
+                        }
+                    }
                     break;
                 case CtrlWay.ByEmp:
                     sql = "SELECT No,Name FROM Port_Emp WHERE No IN (SELECT FK_Emp FROM WF_CCEmp WHERE FK_Node=" + this.NodeID + ")";

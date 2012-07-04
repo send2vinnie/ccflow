@@ -34,7 +34,7 @@ namespace BP.WF
         /// <summary>
         /// 是否读取
         /// </summary>
-        public const string IsRead = "IsRead";
+        public const string Sta = "Sta";
         public const string RefWorkID = "RefWorkID";
         public const string FID = "FID";
 
@@ -53,24 +53,41 @@ namespace BP.WF
         public const string RDT = "RDT";
         #endregion
     }
+    public enum CCSta
+    {
+        /// <summary>
+        /// 未读
+        /// </summary>
+        UnRead,
+        /// <summary>
+        /// 已读取
+        /// </summary>
+        Read,
+        /// <summary>
+        /// 已删除
+        /// </summary>
+        Del
+    }
 	/// <summary>
 	/// 抄送
 	/// </summary>
     public class CCList : EntityMyPK
     {
         #region 属性
-        public bool IsRead
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public CCSta HisSta
         {
             get
             {
-                return this.GetValBooleanByKey(CCListAttr.IsRead);
+                return (CCSta)this.GetValIntByKey(CCListAttr.Sta);
             }
             set
             {
-                this.SetValByKey(CCListAttr.IsRead, value);
+                this.SetValByKey(CCListAttr.Sta, (int)value);
             }
         }
-
         public override UAC HisUAC
         {
             get
@@ -273,7 +290,7 @@ namespace BP.WF
 
                 map.AddTBString(CCListAttr.Rec, null, "记录人", true, true, 0, 50, 10, true);
                 map.AddTBString(CCListAttr.RDT, null, "记录日期", true, true, 0, 500, 10, true);
-                map.AddTBInt(CCListAttr.IsRead, 0, "是否读取?", true, true);
+                map.AddTBInt(CCListAttr.Sta, 0, "状态", true, true);
                 map.AddTBString(CCListAttr.CCTo, null, "抄送给", true, false, 0, 50, 10, true);
                  
                 this._enMap = map;
