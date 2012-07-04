@@ -671,8 +671,8 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
                 msg += "执行更新错误：" + enP.EnDesc + " " + ex.Message;
             }
         }
-        if (msg != "")
-            this.ResponseWriteBlueMsg(msg);
+        //if (msg != "")
+        //    this.ResponseWriteBlueMsg(msg);
     }
     public void SaveTree()
     {
