@@ -213,9 +213,15 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
 
             if (enP.EnMap.EnType != EnType.View)
             {
-                enP.SetValByKey(enP.PK, this.PK);// =this.PK;
-                enP.Retrieve(); //查询。
-                enP.Update(); // 执行更新，处理写在 父实体 的业务逻辑。
+                try
+                {
+                    enP.SetValByKey(enP.PK, this.PK);// =this.PK;
+                    enP.Retrieve(); //查询。
+                    enP.Update(); // 执行更新，处理写在 父实体 的业务逻辑。
+                }
+                catch
+                {
+                }
             }
             MainEn = enP;
             #endregion
@@ -633,9 +639,7 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
         AttrOfOneVSM attr = this.AttrOfOneVSM;
         Entities ensOfMM = attr.EnsOfMM;
         ensOfMM.Delete(attr.AttrOfOneInMM, this.PK);
-
         string msg = "";
-
         AttrOfOneVSM attrOM = this.AttrOfOneVSM;
         Entities ensOfM = attrOM.EnsOfM;
         ensOfM.RetrieveAll();
