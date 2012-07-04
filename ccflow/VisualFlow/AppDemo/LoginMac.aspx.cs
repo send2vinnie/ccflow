@@ -5,12 +5,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class AppDemo_Login : System.Web.UI.Page
+public partial class AppDemo_LoginMac : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Request.QueryString["DoType"] == "Logout")
+        {
             BP.Web.WebUser.Exit();
+        }
 
         if (!Page.IsPostBack)
         {
