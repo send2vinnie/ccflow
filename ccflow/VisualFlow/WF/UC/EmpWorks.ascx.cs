@@ -71,21 +71,17 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
         {
-            if (groupVals.Contains("@" + dr[this.GroupBy].ToString()+"," ))
+            if (groupVals.Contains("@" + dr[this.GroupBy].ToString() + ","))
                 continue;
-            groupVals += "@" + dr[this.GroupBy].ToString()+",";
+            groupVals += "@" + dr[this.GroupBy].ToString() + ",";
         }
-
-        string sql1 = "SELECT COUNT(MyPK) FROM WF_CCList WHERE CCTO='"+WebUser.No+"' AND IsRead=0";
-        string sql2 = "SELECT COUNT(MyPK) FROM WF_CCList WHERE CCTO='"+WebUser.No+"'";
-        string cc = "<b>抄送("+DBAccess.RunSQLReturnValInt(sql1)+"/"+DBAccess.RunSQLReturnValInt(sql2)+")</b>";
 
         int colspan = 9;
         if (this.PageSmall != "")
             this.Pub1.AddBR();
 
-        this.Pub1.AddTable("border=1px align=center width='960px' ");
-        this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b> - <a href='"+this.PageID+".aspx?DoType=CC'>"+cc+"</a>");
+        this.Pub1.AddTable(" style='border:2px;align:center;'  width='960px' ");
+        this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
@@ -178,114 +174,8 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddTableEnd();
         return;
     }
-    public void BindCC()
-    {
-        string sql1 = "SELECT COUNT(MyPK) FROM WF_CCList WHERE CCTO='"+BP.Web.WebUser.No+"' AND IsRead=0";
-        string sql2 = "SELECT COUNT(MyPK) FROM WF_CCList WHERE CCTO='" + WebUser.No + "'";
-        string cc = "<b>抄送(" + DBAccess.RunSQLReturnValInt(sql1) + "/" + DBAccess.RunSQLReturnValInt(sql2) + ")</b>";
-        DataTable dt = BP.WF.Dev2Interface.DB_CCList();
-        string groupVals = "";
-        foreach (DataRow dr in dt.Rows)
-        {
-            if (groupVals.Contains("@" + dr[this.GroupBy].ToString() + ","))
-                continue;
-            groupVals += "@" + dr[this.GroupBy].ToString() + ",";
-        }
-
-        if (this.PageSmall != "")
-            this.Pub1.AddBR();
-        int colspan = 9;
-        this.Pub1.AddTable("border=1px align=center width='960px' ");
-        this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b><a href='" + this.PageID + ".aspx'>待办工作</a></b> - " + cc + "");
-        this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("ID");
-        this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
-
-        if (this.GroupBy != "FlowName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName&DoType=CC' >" + this.ToE("Flow", "流程") + "</a>");
-
-        if (this.GroupBy != "NodeName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName&DoType=CC' >" + this.ToE("NodeName", "节点") + "</a>");
-
-        if (this.GroupBy != "Rec")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=Rec&DoType=CC' >" + this.ToE("Rec", "发起人") + "</a>");
-
-        this.Pub1.AddTDTitle("抄送日期");
-       // this.Pub1.AddTDTitle("报告");
-        this.Pub1.AddTREnd();
-
-        int i = 0;
-        bool is1 = false;
-        DateTime cdt = DateTime.Now;
-        string[] gVals = groupVals.Split('@');
-        int gIdx = 0;
-        foreach (string g in gVals)
-        {
-            if (string.IsNullOrEmpty(g))
-                continue;
-
-            gIdx++;
-            this.Pub1.AddTR();
-            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
-            this.Pub1.AddTREnd();
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                if (dr[this.GroupBy].ToString() + "," != g)
-                    continue;
-
-                this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
-                i++;
-                bool isRead = false;
-                if (dr["IsRead"].ToString()=="1")
-                    isRead=true;
-
-                this.Pub1.AddTDIdx(i);
-                if (isRead==false)
-                this.Pub1.AddTDB("<a href=\"javascript:WinOpen('WFRpt.aspx?CCID="+dr["MyPK"]+"&WorkID=" + dr["RefWorkID"] + "&FK_Flow=" + dr["FK_Flow"] + "&FID=" + dr["FID"] + "');\" >" + dr["Title"] + "</a>");
-                else
-                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?CCID=" + dr["MyPK"] + "&WorkID=" + dr["RefWorkID"] + "&FK_Flow=" + dr["FK_Flow"] + "&FID=" + dr["FID"] + "');\" >" + dr["Title"] + "</a>");
-
-                //  this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["RefWorkID"] + "\" >" + dr["Title"].ToString()+"</a>");
-
-                if (this.GroupBy != "FlowName")
-                {
-                    if (isRead == false)
-                        this.Pub1.AddTDB(dr["FlowName"].ToString());
-                    else
-                        this.Pub1.AddTD(dr["FlowName"].ToString());
-                }
-
-                if (this.GroupBy != "NodeName")
-                {
-                    if (isRead == false)
-                        this.Pub1.AddTDB(dr["NodeName"].ToString());
-                    else
-                        this.Pub1.AddTD(dr["NodeName"].ToString());
-                }
-
-                if (this.GroupBy != "Rec")
-                    this.Pub1.AddTD(dr["Rec"].ToString());
-
-                this.Pub1.AddTD(dr["RDT"].ToString());
-                this.Pub1.AddTREnd();
-            }
-        }
-        this.Pub1.AddTRSum();
-        this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
-        this.Pub1.AddTREnd();
-        this.Pub1.AddTableEnd();
-
-    }
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (this.DoType == "CC")
-        {
-            this.BindCC();
-            return;
-        }
-
         this.BindList();
-        return;  // 以下是备份,不在输出以流程类别了。
     }
 }

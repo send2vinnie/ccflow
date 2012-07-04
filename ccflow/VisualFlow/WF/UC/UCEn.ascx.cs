@@ -2224,7 +2224,7 @@ namespace BP.Web.Comm.UC.WF
                     lab.ID = "Lab" + ath.MyPK;
                     this.Add(lab);
                     if (athDB != null)
-                        lab.Text = "<a href='./../DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='"+appPath+"/Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
+                        lab.Text = "<a href='"+this.Request.ApplicationPath+"/DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='"+appPath+"/Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
 
                     FileUpload fu = new FileUpload();
                     fu.ID = ath.MyPK;
@@ -2389,7 +2389,7 @@ namespace BP.Web.Comm.UC.WF
                     myBtnDel.Visible = true;
 
                     Label lab = this.GetLabelByID("Lab" + frmAth.MyPK);
-                    lab.Text = "<a href='./../DataUser/UploadFile/" + dbUpload.FilePathName + "' target=_blank ><img src='./../../Images/FileType/" + dbUpload.FileExts + ".gif' border=0/>" + dbUpload.FileName + "</a>";
+                    lab.Text = "<a href='"+this.Request.ApplicationPath+"/DataUser/UploadFile/" + dbUpload.FilePathName + "' target=_blank ><img src='"+this.Request.ApplicationPath+"/Images/FileType/" + dbUpload.FileExts + ".gif' border=0/>" + dbUpload.FileName + "</a>";
                     return;
                 case "Download":
                     FrmAttachmentDB dbDown = new FrmAttachmentDB();
@@ -2449,7 +2449,6 @@ namespace BP.Web.Comm.UC.WF
                         return;
                     case BtnEventType.RunURL:
                         doc = doc.Replace("@AppPath", System.Web.HttpContext.Current.Request.ApplicationPath);
-
                         string text = DataType.ReadURLContext(doc, 800, System.Text.Encoding.UTF8);
                         if (text != null && text.Substring(0, 7).Contains("Err"))
                             throw new Exception(text);

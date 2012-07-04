@@ -191,6 +191,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         string pass = this.GetTextBoxByID("TB_Pass").Text;
         try
         {
+              
             Emp em = new Emp();
             em.No = user;
             if (em.RetrieveFromDBSources() == 0)
@@ -200,25 +201,6 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
             }
             if (em.CheckPass(pass))
             {
-
-                /* 检查用户是否被禁用。 */
-                BP.WF.Port.WFEmp wfemp = new BP.WF.Port.WFEmp();
-                wfemp.No = em.No;
-                if (wfemp.RetrieveFromDBSources() == 0)
-                {
-                    wfemp.UseSta = 1;
-                    wfemp.Copy(em);
-                    wfemp.Insert();
-                }
-                else
-                {
-                    if (wfemp.UseSta == 0)
-                    {
-                        this.Alert("改用户已经被禁用.");
-                        return;
-                    }
-                }
-
                 // 执行登录.
                 WebUser.SignInOfGenerLang(em, this.Lang);
                 if (this.Request.RawUrl.ToLower().Contains("wap"))

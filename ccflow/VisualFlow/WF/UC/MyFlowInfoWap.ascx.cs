@@ -122,7 +122,6 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
                 this.AddFieldSet("" + this.ToE("Note", "操作提示"), s);
 
             this.Add("<br><br></div>");
- 
             return;
         }
 
@@ -130,7 +129,7 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();// BP.DA.DBAccess.RunSQLReturnTable(sql);
 
         int colspan = 9;
-        this.AddTable("border=1px align=center width='80%'");
+        this.AddTable(" style='border=1px;align=center;width=80%;height:450px;");
         this.AddCaption("待办工作");
         this.AddTR();
         this.AddTDTitle("ID");

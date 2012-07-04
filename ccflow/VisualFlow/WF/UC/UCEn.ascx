@@ -31,4 +31,21 @@
             document.getElementById(rowIdx + '_' + i).style.display = sta;
         }
     }
+    function NoSubmit(ev) {
+        if (window.event.srcElement.tagName == "TEXTAREA")
+            return true;
+
+        if (ev.keyCode == 13) {
+            window.event.keyCode = 9;
+            // alert(' code=: ' + ev.keyCode + ' tagName:' + window.event.srcElement.tagName);
+            ev.keyCode = 9;
+            // alert('ok');
+            //alert(ev.keyCode);
+            return true;
+            //                event.keyCode = 9;
+            //                ev.keyCode = 9;
+            //                window.event.keyCode = 9;
+        }
+        return true;
+    }
 </script>

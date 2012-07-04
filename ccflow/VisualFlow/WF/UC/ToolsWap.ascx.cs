@@ -373,21 +373,18 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
             System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat(StringFormatFlags.DirectionVertical);//文本
             g.DrawString(WebUser.Name, font, drawBrush, 3, 3);
-
             try
             {
                 File.Delete(pathMe);
             }
             catch
             {
-
             }
             img.Save(pathMe);
             img.Dispose();
             g.Dispose();
 
-            File.Copy(pathMe,
-            BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + WebUser.Name + ".JPG", true);
+            File.Copy(pathMe,BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + WebUser.Name + ".JPG", true);
         }
 
         if (WebUser.IsWap)
