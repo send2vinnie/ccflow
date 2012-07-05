@@ -384,7 +384,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.Add(cl.DocHtml);
             this.AddFieldSetEnd();
 
-            if (cl.HisSta == CCSta.UnRead )
+            if (cl.HisSta == CCSta.UnRead)
             {
                 cl.HisSta = CCSta.Read;
                 cl.Update();

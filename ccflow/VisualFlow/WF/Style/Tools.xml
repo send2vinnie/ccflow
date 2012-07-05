@@ -1,18 +1,14 @@
 <?xml version="1.0" standalone="yes"?>
 <NewDataSet>
-  <!-- 流程管理  -->
-  <Item No="Per" CH="个人信息" B5="个人信息" EN="Personal Information" RU="Запускаемых"  JP="个人信息"  Url="Per.aspx" Img="./Img/Start.gif" Title="发起我能够发起的流程" />
-
+  <!-- 个人信息设置在Tools.aspx中  -->
+  <Item No="Per"  CH="个人信息" B5="个人信息" EN="Personal Information" RU="Запускаемых"  JP="个人信息"  Url="Per.aspx" Img="./Img/Start.gif" Title="发起我能够发起的流程" />
   <Item No="Skin" CH="风格设置" B5="风格设置" EN="Personal Information" RU="Запускаемых"  JP="个人信息"  Url="Per.aspx" Img="./Img/Start.gif" Title="发起我能够发起的流程" />
-
   <Item No="Auto" CH="授权" B5="授权" EN="Authorization" RU="Чтобы Bыполнитe"  JP="授权"  Url="Auto.aspx" Img="./Img/MyWork.gif" Enable="1" Title="等待我处理的工作。" />
   <Item No="AutoLog" CH="授权方式登录" B5="授权方式登录"  EN="Authorization Login" RU="В транзите" JP="授权方式登录"   Url="AutoLou.aspx" Img="./Img/Runing.gif" Enable="1" Title="我参与的工作，没有完成。" />
-
-  <Item No="MyWorks" CH="我可做的工作" B5="我可做的工作"  EN="My works" RU="My works" JP="My works"   Url="AutoLou.aspx" Img="./Img/Runing.gif" Enable="1" Title="我可做的工作" />
-
-  <Item No="Times" CH="时效分析" B5="时效分析" EN="Aging analysis" RU="В транзите" JP="时效分析"   Url="FNTimes.aspx" Img="./Img/Runing.gif" Enable="1" Title="我参与的工作，没有完成。" />
+  <Item1 No="MyWorks" CH="我可做的工作" B5="我可做的工作"  EN="My works" RU="My works" JP="My works"   Url="AutoLou.aspx" Img="./Img/Runing.gif" Enable="1" Title="我可做的工作" />
+  <Item1 No="Times" CH="时效分析" B5="时效分析" EN="Aging analysis" RU="В транзите" JP="时效分析"   Url="FNTimes.aspx" Img="./Img/Runing.gif" Enable="1" Title="我参与的工作，没有完成。" />
   <Item1 No="FtpSet" CH="Ftp服务器设置" B5="Ftp服务器设置" EN="Ftp server settings" RU="В транзите" JP="Ftp服务器设置"   Url="FNTimes.aspx" Img="./Img/Runing.gif" Enable="1" Title="我参与的工作，没有完成。" />
-
+    
   <!-- 系统语言 -->
   <Lang No="CH" Name="简体中文" />
   <Lang No="B5" Name="繁体中文" />
@@ -32,5 +28,5 @@
 
   <WorkOptDtl No="ExpImp" URL="DtlOpt.aspx" CH="导入导出"/>
   <WorkOptDtl No="UnPass" URL="DtlOpt.aspx" CH="审核未通过"/>
-  
+    
 </NewDataSet>

@@ -702,14 +702,12 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("IDX", "序"));
         this.Pub1.AddTDTitle(this.ToE("FlowSort", "流程类别"));
-        this.Pub1.AddTDTitle(this.ToE("Name", "名称"));
+        this.Pub1.AddTDTitle(this.ToE("Name", "流程名称"));
         this.Pub1.AddTDTitle(this.ToE("Bill", "单据"));
         this.Pub1.AddTDTitle(this.ToE("FlowSearch", "流程查询-分析"));
-        //this.Pub1.AddTDTitle(this.ToE("Node", "节点") );
-        //this.Pub1.AddTDTitle(this.ToE("BPR", "成本分析"));
         this.Pub1.AddTREnd();
 
-        string sql = ""; // "SELECT FK_Flow FROM WF_Node ";
+        string sql = "";  
         Flows fls = new Flows();
         fls.RetrieveAll();
         int i = 0;
@@ -723,10 +721,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         string bill = this.ToE("Bill", "单据");
         string nodeSearch = this.ToE("Node", "节点");
         string FX = this.ToE("FX", "分析");
-
         string myWork = this.ToE("MyWork", "我的工作");
         string BPR = this.ToE("BPR", "成本分析");
-
         foreach (FlowSort fs in fss)
         {
             foreach (Flow fl in fls)
@@ -742,12 +738,10 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                     this.Pub1.AddTDB(fl.FK_FlowSortText);
 
                 fk_sort = fl.FK_FlowSort;
-
                 if (WebUser.IsWap == false)
                     this.Pub1.AddTD("<a href=\"javascript:WinOpen('Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart','sd');\"  >" + fl.Name + "</a>");
                 else
                     this.Pub1.AddTD(fl.Name);
-
 
                 if (fl.NumOfBill == 0)
                 {
