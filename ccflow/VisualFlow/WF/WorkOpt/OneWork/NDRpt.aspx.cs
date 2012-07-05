@@ -31,7 +31,6 @@ public partial class WF_WorkOpt_OneWork_NDRpt : System.Web.UI.Page
         Entity en = md.HisEn;
         en.PKVal = this.WorkID;
         en.RetrieveFromDBSources();
-
         this.UCEn1.IsReadonly = true;
         this.UCEn1.BindColumn4(en, fk_mapdata);
     }

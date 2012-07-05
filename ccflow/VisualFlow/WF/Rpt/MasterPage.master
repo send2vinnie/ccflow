@@ -1,58 +1,17 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="WF_Rpt_MasterPage" %>
-
+<%@ Register src="../UC/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>流程数据查询</title>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-    <table width='100%'>
-    <tr>
-         <td width='0px' valign=top>
-        <%-- <table border=0>
-         <tr>
-         <td class=Title> 流程查询</td>
-         </tr>
-         <tr>
-         <td class='TD' ><a href=''>我参与的</a></td>
-         </tr>
-           <tr>
-         <td class='TD' ><a href=''>我部门的</a></td>
-         </tr>
-
-          <tr>
-         <td class=Title> 流程分析</td>
-         </tr>
-         <tr>
-         <td class='TD' ><a href=''>我参与的</a></td>
-         </tr>
-           <tr>
-         <td class='TD' ><a href=''>我部门的</a></td>
-         </tr>
-
-            <tr>
-         <td class=Title> 单据打印</td>
-         </tr>
-         <tr>
-         <td class='TD' ><a href=''>我参与的</a></td>
-         </tr>
-           <tr>
-         <td class='TD' ><a href=''>我部门的</a></td>
-         </tr>
-
-         </table>--%>
-
-        </td>
-        
-        <td valign=top>
+       <uc1:Pub ID="Pub1" runat="server" />
         <asp:ContentPlaceHolder id="ContentPlaceHolder2" runat="server">
         </asp:ContentPlaceHolder>
-        </td>
-        </tr>
     </table>
     </form>
 </body>

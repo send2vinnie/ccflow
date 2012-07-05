@@ -76,19 +76,20 @@ public partial class WF_Rpt_Search : WebPage
             this.PageIdx = int.Parse(this.Request.QueryString["PageIdx"]);
         #endregion 处理风格
 
-        if (WebUser.IsWap)
-        {
-            this.Pub1.Add("<a href='./../WAP/Home.aspx' ><img src='./../WAP/Img/Home.gif' />Home</a>");
-            this.Pub1.Add("-<a href='./../WAP/FlowSearch.aspx' >查询</a>");
+        //if (WebUser.IsWap)
+        //{
+        //    this.Pub1.Add("<a href='./../WAP/Home.aspx' ><img src='./../WAP/Img/Home.gif' />Home</a>");
+        //    this.Pub1.Add("-<a href='./../WAP/FlowSearch.aspx' >查询</a>");
 
-            this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
-            this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
-        }
-        else
-        {
-            this.Pub1.Add("<a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
-            this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
-        }
+        //    this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
+        //    this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
+        //}
+        //else
+        //{
+        //    this.Pub1.Add("<a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
+        //    this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
+        //}
+
 
         #region 处理查询设的默认.
         if (this.DoType == "My")

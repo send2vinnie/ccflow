@@ -62,7 +62,7 @@ public partial class WF_WorkOpt_OneWork_Ath : BP.Web.WebPage
                 this.Pub1.AddTR();
                 this.Pub1.AddTDIdx(i);
                 this.Pub1.AddTD(dr["FK_FrmAttachment"].ToString());
-                this.Pub1.AddTD("<a href='" + this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?DoType=Down&MyPK=" + dr["MyPK"] + "' target=_sd ><img src='../../Images/FileType/" + dr["FileExts"] + ".gif' onerror=\"this.src='../../Images/FileType/Undefined.gif'\" border=0/>" + dr["FileName"].ToString() + "</a>");
+                this.Pub1.AddTD("<a href='" + this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?DoType=Down&MyPK=" + dr["MyPK"] + "' target=_sd ><img src='" + this.Request.ApplicationPath + "/Images/FileType/" + dr["FileExts"] + ".gif' onerror=\"this.src='../../Images/FileType/Undefined.gif'\" border=0/>" + dr["FileName"].ToString() + "</a>");
                 this.Pub1.AddTD(dr["FileSize"].ToString());
                 this.Pub1.AddTD(dr["RecName"].ToString());
                 this.Pub1.AddTD(dr["RDT"].ToString());

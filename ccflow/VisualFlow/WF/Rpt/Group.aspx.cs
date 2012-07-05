@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
+ï»¿using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Web;
-using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 using BP.DA;
+using BP;
 using BP.WF;
 using BP.En;
 using BP.Web;
@@ -17,462 +14,205 @@ using BP.Sys;
 using BP.Rpt;
 using BP.Sys.Xml;
 
-namespace BP.Web.Comm
+public partial class WF_Rpt_G : BP.Web.WebPage
 {
-    /// <summary>
-    /// ÕªÒªËµÃ÷
-    /// </summary>
-    public partial class Groups : BP.Web.WebPage
+
+    #region å±æ€§
+    public string FK_Flow
     {
-        public string FK_Flow
+        get
         {
-            get
+            string s = this.Request.QueryString["FK_Flow"];
+            if (s == null)
             {
-                string s = this.Request.QueryString["FK_Flow"];
-                if (s == null)
+                throw new Exception("ä¸¢å¤±FK_Flowå‚æ•°.");
+                s = "021";
+            }
+            s = s.Replace("ND", "");
+            s = s.Replace("Rpt", "");
+            return s;
+        }
+    }
+    public new string EnsName
+    {
+        get
+        {
+            return "ND" + int.Parse(this.FK_Flow) + "Rpt";
+        }
+    }
+    public Entities _HisEns = null;
+    public new Entities HisEns
+    {
+        get
+        {
+            if (_HisEns == null)
+            {
+                if (this.EnsName != null)
                 {
-                    throw new Exception("¶ªÊ§FK_Flow²ÎÊı.");
-                    s = "021";
+                    if (this._HisEns == null)
+                        _HisEns = BP.DA.ClassFactory.GetEns(this.EnsName);
                 }
-                s = s.Replace("ND", "");
-                s = s.Replace("Rpt", "");
-                return s;
             }
+            return _HisEns;
         }
-        public new string EnsName
+    }
+    /// <summary>
+    /// key
+    /// </summary>
+    public new string Key
+    {
+        get
         {
-            get
-            {
-                return "ND" + int.Parse(this.FK_Flow) + "Rpt";
-            }
+            return this.ToolBar1.GetTBByID("TB_Key").Text;
         }
-        public Entities _HisEns = null;
-        public new Entities HisEns
+    }
+    public UserRegedit ur = null;
+    /// <summary>
+    /// æ˜¯å¦åˆ†é¡µ
+    /// </summary>
+    public bool IsFY
+    {
+        get
         {
-            get
-            {
-                if (_HisEns == null)
-                {
-                    if (this.EnsName != null)
-                    {
-                        if (this._HisEns == null)
-                            _HisEns = BP.DA.ClassFactory.GetEns(this.EnsName);
-                    }
-                }
-                return _HisEns;
-            }
-        } 
-        /// <summary>
-        /// key
-        /// </summary>
-        public new string Key
-        {
-            get
-            {
-                return this.ToolBar1.GetTBByID("TB_Key").Text;
-            }
+            string str = this.Request.QueryString["IsFY"];
+            if (str == null || str == "0")
+                return false;
+            return true;
         }
-        public UserRegedit ur = null;
-        /// <summary>
-        /// ÊÇ·ñ·ÖÒ³
-        /// </summary>
-        public bool IsFY
+    }
+    public string NumKey
+    {
+        get
         {
-            get
-            {
-                string str = this.Request.QueryString["IsFY"];
-                if (str == null || str == "0")
-                    return false;
+            string str = this.Request.QueryString["NumKey"];
+            if (str == null)
+                return ViewState["NumKey"] as string;
+            else
+                return str;
+        }
+        set
+        {
+            ViewState["NumKey"] = value;
+        }
+    }
+    public string OrderBy
+    {
+        get
+        {
+            string str = this.Request.QueryString["OrderBy"];
+            if (str == null)
+                return ViewState["OrderBy"] as string;
+            else
+                return str;
+        }
+        set
+        {
+            ViewState["OrderBy"] = value;
+        }
+    }
+    public string DoType
+    {
+        get
+        {
+            string s = this.Request.QueryString["DoType"];
+            if (s == null)
+                s = "My";
+            return s;
+        }
+    }
+    public string OrderWay
+    {
+        get
+        {
+            string str = this.Request.QueryString["OrderWay"];
+            if (str == null)
+                return ViewState["OrderWay"] as string;
+            else
+                return str;
+        }
+        set
+        {
+            ViewState["OrderWay"] = value;
+        }
+    }
+    public bool IsReadonly
+    {
+        get
+        {
+            string i = this.Request.QueryString["IsReadonly"];
+            if (i == "1")
                 return true;
-            }
-        }
-        public string NumKey
-        {
-            get
-            {
-                string str = this.Request.QueryString["NumKey"];
-                if (str == null)
-                    return ViewState["NumKey"] as string;
-                else
-                    return str;
-            }
-            set
-            {
-                ViewState["NumKey"] = value;
-            }
-        }
-        public string OrderBy
-        {
-            get
-            {
-                string str = this.Request.QueryString["OrderBy"];
-                if (str == null)
-                    return ViewState["OrderBy"] as string;
-                else
-                    return str;
-            }
-            set
-            {
-                ViewState["OrderBy"] = value;
-            }
-        }
-        public string DoType
-        {
-            get
-            {
-                string s = this.Request.QueryString["DoType"];
-                if (s == null)
-                    s = "My";
-                return s;
-            }
-        }
-        public string OrderWay
-        {
-            get
-            {
-                string str = this.Request.QueryString["OrderWay"];
-                if (str == null)
-                    return ViewState["OrderWay"] as string;
-                else
-                    return str;
-            }
-            set
-            {
-                ViewState["OrderWay"] = value;
-            }
-        }
-        public bool IsReadonly
-        {
-            get
-            {
-                string i = this.Request.QueryString["IsReadonly"];
-                if (i == "1")
-                    return true;
-                else
-                    return false;
-            }
-        }
-        public bool IsShowSum
-        {
-            get
-            {
-                string i = this.Request.QueryString["IsShowSum"];
-                if (i == "1")
-                    return true;
-                else
-                    return false;
-            }
-        }
-        public bool IsContainsNDYF
-        {
-            get
-            {
-                if (this.ViewState["IsContinueNDYF"].ToString().ToUpper() == "TRUE")
-                    return true;
-                else
-                    return false;
-            }
-        }
-        public string CfgVal
-        {
-            get
-            {
-                return this.ViewState["CfgVal"].ToString();
-            }
-            set
-            {
-                this.ViewState["CfgVal"] = value;
-            }
-        }
-        public MapData HisMD = null;
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
-            //Flow fl = new Flow(this.FK_Flow);
-            //this.Title = "Á÷³Ì·ÖÎö:" + fl.Name;
-
-            this.Page.RegisterClientScriptBlock("s",
-       "<link href='./../../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-
-            this.Pub1.Add("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />ÎÒ²ÎÓëµÄÁ÷³Ì</a>");
-            this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />ÎÒ²¿ÃÅµÄÁ÷³Ì</a><br>");
-            this.HisMD = new MapData(this.EnsName);
-
-            AttrSearchs searchs = null;
-
-            #region ´¦Àí²éÑ¯ÉèµÄÄ¬ÈÏ.
-            if (this.DoType == "My")
-            {
-                #region ´¦Àí²éÑ¯È¨ÏŞ
-                Entity en = this.HisEns.GetNewEntity;
-                Map map = en.EnMap;
-                this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
-                this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
-                searchs = map.SearchAttrs;
-                string defVal = "";
-                System.Data.DataTable dt = null;
-                foreach (AttrSearch attr in searchs)
-                {
-                    DDL mydll = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
-                    if (mydll == null)
-                        continue;
-                    defVal = mydll.SelectedItemStringVal;
-                    mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + this.EnsName + "','" + attr.Key + "')";
-                    switch (attr.Key)
-                    {
-                        case "FK_NY":
-                            dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
-                            mydll.Items.Clear();
-                            mydll.Items.Add(new ListItem("=>ÔÂ·İ", "all"));
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
-                            }
-                            mydll.SetSelectItem(defVal);
-                            break;
-                        case "FlowStarter":
-                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
-                            mydll.Items.Clear();
-                            mydll.Items.Add(new ListItem("=>·¢ÆğÈË", "all"));
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                            }
-                            mydll.SetSelectItem(defVal);
-                            mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
-                            break;
-                        case "FK_Dept":
-                            if (WebUser.No != "admin")
-                            {
-                                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
-                                if (dt.Rows.Count == 0)
-                                {
-                                    this.UCSys1.AddMsgOfWarning("ÌáÊ¾", "<h2>ÏµÍ³¹ÜÀíÔ±Ã»ÓĞ¸øÄúÉèÖÃ²éÑ¯È¨ÏŞ¡£</h2>");
-                                    this.ToolBar1.Controls.Clear();
-                                    return;
-                                }
-                                mydll.Items.Clear();
-                                foreach (DataRow dr in dt.Rows)
-                                    mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                            }
-
-                            if (mydll.Items.Count >= 2)
-                            {
-                                ListItem liMvals = new ListItem("*¶àÏî×éºÏ..", "mvals");
-                                liMvals.Attributes.CssStyle.Add("style", "color:green");
-                                liMvals.Attributes.Add("color", "green");
-                                liMvals.Attributes.Add("style", "color:green");
-                            }
-                            mydll.SetSelectItem(defVal);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                #endregion ´¦Àí²éÑ¯È¨ÏŞ
-            }
             else
-            {
-                #region ´¦Àí²éÑ¯È¨ÏŞ
-                Entity en = this.HisEns.GetNewEntity;
-                Map map = en.EnMap;
-                this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
-                this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
-                searchs = map.SearchAttrs;
-                string defVal = "";
-                System.Data.DataTable dt = null;
-                foreach (AttrSearch attr in searchs)
-                {
-                    DDL mydll = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
-                    if (mydll == null)
-                        continue;
-                    defVal = mydll.SelectedItemStringVal;
-                    mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + this.EnsName + "','" + attr.Key + "')";
-                    switch (attr.Key)
-                    {
-                        case "FK_NY":
-                            dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
-                            mydll.Items.Clear();
-                            mydll.Items.Add(new ListItem("=>ÔÂ·İ", "all"));
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
-                            }
-                            mydll.SetSelectItem(defVal);
-                            break;
-                        case "FlowStarter":
-                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
-                            mydll.Items.Clear();
-                            mydll.Items.Add(new ListItem("=>·¢ÆğÈË", "all"));
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                            }
-                            mydll.SetSelectItem(defVal);
-                            mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
-                            break;
-                        case "FK_Dept":
-                            if (WebUser.No != "admin")
-                            {
-                                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
-                                if (dt.Rows.Count == 0)
-                                {
-                                    this.UCSys1.AddMsgOfWarning("ÌáÊ¾", "<h2>ÏµÍ³¹ÜÀíÔ±Ã»ÓĞ¸øÄúÉèÖÃ²éÑ¯È¨ÏŞ¡£</h2>");
-                                    this.ToolBar1.Controls.Clear();
-                                    return;
-                                }
-                                mydll.Items.Clear();
-                                foreach (DataRow dr in dt.Rows)
-                                    mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                            }
-
-                            if (mydll.Items.Count >= 2)
-                            {
-                                ListItem liMvals = new ListItem("*¶àÏî×éºÏ..", "mvals");
-                                liMvals.Attributes.CssStyle.Add("style", "color:green");
-                                liMvals.Attributes.Add("color", "green");
-                                liMvals.Attributes.Add("style", "color:green");
-                            }
-                            mydll.SetSelectItem(defVal);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                #endregion ´¦Àí²éÑ¯È¨ÏŞ
-
-                this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-                this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-            }
-            #endregion ´¦Àí²éÑ¯ÉèµÄÄ¬ÈÏ¡£
-
-            this.CB_IsShowPict.Text = this.ToE("IsShowPict", "ÏÔÊ¾Í¼ĞÎ");
-            this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", "Öù×´Í¼");
-            this.BPTabStrip1.Items[4].Text = this.ToE("Pie", "±ıÍ¼");
-            this.BPTabStrip1.Items[6].Text = this.ToE("Line", "ÕÛÏßÍ¼");
-
-            #region È¨ÏŞÎÊÌâ
-            UAC uac = new UAC();
-            try
-            {
-                uac = this.HisEn.HisUAC;
-            }
-            catch
-            {
-                uac.IsView = true;
-            }
-
-            if (uac.IsView == false)
-                throw new Exception("ÄúÃ»ÓĞ²é¿´[" + this.HisEn.EnDesc + "]Êı¾İµÄÈ¨ÏŞ.");
-
-            if (this.IsReadonly)
-            {
-                uac.IsDelete = false;
-                uac.IsInsert = false;
-                uac.IsUpdate = false;
-            }
-            #endregion È¨ÏŞÎÊÌâ
-
-            this.ur = new UserRegedit(WebUser.No,  this.EnsName+"_Group");
-            //if (this.IsPostBack)
-            //{
-            //    ur.Vals = this.GetValueByKey("Vals");
-            //    ur.CfgKey = this.GetValueByKey("CfgKey");
-            //    ur.OrderBy = this.GetValueByKey("OrderBy");
-            //    ur.OrderWay = this.GetValueByKey("OrderWay");
-            //    ur.IsPic = this.GetValueByKeyBool("IsPic");
-            //    ur.SQL = this.GetValueByKey("SQL");
-            //    ur.NumKey = this.GetValueByKey("NumKey");
-            //    ur.MVals = this.GetValueByKey("MVals");
-            //    ur.Save();
-            //}
-
-            #region ÉèÖÃtool bar 1 µÄcontral
-            if (uac.IsView == false)
-                throw new Exception("@¶Ô²»Æğ£¬ÄúÃ»ÓĞ²é¿´µÄÈ¨ÏŞ£¡");
-
-            if (this.OrderBy != null)
-            {
-                if (this.OrderBy != null)
-                    ur.OrderBy = this.OrderBy;
-
-                if (this.OrderWay == "Up")
-                    ur.OrderWay = "DESC";
-                else
-                    ur.OrderWay = "";
-
-                if (this.NumKey == null)
-                    this.NumKey = ur.NumKey;
-            }
-
-            this.OrderBy = ur.OrderBy;
-            this.OrderWay = ur.OrderWay;
-            this.CfgVal = ur.Vals;
-
-            if (this.HisMD.AttrsInTableEns.Contains("FK_NY") && this.HisMD.AttrsInTableEns.Contains("FK_ND"))
-            {
-                this.ViewState["IsContinueNDYF"] = "TRUE";
-            }
+                return false;
+        }
+    }
+    public bool IsShowSum
+    {
+        get
+        {
+            string i = this.Request.QueryString["IsShowSum"];
+            if (i == "1")
+                return true;
             else
-            {
-                this.ViewState["IsContinueNDYF"] = "FALSE";
-            }
+                return false;
+        }
+    }
+    public bool IsContainsNDYF
+    {
+        get
+        {
+            if (this.ViewState["IsContinueNDYF"].ToString().ToUpper() == "TRUE")
+                return true;
+            else
+                return false;
+        }
+    }
+    public string CfgVal
+    {
+        get
+        {
+            return this.ViewState["CfgVal"].ToString();
+        }
+        set
+        {
+            this.ViewState["CfgVal"] = value;
+        }
+    }
+    public MapData HisMD = null;
+    #endregion
+    protected void Page_Load(object sender, EventArgs e)
+    {
+       // this
+        //this.Pub1.Add("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />æˆ‘å‚ä¸çš„æµç¨‹</a>");
+        //this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />æˆ‘éƒ¨é—¨çš„æµç¨‹</a><br>");
 
-            if (this.IsPostBack == false)
-            {
-                string reAttrs = this.Request.QueryString["Attrs"];
-                this.CheckBoxList1.Items.Clear();
-                foreach (Attr attr in this.HisMD.AttrsInTableEns)
-                {
-                    if (attr.UIContralType == UIContralType.DDL)
-                    {
-                        ListItem li = new ListItem(attr.Desc, attr.Key);
-                        if (reAttrs != null)
-                        {
-                            if (reAttrs.IndexOf(attr.Key) != -1)
-                            {
-                                li.Selected = true;
-                            }
-                        }
+        this.HisMD = new MapData(this.EnsName);
+        AttrSearchs searchs = null;
 
-                        // ¸ù¾İ×´Ì¬ ÉèÖÃĞÅÏ¢.
-                        if (this.CfgVal.IndexOf(attr.Key) != -1)
-                            li.Selected = true;
-                        this.CheckBoxList1.Items.Add(li);
-                    }
-                }
-
-                if (this.CheckBoxList1.Items.Count == 0)
-                    throw new Exception(this.HisMD.Name + " " + this.ToE("NoFKNoUse", "Ã»ÓĞÍâ¼üÌõ¼ş£¬²»ÊÊºÏ×ö·Ö×é²éÑ¯")); //Ã»ÓĞÍâ¼üÌõ¼ş£¬²»ÊÊºÏ×ö·Ö×é²éÑ¯¡£
-
-                if (this.CheckBoxList1.Items.Count == 1)
-                    this.CheckBoxList1.Enabled = false;
-            }
-            #endregion
-
-
-            #region ÉèÖÃÑ¡ÔñµÄ Ä¬ÈÏÖµ
-         //    searchs = this.HisMD.HisEn.EnMap.SearchAttrs;
+        #region å¤„ç†æŸ¥è¯¢è®¾çš„é»˜è®¤.
+        if (this.DoType == "My")
+        {
+            #region å¤„ç†æŸ¥è¯¢æƒé™
+            Entity en = this.HisEns.GetNewEntity;
+            Map map = en.EnMap;
+            this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
+      //      this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
+            searchs = map.SearchAttrs;
+            string defVal = "";
+            System.Data.DataTable dt = null;
             foreach (AttrSearch attr in searchs)
             {
-                string mykey = this.Request.QueryString[attr.HisAttr.Key];
-                if (mykey == "" || mykey == null)
-                    continue;
-                else
-                    this.ToolBar1.GetDDLByKey("DDL_" + attr.HisAttr.Key).SetSelectItem(mykey, attr.HisAttr);
-
-                #region ´¦ÀíÈ¨ÏŞÎÊÌâ.
                 DDL mydll = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
                 if (mydll == null)
                     continue;
-                string defVal = mydll.SelectedItemStringVal;
-                DataTable dt = null;
-                mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
+                defVal = mydll.SelectedItemStringVal;
+                mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + this.EnsName + "','" + attr.Key + "')";
                 switch (attr.Key)
                 {
                     case "FK_NY":
                         dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
                         mydll.Items.Clear();
-                        mydll.Items.Add(new ListItem("=>ÔÂ·İ", "all"));
+                        mydll.Items.Add(new ListItem("=>æœˆä»½", "all"));
                         foreach (DataRow dr in dt.Rows)
                         {
                             mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
@@ -482,7 +222,7 @@ namespace BP.Web.Comm
                     case "FlowStarter":
                         dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
                         mydll.Items.Clear();
-                        mydll.Items.Add(new ListItem("=>·¢ÆğÈË", "all"));
+                        mydll.Items.Add(new ListItem("=>å‘èµ·äºº", "all"));
                         foreach (DataRow dr in dt.Rows)
                         {
                             mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
@@ -491,13 +231,12 @@ namespace BP.Web.Comm
                         mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
                         break;
                     case "FK_Dept":
-
                         if (WebUser.No != "admin")
                         {
                             dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
                             if (dt.Rows.Count == 0)
                             {
-                                this.UCSys1.AddMsgOfWarning("ÌáÊ¾", "<h2>ÏµÍ³¹ÜÀíÔ±Ã»ÓĞ¸øÄúÉèÖÃ²éÑ¯È¨ÏŞ¡£</h2>");
+                                this.UCSys1.AddMsgOfWarning("æç¤º", "<h2>ç³»ç»Ÿç®¡ç†å‘˜æ²¡æœ‰ç»™æ‚¨è®¾ç½®æŸ¥è¯¢æƒé™ã€‚</h2>");
                                 this.ToolBar1.Controls.Clear();
                                 return;
                             }
@@ -508,7 +247,7 @@ namespace BP.Web.Comm
 
                         if (mydll.Items.Count >= 2)
                         {
-                            ListItem liMvals = new ListItem("*¶àÏî×éºÏ..", "mvals");
+                            ListItem liMvals = new ListItem("*å¤šé¡¹ç»„åˆ..", "mvals");
                             liMvals.Attributes.CssStyle.Add("style", "color:green");
                             liMvals.Attributes.Add("color", "green");
                             liMvals.Attributes.Add("style", "color:green");
@@ -518,1422 +257,1634 @@ namespace BP.Web.Comm
                     default:
                         break;
                 }
-                #endregion ´¦ÀíÈ¨ÏŞÎÊÌâ.
-
             }
-            #endregion
-
-            this.ToolBar1.AddSpt("spt1");
-            this.ToolBar1.AddBtn(NamesOfBtn.Excel);
-
-            #region Ôö¼ÓÅÅĞò
-            this.BPMultiPage1.AddPageView("Table");
-            this.BPMultiPage1.AddPageView("Img");
-            this.BPMultiPage1.AddPageView("Imgs");
-            this.BPMultiPage1.AddPageView("Imgss");
-            if (this.IsPostBack == false)
-                this.CB_IsShowPict.Checked = ur.IsPic;
-
-            // this.DDL_OrderBy.SelectedItem(ur.OrderBy);
-            // this.DDL_OrderWay.SelectedItem(ur.OrderWay);
-            #endregion
-
-            this.BindNums();
-            if (this.IsPostBack == false)
-                this.BingDG();
-
-            //if (this.DoType == "My")
-            //{
-            //    this.ToolBar1.AddBtn(NamesOfBtn.Search);
-            //}
-
-            this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-            this.ToolBar1.GetBtnByID("Btn_Excel").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-            this.CB_IsShowPict.CheckedChanged += new EventHandler(State_Changed);
-            this.CheckBoxList1.SelectedIndexChanged += new EventHandler(State_Changed);
+            #endregion å¤„ç†æŸ¥è¯¢æƒé™
         }
-
-        public void BindNums()
+        else
         {
-            this.UCSys2.Clear();
-            // ²éÑ¯³öÀ´¹ØÓÚËüµÄ»î¶¯ÁĞÅäÖÃ¡£
-            ActiveAttrs aas = new ActiveAttrs();
-            aas.RetrieveBy(ActiveAttrAttr.For, this.EnsName);
-
-            Attrs attrs = this.HisMD.AttrsInTableEns;
-            attrs.AddTBInt("MyNum", 1, "Á÷³ÌÊıÁ¿", true, true);
-            this.UCSys2.Add("<table border=0 cellPadding=0 >");
-            foreach (Attr attr in attrs)
+            #region å¤„ç†æŸ¥è¯¢æƒé™
+            Entity en = this.HisEns.GetNewEntity;
+            Map map = en.EnMap;
+            this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
+         //   this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
+            searchs = map.SearchAttrs;
+            string defVal = "";
+            System.Data.DataTable dt = null;
+            foreach (AttrSearch attr in searchs)
             {
-                if (attr.UIContralType != UIContralType.TB)
+                DDL mydll = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                if (mydll == null)
                     continue;
-
-                if (attr.UIVisible == false)
-                    continue;
-
-                if (attr.IsNum == false)
-                    continue;
-
-                if (attr.Key == "OID" || attr.Key == "WorkID" || attr.Key == "MID")
-                    continue;
-
-                bool isHave = false;
-                // ÓĞÃ»ÓĞÅäÖÃµÖÏûËüµÄÊôĞÔ¡£
-                foreach (ActiveAttr aa in aas)
+                defVal = mydll.SelectedItemStringVal;
+                mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + this.EnsName + "','" + attr.Key + "')";
+                switch (attr.Key)
                 {
-                    if (aa.AttrKey != attr.Key)
-                        continue;
-
-                    CheckBox cb1 = new CheckBox();
-                    cb1.ID = "CB_" + attr.Key;
-                    cb1.Text = attr.Desc;
-                    cb1.AutoPostBack = true;
-
-                    if (this.CfgVal.IndexOf("@" + attr.Key) == -1)
-                        cb1.Checked = false; /* Èç¹û²»°üº¬ key .*/
-                    else
-                        cb1.Checked = true;
-
-                    cb1.CheckedChanged += new EventHandler(State_Changed);
-
-                    this.UCSys2.Add("<TD style='font-size:12px;text-align:left'style='background:url(imags/TitleCaption1.gif)'>");
-                    this.UCSys2.Add(cb1);
-                    this.UCSys2.Add("</TD>");
-                    isHave = true;
-                }
-                if (isHave)
-                    continue;
-
-                this.UCSys2.AddTR();
-                CheckBox cb = new CheckBox();
-                cb.ID = "CB_" + attr.Key;
-                cb.Text = attr.Desc;
-                cb.AutoPostBack = true;
-                cb.CheckedChanged += new EventHandler(State_Changed);
-
-                if (this.CfgVal.IndexOf("@" + attr.Key) == -1)
-                    cb.Checked = false; /* Èç¹û²»°üº¬ key .*/
-                else
-                    cb.Checked = true;
-
-                this.UCSys2.Add("<TD style='font-size:12px;text-align:left'>");
-                this.UCSys2.Add(cb);
-                this.UCSys2.Add("</TD>");
-
-                DDL ddl = new DDL();
-                ddl.ID = "DDL_" + attr.Key;
-                ddl.Items.Add(new ListItem(this.ToE("ForSum", "ÇóºÍ"), "SUM"));
-                ddl.Items.Add(new ListItem(this.ToE("ForAvg", "ÇóÆ½¾ù"), "AVG"));
-                if (this.IsContainsNDYF)
-                    ddl.Items.Add(new ListItem(this.ToE("ForAMOUNT", "ÇóÀÛ¼Æ"), "AMOUNT"));
-
-                //ddl.Items.Add(new ListItem(this.ToE("ForMax", "Çó×î´ó"), "MAX"));
-                //ddl.Items.Add(new ListItem(this.ToE("ForMin", "Çó×îĞ¡"), "MIN"));
-                //ddl.Items.Add(new ListItem(this.ToE("ForBZC", "Çó±ê×¼²î"), "BZC"));
-                //ddl.Items.Add(new ListItem(this.ToE("ForLSXS", "ÇóÀëÉ¢ÏµÊı"), "LSXS"));
-
-                if (this.CfgVal.IndexOf("@" + attr.Key + "=AVG") != -1)
-                {
-                    ddl.SelectedIndex = 1;
-                }
-                else if (this.CfgVal.IndexOf("@" + attr.Key + "=SUM") != -1)
-                {
-                    ddl.SelectedIndex = 0;
-                }
-                else if (this.CfgVal.IndexOf("@" + attr.Key + "=AMOUNT") != -1)
-                {
-                    ddl.SelectedIndex = 2;
-                }
-                else if (this.CfgVal.IndexOf("@" + attr.Key + "=MAX") != -1)
-                {
-                    ddl.SelectedIndex = 3;
-                }
-                else if (this.CfgVal.IndexOf("@" + attr.Key + "=MIN") != -1)
-                {
-                    ddl.SelectedIndex = 4;
-                }
-                else if (this.CfgVal.IndexOf("@" + attr.Key + "=BZC") != -1)
-                {
-                    ddl.SelectedIndex = 5;
-                }
-                else if (this.CfgVal.IndexOf("@" + attr.Key + "=LSXS") != -1)
-                {
-                    ddl.SelectedIndex = 6;
-                }
-
-                ddl.AutoPostBack = true;
-                ddl.SelectedIndexChanged += new EventHandler(State_Changed);
-
-                this.UCSys2.Add("<TD style='font-size:12px;text-align:left'>");
-                this.UCSys2.Add(ddl);
-                this.UCSys2.AddTDEnd();
-                this.UCSys2.AddTREnd();
-
-                if (this.NumKey == "" || this.NumKey == null)
-                {
-                    this.NumKey = attr.Key;
-                    this.UCSys2.GetCBByID("CB_" + attr.Key).Checked = true;
-                }
-            }
-            this.UCSys2.AddTableEnd();
-
-            //			//this.DDL_GroupField.Items.Add(new ListItem("¸öÊı","COUNT(*)"));
-            //			this.DDL_GroupWay.Items.Add(new ListItem("ÇóºÍ","0"));
-            //			this.DDL_GroupWay.Items.Add(new ListItem("ÇóÆ½¾ù","1"));
-            //
-            //			this.DDL_Order.Items.Add(new ListItem("½µĞò","0"));
-            //			this.DDL_Order.Items.Add(new ListItem("ÉıĞò","1"));
-            //
-            //
-            //			//this.DDL_GroupField.Items.Add(new ListItem("¸öÊı","COUNT(*)"));
-            //			this.DDL_GroupWay.Items.Add(new ListItem("ÇóºÍ","0"));
-            //			this.DDL_GroupWay.Items.Add(new ListItem("ÇóÆ½¾ù","1"));
-            //
-            //			this.DDL_Order.Items.Add(new ListItem("½µĞò","0"));
-            //			this.DDL_Order.Items.Add(new ListItem("ÉıĞò","1"));
-        }
-
-        #region ·½·¨
-        /// <summary>
-        /// ´¦ÀíÊ²Ã´¶¼Ã»ÓĞÑ¡Ôñ¡£
-        /// </summary>
-        public void DealChoseNone()
-        {
-            System.Web.UI.ControlCollection ctls = this.UCSys2.Controls;
-            bool isCheck = false;
-            foreach (Control ct in ctls)
-            {
-                if (ct.ID == null)
-                    continue;
-
-                if (ct.ID.IndexOf("CB_") == -1)
-                    continue;
-
-                string key = ct.ID.Substring("CB_".Length);
-                CheckBox cb = this.UCSys2.GetCBByID("CB_" + key);
-                if (cb.Checked == false)
-                    continue;
-                isCheck = true;
-            }
-
-            if (isCheck == false)
-            {
-                foreach (Control ct in ctls)
-                {
-                    if (ct.ID == null)
-                        continue;
-
-                    if (ct.ID.IndexOf("CB_") == -1)
-                        continue;
-
-                    string key = ct.ID.Substring("CB_".Length);
-                    CheckBox cb = this.UCSys2.GetCBByID("CB_" + key);
-                    cb.Checked = true;
-                }
-            }
-
-            isCheck = false;
-            foreach (ListItem li in this.CheckBoxList1.Items)
-            {
-                if (li.Selected)
-                    isCheck = true;
-            }
-
-            if (isCheck == false)
-            {
-                foreach (ListItem li in this.CheckBoxList1.Items)
-                {
-                    li.Selected = true;
-                    break;
-                }
-            }
-        }
-        public DataTable BingDG()
-        {
-            this.DealChoseNone();
-
-            Entities ens = this.HisMD.HisEns;
-            Entity en = ens.GetNewEntity;
-
-            // ²éÑ¯³öÀ´¹ØÓÚËüµÄ»î¶¯ÁĞÅäÖÃ.
-            ActiveAttrs aas = new ActiveAttrs();
-            aas.RetrieveBy(ActiveAttrAttr.For, this.EnsName);
-
-            Paras myps = new Paras();
-            Attrs attrs = this.HisMD.AttrsInTableEns;
-
-            // ÕÒµ½ ·Ö×éµÄÊı¾İ. 
-            string groupKey = "";
-            Attrs AttrsOfNum = new Attrs();
-            System.Web.UI.ControlCollection ctls = this.UCSys2.Controls;
-            string StateNumKey = "StateNumKey@"; // Îª±£´æ²Ù×÷×´Ì¬µÄĞèÒª¡£
-            string Condition = ""; //´¦ÀíÌØÊâ×Ö¶ÎµÄÌõ¼şÎÊÌâ¡£
-            foreach (Control ct in ctls)
-            {
-                if (ct.ID == null)
-                    continue;
-
-                if (ct.ID.IndexOf("CB_") == -1)
-                    continue;
-
-                string key = ct.ID.Substring("CB_".Length);
-                CheckBox cb = this.UCSys2.GetCBByID("CB_" + key);
-                if (cb.Checked == false)
-                    continue;
-
-                AttrsOfNum.Add(attrs.GetAttrByKey(key));
-
-                DDL ddl = this.UCSys2.GetDDLByID("DDL_" + key);
-                if (ddl == null)
-                {
-                    ActiveAttr aa = (ActiveAttr)aas.GetEnByKey(ActiveAttrAttr.AttrKey, key);
-                    if (aa == null)
-                        continue;
-
-                    Condition += aa.Condition;
-                    groupKey += " round (" + aa.Exp + ", 4) AS " + key + ",";
-                    StateNumKey += key + "=Checked@"; // ¼ÇÂ¼×´Ì¬
-                    //groupKey+=" round ( SUM("+key+"), 4) "+key+",";
-                    //StateNumKey+=key+"=SUM@"; // ¼ÇÂ¼×´Ì¬
-                    continue;
-                }
-
-                switch (ddl.SelectedItemStringVal)
-                {
-                    case "SUM":
-                        groupKey += " round ( SUM(" + key + "), 4) " + key + ",";
-                        StateNumKey += key + "=SUM@"; // ¼ÇÂ¼×´Ì¬
+                    case "FK_NY":
+                        dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
+                        mydll.Items.Clear();
+                        mydll.Items.Add(new ListItem("=>æœˆä»½", "all"));
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                        }
+                        mydll.SetSelectItem(defVal);
                         break;
-                    case "AVG":
-                        groupKey += " round (AVG(" + key + "), 4)  " + key + ",";
-                        StateNumKey += key + "=AVG@"; // ¼ÇÂ¼×´Ì¬
+                    case "FlowStarter":
+                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
+                        mydll.Items.Clear();
+                        mydll.Items.Add(new ListItem("=>å‘èµ·äºº", "all"));
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                        }
+                        mydll.SetSelectItem(defVal);
+                        mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
                         break;
-                    case "AMOUNT":
-                        groupKey += " round ( SUM(" + key + "), 4) " + key + ",";
-                        StateNumKey += key + "=AMOUNT@"; // ¼ÇÂ¼×´Ì¬
+                    case "FK_Dept":
+                        if (WebUser.No != "admin")
+                        {
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                            if (dt.Rows.Count == 0)
+                            {
+                                this.UCSys1.AddMsgOfWarning("æç¤º", "<h2>ç³»ç»Ÿç®¡ç†å‘˜æ²¡æœ‰ç»™æ‚¨è®¾ç½®æŸ¥è¯¢æƒé™ã€‚</h2>");
+                                this.ToolBar1.Controls.Clear();
+                                return;
+                            }
+                            mydll.Items.Clear();
+                            foreach (DataRow dr in dt.Rows)
+                                mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                        }
+
+                        if (mydll.Items.Count >= 2)
+                        {
+                            ListItem liMvals = new ListItem("*å¤šé¡¹ç»„åˆ..", "mvals");
+                            liMvals.Attributes.CssStyle.Add("style", "color:green");
+                            liMvals.Attributes.Add("color", "green");
+                            liMvals.Attributes.Add("style", "color:green");
+                        }
+                        mydll.SetSelectItem(defVal);
                         break;
                     default:
-                        throw new Exception("Ã»ÓĞÅĞ¶ÏµÄÇé¿ö.");
+                        break;
+                }
+            }
+            #endregion å¤„ç†æŸ¥è¯¢æƒé™
+
+            this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+          //  this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+        }
+        #endregion å¤„ç†æŸ¥è¯¢è®¾çš„é»˜è®¤ã€‚
+
+        this.CB_IsShowPict.Text = this.ToE("IsShowPict", "æ˜¾ç¤ºå›¾å½¢");
+
+        #region æƒé™é—®é¢˜
+        UAC uac = new UAC();
+        try
+        {
+            uac = this.HisEn.HisUAC;
+        }
+        catch
+        {
+            uac.IsView = true;
+        }
+
+        if (uac.IsView == false)
+            throw new Exception("æ‚¨æ²¡æœ‰æŸ¥çœ‹[" + this.HisEn.EnDesc + "]æ•°æ®çš„æƒé™.");
+
+        if (this.IsReadonly)
+        {
+            uac.IsDelete = false;
+            uac.IsInsert = false;
+            uac.IsUpdate = false;
+        }
+        #endregion æƒé™é—®é¢˜
+
+        this.ur = new UserRegedit(WebUser.No, this.EnsName + "_Group");
+
+        #region è®¾ç½®tool bar 1 çš„contral
+        if (uac.IsView == false)
+            throw new Exception("@å¯¹ä¸èµ·ï¼Œæ‚¨æ²¡æœ‰æŸ¥çœ‹çš„æƒé™ï¼");
+
+        if (this.OrderBy != null)
+        {
+            if (this.OrderBy != null)
+                ur.OrderBy = this.OrderBy;
+
+            if (this.OrderWay == "Up")
+                ur.OrderWay = "DESC";
+            else
+                ur.OrderWay = "";
+
+            if (this.NumKey == null)
+                this.NumKey = ur.NumKey;
+        }
+
+        this.OrderBy = ur.OrderBy;
+        this.OrderWay = ur.OrderWay;
+        this.CfgVal = ur.Vals;
+
+        if (this.HisMD.AttrsInTableEns.Contains("FK_NY") && this.HisMD.AttrsInTableEns.Contains("FK_ND"))
+        {
+            this.ViewState["IsContinueNDYF"] = "TRUE";
+        }
+        else
+        {
+            this.ViewState["IsContinueNDYF"] = "FALSE";
+        }
+
+        if (this.IsPostBack == false)
+        {
+            string reAttrs = this.Request.QueryString["Attrs"];
+            this.CheckBoxList1.Items.Clear();
+            foreach (Attr attr in this.HisMD.AttrsInTableEns)
+            {
+                if (attr.UIContralType == UIContralType.DDL)
+                {
+                    ListItem li = new ListItem(attr.Desc, attr.Key);
+                    if (reAttrs != null)
+                    {
+                        if (reAttrs.IndexOf(attr.Key) != -1)
+                        {
+                            li.Selected = true;
+                        }
+                    }
+
+                    // æ ¹æ®çŠ¶æ€ è®¾ç½®ä¿¡æ¯.
+                    if (this.CfgVal.IndexOf(attr.Key) != -1)
+                        li.Selected = true;
+                    this.CheckBoxList1.Items.Add(li);
                 }
             }
 
-            bool isHaveLJ = false; // ÊÇ·ñÓĞÀÛ¼Æ×Ö¶Î¡£
-            if (StateNumKey.IndexOf("AMOUNT@") != -1)
-                isHaveLJ = true;
+            if (this.CheckBoxList1.Items.Count == 0)
+                throw new Exception(this.HisMD.Name + " " + this.ToE("NoFKNoUse", "æ²¡æœ‰å¤–é”®æ¡ä»¶ï¼Œä¸é€‚åˆåšåˆ†ç»„æŸ¥è¯¢")); //æ²¡æœ‰å¤–é”®æ¡ä»¶ï¼Œä¸é€‚åˆåšåˆ†ç»„æŸ¥è¯¢ã€‚
 
-            if (groupKey == "")
+            if (this.CheckBoxList1.Items.Count == 1)
+                this.CheckBoxList1.Enabled = false;
+        }
+        #endregion
+
+        #region è®¾ç½®é€‰æ‹©çš„ é»˜è®¤å€¼
+        //    searchs = this.HisMD.HisEn.EnMap.SearchAttrs;
+        foreach (AttrSearch attr in searchs)
+        {
+            string mykey = this.Request.QueryString[attr.HisAttr.Key];
+            if (mykey == "" || mykey == null)
+                continue;
+            else
+                this.ToolBar1.GetDDLByKey("DDL_" + attr.HisAttr.Key).SetSelectItem(mykey, attr.HisAttr);
+
+            #region å¤„ç†æƒé™é—®é¢˜.
+            DDL mydll = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+            if (mydll == null)
+                continue;
+            string defVal = mydll.SelectedItemStringVal;
+            DataTable dt = null;
+            mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
+            switch (attr.Key)
             {
-                this.UCSys1.AddMsgOfWarning(this.ToE("Warning", "¾¯¸æ"),
-                    "<img src='../../Images/Pub/warning.gif' /><b><font color=red>" + this.ToE("NoSelectGroupData", "ÄúÃ»ÓĞÑ¡Ôñ·ÖÎöµÄÊı¾İ") + "</font></b>"); //ÄúÃ»ÓĞÑ¡Ôñ·ÖÎöµÄÊı¾İ¡£
-                return null;
+                case "FK_NY":
+                    dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
+                    mydll.Items.Clear();
+                    mydll.Items.Add(new ListItem("=>æœˆä»½", "all"));
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                    }
+                    mydll.SetSelectItem(defVal);
+                    break;
+                case "FlowStarter":
+                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
+                    mydll.Items.Clear();
+                    mydll.Items.Add(new ListItem("=>å‘èµ·äºº", "all"));
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                    }
+                    mydll.SetSelectItem(defVal);
+                    mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
+                    break;
+                case "FK_Dept":
+                    if (WebUser.No != "admin")
+                    {
+                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                        if (dt.Rows.Count == 0)
+                        {
+                            this.UCSys1.AddMsgOfWarning("æç¤º", "<h2>ç³»ç»Ÿç®¡ç†å‘˜æ²¡æœ‰ç»™æ‚¨è®¾ç½®æŸ¥è¯¢æƒé™ã€‚</h2>");
+                            this.ToolBar1.Controls.Clear();
+                            return;
+                        }
+                        mydll.Items.Clear();
+                        foreach (DataRow dr in dt.Rows)
+                            mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                    }
+
+                    if (mydll.Items.Count >= 2)
+                    {
+                        ListItem liMvals = new ListItem("*å¤šé¡¹ç»„åˆ..", "mvals");
+                        liMvals.Attributes.CssStyle.Add("style", "color:green");
+                        liMvals.Attributes.Add("color", "green");
+                        liMvals.Attributes.Add("style", "color:green");
+                    }
+                    mydll.SetSelectItem(defVal);
+                    break;
+                default:
+                    break;
+            }
+            #endregion å¤„ç†æƒé™é—®é¢˜.
+
+        }
+        #endregion
+
+        this.ToolBar1.AddSpt("spt1");
+        this.ToolBar1.AddBtn(NamesOfBtn.Excel,"å¯¼å‡ºåˆ°Excel");
+
+        #region å¢åŠ æ’åº
+        //this.BPMultiPage1.AddPageView("Table");
+        //this.BPMultiPage1.AddPageView("Img");
+        //this.BPMultiPage1.AddPageView("Imgs");
+        //this.BPMultiPage1.AddPageView("Imgss");
+        if (this.IsPostBack == false)
+            this.CB_IsShowPict.Checked = ur.IsPic;
+
+        // this.DDL_OrderBy.SelectedItem(ur.OrderBy);
+        // this.DDL_OrderWay.SelectedItem(ur.OrderWay);
+        #endregion
+
+        this.BindNums();
+        if (this.IsPostBack == false)
+            this.BingDG();
+
+        //if (this.DoType == "My")
+        //{
+        //    this.ToolBar1.AddBtn(NamesOfBtn.Search);
+        //}
+
+        this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+        this.ToolBar1.GetBtnByID("Btn_Excel").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+        this.CB_IsShowPict.CheckedChanged += new EventHandler(State_Changed);
+        this.CheckBoxList1.SelectedIndexChanged += new EventHandler(State_Changed);
+    }
+
+    public void BindNums()
+    {
+        this.UCSys2.Clear();
+        // æŸ¥è¯¢å‡ºæ¥å…³äºå®ƒçš„æ´»åŠ¨åˆ—é…ç½®ã€‚
+        ActiveAttrs aas = new ActiveAttrs();
+        aas.RetrieveBy(ActiveAttrAttr.For, this.EnsName);
+
+        Attrs attrs = this.HisMD.AttrsInTableEns;
+        attrs.AddTBInt("MyNum", 1, "æµç¨‹æ•°é‡", true, true);
+        this.UCSys2.Add("<table border=0 cellPadding=0 BorderStyle=None Width=100%  >");
+        foreach (Attr attr in attrs)
+        {
+            if (attr.UIContralType != UIContralType.TB)
+                continue;
+
+            if (attr.UIVisible == false)
+                continue;
+
+            if (attr.IsNum == false)
+                continue;
+
+            if (attr.Key == "OID" || attr.Key == "WorkID" || attr.Key == "MID")
+                continue;
+
+            bool isHave = false;
+            // æœ‰æ²¡æœ‰é…ç½®æŠµæ¶ˆå®ƒçš„å±æ€§ã€‚
+            foreach (ActiveAttr aa in aas)
+            {
+                if (aa.AttrKey != attr.Key)
+                    continue;
+
+                CheckBox cb1 = new CheckBox();
+                cb1.ID = "CB_" + attr.Key;
+                cb1.Text = attr.Desc;
+                cb1.AutoPostBack = true;
+
+                if (this.CfgVal.IndexOf("@" + attr.Key) == -1)
+                    cb1.Checked = false; /* å¦‚æœä¸åŒ…å« key .*/
+                else
+                    cb1.Checked = true;
+
+                cb1.CheckedChanged += new EventHandler(State_Changed);
+
+                this.UCSys2.Add("<TD >");
+                this.UCSys2.Add(cb1);
+                this.UCSys2.Add("</TD>");
+                isHave = true;
+            }
+            if (isHave)
+                continue;
+
+            this.UCSys2.AddTR();
+            CheckBox cb = new CheckBox();
+            cb.ID = "CB_" + attr.Key;
+            cb.Text = attr.Desc;
+            cb.AutoPostBack = true;
+            cb.CheckedChanged += new EventHandler(State_Changed);
+
+            if (this.CfgVal.IndexOf("@" + attr.Key) == -1)
+                cb.Checked = false; /* å¦‚æœä¸åŒ…å« key .*/
+            else
+                cb.Checked = true;
+
+            this.UCSys2.Add("<TD style='font-size:12px;text-align:left'>");
+            this.UCSys2.Add(cb);
+            this.UCSys2.Add("</TD>");
+
+            DDL ddl = new DDL();
+            ddl.ID = "DDL_" + attr.Key;
+            ddl.Items.Add(new ListItem(this.ToE("ForSum", "æ±‚å’Œ"), "SUM"));
+            ddl.Items.Add(new ListItem(this.ToE("ForAvg", "æ±‚å¹³å‡"), "AVG"));
+            if (this.IsContainsNDYF)
+                ddl.Items.Add(new ListItem(this.ToE("ForAMOUNT", "æ±‚ç´¯è®¡"), "AMOUNT"));
+
+            //ddl.Items.Add(new ListItem(this.ToE("ForMax", "æ±‚æœ€å¤§"), "MAX"));
+            //ddl.Items.Add(new ListItem(this.ToE("ForMin", "æ±‚æœ€å°"), "MIN"));
+            //ddl.Items.Add(new ListItem(this.ToE("ForBZC", "æ±‚æ ‡å‡†å·®"), "BZC"));
+            //ddl.Items.Add(new ListItem(this.ToE("ForLSXS", "æ±‚ç¦»æ•£ç³»æ•°"), "LSXS"));
+
+            if (this.CfgVal.IndexOf("@" + attr.Key + "=AVG") != -1)
+            {
+                ddl.SelectedIndex = 1;
+            }
+            else if (this.CfgVal.IndexOf("@" + attr.Key + "=SUM") != -1)
+            {
+                ddl.SelectedIndex = 0;
+            }
+            else if (this.CfgVal.IndexOf("@" + attr.Key + "=AMOUNT") != -1)
+            {
+                ddl.SelectedIndex = 2;
+            }
+            else if (this.CfgVal.IndexOf("@" + attr.Key + "=MAX") != -1)
+            {
+                ddl.SelectedIndex = 3;
+            }
+            else if (this.CfgVal.IndexOf("@" + attr.Key + "=MIN") != -1)
+            {
+                ddl.SelectedIndex = 4;
+            }
+            else if (this.CfgVal.IndexOf("@" + attr.Key + "=BZC") != -1)
+            {
+                ddl.SelectedIndex = 5;
+            }
+            else if (this.CfgVal.IndexOf("@" + attr.Key + "=LSXS") != -1)
+            {
+                ddl.SelectedIndex = 6;
             }
 
-            /* Èç¹û°üº¬ÀÛ¼ÆÊı¾İ£¬ÄÇËüÒ»¶¨ĞèÒªÒ»¸öÔÂ·İ×Ö¶Î¡£ÒµÎñÂß¼­´íÎó¡£*/
-            groupKey = groupKey.Substring(0, groupKey.Length - 1);
-            BP.DA.Paras ps = new Paras();
-            // Éú³É sql.
-            string selectSQL = "SELECT ";
-            string groupBy = " GROUP BY ";
-            Attrs AttrsOfGroup = new Attrs();
-            string StateGroupKey = "StateGroupKey=@"; // Îª±£´æ²Ù×÷×´Ì¬µÄĞèÒª¡£
+            ddl.AutoPostBack = true;
+            ddl.SelectedIndexChanged += new EventHandler(State_Changed);
+
+            this.UCSys2.Add("<TD style='font-size:12px;text-align:left'>");
+            this.UCSys2.Add(ddl);
+            this.UCSys2.AddTDEnd();
+            this.UCSys2.AddTREnd();
+
+            if (this.NumKey == "" || this.NumKey == null)
+            {
+                this.NumKey = attr.Key;
+                this.UCSys2.GetCBByID("CB_" + attr.Key).Checked = true;
+            }
+        }
+        this.UCSys2.AddTableEnd();
+
+        //			//this.DDL_GroupField.Items.Add(new ListItem("ä¸ªæ•°","COUNT(*)"));
+        //			this.DDL_GroupWay.Items.Add(new ListItem("æ±‚å’Œ","0"));
+        //			this.DDL_GroupWay.Items.Add(new ListItem("æ±‚å¹³å‡","1"));
+        //
+        //			this.DDL_Order.Items.Add(new ListItem("é™åº","0"));
+        //			this.DDL_Order.Items.Add(new ListItem("å‡åº","1"));
+        //
+        //
+        //			//this.DDL_GroupField.Items.Add(new ListItem("ä¸ªæ•°","COUNT(*)"));
+        //			this.DDL_GroupWay.Items.Add(new ListItem("æ±‚å’Œ","0"));
+        //			this.DDL_GroupWay.Items.Add(new ListItem("æ±‚å¹³å‡","1"));
+        //
+        //			this.DDL_Order.Items.Add(new ListItem("é™åº","0"));
+        //			this.DDL_Order.Items.Add(new ListItem("å‡åº","1"));
+    }
+
+    #region æ–¹æ³•
+    /// <summary>
+    /// å¤„ç†ä»€ä¹ˆéƒ½æ²¡æœ‰é€‰æ‹©ã€‚
+    /// </summary>
+    public void DealChoseNone()
+    {
+        System.Web.UI.ControlCollection ctls = this.UCSys2.Controls;
+        bool isCheck = false;
+        foreach (Control ct in ctls)
+        {
+            if (ct.ID == null)
+                continue;
+
+            if (ct.ID.IndexOf("CB_") == -1)
+                continue;
+
+            string key = ct.ID.Substring("CB_".Length);
+            CheckBox cb = this.UCSys2.GetCBByID("CB_" + key);
+            if (cb.Checked == false)
+                continue;
+            isCheck = true;
+        }
+
+        if (isCheck == false)
+        {
+            foreach (Control ct in ctls)
+            {
+                if (ct.ID == null)
+                    continue;
+
+                if (ct.ID.IndexOf("CB_") == -1)
+                    continue;
+
+                string key = ct.ID.Substring("CB_".Length);
+                CheckBox cb = this.UCSys2.GetCBByID("CB_" + key);
+                cb.Checked = true;
+            }
+        }
+
+        isCheck = false;
+        foreach (ListItem li in this.CheckBoxList1.Items)
+        {
+            if (li.Selected)
+                isCheck = true;
+        }
+
+        if (isCheck == false)
+        {
             foreach (ListItem li in this.CheckBoxList1.Items)
             {
-                if (li.Value == "FK_NY")
-                {
-                    /* Èç¹ûÊÇÄêÔÂ ·Ö×é£¬ ²¢ÇÒÈç¹ûÄÚ²¿ÓĞ ÀÛ¼ÆÊôĞÔ£¬¾ÍÇ¿ÖÆÑ¡Ôñ¡£*/
-                    if (isHaveLJ)
-                        li.Selected = true;
-                }
-
-                if (li.Selected)
-                {
-                    selectSQL += li.Value + ",";
-                    groupBy += li.Value + ",";
-
-                    // ¼ÓÈë×éÀïÃæ¡£
-                    AttrsOfGroup.Add(attrs.GetAttrByKey(li.Value), false, false);
-                    StateGroupKey += li.Value + "@";
-                }
+                li.Selected = true;
+                break;
             }
-            groupBy = groupBy.Substring(0, groupBy.Length - 1);
+        }
+    }
+    public DataTable BingDG()
+    {
+        this.DealChoseNone();
 
-            #region Éú³ÉWhere  _OLD .   Í¨¹ıÕâ¸ö¹ı³Ì²úÉúÁ½¸ö where.
-            // ÕÒµ½ WHERE Êı¾İ¡£
-            string where = " WHERE ";
-            string whereOfLJ = " WHERE "; // ÀÛ¼ÆµÄwhere.
-            string url = "";
-            foreach (Control item in this.ToolBar1.Controls)
+        Entities ens = this.HisMD.HisEns;
+        Entity en = ens.GetNewEntity;
+
+        // æŸ¥è¯¢å‡ºæ¥å…³äºå®ƒçš„æ´»åŠ¨åˆ—é…ç½®.
+        ActiveAttrs aas = new ActiveAttrs();
+        aas.RetrieveBy(ActiveAttrAttr.For, this.EnsName);
+
+        Paras myps = new Paras();
+        Attrs attrs = this.HisMD.AttrsInTableEns;
+
+        // æ‰¾åˆ° åˆ†ç»„çš„æ•°æ®. 
+        string groupKey = "";
+        Attrs AttrsOfNum = new Attrs();
+        System.Web.UI.ControlCollection ctls = this.UCSys2.Controls;
+        string StateNumKey = "StateNumKey@"; // ä¸ºä¿å­˜æ“ä½œçŠ¶æ€çš„éœ€è¦ã€‚
+        string Condition = ""; //å¤„ç†ç‰¹æ®Šå­—æ®µçš„æ¡ä»¶é—®é¢˜ã€‚
+        foreach (Control ct in ctls)
+        {
+            if (ct.ID == null)
+                continue;
+
+            if (ct.ID.IndexOf("CB_") == -1)
+                continue;
+
+            string key = ct.ID.Substring("CB_".Length);
+            CheckBox cb = this.UCSys2.GetCBByID("CB_" + key);
+            if (cb.Checked == false)
+                continue;
+
+            AttrsOfNum.Add(attrs.GetAttrByKey(key));
+
+            DDL ddl = this.UCSys2.GetDDLByID("DDL_" + key);
+            if (ddl == null)
             {
-                if (item.ID == null)
-                    continue;
-                if (item.ID.IndexOf("DDL_") == -1)
-                    continue;
-                if (item.ID.IndexOf("DDL_Form_") == 0 || item.ID.IndexOf("DDL_To_") == 0)
+                ActiveAttr aa = (ActiveAttr)aas.GetEnByKey(ActiveAttrAttr.AttrKey, key);
+                if (aa == null)
                     continue;
 
-                string key = item.ID.Substring("DDL_".Length);
-                DDL ddl = (DDL)item;
-                if (ddl.SelectedItemStringVal == "all")
-                    continue;
+                Condition += aa.Condition;
+                groupKey += " round (" + aa.Exp + ", 4) AS " + key + ",";
+                StateNumKey += key + "=Checked@"; // è®°å½•çŠ¶æ€
+                //groupKey+=" round ( SUM("+key+"), 4) "+key+",";
+                //StateNumKey+=key+"=SUM@"; // è®°å½•çŠ¶æ€
+                continue;
+            }
 
-                string val = ddl.SelectedItemStringVal;
-                if (val == null)
-                    continue;
+            switch (ddl.SelectedItemStringVal)
+            {
+                case "SUM":
+                    groupKey += " round ( SUM(" + key + "), 4) " + key + ",";
+                    StateNumKey += key + "=SUM@"; // è®°å½•çŠ¶æ€
+                    break;
+                case "AVG":
+                    groupKey += " round (AVG(" + key + "), 4)  " + key + ",";
+                    StateNumKey += key + "=AVG@"; // è®°å½•çŠ¶æ€
+                    break;
+                case "AMOUNT":
+                    groupKey += " round ( SUM(" + key + "), 4) " + key + ",";
+                    StateNumKey += key + "=AMOUNT@"; // è®°å½•çŠ¶æ€
+                    break;
+                default:
+                    throw new Exception("æ²¡æœ‰åˆ¤æ–­çš„æƒ…å†µ.");
+            }
+        }
 
-                if (val == "mvals")
+        bool isHaveLJ = false; // æ˜¯å¦æœ‰ç´¯è®¡å­—æ®µã€‚
+        if (StateNumKey.IndexOf("AMOUNT@") != -1)
+            isHaveLJ = true;
+
+        if (groupKey == "")
+        {
+            this.UCSys1.AddMsgOfWarning(this.ToE("Warning", "è­¦å‘Š"),
+                "<img src='../../Images/Pub/warning.gif' /><b><font color=red>" + this.ToE("NoSelectGroupData", "æ‚¨æ²¡æœ‰é€‰æ‹©åˆ†æçš„æ•°æ®") + "</font></b>"); //æ‚¨æ²¡æœ‰é€‰æ‹©åˆ†æçš„æ•°æ®ã€‚
+            return null;
+        }
+
+        /* å¦‚æœåŒ…å«ç´¯è®¡æ•°æ®ï¼Œé‚£å®ƒä¸€å®šéœ€è¦ä¸€ä¸ªæœˆä»½å­—æ®µã€‚ä¸šåŠ¡é€»è¾‘é”™è¯¯ã€‚*/
+        groupKey = groupKey.Substring(0, groupKey.Length - 1);
+        BP.DA.Paras ps = new Paras();
+        // ç”Ÿæˆ sql.
+        string selectSQL = "SELECT ";
+        string groupBy = " GROUP BY ";
+        Attrs AttrsOfGroup = new Attrs();
+        string StateGroupKey = "StateGroupKey=@"; // ä¸ºä¿å­˜æ“ä½œçŠ¶æ€çš„éœ€è¦ã€‚
+        foreach (ListItem li in this.CheckBoxList1.Items)
+        {
+            if (li.Value == "FK_NY")
+            {
+                /* å¦‚æœæ˜¯å¹´æœˆ åˆ†ç»„ï¼Œ å¹¶ä¸”å¦‚æœå†…éƒ¨æœ‰ ç´¯è®¡å±æ€§ï¼Œå°±å¼ºåˆ¶é€‰æ‹©ã€‚*/
+                if (isHaveLJ)
+                    li.Selected = true;
+            }
+
+            if (li.Selected)
+            {
+                selectSQL += li.Value + ",";
+                groupBy += li.Value + ",";
+
+                // åŠ å…¥ç»„é‡Œé¢ã€‚
+                AttrsOfGroup.Add(attrs.GetAttrByKey(li.Value), false, false);
+                StateGroupKey += li.Value + "@";
+            }
+        }
+        groupBy = groupBy.Substring(0, groupBy.Length - 1);
+
+        #region ç”ŸæˆWhere  _OLD .   é€šè¿‡è¿™ä¸ªè¿‡ç¨‹äº§ç”Ÿä¸¤ä¸ª where.
+        // æ‰¾åˆ° WHERE æ•°æ®ã€‚
+        string where = " WHERE ";
+        string whereOfLJ = " WHERE "; // ç´¯è®¡çš„where.
+        string url = "";
+        foreach (Control item in this.ToolBar1.Controls)
+        {
+            if (item.ID == null)
+                continue;
+            if (item.ID.IndexOf("DDL_") == -1)
+                continue;
+            if (item.ID.IndexOf("DDL_Form_") == 0 || item.ID.IndexOf("DDL_To_") == 0)
+                continue;
+
+            string key = item.ID.Substring("DDL_".Length);
+            DDL ddl = (DDL)item;
+            if (ddl.SelectedItemStringVal == "all")
+                continue;
+
+            string val = ddl.SelectedItemStringVal;
+            if (val == null)
+                continue;
+
+            if (val == "mvals")
+            {
+                UserRegedit sUr = new UserRegedit();
+                sUr.MyPK = WebUser.No + this.EnsName + "_SearchAttrs";
+                sUr.RetrieveFromDBSources();
+
+                /* å¦‚æœæ˜¯å¤šé€‰å€¼ */
+                string cfgVal = sUr.MVals;
+                AtPara ap = new AtPara(cfgVal);
+                string instr = ap.GetValStrByKey(key);
+                if (instr == null || instr == "")
                 {
-                    UserRegedit sUr = new UserRegedit();
-                    sUr.MyPK = WebUser.No + this.EnsName + "_SearchAttrs";
-                    sUr.RetrieveFromDBSources();
-
-                    /* Èç¹ûÊÇ¶àÑ¡Öµ */
-                    string cfgVal = sUr.MVals;
-                    AtPara ap = new AtPara(cfgVal);
-                    string instr = ap.GetValStrByKey(key);
-                    if (instr == null || instr == "")
+                    if (key == "FK_Dept" || key == "FK_Unit")
                     {
-                        if (key == "FK_Dept" || key == "FK_Unit")
+                        if (key == "FK_Dept")
                         {
-                            if (key == "FK_Dept")
-                            {
-                                val = WebUser.FK_Dept;
-                                ddl.SelectedIndex = 0;
-                            }
-
-                            if (key == "FK_Unit")
-                            {
-                                val = WebUser.FK_Unit;
-                                ddl.SelectedIndex = 0;
-                            }
+                            val = WebUser.FK_Dept;
+                            ddl.SelectedIndex = 0;
                         }
-                        else
+
+                        if (key == "FK_Unit")
                         {
-                            continue;
+                            val = WebUser.FK_Unit;
+                            ddl.SelectedIndex = 0;
                         }
                     }
                     else
                     {
-                        instr = instr.Replace("..", ".");
-                        instr = instr.Replace(".", "','");
-                        instr = instr.Substring(2);
-                        instr = instr.Substring(0, instr.Length - 2);
-                        where += " " + key + " IN (" + instr + ")  AND ";
                         continue;
                     }
                 }
-
-                if (key == "FK_Dept")
+                else
                 {
-                    if (val.Length == 8)
-                    {
-                        where += " FK_Dept =" + SystemConfig.AppCenterDBVarStr + "V_Dept    AND ";
-                    }
-                    else
-                    {
-                        switch (SystemConfig.AppCenterDBType)
-                        {
-                            case DBType.Oracle9i:
-                            case DBType.Informix:
-                                where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
-                                break;
-                            case DBType.SQL2000:
-                            default:
-                                where += " FK_Dept LIKE  " + SystemConfig.AppCenterDBVarStr + "V_Dept+'%'   AND ";
-                                //  WHERE += " FK_Dept LIKE '@V_Dept%'   AND ";
-                                break;
-                        }
-                    }
-                    myps.Add("V_Dept", val);
+                    instr = instr.Replace("..", ".");
+                    instr = instr.Replace(".", "','");
+                    instr = instr.Substring(2);
+                    instr = instr.Substring(0, instr.Length - 2);
+                    where += " " + key + " IN (" + instr + ")  AND ";
+                    continue;
+                }
+            }
+
+            if (key == "FK_Dept")
+            {
+                if (val.Length == 8)
+                {
+                    where += " FK_Dept =" + SystemConfig.AppCenterDBVarStr + "V_Dept    AND ";
                 }
                 else
                 {
-                    where += " " + key + " =" + SystemConfig.AppCenterDBVarStr + key + "   AND ";
-                    if (key != "FK_NY")
-                        whereOfLJ += " " + key + " =" + SystemConfig.AppCenterDBVarStr + key + "   AND ";
-
-                    myps.Add(key, val);
-                }
-            }
-            #endregion
-
-            #region ¼ÓÉÏ where like Ìõ¼ş
-            try
-            {
-                string key = this.ToolBar1.GetTBByID("TB_Key").Text.Trim();
-                if (key.Length > 1)
-                {
-                    string whereLike = "";
-
-                    bool isAddAnd = false;
-                    foreach (Attr likeKey in attrs)
+                    switch (SystemConfig.AppCenterDBType)
                     {
-                        if (likeKey.IsNum)
-                            continue;
-                        if (likeKey.IsRefAttr)
-                            continue;
-
-                        switch (likeKey.Field)
-                        {
-                            case "MyFileExt":
-                            case "MyFilePath":
-                            case "WebPath":
-                                continue;
-                            default:
-                                break;
-                        }
-
-
-                        if (isAddAnd == false)
-                        {
-                            isAddAnd = true;
-                            whereLike += "      " + likeKey.Field + " LIKE '%" + key + "%' ";
-                        }
-                        else
-                        {
-                            whereLike += "   AND   " + likeKey.Field + " LIKE '%" + key + "%'";
-                        }
+                        case DBType.Oracle9i:
+                        case DBType.Informix:
+                            where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
+                            break;
+                        case DBType.SQL2000:
+                        default:
+                            where += " FK_Dept LIKE  " + SystemConfig.AppCenterDBVarStr + "V_Dept+'%'   AND ";
+                            //  WHERE += " FK_Dept LIKE '@V_Dept%'   AND ";
+                            break;
                     }
-                    whereLike += "          ";
-                    where += whereLike;
                 }
-            }
-            catch
-            {
-            }
-            #endregion
-
-            if (where == " WHERE ")
-            {
-                where = "" + Condition.Replace("and", "");
-                whereOfLJ = "" + Condition.Replace("and", "");
+                myps.Add("V_Dept", val);
             }
             else
             {
-                where = where.Substring(0, where.Length - " AND ".Length) + Condition;
-                whereOfLJ = whereOfLJ.Substring(0, whereOfLJ.Length - " AND ".Length) + Condition;
+                where += " " + key + " =" + SystemConfig.AppCenterDBVarStr + key + "   AND ";
+                if (key != "FK_NY")
+                    whereOfLJ += " " + key + " =" + SystemConfig.AppCenterDBVarStr + key + "   AND ";
+
+                myps.Add(key, val);
             }
+        }
+        #endregion
 
-            string orderByReq = this.Request.QueryString["OrderBy"];
-            string orderby = "";
-            if (orderByReq != null)
+        #region åŠ ä¸Š where like æ¡ä»¶
+        try
+        {
+            string key = this.ToolBar1.GetTBByID("TB_Key").Text.Trim();
+            if (key.Length > 1)
             {
-                //this.Alert(orderByReq + "  " + this.OrderWay);
-                //this.ResponseWriteBlueMsg(selectSQL);
-            }
+                string whereLike = "";
 
-            if (orderByReq != null && this.OrderBy != null && (selectSQL.Contains(orderByReq) || groupKey.Contains(orderByReq)))
-            {
-                orderby = " ORDER BY " + this.OrderBy;
-                if (this.OrderWay != "Up")
-                    orderby += " DESC ";
-            }
-
-            // ×é×°³ÉĞèÒªµÄ sql 
-            string sql = "";
-            sql = selectSQL + groupKey + " FROM " + this.HisMD.PTable + where + groupBy + orderby;
-
-            // ÎïÀí±í¡£
-            // this.ResponseWriteBlueMsg(sql);
-            myps.SQL = sql;
-            DataTable dt2 = DBAccess.RunSQLReturnTable(myps);
-            // this.Response.Write(sql);
-
-            DataTable dt1 = dt2.Clone();
-            dt1.Columns.Add("IDX", typeof(int));
-
-            #region ¶ÔËû½øĞĞ·ÖÒ³Ãæ
-            int myIdx = 0;
-            foreach (DataRow dr in dt2.Rows)
-            {
-                myIdx++;
-                DataRow mydr = dt1.NewRow();
-                mydr["IDX"] = myIdx;
-                foreach (DataColumn dc in dt2.Columns)
+                bool isAddAnd = false;
+                foreach (Attr likeKey in attrs)
                 {
-                    mydr[dc.ColumnName] = dr[dc.ColumnName];
-                }
-                dt1.Rows.Add(mydr);
-            }
-            #endregion
-
-            #region ´¦Àí Int ÀàĞÍµÄ·Ö×éÁĞ¡£
-            DataTable dt = dt1.Clone();
-            dt.Rows.Clear();
-            foreach (Attr attr in AttrsOfGroup)
-            {
-                dt.Columns[attr.Key].DataType = typeof(string);
-            }
-            foreach (DataRow dr in dt1.Rows)
-            {
-                dt.ImportRow(dr);
-            }
-            #endregion
-
-            // ´¦ÀíÕâ¸öÎïÀí±í , Èç¹ûÓĞÀÛ¼Æ×Ö¶Î, ¾ÍÀ©Õ¹ËüµÄÁĞ¡£
-            if (isHaveLJ)
-            {
-                // Ê×ÏÈÀ©³äÁĞ.
-                foreach (Attr attr in AttrsOfNum)
-                {
-                    if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") == -1)
+                    if (likeKey.IsNum)
+                        continue;
+                    if (likeKey.IsRefAttr)
                         continue;
 
-                    switch (attr.MyDataType)
+                    switch (likeKey.Field)
                     {
-                        case DataType.AppInt:
-                            dt.Columns.Add(attr.Key + "Amount", typeof(int));
-                            break;
-                        default:
-                            dt.Columns.Add(attr.Key + "Amount", typeof(decimal));
-                            break;
-                    }
-                }
-
-                // Ìí¼ÓÀÛ¼Æ»ã×ÜÊı¾İ.
-                foreach (DataRow dr in dt.Rows)
-                {
-                    foreach (Attr attr in AttrsOfNum)
-                    {
-                        if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") == -1)
+                        case "MyFileExt":
+                        case "MyFilePath":
+                        case "WebPath":
                             continue;
-
-                        //ĞÎ³É²éÑ¯sql.
-                        if (whereOfLJ.Length > 10)
-                            sql = "SELECT SUM(" + attr.Key + ") FROM " + this.HisMD.PTable + whereOfLJ + " AND ";
-                        else
-                            sql = "SELECT SUM(" + attr.Key + ") FROM " + this.HisMD.PTable + " WHERE ";
-
-                        foreach (Attr attr1 in AttrsOfGroup)
-                        {
-                            switch (attr1.Key)
-                            {
-                                case "FK_NY":
-                                    sql += " FK_NY <= '" + dr["FK_NY"] + "' AND FK_ND='" + dr["FK_NY"].ToString().Substring(0, 4) + "' AND ";
-                                    break;
-                                case "FK_Dept":
-                                    sql += attr1.Key + "='" + dr[attr1.Key] + "' AND ";
-                                    break;
-                                case "FK_SJ":
-                                case "FK_XJ":
-                                    sql += attr1.Key + " LIKE '" + dr[attr1.Key] + "%' AND ";
-                                    break;
-                                default:
-                                    sql += attr1.Key + "='" + dr[attr1.Key] + "' AND ";
-                                    break;
-                            }
-                        }
-
-                        sql = sql.Substring(0, sql.Length - "AND ".Length);
-                        if (attr.MyDataType == DataType.AppInt)
-                            dr[attr.Key + "Amount"] = DBAccess.RunSQLReturnValInt(sql, 0);
-                        else
-                            dr[attr.Key + "Amount"] = DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
-                    }
-                }
-            }
-            // Éú³É±íÍ·¡£
-//            this.UCSys1.AddTable("width='30%'");
-
-            this.UCSys1.Clear();
-            this.UCSys1.AddTable();
-
-            #region Ôö¼Ó·Ö×éÌõ¼ş
-            if (StateNumKey.IndexOf("=AMOUNT") != -1)
-            {
-                /* Èç¹û°üº¬ÀÛ¼Æ */
-
-                // Ôö¼Ó·Ö×éÌõ¼ş¡£
-                this.UCSys1.AddTR();  // ¿ªÊ¼µÚÒ»ÁĞ¡£
-                this.UCSys1.Add("<td rowspan=2 class='Title'>ID</td>");
-                foreach (Attr attr in AttrsOfGroup)
-                {
-                    this.UCSys1.Add("<td rowspan=2 class='Title'>" + attr.Desc + "</td>");
-                }
-                // Ôö¼ÓÊı¾İÁĞ
-                foreach (Attr attr in AttrsOfNum)
-                {
-                    if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1)
-                    {
-                        /*  Èç¹û±¾Êı¾İÁĞ °üº¬ÀÛ¼Æ */
-                        this.UCSys1.Add("<td  colspan=2 class='Title' >" + attr.Desc + "</td>");
-                    }
-                    else
-                    {
-                        this.UCSys1.Add("<td  rowspan=2 class='Title' >" + attr.Desc + "</td>");
-                    }
-                }
-                this.UCSys1.AddTREnd();  // end ¿ªÊ¼µÚÒ»ÁĞ
-
-                this.UCSys1.AddTR();
-                foreach (Attr attr in AttrsOfNum)
-                {
-                    if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") == -1)
-                        continue;
-
-                    this.UCSys1.Add("<td class='Title'>" + this.ToE("CrrMonth", "±¾ÔÂ") + "</td>"); //±¾ÔÂ this.ToE("OrderCondErr")
-                    this.UCSys1.Add("<td class='Title'>" + this.ToE("Amount", "ÀÛ¼Æ") + "</td>"); //ÀÛ¼Æ
-                }
-                this.UCSys1.AddTR();
-            }
-            else  /* Ã»ÓĞºÏ¼ÆµÄÇé¿ö */
-            {
-                this.UCSys1.AddTR();
-                this.UCSys1.AddTDTitle("IDX");
-
-                // ·Ö×éÌõ¼ş
-                foreach (Attr attr in AttrsOfGroup)
-                {
-                    if (this.OrderBy == attr.Key)
-                    {
-                        switch (this.OrderWay)
-                        {
-                            case "Down":
-                                this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Up' >" + attr.Desc + "<img src='"+this.Request.ApplicationPath+"/Images/ArrDown.gif' border=0/></a>");
-                                break;
-                            case "Up":
-                            default:
-                                this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "<img src='"+this.Request.ApplicationPath+"/Images/ArrUp.gif' border=0/></a>");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "</a>");
-                    }
-                }
-
-                // ·Ö×éÊı¾İ
-                foreach (Attr attr in AttrsOfNum)
-                {
-                    string lab = "";
-                    if (StateNumKey.Contains(attr.Key + "=SUM"))
-                    {
-                        lab = "(ºÏ¼Æ)" + attr.Desc;
-                    }
-                    else
-                    {
-                        lab = "(Æ½¾ù)" + attr.Desc;
-                    }
-
-                    if (this.OrderBy == attr.Key)
-                    {
-                        switch (this.OrderWay)
-                        {
-                            case "Down":
-                                if (this.NumKey == attr.Key)
-                                    this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
-                                else
-                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up&FK_Flow="+this.FK_Flow+"'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
-                                break;
-                            case "Up":
-                            default:
-                                if (this.NumKey == attr.Key)
-                                    this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
-                                else
-                                    this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        if (this.NumKey == attr.Key)
-                            this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
-                        else
-                            this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&FK_Flow=" + this.FK_Flow + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
-
-                    }
-                }
-                this.UCSys1.AddTDGroupTitle("");
-                this.UCSys1.AddTREnd();
-            }
-            #endregion Éú³É±íÍ·
-
-            #region Éú³ÉÒª²éÑ¯Ìõ¼ş
-            string YSurl = "GroupDtl.aspx?EnsName=" + this.EnsName;
-            string keys = "";
-
-            // ·Ö×éµÄĞÅÏ¢ÖĞÊÇ·ñ°üº¬²¿ÃÅ£¿
-            bool IsHaveFK_Dept = false;
-            foreach (Attr attr in AttrsOfGroup)
-            {
-                if (attr.Key == "FK_Dept")
-                {
-                    IsHaveFK_Dept = true;
-                    break;
-                }
-            }
-
-            foreach (AttrSearch a23 in en.EnMap.SearchAttrs)
-            {
-                Attr attrS = a23.HisAttr;
-                if (attrS.MyFieldType == FieldType.RefText)
-                    continue;
-
-                if (IsHaveFK_Dept && attrS.Key == "FK_Dept")
-                    continue;
-
-                DDL ddl = this.ToolBar1.GetDDLByKey("DDL_" + attrS.Key);
-                if (ddl == null)
-                {
-                    throw new Exception(attrS.Key);
-                }
-
-                string val = this.ToolBar1.GetDDLByKey("DDL_" + attrS.Key).SelectedItemStringVal;
-                if (val == "all")
-                    continue;
-                keys += "&" + attrS.Key + "=" + val;
-            }
-            YSurl = YSurl + keys;
-            #endregion
-
-            //this.Table =dt;
-
-            #region Éú³ÉÍâ¼ü
-            // Îª±íÀ©³äÍâ¼ü
-            foreach (Attr attr in AttrsOfGroup)
-            {
-                dt.Columns.Add(attr.Key + "T", typeof(string));
-            }
-            foreach (Attr attr in AttrsOfGroup)
-            {
-                if (attr.IsEnum)
-                {
-                    /* ËµÃ÷ËüÊÇÃ¶¾ÙÀàĞÍ */
-                    SysEnums ses = new SysEnums(attr.UIBindKey);
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        int val = 0;
-                        try
-                        {
-                            val = int.Parse(dr[attr.Key].ToString());
-                        }
-                        catch
-                        {
-                            dr[attr.Key + "T"] = " ";
-                            continue;
-                        }
-
-                        foreach (SysEnum se in ses)
-                        {
-                            if (se.IntKey == val)
-                                dr[attr.Key + "T"] = se.Lab;
-                        }
-                    }
-                    continue;
-                }
-                foreach (DataRow dr in dt.Rows)
-                {
-                    string val = dr[attr.Key].ToString();
-
-                    if (attr.UIBindKey.Contains(".") == false)
-                    {
-                        try
-                        {
-                            dr[attr.Key + "T"] = DBAccess.RunSQLReturnStringIsNull("SELECT Name FROM " + attr.UIBindKey + " WHERE No='" + val + "'", val);
-                        }
-                        catch
-                        {
-                            dr[attr.Key + "T"] = val;
-                        }
-                        continue;
-                    }
-
-                    Entity myen = attr.HisFKEn;
-                    myen.SetValByKey(attr.UIRefKeyValue, val);
-                    try
-                    {
-                        myen.Retrieve();
-                        //  dr[attr.Key + "T"] = val + myen.GetValStringByKey(attr.UIRefKeyText);
-                        //   dr[attr.Key + "T"] = myen.GetValStrByKey(attr.UIRefKeyValue)+ myen.GetValStrByKey(attr.UIRefKeyText);
-                        dr[attr.Key + "T"] = myen.GetValStrByKey(attr.UIRefKeyText);
-                    }
-                    catch (Exception ex)
-                    {
-                        if (val == null || val.Length <= 1)
-                        {
-                            dr[attr.Key + "T"] = val;
-                        }
-                        else if (val.Substring(0, 2) == "63")
-                        {
-                            try
-                            {
-                                BP.Port.Dept Dept = new BP.Port.Dept(val);
-                                dr[attr.Key + "T"] = Dept.Name;
-                            }
-                            catch
-                            {
-                                dr[attr.Key + "T"] = val;
-                            }
-                        }
-                        else
-                        {
-                            dr[attr.Key + "T"] = val;
-                        }
-                    }
-                }
-            }
-            #endregion
-
-            #region Éú³É±íÌå
-            int i = 0;
-            bool is1 = false;
-            foreach (DataRow dr in dt.Rows)
-            {
-                i++;
-
-                url = YSurl.Clone() as string;
-                string keyActive = "";
-                // ²úÉúurl .
-                foreach (Attr attr in AttrsOfGroup)
-                {
-                    url += "&" + attr.Key + "=" + dr[attr.Key].ToString();
-                    //keyActive+="&"+attr.Key+"="+dr[attr.Key].ToString() ; 
-                }
-
-                is1 = this.UCSys1.AddTR(is1);
-                // this.UCSys1.AddTRTXHand("onclick=\"WinOpen('" + url + "','dtl');\" ");
-
-                this.UCSys1.AddTDIdx(int.Parse(dr["IDX"].ToString()));
-                // ·Ö×éÌõ¼ş
-                foreach (Attr attr in AttrsOfGroup)
-                {
-                    this.UCSys1.AddTD(dr[attr.Key + "T"].ToString());
-                }
-
-                // ·Ö×éÊı¾İ
-                foreach (Attr attr in AttrsOfNum)
-                {
-                    decimal obj = 0;
-                    try
-                    {
-                        obj = decimal.Parse(dr[attr.Key].ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        // throw new Exception(dr[attr.Key].ToString() +"@SQL="+ sql +"@"+ex.Message +"@Attr="+attr.Key );
-                    }
-
-                    switch (attr.MyDataType)
-                    {
-                        case DataType.AppMoney:
-                        case DataType.AppRate:
-                            if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  Èç¹û±¾Êı¾İÁĞ °üº¬ÀÛ¼Æ */
-                            {
-                                this.UCSys1.AddTDJE(obj);
-                                this.UCSys1.AddTDJE(decimal.Parse(dr[attr.Key + "Amount"].ToString()));
-                            }
-                            else
-                            {
-                                this.UCSys1.AddTDJE(obj);
-                            }
-                            break;
                         default:
-                            if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  Èç¹û±¾Êı¾İÁĞ °üº¬ÀÛ¼Æ */
-                            {
-                                this.UCSys1.AddTDNum(obj);
-                                this.UCSys1.AddTDNum(decimal.Parse(dr[attr.Key + "Amount"].ToString()));
-                            }
-                            else
-                            {
-                                this.UCSys1.AddTDNum(obj);
-                            }
                             break;
                     }
+
+
+                    if (isAddAnd == false)
+                    {
+                        isAddAnd = true;
+                        whereLike += "      " + likeKey.Field + " LIKE '%" + key + "%' ";
+                    }
+                    else
+                    {
+                        whereLike += "   AND   " + likeKey.Field + " LIKE '%" + key + "%'";
+                    }
                 }
-                this.UCSys1.AddTD("<a href=\"javascript:WinOpen('" + url + "','s','900', '600')\" >ÏêÏ¸</a>");
-                this.UCSys1.AddTREnd();
+                whereLike += "          ";
+                where += whereLike;
             }
+        }
+        catch
+        {
+        }
+        #endregion
 
-            #region  ¼ÓÈëºÏ¼ÆĞÅÏ¢¡£
-            this.UCSys1.AddTR("class='TRSum'");
-            this.UCSys1.AddTD(this.ToE("Sum", "»ã×Ü"));
-            foreach (Attr attr in AttrsOfGroup)
+        if (where == " WHERE ")
+        {
+            where = "" + Condition.Replace("and", "");
+            whereOfLJ = "" + Condition.Replace("and", "");
+        }
+        else
+        {
+            where = where.Substring(0, where.Length - " AND ".Length) + Condition;
+            whereOfLJ = whereOfLJ.Substring(0, whereOfLJ.Length - " AND ".Length) + Condition;
+        }
+
+        string orderByReq = this.Request.QueryString["OrderBy"];
+        string orderby = "";
+        if (orderByReq != null)
+        {
+            //this.Alert(orderByReq + "  " + this.OrderWay);
+            //this.ResponseWriteBlueMsg(selectSQL);
+        }
+
+        if (orderByReq != null && this.OrderBy != null && (selectSQL.Contains(orderByReq) || groupKey.Contains(orderByReq)))
+        {
+            orderby = " ORDER BY " + this.OrderBy;
+            if (this.OrderWay != "Up")
+                orderby += " DESC ";
+        }
+
+        // ç»„è£…æˆéœ€è¦çš„ sql 
+        string sql = "";
+        sql = selectSQL + groupKey + " FROM " + this.HisMD.PTable + where + groupBy + orderby;
+
+        // ç‰©ç†è¡¨ã€‚
+        // this.ResponseWriteBlueMsg(sql);
+        myps.SQL = sql;
+        DataTable dt2 = DBAccess.RunSQLReturnTable(myps);
+        // this.Response.Write(sql);
+
+        DataTable dt1 = dt2.Clone();
+        dt1.Columns.Add("IDX", typeof(int));
+
+        #region å¯¹ä»–è¿›è¡Œåˆ†é¡µé¢
+        int myIdx = 0;
+        foreach (DataRow dr in dt2.Rows)
+        {
+            myIdx++;
+            DataRow mydr = dt1.NewRow();
+            mydr["IDX"] = myIdx;
+            foreach (DataColumn dc in dt2.Columns)
             {
-                this.UCSys1.AddTD();
+                mydr[dc.ColumnName] = dr[dc.ColumnName];
             }
+            dt1.Rows.Add(mydr);
+        }
+        #endregion
 
-            //²»ÏÔÊ¾ºÏ¼ÆÁĞ¡£
-            string NoShowSum = SystemConfig.GetConfigXmlEns("NoShowSum", this.EnsName);
-            if (NoShowSum == null)
-                NoShowSum = "";
+        #region å¤„ç† Int ç±»å‹çš„åˆ†ç»„åˆ—ã€‚
+        DataTable dt = dt1.Clone();
+        dt.Rows.Clear();
+        foreach (Attr attr in AttrsOfGroup)
+        {
+            dt.Columns[attr.Key].DataType = typeof(string);
+        }
+        foreach (DataRow dr in dt1.Rows)
+        {
+            dt.ImportRow(dr);
+        }
+        #endregion
 
-            Attrs AttrsOfNum1 = AttrsOfNum.Clone();
-            decimal d = 0;
+        // å¤„ç†è¿™ä¸ªç‰©ç†è¡¨ , å¦‚æœæœ‰ç´¯è®¡å­—æ®µ, å°±æ‰©å±•å®ƒçš„åˆ—ã€‚
+        if (isHaveLJ)
+        {
+            // é¦–å…ˆæ‰©å……åˆ—.
             foreach (Attr attr in AttrsOfNum)
             {
-                if (NoShowSum.Contains("@" + attr.Key + "@"))
+                if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") == -1)
+                    continue;
+
+                switch (attr.MyDataType)
                 {
-                    bool isHave = false;
-                    foreach (ActiveAttr aa in aas)
+                    case DataType.AppInt:
+                        dt.Columns.Add(attr.Key + "Amount", typeof(int));
+                        break;
+                    default:
+                        dt.Columns.Add(attr.Key + "Amount", typeof(decimal));
+                        break;
+                }
+            }
+
+            // æ·»åŠ ç´¯è®¡æ±‡æ€»æ•°æ®.
+            foreach (DataRow dr in dt.Rows)
+            {
+                foreach (Attr attr in AttrsOfNum)
+                {
+                    if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") == -1)
+                        continue;
+
+                    //å½¢æˆæŸ¥è¯¢sql.
+                    if (whereOfLJ.Length > 10)
+                        sql = "SELECT SUM(" + attr.Key + ") FROM " + this.HisMD.PTable + whereOfLJ + " AND ";
+                    else
+                        sql = "SELECT SUM(" + attr.Key + ") FROM " + this.HisMD.PTable + " WHERE ";
+
+                    foreach (Attr attr1 in AttrsOfGroup)
                     {
-                        if (aa.AttrKey != attr.Key)
-                            continue;
-
-                        isHave = true;
-                        /* Èç¹ûËüÊÇÒ»¸ö¼ÆËãÁĞ */
-                        string exp = aa.ExpApp;
-                        if (exp == null || exp == "")
+                        switch (attr1.Key)
                         {
-                            this.UCSys1.AddTD();
-                            break;
+                            case "FK_NY":
+                                sql += " FK_NY <= '" + dr["FK_NY"] + "' AND FK_ND='" + dr["FK_NY"].ToString().Substring(0, 4) + "' AND ";
+                                break;
+                            case "FK_Dept":
+                                sql += attr1.Key + "='" + dr[attr1.Key] + "' AND ";
+                                break;
+                            case "FK_SJ":
+                            case "FK_XJ":
+                                sql += attr1.Key + " LIKE '" + dr[attr1.Key] + "%' AND ";
+                                break;
+                            default:
+                                sql += attr1.Key + "='" + dr[attr1.Key] + "' AND ";
+                                break;
                         }
-                        foreach (Attr myattr in AttrsOfNum1)
-                        {
-                            if (exp.IndexOf("@" + myattr.Key + "@") != -1)
-                            {
-                                d = 0;
-                                foreach (DataRow dr1 in dt.Rows)
-                                {
-                                    try
-                                    {
-                                        d += decimal.Parse(dr1[myattr.Key].ToString());
-                                    }
-                                    catch
-                                    {
-                                    }
-                                }
-
-                                exp = exp.Replace("@" + myattr.Key + "@", d.ToString());
-                            }
-                        }
-                        this.UCSys1.AddTDNum(DataType.ParseExpToDecimal(exp));
                     }
 
-                    if (isHave == false)
-                        this.UCSys1.AddTD();
+                    sql = sql.Substring(0, sql.Length - "AND ".Length);
+                    if (attr.MyDataType == DataType.AppInt)
+                        dr[attr.Key + "Amount"] = DBAccess.RunSQLReturnValInt(sql, 0);
                     else
-                    {
+                        dr[attr.Key + "Amount"] = DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
+                }
+            }
+        }
+        // ç”Ÿæˆè¡¨å¤´ã€‚
+        //            this.UCSys1.AddTable("width='30%'");
 
+        this.UCSys1.Clear();
+//        this.UCSys1.AddTable("style='align:left' ");
+        this.UCSys1.Add("<table class='MyTable' >");
+
+        #region å¢åŠ åˆ†ç»„æ¡ä»¶
+        if (StateNumKey.IndexOf("=AMOUNT") != -1)
+        {
+            /* å¦‚æœåŒ…å«ç´¯è®¡ */
+
+            // å¢åŠ åˆ†ç»„æ¡ä»¶ã€‚
+            this.UCSys1.AddTR();  // å¼€å§‹ç¬¬ä¸€åˆ—ã€‚
+            this.UCSys1.Add("<td rowspan=2 class='Title'>ID</td>");
+            foreach (Attr attr in AttrsOfGroup)
+            {
+                this.UCSys1.Add("<td rowspan=2 class='Title'>" + attr.Desc + "</td>");
+            }
+            // å¢åŠ æ•°æ®åˆ—
+            foreach (Attr attr in AttrsOfNum)
+            {
+                if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1)
+                {
+                    /*  å¦‚æœæœ¬æ•°æ®åˆ— åŒ…å«ç´¯è®¡ */
+                    this.UCSys1.Add("<td  colspan=2 class='Title' >" + attr.Desc + "</td>");
+                }
+                else
+                {
+                    this.UCSys1.Add("<td  rowspan=2 class='Title' >" + attr.Desc + "</td>");
+                }
+            }
+            this.UCSys1.AddTREnd();  // end å¼€å§‹ç¬¬ä¸€åˆ—
+
+            this.UCSys1.AddTR();
+            foreach (Attr attr in AttrsOfNum)
+            {
+                if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") == -1)
+                    continue;
+
+                this.UCSys1.Add("<td class='Title'>" + this.ToE("CrrMonth", "æœ¬æœˆ") + "</td>"); //æœ¬æœˆ this.ToE("OrderCondErr")
+                this.UCSys1.Add("<td class='Title'>" + this.ToE("Amount", "ç´¯è®¡") + "</td>"); //ç´¯è®¡
+            }
+            this.UCSys1.AddTR();
+        }
+        else  /* æ²¡æœ‰åˆè®¡çš„æƒ…å†µ */
+        {
+            this.UCSys1.AddTR();
+            this.UCSys1.AddTDTitle("IDX");
+
+            // åˆ†ç»„æ¡ä»¶
+            foreach (Attr attr in AttrsOfGroup)
+            {
+                if (this.OrderBy == attr.Key)
+                {
+                    switch (this.OrderWay)
+                    {
+                        case "Down":
+                            this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Up' >" + attr.Desc + "<img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                            break;
+                        case "Up":
+                        default:
+                            this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "<img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                            break;
+                    }
+                }
+                else
+                {
+                    this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "</a>");
+                }
+            }
+
+            // åˆ†ç»„æ•°æ®
+            foreach (Attr attr in AttrsOfNum)
+            {
+                string lab = "";
+                if (StateNumKey.Contains(attr.Key + "=SUM"))
+                {
+                    lab = "(åˆè®¡)" + attr.Desc;
+                }
+                else
+                {
+                    lab = "(å¹³å‡)" + attr.Desc;
+                }
+
+                if (this.OrderBy == attr.Key)
+                {
+                    switch (this.OrderWay)
+                    {
+                        case "Down":
+                            if (this.NumKey == attr.Key)
+                                this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                            else
+                                this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                            break;
+                        case "Up":
+                        default:
+                            if (this.NumKey == attr.Key)
+                                this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                            else
+                                this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                            break;
+                    }
+                }
+                else
+                {
+                    if (this.NumKey == attr.Key)
+                        this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
+                    else
+                        this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&FK_Flow=" + this.FK_Flow + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
+                }
+            }
+            this.UCSys1.AddTDTitle("æŒ–æ˜");
+            this.UCSys1.AddTREnd();
+        }
+        #endregion ç”Ÿæˆè¡¨å¤´
+
+        #region ç”Ÿæˆè¦æŸ¥è¯¢æ¡ä»¶
+        string YSurl = "GroupDtl.aspx?EnsName=" + this.EnsName;
+        string keys = "";
+
+        // åˆ†ç»„çš„ä¿¡æ¯ä¸­æ˜¯å¦åŒ…å«éƒ¨é—¨ï¼Ÿ
+        bool IsHaveFK_Dept = false;
+        foreach (Attr attr in AttrsOfGroup)
+        {
+            if (attr.Key == "FK_Dept")
+            {
+                IsHaveFK_Dept = true;
+                break;
+            }
+        }
+        foreach (AttrSearch a23 in en.EnMap.SearchAttrs)
+        {
+            Attr attrS = a23.HisAttr;
+            if (attrS.MyFieldType == FieldType.RefText)
+                continue;
+
+            if (IsHaveFK_Dept && attrS.Key == "FK_Dept")
+                continue;
+
+            DDL ddl = this.ToolBar1.GetDDLByKey("DDL_" + attrS.Key);
+            if (ddl == null)
+            {
+                throw new Exception(attrS.Key);
+            }
+
+            string val = this.ToolBar1.GetDDLByKey("DDL_" + attrS.Key).SelectedItemStringVal;
+            if (val == "all")
+                continue;
+            keys += "&" + attrS.Key + "=" + val;
+        }
+        YSurl = YSurl + keys;
+        #endregion
+
+        #region ç”Ÿæˆå¤–é”®
+        // ä¸ºè¡¨æ‰©å……å¤–é”®
+        foreach (Attr attr in AttrsOfGroup)
+        {
+            dt.Columns.Add(attr.Key + "T", typeof(string));
+        }
+        foreach (Attr attr in AttrsOfGroup)
+        {
+            if (attr.IsEnum)
+            {
+                /* è¯´æ˜å®ƒæ˜¯æšä¸¾ç±»å‹ */
+                SysEnums ses = new SysEnums(attr.UIBindKey);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int val = 0;
+                    try
+                    {
+                        val = int.Parse(dr[attr.Key].ToString());
+                    }
+                    catch
+                    {
+                        dr[attr.Key + "T"] = " ";
+                        continue;
+                    }
+
+                    foreach (SysEnum se in ses)
+                    {
+                        if (se.IntKey == val)
+                            dr[attr.Key + "T"] = se.Lab;
+                    }
+                }
+                continue;
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                string val = dr[attr.Key].ToString();
+
+                if (attr.UIBindKey.Contains(".") == false)
+                {
+                    try
+                    {
+                        dr[attr.Key + "T"] = DBAccess.RunSQLReturnStringIsNull("SELECT Name FROM " + attr.UIBindKey + " WHERE No='" + val + "'", val);
+                    }
+                    catch
+                    {
+                        dr[attr.Key + "T"] = val;
                     }
                     continue;
+                }
+
+                Entity myen = attr.HisFKEn;
+                myen.SetValByKey(attr.UIRefKeyValue, val);
+                try
+                {
+                    myen.Retrieve();
+                    dr[attr.Key + "T"] = myen.GetValStrByKey(attr.UIRefKeyText);
+                }
+                catch
+                {
+                    if (val == null || val.Length <= 1)
+                    {
+                        dr[attr.Key + "T"] = val;
+                    }
+                    else
+                    {
+                        dr[attr.Key + "T"] = val;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region ç”Ÿæˆè¡¨ä½“
+        int i = 0;
+        bool is1 = false;
+        foreach (DataRow dr in dt.Rows)
+        {
+            i++;
+            url = YSurl.Clone() as string;
+            string keyActive = "";
+            // äº§ç”Ÿurl .
+            foreach (Attr attr in AttrsOfGroup)
+            {
+                url += "&" + attr.Key + "=" + dr[attr.Key].ToString();
+                //keyActive+="&"+attr.Key+"="+dr[attr.Key].ToString() ; 
+            }
+
+            is1 = this.UCSys1.AddTR(is1);
+            this.UCSys1.AddTDIdx(int.Parse(dr["IDX"].ToString()));
+            // åˆ†ç»„æ¡ä»¶
+            foreach (Attr attr in AttrsOfGroup)
+            {
+                this.UCSys1.AddTD(dr[attr.Key + "T"].ToString());
+            }
+
+            // åˆ†ç»„æ•°æ®
+            foreach (Attr attr in AttrsOfNum)
+            {
+                decimal obj = 0;
+                try
+                {
+                    obj = decimal.Parse(dr[attr.Key].ToString());
+                }
+                catch (Exception ex)
+                {
+                    // throw new Exception(dr[attr.Key].ToString() +"@SQL="+ sql +"@"+ex.Message +"@Attr="+attr.Key );
                 }
 
                 switch (attr.MyDataType)
                 {
                     case DataType.AppMoney:
                     case DataType.AppRate:
-                        if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  Èç¹û±¾Êı¾İÁĞ °üº¬ÀÛ¼Æ */
+                        if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  å¦‚æœæœ¬æ•°æ®åˆ— åŒ…å«ç´¯è®¡ */
                         {
-                            d = 0;
-                            foreach (DataRow dr1 in dt.Rows)
-                                d += decimal.Parse(dr1[attr.Key].ToString());
-                            this.UCSys1.AddTDJE(d);
-
-                            d = 0;
-                            foreach (DataRow dr1 in dt.Rows)
-                                d += decimal.Parse(dr1[attr.Key + "Amount"].ToString());
-                            this.UCSys1.AddTDJE(d);
+                            this.UCSys1.AddTDJE(obj);
+                            this.UCSys1.AddTDJE(decimal.Parse(dr[attr.Key + "Amount"].ToString()));
                         }
                         else
                         {
-                            d = 0;
-                            foreach (DataRow dr1 in dt.Rows)
-                            {
-                                try
-                                {
-                                    d += decimal.Parse(dr1[attr.Key].ToString());
-                                }
-                                catch
-                                {
-                                }
-                            }
-
-                            if (StateNumKey.IndexOf(attr.Key + "=AVG") < 1)
-                            {
-                                this.UCSys1.AddTDJE(d);
-                            }
-                            else
-                            {
-                                if (dt.Rows.Count == 0)
-                                    this.UCSys1.AddTD();
-                                else
-                                    this.UCSys1.AddTDJE(d / dt.Rows.Count);
-                            }
+                            this.UCSys1.AddTDJE(obj);
                         }
                         break;
                     default:
-                        if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  Èç¹û±¾Êı¾İÁĞ °üº¬ÀÛ¼Æ */
+                        if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  å¦‚æœæœ¬æ•°æ®åˆ— åŒ…å«ç´¯è®¡ */
                         {
-                            d = 0;
-                            foreach (DataRow dr1 in dt.Rows)
-                                d += decimal.Parse(dr1[attr.Key].ToString());
-                            this.UCSys1.AddTDNum(d);
-
-                            d = 0;
-                            foreach (DataRow dr1 in dt.Rows)
-                                d += decimal.Parse(dr1[attr.Key + "Amount"].ToString());
-                            this.UCSys1.AddTDNum(d);
+                            this.UCSys1.AddTDNum(obj);
+                            this.UCSys1.AddTDNum(decimal.Parse(dr[attr.Key + "Amount"].ToString()));
                         }
                         else
+                        {
+                            this.UCSys1.AddTDNum(obj);
+                        }
+                        break;
+                }
+            }
+            this.UCSys1.AddTD("<a href=\"javascript:WinOpen('" + url + "','s','900', '600')\" >è¯¦ç»†</a>");
+            this.UCSys1.AddTREnd();
+        }
+
+        #region  åŠ å…¥åˆè®¡ä¿¡æ¯ã€‚
+        this.UCSys1.AddTR("class='TRSum'");
+        this.UCSys1.AddTD(this.ToE("Sum", "æ±‡æ€»"));
+        foreach (Attr attr in AttrsOfGroup)
+        {
+            this.UCSys1.AddTD();
+        }
+
+        //ä¸æ˜¾ç¤ºåˆè®¡åˆ—ã€‚
+        string NoShowSum = SystemConfig.GetConfigXmlEns("NoShowSum", this.EnsName);
+        if (NoShowSum == null)
+            NoShowSum = "";
+
+        Attrs AttrsOfNum1 = AttrsOfNum.Clone();
+        decimal d = 0;
+        foreach (Attr attr in AttrsOfNum)
+        {
+            if (NoShowSum.Contains("@" + attr.Key + "@"))
+            {
+                bool isHave = false;
+                foreach (ActiveAttr aa in aas)
+                {
+                    if (aa.AttrKey != attr.Key)
+                        continue;
+
+                    isHave = true;
+                    /* å¦‚æœå®ƒæ˜¯ä¸€ä¸ªè®¡ç®—åˆ— */
+                    string exp = aa.ExpApp;
+                    if (exp == null || exp == "")
+                    {
+                        this.UCSys1.AddTD();
+                        break;
+                    }
+                    foreach (Attr myattr in AttrsOfNum1)
+                    {
+                        if (exp.IndexOf("@" + myattr.Key + "@") != -1)
                         {
                             d = 0;
                             foreach (DataRow dr1 in dt.Rows)
                             {
                                 try
                                 {
-                                    d += decimal.Parse(dr1[attr.Key].ToString());
+                                    d += decimal.Parse(dr1[myattr.Key].ToString());
                                 }
                                 catch
                                 {
                                 }
                             }
 
-                            if (StateNumKey.IndexOf(attr.Key + "=AVG") < 1)
+                            exp = exp.Replace("@" + myattr.Key + "@", d.ToString());
+                        }
+                    }
+                    this.UCSys1.AddTDNum(DataType.ParseExpToDecimal(exp));
+                }
+
+                if (isHave == false)
+                    this.UCSys1.AddTD();
+                else
+                {
+
+                }
+                continue;
+            }
+
+            switch (attr.MyDataType)
+            {
+                case DataType.AppMoney:
+                case DataType.AppRate:
+                    if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  å¦‚æœæœ¬æ•°æ®åˆ— åŒ…å«ç´¯è®¡ */
+                    {
+                        d = 0;
+                        foreach (DataRow dr1 in dt.Rows)
+                            d += decimal.Parse(dr1[attr.Key].ToString());
+                        this.UCSys1.AddTDJE(d);
+
+                        d = 0;
+                        foreach (DataRow dr1 in dt.Rows)
+                            d += decimal.Parse(dr1[attr.Key + "Amount"].ToString());
+                        this.UCSys1.AddTDJE(d);
+                    }
+                    else
+                    {
+                        d = 0;
+                        foreach (DataRow dr1 in dt.Rows)
+                        {
+                            try
                             {
-                                this.UCSys1.AddTDNum(d);
+                                d += decimal.Parse(dr1[attr.Key].ToString());
                             }
-                            else
+                            catch
                             {
-                                if (dt.Rows.Count == 0)
-                                    this.UCSys1.AddTD();
-                                else
-                                    this.UCSys1.AddTDJE(d / dt.Rows.Count);
                             }
                         }
-                        break;
-                }
-            }
-            this.UCSys1.AddTD();
-            this.UCSys1.AddTREnd();
-            #endregion
 
-            this.UCSys1.AddTableEnd();
-            #endregion Éú³É±íÌå
-
-            #region Éú³É Í¼ĞÎ
-            this.BPTabStrip1.Visible = this.CB_IsShowPict.Checked;
-            //if (AttrsOfGroup.Count==1)
-            if (this.CB_IsShowPict.Checked)
-            {
-                /* Èç¹ûÊÇ 1 Î³ */
-                string colOfGroupField = "";
-                string colOfGroupName = "";
-                string colOfNumField = "";
-                string colOfNumName = "";
-                string title = "";
-                int chartHeight = this.TB_H.TextExtInt;
-                int chartWidth = this.TB_W.TextExtInt;
-
-
-                if (isHaveLJ)
-                {
-                    /*  Èç¹ûÓĞÀÛ¼Æ, ¾Í°´ÕÕÀÛ¼Æ×Ö¶Î·ÖÎö¡£*/
-                    colOfGroupField = AttrsOfGroup[0].Key;
-                    colOfGroupName = AttrsOfGroup[0].Desc;
-
-                    colOfNumName = AttrsOfNum[0].Desc;
-                    if (dt.Columns.Contains(AttrsOfNum[0].Key + "AMOUNT"))
-                        colOfNumField = AttrsOfNum[0].Key + "AMOUNT";
-                    else
-                        colOfNumField = AttrsOfNum[0].Key;
-                }
-                else
-                {
-                    colOfGroupField = AttrsOfGroup[0].Key;
-                    colOfGroupName = AttrsOfGroup[0].Desc;
-
-                    if (NumKey == null)
+                        if (StateNumKey.IndexOf(attr.Key + "=AVG") < 1)
+                        {
+                            this.UCSys1.AddTDJE(d);
+                        }
+                        else
+                        {
+                            if (dt.Rows.Count == 0)
+                                this.UCSys1.AddTD();
+                            else
+                                this.UCSys1.AddTDJE(d / dt.Rows.Count);
+                        }
+                    }
+                    break;
+                default:
+                    if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1) /*  å¦‚æœæœ¬æ•°æ®åˆ— åŒ…å«ç´¯è®¡ */
                     {
-                        colOfNumName = AttrsOfNum[0].Desc;
-                        colOfNumField = AttrsOfNum[0].Key;
+                        d = 0;
+                        foreach (DataRow dr1 in dt.Rows)
+                            d += decimal.Parse(dr1[attr.Key].ToString());
+                        this.UCSys1.AddTDNum(d);
+
+                        d = 0;
+                        foreach (DataRow dr1 in dt.Rows)
+                            d += decimal.Parse(dr1[attr.Key + "Amount"].ToString());
+                        this.UCSys1.AddTDNum(d);
                     }
                     else
                     {
-                        //  colOfNumField = AttrsOfNum[0].Key;
-                        colOfNumName = attrs.GetAttrByKey(NumKey).Desc; // this.UCSys1.get;
-                        colOfNumField = NumKey;
+                        d = 0;
+                        foreach (DataRow dr1 in dt.Rows)
+                        {
+                            try
+                            {
+                                d += decimal.Parse(dr1[attr.Key].ToString());
+                            }
+                            catch
+                            {
+                            }
+                        }
+
+                        if (StateNumKey.IndexOf(attr.Key + "=AVG") < 1)
+                        {
+                            this.UCSys1.AddTDNum(d);
+                        }
+                        else
+                        {
+                            if (dt.Rows.Count == 0)
+                                this.UCSys1.AddTD();
+                            else
+                                this.UCSys1.AddTDJE(d / dt.Rows.Count);
+                        }
                     }
-                }
-
-
-                string colOfNumName1 = "";
-                if (StateNumKey.Contains(this.NumKey + "=SUM"))
-                    colOfNumName1 = "(ºÏ¼Æ)" + colOfNumName;
-                else
-                    colOfNumName1 = "(Æ½¾ù)" + colOfNumName;
-
-
-                //  DataTable dtChart = this.DealTable(dt);
-
-
-                try
-                {
-                    this.Img1.ImageUrl = this.Request.ApplicationPath+"/Temp/" + BP.Web.Comm.UC.UCSys.GenerChart(dt,
-                        colOfGroupField + "T", colOfGroupName,
-                        colOfNumField, colOfNumName1
-                        , "", chartHeight, chartWidth, ChartType.Histogram);
-
-                    this.Img2.ImageUrl = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.UCGraphics.GenerChart(dt,
-                        colOfGroupField + "T", colOfGroupName,
-                        colOfNumField, colOfNumName1
-                        , "", chartHeight, chartWidth, ChartType.Pie);
-
-                    this.Img3.ImageUrl = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.UCGraphics.GenerChart(dt,
-                        colOfGroupField + "T", colOfGroupName,
-                        colOfNumField, colOfNumName1
-                        , "", chartHeight, chartWidth, ChartType.Line);
-                }
-                catch (Exception ex)
-                {
-                    this.ResponseWriteRedMsg("@²úÉúÍ¼Æ¬ÎÄ¼ş³öÏÖ´íÎó:" + ex.Message);
-                    ///return;
-                }
-
-                this.BPTabStrip1.Items[0].Text = this.ToE("TableGrade", "±í¸ñ");
-                // this.BPTabStrip1.Items[0].Text = this.ToE("TableGrade", "±í¸ñ-<a href=\"javascript:WinOpen('./Rpt/Adv.aspx')\" >¸ß¼¶</a>");
-
-                this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", colOfNumName + "-Öù×´Í¼");
-                this.BPTabStrip1.Items[4].Text = this.ToE("Pie", colOfNumName + "-±ıÍ¼");
-                this.BPTabStrip1.Items[6].Text = this.ToE("Line", colOfNumName + "-ÕÛÏßÍ¼");
+                    break;
             }
-            #endregion
-
-            #region ±£´æ×´Ì¬
-            //if (this.IsPostBack)
-            //{
-            //    this.ResponseWriteBlueMsg("hi");
-            // ±£´æ×´Ì¬¡£
-
-            ur.Vals = StateGroupKey + StateNumKey;
-            ur.CfgKey = this.EnsName + "_Group";
-            ur.FK_Emp = WebUser.NoOfSessionID;
-            ur.OrderBy = this.OrderBy;
-            ur.OrderWay = this.OrderWay;
-            ur.IsPic = this.CB_IsShowPict.Checked;
-            ur.GenerSQL = myps.SQL;
-            ur.NumKey = this.NumKey;
-            ur.Paras = "";
-            foreach (Para para in myps)
-            {
-                ur.Paras += "@" + para.ParaName + "=" + para.val;
-            }
-            ur.Save();
-
-            this.SetValueByKey("Vals", ur.Vals);
-            this.SetValueByKey("CfgKey", ur.CfgKey);
-            this.SetValueByKey("OrderBy", ur.OrderBy);
-            this.SetValueByKey("OrderWay", ur.OrderWay);
-            this.SetValueByKey("IsPic", ur.IsPic);
-            this.SetValueByKey("SQL", ur.GenerSQL);
-            this.SetValueByKey("NumKey", ur.NumKey);
-            this.CfgVal = ur.Vals;
-            #endregion
-
-            return dt1;
         }
-         
-        //public string Vals = null;
-        //public string CfgKey = null;
-        //public string OrderBy = null;
-        //public string OrderWay = null;
-        //public bool IsPic = false;
-        //public bool NumKey = false;
-        //public bool Paras = false;
-        //public bool SQL = false;
+        this.UCSys1.AddTD();
+        this.UCSys1.AddTREnd();
+        #endregion
 
+        this.UCSys1.AddTableEnd();
+        #endregion ç”Ÿæˆè¡¨ä½“
 
-        public DataTable DealTable(DataTable dt)
+        #region ç”Ÿæˆ å›¾å½¢
+        //this.BPTabStrip1.Visible = true;
+        ///this.CB_IsShowPict.Checked;
+        //if (AttrsOfGroup.Count==1)
+        if (this.CB_IsShowPict.Checked)
         {
-            DataTable dtCopy = new DataTable();
+            /* å¦‚æœæ˜¯ 1 çº¬ */
+            string colOfGroupField = "";
+            string colOfGroupName = "";
+            string colOfNumField = "";
+            string colOfNumName = "";
+            string title = "";
+            int chartHeight = int.Parse( this.TB_H.Text);
+            int chartWidth = int.Parse( this.TB_W.Text);
 
-            #region °ÑËûÃÇ×ª»»Îª string ÀàĞÍ¡£
-            foreach (DataColumn dc in dt.Columns)
-                dtCopy.Columns.Add(dc.ColumnName, typeof(string));
-
-            foreach (DataRow dr in dt.Rows)
-                dtCopy.ImportRow(dr);
-            #endregion
-
-            Entity en = this.HisMD.HisEn;
-            Map map = en.EnMap;
-            Attrs attrs = this.HisMD.AttrsInTableEns;
-            foreach (DataColumn dc in dt.Columns)
+            if (isHaveLJ)
             {
-                bool isLJ = false;
-                Attr attr = null;
-                try
-                {
-                    attr = map.GetAttrByKey(dc.ColumnName);
-                    isLJ = false;
-                }
-                catch
-                {
-                    try
-                    {
-                        attr = map.GetAttrByKey(dc.ColumnName + "AMOUNT");
-                        isLJ = true;
-                    }
-                    catch
-                    {
-                    }
-                }
+                /*  å¦‚æœæœ‰ç´¯è®¡, å°±æŒ‰ç…§ç´¯è®¡å­—æ®µåˆ†æã€‚*/
+                colOfGroupField = AttrsOfGroup[0].Key;
+                colOfGroupName = AttrsOfGroup[0].Desc;
 
-                if (attr == null)
-                    continue;
-
-                if (attr.UIBindKey == null || attr.UIBindKey == "")
-                {
-                    if (isLJ)
-                        dtCopy.Columns[attr.Key.ToUpper() + "AMOUNT"].ColumnName = "ÀÛ¼Æ";
-                    else
-                        dtCopy.Columns[attr.Key.ToUpper()].ColumnName = attr.Desc;
-                    continue;
-                }
-
-                // ÉèÖÃ±êÇ© 
-                if (attr.UIBindKey.IndexOf(".") != -1)
-                {
-                    //  Entity en1 = BP.DA.ClassFactory.GetEns(attr.UIBindKey).GetNewEntity;
-                    Entity en1 = attr.HisFKEn;
-                    string pk = en1.PK;
-                    foreach (DataRow dr in dtCopy.Rows)
-                    {
-                        if (dr[attr.Key] == DBNull.Value)
-                            continue;
-
-                        string val = (string)dr[attr.Key];
-                        if (val == null || val == "")
-                            continue;
-
-                        en1.SetValByKey(pk, dr[attr.Key]);
-                        int i = en1.RetrieveFromDBSources();
-                        if (i == 0)
-                            continue;
-
-                        dr[attr.Key] = en1.GetValStrByKey(attr.UIRefKeyValue) + en1.GetValStrByKey(attr.UIRefKeyText);
-                    }
-                }
-                else if (attr.UIBindKey.Length >= 2)
-                {
-                    foreach (DataRow mydr in dtCopy.Rows)
-                    {
-                        if (mydr[attr.Key] == DBNull.Value)
-                            continue;
-
-                        int intVal = int.Parse(mydr[attr.Key].ToString());
-                        SysEnum se = new SysEnum(attr.UIBindKey, intVal);
-                        mydr[attr.Key] = se.Lab;
-                    }
-                }
-                dtCopy.Columns[attr.Key.ToUpper()].ColumnName = attr.Desc;
+                colOfNumName = AttrsOfNum[0].Desc;
+                if (dt.Columns.Contains(AttrsOfNum[0].Key + "AMOUNT"))
+                    colOfNumField = AttrsOfNum[0].Key + "AMOUNT";
+                else
+                    colOfNumField = AttrsOfNum[0].Key;
             }
+            else
+            {
+                colOfGroupField = AttrsOfGroup[0].Key;
+                colOfGroupName = AttrsOfGroup[0].Desc;
+
+                if (NumKey == null)
+                {
+                    colOfNumName = AttrsOfNum[0].Desc;
+                    colOfNumField = AttrsOfNum[0].Key;
+                }
+                else
+                {
+                    //  colOfNumField = AttrsOfNum[0].Key;
+                    colOfNumName = attrs.GetAttrByKey(NumKey).Desc; // this.UCSys1.get;
+                    colOfNumField = NumKey;
+                }
+            }
+
+            string colOfNumName1 = "";
+            if (StateNumKey.Contains(this.NumKey + "=SUM"))
+                colOfNumName1 = "(åˆè®¡)" + colOfNumName;
+            else
+                colOfNumName1 = "(å¹³å‡)" + colOfNumName;
+
+            if (dt.Columns.Contains(colOfNumField) == false)
+            {
+                foreach (Attr item in AttrsOfNum)
+                {
+                    if (dt.Columns.Contains(item.Key))
+                    {
+                        colOfNumField = item.Key;
+                        break;
+                    }
+                }
+            }
+            
 
             try
             {
-                dtCopy.Columns["MYNUM"].ColumnName = "¸öÊı";
+                url = this.Request.ApplicationPath + "/Temp/" + BP.Web.Comm.UC.UCSys.GenerChart(dt,
+                  colOfGroupField + "T", colOfGroupName,
+                  colOfNumField, colOfNumName1
+                  , "", chartHeight, chartWidth, ChartType.Histogram);
+
+                this.UCSys3.AddBR("<img src='" + url + "' />");
+
+
+                url = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.UCGraphics.GenerChart(dt,
+                   colOfGroupField + "T", colOfGroupName,
+                   colOfNumField, colOfNumName1
+                   , "", chartHeight, chartWidth, ChartType.Pie);
+
+                this.UCSys3.AddBR("<img src='" + url + "' />");
+
+
+                url = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.UCGraphics.GenerChart(dt,
+                   colOfGroupField + "T", colOfGroupName,
+                   colOfNumField, colOfNumName1
+                   , "", chartHeight, chartWidth, ChartType.Line);
+                this.UCSys3.AddBR("<img src='" + url + "' />");
             }
-            catch
+            catch (Exception ex)
             {
+                this.ResponseWriteRedMsg("@äº§ç”Ÿå›¾ç‰‡æ–‡ä»¶å‡ºç°é”™è¯¯:" + ex.Message);
             }
-            return dtCopy;
-        }
 
-        #region Web ´°ÌåÉè¼ÆÆ÷Éú³ÉµÄ´úÂë
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: ¸Ãµ÷ÓÃÊÇ ASP.NET Web ´°ÌåÉè¼ÆÆ÷Ëù±ØĞèµÄ¡£
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
-
-        /// <summary>
-        /// Éè¼ÆÆ÷Ö§³ÖËùĞèµÄ·½·¨ - ²»ÒªÊ¹ÓÃ´úÂë±à¼­Æ÷ĞŞ¸Ä
-        /// ´Ë·½·¨µÄÄÚÈİ¡£
-        /// </summary>
-        private void InitializeComponent()
-        {
+            //this.BPTabStrip1.Items[0].Text = this.ToE("TableGrade", "è¡¨æ ¼");
+            //// this.BPTabStrip1.Items[0].Text = this.ToE("TableGrade", "è¡¨æ ¼-<a href=\"javascript:WinOpen('./Rpt/Adv.aspx')\" >é«˜çº§</a>");
+            //this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", colOfNumName + "-æŸ±çŠ¶å›¾");
+            //this.BPTabStrip1.Items[4].Text = this.ToE("Pie", colOfNumName + "-é¥¼å›¾");
+            //this.BPTabStrip1.Items[6].Text = this.ToE("Line", colOfNumName + "-æŠ˜çº¿å›¾");
         }
         #endregion
 
-        #endregion 
-
-        private void ToolBar1_ButtonClick(object sender, System.EventArgs e)
-        {
-            Btn btn = (Btn)sender;
-            switch (btn.ID)
-            {
-                case NamesOfBtn.Save:
-                    GroupEnsTemplates rts = new GroupEnsTemplates();
-                    GroupEnsTemplate rt = new GroupEnsTemplate();
-                    rt.EnsName = this.EnsName;
-                    //rt.Name=""
-                    string name = "";
-                    //string opercol="";
-                    string attrs = "";
-                    foreach (ListItem li in CheckBoxList1.Items)
-                    {
-                        if (li.Selected)
-                        {
-                            attrs += "@" + li.Value;
-                            name += li.Text + "_";
-                        }
-                    }
-
-                    name = this.HisEn.EnDesc + name.Substring(0, name.Length - 1);
-                    if (rt.Search(WebUser.No, this.EnsName, attrs) >= 1)
-                    {
-                        this.InvokeEnManager(rts.ToString(), rt.OID.ToString(), true);
-                        return;
-                    }
-                    rt.Name = name;
-                    rt.Attrs = attrs;
-                    //rt.OperateCol=this.DDL_GroupField.SelectedItemStringVal+"@"+this.DDL_GroupWay.SelectedItemStringVal;
-                    rt.Rec = WebUser.No;
-                    rt.EnName = this.EnsName;
-                    rt.EnName = this.HisEn.EnMap.EnDesc;
-                    rt.Save();
-                    this.InvokeEnManager(rts.ToString(), rt.OID.ToString(), true);
-                    //	this.ResponseWriteBlueMsg("µ±Ç°µÄÄ£°åÒÑ¾­¼ÓÈëÁË×Ô¶¨Òå±¨±í¶ÓÁĞ£¬µã»÷ÕâÀï<a href');\"±à¼­×Ô¼º¶¨Òå±¨±í</a>");
-                    break;
-                case NamesOfBtn.Help:
-                    this.Helper();
-                    break;
-                case NamesOfBtn.Excel:
-                    DataTable dt = this.BingDG();
-                    this.ExportDGToExcel(this.DealTable(dt), this.HisEns.GetNewEntity.EnDesc);
-                    return;
-                default:
-                    this.ToolBar1.SaveSearchState(this.EnsName, this.Key);
-                    if (this.IsPostBack)
-                    {
-                        //this.ur = new UserRegedit(WebUser.NoOfSessionID, this.EnsName + "_Group");
-                        //ur.Vals = this.GetValueByKey("Vals");
-                        //ur.CfgKey = this.GetValueByKey("CfgKey");
-                        //ur.OrderBy = this.GetValueByKey("OrderBy");
-                        //ur.OrderWay = this.GetValueByKey("OrderWay");
-                        //ur.IsPic = bool.Parse(this.GetValueByKey("IsPic"));
-                        //ur.SQL = this.GetValueByKey("SQL");
-                        //ur.NumKey = this.GetValueByKey("NumKey");
-                        //ur.Save();
-                    }
-                    this.BingDG();
-                    return;
-            }
-        }
-        void State_Changed(object sender, EventArgs e)
-        {
-            this.BingDG();
-            //this.SaveState();
-        }
-        void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.BingDG();
-          //  this.SaveState();
-        }
-        //public void SaveState()
+        #region ä¿å­˜çŠ¶æ€
+        //if (this.IsPostBack)
         //{
-        //    this.ur = new UserRegedit(WebUser.No, this.EnsName + "_Group");
-        //    ur.Vals = this.GetValueByKey("Vals");
-        //    ur.CfgKey = this.EnsName + "_Group";
-        //    ur.OrderBy = this.GetValueByKey("OrderBy");
-        //    ur.OrderWay = this.GetValueByKey("OrderWay");
-        //    ur.IsPic = this.CB_IsShowPict.Checked;
-        //    //bool.Parse(this.GetValueByKey("IsPic"));
-        //    ur.SQL = this.GetValueByKey("SQL");
-        //    ur.NumKey = this.GetValueByKey("NumKey");
-        //    ur.Save();
-        //}
+        //    this.ResponseWriteBlueMsg("hi");
+        // ä¿å­˜çŠ¶æ€ã€‚
+
+        ur.Vals = StateGroupKey + StateNumKey;
+        ur.CfgKey = this.EnsName + "_Group";
+        ur.FK_Emp = WebUser.NoOfSessionID;
+        ur.OrderBy = this.OrderBy;
+        ur.OrderWay = this.OrderWay;
+        ur.IsPic = this.CB_IsShowPict.Checked;
+        ur.GenerSQL = myps.SQL;
+        ur.NumKey = this.NumKey;
+        ur.Paras = "";
+        foreach (Para para in myps)
+        {
+            ur.Paras += "@" + para.ParaName + "=" + para.val;
+        }
+        ur.Save();
+
+        this.SetValueByKey("Vals", ur.Vals);
+        this.SetValueByKey("CfgKey", ur.CfgKey);
+        this.SetValueByKey("OrderBy", ur.OrderBy);
+        this.SetValueByKey("OrderWay", ur.OrderWay);
+        this.SetValueByKey("IsPic", ur.IsPic);
+        this.SetValueByKey("SQL", ur.GenerSQL);
+        this.SetValueByKey("NumKey", ur.NumKey);
+        this.CfgVal = ur.Vals;
+        #endregion
+
+        return dt1;
+    }
+
+    //public string Vals = null;
+    //public string CfgKey = null;
+    //public string OrderBy = null;
+    //public string OrderWay = null;
+    //public bool IsPic = false;
+    //public bool NumKey = false;
+    //public bool Paras = false;
+    //public bool SQL = false;
+
+
+    public DataTable DealTable(DataTable dt)
+    {
+        DataTable dtCopy = new DataTable();
+
+        #region æŠŠä»–ä»¬è½¬æ¢ä¸º string ç±»å‹ã€‚
+        foreach (DataColumn dc in dt.Columns)
+            dtCopy.Columns.Add(dc.ColumnName, typeof(string));
+
+        foreach (DataRow dr in dt.Rows)
+            dtCopy.ImportRow(dr);
+        #endregion
+
+        Entity en = this.HisMD.HisEn;
+        Map map = en.EnMap;
+        Attrs attrs = this.HisMD.AttrsInTableEns;
+        foreach (DataColumn dc in dt.Columns)
+        {
+            bool isLJ = false;
+            Attr attr = null;
+            try
+            {
+                attr = map.GetAttrByKey(dc.ColumnName);
+                isLJ = false;
+            }
+            catch
+            {
+                try
+                {
+                    attr = map.GetAttrByKey(dc.ColumnName + "AMOUNT");
+                    isLJ = true;
+                }
+                catch
+                {
+                }
+            }
+
+            if (attr == null)
+                continue;
+
+            if (attr.UIBindKey == null || attr.UIBindKey == "")
+            {
+                if (isLJ)
+                    dtCopy.Columns[attr.Key.ToUpper() + "AMOUNT"].ColumnName = "ç´¯è®¡";
+                else
+                    dtCopy.Columns[attr.Key.ToUpper()].ColumnName = attr.Desc;
+                continue;
+            }
+
+            // è®¾ç½®æ ‡ç­¾ 
+            if (attr.UIBindKey.IndexOf(".") != -1)
+            {
+                //  Entity en1 = BP.DA.ClassFactory.GetEns(attr.UIBindKey).GetNewEntity;
+                Entity en1 = attr.HisFKEn;
+                string pk = en1.PK;
+                foreach (DataRow dr in dtCopy.Rows)
+                {
+                    if (dr[attr.Key] == DBNull.Value)
+                        continue;
+
+                    string val = (string)dr[attr.Key];
+                    if (val == null || val == "")
+                        continue;
+
+                    en1.SetValByKey(pk, dr[attr.Key]);
+                    int i = en1.RetrieveFromDBSources();
+                    if (i == 0)
+                        continue;
+
+                    dr[attr.Key] = en1.GetValStrByKey(attr.UIRefKeyValue) + en1.GetValStrByKey(attr.UIRefKeyText);
+                }
+            }
+            else if (attr.UIBindKey.Length >= 2)
+            {
+                foreach (DataRow mydr in dtCopy.Rows)
+                {
+                    if (mydr[attr.Key] == DBNull.Value)
+                        continue;
+
+                    int intVal = int.Parse(mydr[attr.Key].ToString());
+                    SysEnum se = new SysEnum(attr.UIBindKey, intVal);
+                    mydr[attr.Key] = se.Lab;
+                }
+            }
+            dtCopy.Columns[attr.Key.ToUpper()].ColumnName = attr.Desc;
+        }
+
+        try
+        {
+            dtCopy.Columns["MYNUM"].ColumnName = "ä¸ªæ•°";
+        }
+        catch
+        {
+        }
+        return dtCopy;
+    }
+
+    #region Web çª—ä½“è®¾è®¡å™¨ç”Ÿæˆçš„ä»£ç 
+    override protected void OnInit(EventArgs e)
+    {
+        //
+        // CODEGEN: è¯¥è°ƒç”¨æ˜¯ ASP.NET Web çª—ä½“è®¾è®¡å™¨æ‰€å¿…éœ€çš„ã€‚
+        //
+        InitializeComponent();
+        base.OnInit(e);
+    }
+
+    /// <summary>
+    /// è®¾è®¡å™¨æ”¯æŒæ‰€éœ€çš„æ–¹æ³• - ä¸è¦ä½¿ç”¨ä»£ç ç¼–è¾‘å™¨ä¿®æ”¹
+    /// æ­¤æ–¹æ³•çš„å†…å®¹ã€‚
+    /// </summary>
+    private void InitializeComponent()
+    {
+    }
+    #endregion
+    #endregion
+
+    private void ToolBar1_ButtonClick(object sender, System.EventArgs e)
+    {
+        Btn btn = (Btn)sender;
+        switch (btn.ID)
+        {
+            case NamesOfBtn.Save:
+                GroupEnsTemplates rts = new GroupEnsTemplates();
+                GroupEnsTemplate rt = new GroupEnsTemplate();
+                rt.EnsName = this.EnsName;
+                //rt.Name=""
+                string name = "";
+                //string opercol="";
+                string attrs = "";
+                foreach (ListItem li in CheckBoxList1.Items)
+                {
+                    if (li.Selected)
+                    {
+                        attrs += "@" + li.Value;
+                        name += li.Text + "_";
+                    }
+                }
+
+                name = this.HisEn.EnDesc + name.Substring(0, name.Length - 1);
+                if (rt.Search(WebUser.No, this.EnsName, attrs) >= 1)
+                {
+                    this.InvokeEnManager(rts.ToString(), rt.OID.ToString(), true);
+                    return;
+                }
+                rt.Name = name;
+                rt.Attrs = attrs;
+                //rt.OperateCol=this.DDL_GroupField.SelectedItemStringVal+"@"+this.DDL_GroupWay.SelectedItemStringVal;
+                rt.Rec = WebUser.No;
+                rt.EnName = this.EnsName;
+                rt.EnName = this.HisEn.EnMap.EnDesc;
+                rt.Save();
+                this.InvokeEnManager(rts.ToString(), rt.OID.ToString(), true);
+                //	this.ResponseWriteBlueMsg("å½“å‰çš„æ¨¡æ¿å·²ç»åŠ å…¥äº†è‡ªå®šä¹‰æŠ¥è¡¨é˜Ÿåˆ—ï¼Œç‚¹å‡»è¿™é‡Œ<a href');\"ç¼–è¾‘è‡ªå·±å®šä¹‰æŠ¥è¡¨</a>");
+                break;
+            case NamesOfBtn.Help:
+                this.Helper();
+                break;
+            case NamesOfBtn.Excel:
+                DataTable dt = this.BingDG();
+                this.ExportDGToExcel(this.DealTable(dt), this.HisEns.GetNewEntity.EnDesc);
+                return;
+            default:
+                this.ToolBar1.SaveSearchState(this.EnsName, this.Key);
+                if (this.IsPostBack)
+                {
+                    //this.ur = new UserRegedit(WebUser.NoOfSessionID, this.EnsName + "_Group");
+                    //ur.Vals = this.GetValueByKey("Vals");
+                    //ur.CfgKey = this.GetValueByKey("CfgKey");
+                    //ur.OrderBy = this.GetValueByKey("OrderBy");
+                    //ur.OrderWay = this.GetValueByKey("OrderWay");
+                    //ur.IsPic = bool.Parse(this.GetValueByKey("IsPic"));
+                    //ur.SQL = this.GetValueByKey("SQL");
+                    //ur.NumKey = this.GetValueByKey("NumKey");
+                    //ur.Save();
+                }
+                this.BingDG();
+                return;
+        }
+    }
+    void State_Changed(object sender, EventArgs e)
+    {
+        this.BingDG();
+        //this.SaveState();
+    }
+    void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        this.BingDG();
+        //  this.SaveState();
     }
 }

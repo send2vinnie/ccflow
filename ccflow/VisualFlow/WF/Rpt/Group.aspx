@@ -1,26 +1,19 @@
-<%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
-<%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
-<%@ Register TagPrefix="uc1" TagName="UCEn" Src="../../Comm/UC/UCEn.ascx" %>
+Ôªø<%@ Page Title="" Language="C#" MasterPageFile="~/WF/Rpt/MasterPage.master" AutoEventWireup="true" CodeFile="Group.aspx.cs" Inherits="WF_Rpt_G" %>
 <%@ Register TagPrefix="uc1" TagName="UCSys" Src="../../Comm/UC/UCSys.ascx" %>
-<%@ Page language="c#" Inherits="BP.Web.Comm.Groups" CodeFile="Group.aspx.cs" %>
-<%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls"
- Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
 <%@ Register src="../../Comm/Rpt/ucgraphics.ascx" tagname="ucgraphics" tagprefix="uc3" %>
 <%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc4" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
-<HTML>
-	<HEAD>
-    <title runat=server></title>
-		<META content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
-		<META content="C#" name="CODE_LANGUAGE">
-		<META content="JavaScript" name="vs_defaultClientScript">
-		<META http-equiv="Page-Enter" content="revealTrans(duration=0.5, transition=8)" >
-		<META content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <style type="text/css">
+.MyTable
+{
+    text-align:left;
+}
+</style>
 		<script language="JavaScript" src="./../../Comm/JScript.js"></script>
 		<base target=_self />
         <script type="text/javascript">
-             //   ¬º˛.
+            //  ‰∫ã‰ª∂.
             function DDL_mvals_OnChange(ctrl, ensName, attrKey) {
 
                 var idx_Old = ctrl.selectedIndex;
@@ -37,45 +30,49 @@
                 }
             }
         </script>
-	</HEAD>
-	<body  onkeypress=Esc() leftMargin=0 topMargin=0>
-		<form id="Form1" method="post" runat="server">
-			<TABLE height="100%" style="background:none;"  cellPadding=0 width="100%" align=left border=0>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" Runat="Server">
+    <TABLE height="100%" style="background:none;"  cellPadding=0 width="100%" align=left border=0>
 				<TR>
-					<TD colSpan="2" class=toolbar >
-                    <uc4:Pub ID="Pub1" runat="server" />
+					<TD colSpan="2"  class="GroupTitle" >
+                     <uc4:Pub ID="Pub1" runat="server" />
                         <uc2:ToolBar ID="ToolBar1" runat="server" />
                     </TD>
 				</TR>
-
 				<TR vAlign="top" height="100%">
 					<TD vAlign="top" noWrap width="18%"  >
 						<TABLE width="100%" cellspacing="1" style="border:1px #abcbe6 solid;">
 							<TR>
-								<TD border="0" align=center class="GroupTitle" ><b><%=BP.Sys.Language.GetValByUserLang("ShowDoc","œ‘ æƒ⁄»›")%> </b></TD>
+								<TD border="0" class="GroupTitle" ><b><%=BP.Sys.Language.GetValByUserLang("ShowDoc","ÊòæÁ§∫ÂÜÖÂÆπ")%> </b></TD>
 							</TR>
 							<tr>
-								<TD  style="font-size:12px;"><asp:checkboxlist id="CheckBoxList1" runat="server" AutoPostBack=true ></asp:checkboxlist></TD>
+								<TD  style="font-size:12px; border:0px"><asp:checkboxlist id="CheckBoxList1"  BorderStyle=None Width="100%" runat="server" AutoPostBack=true ></asp:checkboxlist></TD>
 							</TR>
-							<tr >
-								<TD nowarp=true align=left  style="font-size:12px;"><uc1:ucsys id="UCSys2" runat="server"></uc1:ucsys></TD>
+
+                            <TR>
+								<TD border="0" class="GroupTitle" ><b>ÂàÜÊûêÈ°πÁõÆ</b></TD>
+							</TR>
+							<tr>
+								<TD nowarp=true align="left"  style="font-size:12px;"  BorderStyle=None Width="100%"  ><uc1:ucsys id="UCSys2" runat="server"></uc1:ucsys></TD>
 							</TR>
 							<TR>
 								<TD class="GroupTitle" >
-								<asp:CheckBox ID="CB_IsShowPict" runat="server" Text="œ‘ æÕº–Œ" AutoPostBack=true Font-Bold="True" />
+								<asp:CheckBox ID="CB_IsShowPict" runat="server" Text="ÊòæÁ§∫ÂõæÂΩ¢" AutoPostBack=true Font-Bold="True" />
 								</TD>
 							</TR>
 							<TR>
-								<TD>
+								<TD align="Left">
 								<table width='100%' border="1px;" class='t' >
 								<tr style="font-size:12px;">
-								<TD> <%=BP.Sys.Language.GetValByUserLang("Height", "∏ﬂ∂»")%>:</TD>
-								  <TD class="TD"><cc1:tb id="TB_H" runat="server" ShowType="Num" Width="80px">400</cc1:tb></TD>
+								<TD nowarp=true>È´òÂ∫¶:</TD>
+								  <TD class="TD">
+                                      <asp:TextBox ID="TB_H" runat="server" Text="400" style="Width:90px;height:auto; text-align:right"></asp:TextBox>
+                                      <textbox> </textbox> </TD>
 								 </tr>
 								<tr style="font-size:12px;">
-								<TD><%=BP.Sys.Language.GetValByUserLang("Width","øÌ∂»") %>:</TD>
+								<TD  nowarp=true >ÂÆΩÂ∫¶:</TD>
 									<TD class="TD" >
-									<cc1:tb id="TB_W" runat="server" ShowType="Num" Width="80px">600</cc1:tb>
+									    <asp:TextBox ID="TB_W" runat="server" Text="800" style="Width:90px;height:auto; text-align:right"></asp:TextBox>
 									</TD>
 								</TR>
 								</table>
@@ -83,41 +80,15 @@
 							</TR>
 						</TABLE>
 					</TD>
-					<TD valign="top" ><cc1:bptabstrip id="BPTabStrip1" Visible=true runat="server"  Height="30px" Width='600px' 
-							BorderStyle="None" BorderWidth="2px" TargetID="BPMultiPage1" TabDefaultStyle="font-size:12px;background:white;padding:3px;text-align:center;text-decoration:none;"   
-  TabHoverStyle="color:red;"   TabSelectedStyle="background:white;border-bottom:none" >
-							<iewc:Tab Text=" ±Ì∏Ò" ID="ShowTable" DefaultImageUrl="../../Images/Pub/Table.gif" ></iewc:Tab>
-							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" ÷˘◊¥Õº"  ID="ShowZZT" DefaultImageUrl="../../Images/Pub/Histogram.ico"></iewc:Tab>
-							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" ±˝Õº"  ID="ShowPie" DefaultImageUrl="../../Images/Pub/Pie.ico"></iewc:Tab>
-							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" ’€œﬂÕº" ID="ShowZXT" DefaultImageUrl="../../Images/Pub/ZX.ico"></iewc:Tab>
-							<iewc:TabSeparator></iewc:TabSeparator>
-						</cc1:bptabstrip>
-						<cc1:bpmultipage id="BPMultiPage1" runat="server" Width="95%" Height="100%" BorderColor=GhostWhite>
-							<IEWC:PAGEVIEW id="P0">
-								<uc1:ucsys id="UCSys1" runat="server"></uc1:ucsys>
-								<table class=Table1 border=0 class=Table>
-								<tr>
-								<td class=TD>
-								<uc1:UCSys ID="UCSys3" runat="server" />
-								</td>
-								</tr>
-							</table>
-							</IEWC:PAGEVIEW>
-							<IEWC:PAGEVIEW id="P1" BorderColor=White>
-								<cc1:BPImage id="Img1" BorderWidth=0 runat="server"></cc1:BPImage>
-							</IEWC:PAGEVIEW>
-							<IEWC:PAGEVIEW id="P2" BorderColor=White >
-								<cc1:BPImage  id="Img2"  BorderWidth=0 runat="server"></cc1:BPImage>
-							</IEWC:PAGEVIEW>
-							<IEWC:PAGEVIEW id="P3" BorderColor=White>
-								<cc1:BPImage id="Img3"  BorderWidth=0 runat="server"></cc1:BPImage>
-							</IEWC:PAGEVIEW>
-						</cc1:bpmultipage> </TD>
+					<TD valign="top"   class=TD  class="align:left" >
+                    <uc1:ucsys id="UCSys1" runat="server"></uc1:ucsys>
+						<uc1:UCSys ID="UCSys3" runat="server" />
+						
+                        <%--<cc1:BPImage id="Img1" BorderWidth=0 runat="server"></cc1:BPImage>
+						<cc1:BPImage  id="Img2"  BorderWidth=0 runat="server"></cc1:BPImage>
+						<cc1:BPImage id="Img3"  BorderWidth=0 runat="server"></cc1:BPImage>--%>
+				   </TD>
 				</TR>
 			</TABLE>
-		</form>
-	</body>
-</HTML>
+</asp:Content>
+
