@@ -5,17 +5,107 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.WF;
+using BP.Port;
+using BP.Sys;
+using BP.DA;
 using BP.En;
+using IBM.Data;
+using IBM.Data.Informix;
+using IBM.Data.Utilities;
 
-public partial class TestFrm : System.Web.UI.Page
+public partial class TestFrm : BP.Web.PageBase
 {
+    public  string GetMac(string clientip)
+    {
+        string mac = "";
+        System.Diagnostics.Process process = new System.Diagnostics.Process();
+        //线程类，可以启动关闭一些线程
+        process.StartInfo.FileName = "nbtstat";
+        //传递给启动线程名，命令为nbtstat
+        //此命令为cmd命令，可以根据其进一步获取mac等地址
+        process.StartInfo.Arguments = "-a " + clientip;
+        //设置nbtstat的命令参数
+        process.StartInfo.UseShellExecute = false;
+        //不启用外壳启动线程
+        process.StartInfo.CreateNoWindow = true;
+        //不创建新窗口启动线程
+        process.Start();
+        //启动
+        string output = process.StandardOutput.ReadToEnd();
+        //获取流全部内容
+        int length = output.IndexOf("MAC Address = ");
+        if (length > 0)
+        {
+            mac = output.Substring(length - 14, 17);
+        }
+        return mac;
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.repariIt();
+        this.Response.Write(this.GetMac("192.168.1.13"));
+        return;
+       
+        Flow fl = new Flow();
+        fl.CheckPhysicsTable();
+        return;
+         string s = fl.GenerNewNo;
+         fl.No = s;
+         fl.Name = "";
+         fl.Insert();
+         s = fl.GenerNewNo;
+       return;
+
+        Emps emps = new Emps();
+        emps.RetrieveAll();
+        return;
+
+
+        GenerFH fh = new GenerFH(812);
+        fh.DirectUpdate();
+        return;
+
+        //BP.WF.Node nd = new Node(199);
+        //nd.Update();
+        //return;
+
+
+        BP.WF.DTS.LoadTemplete ld = new BP.WF.DTS.LoadTemplete();
+        ld.Do();
+        return;
+
+
+        //Emp emp = new Emp("admin");
+        //BP.Web.WebUser.SignInOfGener(emp);
+
+        BP.Sys.SysEnums ses = new BP.Sys.SysEnums();
+        QueryObject qo = new QueryObject(ses);
+        qo.AddWhere(SysEnumAttr.Lang, "CH");
+        qo.addAnd();
+        qo.AddWhere(SysEnumAttr.EnumKey, "WFState");
+        qo.DoQuery();
+
+       // emps.RetrieveAll();
+        //Flow fl = new Flow();
+        //fl.CheckPhysicsTable();
+        //fl.No = "001";
+        //fl.Name = "name";
+        //fl.IsOK = true;
+        //fl.Update();
+        return;
+
+
+        for (int i = 0; i < 10; i++)
+        {
+            int workid = BP.DA.DBAccess.GenerOID();
+            Int64 wid = BP.DA.DBAccess.GenerOID("WID");
+        }
+        //BP.DA.DBAccess.RunSQL("DROP TABLE WF_GenerWorkFlow");
+        //GenerWorkFlow gwf = new GenerWorkFlow();
+        //gwf.CheckPhysicsTable();
         return;
 
         // 把流程运行到最后的节点上去，并且结束流程。
-        string file = @"C:\aa\开票流程2.xls";
+        string file = @"C:\aa\开票流程-流程已完成.xls";
         string info = BP.WF.Glo.LoadFlowDataWithToSpecEndNode(file);
         this.Response.Write(info);
         return;
@@ -25,7 +115,6 @@ public partial class TestFrm : System.Web.UI.Page
         string info1 = BP.WF.Glo.LoadFlowDataWithToSpecNode(file1);
         this.Response.Write(info1);
         return;
- 
     }
 
     public void repariIt()
