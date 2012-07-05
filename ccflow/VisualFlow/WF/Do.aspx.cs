@@ -77,7 +77,6 @@ namespace BP.Web.WF
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
-
             Response.AddHeader("P3P", "CP=CAO PSA OUR");
             Response.AddHeader("Cache-Control", "no-store");
             Response.AddHeader("Expires", "0");
@@ -93,6 +92,14 @@ namespace BP.Web.WF
                 string str = "";
                 switch (this.ActionType)
                 {
+                    case "DelCC": //删除抄送.
+                        CCList cc = new CCList();
+                        cc.MyPK = this.MyPK;
+                        cc.Retrieve();
+                        cc.HisSta = CCSta.Del;
+                        cc.Update();
+                        this.WinClose();
+                        break;
                     case "DelSubFlow": //删除进程。
                         try
                         {
@@ -118,9 +125,7 @@ namespace BP.Web.WF
                             this.WinClose();
                             break;
                         }
-
                         FrmEvents fes = new FrmEvents(this.EnsName); //获得事件.
-
                         // 处理删除前事件.
                         try
                         {
