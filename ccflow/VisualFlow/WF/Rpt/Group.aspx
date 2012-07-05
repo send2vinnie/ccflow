@@ -22,7 +22,6 @@
                 if (attrKey == null)
                     return;
                 var timestamp = Date.parse(new Date());
-
                 var url = 'SelectMVals.aspx?EnsName=' + ensName + '&AttrKey=' + attrKey + '&D=' + timestamp;
                 var val = window.showModalDialog(url, 'dg', 'dialogHeight: 450px; dialogWidth: 450px; center: yes; help: no');
                 if (val == '' || val == null) {

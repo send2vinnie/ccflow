@@ -8,9 +8,9 @@
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body>
+<body leftMargin=0    topMargin=0>
     <form id="form1" runat="server">
-    <table border=1 width='90%' >
+    <table border=1 width='90%' align=center >
      <tr>
      <td>
         <uc1:Pub ID="Pub1" runat="server" />

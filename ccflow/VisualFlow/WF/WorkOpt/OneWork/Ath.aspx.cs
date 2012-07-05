@@ -46,7 +46,7 @@ public partial class WF_WorkOpt_OneWork_Ath : BP.Web.WebPage
         if (dt.Rows.Count > 0)
         {
             this.Pub1.AddTable();
-            this.Pub1.AddCaptionLeft("流程附件");
+        //    this.Pub1.AddCaptionLeft("流程附件");
             this.Pub1.AddTR();
             this.Pub1.AddTDTitle("IDX");
             this.Pub1.AddTDTitle("附件编号");
@@ -76,7 +76,7 @@ public partial class WF_WorkOpt_OneWork_Ath : BP.Web.WebPage
         if (bills.Count > 0)
         {
             this.Pub1.AddTable();
-            this.Pub1.AddCaptionLeft("单据");
+        //    this.Pub1.AddCaptionLeft("单据");
             this.Pub1.AddTR();
             this.Pub1.AddTDTitle("IDX");
             this.Pub1.AddTDTitle("名称");
@@ -106,7 +106,7 @@ public partial class WF_WorkOpt_OneWork_Ath : BP.Web.WebPage
         int num = bills.Count + dt.Rows.Count;
         if (num == 0)
         {
-            this.Pub1.AddMsgGreen("提示", "当前流程没有数据，或者该流程没有附件或者单据。");
+            this.Pub1.AddMsgGreen("提示", "<h2>当前流程没有数据，或者该流程没有附件或者单据。</h2>");
         }
     }
 }
