@@ -30,7 +30,6 @@
                     <li runat="server" id="cld" style=" background:url(Img/Menu/Rili.jpg) -1px 0px"><a  href="../WF/CalendarSmall.aspx" target="main">日历</a></li>
                     <li runat="server" id="Li2" style=" background:url(Img/Menu/GetTask.jpg) -1px 0px"><a  href="../WF/GetTaskSmall.aspx" target="main">取回审批</a></li>
                     <li runat="server" id="end" style=" background:url(Img/Menu/Setting.jpg) -1px 0px"><a  href="../WF/ToolsSmall.aspx" target="main">设置 </a></li>
-
                 </ul>
             </div>
         </div>

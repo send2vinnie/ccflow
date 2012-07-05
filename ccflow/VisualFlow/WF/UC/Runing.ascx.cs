@@ -61,12 +61,11 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
             this.Pub1.AddBR();
 
         this.Pub1.AddTable("border=1px align=center width='960px'");
-        this.Pub1.AddTR();
 
         if (WebUser.IsWap)
             this.Pub1.AddCaption("<img src='./Img/Home.gif' >&nbsp;<a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作") );
         else
-            this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "在途工作") + "</b>");
+            this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "在途工作") + "</b>");
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("IDX", "序"));

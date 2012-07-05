@@ -126,13 +126,11 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             this.Pub1.AddBR();
 
         this.Pub1.AddTable("width='960px' align=center ");
-        this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b><a href=FlowSearch" + this.PageSmall + ".aspx >" + this.ToE("FlowSearch", "流程查询") + "</a>-<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a>-" + nd.Name + "</b></TD>");
-        this.Pub1.AddTREnd();
+
+        this.Pub1.AddCaptionLeft("<img src='./Img/EmpWorks.gif' > <b><a href=FlowSearch" + this.PageSmall + ".aspx >" + this.ToE("FlowSearch", "流程查询") + "</a>-<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a>-" + nd.Name + "</b>");
 
         this.Pub1.AddTR();
         this.Pub1.Add("<TD colspan=" + colspan + " class=TD>发生日期从:");
-
         TextBox tb = new TextBox();
         tb.ID = "TB_F";
         tb.Columns = 10;
@@ -692,12 +690,10 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             this.Pub1.AddBR();
 
         this.Pub1.AddTable("border=1px width='960px'");
-        this.Pub1.AddTR();
         if (WebUser.IsWap)
             this.Pub1.AddCaption("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a> - <img src='./Img/Search.gif' > - " + this.ToE("FlowSearch", "流程查询"));
         else
-            this.Pub1.AddCaption("<img src='./Img/Search.gif' > <b>" + this.ToE("FlowSearch", "流程查询-分析") + "</b>");
-        this.Pub1.AddTREnd();
+            this.Pub1.AddCaptionLeft("<img src='./Img/Search.gif' > <b>" + this.ToE("FlowSearch", "流程查询-分析") + "</b>");
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("IDX", "序"));

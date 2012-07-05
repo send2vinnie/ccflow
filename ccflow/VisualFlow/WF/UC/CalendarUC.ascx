@@ -24,7 +24,7 @@
     vertical-align:middle;
 }
 </style>
-<table   style="width:80%;height:450px;border:1px" >
+<table   style="width:80%;height:450px;border:1px" align=center >
 <tr>
 <td valign=top style="width:20%">
     <uc1:Pub ID="Left" runat="server" />

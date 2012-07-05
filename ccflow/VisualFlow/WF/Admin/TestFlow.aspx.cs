@@ -116,13 +116,11 @@ public partial class WF_Admin_TestFlow : WebPage
         if (this.FK_Flow == null)
         {
             this.Ucsys1.AddFieldSet("关于流程测试");
-
             this.Ucsys1.AddUL();
             this.Ucsys1.AddLi("现在是流程测试状态，此功能紧紧提供给流程设计人员使用。");
             this.Ucsys1.AddLi("提供此功能的目的是，快速的让各个角色人员登录，以便减少登录的繁琐麻烦。");
             this.Ucsys1.AddLi("点左边的流程列表后，系统自动显示能够发起此流程的工作人员，点一个工作人员就直接登录了。");
             this.Ucsys1.AddULEnd();
-
             this.Ucsys1.AddFieldSetEnd();
             return;
         }
@@ -167,8 +165,9 @@ public partial class WF_Admin_TestFlow : WebPage
 
 
         this.Ucsys1.AddFieldSet(this.ToE("ChoseStarter", "可发起(<font color=red>" + fl.Name + "</font>)流程的人员"));
-        this.Ucsys1.AddTable("border=0");
-        this.Ucsys1.AddCaptionLeft("流程编号:"+fl.No+" 名称:"+fl.Name+"  - <a href='../Login.aspx'>直接登陆</a>");
+
+        this.Ucsys1.AddTable("align=center");
+        this.Ucsys1.AddCaptionLeft("流程编号:" + fl.No + " 名称:" + fl.Name + "  - <a href='../Login.aspx'>博客模式直接登陆</a> - <a href='../../AppDemo/Login.aspx' >应用程序模式直接登陆</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("Users");
         this.Ucsys1.AddTDTitle("独立模式");
@@ -193,7 +192,7 @@ public partial class WF_Admin_TestFlow : WebPage
             this.Ucsys1.AddTD("<a href='TestSDK.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  >SDK</a> ");
             this.Ucsys1.AddTREnd();
         }
-        this.Ucsys1.AddTableEnd();
+        this.Ucsys1.AddTableEndWithBR();
         this.Ucsys1.AddFieldSetEnd();
 
         //this.Ucsys1.AddFieldSet(fl.Name);
