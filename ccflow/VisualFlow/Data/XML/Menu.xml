@@ -29,4 +29,9 @@
   <Item No="0902" CH="用户工具" RU="Пользователь инструменты" EN="User Tools" Url="../../Comm/Sys/UserTools.aspx" Img="../../Images/Pub/Table.gif" Enable="1" />
   <Item No="0902" CH="单据维护" RU="Документ обслуживание" EN="Bill" Url="../../Comm/PanelEns.aspx?EnsName=BP.WF.BillTemplates&amp;IsReadonly=1" Img="../../Images/Pub/Table.gif" Enable="1" />
   <Item No="0902" CH="流程说明书" Url="../FlowHelp.aspx" DFor="admin" Img="../../Images/Pub/Table.gif" Enable="1" RU="Руководство процессами" EN="Flow hand Bill" />
+
+
+   <!-- 报表菜单 -->
+    
+    
 </NewDataSet>
