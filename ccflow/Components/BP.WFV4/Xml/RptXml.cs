@@ -7,9 +7,9 @@ using BP.XML;
 namespace BP.WF.XML
 {
     /// <summary>
-    /// 工作一户式
+    /// 流程一户式
     /// </summary>
-    public class OneWorkXml : XmlEnNoName
+    public class RptXml : XmlEnNoName
     {
         public new string Name
         {
@@ -22,14 +22,22 @@ namespace BP.WF.XML
         {
             get
             {
-                return this.GetValStringByKey("No");
+                return this.GetValStringByKey("URL");
             }
         }
+        public new string ICON
+        {
+            get
+            {
+                return this.GetValStringByKey("ICON");
+            }
+        }
+
         #region 构造
         /// <summary>
         /// 节点扩展信息
         /// </summary>
-        public OneWorkXml()
+        public RptXml()
         {
         }
         /// <summary>
@@ -39,21 +47,21 @@ namespace BP.WF.XML
         {
             get
             {
-                return new OneWorkXmls();
+                return new RptXmls();
             }
         }
         #endregion
     }
     /// <summary>
-    /// 工作一户式s
+    /// 流程一户式s
     /// </summary>
-    public class OneWorkXmls : XmlEns
+    public class RptXmls : XmlEns
     {
         #region 构造
         /// <summary>
-        /// 工作一户式s
+        /// 流程一户式s
         /// </summary>
-        public OneWorkXmls() { }
+        public RptXmls() { }
         #endregion
 
         #region 重写基类属性或方法。
@@ -64,7 +72,7 @@ namespace BP.WF.XML
         {
             get
             {
-                return new OneWorkXml();
+                return new RptXml();
             }
         }
         public override string File
@@ -81,7 +89,7 @@ namespace BP.WF.XML
         {
             get
             {
-                return "OneWork";
+                return "RptFlow";
             }
         }
         public override Entities RefEns

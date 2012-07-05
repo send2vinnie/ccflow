@@ -120,6 +120,8 @@
       <Name>System.EnterpriseServices</Name>
       <HintPath>..\..\WF\bin\System.EnterpriseServices.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
@@ -295,8 +297,8 @@
     <Compile Include="TestNDRpt.cs" />
     <Compile Include="Xml\OneWorkXml.cs" />
     <Compile Include="Xml\DBSrc.cs" />
+    <Compile Include="Xml\RptXml.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
@@ -319,6 +321,9 @@
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
       <Name>BP.En30</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

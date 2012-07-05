@@ -152,6 +152,8 @@ namespace BP.WF
         }
         #endregion attrs
 
+         
+
         #region attrs - attrs 
         public string RptName = null;
         public override Map EnMap

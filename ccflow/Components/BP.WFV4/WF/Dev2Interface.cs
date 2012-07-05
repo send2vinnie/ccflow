@@ -189,13 +189,18 @@ namespace BP.WF
         #endregion 获取流程事例的轨迹图
 
         #region 获取操送列表
-        public static DataTable DB_CCList(string fk_emp)
+        public static DataTable DB_CCList_UnRead(string fk_emp)
         {
-            return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "'");
+            //Paras ps = new Paras();
+            return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "' AND Sta=0");
         }
-        public static DataTable DB_CCList()
+        public static DataTable DB_CCList_Read(string fk_emp)
         {
-            return DB_CCList(WebUser.No);
+            return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "' AND Sta=1");
+        }
+        public static DataTable DB_CCList_Delete(string fk_emp)
+        {
+            return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "' AND Sta=2");
         }
         #endregion
 
