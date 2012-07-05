@@ -100,7 +100,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
 
-        //  this.Pub1.AddTDTitle("发送人");
+        //this.Pub1.AddTDTitle("发送人");
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
         this.Pub1.AddTDTitle(this.ToE("Sta", "状态"));

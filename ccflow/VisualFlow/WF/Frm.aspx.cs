@@ -31,10 +31,10 @@ public partial class WF_Frm : WebPage
         get
         {
             string oid = this.Request.QueryString["WorkID"];
-            if (oid == null || oid=="" )
+            if (oid == null || oid == "")
                 oid = this.Request.QueryString["OID"];
-            if (oid==null || oid=="")
-                oid="0";
+            if (oid == null || oid == "")
+                oid = "0";
             return int.Parse(oid);
         }
     }
@@ -230,8 +230,6 @@ public partial class WF_Frm : WebPage
             return;
         }
         this.Response.Redirect("Frm.aspx?OID=" + wk.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
-        // wk.RetrieveFromDBSources();
-        // this.UCEn1.ResetEnVal(wk);
         return;
     }
     protected void Btn_Save_Click(object sender, EventArgs e)
@@ -249,23 +247,13 @@ public partial class WF_Frm : WebPage
             en.SetValByKey("OID", this.OID);
             int i = en.RetrieveFromDBSources();
             en = this.UCEn1.Copy(en) as GEEntity;
-
             FrmEvents fes = new FrmEvents(this.FK_MapData);
             fes.DoEventNode(FrmEventList.SaveBefore, en);
             if (i == 0)
                 en.Insert();
             else
                 en.Update();
-
             fes.DoEventNode(FrmEventList.SaveAfter, en);
-
-            //if (fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveAfter) == true
-            //    || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
-            //{
-            //    /*如果包含保存*/
-            //    this.Response.Redirect("Frm.aspx?OID=" + this.RefOID + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData,true);
-            //}
-
             this.Response.Redirect("Frm.aspx?OID=" + en.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
         }
         catch (Exception ex)

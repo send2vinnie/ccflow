@@ -4,7 +4,6 @@
     <script language="JavaScript" src="../Comm/JScript.js"></script>
     <script language="JavaScript" src="../Comm/JS/Calendar/WdatePicker.js" defer="defer" ></script>
     <style type="text/css">
-    
     .D
     {
          text-align:center;
@@ -12,8 +11,8 @@
          float:left;
           margin-left:20px;
     }
-    
     </style>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div class=D >

@@ -19,11 +19,12 @@
 	font-size: 12px;
 }
 </style>
+
     </asp:ContentPlaceHolder>
 <base target=_self /> 
 </head>
-<body topmargin="0" leftmargin="0" >
-    <form id="form1" runat="server">
+<body topmargin="0" leftmargin="0" onkeypress="NoSubmit(event);"  >
+    <form id="form1" runat="server" onkeypress="NoSubmit(event);" >
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
     </form>

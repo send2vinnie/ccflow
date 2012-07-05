@@ -6,7 +6,6 @@
 	<script language="JavaScript" src="./Scripts/MapExt.js" type="text/javascript" ></script>
     <script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' type="text/javascript"></script>
 <script language="javascript" >
-
     // 获取DDL值
     function ReqDDL(ddlID) {
         var v = document.getElementById('ContentPlaceHolder1_UCEn1_DDL_' + ddlID).value;
@@ -71,7 +70,6 @@
         window.location.href = 'Dtl.aspx?EnsName=' + fk_mapdtl + '&RefPKVal=' + workId;
     }
     function OnKeyPress() {
-
     }
 
     function ReinitIframe(frmID, tdID) {
@@ -100,7 +98,6 @@
         return;
     }
     </script>
-
     <style type="text/css">
         .HBtn
         {
@@ -108,7 +105,6 @@
         	visibility:visible;
         }
     </style>
-	
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server" >
