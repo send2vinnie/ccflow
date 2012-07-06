@@ -6,13 +6,13 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息是通过下列
 // 属性集控制的。更改这些属性值可修改与程序集
 // 关联的信息。
-//
+
 [assembly: AssemblyTitle("ccflow")]
 [assembly: AssemblyDescription("ccflow4.5.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("济南驰骋信息技术有限公司")]
 [assembly: AssemblyProduct("ccflow4.5")]
-[assembly: AssemblyCopyright("驰骋工作流2003-2011")]
+[assembly: AssemblyCopyright("驰骋工作流2003-2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]	
 

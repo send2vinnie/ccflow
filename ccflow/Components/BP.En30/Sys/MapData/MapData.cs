@@ -6,6 +6,24 @@ using BP.En;
 namespace BP.Sys
 {
     /// <summary>
+    /// 按日期查询方式
+    /// </summary>
+    public enum DTSearchWay
+    {
+        /// <summary>
+        /// 不设置
+        /// </summary>
+        None,
+        /// <summary>
+        /// 按日期
+        /// </summary>
+        ByDate,
+        /// <summary>
+        /// 按日期时间
+        /// </summary>
+        ByDateTime
+    }
+    /// <summary>
     /// 应用类型
     /// </summary>
     public enum AppType
@@ -95,6 +113,14 @@ namespace BP.Sys
         /// Tag
         /// </summary>
         public const string Tag = "Tag";
+        /// <summary>
+        /// 时间查询方式
+        /// </summary>
+        public const string DTSearchWay = "DTSearchWay";
+        /// <summary>
+        /// 时间查询字段
+        /// </summary>
+        public const string DTSearchKey = "DTSearchKey";
     }
 	/// <summary>
 	/// 映射基础
@@ -182,6 +208,7 @@ namespace BP.Sys
         }
 
         #region 属性
+
         public string PTable
         {
             get
@@ -236,6 +263,8 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.AppType, (int)value);
             }
         }
+
+     
         public string DesignerContact
         {
             get
@@ -314,6 +343,34 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDataAttr.SearchKeys, value);
+            }
+        }
+        /// <summary>
+        /// 时间查询字段
+        /// </summary>
+        public string DTSearchKey
+        {
+            get
+            {
+                return this.GetValStrByKey(MapDataAttr.DTSearchKey);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.DTSearchKey, value);
+            }
+        }
+        /// <summary>
+        /// 时间查询方式
+        /// </summary>
+        public DTSearchWay HisDTSearchWay
+        {
+            get
+            {
+                return (DTSearchWay)this.GetValIntByKey(MapDataAttr.DTSearchWay);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.DTSearchWay, (int)value);
             }
         }
         /// <summary>
@@ -547,6 +604,10 @@ namespace BP.Sys
                 // enumAppType
                 map.AddTBInt(MapDataAttr.AppType, 1, "应用类型", true, false);
 
+                //时间查询:用于报表查询.
+                map.AddTBInt(MapDataAttr.DTSearchWay, 0, "时间查询方式", true, false);
+                map.AddTBString(MapDataAttr.DTSearchKey, null, "查询字段", true, false, 0, 50, 20);
+
                 map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerContact, null, "联系方式", true, false, 0, 500, 20);
@@ -557,6 +618,27 @@ namespace BP.Sys
         }
         #endregion
 
+        public MapAttrs HisShowColsAttrs
+        {
+            get
+            {
+                MapAttrs mattrs = new MapAttrs(this.No);
+                MapAttrs attrs = new MapAttrs();
+
+                string[] strs = this.AttrsInTable.Split('@');
+                foreach (string str in strs)
+                {
+                    if (str == null || str == "")
+                        continue;
+                    string[] kv = str.Split('=');
+                    MapAttr myattr = mattrs.GetEntityByKey(MapAttrAttr.KeyOfEn, kv[0]) as MapAttr;
+                    if (myattr == null)
+                        continue;
+                    attrs.AddEntity(myattr);
+                }
+                return attrs;
+            }
+        }
         /// <summary>
         /// 导入数据
         /// </summary>
