@@ -168,16 +168,28 @@ namespace BP.Web.WF.Comm
             Entity myen = ens.GetNewEntity;
             string pk = myen.PK;
             string clName = myen.ToString();
-
             Attrs attrs = myen.EnMap.Attrs;
-            Attrs selectedAttrs = myen.EnMap.GetChoseAttrs(ens);
-            BP.Sys.Xml.PanelEnss cfgs = new BP.Sys.Xml.PanelEnss();
-            cfgs.RetrieveBy(BP.Sys.Xml.PanelEnsAttr.For, ens.ToString());
+            MapData md =new MapData(this.EnsName);
 
-            // 生成标题
-            //this.Pub1.Add("<Table border='1' width='20%' align=left cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
+            #region 求出可显示的属性。
+            Attrs selectedAttrs = new Attrs();
+            string attrKeyShow = md.AttrsInTable;
+            string[] strs = md.AttrsInTable.Split('@');
+            foreach (string str in strs)
+            {
+                if (str == null || str == "")
+                    continue;
+
+                string[] kv = str.Split('=');
+                if (kv[0] == "MyNum")
+                    continue;
+
+                selectedAttrs.Add(myen.EnMap.GetAttrByKey(kv[0]));
+            }
+            #endregion 求出可显示的属性.
+
             this.Pub1.AddTable();
-            this.Pub1.AddCaptionLeft("数据挖掘："+myen.EnMap.EnDesc + "，记录：" + ens.Count + "条");
+            this.Pub1.AddCaptionLeft(myen.EnMap.EnDesc + " 记录：" + ens.Count + "条");
             this.Pub1.AddTR();
             this.Pub1.AddTDTitle("序");
             this.Pub1.AddTDTitle("");
@@ -196,31 +208,20 @@ namespace BP.Web.WF.Comm
             int pageidx = this.PageIdx - 1;
             int idx = SystemConfig.PageSize * pageidx;
             this.Pub1.AddTREnd();
-
-            string urlExt = "";
+            string style = WebUser.Style;
             foreach (Entity en in ens)
             {
-                #region 处理keys
-                string style = WebUser.Style;
-                string url = ""; // this.GenerEnUrl(en, attrs);
-                #endregion
-
                 this.Pub1.AddTR();
                 idx++;
                 this.Pub1.AddTDIdx(idx);
                 this.Pub1.Add("<TD class='TD'><a href=\"javascript:WinOpen('../WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "');\" ><img src='../../Images/Btn/DTS.gif'></a></TD>");
-                string val = "";
                 foreach (Attr attr in selectedAttrs)
                 {
-                    if (attr.UIVisible == false)
+                    if (attr.UIVisible == false || attr.Key == "MyNum")
                         continue;
-
-                    if (attr.Key == "MyNum")
-                        continue;
-
                     if (attr.UIContralType == UIContralType.DDL)
                     {
-                        if (attr.UIBindKey == "FK_NY")
+                        if (attr.UIBindKey == "BP.Pub.NYs")
                             this.Pub1.AddTD(en.GetValStrByKey(attr.Key));
                         else
                             this.Pub1.AddTD(en.GetValRefTextByKey(attr.Key));
@@ -245,18 +246,10 @@ namespace BP.Web.WF.Comm
                         case DataType.AppString:
                             if (str == "" || str == null)
                                 str = "&nbsp;";
-
                             if (attr.UIHeight != 0)
-                            {
                                 this.Pub1.AddTDDoc(str, str);
-                            }
                             else
-                            {
-                                if (attr.Key.IndexOf("ail") == -1)
-                                    this.Pub1.AddTD(str);
-                                else
-                                    this.Pub1.AddTD("<a href=\"javascript:mailto:" + str + "\"' >" + str + "</a>");
-                            }
+                                this.Pub1.AddTD(str);
                             break;
                         case DataType.AppBoolean:
                             if (str == "1")
@@ -279,28 +272,16 @@ namespace BP.Web.WF.Comm
                 }
                 this.Pub1.AddTREnd();
             }
-
             #region  求合计代码写在这里。
-            string NoShowSum = SystemConfig.GetConfigXmlEns("NoShowSum", ens.ToString());
-            if (NoShowSum == null)
-                NoShowSum = "";
 
             bool IsHJ = false;
             foreach (Attr attr in selectedAttrs)
             {
-                if (attr.MyFieldType == FieldType.RefText)
+                if (attr.MyFieldType == FieldType.RefText || attr.UIContralType == UIContralType.DDL )
                     continue;
-
-                if (attr.UIContralType == UIContralType.DDL)
-                    continue;
-
-                if (NoShowSum.IndexOf("@" + attr.Key + "@") != -1)
-                    continue;
-
                 if (attr.Key == "OID" || attr.Key == "FID"
                     || attr.Key == "MID" || attr.Key.ToUpper() == "WORKID")
                     continue;
-
                 switch (attr.MyDataType)
                 {
                     case DataType.AppDouble:
@@ -313,54 +294,38 @@ namespace BP.Web.WF.Comm
                         break;
                 }
             }
-
-            IsHJ = false;
-
             if (IsHJ)
             {
                 // 找出配置是不显示合计的列。
-
-                if (NoShowSum == null)
-                    NoShowSum = "";
-
-                this.Pub1.Add("<TR class='TRSum' >");
-                this.Pub1.AddTD(this.ToE("Sum", "合计"));
+                this.Pub1.Add("<TR class='TRSum'>");
+                this.Pub1.AddTD("class=Sum", "合计");
+                this.Pub1.AddTD("class=Sum", "");
                 foreach (Attr attr in selectedAttrs)
                 {
-                    if (attr.MyFieldType == FieldType.RefText)
-                        continue;
-
-                    if (attr.UIVisible == false)
-                        continue;
-
-                    if (attr.Key == "MyNum")
+                    if (attr.MyFieldType == FieldType.RefText
+                        || attr.UIVisible == false
+                        || attr.Key == "MyNum")
                         continue;
 
                     if (attr.MyDataType == DataType.AppBoolean)
                     {
-                        this.Pub1.AddTD();
+                        this.Pub1.AddTD("class=Sum", "");
                         continue;
                     }
 
                     if (attr.UIContralType == UIContralType.DDL)
                     {
-                        this.Pub1.AddTD();
+                        this.Pub1.AddTD("class=Sum", "");
                         continue;
                     }
+
                     if (attr.Key == "OID" || attr.Key == "FID"
                         || attr.Key == "MID" || attr.Key.ToUpper() == "WORKID")
                     {
-                        this.Pub1.AddTD();
+                        this.Pub1.AddTD("class=Sum", "");
                         continue;
                     }
 
-
-                    if (NoShowSum.IndexOf("@" + attr.Key + "@") != -1)
-                    {
-                        /*不需要显示它他们的合计。*/
-                        this.Pub1.AddTD();
-                        continue;
-                    }
                     switch (attr.MyDataType)
                     {
                         case DataType.AppDouble:
@@ -376,13 +341,14 @@ namespace BP.Web.WF.Comm
                             this.Pub1.AddTDJE(ens.GetSumDecimalByKey(attr.Key));
                             break;
                         default:
-                            this.Pub1.AddTD();
+                            this.Pub1.AddTD("class=Sum", "");
                             break;
                     }
                 }
                 this.Pub1.AddTREnd();
             }
             #endregion
+
             this.Pub1.AddTableEnd();
         }
         private void DataPanelDtlAdd(Entity en, Attr attr, BP.Sys.Xml.PanelEnss cfgs, string url, string cardUrl, string focusField)

@@ -24,11 +24,20 @@
                 document.getElementById(rowIdx + '_' + i).style.display = sta;
             }
         }
-        function Do(mypk) {
+        function DoDelCC(mypk) {
             var url = 'Do.aspx?DoType=DelCC&MyPK=' + mypk;
             var v = window.showModalDialog(url, 'sd', 'dialogHeight: 10px; dialogWidth: 10px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');
-            i
-            f (v == null) {
+        }
+        function WinOpen(ccid, fk_flow, fk_node, workid, fid, sta) {
+            var url = '';
+            if (sta == '0') {
+                url = 'Do.aspx?DoType=DoOpenCC&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node + '&WorkID=' + workid + '&FID=' + fid + '&Sta=' + sta + '&MyPK=' + ccid;
             }
+            else {
+                url = './WorkOpt/OneWork/Track.aspx?FK_Flow=' + fk_flow + '&FK_Node=' + fk_node + '&WorkID=' + workid + '&FID=' + fid + '&Sta=' + sta + '&MyPK=' + ccid;
+            }
+            var newWindow = window.open(url, 'z', 'help:1;resizable:1;dialogWidth:680px;dialogHeight:420px');
+            newWindow.focus();
+            return;
         }
     </script>

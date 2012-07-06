@@ -314,7 +314,8 @@ public partial class WF_Rpt_Search : WebPage
         #endregion 求出可显示的属性.
 
         #region  生成标题
-        this.UCSys1.Add("<Table border='1' align=left width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
+        //this.UCSys1.Add("<Table border='1' align=left width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
+        this.UCSys1.AddTable();
         this.UCSys1.AddTR();
         this.UCSys1.AddTDTitle("序");
         foreach (Attr attr in selectedAttrs)

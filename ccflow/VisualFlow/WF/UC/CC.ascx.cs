@@ -64,24 +64,32 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
             return s;
         }
     }
+    public string Sta
+    {
+        get
+        {
+            return this.Request["Sta"];
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
-        switch (this.DoType)
+        switch (this.Request.QueryString["Sta"])
         {
-            case "Read":
+            case "0":
+                this.Bind(BP.WF.Dev2Interface.DB_CCList_UnRead(WebUser.No));
+                break;
+            case "1":
                 this.Bind(BP.WF.Dev2Interface.DB_CCList_Read(WebUser.No));
                 break;
-            case "Del":
-                this.Bind(BP.WF.Dev2Interface.DB_CCList_Delete(WebUser.No));
-                break;
+            case "2":
             default:
-                this.Bind(BP.WF.Dev2Interface.DB_CCList_UnRead(WebUser.No));
+                this.Bind(BP.WF.Dev2Interface.DB_CCList_Delete(WebUser.No));
                 break;
         }
     }
     public string GenerMenu()
     {
-        string msg = "<a href='" + this.PageID + ".aspx?DoType=UnRead' >未读</a> - <a href='" + this.PageID + ".aspx?DoType=Read' >已读</a> - <a href='" + this.PageID + ".aspx?DoType=Delete' >删除</a>";
+        string msg = "<a href='" + this.PageID + ".aspx?Sta=0' >未读</a> - <a href='" + this.PageID + ".aspx?Sta=1' >已读</a> - <a href='" + this.PageID + ".aspx?Sta=2' >删除</a>";
         return msg;
     }
     /// <summary>
@@ -101,12 +109,11 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
             this.Pub1.AddBR();
         int colspan = 9;
         this.Pub1.AddTable("border=1px align=center width='960px' ");
-
         this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;" + this.GenerMenu());
-
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
+        this.Pub1.AddTDTitle("内容");
 
         if (this.GroupBy != "FlowName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName&DoType=CC' >" + this.ToE("Flow", "流程") + "</a>");
@@ -118,6 +125,7 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=Rec&DoType=CC' >" + this.ToE("Rec", "发起人") + "</a>");
 
         this.Pub1.AddTDTitle("抄送日期");
+        if (this.Sta=="1")
         this.Pub1.AddTDTitle("删除");
         this.Pub1.AddTREnd();
 
@@ -148,11 +156,11 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
 
                 this.Pub1.AddTDIdx(i);
                 if (isRead == false)
-                    this.Pub1.AddTDB("<a href=\"javascript:WinOpen('WFRpt.aspx?CCID=" + dr["MyPK"] + "&WorkID=" + dr["RefWorkID"] + "&FK_Flow=" + dr["FK_Flow"] + "&FID=" + dr["FID"] + "');\" >" + dr["Title"] + "</a>");
+                    this.Pub1.AddTDB("<a href=\"javascript:WinOpen('" + dr["MyPK"] + "','" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
                 else
-                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?CCID=" + dr["MyPK"] + "&WorkID=" + dr["RefWorkID"] + "&FK_Flow=" + dr["FK_Flow"] + "&FID=" + dr["FID"] + "');\" >" + dr["Title"] + "</a>");
+                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('" + dr["MyPK"] + ",'" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
 
-                //  this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["RefWorkID"] + "\" >" + dr["Title"].ToString()+"</a>");
+                this.Pub1.AddTD( DataType.ParseText2Html( dr["Doc"].ToString() ));
 
                 if (this.GroupBy != "FlowName")
                 {
@@ -174,8 +182,8 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
                     this.Pub1.AddTD(dr["Rec"].ToString());
 
                 this.Pub1.AddTD(dr["RDT"].ToString());
-
-                this.Pub1.AddTD("<a href=''><img src='"+this.Request.ApplicationPath+"/Images/Btn/Delete.gif' /></a>");
+                if (this.Sta == "1")
+                    this.Pub1.AddTD("<a href=\"javascript:DoDelCC('" + dr["MyPK"] + "');\"><img src='" + this.Request.ApplicationPath + "/Images/Btn/Delete.gif' /></a>");
                 this.Pub1.AddTREnd();
             }
         }

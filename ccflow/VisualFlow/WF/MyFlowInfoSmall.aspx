@@ -5,10 +5,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <br>
-<table width='80%' >
+<table width='80%' align=center >
 <tr>
-<td width='80%'>
+<td width='80%'  align=center>
     <uc2:MyFlowInfo ID="MyFlowInfo1" runat="server" />
+    <br />
+    <br />
+    <br />
+
 </td>
 </tr>
 </table>

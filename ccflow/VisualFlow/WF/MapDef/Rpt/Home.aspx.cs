@@ -159,7 +159,6 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         md.RetrieveFromDBSources();
 
         MapAttrs attrs=new MapAttrs(this.FK_MapData);
-      
         MapAttrs attrsOfSearch = new MapAttrs();
         string[] strs = md.AttrsInTable.Split('@');
         foreach (string str in strs)
@@ -174,9 +173,10 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             attrsOfSearch.AddEntity(myattr);
         }
 
-        this.Pub2.AddH2("列表字段显示顺序- 移动箭头改变顺序");
 
         this.Pub2.AddTable("align=left");
+        this.Pub2.AddCaptionLeft("列表字段显示顺序- 移动箭头改变顺序");
+
         this.Pub2.AddTR();
         int idx = -1;
         foreach (MapAttr attr in attrsOfSearch)
@@ -184,11 +184,11 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             idx++;
             this.Pub2.Add("<TD class=Title>");
             if (idx != 0)
-                this.Pub2.Add("<a href=\"javascript:DoLeft('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arrowhead_Previous_S.gif' ></a>");
+                this.Pub2.Add("<a href=\"javascript:DoLeft('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arr/Arrowhead_Previous_S.gif' ></a>");
 
             this.Pub2.Add(attr.Name);
             if (idx != strs.Length-2)
-                this.Pub2.Add("<a href=\"javascript:DoRight('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arrowhead_Next_S.gif' ></a>");
+                this.Pub2.Add("<a href=\"javascript:DoRight('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arr/Arrowhead_Next_S.gif' ></a>");
 
             this.Pub2.Add("</TD>");
         }
@@ -342,17 +342,17 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
     #region 查询条件定义
     public void SearchCond()
     {
-        MapAttrs mattrs = new MapAttrs(this.FK_MapData);
         MapData md = new MapData(this.FK_MapData);
+        MapAttrs attrs = new MapAttrs(this.FK_MapData);
+        MapAttrs attrsOfSearch = md.HisShowColsAttrs;
 
         #region 查询条件定义
-//        this.Pub2.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../Rpt/Search.aspx?FK_Flow=" + this.FK_Flow + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
-
         this.Pub2.AddH2("查询条件定义");
+        this.Pub2.AddFieldSet("外键与枚举类型");
+        this.Pub2.Add("外键现枚举类型的数据才能进行下拉框查询，请选择要给查询。");
+        this.Pub2.AddBR();
 
-        this.Pub2.AddFieldSet( "设置查询条件" );
-
-        foreach (MapAttr mattr in mattrs)
+        foreach (MapAttr mattr in attrsOfSearch)
         {
             if (mattr.UIContralType != UIContralType.DDL)
                 continue;
@@ -366,6 +366,47 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             this.Pub2.Add(cb);
             this.Pub2.AddBR();
         }
+        this.Pub2.AddFieldSetEnd();
+
+        bool isHave = false;
+        foreach (MapAttr mattr in attrsOfSearch)
+        {
+            if (mattr.MyDataType== DataType.AppDate || mattr.MyDataType == DataType.AppDateTime)
+            {
+                isHave = true;
+                break;
+            }
+        }
+
+        if (isHave)
+        {
+            this.Pub2.AddFieldSet("时间段");
+            this.Pub2.Add("对于数据进行按时间段的查询：比如对流程的发起时间进行发起时间从，到进行查询。");
+            this.Pub2.AddBR();
+
+            this.Pub2.Add("选择方式");
+            BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+            ddl.ID = "DDL_DTSearchWay";
+            ddl.BindSysEnum("DTSearchWay");
+            this.Pub2.Add(ddl);
+
+            this.Pub2.Add("&nbsp;字段");
+            ddl = new BP.Web.Controls.DDL();
+            ddl.ID = "DDL_DTSearchField";
+            foreach (MapAttr mattr in attrsOfSearch)
+            {
+                if (mattr.MyDataType == DataType.AppDate || mattr.MyDataType == DataType.AppDateTime)
+                {
+                    if (mattr.UIVisible == false)
+                        continue;
+
+                    ddl.Items.Add(new ListItem(mattr.KeyOfEn+"  "+mattr.Name, mattr.KeyOfEn));
+                }
+            }
+            this.Pub2.Add(ddl);
+            this.Pub2.AddFieldSetEnd();
+        }
+
 
         this.Pub2.AddHR();
         Button btn = new Button();
@@ -373,13 +414,12 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         btn.ID = "Btn_Save";
         btn.Click += new EventHandler(btn_SearchCond_Click);
         this.Pub2.Add(btn);
-        this.Pub2.AddFieldSetEnd();
         #endregion
     }
     void btn_SearchCond_Click(object sender, EventArgs e)
     {
         MapData md = new MapData(this.FK_MapData);
-        MapAttrs mattrs = new MapAttrs(md.No);
+        MapAttrs mattrs = md.HisShowColsAttrs;
         string keys = "";
         foreach (MapAttr mattr in mattrs)
         {

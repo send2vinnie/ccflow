@@ -5,8 +5,8 @@
 <%@ Register src="../UC/Pub.ascx" tagname="Pub" tagprefix="uc2" %>
 <!DocType HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
-	<HEAD>
-		<title>详细</title>
+	<HEAD >
+		<title>数据挖掘->详细信息</title>
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
 		<meta name="CODE_LANGUAGE" Content="C#">
 		<meta name="vs_defaultClientScript" content="JavaScript">
@@ -17,7 +17,6 @@
                 newWindow.focus();
                 return;
             }
-
     </script>
     <base target=_self />
 	</HEAD>

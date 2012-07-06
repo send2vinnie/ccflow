@@ -87,11 +87,28 @@ namespace BP.Web.WF
                 //this.Response.Redirect(url + "&DTT=" + DateTime.Now.ToString("mmDDhhmmss"), true);
                 //return;
             }
+
             try
             {
                 string str = "";
                 switch (this.ActionType)
                 {
+                    case "DoOpenCC":
+                        string fk_flow1 = this.Request.QueryString["FK_Flow"];
+                        string fk_node1 = this.Request.QueryString["FK_Node"];
+                        string workid1 = this.Request.QueryString["WorkID"];
+                        string fid1 = this.Request.QueryString["FID"];
+                        string Sta = this.Request.QueryString["Sta"];
+                        if (Sta == "0")
+                        {
+                            BP.WF.CCList cc1 = new BP.WF.CCList();
+                            cc1.MyPK = this.Request.QueryString["MyPK"];
+                            cc1.Retrieve();
+                            cc1.HisSta = CCSta.Read;
+                            cc1.Update();
+                        }
+                        this.Response.Redirect(this.Request.ApplicationPath + "/WF/WorkOpt/OneWork/Track.aspx?FK_Flow=" + fk_flow1 + "&FK_Node=" + fk_node1 + "&WorkID=" + workid1+"&FID="+fid1, false);
+                        return;
                     case "DelCC": //删除抄送.
                         CCList cc = new CCList();
                         cc.MyPK = this.MyPK;
@@ -209,7 +226,7 @@ namespace BP.Web.WF
                         BP.WF.Port.WFEmp myau = new BP.WF.Port.WFEmp(WebUser.No);
                         BP.DA.Log.DefaultLogWriteLineInfo("取消授权:" + WebUser.No + "取消了对(" + myau.Author + ")的授权。");
                         myau.Author = "";
-                        myau.AuthorWay=0;
+                        myau.AuthorWay = 0;
                         myau.Update();
                         //myau.Update(BP.WF.Port.WFEmpAttr.Author, "",BP.WF.Port.WFEmpAttr.AuthorIsOK, 0);
                         this.WinClose();
