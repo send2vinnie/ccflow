@@ -37,7 +37,7 @@ th, .Title
 
 .Sum
 {
-    background-color: #E6F7FF;
+    background-color: InfoBackground;
     font-size: 12px;
     border: 1px solid #ccc;
     text-align: left;
@@ -61,9 +61,9 @@ td input[type="textbox"]
     padding: 0px;
 }
 
-td .TDNum
+.TDNum
 {
-    text-align:right;
+    text-align: right;
     word-break: keep-all;
 }
 
@@ -80,7 +80,6 @@ td input
     background-image: url('Img/calendar.gif');
     background-repeat: no-repeat;
 	    text-align: left;
-
 }
 
 caption,.TitleMsg
