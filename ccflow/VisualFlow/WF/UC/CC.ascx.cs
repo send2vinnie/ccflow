@@ -68,12 +68,15 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
     {
         get
         {
-            return this.Request["Sta"];
+            string s= this.Request["Sta"];
+            if (s == null)
+                s = "0";
+            return s;
         }
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        switch (this.Request.QueryString["Sta"])
+        switch (this.Sta)
         {
             case "0":
                 this.Bind(BP.WF.Dev2Interface.DB_CCList_UnRead(WebUser.No));
