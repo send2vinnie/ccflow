@@ -348,6 +348,18 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
         #region 查询条件定义
         this.Pub2.AddH2("查询条件定义");
+
+        this.Pub2.AddFieldSet("是否增加关键字查询");
+        this.Pub2.Add("关键字查询是接受用户输入一个关键字，在整个表的列中用like 查询(外键、枚举、数值类型的除外)");
+        this.Pub2.AddBR();
+        CheckBox mycb = new CheckBox();
+        mycb.ID = "CB_IsShearchKey";
+        mycb.Text = "是否增加关键字查询";
+        mycb.Checked = md.IsBlank;
+
+        this.Pub2.Add(mycb);
+        this.Pub2.AddFieldSetEnd();
+
         this.Pub2.AddFieldSet("外键与枚举类型");
         this.Pub2.Add("外键现枚举类型的数据才能进行下拉框查询，请选择要给查询。");
         this.Pub2.AddBR();
@@ -384,29 +396,29 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             this.Pub2.Add("对于数据进行按时间段的查询：比如对流程的发起时间进行发起时间从，到进行查询。");
             this.Pub2.AddBR();
 
-            this.Pub2.Add("选择方式");
+            this.Pub2.Add("选择方式:");
             BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
             ddl.ID = "DDL_DTSearchWay";
             ddl.BindSysEnum("DTSearchWay");
+            ddl.SetSelectItem((int)md.HisDTSearchWay);
             this.Pub2.Add(ddl);
 
-            this.Pub2.Add("&nbsp;字段");
+            this.Pub2.Add("&nbsp;字段:");
             ddl = new BP.Web.Controls.DDL();
-            ddl.ID = "DDL_DTSearchField";
+            ddl.ID = "DDL_DTSearchKey";
             foreach (MapAttr mattr in attrsOfSearch)
             {
                 if (mattr.MyDataType == DataType.AppDate || mattr.MyDataType == DataType.AppDateTime)
                 {
                     if (mattr.UIVisible == false)
                         continue;
-
-                    ddl.Items.Add(new ListItem(mattr.KeyOfEn+"  "+mattr.Name, mattr.KeyOfEn));
+                    ddl.Items.Add(new ListItem(mattr.KeyOfEn + "  " + mattr.Name, mattr.KeyOfEn));
                 }
             }
+            ddl.SetSelectItem(md.DTSearchKey);
             this.Pub2.Add(ddl);
             this.Pub2.AddFieldSetEnd();
         }
-
 
         this.Pub2.AddHR();
         Button btn = new Button();
@@ -425,12 +437,21 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         {
             if (mattr.UIContralType != UIContralType.DDL)
                 continue;
-
             CheckBox cb = this.Pub2.GetCBByID("CB_F_" + mattr.KeyOfEn);
             if (cb.Checked)
                 keys += "@" + mattr.KeyOfEn;
         }
+
         md.SearchKeys = keys;
+
+        if (this.Pub2.IsExit("DDL_DTSearchWay") )
+        {
+            BP.Web.Controls.DDL ddl = this.Pub2.GetDDLByID("DDL_DTSearchWay");
+            md.HisDTSearchWay = (DTSearchWay)ddl.SelectedItemIntVal;
+
+            ddl = this.Pub2.GetDDLByID("DDL_DTSearchKey");
+            md.DTSearchKey = ddl.SelectedItemStringVal;
+        }
         md.Update();
         Cash.Map_Cash.Remove(this.FK_MapData);
         this.Alert("保存成功.");

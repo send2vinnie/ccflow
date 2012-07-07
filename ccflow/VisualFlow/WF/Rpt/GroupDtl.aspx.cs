@@ -214,7 +214,7 @@ namespace BP.Web.WF.Comm
                 this.Pub1.AddTR();
                 idx++;
                 this.Pub1.AddTDIdx(idx);
-                this.Pub1.Add("<TD class='TD'><a href=\"javascript:WinOpen('../WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "');\" ><img src='../../Images/Btn/DTS.gif'></a></TD>");
+                this.Pub1.Add("<TD class='TD'><a href=\"javascript:WinOpen('../WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "');\" ><img src='../Img/Track.png' border=0 /></a></TD>");
                 foreach (Attr attr in selectedAttrs)
                 {
                     if (attr.UIVisible == false || attr.Key == "MyNum")

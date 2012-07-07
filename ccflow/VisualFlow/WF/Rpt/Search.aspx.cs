@@ -103,7 +103,13 @@ public partial class WF_Rpt_Search : WebPage
             #region 处理查询权限
             Entity en = this.HisEns.GetNewEntity;
             Map map = en.EnMap;
+
             this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
+            #region 生成查询条件
+
+            #endregion
+
+
             this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
             AttrSearchs searchs = map.SearchAttrs;
             string defVal = "";
@@ -171,6 +177,7 @@ public partial class WF_Rpt_Search : WebPage
                 }
             }
             #endregion 处理查询权限
+
             this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
         }
@@ -308,7 +315,6 @@ public partial class WF_Rpt_Search : WebPage
             string[] kv = str.Split('=');
             if (kv[0] == "MyNum")
                 continue;
-
             selectedAttrs.Add(myen.EnMap.GetAttrByKey(kv[0]));
         }
         #endregion 求出可显示的属性.
@@ -318,6 +324,7 @@ public partial class WF_Rpt_Search : WebPage
         this.UCSys1.AddTable();
         this.UCSys1.AddTR();
         this.UCSys1.AddTDTitle("序");
+        this.UCSys1.AddTDTitle("报告");
         foreach (Attr attr in selectedAttrs)
         {
             if (attr.IsRefAttr)
@@ -339,7 +346,6 @@ public partial class WF_Rpt_Search : WebPage
         #endregion 用户界面属性设置
 
         #region 数据输出.
-        this.UCSys1.AddTDTitle("功能");
         this.UCSys1.AddTREnd();
         string urlExt = "";
         foreach (Entity en in ens)
@@ -351,9 +357,14 @@ public partial class WF_Rpt_Search : WebPage
 
             this.UCSys1.AddTR();
 
+
             #region 输出字段。
             idx++;
             this.UCSys1.AddTDIdx(idx);
+
+            this.UCSys1.AddTD("<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" ><img src='../Img/Track.png' border=0 /></a>");
+        
+
             string val = "";
             foreach (Attr attr in selectedAttrs)
             {
@@ -428,12 +439,7 @@ public partial class WF_Rpt_Search : WebPage
             }
             #endregion 输出字段。
 
-            //相关功能.
-            // string ext = "<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >轨迹图</a>";
-            //ext += "-<a href=\"javascript:WinOpen('Attachment.aspx?FK_Flow=" + this.FK_Flow + "&OID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >附件</a>";
-            string ext = "<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" >工作报告</a>";
-
-            this.UCSys1.AddTD(ext);
+       
             this.UCSys1.AddTREnd();
         }
         #endregion 数据输出.
