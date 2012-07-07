@@ -5,24 +5,48 @@
     }
 </script>
 <style type="text/css">
-.WorkCell
+    
+.Holiday
+{
+    text-align:center;
+    vertical-align:middle;
+    font-size:12px;
+    background-color:InfoBackground;
+}
+
+.HolidayHave
 {
     font-weight:bolder;
     text-align:center;
     vertical-align:middle;
+    font-size:12px;
+    background-color:InfoBackground;
+}
+
+.Day
+{
+    text-align:center;
+    vertical-align:middle;
+    font-size:12px;
+}
+
+.DayHave
+{
+    text-align:center;
+    vertical-align:middle;
+    font-size:small;
+    font-size:12px;
     background-color:Orange;
 }
+
 .Week
 {
     background-color:ButtonFace;
     text-align:center;
     vertical-align:middle;
+    font-weight:bolder;
 }
-.Day
-{
-    text-align:center;
-    vertical-align:middle;
-}
+
 </style>
 <table   style="width:80%;height:450px;border:1px" align=center >
 <tr>

@@ -15,16 +15,22 @@ using BP.Web;
 
 public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
 {
+    /// <summary>
+    /// 日期
+    /// </summary>
     public string FK_Date
     {
         get
         {
             string s = this.Request.QueryString["FK_Date"];
             if (s == null)
-                s = DataType.CurrentData;
+                s = this.FK_NY + "-01";
             return s;
         }
     }
+    /// <summary>
+    /// 月份
+    /// </summary>
     public string FK_NY
     {
         get
@@ -35,6 +41,9 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
             return s;
         }
     }
+    /// <summary>
+    /// 人员
+    /// </summary>
     public string FK_Emp
     {
         get
@@ -47,19 +56,9 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (this.FK_Date == null)
-        {
-            DateTime firstDay = DataType.ParseSysDate2DateTime(this.FK_NY + "-01");
-            
-            this.BindMonth(firstDay);
-         //   this.BindLog();
-        }
-        else
-        {
-            DateTime myday = DataType.ParseSysDate2DateTime(this.FK_Date);
-            this.BindMonth(myday);
-            this.BindLog(myday);
-        }
+        DateTime myday = DataType.ParseSysDate2DateTime(this.FK_Date);
+        this.BindMonth(myday);
+        this.BindLog(myday);
     }
     public void BindLog(DateTime dt)
     {
@@ -174,20 +173,20 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
                     html += "<TR>";
                     week++;
                     if (workNum > 0)
-                        html += " <TD class='WorkCell'  ><a href='" + this.PageID + ".aspx?FK_Date=" + cellDate + "' ><b>" + Mday + "</b></a></TD>";
+                        html += " <TD class='HolidayHave'  ><a href='" + this.PageID + ".aspx?FK_Date=" + cellDate + "' ><b>" + Mday + "</b></a></TD>";
                     else
-                        html += " <TD class='Day'>" + Mday + "</TD>";
+                        html += " <TD class='Holiday'>" + Mday + "</TD>";
                     break;
                 case DayOfWeek.Saturday: // 1
                     if (workNum > 0)
-                        html += " <TD class='WorkCell'  ><a href='" + this.PageID + ".aspx?FK_Date=" + cellDate + "' ><b>" + Mday + "</b></a></TD>";
+                        html += " <TD class='HolidayHave'  ><a href='" + this.PageID + ".aspx?FK_Date=" + cellDate + "' ><b>" + Mday + "</b></a></TD>";
                     else
-                        html += " <TD  class='Day' >" + Mday + "</TD>";
+                        html += " <TD  class='Holiday' >" + Mday + "</TD>";
                     html += "</TR>";
                     break;
                 default:
                     if (workNum > 0)
-                        html += " <TD class='WorkCell'  ><a href='" + this.PageID + ".aspx?FK_Date=" + cellDate + "' ><b>" + Mday + "</b></a></TD>";
+                        html += " <TD class='DayHave'  ><a href='" + this.PageID + ".aspx?FK_Date=" + cellDate + "' ><b>" + Mday + "</b></a></TD>";
                     else
                         html += " <TD  class='Day' >" + Mday + "</TD>";
                     break;
