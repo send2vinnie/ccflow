@@ -16,7 +16,6 @@ using BP.Sys.Xml;
 
 public partial class WF_Rpt_G : BP.Web.WebPage
 {
-
     #region 属性
     public string FK_Flow
     {
@@ -182,10 +181,6 @@ public partial class WF_Rpt_G : BP.Web.WebPage
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-       // this
-        //this.Pub1.Add("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
-        //this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
-
         this.HisMD = new MapData(this.EnsName);
         AttrSearchs searchs = null;
 
@@ -500,25 +495,13 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         this.ToolBar1.AddBtn(NamesOfBtn.Excel,"导出到Excel");
 
         #region 增加排序
-        //this.BPMultiPage1.AddPageView("Table");
-        //this.BPMultiPage1.AddPageView("Img");
-        //this.BPMultiPage1.AddPageView("Imgs");
-        //this.BPMultiPage1.AddPageView("Imgss");
         if (this.IsPostBack == false)
             this.CB_IsShowPict.Checked = ur.IsPic;
-
-        // this.DDL_OrderBy.SelectedItem(ur.OrderBy);
-        // this.DDL_OrderWay.SelectedItem(ur.OrderWay);
         #endregion
 
         this.BindNums();
         if (this.IsPostBack == false)
             this.BingDG();
-
-        //if (this.DoType == "My")
-        //{
-        //    this.ToolBar1.AddBtn(NamesOfBtn.Search);
-        //}
 
         this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
         this.ToolBar1.GetBtnByID("Btn_Excel").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
@@ -972,6 +955,25 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         }
         catch
         {
+        }
+        #endregion
+
+        #region 加上日期时间段.
+        if (en.EnMap.DTSearchWay != DTSearchWay.None)
+        {
+            string dtFrom = this.ToolBar1.GetTBByID("TB_S_From").Text.Trim();
+            string dtTo = this.ToolBar1.GetTBByID("TB_S_To").Text.Trim();
+            string field = en.EnMap.DTSearchKey;
+            if (en.EnMap.DTSearchWay == DTSearchWay.ByDate)
+            {
+                where += "( " + field + ">='" + dtFrom + " 01:01' AND " + field + "<='" + dtTo + " 23:59')     ";
+            }
+            else
+            {
+                where += "(";
+                where += field + " >='" + dtFrom + "' AND " + field + "<='" + dtTo + "'";
+                where += ")";
+            }
         }
         #endregion
 
@@ -1819,39 +1821,6 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         Btn btn = (Btn)sender;
         switch (btn.ID)
         {
-            case NamesOfBtn.Save:
-                GroupEnsTemplates rts = new GroupEnsTemplates();
-                GroupEnsTemplate rt = new GroupEnsTemplate();
-                rt.EnsName = this.EnsName;
-                //rt.Name=""
-                string name = "";
-                //string opercol="";
-                string attrs = "";
-                foreach (ListItem li in CheckBoxList1.Items)
-                {
-                    if (li.Selected)
-                    {
-                        attrs += "@" + li.Value;
-                        name += li.Text + "_";
-                    }
-                }
-
-                name = this.HisEn.EnDesc + name.Substring(0, name.Length - 1);
-                if (rt.Search(WebUser.No, this.EnsName, attrs) >= 1)
-                {
-                    this.InvokeEnManager(rts.ToString(), rt.OID.ToString(), true);
-                    return;
-                }
-                rt.Name = name;
-                rt.Attrs = attrs;
-                //rt.OperateCol=this.DDL_GroupField.SelectedItemStringVal+"@"+this.DDL_GroupWay.SelectedItemStringVal;
-                rt.Rec = WebUser.No;
-                rt.EnName = this.EnsName;
-                rt.EnName = this.HisEn.EnMap.EnDesc;
-                rt.Save();
-                this.InvokeEnManager(rts.ToString(), rt.OID.ToString(), true);
-                //	this.ResponseWriteBlueMsg("当前的模板已经加入了自定义报表队列，点击这里<a href');\"编辑自己定义报表</a>");
-                break;
             case NamesOfBtn.Help:
                 this.Helper();
                 break;
@@ -1861,18 +1830,6 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                 return;
             default:
                 this.ToolBar1.SaveSearchState(this.EnsName, this.Key);
-                if (this.IsPostBack)
-                {
-                    //this.ur = new UserRegedit(WebUser.NoOfSessionID, this.EnsName + "_Group");
-                    //ur.Vals = this.GetValueByKey("Vals");
-                    //ur.CfgKey = this.GetValueByKey("CfgKey");
-                    //ur.OrderBy = this.GetValueByKey("OrderBy");
-                    //ur.OrderWay = this.GetValueByKey("OrderWay");
-                    //ur.IsPic = bool.Parse(this.GetValueByKey("IsPic"));
-                    //ur.SQL = this.GetValueByKey("SQL");
-                    //ur.NumKey = this.GetValueByKey("NumKey");
-                    //ur.Save();
-                }
                 this.BingDG();
                 return;
         }

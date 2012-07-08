@@ -66,11 +66,13 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
 
-        string sql;
+        string sql,sql2;
         if (BP.Web.WebUser.IsAuthorize)
         {
             BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(BP.Web.WebUser.No);
             sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows;
+          
+
         }
         else
         {
@@ -79,7 +81,10 @@ public partial class Face_MasterPage : BP.Web.MasterPage
 
 
         int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
+        int numCC = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(MyPK) FROM wf_cclist WHERE Sta=0 AND CCTo='"+BP.Web.WebUser.No+"'");
+        
         string msg = this.ToE("PendingWork", "待办");
+        string msgCC="抄送";
         if (num != 0)
         {
             msg = "<div id='blink'>" + this.ToE("PendingWork", "待办") + "-" + num + "</div>";
@@ -93,6 +98,20 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             script += " setInterval('changeColor()',200);";
             script += "</script> ";
             this.Page.ClientScript.RegisterClientScriptBlock(typeof(string), "s", script);
+        }
+        if (numCC != 0)
+        {
+            msgCC = "<div id='blink'>抄送-" + numCC + "</div>";
+            string script = "";
+            script += "<script language=javascript>";
+            script += "function changeColor1(){";
+            script += " var color='#f00|#0f0|#00f|#880|#808|#088|yellow|green|blue|gray';";
+            script += " color=color.split('|'); ";
+            script += " document.getElementById('blink').style.color=color[parseInt(Math.random() * color.length)] ";
+            script += " }";
+            script += " setInterval('changeColor1()',300);";
+            script += "</script> ";
+            this.Page.ClientScript.RegisterClientScriptBlock(typeof(string), "scc", script);
         }
         #region 菜单输出区域
 
@@ -115,13 +134,18 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             {
                 if (en.No == "EmpWorks")
                     this.Pub1.Add("<li class=current ><a href=\"" + en.Url + "\" target='_self' title='" + en.Title + "' ><span>" + msg + "</span></a></li>");
+                else if (en.No == "CC")
+                    this.Pub1.Add("<li class=current ><a href=\"" + en.Url + "\" target='_self' title='" + en.Title + "' ><span>" + msgCC + "</span></a></li>");
                 else
                     this.Pub1.Add("<li class=current ><a href=\"" + en.Url + "\" target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
+
             }
             else
             {
                 if (en.No == "EmpWorks")
                     this.Pub1.Add("<li class='Barli' ><a href=\"" + en.Url + "\" target='_self' title='" + en.Title + "' ><span>" + msg + "</span></a></li>");
+                else if (en.No == "CC")
+                    this.Pub1.Add("<li class='Barli' ><a href=\"" + en.Url + "\" target='_self' title='" + en.Title + "' ><span>" + msgCC + "</span></a></li>");
                 else
                     this.Pub1.Add("<li class='Barli' ><a href=\"" + en.Url + "\" target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }

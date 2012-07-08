@@ -80,7 +80,6 @@ public partial class WF_Rpt_Search : WebPage
         //{
         //    this.Pub1.Add("<a href='./../WAP/Home.aspx' ><img src='./../WAP/Img/Home.gif' />Home</a>");
         //    this.Pub1.Add("-<a href='./../WAP/FlowSearch.aspx' >查询</a>");
-
         //    this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
         //    this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
         //}
@@ -103,12 +102,7 @@ public partial class WF_Rpt_Search : WebPage
             #region 处理查询权限
             Entity en = this.HisEns.GetNewEntity;
             Map map = en.EnMap;
-
             this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
-            #region 生成查询条件
-
-            #endregion
-
 
             this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
             AttrSearchs searchs = map.SearchAttrs;
@@ -154,8 +148,6 @@ public partial class WF_Rpt_Search : WebPage
                                 dfs.FK_Dept = WebUser.FK_Dept;
                                 dfs.FK_Emp = WebUser.No;
                                 dfs.Insert();
-
-
                                 dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
                             }
                             mydll.Items.Clear();

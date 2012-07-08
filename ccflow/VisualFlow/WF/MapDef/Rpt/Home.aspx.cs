@@ -173,7 +173,6 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             attrsOfSearch.AddEntity(myattr);
         }
 
-
         this.Pub2.AddTable("align=left");
         this.Pub2.AddCaptionLeft("列表字段显示顺序- 移动箭头改变顺序");
 
@@ -353,10 +352,9 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         this.Pub2.Add("关键字查询是接受用户输入一个关键字，在整个表的列中用like 查询(外键、枚举、数值类型的除外)");
         this.Pub2.AddBR();
         CheckBox mycb = new CheckBox();
-        mycb.ID = "CB_IsShearchKey";
+        mycb.ID = "CB_IsSearchKey";
         mycb.Text = "是否增加关键字查询";
-        mycb.Checked = md.IsBlank;
-
+        mycb.Checked = md.IsSearchKey;
         this.Pub2.Add(mycb);
         this.Pub2.AddFieldSetEnd();
 
@@ -443,6 +441,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         }
 
         md.SearchKeys = keys;
+        md.IsSearchKey = this.Pub2.GetCBByID("CB_IsSearchKey").Checked;
 
         if (this.Pub2.IsExit("DDL_DTSearchWay") )
         {
@@ -475,29 +474,19 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         string info = "";
         info += "<b>关于流程数据表:</b><br>";
         info += "流程数据是一个流程上所有节点表单字段合集组成的物理表，是以NDxxxRpt命名的，流程发起后就向这个物理表中增加一条数据。";
-
         info += "<br><b>如何进行权限控制:</b><br>";
         info += "数据权限是以查询与分析的部门条件进行控制的，一个操作员能够查询那些部门的数据是管理员在系统中维护的，存放在Port_DeptFlowScorp物理表中。";
-
-
         this.Pub2.Add(info);
-
-
         this.Pub2.AddULEnd();
         this.Pub2.AddFieldSetEnd();
-
-
     }
     public void BindLeft(Flow fl)
     {
-        // this.Pub1.AddH2(fl.Name + " - 查询设计");
+        //this.Pub1.AddH2(fl.Name + " - 查询设计");
 
         this.Pub1.Add("<a href='http://ccflow.org' target=_b><img src='../../../DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png' border=0/></a>");
-
         this.Pub1.AddHR();
-
         this.Pub1.AddUL();
-
         this.Pub1.AddLi("<a href=\"Home.aspx?FK_Flow=" + this.FK_Flow + "&FK_MapData=" + this.FK_MapData + "\"><b>帮助</b></a>");
         this.Pub1.Add("流程报表设计器的基础使用方法。<br><br>");
 

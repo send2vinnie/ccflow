@@ -6,6 +6,12 @@
     JP=""
     RU=""    />
 
+ <Item Key="DTSearchWay"
+ CH="@0=不启用@1=按日期@2=按日期时间"
+ EN="@0=不启用@1=按日期@2=按日期时间"
+ JP="@0=不启用@1=按日期@2=按日期时间"
+ RU="@0=不启用@1=按日期@2=按日期时间" />
+    
     <Item Key="CtrlWay"
   CH="@0=按岗位@1=按部门@2=按人员@3=按SQL"
   EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
