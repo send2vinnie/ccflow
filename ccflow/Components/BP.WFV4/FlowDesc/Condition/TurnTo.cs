@@ -289,7 +289,7 @@ namespace BP.WF
                 if (this.HisWork.EnMap.Attrs.Contains(attr.KeyOfEn) == false)
                     throw new Exception("判断条件方向出现错误：实体：" + this.HisWork.EnDesc + " 属性" + this.FK_Attr + "已经不存在.");
 
-                this.MsgOfTurnTo = "@以表单值判断方向，值 " + this.HisWork.EnDesc + "." + this.FK_Attr + " (" + this.HisWork.GetValStringByKey(this.FK_Attr) + ") 操作符:(" + this.FK_Operator + ") 判断值:(" + this.OperatorValue.ToString() + ")";
+                this.MsgOfTurnTo = "@以表单值判断方向，值 " + this.HisWork.EnDesc + "." + this.FK_Attr + " (" + this.HisWork.GetValStringByKey(attr.KeyOfEn) + ") 操作符:(" + this.FK_Operator + ") 判断值:(" + this.OperatorValue.ToString() + ")";
 
                 switch (this.FK_Operator.Trim().ToLower())
                 {
