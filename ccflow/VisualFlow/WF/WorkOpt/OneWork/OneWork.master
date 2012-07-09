@@ -16,16 +16,13 @@
         <uc1:Pub ID="Pub1" runat="server" />
         </td>
      </tr>
-
     <tr>
-    <td width='100%' height='600px' valign=top>
+    <td width='100%' height='450px' valign=top>
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
-        
          </td>
         </tr>
    </table>
-
     </form>
 </body>
 </html>

@@ -1410,7 +1410,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                                 break;
                             url = url.Replace("@" + attr.Key, hisWK1.GetValStrByKey(attr.Key));
                         }
-                        url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                        url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID=" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
                         this.Response.Redirect(url, true);
                         return;
                     }

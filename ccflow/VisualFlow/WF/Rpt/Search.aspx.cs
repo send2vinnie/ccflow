@@ -312,14 +312,13 @@ public partial class WF_Rpt_Search : WebPage
         #endregion 求出可显示的属性.
 
         #region  生成标题
-        //this.UCSys1.Add("<Table border='1' align=left width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
         this.UCSys1.AddTable();
         this.UCSys1.AddTR();
         this.UCSys1.AddTDTitle("序");
-        this.UCSys1.AddTDTitle("报告");
+        this.UCSys1.AddTDTitle("标题");
         foreach (Attr attr in selectedAttrs)
         {
-            if (attr.IsRefAttr)
+            if (attr.IsRefAttr || attr.Key=="Title")
                 continue;
             this.UCSys1.AddTDTitle(attr.Desc);
         }
@@ -349,18 +348,17 @@ public partial class WF_Rpt_Search : WebPage
 
             this.UCSys1.AddTR();
 
-
             #region 输出字段。
             idx++;
             this.UCSys1.AddTDIdx(idx);
 
-            this.UCSys1.AddTD("<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" ><img src='../Img/Track.png' border=0 /></a>");
+            this.UCSys1.AddTD("<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" ><img src='../Img/Track.png' border=0 />"+en.GetValByKey("Title")+"</a>");
         
 
             string val = "";
             foreach (Attr attr in selectedAttrs)
             {
-                if (attr.IsRefAttr || attr.Key == "MyNum")
+                if (attr.IsRefAttr || attr.Key == "MyNum" || attr.Key=="Title")
                     continue;
 
                 if (attr.UIContralType == UIContralType.DDL)
@@ -440,7 +438,7 @@ public partial class WF_Rpt_Search : WebPage
         bool IsHJ = false;
         foreach (Attr attr in selectedAttrs)
         {
-            if (attr.MyFieldType == FieldType.RefText)
+            if (attr.MyFieldType == FieldType.RefText || attr.Key == "Title")
                 continue;
 
             if (attr.UIContralType == UIContralType.DDL)
@@ -469,9 +467,10 @@ public partial class WF_Rpt_Search : WebPage
         {
             this.UCSys1.Add("<TR class='Sum' >");
             this.UCSys1.AddTD(this.ToE("Sum", "合计"));
+            this.UCSys1.AddTD();
             foreach (Attr attr in selectedAttrs)
             {
-                if (attr.Key == "MyNum")
+                if (attr.Key == "MyNum" )
                     continue;
 
                 if (attr.UIContralType == UIContralType.DDL)
@@ -483,9 +482,9 @@ public partial class WF_Rpt_Search : WebPage
                 if (attr.UIVisible == false)
                     continue;
 
-                if (attr.Key == "OID" || attr.Key == "MID" || attr.Key.ToUpper() == "WORKID")
+                if (attr.Key == "OID" || attr.Key == "MID" || attr.Key.ToUpper() == "WORKID" || attr.Key == "FID")
                 {
-                    this.UCSys1.AddTD(attr.Key);
+                    this.UCSys1.AddTD();
                     continue;
                 }
 
@@ -508,8 +507,6 @@ public partial class WF_Rpt_Search : WebPage
                         break;
                 }
             } /*结束循环*/
-            this.UCSys1.AddTD();
-            this.UCSys1.AddTD();
             this.UCSys1.AddTREnd();
         }
         #endregion

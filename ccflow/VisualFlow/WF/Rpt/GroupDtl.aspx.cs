@@ -192,7 +192,7 @@ namespace BP.Web.WF.Comm
             this.Pub1.AddCaptionLeft(myen.EnMap.EnDesc + " 记录：" + ens.Count + "条");
             this.Pub1.AddTR();
             this.Pub1.AddTDTitle("序");
-            this.Pub1.AddTDTitle("");
+            this.Pub1.AddTDTitle("标题");
             foreach (Attr attrT in selectedAttrs)
             {
                 if (attrT.UIVisible == false)
@@ -214,10 +214,10 @@ namespace BP.Web.WF.Comm
                 this.Pub1.AddTR();
                 idx++;
                 this.Pub1.AddTDIdx(idx);
-                this.Pub1.Add("<TD class='TD'><a href=\"javascript:WinOpen('../WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "');\" ><img src='../Img/Track.png' border=0 /></a></TD>");
+                this.Pub1.Add("<TD class='TD'><a href=\"javascript:WinOpen('../WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "');\" ><img src='../Img/Track.png' border=0 />"+en.GetValStrByKey("Title")+"</a></TD>");
                 foreach (Attr attr in selectedAttrs)
                 {
-                    if (attr.UIVisible == false || attr.Key == "MyNum")
+                    if (attr.UIVisible == false || attr.Key=="Title" || attr.Key == "MyNum")
                         continue;
                     if (attr.UIContralType == UIContralType.DDL)
                     {

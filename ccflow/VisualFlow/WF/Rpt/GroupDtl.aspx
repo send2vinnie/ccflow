@@ -13,7 +13,7 @@
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
         <script type="text/javascript">
             function WinOpen(url) {
-                var newWindow = window.open(url, 'z', 'dialogWidth:680px;dialogHeight:420px');
+                var newWindow = window.open(url, 'df', 'width=700,height=400,top=100,left=300,scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');
                 newWindow.focus();
                 return;
             }

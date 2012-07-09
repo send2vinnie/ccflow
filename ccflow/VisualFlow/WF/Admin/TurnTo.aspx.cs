@@ -98,7 +98,7 @@ public partial class WF_Admin_TurnTo : WebPage
             cond.FK_Attr = this.FK_Attr;
 
         this.Title = "节点完成后转向条件";
-        this.Pub1.AddTable();
+        this.Pub1.AddTable("align=center");
         this.Pub1.AddCaptionLeft("节点完成后转向条件" + nd.Name);
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
@@ -190,12 +190,10 @@ public partial class WF_Admin_TurnTo : WebPage
             default:
                 break;
         }
-
         ddl.SetSelectItem(cond.FK_Operator.ToString());
         this.Pub1.AddTD(ddl);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
-
         switch (attrS.LGType)
         {
             case BP.En.FieldTypeS.Enum:
@@ -389,7 +387,6 @@ public partial class WF_Admin_TurnTo : WebPage
     void btn_Save_Node_Click(object sender, EventArgs e)
     {
         TurnTo cond = new TurnTo();
-
         BP.WF.Node nd = new BP.WF.Node(this.FK_NodeInt);
         cond.FK_Flow = nd.FK_Flow;
         cond.FK_Node = this.FK_NodeInt;
