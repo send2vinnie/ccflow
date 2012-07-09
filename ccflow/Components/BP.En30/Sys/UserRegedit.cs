@@ -48,6 +48,14 @@ namespace BP.Sys
         /// 查询中
         /// </summary>
         public const string MVals = "MVals";
+        /// <summary>
+        /// 查询时间从
+        /// </summary>
+        public const string DTFrom = "DTFrom";
+        /// <summary>
+        /// 查询时间到
+        /// </summary>
+        public const string DTTo = "DTTo";
     }
 	/// <summary>
 	/// 用户注册表
@@ -138,8 +146,86 @@ namespace BP.Sys
 			set
 			{
 				this.SetValByKey(UserRegeditAttr.FK_Emp,value) ; 
-			}		
+			}
 		}
+        /// <summary>
+        /// 查询时间从
+        /// </summary>
+        public string DTFrom_Data
+        {
+            get
+            {
+                string s = this.GetValStringByKey(UserRegeditAttr.DTFrom);
+                if (string.IsNullOrEmpty(s) || 1==1)
+                {
+                    DateTime dt = DateTime.Now.AddDays(-14);
+                    return dt.ToString(DataType.SysDataFormat);
+                }
+                return s.Substring(0, 10);
+            }
+            set
+            {
+                this.SetValByKey(UserRegeditAttr.DTFrom, value);
+            }
+        }
+        /// <summary>
+        /// 到
+        /// </summary>
+        public string DTTo_Data
+        {
+            get
+            {
+                string s = this.GetValStringByKey(UserRegeditAttr.DTTo);
+                if (string.IsNullOrEmpty(s) || 1 == 1 )
+                {
+                    DateTime dt = DateTime.Now;
+                    return dt.ToString(DataType.SysDataFormat);
+                }
+                return s.Substring(0, 10);
+            }
+            set
+            {
+                this.SetValByKey(UserRegeditAttr.DTTo, value);
+            }
+        }
+
+        public string DTFrom_Datatime
+        {
+            get
+            {
+                string s = this.GetValStringByKey(UserRegeditAttr.DTFrom);
+                if (string.IsNullOrEmpty(s))
+                {
+                    DateTime dt = DateTime.Now.AddDays(-14);
+                    return dt.ToString(DataType.SysDataTimeFormat);
+                }
+                return s ;
+            }
+            set
+            {
+                this.SetValByKey(UserRegeditAttr.DTFrom, value);
+            }
+        }
+        /// <summary>
+        /// 到
+        /// </summary>
+        public string DTTo_Datatime
+        {
+            get
+            {
+                string s = this.GetValStringByKey(UserRegeditAttr.DTTo);
+                if (string.IsNullOrEmpty(s))
+                {
+                    DateTime dt = DateTime.Now;
+                    return dt.ToString(DataType.SysDataTimeFormat);
+                }
+                return s ;
+            }
+            set
+            {
+                this.SetValByKey(UserRegeditAttr.DTTo, value);
+            }
+        }
 		/// <summary>
 		/// CfgKey
 		/// </summary>
@@ -242,8 +328,8 @@ namespace BP.Sys
 		/// <summary>
 		/// EnMap
 		/// </summary>
-		public override Map EnMap
-		{
+        public override Map EnMap
+        {
             get
             {
                 if (this._enMap != null)
@@ -256,7 +342,6 @@ namespace BP.Sys
                 map.EnType = EnType.Sys;
 
                 map.AddMyPK();
-
                 map.AddTBString(UserRegeditAttr.FK_Emp, null, "用户", false, false, 1, 30, 20);
                 map.AddTBString(UserRegeditAttr.CfgKey, null, "键", true, false, 1, 200, 20);
                 map.AddTBString(UserRegeditAttr.Vals, null, "值", true, false, 0, 2000, 20);
@@ -269,10 +354,13 @@ namespace BP.Sys
                 map.AddTBString(UserRegeditAttr.MVals, null, "MVals", true, false, 0, 300, 20);
                 map.AddBoolean(UserRegeditAttr.IsPic, false, "是否图片", true, false);
 
+                map.AddTBString(UserRegeditAttr.DTFrom, null, "查询时间从", true, false, 0, 20, 20);
+                map.AddTBString(UserRegeditAttr.DTTo, null, "到", true, false, 0, 20, 20);
+
                 this._enMap = map;
                 return this._enMap;
             }
-		}
+        }
 		#endregion 
         public override Entities GetNewEntities
         {

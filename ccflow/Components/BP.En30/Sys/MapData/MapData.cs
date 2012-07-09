@@ -121,6 +121,10 @@ namespace BP.Sys
         /// 时间查询字段
         /// </summary>
         public const string DTSearchKey = "DTSearchKey";
+        /// <summary>
+        /// 关键字查询
+        /// </summary>
+        public const string IsSearchKey = "IsSearchKey";
     }
 	/// <summary>
 	/// 映射基础
@@ -206,7 +210,20 @@ namespace BP.Sys
                 BP.Web.WebUser.SetSessionByKey("IsEditDtlModel", "1");
             }
         }
-
+        /// <summary>
+        /// 关键字查询
+        /// </summary>
+        public bool IsSearchKey
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDataAttr.IsSearchKey);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.IsSearchKey, value);
+            }
+        }
         #region 属性
 
         public string PTable
@@ -484,6 +501,12 @@ namespace BP.Sys
             map.EnType = EnType.App;
             map.DepositaryOfEntity = Depositary.None;
             map.DepositaryOfMap = Depositary.Application;
+            map.IsShowSearchKey = this.IsSearchKey;
+
+            // 按日期查询.
+            map.DTSearchWay = this.HisDTSearchWay;
+            map.DTSearchKey = this.DTSearchKey;
+
 
             Attrs attrs = new Attrs();
             foreach (MapAttr mapAttr in mapAttrs)
@@ -605,6 +628,7 @@ namespace BP.Sys
                 map.AddTBInt(MapDataAttr.AppType, 1, "应用类型", true, false);
 
                 //时间查询:用于报表查询.
+                map.AddTBInt(MapDataAttr.IsSearchKey, 0, "是否需要关键字查询", true, false);
                 map.AddTBInt(MapDataAttr.DTSearchWay, 0, "时间查询方式", true, false);
                 map.AddTBString(MapDataAttr.DTSearchKey, null, "查询字段", true, false, 0, 50, 20);
 

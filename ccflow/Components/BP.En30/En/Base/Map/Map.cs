@@ -866,6 +866,8 @@ namespace BP.En
             }
         }
         public bool IsShowSearchKey = true;
+        public BP.Sys.DTSearchWay DTSearchWay= Sys.DTSearchWay.None;
+        public string  DTSearchKey = null;
         /// <summary>
         ///  «∑ÒºÏ≤È XXX  ‰»Î.
         /// </summary>
