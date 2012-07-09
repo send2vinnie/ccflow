@@ -282,58 +282,60 @@ namespace BP.WF
             get
             {
 
-             
-                    if (this.HisWork.EnMap.Attrs.Contains(this.FK_Attr) == false)
-                        throw new Exception("判断条件方向出现错误：实体：" + this.HisWork.EnDesc + " 属性" + this.FK_Attr + "已经不存在.");
+                BP.Sys.MapAttr attr = new Sys.MapAttr();
+                attr.MyPK = this.FK_Attr;
+                attr.RetrieveFromDBSources();
 
-                    this.MsgOfTurnTo = "@以表单值判断方向，值 " + this.HisWork.EnDesc + "." + this.FK_Attr + " (" + this.HisWork.GetValStringByKey(this.FK_Attr) + ") 操作符:(" + this.FK_Operator + ") 判断值:(" + this.OperatorValue.ToString() + ")";
+                if (this.HisWork.EnMap.Attrs.Contains(attr.KeyOfEn) == false)
+                    throw new Exception("判断条件方向出现错误：实体：" + this.HisWork.EnDesc + " 属性" + this.FK_Attr + "已经不存在.");
 
-                    switch (this.FK_Operator.Trim().ToLower())
-                    {
-                        case "=":  // 如果是 = 
-                            if (this.HisWork.GetValStringByKey(this.FK_Attr) == this.OperatorValue.ToString())
-                                return true;
-                            else
-                                return false;
+                this.MsgOfTurnTo = "@以表单值判断方向，值 " + this.HisWork.EnDesc + "." + this.FK_Attr + " (" + this.HisWork.GetValStringByKey(this.FK_Attr) + ") 操作符:(" + this.FK_Operator + ") 判断值:(" + this.OperatorValue.ToString() + ")";
 
-                        case ">":
-                            if (this.HisWork.GetValDoubleByKey(this.FK_Attr) > Double.Parse(this.OperatorValue.ToString()))
-                                return true;
-                            else
-                                return false;
+                switch (this.FK_Operator.Trim().ToLower())
+                {
+                    case "=":  // 如果是 = 
+                        if (this.HisWork.GetValStringByKey(attr.KeyOfEn) == this.OperatorValue.ToString())
+                            return true;
+                        else
+                            return false;
 
-                        case ">=":
-                            if (this.HisWork.GetValDoubleByKey(this.FK_Attr) >= Double.Parse(this.OperatorValue.ToString()))
-                                return true;
-                            else
-                                return false;
+                    case ">":
+                        if (this.HisWork.GetValDoubleByKey(attr.KeyOfEn) > Double.Parse(this.OperatorValue.ToString()))
+                            return true;
+                        else
+                            return false;
 
-                        case "<":
-                            if (this.HisWork.GetValDoubleByKey(this.FK_Attr) < Double.Parse(this.OperatorValue.ToString()))
-                                return true;
-                            else
-                                return false;
+                    case ">=":
+                        if (this.HisWork.GetValDoubleByKey(attr.KeyOfEn) >= Double.Parse(this.OperatorValue.ToString()))
+                            return true;
+                        else
+                            return false;
 
-                        case "<=":
-                            if (this.HisWork.GetValDoubleByKey(this.FK_Attr) <= Double.Parse(this.OperatorValue.ToString()))
-                                return true;
-                            else
-                                return false;
+                    case "<":
+                        if (this.HisWork.GetValDoubleByKey(attr.KeyOfEn) < Double.Parse(this.OperatorValue.ToString()))
+                            return true;
+                        else
+                            return false;
 
-                        case "!=":
-                            if (this.HisWork.GetValDoubleByKey(this.FK_Attr) != Double.Parse(this.OperatorValue.ToString()))
-                                return true;
-                            else
-                                return false;
-                        case "like":
-                            if (this.HisWork.GetValStringByKey(this.FK_Attr).IndexOf(this.OperatorValue.ToString()) == -1)
-                                return false;
-                            else
-                                return true;
-                        default:
-                            throw new Exception("@没有找到操作符号..");
-                    }
-               
+                    case "<=":
+                        if (this.HisWork.GetValDoubleByKey(attr.KeyOfEn) <= Double.Parse(this.OperatorValue.ToString()))
+                            return true;
+                        else
+                            return false;
+
+                    case "!=":
+                        if (this.HisWork.GetValDoubleByKey(attr.KeyOfEn) != Double.Parse(this.OperatorValue.ToString()))
+                            return true;
+                        else
+                            return false;
+                    case "like":
+                        if (this.HisWork.GetValStringByKey(attr.KeyOfEn).IndexOf(this.OperatorValue.ToString()) == -1)
+                            return false;
+                        else
+                            return true;
+                    default:
+                        throw new Exception("@没有找到操作符号..");
+                }
             }
         }
         /// <summary>
