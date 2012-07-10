@@ -319,11 +319,11 @@ namespace BP.WF
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
             if (WebUser.IsAuthorize == false)
-                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT DESC ");
+                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow, ADT DESC ");
             else
             {
                 WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
-                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY ADT DESC ");
+                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ");
             }
         }
         #endregion 获取当前操作员的待办工作

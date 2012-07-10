@@ -322,7 +322,6 @@ namespace BP.WF
                             return true;
                         else
                             return false;
-
                     case "!=":
                         if (this.HisWork.GetValDoubleByKey(attr.KeyOfEn) != Double.Parse(this.OperatorValue.ToString()))
                             return true;
