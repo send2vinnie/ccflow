@@ -346,8 +346,6 @@ namespace BP.WF
                     empNo = dtR.Rows[0][1] as string;
                 }
             }
-          
-
             #region  最后一定是按照岗位来执行。
             if (this.HisNode.IsStartNode == false)
             {
@@ -696,8 +694,6 @@ namespace BP.WF
                    throw new Exception("@节点访问规则错误:节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + "), 按节点岗位与人员部门集合两个纬度计算，没有找到人员:SQL=" + sql);
            }
            #endregion 
-
-
 
            if (town.HisNode.HisDeliveryWay != DeliveryWay.ByStation)
                throw new Exception("@没有判断的执行规则:" + town.HisNode.HisDeliveryWay);
@@ -2936,7 +2932,7 @@ namespace BP.WF
             {
                 wl.Insert(); // 先插入，后更新。
             }
-            catch (Exception ex)
+            catch
             {
                 wl.Update();
             }

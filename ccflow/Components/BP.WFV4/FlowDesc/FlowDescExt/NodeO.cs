@@ -346,6 +346,12 @@ namespace BP.WF.Ext
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();
+                rm.Title = "DXReport设置"; //"单据&单据";
+                rm.ClassMethodName = this.ToString() + ".DXReport";
+                rm.Icon = "/Images/FileType/doc.gif";
+                map.AddRefMethod(rm);
+
+                rm = new RefMethod();
                 rm.Title = this.ToE("DoFAppSet", "调用外部程序接口"); // "调用外部程序接口";
                 rm.ClassMethodName = this.ToString() + ".DoFAppSet";
                 map.AddRefMethod(rm);
@@ -409,6 +415,15 @@ namespace BP.WF.Ext
         public string DoCanReturnNodes()
         {
             PubClass.WinOpen("./../WF/Admin/CanReturnNodes.aspx?FK_Node=" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "可退回的节点", "Bill", 500, 300, 200, 300);
+            return null;
+        }
+        /// <summary>
+        /// DXReport
+        /// </summary>
+        /// <returns></returns>
+        public string DXReport()
+        {
+            PubClass.WinOpen("./../WF/Admin/DXReport.aspx?FK_Node=" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "DXReport设置", "DXReport", 500, 300, 200, 300);
             return null;
         }
         public string DoListen()
