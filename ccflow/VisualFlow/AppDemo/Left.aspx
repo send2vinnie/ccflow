@@ -6,6 +6,13 @@
     <link href="css/basic.css" rel="stylesheet" type="text/css" />
     <link href="css/base.css" rel="stylesheet" type="text/css" />
     <link href="css/common.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript">
+        function myrefresh() {
+            window.location.reload();
+        }
+        setTimeout('myrefresh()', 10000); //指定1秒刷新一次 
+   </script> 
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -24,7 +31,7 @@
                   <% }  %>--%>
                     <li runat="server" id="Li2s" style=" background:url(Img/Menu/Start.jpg) -1px 0px"><a  href="../WF/StartSmall.aspx" target="main">发起</a></li>
                     <li runat="server" id="get" style=" background:url(Img/Menu/EmpWorks.jpg) -1px 0px"><a  href="../WF/EmpWorksSmall.aspx" target="main">待办 (<%= EmpWorks%>)</a></li>
-                    <li runat="server" id="Li3" style=" background:url(Img/Menu/CC.jpg) -1px 0px"><a  href="../WF/CCSmall.aspx" target="main">抄送</a></li>
+                    <li runat="server" id="Li3" style=" background:url(Img/Menu/CC.jpg) -1px 0px"><a  href="../WF/CCSmall.aspx" target="main">抄送 (<%= CCNum%>)</a></li>
                     <li runat="server" id="Li1" style=" background:url('Img/Menu/Ruing.jpg') -1px 0px"><a  href="../WF/RuningSmall.aspx" target="main">在途</a></li>
                     <li runat="server" id="over" style=" background:url(Img/Menu/Search.jpg) -1px 0px"><a  href="../WF/FlowSearchSmall.aspx" target="main">查询 </a></li>
                     <li runat="server" id="cld" style=" background:url(Img/Menu/Rili.jpg) -1px 0px"><a  href="../WF/CalendarSmall.aspx" target="main">日历</a></li>

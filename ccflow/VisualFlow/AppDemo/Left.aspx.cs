@@ -20,6 +20,18 @@ public partial class AppDemo_Left : System.Web.UI.Page
             return BP.DA.DBAccess.RunSQLReturnValInt(sql);
         }
     }
+    /// <summary>
+    /// 返回待办件数量
+    /// </summary>
+    /// <returns></returns>
+    public int CCNum
+    {
+        get
+        {
+            string sql = "SELECT COUNT(*) AS Num FROM WF_CCList WHERE CCTo='" + BP.Web.WebUser.No + "' AND Sta=0";
+            return BP.DA.DBAccess.RunSQLReturnValInt(sql);
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
 
