@@ -7,10 +7,10 @@ body
 /*  table 类型风格 */
 table
 {
-    border: 1px solid;
+    border: 1px solid #CCCCCC;
     padding: inherit;
     margin: 0;
-    margin-bottom:0px;
+    margin-bottom: 0px;
 }
 
 th, .Title

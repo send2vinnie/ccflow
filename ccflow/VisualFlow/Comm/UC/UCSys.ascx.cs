@@ -2184,18 +2184,15 @@ namespace BP.Web.Comm.UC
                 this.AddTD(en.GetValRefTextByKey(attr.Key));
                 return;
             }
-
             if (attr.UIHeight != 0)
             {
                 this.AddTDDoc("...", "...");
                 return;
             }
-
             string str = en.GetValStrByKey(attr.Key);
 
             if (focusField == attr.Key)
                 str = "<a href=" + cardUrl + ">" + str + "</a>";
-
 
             switch (attr.MyDataType)
             {
@@ -2273,7 +2270,6 @@ namespace BP.Web.Comm.UC
                     else
                     {
                         cfgurl = cfgurl.Replace("@Keys", url);
-
                         this.AddTDNum("<a href=\"javascript:WinOpen('" + cfgurl + "','dtl1');\" >" + decimal.Parse(str).ToString("0.00") + "</a>");
                     }
                     break;
