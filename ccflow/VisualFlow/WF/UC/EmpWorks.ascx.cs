@@ -117,9 +117,32 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 continue;
 
             gIdx++;
-            this.Pub1.AddTR();
-            this.Pub1.AddTD("colspan="+colspan+" class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",","") + "</b>");
-            this.Pub1.AddTREnd();
+            if (this.GroupBy != "PRI")
+            {
+                this.Pub1.AddTR();
+                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
+                this.Pub1.AddTREnd();
+            }
+            else
+            {
+                string s = null;
+                switch (g)
+                {
+                    case "1":
+                        s = "<img src='./Img/Flag_Red.png' />高";
+                        break;
+                    case "2":
+                        s = "<img src='./Img/Flag_Yellow.png' />中";
+                        break;
+                    case "3":
+                    default:
+                        s = "<img src='./Img/Flag_Green.png' />低";
+                        break;
+                }
+                this.Pub1.AddTR();
+                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" +  s + "</b>");
+                this.Pub1.AddTREnd();
+            }
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -144,15 +167,15 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 {
                     switch (dr["PRI"].ToString())
                     {
-                        case "0":
-                            this.Pub1.AddTD("低");
+                        case "1":
+                            this.Pub1.AddTD("<img src='./Img/Flag_Red.png' border=0 />高");
                             break;
                         case "2":
-                            this.Pub1.AddTD("高");
+                            this.Pub1.AddTD("<img src='./Img/Flag_Yellow.png' border=0 />中");
                             break;
-                        case "1":
+                        case "3":
                         default:
-                            this.Pub1.AddTD("中");
+                            this.Pub1.AddTD("<img src='./Img/Flag_Green.png' border=0 />低");
                             break;
                     }
                 }
@@ -170,8 +193,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                         this.Pub1.AddTDCenter("<font color=red>逾期</font>");
                 }
                 else
+                {
                     this.Pub1.AddTDCenter("正常");
-
+                }
                 this.Pub1.AddTREnd();
             }
         }
