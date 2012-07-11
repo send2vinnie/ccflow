@@ -22,7 +22,7 @@
             //            window.dialogTop = ((window.screen.availHeight - document.body.clientHeight) / 2).toString() + "px"
         }
     </script>
-<base target=_self /> 
+<base target=_self />
  <style type="text/css">
  body
 {
