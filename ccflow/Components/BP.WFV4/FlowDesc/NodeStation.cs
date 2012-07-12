@@ -103,8 +103,8 @@ namespace BP.WF
                 map.DepositaryOfMap = Depositary.Application;
 
                 map.AddTBIntPK(NodeStationAttr.FK_Node, 0,"节点", false,false);
-                //map.AddDDLEntitiesPK(NodeStationAttr.FK_Node, 0, DataType.AppInt, "节点", new Nodes(), NodeAttr.NodeID, NodeAttr.Name, true);
-                map.AddDDLEntitiesPK(NodeStationAttr.FK_Station, null, "工作岗位", new Stations(), true);
+                map.AddDDLEntitiesPK(NodeStationAttr.FK_Station, null, "工作岗位",
+                    new Stations(), true);
                 this._enMap = map;
 
                 return this._enMap;

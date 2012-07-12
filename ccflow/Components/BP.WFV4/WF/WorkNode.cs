@@ -330,6 +330,7 @@ namespace BP.WF
                     throw new Exception("流程设计错误或组织结构维护不完整:没有找到“按部门与岗位的交集计算”的节点人员。");
             }
 
+            #region 按指定的节点人员，做为下一步骤的流程接受人。
             string empNo = WebUser.No;
             string empDept = WebUser.FK_Dept;
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeStation)
@@ -339,13 +340,15 @@ namespace BP.WF
                 if (DataType.IsNumStr(fk_node) == false)
                     throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点岗位投递，但是您没有在访问规则设置中设置节点编号。");
 
-                DataTable dtR = DBAccess.RunSQLReturnTable("SELECT fk_dept,Rec FROM  ND" + fk_node + " where OID=" + this.WorkID);
-                if (dtR.Rows.Count == 0)
-                {
-                    empDept = dtR.Rows[0][0] as string;
-                    empNo = dtR.Rows[0][1] as string;
-                }
+                dt = DBAccess.RunSQLReturnTable("SELECT Rec FROM ND" + fk_node + " WHERE OID=" + this.WorkID);
+                if (dt.Rows.Count == 1)
+                    return WorkerListWayOfDept(town, dt);
+
+                throw new Exception("@流程设计错误，到达的节点（" + town.HisNode.Name + "）在指定的节点中没有数据，无法找到工作的人员。");
             }
+            #endregion 按指定的节点人员，做为下一步骤的流程接受人。
+
+
             #region  最后一定是按照岗位来执行。
             if (this.HisNode.IsStartNode == false)
             {
@@ -593,6 +596,8 @@ namespace BP.WF
                    throw new Exception("@当前流程是工程类流程，但是在节点表单中没有PrjNo字段(注意区分大小写)，请确认。@异常信息:" + ex.Message);
                }
            }
+
+           #region 按部门与岗位的交集计算.
            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByDeptAndStation)
            {
                sql = "SELECT No FROM Port_Emp WHERE No IN ";
@@ -605,13 +610,12 @@ namespace BP.WF
                sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")";
                sql += ")";
                dt = DBAccess.RunSQLReturnTable(sql);
-
                if (dt.Rows.Count > 0)
                    return WorkerListWayOfDept(town, dt);
                else
                    throw new Exception("@节点访问规则错误:节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + "), 按照岗位与部门的交集确定接受人的范围错误，没有找到人员:SQL=" + sql);
            }
-
+           #endregion 按部门与岗位的交集计算.
 
            #region 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByDept)
@@ -662,7 +666,7 @@ namespace BP.WF
            }
            #endregion 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
 
-           #region 按照指定节点的岗位来执行。
+           #region 按指定的节点人员，做为下一步骤的流程接受人。
            string empNo = WebUser.No;
            string empDept = WebUser.FK_Dept;
            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeStation)
@@ -672,18 +676,13 @@ namespace BP.WF
                if (DataType.IsNumStr(fk_node) == false)
                    throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点岗位投递，但是您没有在访问规则设置中设置节点编号。");
 
-               DataTable dtR = DBAccess.RunSQLReturnTable("SELECT FK_Dept, Rec FROM  ND" + fk_node + " WHERE OID=" + this.WorkID);
-               if (dtR.Rows.Count == 1)
-               {
-                   empDept = dtR.Rows[0][0] as string;
-                   empNo = dtR.Rows[0][1] as string;
-               }
-               else
-               {
-                   throw new Exception("@流程设计错误:您设置的是BySpecNodeStation方式，但是按这种方式没有取到人员.");
-               }
+               dt = DBAccess.RunSQLReturnTable("SELECT Rec FROM ND" + fk_node + " WHERE OID=" + this.WorkID);
+               if (dt.Rows.Count == 1)
+                   return WorkerListWayOfDept(town, dt);
+
+               throw new Exception("@流程设计错误，到达的节点（" + town.HisNode.Name + "）在指定的节点中没有数据，无法找到工作的人员。");
            }
-           #endregion 按照指定节点的岗位来执行。
+           #endregion 按指定的节点人员，做为下一步骤的流程接受人。
 
            #region 按节点岗位与人员部门集合两个纬度计算.
            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByStationAndEmpDept)
