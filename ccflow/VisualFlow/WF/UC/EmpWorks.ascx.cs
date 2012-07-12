@@ -120,7 +120,10 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             if (this.GroupBy != "PRI")
             {
                 this.Pub1.AddTR();
-                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
+                if (this.GroupBy == "Rec")
+                    this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
+                else
+                    this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
                 this.Pub1.AddTREnd();
             }
             else
@@ -128,13 +131,13 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 string s = null;
                 switch (g)
                 {
-                    case "1":
+                    case "1,":
                         s = "<img src='./Img/Flag_Red.png' />高";
                         break;
-                    case "2":
+                    case "2,":
                         s = "<img src='./Img/Flag_Yellow.png' />中";
                         break;
-                    case "3":
+                    case "3,":
                     default:
                         s = "<img src='./Img/Flag_Green.png' />低";
                         break;
@@ -153,7 +156,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
                 this.Pub1.AddTDIdx(i);
-                this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+                this.Pub1.AddTD("Class=TTD","<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
                 if (this.GroupBy != "FlowName")
                     this.Pub1.AddTD(dr["FlowName"].ToString());
 

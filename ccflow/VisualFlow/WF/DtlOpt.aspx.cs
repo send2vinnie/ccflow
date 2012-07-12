@@ -186,7 +186,7 @@ public partial class WF_DtlOpt : WebPage
                     }
                 }
                 if (isHave == false)
-                    throw new Exception("@您导入的excel文件不符合系统要求的格式。");
+                    throw new Exception("@您导入的excel文件不符合系统要求的格式，请下载模版文件重新填入。");
             }
             #endregion 检查两个文件是否一致。
 

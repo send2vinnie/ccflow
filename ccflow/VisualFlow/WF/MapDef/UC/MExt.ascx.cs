@@ -502,7 +502,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         mes.Retrieve(MapExtAttr.ExtType, this.ExtType,
                    MapExtAttr.FK_MapData, this.FK_MapData);
         this.Pub2.AddTable("align=left width=100%");
-        this.Pub2.AddCaptionLeftTX("字段超连接");
+        this.Pub2.AddCaptionLeft("字段超连接");
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("IDX");
         this.Pub2.AddTDTitle("字段");
@@ -558,7 +558,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
 
         this.Pub2.AddTable();
-        this.Pub2.AddCaptionLeftTX("字段超连接 - <a href='MapExt.aspx?s=3&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "' >返回</a>");
+        this.Pub2.AddCaptionLeft("字段超连接 - <a href='MapExt.aspx?s=3&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "' >返回</a>");
         this.Pub2.AddTR();
         this.Pub2.AddTD("字段英文名");
         this.Pub2.AddTD(this.OperAttrKey);
