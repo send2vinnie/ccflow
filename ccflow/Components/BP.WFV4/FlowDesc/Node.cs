@@ -3367,7 +3367,7 @@ namespace BP.WF
                     attr.MinLen = 0;
                     attr.MaxLen = 200;
                     attr.IDX = -100;
-                    attr.DefVal = "0";
+                    attr.DefVal = "2";
                     attr.X = (float)174.76;
                     attr.Y = (float)56.19;
                     attr.Insert();

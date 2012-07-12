@@ -104,11 +104,14 @@ namespace BP.WF
                 Map map = new Map("WF_Task");
                 map.EnDesc = "任务";
                 map.EnType = EnType.Admin;
-                map.AddMyPK();
+
+                map.AddMyPK(); //唯一的主键.
                 map.AddTBString(TaskAttr.FK_Flow, null, "流程编号", true, false, 0, 200, 10);
                 map.AddTBString(TaskAttr.Starter, null, "发起人", true, false, 0, 200, 10);
                 map.AddTBString(TaskAttr.Paras, null, "参数", true, false, 0, 4000, 10);
-                map.AddTBInt(TaskAttr.TaskSta, 0, "TaskSta", true, false);
+
+                // TaskSta 0=未发起，1=成功发起，2=发起失败.
+                map.AddTBInt(TaskAttr.TaskSta, 0, "任务状态", true, false);
 
                 map.AddTBString(TaskAttr.Msg, null, "消息", true, false, 0, 4000, 10);
                 this._enMap = map;

@@ -612,6 +612,7 @@ namespace BP.WF
                    throw new Exception("@节点访问规则错误:节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + "), 按照岗位与部门的交集确定接受人的范围错误，没有找到人员:SQL=" + sql);
            }
 
+
            #region 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByDept)
            {
@@ -671,11 +672,15 @@ namespace BP.WF
                if (DataType.IsNumStr(fk_node) == false)
                    throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点岗位投递，但是您没有在访问规则设置中设置节点编号。");
 
-               DataTable dtR = DBAccess.RunSQLReturnTable("SELECT fk_dept,Rec FROM  ND" + fk_node + " where OID=" + this.WorkID);
-               if (dtR.Rows.Count == 0)
+               DataTable dtR = DBAccess.RunSQLReturnTable("SELECT FK_Dept, Rec FROM  ND" + fk_node + " WHERE OID=" + this.WorkID);
+               if (dtR.Rows.Count == 1)
                {
                    empDept = dtR.Rows[0][0] as string;
                    empNo = dtR.Rows[0][1] as string;
+               }
+               else
+               {
+                   throw new Exception("@流程设计错误:您设置的是BySpecNodeStation方式，但是按这种方式没有取到人员.");
                }
            }
            #endregion 按照指定节点的岗位来执行。

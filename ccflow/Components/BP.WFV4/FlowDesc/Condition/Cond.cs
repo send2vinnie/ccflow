@@ -544,7 +544,6 @@ namespace BP.WF
                 map.EnDesc = "流程条件";
 
                 map.AddMyPK();
-
                 map.AddTBInt(CondAttr.CondType, 0, "条件类型", true, true);
                 //map.AddDDLSysEnum(CondAttr.CondType, 0, "条件类型", true, false, CondAttr.CondType,"@0=节点完成条件@1=流程完成条件@2=方向条件");
 
@@ -552,24 +551,16 @@ namespace BP.WF
                 map.AddTBString(CondAttr.FK_Flow, null, "流程", true, true, 0, 60, 20);
                 map.AddTBInt(CondAttr.NodeID, 0, "发生的事件", true, true);
                 map.AddTBInt(CondAttr.FK_Node, 0, "节点ID", true, true);
-
                 map.AddTBString(CondAttr.FK_Attr, null, "属性", true, true, 0, 80, 20);
-
                 map.AddTBString(CondAttr.AttrKey, null, "属性键", true, true, 0, 60, 20);
                 map.AddTBString(CondAttr.AttrName, null, "中文名称", true, true, 0, 500, 20);
-
                 map.AddTBString(CondAttr.FK_Operator, "=", "运算符号", true, true, 0, 60, 20);
                 map.AddTBString(CondAttr.OperatorValue, "", "要运算的值", true, true, 0, 4000, 20);
                 map.AddTBString(CondAttr.OperatorValueT, "", "要运算的值T", true, true, 0, 4000, 20);
-
                 map.AddTBInt(CondAttr.ToNodeID, 0, "ToNodeID（对方向条件有效）", true, true);
-
                 map.AddDDLSysEnum(CondAttr.ConnJudgeWay, 0, "条件关系", true, false, CondAttr.ConnJudgeWay, "@0=or@1=and");
-                //  map.AddTBInt(CondAttr.ConnJudgeWay, 0, "条件关系", true, true);
                 map.AddTBInt(CondAttr.MyPOID, 0, "MyPOID", true, true);
-
                 map.AddTBInt(CondAttr.PRI, 0, "计算优先级", true, true);
-
                 this._enMap = map;
                 return this._enMap;
             }

@@ -311,10 +311,8 @@ namespace BP.WF.Ext
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeDepts(), new BP.WF.Port.Depts(), NodeDeptAttr.FK_Node, NodeDeptAttr.FK_Dept, DeptAttr.Name,
                 DeptAttr.No, this.ToE("AccptDept", "节点部门"));
 
-
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeEmps(), new BP.WF.Port.Emps(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
                     DeptAttr.No, this.ToE("Accpter", "接受人员"));
-
 
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeFlows(), new Flows(), NodeFlowAttr.FK_Node, NodeFlowAttr.FK_Flow, DeptAttr.Name, DeptAttr.No,
                     this.ToE("CallSubFlow", "可调用的子流程"));
