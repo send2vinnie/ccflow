@@ -394,11 +394,10 @@ public partial class Comm_Dtl : WebPage
                     continue;
 
                 string val = dtl.GetValByKey(attr.KeyOfEn).ToString();
-
                 if (attr.UIIsEnable == false && LinkFields.Contains("," + attr.KeyOfEn + ","))
                 {
-                    MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link, 
-                        MapExtAttr.AttrOfOper,attr.KeyOfEn) as MapExt;
+                    MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link,
+                        MapExtAttr.AttrOfOper, attr.KeyOfEn) as MapExt;
 
                     string url = meLink.Tag;
                     if (url.Contains("?") == false)
@@ -443,7 +442,7 @@ public partial class Comm_Dtl : WebPage
                                     tb.Attributes.Add("readonly", "true");
                                     tb.CssClass = "TBReadonly";
                                 }
-                                
+
                                 if (attr.UIHeight > 25)
                                 {
                                     tb.TextMode = TextBoxMode.MultiLine;
@@ -593,12 +592,15 @@ public partial class Comm_Dtl : WebPage
                         break;
                     case UIContralType.CheckBok:
                         cb = new CheckBox();
+                        //   tb.Attributes["onfocus"] = "isChange=true;";
+
                         cb.ID = "CB_" + attr.KeyOfEn + "_" + dtl.OID;
                         cb.Text = attr.Name;
                         if (val == "1")
                             cb.Checked = true;
                         else
                             cb.Checked = false;
+                        //  cb.Attributes["onchecked"] = "alert('ss'); isChange= true; ";
                         cb.Attributes["onclick"] = "isChange= true;";
                         this.Pub1.AddTD(cb);
                         break;
@@ -606,7 +608,6 @@ public partial class Comm_Dtl : WebPage
                         break;
                 }
             }
-
 
             //if (dtl.IsEnableAthM)
             //    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
@@ -1026,7 +1027,6 @@ public partial class Comm_Dtl : WebPage
             try
             {
                 this.Pub1.Copy(dtl, dtl.OID.ToString(), map);
-
                 if (dtl.OID < mdtl.RowsOfList + 2)
                 {
                     int myOID = dtl.OID;
