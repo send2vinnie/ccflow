@@ -27,6 +27,7 @@ namespace BP.DA
 		{
 			if (en.EnMap.EnType==EnType.View)
 				return 0;
+
 			switch(en.EnMap.EnDBUrl.DBUrlType)
 			{
 				case DBUrlType.AppCenterDSN :

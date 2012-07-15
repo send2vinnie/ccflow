@@ -14,16 +14,15 @@ namespace BP.En
         public string Select = null;
         public SQLCash()
         { 
+
         }
         public SQLCash(Entity en)
         {
             this.EnName = en.ToString();
-
             this.Insert = SqlBuilder.InsertForPara(en);
             this.Update = SqlBuilder.UpdateForPara(en, null);
             this.Delete = SqlBuilder.DeleteForPara(en);
             this.Select = SqlBuilder.RetrieveForPara(en);
-
 
             //switch (en.EnMap.EnDBUrl.DBType)
             //{

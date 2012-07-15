@@ -1111,7 +1111,6 @@ namespace BP.En
             try
             {
                 i = EnDA.Delete(this);
-
                 if (this.CashKey != null)
                     Cash1.Remove(this.CashKey, this.PKVal.ToString());
             }

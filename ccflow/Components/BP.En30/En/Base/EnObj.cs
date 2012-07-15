@@ -819,9 +819,8 @@ namespace BP.En
                 foreach (Attr attr in attrs)
                 {
                     string str = this.GetValStrByKey(attr.Key);
-                    if (str == "" || str == "0" || str == null)
+                    if (str == "" || str == attr.DefaultVal.ToString() || str == null)
                         continue;
-
                     if (str == attr.DefaultVal.ToString())
                         continue;
 
