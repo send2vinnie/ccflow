@@ -170,8 +170,8 @@ public partial class WF_MapDef_GroupField : WebPage
         
         #region edit operation
         GroupField en = new GroupField(this.RefOID);
-        this.Pub1.AddBR();
-        this.Pub1.Add("<Table border=0 >");
+        this.Pub1.Add("<Table border=0 align=center>");
+        this.Pub1.AddCaptionLeft("字段分组");
         this.Pub1.AddTR();
 
         this.Pub1.AddTD(this.ToE("Name", "分组名称") );
@@ -220,6 +220,7 @@ public partial class WF_MapDef_GroupField : WebPage
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+        this.Pub1.Add("把相近的字段放在一个大单元格里，只是为了显示所用没有任何计算意义。");
         #endregion
 
     }

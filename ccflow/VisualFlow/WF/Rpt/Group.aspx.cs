@@ -62,7 +62,14 @@ public partial class WF_Rpt_G : BP.Web.WebPage
     {
         get
         {
-            return this.ToolBar1.GetTBByID("TB_Key").Text;
+            try
+            {
+                return this.ToolBar1.GetTBByID("TB_Key").Text;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
     public UserRegedit ur = null;
@@ -1822,7 +1829,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         switch (btn.ID)
         {
             case NamesOfBtn.Help:
-                this.Helper();
+              //  this.Helper();
                 break;
             case NamesOfBtn.Excel:
                 DataTable dt = this.BingDG();

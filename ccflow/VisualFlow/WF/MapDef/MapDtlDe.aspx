@@ -9,7 +9,6 @@
     <script language="JavaScript" src="./../../Comm/JS/Calendar/WdatePicker.js"  defer="defer" ></script>
 	<base target="_self" />
 	<script language="javascript">
-	  
 	function Insert(mypk,IDX)
     {
         var url='Do.aspx?DoType=AddF&MyPK='+mypk+'&IDX=' +IDX ;
@@ -50,49 +49,51 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-     function EditTable(mypk,refno)
-    {
-        var url='EditTable.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
+    function EditTable(mypk, refno) {
+        var url = 'EditTable.aspx?DoType=Edit&MyPK=' + mypk + '&RefNo=' + refno;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-    
-	function Up(mypk,refNo)
-    {
-        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefNo='+refNo+"&IsDtl=1";
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+
+    function Up(mypk, refNo) {
+        var url = 'Do.aspx?DoType=Up&MyPK=' + mypk + '&RefNo=' + refNo + "&IsDtl=1";
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         //window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
-        window.location.href = window.location.href ;
-    }
-    function Down(mypk,refNo)
-    {
-        var url = 'Do.aspx?DoType=Down&MyPK=' + mypk + '&RefNo=' + refNo + "&IsDtl=1";
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function Del(mypk,refNo)
-    {
-        if (window.confirm('您确定要删除吗？') ==false)
-            return ;
-    
-        var url='Do.aspx?DoType=Del&MyPK='+mypk+'&RefNo='+refNo;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+    function Down(mypk, refNo) {
+        var url = 'Do.aspx?DoType=Down&MyPK=' + mypk + '&RefNo=' + refNo + "&IsDtl=1";
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+    function Del(mypk, refNo) {
+        if (window.confirm('您确定要删除吗？') == false)
+            return;
+
+        var url = 'Do.aspx?DoType=Del&MyPK=' + mypk + '&RefNo=' + refNo;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
     function DtlMTR(MyPK) {
         var url = 'MapDtlMTR.aspx?MyPK=' + MyPK;
-     //   window.open(url);
-        //return;
-
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 350px; dialogWidth: 550px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-	function Esc()
-    {
-       if (event.keyCode == 27)     
-        window.close();
-       return true;
+    function Esc() {
+        if (event.keyCode == 27)
+            window.close();
+        return true;
     }
+    function Attachment(fk_mapdtl) {
+        window.showModalDialog('Attachment.aspx?IsBTitle=1&PKVal=0&FK_MapData=' + fk_mapdtl + '&FK_FrmAttachment=' + fk_mapdtl + '_AthM&Ath=AthM');
+    }
+
+    function MapM2M(fk_mapdtl) {
+        window.showModalDialog('MapM2M.aspx?NoOfObj=M2M&PKVal=0&FK_MapData=' + fk_mapdtl + '&FK_FrmAttachment=' + fk_mapdtl + '_AthM&Ath=AthM');
+    }
+
+   // this.Pub1.AddTDTitle("<a href=\"javascript:window.showModalDialog('MapM2M.aspx?NoOfObj=M2M&FK_MapData=" + this.FK_MapDtl + "',)\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
+
 	</script>
   <script language="javascript" for="document" event="onkeydown">
 //    if(event.keyCode==13)

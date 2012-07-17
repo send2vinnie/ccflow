@@ -72,7 +72,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         
         MapAttrs attrs = new MapAttrs(this.MyPK);
         MapAttrs attrs2 = new MapAttrs();
-
         MapExts mes = new MapExts(this.MyPK);
         string LinkFields = ",";
         if (mes.Count != 0)
@@ -146,10 +145,10 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         }
 
         if (dtl.IsEnableAthM)
-            this.Pub1.AddTDTitle("<a href=\"javascript:window.showModalDialog('Attachment.aspx?IsBTitle=1&PKVal=0&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM&Ath=AthM')\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
+            this.Pub1.AddTDTitle("<a href=\"javascript:Attachment('"+dtl.No+"');\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
          
         if (dtl.IsEnableM2M)
-            this.Pub1.AddTDTitle("<a href=\"javascript:window.showModalDialog('MapM2M.aspx?NoOfObj=M2M&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
+            this.Pub1.AddTDTitle("<a href=\"javascript:MapM2M('" + dtl.No + "');\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
 
         if (dtl.IsEnableM2MM)
             this.Pub1.AddTDTitle("<a href=\"javascript:window.showModalDialog('MapM2MM.aspx?NoOfObj=M2MM&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");

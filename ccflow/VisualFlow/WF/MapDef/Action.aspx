@@ -13,7 +13,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<table width='80%'>
+<table width='80%' align=center>
 <uc1:Pub ID="Pub3" runat="server" />
 <tr>
 <td valign=top><uc1:Pub ID="Pub1" runat="server" /></td>

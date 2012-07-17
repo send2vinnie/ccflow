@@ -307,12 +307,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.BindTrack_ViewSpecialWork();
             return;
         }
-
         Flow fl = new Flow(this.FK_Flow);
-        //this.AddTable("width='100%'");
-        this.AddTable();
 
-       // this.AddCaptionLeft("流程日志:" + fl.Name);
+        this.AddTable();
         this.AddTR();
         this.AddTDTitle("IDX");
         this.AddTDTitle("日期时间");
@@ -367,7 +364,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTD(item.NDToT);
             this.AddTD(item.EmpToT);
             this.AddTD(item.HisActionTypeT);
-            this.AddTD(item.MsgHtml);
+            this.AddTDDoc(item.MsgHtml);
 
             this.AddTD("<a href=\"javascript:WinOpen('" + this.Request.ApplicationPath + "/WF/WFRpt.aspx?WorkID=" + item.WorkID + "&FK_Flow=" + item.FK_Flow + "&DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">表单</a>");
             this.AddTD(item.Exer);

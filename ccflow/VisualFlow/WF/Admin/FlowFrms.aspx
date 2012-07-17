@@ -19,12 +19,12 @@
 <base target="_self" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server" >
-    <table width='900px' height='100%' >
+    <table width='900px' height='100%' align=center  border="0px" >
 <tr>
-<td align=left valign=top width='20%'>
+<td align=left valign=top width='20%'  border="0px">
     <uc1:Pub ID="Left" runat="server" />
     </td>
-    <td align="Left" valign=top width='80%'>
+    <td align="Left" valign=top width='80%'  border="0px">
     <uc1:Pub ID="Pub1" runat="server" />
     </td>
     </tr>

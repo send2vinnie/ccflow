@@ -592,8 +592,6 @@ public partial class Comm_Dtl : WebPage
                         break;
                     case UIContralType.CheckBok:
                         cb = new CheckBox();
-                        //   tb.Attributes["onfocus"] = "isChange=true;";
-
                         cb.ID = "CB_" + attr.KeyOfEn + "_" + dtl.OID;
                         cb.Text = attr.Name;
                         if (val == "1")
@@ -762,7 +760,6 @@ public partial class Comm_Dtl : WebPage
                                     continue;
                                 tbAuto.Attributes["onkeyup"] = " isChange=true; DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                                 tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
-
                                 if (me.Tag != "")
                                 {
                                     /* 处理下拉框的选择范围的问题 */
@@ -801,6 +798,11 @@ public partial class Comm_Dtl : WebPage
                             case MapExtXmlList.PopVal: //弹出窗.
                                 TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
                                 tb.Attributes["ondblclick"] = " isChange=true; ReturnVal(this,'" + me.Doc + "','sd');";
+                                break;
+                            case MapExtXmlList.Link: // 超链接.
+
+                                //TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
+                                //tb.Attributes["ondblclick"] = " isChange=true; ReturnVal(this,'" + me.Doc + "','sd');";
                                 break;
                             default:
                                 break;

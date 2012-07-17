@@ -136,8 +136,6 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         this.Pub1.AddTDTitle("是否可打印");
         this.Pub1.AddTDTitle("");
         this.Pub1.AddTDTitle("");
-        this.Pub1.AddTDTitle("");
-        this.Pub1.AddTDTitle("");
         this.Pub1.AddTREnd();
 
         FrmNodes fns = new FrmNodes(this.FK_Node);
@@ -274,21 +272,16 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
     public void BindFlowFrms()
     {
         FrmNodes fns = new FrmNodes(this.FK_Node);
-
         this.Pub1.AddH2("流程表单绑定 - 请打钩要绑定的表单，然后点保存按钮。");
-
         this.Pub1.AddTable("align=left");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("Idx");
         this.Pub1.AddTDTitle("表单编号");
         this.Pub1.AddTDTitle("名称");
         this.Pub1.AddTDTitle("物理表");
-        //this.Pub1.AddTDTitle("设计者");
-        //this.Pub1.AddTDTitle("设计单位");
-        //this.Pub1.AddTDTitle("联系方式");
         this.Pub1.AddTREnd();
-        BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
 
+        BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
         MapDatas mds = new MapDatas();
         mds.Retrieve(MapDataAttr.AppType, (int)AppType.Application);
 
@@ -476,15 +469,6 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.AddTD("物理表/视图");
-        tb = new TextBox();
-        tb.ID = "TB_PTable";
-        tb.Text = md.No;
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTD("多个表单可以对应同一个表或视图<br>ccflow会自动创建表。");
-        this.Pub1.AddTREnd();
-
-        this.Pub1.AddTR();
         this.Pub1.AddTD("默认类型");
         DDL ddl = new DDL();
         ddl.ID = "DDL_FrmType";
@@ -492,6 +476,19 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         this.Pub1.AddTD(ddl);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("物理表/视图");
+        tb = new TextBox();
+        tb.ID = "TB_PTable";
+        tb.Text = md.No;
+        this.Pub1.AddTD(tb);
+        this.Pub1.AddTD("多个表单可以对应同一个表或视图<br>如果表不存在,ccflow会自动创建.");
+        this.Pub1.AddTREnd();
+
+
+      
 
         this.Pub1.AddTR();
         this.Pub1.AddTD("类别");
@@ -504,39 +501,30 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("设计者");
-        tb = new TextBox();
-        tb.ID = "TB_" + MapDataAttr.Designer;
-        tb.Text = md.Designer;
-        if (string.IsNullOrEmpty(tb.Text))
-            tb.Text = BP.SystemConfig.DeveloperShortName;
-        tb.Columns = 60;
-        this.Pub1.AddTD("colspan=2", tb);
-        this.Pub1.AddTREnd();
+       
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("设计单位");
-        tb = new TextBox();
-        tb.ID = "TB_" + MapDataAttr.DesignerUnit;
-        tb.Text = md.DesignerUnit;
-        if (string.IsNullOrEmpty(tb.Text))
-            tb.Text = BP.SystemConfig.DeveloperName;
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("设计单位");
+        //tb = new TextBox();
+        //tb.ID = "TB_" + MapDataAttr.DesignerUnit;
+        //tb.Text = md.DesignerUnit;
+        //if (string.IsNullOrEmpty(tb.Text))
+        //    tb.Text = BP.SystemConfig.DeveloperName;
 
-        tb.Columns = 60;
-        this.Pub1.AddTD("colspan=2", tb);
-        this.Pub1.AddTREnd();
+        //tb.Columns = 60;
+        //this.Pub1.AddTD("colspan=2", tb);
+        //this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("联系方式");
-        tb = new TextBox();
-        tb.ID = "TB_" + MapDataAttr.DesignerContact;
-        tb.Text = md.DesignerContact;
-        if (string.IsNullOrEmpty(tb.Text))
-            tb.Text = BP.SystemConfig.ServiceTel + "," + BP.SystemConfig.ServiceMail;
-        tb.Columns = 60;
-        this.Pub1.AddTD("colspan=2", tb);
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("联系方式");
+        //tb = new TextBox();
+        //tb.ID = "TB_" + MapDataAttr.DesignerContact;
+        //tb.Text = md.DesignerContact;
+        //if (string.IsNullOrEmpty(tb.Text))
+        //    tb.Text = BP.SystemConfig.ServiceTel + "," + BP.SystemConfig.ServiceMail;
+        //tb.Columns = 60;
+        //this.Pub1.AddTD("colspan=2", tb);
+        //this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
         this.Pub1.AddTD("");

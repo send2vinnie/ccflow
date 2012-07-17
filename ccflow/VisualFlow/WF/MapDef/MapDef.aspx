@@ -350,7 +350,7 @@ body
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-                <table width='100%' height='1300px' align=center >
+                <table width='100%' height='100%' align="center" >
                  <tr>
                   <td valign=top align=left width='250px'  bgcolor="#cccccc">
                    <uc1:Pub ID="Left" runat="server" />

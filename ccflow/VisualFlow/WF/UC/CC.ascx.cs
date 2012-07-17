@@ -159,11 +159,11 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
 
                 this.Pub1.AddTDIdx(i);
                 if (isRead == false)
-                    this.Pub1.AddTDB("<a href=\"javascript:WinOpen('" + dr["MyPK"] + "','" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
+                    this.Pub1.AddTDB("Class=TTD", "<a href=\"javascript:WinOpen('" + dr["MyPK"] + "','" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
                 else
-                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('" + dr["MyPK"] + ",'" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
+                    this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpen('" + dr["MyPK"] + ",'" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
 
-                this.Pub1.AddTD( DataType.ParseText2Html( dr["Doc"].ToString() ));
+                this.Pub1.AddTD(DataType.ParseText2Html(dr["Doc"].ToString()));
 
                 if (this.GroupBy != "FlowName")
                 {

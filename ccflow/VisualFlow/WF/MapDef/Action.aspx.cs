@@ -87,16 +87,16 @@ public partial class WF_Admin_Action : WebPage
             this.Pub2.AddFieldSetEnd();
             return;
         }
+
         FrmEvent mynde = ndevs.GetEntityByKey(FrmEventAttr.FK_Event, myEvent) as FrmEvent;
         if (mynde == null)
             mynde = new FrmEvent();
-
 
         this.Pub2.AddFieldSet(myEnentXml.Name);
         this.Pub2.Add("要执行的内容<br>");
         TextBox tb = new TextBox();
         tb.ID = "TB_Doc";
-        tb.Columns = 60;
+        tb.Columns = 70;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 5;
         tb.Text = mynde.DoDoc;
@@ -113,7 +113,7 @@ public partial class WF_Admin_Action : WebPage
 
         tb = new TextBox();
         tb.ID = "TB_MsgOK";
-        tb.Columns = 60;
+        tb.Columns = 70;
         tb.Text = mynde.MsgOKString;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 3;
@@ -125,7 +125,7 @@ public partial class WF_Admin_Action : WebPage
         this.Pub2.Add("执行失败信息提示<br>");
         tb = new TextBox();
         tb.ID = "TB_MsgErr";
-        tb.Columns = 60;
+        tb.Columns = 70;
         tb.Text = mynde.MsgErrorString;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 3;
@@ -134,7 +134,7 @@ public partial class WF_Admin_Action : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = "Save";
+        btn.Text = "  Save  ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub2.Add(btn);
 
