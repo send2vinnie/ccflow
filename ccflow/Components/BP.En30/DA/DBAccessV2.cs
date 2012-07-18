@@ -399,7 +399,6 @@ namespace BP.DA
             switch (BP.SystemConfig.AppCenterDBType)
             {
                 case DBType.SQL2000:
-                case DBType.Access:
                     return DBProcedure.RunSPReturnDataTable(spName, paras, (SqlConnection)DBAccess.GetAppCenterDBConn);
                 case DBType.Oracle9i:
                     ConnOfOra connofora = GetAppCenterDBConn as ConnOfOra;
@@ -413,6 +412,7 @@ namespace BP.DA
                     DataTable dt1 = DBProcedure.RunSPReturnDataTable(spName, paras, connIFX.Conn);
                     HisConnOfOras.PutPool(connIFX);
                     return dt1;
+                case DBType.Access:
                 default:
                     throw new Exception("Error " + BP.SystemConfig.AppCenterDBType);
             }
