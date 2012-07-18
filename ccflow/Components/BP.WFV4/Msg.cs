@@ -15,19 +15,19 @@ namespace BP.WF
 		/// </summary>
 		/// <param name="workId"></param>
         public static void DeleteByWorkID(Int64 workId)
-		{
-             
-			System.Web.HttpContext.Current.Application.Lock();
-			Msgs msgs= (Msgs)System.Web.HttpContext.Current.Application["WFMsgs"];	
-			if (msgs==null)
-			{
-				msgs= new Msgs();
-				System.Web.HttpContext.Current.Application["WFMsgs"]=msgs;
-			}
-			// 清除全部的工作ID=workid 的消息。
-			msgs.ClearByWorkID(workId);
-			System.Web.HttpContext.Current.Application.UnLock();
-		}
+        {
+
+            System.Web.HttpContext.Current.Application.Lock();
+            Msgs msgs = (Msgs)System.Web.HttpContext.Current.Application["WFMsgs"];
+            if (msgs == null)
+            {
+                msgs = new Msgs();
+                System.Web.HttpContext.Current.Application["WFMsgs"] = msgs;
+            }
+            // 清除全部的工作ID=workid 的消息。
+            msgs.ClearByWorkID(workId);
+            System.Web.HttpContext.Current.Application.UnLock();
+        }
 		/// <summary>
 		/// 增加信息
 		/// </summary>

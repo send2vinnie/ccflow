@@ -1417,9 +1417,6 @@ namespace BP.WF
             dt.TableName = "WF_FAppSet";
             ds.Tables.Add(dt);
 
-            // 流程发送完后抄送到岗位 
-            FlowStations fstas = new FlowStations(this.No);
-            ds.Tables.Add(fstas.ToDataTableField("WF_FlowStation"));
 
             // 流程标签.
             LabNotes labs = new LabNotes(this.No);
@@ -1437,22 +1434,41 @@ namespace BP.WF
 
 
             // 节点与部门。
-            sql = "SELECT * FROM WF_NodeDept where FK_Node IN (" + sqlin + ")";
+            sql = "SELECT * FROM WF_NodeDept WHERE FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "WF_NodeDept";
             ds.Tables.Add(dt);
 
 
             // 节点与岗位权限。
-            sql = "SELECT * FROM WF_NodeStation where FK_Node IN (" + sqlin + ")";
+            sql = "SELECT * FROM WF_NodeStation WHERE FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "WF_NodeStation";
             ds.Tables.Add(dt);
 
             // 节点与人员。
-            sql = "SELECT * FROM WF_NodeEmp where FK_Node IN (" + sqlin + ")";
+            sql = "SELECT * FROM WF_NodeEmp WHERE FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "WF_NodeEmp";
+            ds.Tables.Add(dt);
+
+
+            // 抄送人员。
+            sql = "SELECT * FROM WF_CCEmp WHERE FK_Node IN (" + sqlin + ")";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_CCEmp";
+            ds.Tables.Add(dt);
+
+            // 抄送部门。
+            sql = "SELECT * FROM WF_CCDept WHERE FK_Node IN (" + sqlin + ")";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_CCDept";
+            ds.Tables.Add(dt);
+
+            // 抄送部门。
+            sql = "SELECT * FROM WF_CCStation WHERE FK_Node IN (" + sqlin + ")";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_CCStation";
             ds.Tables.Add(dt);
 
             //// 流程报表。
@@ -3205,9 +3221,8 @@ namespace BP.WF
                 rm.ClassMethodName = this.ToString() + ".DoExp";
                 map.AddRefMethod(rm);
 
-
-                map.AttrsOfOneVSM.Add(new FlowStations(), new Stations(), FlowStationAttr.FK_Flow,
-                    FlowStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "抄送岗位");
+                //map.AttrsOfOneVSM.Add(new FlowStations(), new Stations(), FlowStationAttr.FK_Flow,
+                //    FlowStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "抄送岗位");
 
                 this._enMap = map;
                 return this._enMap;
@@ -3737,29 +3752,6 @@ namespace BP.WF
                                     fs.SetValByKey(dc.ColumnName, val);
                                 }
                                 fs.OID = 0;
-                                fs.Insert();
-                            }
-                            break;
-                        case "WF_FlowStation": //FlowStations.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                FlowStation fs = new FlowStation();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_flow":
-                                            continue;
-                                        default:
-                                            break;
-                                    }
-                                    fs.SetValByKey(dc.ColumnName, val);
-                                }
-                                fs.FK_Flow = fl.No;
                                 fs.Insert();
                             }
                             break;
@@ -4310,6 +4302,90 @@ namespace BP.WF
                                 //  int oid = DBAccess.GenerOID();
                                 //  DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + gf.OID + " WHERE FK_MapData='" + gf.EnName + "' AND GroupID=" + gf.OID);
                                 gf.InsertAsOID(gf.OID);
+                            }
+                            break;
+                        case "WF_CCDept": // 抄送.
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                CCDept ne = new CCDept();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
+                                    switch (dc.ColumnName.ToLower())
+                                    {
+                                        case "fk_node":
+                                            if (val.Length == 3)
+                                                val = flowID + val.Substring(1);
+                                            else if (val.Length == 4)
+                                                val = flowID + val.Substring(2);
+                                            else if (val.Length == 5)
+                                                val = flowID + val.Substring(3);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    ne.SetValByKey(dc.ColumnName, val);
+                                }
+                                ne.Insert();
+                            }
+                            break;
+                        case "WF_CCEmp": // 抄送.
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                CCEmp ne = new CCEmp();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
+                                    switch (dc.ColumnName.ToLower())
+                                    {
+                                        case "fk_node":
+                                            if (val.Length == 3)
+                                                val = flowID + val.Substring(1);
+                                            else if (val.Length == 4)
+                                                val = flowID + val.Substring(2);
+                                            else if (val.Length == 5)
+                                                val = flowID + val.Substring(3);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    ne.SetValByKey(dc.ColumnName, val);
+                                }
+                                ne.Insert();
+                            }
+                            break;
+                        case "WF_CCStation": // 抄送.
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                CCStation ne = new CCStation();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
+                                    switch (dc.ColumnName.ToLower())
+                                    {
+                                        case "fk_node":
+                                            if (val.Length == 3)
+                                                val = flowID + val.Substring(1);
+                                            else if (val.Length == 4)
+                                                val = flowID + val.Substring(2);
+                                            else if (val.Length == 5)
+                                                val = flowID + val.Substring(3);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    ne.SetValByKey(dc.ColumnName, val);
+                                }
+                                ne.Insert();
                             }
                             break;
                         default:

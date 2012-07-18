@@ -214,7 +214,7 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.WhoExeIt, 0, "谁执行它",
               true, true, NodeAttr.WhoExeIt, "@0=操作员执行@1=机器执行@2=混合执行");
 
-                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
+                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "节点表单类型"), true, true);
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 500, 10, false);
 

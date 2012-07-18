@@ -90,8 +90,12 @@ namespace BP.WF.Port
                 map.AddTBStringPK(SimpleNoNameAttr.No, null, null, true, false, 2, 2, 2);
                 map.AddTBString(SimpleNoNameAttr.Name, null, null, true, false, 2, 50, 250);
                 map.AddDDLSysEnum(StationAttr.StaGrade, 0,
-                    this.ToE("Type", "类型"), true, true, 
+                    this.ToE("Type", "类型"), true, true,
                     StationAttr.StaGrade, "@1=高层岗@2=中层岗@3=执行岗");
+
+           //     map.AddDDLSysEnum("StaNWB", 0,"岗位标志", true, true);
+              //  map.AddDDLSysEnum("StaNWB", 0, "岗位标志", true, true, "StaNWB", "@1=内部岗@2=外部岗");
+
 
                 //switch (BP.SystemConfig.SysNo)
                 //{

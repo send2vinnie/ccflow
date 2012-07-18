@@ -689,8 +689,11 @@ namespace BP.WF
            {
                sql = "SELECT No FROM Port_Emp WHERE NO IN "
                      + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
-                     + " AND  NO IN "
-                     + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Emp = '" + WebUser.No + "')";
+                     + " AND  FK_Dept IN "
+                     + "(SELECT  FK_Dept  FROM Port_EmpDept WHERE FK_Emp = '" + WebUser.No + "')";
+                     //2012.7.16李健修改
+                     //+" AND  NO IN "
+                     //+ "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Emp = '" + WebUser.No + "')";
                dt = DBAccess.RunSQLReturnTable(sql);
                if (dt.Rows.Count > 0)
                    return WorkerListWayOfDept(town, dt);
@@ -3482,7 +3485,7 @@ namespace BP.WF
                 string url = basePath + "/WF/Do.aspx?DoType=OF&SID=" + sid;
                 string urlWap = basePath + "/WF/Do.aspx?DoType=OF&SID=" + sid + "&IsWap=1";
 
-                //string mytemp ="您好" + wl.FK_EmpText + ":  <br><br>&nbsp;&nbsp; "+WebUser.Name+"发来的工作需要您处理，点这里<a href='" + url + "'>打开工作</a>。 \t\n <br>&nbsp;&nbsp;如果打不开请复制到浏览器地址栏里。<br>&nbsp;&nbsp;" + url + " <br><br>&nbsp;&nbsp;此邮件由驰骋工作流程引擎自动发出，请不要回复。<br>*^_^*  谢谢 ";
+                //string mytemp ="您好" + wl.FK_EmpText + ":  <br><br>&nbsp;&nbsp; "+WebUser.Name+"发来的工作需要您处理，点这里<a href='" + url + "'>打开工作</a>。 \t\n <br>&nbsp;&nbsp;如果打不开请复制到浏览器地址栏里。<br>&nbsp;&nbsp;" + url + " <br><br>&nbsp;&nbsp;此邮件由iWF工作流程引擎自动发出，请不要回复。<br>*^_^*  谢谢 ";
                 string mytemp = mailTemp.Clone() as string;
                 mytemp = string.Format(mytemp, wl.FK_EmpText, WebUser.Name, url, urlWap);
 

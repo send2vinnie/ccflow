@@ -734,20 +734,20 @@ namespace BP.WF
                 nd.DirectUpdate();
             }
 
-            // 处理抄送人员对象。
-            string sql = "select FK_Station from WF_FlowStation WHERE fk_flow='" + fl.No + "'";
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            string mystas = "";
-            foreach (DataRow dr in dt.Rows)
-            {
-                mystas += dr[0].ToString() + ",";
-            }
+            //// 处理抄送人员对象。
+            //string sql = "select FK_Station from WF_FlowStation WHERE fk_flow='" + fl.No + "'";
+            //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            //string mystas = "";
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    mystas += dr[0].ToString() + ",";
+            //}
          //   fl.CCStas = mystas;
 
 
             // 处理岗位分组.
-            sql = "SELECT HisStas, COUNT(*) as NUM FROM WF_Node WHERE FK_Flow='" + fl.No + "' GROUP BY HisStas";
-            dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            string sql = "SELECT HisStas, COUNT(*) as NUM FROM WF_Node WHERE FK_Flow='" + fl.No + "' GROUP BY HisStas";
+           DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             foreach (DataRow dr in dt.Rows)
             {
                 string stas = dr[0].ToString();

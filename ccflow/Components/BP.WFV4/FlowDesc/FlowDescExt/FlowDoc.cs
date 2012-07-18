@@ -129,8 +129,8 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoExp";
                 map.AddRefMethod(rm);
 
-                map.AttrsOfOneVSM.Add(new FlowStations(), new Stations(), FlowStationAttr.FK_Flow,
-                    FlowStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "³­ËÍ¸ÚÎ»");
+                //map.AttrsOfOneVSM.Add(new FlowStations(), new Stations(), FlowStationAttr.FK_Flow,
+                //    FlowStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "³­ËÍ¸ÚÎ»");
 
 
                 this._enMap = map;

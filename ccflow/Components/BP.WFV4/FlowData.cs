@@ -7,7 +7,7 @@ using BP.Sys;
 namespace BP.WF
 {
     /// <summary>
-    ///  属性
+    ///  属性 
     /// </summary>
     public class FlowDataAttr
     {
