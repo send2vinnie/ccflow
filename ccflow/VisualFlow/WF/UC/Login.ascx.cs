@@ -39,6 +39,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
             {
                 Emp emp = new Emp(userNo);
                 BP.Web.WebUser.SignInOfGener(emp);
+                BP.Web.WebUser.SID = sid;
                 Response.Redirect(this.ToWhere, false);
                 return;
             }

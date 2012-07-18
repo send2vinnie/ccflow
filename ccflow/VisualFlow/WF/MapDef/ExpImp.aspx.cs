@@ -103,34 +103,34 @@ public partial class WF_MapDef_ExpImp : WebPage
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("设计者");
-        tb = new TextBox();
-        tb.ID = "TB_Designer";
-        tb.Text = md.Designer;
-        this.Pub1.AddTD(tb);
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("设计者");
+        //tb = new TextBox();
+        //tb.ID = "TB_Designer";
+        //tb.Text = md.Designer;
+        //this.Pub1.AddTD(tb);
 
-        this.Pub1.AddTD();
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTD();
+        //this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("设计单位");
-        tb = new TextBox();
-        tb.ID = "TB_DesignerContact";
-        tb.Text = md.DesignerContact;
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTD();
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("设计单位");
+        //tb = new TextBox();
+        //tb.ID = "TB_DesignerContact";
+        //tb.Text = md.DesignerContact;
+        //this.Pub1.AddTD(tb);
+        //this.Pub1.AddTD();
+        //this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("联系方式");
-        tb = new TextBox();
-        tb.ID = "TB_DesignerContact";
-        tb.Text = md.DesignerContact;
-        tb.Columns = 50;
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTD();
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("联系方式");
+        //tb = new TextBox();
+        //tb.ID = "TB_DesignerContact";
+        //tb.Text = md.DesignerContact;
+        //tb.Columns = 50;
+        //this.Pub1.AddTD(tb);
+        //this.Pub1.AddTD();
+        //this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
 
         this.Pub1.AddTR();

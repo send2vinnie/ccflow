@@ -381,9 +381,9 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         this.Pub1.AddTDTitle("名称");
         this.Pub1.AddTDTitle("物理表");
 
-        this.Pub1.AddTDTitle("设计者");
-        this.Pub1.AddTDTitle("设计单位");
-        this.Pub1.AddTDTitle("联系方式");
+        //this.Pub1.AddTDTitle("设计者");
+        //this.Pub1.AddTDTitle("设计单位");
+        //this.Pub1.AddTDTitle("联系方式");
         this.Pub1.AddTREnd();
 
         MapDatas mds = new MapDatas();
@@ -409,9 +409,9 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
                 this.Pub1.AddTD(md.No);
                 this.Pub1.AddTDA("FlowFrms.aspx?ShowType=Frm&FK_MapData="+md.No+"&FK_Node="+this.FK_Node, md.Name);
                 this.Pub1.AddTD(md.PTable);
-                this.Pub1.AddTD(md.Designer);
-                this.Pub1.AddTD(md.DesignerUnit);
-                this.Pub1.AddTD(md.DesignerContact);
+                //this.Pub1.AddTD(md.Designer);
+                //this.Pub1.AddTD(md.DesignerUnit);
+                //this.Pub1.AddTD(md.DesignerContact);
                 this.Pub1.AddTREnd();
 
                 //this.Pub1.AddTR();

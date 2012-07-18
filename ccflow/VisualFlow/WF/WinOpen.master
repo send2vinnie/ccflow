@@ -8,6 +8,7 @@
     <script language="JavaScript" src="../Comm/JS/Calendar/WdatePicker.js" defer="defer" ></script>
     <script type="text/javascript" >
         function RSize() {
+            alert('5555');
             //            if (document.body.scrollWidth > (window.screen.availWidth - 100)) {
             //                window.dialogWidth = (window.screen.availWidth - 100).toString() + "px"
             //            } else {
@@ -38,7 +39,7 @@
     </asp:ContentPlaceHolder>
 <base target=_self /> 
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="NoSubmit(event);" >
+<body topmargin="0" leftmargin="0" onkeypress="NoSubmit(event);"  onload="RSize();"   >
     <form id="form1" runat="server" onkeypress="NoSubmit(event);" >
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>

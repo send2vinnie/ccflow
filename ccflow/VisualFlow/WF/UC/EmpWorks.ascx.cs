@@ -67,6 +67,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     public void BindList()
     {
         DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
+
         bool isPRI = Glo.IsEnablePRI;
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
@@ -92,8 +93,8 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         if (this.GroupBy != "NodeName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "节点") + "</a>");
 
-        if (this.GroupBy != "Starter")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=Starter' >" + this.ToE("Starter", "发起人") + "</a>");
+        if (this.GroupBy != "StarterName")
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName' >" + this.ToE("Starter", "发起人") + "</a>");
 
         if (isPRI &&  this.GroupBy != "PRI")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=PRI' >优先级</a>");
@@ -163,7 +164,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (this.GroupBy != "NodeName")
                     this.Pub1.AddTD(dr["NodeName"].ToString());
 
-                if (this.GroupBy != "Starter")
+                if (this.GroupBy != "StarterName")
                     this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
 
                 if (isPRI && this.GroupBy != "PRI")

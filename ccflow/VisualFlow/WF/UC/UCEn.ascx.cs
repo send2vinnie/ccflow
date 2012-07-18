@@ -1913,7 +1913,6 @@ namespace BP.Web.Comm.UC.WF
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
-
                                 if (attr.UIRows == 1)
                                 {
                                     tb.Text = en.GetValStringByKey(attr.KeyOfEn);

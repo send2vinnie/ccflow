@@ -154,8 +154,8 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
                 bool isRead = false;
-                if (dr["IsRead"].ToString() == "1")
-                    isRead = true;
+             //   if (dr["IsRead"].ToString() == "1")
+               //     isRead = true;
 
                 this.Pub1.AddTDIdx(i);
                 if (isRead == false)
