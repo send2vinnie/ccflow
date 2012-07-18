@@ -10,9 +10,8 @@
         function myrefresh() {
             window.location.reload();
         }
-        setTimeout('myrefresh()', 10000); //指定1秒刷新一次 
+        setTimeout('myrefresh()', 100000); //指定1秒刷新一次 
    </script> 
-
 </head>
 <body>
     <form id="form1" runat="server">
