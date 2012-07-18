@@ -688,7 +688,6 @@ namespace BP
             char[] cc = keys.ToCharArray();
             foreach (char c in cc)
                 fd = fd.Replace(c.ToString(), "");
-
             string s = fd.Substring(0, 1);
             try
             {

@@ -125,6 +125,10 @@ namespace BP.Sys
         /// 关键字查询
         /// </summary>
         public const string IsSearchKey = "IsSearchKey";
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public const string Note = "Note";
     }
 	/// <summary>
 	/// 映射基础
@@ -172,7 +176,6 @@ namespace BP.Sys
                 return _FrmAttachments;
             }
         }
-
         private FrmImgAths _FrmImgAths = null;
         public FrmImgAths FrmImgAths
         {
@@ -224,8 +227,8 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.IsSearchKey, value);
             }
         }
-        #region 属性
 
+        #region 属性
         public string PTable
         {
             get
@@ -280,41 +283,23 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.AppType, (int)value);
             }
         }
-
-     
-        public string DesignerContact
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Note
         {
             get
             {
-                return this.GetValStrByKey(MapDataAttr.DesignerContact);
+                return this.GetValStrByKey(MapDataAttr.Note);
             }
             set
             {
-                this.SetValByKey(MapDataAttr.DesignerContact, value);
+                this.SetValByKey(MapDataAttr.Note, value);
             }
         }
-        public string DesignerUnit
-        {
-            get
-            {
-                return this.GetValStrByKey(MapDataAttr.DesignerUnit);
-            }
-            set
-            {
-                this.SetValByKey(MapDataAttr.DesignerUnit, value);
-            }
-        }
-        public string Designer
-        {
-            get
-            {
-                return this.GetValStrByKey(MapDataAttr.Designer);
-            }
-            set
-            {
-                this.SetValByKey(MapDataAttr.Designer, value);
-            }
-        }
+        /// <summary>
+        /// 类别，可以为空.
+        /// </summary>
         public string FK_FrmSort
         {
             get
@@ -326,6 +311,9 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.FK_FrmSort, value);
             }
         }
+        /// <summary>
+        /// 明细表集合.
+        /// </summary>
         public string Dtls
         {
             get
@@ -351,6 +339,9 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.EnPK, value);
             }
         }
+        /// <summary>
+        /// 查询键
+        /// </summary>
         public string SearchKeys
         {
             get
@@ -548,6 +539,11 @@ namespace BP.Sys
                 return _HisEn;
             }
         }
+        /// <summary>
+        /// 生成map.
+        /// </summary>
+        /// <param name="no"></param>
+        /// <returns></returns>
         public static Map GenerHisMap(string no)
         {
             if (SystemConfig.IsDebug)
@@ -582,7 +578,7 @@ namespace BP.Sys
         /// <summary>
         /// 映射基础
         /// </summary>
-        /// <param name="no"></param>
+        /// <param name="no">映射编号</param>
         public MapData(string no):base(no)
         {
         }
@@ -609,15 +605,16 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.PTable, null, "物理表", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.Dtls, null, "明细表", true, false, 0, 500, 20);
 
-                map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
-                map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
+                map.AddTBInt(MapDataAttr.FrmW, 900, "FrmW", true, true);
+                map.AddTBInt(MapDataAttr.FrmH, 1200, "FrmH", true, true);
+
                 //数据源.
                 map.AddTBInt(MapDataAttr.DBURL, 0, "DBURL", true, false);
 
-                // Tag
+                //Tag
                 map.AddTBString(MapDataAttr.Tag, null, "Tag", true, false, 0, 500, 20);
 
-                //FrmType  @自由表单，@傻瓜表单，@自定义表单。
+                //FrmType  @自由表单，@傻瓜表单，@自定义表单.
                 map.AddTBInt(MapDataAttr.FrmType, 0, "表单类型", true, false);
 
 
@@ -632,6 +629,7 @@ namespace BP.Sys
                 map.AddTBInt(MapDataAttr.DTSearchWay, 0, "时间查询方式", true, false);
                 map.AddTBString(MapDataAttr.DTSearchKey, null, "查询字段", true, false, 0, 50, 20);
 
+                map.AddTBString(MapDataAttr.Note, null, "备注", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerContact, null, "联系方式", true, false, 0, 500, 20);
@@ -689,12 +687,16 @@ namespace BP.Sys
             //导入.
             return ImpMapData(fk_mapData, ds);
         }
+        /// <summary>
+        /// 导入
+        /// </summary>
+        /// <param name="fk_mapdata"></param>
+        /// <param name="ds"></param>
+        /// <returns></returns>
         public static MapData ImpMapData(string fk_mapdata, DataSet ds)
         {
             #region 检查导入的数据是否完整.
-
             string errMsg = "";
-
             //if (ds.Tables[0].TableName != "Sys_MapData")
             //    errMsg += "@非表单模板。";
 
@@ -703,7 +705,6 @@ namespace BP.Sys
 
             if (ds.Tables.Contains("Sys_MapAttr") == false)
                 errMsg += "@缺少表:Sys_MapAttr";
-
 
             if (ds.Tables.Contains("Sys_MapData") == false)
                 errMsg += "@缺少表:Sys_MapData";
@@ -1135,6 +1136,11 @@ namespace BP.Sys
         {
             this.PTable = PubClass.DealToFieldOrTableNames(this.PTable);
             return base.beforeInsert();
+        }
+        protected override bool beforeUpdateInsertAction()
+        {
+            this.PTable = PubClass.DealToFieldOrTableNames(this.PTable);
+            return base.beforeUpdateInsertAction();
         }
         protected override bool beforeDelete()
         {
