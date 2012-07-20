@@ -2641,6 +2641,11 @@ namespace BP.En
                     case AutoFullWay.Way2_SQL:
                         string sql = attr.AutoFullDoc;
                         sql = sql.Replace("~", "'");
+
+                        sql = sql.Replace("@WebUser.No", Web.WebUser.No);
+                        sql = sql.Replace("@WebUser.Name", Web.WebUser.Name);
+                        sql = sql.Replace("@WebUser.FK_Dept", Web.WebUser.FK_Dept);
+
                         Attrs attrs1 = this.EnMap.Attrs;
                         foreach (Attr a1 in attrs1)
                         {
