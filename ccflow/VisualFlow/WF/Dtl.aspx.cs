@@ -52,6 +52,19 @@ public partial class Comm_Dtl : WebPage
             return str;
         }
     }
+    /// <summary>
+    /// 主表FK_MapData
+    /// </summary>
+    public string MainEnsName
+    {
+        get
+        {
+            string str = this.Request.QueryString["MainEnsName"];
+            if (str == null)
+                return "ND299";
+            return str;
+        }
+    }
     public int BlankNum
     {
         get
@@ -139,7 +152,7 @@ public partial class Comm_Dtl : WebPage
 
         if (mdtl.HisDtlShowModel == DtlShowModel.Card)
         {
-            this.Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
+            this.Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap + "&FK_Node=" + this.FK_Node + "&MainEnsName="+this.MainEnsName, true);
             return;
         }
         this.Bind(mdtl);
@@ -217,6 +230,7 @@ public partial class Comm_Dtl : WebPage
         GEDtls dtls = new GEDtls(this.EnsName);
         this.FK_MapData = mdtl.FK_MapData;
 
+        GEEntity mainEn = null;
         #region 生成标题
         MapAttrs attrs = new MapAttrs(this.EnsName);
         MapAttrs attrs2 = new MapAttrs();
@@ -296,7 +310,7 @@ public partial class Comm_Dtl : WebPage
             int count = qo.GetCount();
             this.DtlCount = count;
             this.Pub2.Clear();
-            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap + "&IsReadonly=" + this.IsReadonly);
+            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap + "&IsReadonly=" + this.IsReadonly+"&MainEnsName="+this.MainEnsName);
             int num = qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
             mdtl.RowsOfList = mdtl.RowsOfList + this.addRowNum;
             if (mdtl.IsInsert && this.IsReadonly == 0)
@@ -418,6 +432,18 @@ public partial class Comm_Dtl : WebPage
                             url = url.Replace("@" + item.KeyOfEn, dtl.GetValStrByKey(item.KeyOfEn));
                             if (url.Contains("@") == false)
                                 break;
+                        }
+                        if (url.Contains("@"))
+                        {
+                            /*可能是主表也要有参数*/
+                            if (mainEn == null)
+                                mainEn = this.MainEn;
+                            foreach (Attr attrM in mainEn.EnMap.Attrs)
+                            {
+                                url = url.Replace("@" + attrM.Key, mainEn.GetValStrByKey(attrM.Key));
+                                if (url.Contains("@") == false)
+                                    break;
+                            }
                         }
                     }
                     this.Pub1.AddTD("<a href='" + url + "' target='" + meLink.Tag1 + "' >" + val + "</a>");
