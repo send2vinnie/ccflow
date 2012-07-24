@@ -396,6 +396,9 @@ public partial class Comm_Dtl : WebPage
                 string val = dtl.GetValByKey(attr.KeyOfEn).ToString();
                 if (attr.UIIsEnable == false && LinkFields.Contains("," + attr.KeyOfEn + ","))
                 {
+
+                    if (string.IsNullOrEmpty(val))
+                        val = "...";
                     MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link,
                         MapExtAttr.AttrOfOper, attr.KeyOfEn) as MapExt;
 
