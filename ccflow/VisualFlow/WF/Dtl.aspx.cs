@@ -402,7 +402,7 @@ public partial class Comm_Dtl : WebPage
                     MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link,
                         MapExtAttr.AttrOfOper, attr.KeyOfEn) as MapExt;
 
-                    string url = meLink.Tag;
+                    string url = meLink.Tag.Clone() as string;
                     if (url.Contains("?") == false)
                         url = url + "?a3=2";
 
