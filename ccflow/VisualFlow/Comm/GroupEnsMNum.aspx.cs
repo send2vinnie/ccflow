@@ -389,7 +389,6 @@ namespace BP.Web.Comm
                 DDL ddl = new DDL();
                 ddl.ID = "DDL_" + attr.Key;
                 ddl.Items.Add(new ListItem(this.ToE("ForSum", "求和"), "SUM"));
-
                 ddl.Items.Add(new ListItem(this.ToE("ForAvg", "求平均"), "AVG"));
                 if (this.IsContainsNDYF)
                     ddl.Items.Add(new ListItem(this.ToE("ForAMOUNT", "求累计"), "AMOUNT"));
