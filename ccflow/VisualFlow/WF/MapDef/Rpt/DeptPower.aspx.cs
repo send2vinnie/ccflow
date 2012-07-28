@@ -80,14 +80,21 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
         depts.RetrieveAll();
         Emps emps = new Emps();
         emps.RetrieveAll();
+        string ctlIDs = "";
         foreach (Dept dept in depts)
         {
+            CheckBox cbDept = new CheckBox();
+            cbDept.Text = "<b>"+dept.Name+"</b>";
+            cbDept.ID = "CB_S_all" + dept.No;
+
             this.Pub1.AddTR();
-            this.Pub1.AddTDTitle("" + dept.Name);
+            this.Pub1.AddTDTitle(cbDept);
             this.Pub1.AddTREnd();
 
             this.Pub1.AddTR();
             this.Pub1.AddTDBegin();
+
+            string ctlDeptIDs = "";
             foreach (Emp emp in emps)
             {
                 if (emp.FK_Dept != dept.No)
@@ -97,7 +104,11 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
                 cb.ID = "CB_" + emp.No;
                 cb.Text = emp.Name;
                 this.Pub1.Add(cb);
+                ctlIDs += cb.ID + ",";
+                ctlDeptIDs += cb.ID + ",";
             }
+
+            cbDept.Attributes["onclick"] = "SetSelected(this,'" + ctlDeptIDs + "')";
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
         }
@@ -105,7 +116,8 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
 
         CheckBox cball = new CheckBox();
         cball.Text = "CB_All_S";
-        cball.Text = "选择全部";
+        cball.Text = "<b>选择全部</b>&nbsp;&nbsp;&nbsp;&nbsp;";
+        cball.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
         this.Pub1.Add(cball);
 
         Button btn = new Button();
@@ -127,6 +139,7 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
             if (cb.Checked == false)
                 continue;
             strs += emp.No + ",";
+            
         }
 
         if (strs == "")
@@ -142,18 +155,28 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
         this.Pub1.AddCaptionLeft("<a href='DeptPower.aspx?FK_Flow=" + this.FK_Flow+"&IsSave=1' >返回</a> =》 第二步:部门查询权限设置");
         Depts depts = new Depts();
         depts.RetrieveAll();
+        string ctlIDs = "";
         this.Pub1.AddTR();
         this.Pub1.AddTDBegin();
         foreach (Dept dept in depts)
         {
             CheckBox cb = new CheckBox();
             cb.ID = "CB_" + dept.No;
-            cb.Text = dept.Name;
+            cb.Text = dept.No+" - "+dept.Name;
+            this.Pub1.AddBR();
+            this.Pub1.Add(DataType.GenerSpace(dept.No.Length));
             this.Pub1.Add(cb);
+            ctlIDs += cb.ID + ",";
         }
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+
+        CheckBox cball = new CheckBox();
+        cball.Text = "CB_All_S";
+        cball.Text = "<b>选择全部</b>&nbsp;&nbsp;&nbsp;&nbsp;";
+        cball.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
+        this.Pub1.Add(cball);
 
         Button btn = new Button();
         btn.Text = " 保存设置 ";
@@ -199,6 +222,5 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
             }
         }
         this.Alert("保存成功!!");
-        //  this.Response.Redirect("DeptPower.aspx?FK_Flow=" + this.FK_Flow+"&IsSave=1", true);
     }
 }

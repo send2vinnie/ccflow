@@ -141,14 +141,16 @@ public partial class WF_Rpt_Search : WebPage
                     case "FK_Dept":
                         if (WebUser.No != "admin")
                         {
-                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='"+this.FK_Flow+"')");
                             if (dt.Rows.Count == 0)
                             {
-                                BP.WF.Port.DeptFlowScorp dfs = new BP.WF.Port.DeptFlowScorp();
+                                BP.WF.Port.DeptFlowSearch dfs = new BP.WF.Port.DeptFlowSearch();
                                 dfs.FK_Dept = WebUser.FK_Dept;
                                 dfs.FK_Emp = WebUser.No;
+                                dfs.FK_Flow = this.FK_Flow;
+                                dfs.MyPK = WebUser.FK_Dept + "_" + WebUser.No + "_" + this.FK_Flow;
                                 dfs.Insert();
-                                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "')");
                             }
                             mydll.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
@@ -351,10 +353,7 @@ public partial class WF_Rpt_Search : WebPage
             #region 输出字段。
             idx++;
             this.UCSys1.AddTDIdx(idx);
-
             this.UCSys1.AddTD("<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" ><img src='../Img/Track.png' border=0 />"+en.GetValByKey("Title")+"</a>");
-        
-
             string val = "";
             foreach (Attr attr in selectedAttrs)
             {
