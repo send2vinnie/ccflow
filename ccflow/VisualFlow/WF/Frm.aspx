@@ -14,6 +14,7 @@
         }
         return v;
     }
+
     // 获取TB值
     function ReqTB(tbID) {
         var v = document.getElementById('ContentPlaceHolder1_UCEn1_TB_' + tbID).value;

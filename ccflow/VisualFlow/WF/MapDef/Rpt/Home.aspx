@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/MapDef/WinOpen.master" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="WF_MapDef_Rpt_Home" %>
-
 <%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script type="text/javascript">
     function SelectColumns(fk_flow, fk_MapData) {
@@ -29,6 +27,10 @@
     }
     function DoRight(fk_flow, fk_MapData, idx) {
         window.location.href = 'Home.aspx?DoType=ColumnsOrder&ActionType=Right&FK_Flow=' + fk_flow + '&FK_MapData=' + fk_MapData + '&Idx=' + idx;
+    }
+    function DoRightSet(fk_flow, fk_MapData) {
+        var url = 'DeptPower.aspx?FK_MapData=' + fk_MapData + '&FK_Flow=' + fk_flow;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 900px;center: yes; help: no');
     }
 </script>
 </asp:Content>

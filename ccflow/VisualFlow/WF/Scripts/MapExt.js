@@ -332,8 +332,6 @@ function FullM2M(key, fk_mapExt) {
 //填充明细.
 function FullDtl(key, fk_mapExt) {
 
-     
-
     GenerPageKVs();
     //FullM2M(key, fk_mapExt); //填充M2M.
     var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList", "OID": oid, "KVs": kvs };
