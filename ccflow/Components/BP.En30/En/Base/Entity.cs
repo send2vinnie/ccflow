@@ -2646,16 +2646,22 @@ namespace BP.En
                         sql = sql.Replace("@WebUser.Name", Web.WebUser.Name);
                         sql = sql.Replace("@WebUser.FK_Dept", Web.WebUser.FK_Dept);
 
-                        Attrs attrs1 = this.EnMap.Attrs;
-                        foreach (Attr a1 in attrs1)
+                        if (sql.Contains("@") == true)
                         {
-                            if (sql.Contains("@" + a1.Key) == false)
-                                continue;
+                            Attrs attrs1 = this.EnMap.Attrs;
+                            foreach (Attr a1 in attrs1)
+                            {
+                                if (sql.Contains("@") == false)
+                                    break;
 
-                            if (a1.IsNum)
-                                sql = sql.Replace("@" + a1.Key, this.GetValStrByKey(a1.Key));
-                            else
-                                sql = sql.Replace("@" + a1.Key, "'" + this.GetValStrByKey(a1.Key) + "'");
+                                if (sql.Contains("@" + a1.Key) == false)
+                                    continue;
+
+                                if (a1.IsNum)
+                                    sql = sql.Replace("@" + a1.Key, this.GetValStrByKey(a1.Key));
+                                else
+                                    sql = sql.Replace("@" + a1.Key, "'" + this.GetValStrByKey(a1.Key) + "'");
+                            }
                         }
 
                         sql = sql.Replace("''", "'");
