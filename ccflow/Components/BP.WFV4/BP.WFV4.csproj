@@ -133,7 +133,6 @@
   <ItemGroup>
     <Compile Include="DemoData\EmpDemo.cs" />
     <Compile Include="DynamicWebService.cs" />
-    <Compile Include="Port\DeptFlowSearchScorp.cs" />
     <Compile Include="WF\Dev2Interface.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -227,7 +226,7 @@
     <Compile Include="Port\EmpDept.cs" />
     <Compile Include="Port\EmpStation.cs" />
     <Compile Include="Port\Station.cs" />
-    <Compile Include="Port\DeptFlowScorp.cs" />
+    <Compile Include="Port\DeptFlowSearch.cs" />
     <Compile Include="Port\SMS.cs" />
     <Compile Include="WF.cs" />
     <Compile Include="WF\GERpt.cs" />
