@@ -131,7 +131,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoData\EmpDemo.cs" />
     <Compile Include="DynamicWebService.cs" />
+    <Compile Include="Port\DeptFlowSearchScorp.cs" />
     <Compile Include="WF\Dev2Interface.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -194,7 +196,6 @@
     <Compile Include="FlowDesc\Task.cs" />
     <Compile Include="FlowDesc\SelectAccper.cs" />
     <Compile Include="FlowDesc\NodeDept.cs" />
-    <Compile Include="FlowDesc\FlowStation.cs" />
     <Compile Include="FlowDesc\NodeUnitData.cs" />
     <Compile Include="FlowData.cs" />
     <Compile Include="FlowDesc\FrmNode.cs" />

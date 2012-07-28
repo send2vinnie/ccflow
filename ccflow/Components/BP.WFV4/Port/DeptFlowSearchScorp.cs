@@ -18,7 +18,7 @@ namespace BP.WF.Port
         /// <summary>
         /// 部门
         /// </summary>
-        public const string FK_Dept = "FK_Dept";
+        public const string FK_DeptFlow = "FK_DeptFlow";
         #endregion
     }
     /// <summary>
@@ -58,25 +58,25 @@ namespace BP.WF.Port
                 SetValByKey(DeptSearchScorpAttr.FK_Emp, value);
             }
         }
-        public string FK_DeptT
+        public string FK_DeptFlowT
         {
             get
             {
-                return this.GetValRefTextByKey(DeptSearchScorpAttr.FK_Dept);
+                return this.GetValRefTextByKey(DeptSearchScorpAttr.FK_DeptFlow);
             }
         }
         /// <summary>
         ///部门
         /// </summary>
-        public string FK_Dept
+        public string FK_DeptFlow
         {
             get
             {
-                return this.GetValStringByKey(DeptSearchScorpAttr.FK_Dept);
+                return this.GetValStringByKey(DeptSearchScorpAttr.FK_DeptFlow);
             }
             set
             {
-                SetValByKey(DeptSearchScorpAttr.FK_Dept, value);
+                SetValByKey(DeptSearchScorpAttr.FK_DeptFlow, value);
             }
         }
         #endregion
@@ -98,7 +98,7 @@ namespace BP.WF.Port
         public DeptSearchScorp(string _empoid, string wsNo)
         {
             this.FK_Emp = _empoid;
-            this.FK_Dept = wsNo;
+            this.FK_DeptFlow = wsNo;
             if (this.Retrieve() == 0)
                 this.Insert();
         }
@@ -112,13 +112,11 @@ namespace BP.WF.Port
                 if (this._enMap != null)
                     return this._enMap;
 
-                Map map = new Map("Port_DeptSearchScorp");
+                Map map = new Map("Port_FlowSearchRight");
                 map.EnDesc = "部门数据查询权限";
                 map.EnType = EnType.Dot2Dot;
-
+                map.AddTBStringPK(DeptSearchScorpAttr.FK_DeptFlow, null, "部门", true, true, 1, 50, 11);
                 map.AddTBStringPK(DeptSearchScorpAttr.FK_Emp, null, "操作员", true, true, 1, 50, 11);
-                map.AddDDLEntitiesPK(DeptSearchScorpAttr.FK_Dept, null, "部门", new BP.WF.Port.Depts(), true);
-                // map.AddDDLEntitiesPK(DeptSearchScorpAttr.FK_Emp, null, "操作员", new Emps(), true);
 
                 this._enMap = map;
                 return this._enMap;

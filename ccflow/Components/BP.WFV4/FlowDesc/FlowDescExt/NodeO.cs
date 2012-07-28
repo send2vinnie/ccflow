@@ -193,12 +193,12 @@ namespace BP.WF.Ext
 
                 map.AddTBString(NodeAttr.Name, null, this.ToE("Name", "名称"), true, true, 0, 100, 10, true);
                 map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, false);
-                map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, false);
+                map.AddBoolean(NodeAttr.IsRM, true, "是否起用投递路径自动记忆功能?", true, true, false);
+                map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, true);
                 map.AddBoolean(NodeAttr.IsBackTracking, false, "是否可以在退回后原路返回(只有启用退回功能才有效)", true, true, true);
-                map.AddBoolean(NodeAttr.IsRM, true, "是否起用投递路径自动记忆功能?", true, true, true);
 
                 // map.AddTBInt(NodeAttr.PassRate, 100, "通过率(对于合流节点有效)", true, true);
-                map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率", true, false);
+                map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率(对合流点有效)", true, false);
 
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, this.ToE("RunModel", "运行模式"),
                     true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流@4=子线程");
@@ -269,9 +269,9 @@ namespace BP.WF.Ext
                 map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
-                map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, 
-                    NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
+                //map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
+                //map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, 
+                //    NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
 
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
@@ -297,7 +297,7 @@ namespace BP.WF.Ext
                 true, true, NodeAttr.OutTimeDeal, "@0=不处理@1=自动转入下一步@2=自动转到指定的人员@3=向指定的人员发送消息@4=删除流程@5=执行SQL");
 
                 map.AddTBString(NodeAttr.DoOutTime, null, "处理内容", true, false, 0, 500, 10, true);
-                map.AddTBString(NodeAttr.FK_Flow, null, "flow", false, false, 0, 100, 10);
+        //        map.AddTBString(NodeAttr.FK_Flows, null, "flow", false, false, 0, 100, 10);
 
                 map.AddDDLSysEnum(NodeAttr.CHWay, 0, "考核方式", true, true, NodeAttr.CHWay, "@0=不考核@1=按时效@2=按工作量");
                 map.AddTBFloat(NodeAttr.Workload, 0, "工作量(单位:分钟)", true, false);
