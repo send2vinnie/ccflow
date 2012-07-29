@@ -504,7 +504,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
 
         this.Pub1.AddLi("<a href=\"javascript:DoRightSet('" + this.FK_Flow + "','" + this.FK_MapData + "');\"><b>查询权限设置</b></a>");
-        this.Pub1.Add("查询权限<br><br>");
+        this.Pub1.Add("查询权限，用于设置那些人可以查询那些数据。<br><br>");
 
         //this.Pub1.AddLi("<a href=\"javascript:Card('" + this.FK_Flow + "','" + this.FK_MapData + "');\"><b>显示卡片</b></a>");
         //this.Pub1.Add("对卡片显示出来的流程详细信息内容进行设计。<br><br>");

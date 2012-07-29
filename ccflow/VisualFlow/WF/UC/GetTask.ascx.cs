@@ -137,7 +137,11 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
         }
 
         Flows fls = new Flows();
-        fls.RetrieveAll();
+        BP.En.QueryObject qo = new QueryObject(fls);
+        qo.addOrderBy(FlowAttr.FK_FlowSort);
+        qo.DoQuery();
+
+        //fls.RetrieveAll(FlowAttr.FK_FlowSort);
 
         string pageid = this.Request.RawUrl.ToLower();
         if (pageid.Contains("small"))
@@ -157,7 +161,6 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
         int colspan = 5;
         this.AddTable("width='960px' align=center");
         this.AddCaptionLeft("<a href='GetTask" + pageid + ".aspx'><img src='./Img/Start.gif' > <b>取回处理</b></a>");
-
 
         this.AddTR();
         this.AddTDTitle(this.ToE("IDX", "序"));

@@ -1038,17 +1038,21 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         this.Add("<p class=BigDoc >");
 
-        this.Add(this.ToE("UserAcc", "用户帐号") + ":" + WebUser.No);
-        this.Add(this.ToE("UserName", "用户名") + ":" + WebUser.Name);
+        this.Add(this.ToE("UserAcc", "用户帐号") + ":&nbsp;&nbsp;<font color=green>" + WebUser.No + "</font>&nbsp;&nbsp;");
+        this.Add("<br>"+this.ToE("UserName", "用户名") + ":&nbsp;&nbsp;<font color=green>" + WebUser.Name + "</font>&nbsp;&nbsp;");
         this.AddHR();
 
         this.AddB(this.ToE("ESign", "电子签字") + ":<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> ，<a href='"+this.PageID+".aspx?RefNo=Siganture' >" + this.ToE("Edit", "设置/修改") + "</a>。");
 
         this.AddBR();
+        this.AddBR();
+
 
         this.Add(this.ToE("Dept", "部门") + " : <font color=green>" + WebUser.FK_DeptName + "</font>");
 
         this.AddBR();
+        this.AddBR();
+
 
         BP.WF.Port.WFEmp au = new BP.WF.Port.WFEmp(WebUser.No);
        // this.Add(au.AuthorIsOK.ToString());
@@ -1067,13 +1071,13 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.Add("&nbsp;我要:<a href='" + this.PageID + ".aspx?RefNo=Pass'>" + this.ToE("ChangePass", "修改密码") + "</a>");
 
         this.AddBR("<hr><b>" + this.ToE("InfoAlert", "信息提示") + "：</b><a href='" + this.PageID + ".aspx?RefNo=Profile'>" + this.ToE("Edit", "设置/修改") + "</a>");
-        this.Add("<br>" + this.ToE("ToAlert1", "接受短消息提醒手机号") + " : <font color=green>" + au.TelHtml + "</font>");
-        this.Add("<br>" + this.ToE("ToAlert2", "接受E-mail提醒") + " : <font color=green>" + au.EmailHtml + "</font>");
+        this.Add("<br><br>" + this.ToE("ToAlert1", "接受短消息提醒手机号") + " : <font color=green>" + au.TelHtml + "</font>");
+        this.Add("<br><br>" + this.ToE("ToAlert2", "接受E-mail提醒") + " : <font color=green>" + au.EmailHtml + "</font>");
 
         this.AddHR();
         Stations sts = WebUser.HisStations;
         this.AddB(this.ToE("To3", "岗位/部门-权限"));
-
+        this.AddBR();
         this.AddBR(this.ToE("StaP", "岗位权限"));
         foreach (Station st in sts)
         {
@@ -1082,15 +1086,13 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         Depts depts = WebUser.HisDepts;
         this.AddBR();
+        this.AddBR();
         this.Add(this.ToE("DeptP", "部门权限"));
+        this.AddBR();
         foreach (Dept st in depts)
-        {
             this.Add(" - <font color=green>" + st.Name + "</font>");
-        }
-
 
         this.Add("</p>");
-
         this.AddFieldSetEnd();
     }
 }
