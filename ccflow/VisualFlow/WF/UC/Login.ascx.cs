@@ -141,7 +141,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
             if (WebUser.IsAuthorize)
                 this.Add(" - <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\" >退出授权模式[" + WebUser.Auth + "]</a>" + home);
             else
-                this.Add(" - <a href='Tools.aspx?RefNo=AutoLog' >" + this.ToE("AutoLog", "授权方式登录") + "</a>" + home);
+                this.Add(" - <a href='Tools.aspx?RefNo=AutoLog' >" + this.ToE("AutoLog", "授权方式登陆") + "</a>" + home);
 
             this.Add(" - <a href='" + this.PageID + ".aspx?DoType=Logout' ><font color=green><b>安全退出</b></a>");
         }
@@ -202,7 +202,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
             }
             if (em.CheckPass(pass))
             {
-                // 执行登录.
+                // 执行登陆.
                 WebUser.SignInOfGenerLang(em, this.Lang);
                 if (this.Request.RawUrl.ToLower().Contains("wap"))
                     WebUser.IsWap = true;

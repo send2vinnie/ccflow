@@ -1088,7 +1088,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddBR();
         this.AddBR();
         this.Add(this.ToE("DeptP", "部门权限"));
-        this.AddBR();
         foreach (Dept st in depts)
             this.Add(" - <font color=green>" + st.Name + "</font>");
 

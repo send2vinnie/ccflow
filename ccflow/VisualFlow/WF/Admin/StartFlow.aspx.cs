@@ -54,8 +54,8 @@ public partial class WF_Admin_StartFlow : WebPage
 
             this.Pub1.AddUL();
             this.Pub1.AddLi("现在是流程测试状态，此功能紧紧提供给流程设计人员使用。");
-            this.Pub1.AddLi("提供此功能的目的是，快速的让各个角色人员登录，以便减少登录的繁琐麻烦。");
-            this.Pub1.AddLi("点左边的流程列表后，系统自动显示能够发起此流程的工作人员，点一个工作人员就直接登录了。");
+            this.Pub1.AddLi("提供此功能的目的是，快速的让各个角色人员登陆，以便减少登陆的繁琐麻烦。");
+            this.Pub1.AddLi("点左边的流程列表后，系统自动显示能够发起此流程的工作人员，点一个工作人员就直接登陆了。");
             this.Pub1.AddULEnd();
             this.Pub1.AddFieldSetEnd();
             return;
