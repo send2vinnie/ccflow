@@ -175,19 +175,11 @@ EN="@0=Init@1=Runing@2=Complete@3=Postpone"
 JP="@0=Init@1=Runing@2=Complete@3=Postpone"
 RU="@0=Init@1=Runing@2=Complete@3=Postpone" />
 
-
   <!-- JMCD机密程度  -->
   <Item Key="JMCD"
   CH="@0=一般@1=保密@2=秘密@3=机密"
   EN="@0=Init@1=Runing@2=Complete@3=Postpone"
   JP="@0=Init@1=Runing@2=Complete@3=Postpone"
   RU="@0=Init@1=Runing@2=Complete@3=Postpone" />
-    
-<!-- PRI 优先级  -->
-<Item Key="PRI"
-CH="@0=高@1=中@2=低"
-EN="@0=Height@1=Middle@2=Low"
-JP="@0=Height@1=Middle@2=Low"
-RU="@0=Height@1=Middle@2=Low" />
   
 </NewDataSet>
