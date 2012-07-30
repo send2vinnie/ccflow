@@ -320,7 +320,6 @@ function RSize() {
     } else {
         window.dialogHeight = (document.body.scrollHeight + 115).toString() + "px"
     }
-
     window.dialogLeft = ((window.screen.availWidth - document.body.clientWidth) / 2).toString() + "px"
     window.dialogTop = ((window.screen.availHeight - document.body.clientHeight) / 2).toString() + "px"
 }
