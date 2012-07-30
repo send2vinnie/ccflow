@@ -1184,8 +1184,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         mywf = new WorkFlow(this.FK_Flow, this.WorkID);
                     else
                         mywf = new WorkFlow(this.FK_Flow, this.FID);
-
-                    this.ToMsg("结束流程提示:<hr>" + mywf.DoFlowOver(""), "info");
+                    string info  = this.UCEn1.GetTBByID("TB_Doc").Text;
+                    if (string.IsNullOrEmpty(info))
+                    {
+                        this.Alert("请输入强制终止流程的原因。");
+                        return;
+                    }
+                    this.ToMsg("结束流程提示:<hr>" + mywf.DoFlowOver(info), "info");
                     break;
                 case NamesOfBtn.Delete:
                 case "Btn_Del":
