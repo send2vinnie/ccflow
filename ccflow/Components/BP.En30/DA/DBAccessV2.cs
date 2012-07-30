@@ -617,14 +617,14 @@ namespace BP.DA
 
         #region 检查权限
         /// <summary>
-        /// 检查session . 主要是判断是不是有用户登录信息。
+        /// 检查session . 主要是判断是不是有用户登陆信息。
         /// </summary>
         public static void DoCheckSession()
         {
             if (HttpContext.Current != null && SystemConfig.IsDebug == false)
             {
                 HttpContext.Current.Session["url"] = HttpContext.Current.Request.RawUrl;
-                string str = "您的登录时间太长，请重新登录。";
+                string str = "您的登陆时间太长，请重新登陆。";
                 HttpContext.Current.Session["info"] = str;
                 System.Web.HttpContext.Current.Response.Redirect(System.Web.HttpContext.Current.Request.ApplicationPath + SystemConfig.PageOfLostSession, true);
                 //System.Web.HttpContext.Current.Response.Redirect(System.Web.HttpContext.Current.Request.ApplicationPath+"/Portal/ErrPage.aspx");

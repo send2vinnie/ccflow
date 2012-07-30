@@ -495,9 +495,9 @@ namespace BP.WF
         }
         #endregion UI 接口
 
-        #region 登录接口
+        #region 登陆接口
         /// <summary>
-        /// 用户登录
+        /// 用户登陆
         /// </summary>
         /// <param name="userNo">用户名</param>
         /// <param name="sid">安全ID</param>
@@ -547,7 +547,7 @@ namespace BP.WF
             BP.TA.SMS.AddMsg(DateTime.Now.ToString(), userNo, BP.WF.Port.AlertWay.Email, emp.Tel, msgTitle,
                 emp.Email, msgTitle, msgDoc);
         }
-        #endregion 登录接口
+        #endregion 登陆接口
 
         #region 与流程有关的接口
         /// <summary>

@@ -406,10 +406,10 @@ namespace BP.DA
 			//return ;
 			if (SystemConfig.IsDebug==false)
 			{	
-				//throw new Exception("@您的登录时间太长，请重新登录。") ; 
+				//throw new Exception("@您的登陆时间太长，请重新登陆。") ; 
 				
 				HttpContext.Current.Session["url"]=HttpContext.Current.Request.RawUrl;
-				string str="您的登录时间太长，请重新登录。";
+				string str="您的登陆时间太长，请重新登陆。";
 				HttpContext.Current.Session["info"]=str;				
 				System.Web.HttpContext.Current.Response.Redirect(System.Web.HttpContext.Current.Request.ApplicationPath+"/SignIn.aspx");
 				//System.Web.HttpContext.Current.Response.Redirect(System.Web.HttpContext.Current.Request.ApplicationPath+"/Portal/ErrPage.aspx");

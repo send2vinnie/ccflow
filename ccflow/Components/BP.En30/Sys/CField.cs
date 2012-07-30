@@ -134,7 +134,7 @@ namespace BP.Sys
 
             //string no = Web.WebUser.No;
             //if (no == null)
-            //    throw new Exception("@您的登录时间太长。。。");
+            //    throw new Exception("@您的登陆时间太长。。。");
 
             //CField cf = new CField(no, ens.ToString());
             //if (cf.Attrs == "")

@@ -24,7 +24,7 @@ namespace BP.Web
                 throw new Exception("您的浏览器不支持cookies功能，无法使用改系统。");
 
             if (WebUser.No==null)
-                throw new Exception("您登录的时间太长，请重新登录。");
+                throw new Exception("您登陆的时间太长，请重新登陆。");
         }
     }
 }
