@@ -220,7 +220,7 @@
 
   <Item No="DoListen" CH="消息收听" EN="Message Listening" JP="Message Report" RU="Message Report" />
 
-  <Item No="AutoLog" CH="授权方式登录" B5="授权方式登录"  EN="Authorized Login" RU="Authorization Login" JP="授权方式登录"  
+  <Item No="AutoLog" CH="授权方式登陆" B5="授权方式登陆"  EN="Authorized Login" RU="Authorization Login" JP="授权方式登陆"  
           />
 
 

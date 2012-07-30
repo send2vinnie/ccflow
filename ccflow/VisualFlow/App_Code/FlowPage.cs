@@ -200,7 +200,7 @@ public class FlowPage : System.Web.UI.Page
     public string DoGenerJSOfReturn()
     {
         string script = "";
-        script += "var url='" + this.Request.ApplicationPath + "/WF/Return.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "';";
+        script += "var url='" + this.Request.ApplicationPath + "/WF/ReturnWork.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "';";
         script += "var newWindow = window.open(url, 'z', 'scroll:1;status:1;help:1;resizable:1;dialogWidth:680px;dialogHeight:420px');";
         script += "newWindow.focus();";
         script += "return false;";
@@ -208,7 +208,7 @@ public class FlowPage : System.Web.UI.Page
     }
     public void DoOpenReturn()
     {
-        string url = this.Request.ApplicationPath + "/WF/Return.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+        string url = this.Request.ApplicationPath + "/WF/ReturnWork.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
         this.WinOpen(url);
     }
     public void WinOpen(string url)

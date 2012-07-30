@@ -14,7 +14,7 @@ function Forward(appPath, fk_flow, workid) {
 }
 
 function Return(appPath, fk_flow,fk_node, workid) {
-    var url = appPath + '/Wap/ReturnWork.aspx?FK_Flow=' + fk_flow + '&FK_Node='+fk_node+'&WorkID=' + workid;
+    var url = appPath + '/wf/WAP/ReturnWork.aspx?FK_Flow=' + fk_flow + '&FK_Node='+fk_node+'&WorkID=' + workid;
     window.showModalDialog(url, 'sd', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');
     window.location.href = window.location.href;
     return false;

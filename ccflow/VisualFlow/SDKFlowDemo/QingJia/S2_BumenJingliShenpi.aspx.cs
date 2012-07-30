@@ -34,7 +34,7 @@ public partial class Demo_QingJia_S2_BumenJingliShenpi : FlowPage
     protected void Btn_Send_Click(object sender, EventArgs e)
     {
         Hashtable ht = new Hashtable();
-        ht.Add("qingjiatian", float.Parse(this.TB_qingjiatian.Text));
+        ht.Add("QingJiaTian", float.Parse(this.TB_qingjiatian.Text));
 
         string msg = BP.WF.Dev2Interface.Node_SendWork(this.FK_Flow, 
             this.WorkID,
@@ -53,6 +53,7 @@ public partial class Demo_QingJia_S2_BumenJingliShenpi : FlowPage
         msg = msg.Replace("@@", "@");
         msg = msg.Replace("@", "<BR>@");
         this.Alert("撤销提示", msg);
+
         this.InitButtonState();
        
     }

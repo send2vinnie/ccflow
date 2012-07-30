@@ -155,7 +155,7 @@ public class WSDesigner : WSBase
         }
     }
     /// <summary>
-    /// 让admin 登录
+    /// 让admin 登陆
     /// </summary>
     /// <param name="lang">当前的语言</param>
     /// <returns>成功则为空，有异常时返回异常信息</returns>
@@ -200,7 +200,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string Do(string doWhat, string para1, bool isLogin)
     {
-        // 如果admin账户登录时有错误发生，则返回错误信息
+        // 如果admin账户登陆时有错误发生，则返回错误信息
         var result = LetAdminLogin("CH", isLogin);
         if (string.IsNullOrEmpty(result)==false)
         {

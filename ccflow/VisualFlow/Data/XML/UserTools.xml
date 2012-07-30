@@ -11,7 +11,7 @@
 		<ICON> ../../Images/System/Sys.gif </ICON>
 		<URL> ../Port/ChangePass.aspx  </URL>
 		<Name> 修改密码  </Name>
-		<DESC> 修改您在本系统登录密码。</DESC>
+		<DESC> 修改您在本系统登陆密码。</DESC>
 		<Enable>1</Enable>		
 	</AdminTools>
 	

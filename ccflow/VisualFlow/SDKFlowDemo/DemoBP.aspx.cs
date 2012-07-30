@@ -33,6 +33,10 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
     /// </summary>
     public void GloBaseApp()
     {
+        // 执行登陆。
+        Emp emp = new Emp("guobaogeng");
+        BP.Web.WebUser.SignInOfGener(emp);
+
         // 当前登陆人员编号.
         string currLoginUserNo = BP.Web.WebUser.No;
         // 登陆人员名称
@@ -41,6 +45,8 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
         string currLoginUserDeptNo = BP.Web.WebUser.FK_Dept;
         // 登陆人员部门名称
         string currLoginUserDeptName = BP.Web.WebUser.FK_DeptName;
+
+        BP.Web.WebUser.Exit(); //执行退出.
     }
     /// <summary>
     /// 数据库操作访问
@@ -103,6 +109,15 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
     {
         #region  直接插入一条数据.
         BP.Port.Emp emp = new BP.Port.Emp();
+        emp.CheckPhysicsTable(); 
+        /*  检查物理表是否与Map一致 
+         *  1，如果没有这个物理表则创建。
+         *  2，如果缺少字段则创建。
+         *  3，如果字段类型不一直则删除创建，比如原来是int类型现在map修改成string类型。
+         *  4，map字段减少则不处理。
+         *  5，手工的向物理表中增加的字段则不处理。
+         *  6，数据源是视图字段不匹配则创建失败。
+         * */
         emp.No = "zhangsan";
         emp.Name = "张三";
         emp.FK_Dept = "01";
@@ -185,7 +200,6 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
         {
             this.Response.Write("不应该出现的异常。");
         }
-
         // 初试化实例后，执行删除，这种方式要执行两个sql.
         emp = new BP.Port.Emp("abc");
         emp.Delete();
@@ -265,8 +279,6 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
             this.Response.Write("<br>部门编号:" + emp.FK_Dept);
             this.Response.Write("<br>部门名称:" + emp.FK_DeptText);
         }
-
-
         // 具有括号表达式的查询。
         myEmps = new Emps();
         qo = new QueryObject(myEmps);
