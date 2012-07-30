@@ -78,20 +78,6 @@ public partial class WF_Rpt_Bill : WebPage
         else
             this.PageIdx = int.Parse(this.Request.QueryString["PageIdx"]);
 
-        //if (WebUser.IsWap)
-        //{
-        //    this.Pub1.Add("<a href='./../WAP/Home.aspx' ><img src='./../WAP/Img/Home.gif' />Home</a>");
-        //    this.Pub1.Add("-<a href='./../WAP/FlowSearch.aspx' >查询</a>");
-
-        //    this.Pub1.Add(" - <a href='" + this.PageID + ".aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我打印的</a>");
-        //    this.Pub1.Add(" - <a href='" + this.PageID + ".aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的</a><br>");
-        //}
-        //else
-        //{
-        //    this.Pub1.Add("<a href='"+this.PageID+".aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我打印的</a>");
-        //    this.Pub1.Add(" - <a href='" + this.PageID + ".aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的</a><br>");
-        //}
-
         #region 处理查询设的默认.
         if (this.DoType == "My")
         {
@@ -129,12 +115,12 @@ public partial class WF_Rpt_Bill : WebPage
                         mydll.SetSelectItem(defVal);
                         break;
                     case "FK_NY":
-                        dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM WF_Bill WHERE FK_NY!='' AND FK_Flow='"+this.FK_Flow+"' ORDER BY FK_NY");
+                        dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM WF_Bill WHERE FK_NY!='' AND FK_Flow='" + this.FK_Flow + "' ORDER BY FK_NY");
                         mydll.Items.Clear();
                         mydll.Items.Add(new ListItem("=>月份", "all"));
                         foreach (DataRow dr in dt.Rows)
                         {
-                          //  BP.WF.Bill
+                            //  BP.WF.Bill
                             mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
                         }
                         mydll.SetSelectItem(defVal);
@@ -153,12 +139,16 @@ public partial class WF_Rpt_Bill : WebPage
                     case "FK_Dept":
                         if (WebUser.No != "admin")
                         {
-                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "')");
                             if (dt.Rows.Count == 0)
                             {
-                                this.Pub2.AddMsgOfWarning("提示", "<h2>系统管理员没有给您设置查询权限。</h2>");
-                                this.ToolBar1.Controls.Clear();
-                                return;
+                                BP.WF.Port.DeptFlowSearch dfs = new BP.WF.Port.DeptFlowSearch();
+                                dfs.FK_Dept = WebUser.FK_Dept;
+                                dfs.FK_Emp = WebUser.No;
+                                dfs.FK_Flow = this.FK_Flow;
+                                dfs.MyPK = WebUser.FK_Dept + "_" + WebUser.No + "_" + this.FK_Flow;
+                                dfs.Insert();
+                                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "')");
                             }
                             mydll.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
@@ -300,7 +290,6 @@ public partial class WF_Rpt_Bill : WebPage
     public void BindEns(Entities ens, string ctrlId)
     {
         this.Title =  "单据查询";
-
         this.UCSys1.Controls.Clear();
         Entity myen = ens.GetNewEntity;
         string pk = myen.PK;
@@ -350,6 +339,13 @@ public partial class WF_Rpt_Bill : WebPage
             string val = "";
             foreach (Attr attr in attrs)
             {
+                if (attr.Key == "FK_NY")
+                {
+                    this.UCSys1.AddTD(en.GetValStrByKey(attr.Key));
+                    continue;
+                }
+
+
                 if (attr.IsRefAttr || attr.UIVisible == false || attr.Key == "MyNum")
                     continue;
 
@@ -368,7 +364,6 @@ public partial class WF_Rpt_Bill : WebPage
                 string str = en.GetValStrByKey(attr.Key);
                 if (focusField == attr.Key)
                 {
-                    //str = "<b><font color='blue' ><a href=" + urlExt + ">" + str + "</font></b></a>";
                     str = "<b><font color='blue' >" + str + "</font></a>";
                 }
                 switch (attr.MyDataType)
@@ -411,9 +406,9 @@ public partial class WF_Rpt_Bill : WebPage
 
             //相关功能.
             string ext = "";
-            ext += "<a href=\"javascript:WinOpen('Bill.aspx?DoType=Print&MyPK=" + en.PKVal + "','tdr');\" >打印</a>";
-            ext += "-<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStringByKey("WorkID") + "&FID=" + en.GetValStringByKey("FID") + "','tr');\" >轨迹图</a>";
-            ext += "-<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStringByKey("WorkID") + "&FID=" + en.GetValStringByKey("FID") + "','tdr');\" >工作报告</a>";
+            ext += "<a href=\"javascript:WinOpen('Bill.aspx?DoType=Print&MyPK=" + en.PKVal + "','tdr');\" ><img src='./../Img/book.gif' />打印</a>";
+            ext += "-<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStringByKey("WorkID") + "&FID=" + en.GetValStringByKey("FID") + "','tr');\" ><img src='./../Img/track.png' />轨迹图</a>";
+           // ext += "-<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStringByKey("WorkID") + "&FID=" + en.GetValStringByKey("FID") + "','tdr');\" >工作报告</a>";
 
             this.UCSys1.AddTD(ext);
             this.UCSys1.AddTREnd();

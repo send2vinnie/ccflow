@@ -17,10 +17,10 @@
   <Lang No="RU" Name="Русский" />
 
   <Skin No="0" CSS="#0053B9" CH="蓝"  B5="默认风格" EN="default sytle" RU="default sytle"  JP="default sytle" />
-  <Skin No="1" CSS="#429296" CH="青"  B5="蓝色风格" EN="blue sytle" RU="blue sytle"  JP="blue sytle" />
-  <Skin No="2" CSS="#FE9500" CH="橙"  B5="绿色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
-  <Skin No="3" CSS="#9934B7" CH="紫" B5="绿色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
-  <Skin No="4" CSS="#BA350F" CH="红" B5="绿色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
+  <Skin No="1" CSS="#429296" CH="青"  B5="青色风格" EN="blue sytle" RU="blue sytle"  JP="blue sytle" />
+  <Skin No="2" CSS="#FE9500" CH="橙"  B5="橙色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
+  <Skin No="3" CSS="#9934B7" CH="紫" B5="紫色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
+  <Skin No="4" CSS="#BA350F" CH="红" B5="红色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
 
   <WorkOpt No="Home" URL="Home.aspx?WorkID=@WorkID~FK_Node=@FK_Node" CH="主页" />
   <WorkOpt No="ExpImp" URL="ExpImp.aspx?WorkID=@WorkID~FK_Node=@FK_Node" CH="导入导出"/>

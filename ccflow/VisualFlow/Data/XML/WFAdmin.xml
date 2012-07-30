@@ -21,8 +21,8 @@
     <RptFlow No="Group_My" CH="我参与的流程" URL="Group.aspx?DoType=My"   ICON="./../../Images/Btn/Chart.gif" />
     <RptFlow No="Group_Dept" CH="部门流程"   URL="Group.aspx?DoType=Dept"   ICON="./../../Images/Btn/Chart.gif" />
 
-    <RptFlow No="Bill_MyFlow" CH="我打印的单据" URL="Bill.aspx?DoType=My"   ICON="./../../Images/Btn/Word.gif" />
-    <RptFlow No="Bill_DeptFlow" CH="部门单据"   URL="Bill.aspx?DoType=Dept"   ICON="./../../Images/Btn/Word.gif" />
+    <!--<RptFlow No="Bill_MyFlow" CH="我打印的单据" URL="Bill.aspx?DoType=My"   ICON="./../../Images/Btn/Word.gif" />
+    <RptFlow No="Bill_DeptFlow" CH="部门单据"   URL="Bill.aspx?DoType=Dept"   ICON="./../../Images/Btn/Word.gif" />-->
 
     <RptFlow1 No="Chat" CH="流程图"   URL="Chat.aspx?DoType=Dept"   ICON="./../../Images/Chart.gif" />
 </NewDataSet>
