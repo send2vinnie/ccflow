@@ -617,7 +617,7 @@ namespace BP.DA
 
         #region 检查权限
         /// <summary>
-        /// 检查session . 主要是判断是不是有用户登陆信息。
+        /// 检查session . 主要是判断是不是有用户登录信息。
         /// </summary>
         public static void DoCheckSession()
         {

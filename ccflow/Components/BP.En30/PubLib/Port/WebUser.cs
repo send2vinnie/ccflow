@@ -108,7 +108,7 @@ namespace BP.Web
             return str;
         }
         /// <summary>
-        /// 登陆
+        /// 登录
         /// </summary>
         /// <param name="em"></param>
         public static void SignInOfGener(Emp em)
@@ -117,7 +117,7 @@ namespace BP.Web
         }
       
         /// <summary>
-        /// 登陆
+        /// 登录
         /// </summary>
         /// <param name="em"></param>
         /// <param name="isRememberMe"></param>
@@ -126,7 +126,7 @@ namespace BP.Web
             SignInOfGener(em, "CH", null, isRememberMe, false);
         }
         /// <summary>
-        /// 登陆
+        /// 登录
         /// </summary>
         /// <param name="em"></param>
         /// <param name="auth"></param>
@@ -135,7 +135,7 @@ namespace BP.Web
             SignInOfGener(em, "CH", auth, true, false);
         }
         /// <summary>
-        /// 登陆
+        /// 登录
         /// </summary>
         /// <param name="em"></param>
         /// <param name="lang"></param>
@@ -144,7 +144,7 @@ namespace BP.Web
             SignInOfGener(em, lang, null, isRememberMe, false);
         }
         /// <summary>
-        /// 登陆
+        /// 登录
         /// </summary>
         /// <param name="em"></param>
         /// <param name="lang"></param>
@@ -501,7 +501,7 @@ namespace BP.Web
         public static string GetValFromSessionOrCookies(string sessionkey)
         {
             if (WebUser.No == null)
-                throw new Exception("@登陆时间太长。");
+                throw new Exception("@登录时间太长。");
 
             string s = GetSessionByKey(sessionkey, null);
             if (string.IsNullOrEmpty(s) == false)
@@ -513,7 +513,7 @@ namespace BP.Web
             string key = "CCS";
             HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies[key];
             if (hc == null)
-                throw new Exception("@您登陆信息已经超时，或者您的IE不支持记录cookies.");
+                throw new Exception("@您登录信息已经超时，或者您的IE不支持记录cookies.");
 
             if (hc.Values["No"] != null)
             {
@@ -530,12 +530,12 @@ namespace BP.Web
 
                 string name = BP.DA.DBAccess.RunSQLReturnStringIsNull("SELECT Name, FK_Dept FROM Port_Emp WHERE No='" + HttpUtility.UrlDecode(hc["No"] + "'"), "null");
                 if (name == "null")
-                    throw new Exception("@您需要重新登陆。");
+                    throw new Exception("@您需要重新登录。");
 
                 WebUser.SetSessionByKey("Name", name);
                 return hc.Values[sessionkey];
             }
-            throw new Exception("@登陆时间太长或者是您的浏览器不支持cookies.");
+            throw new Exception("@登录时间太长或者是您的浏览器不支持cookies.");
         }
         /// <summary>
         /// FK_Dept
@@ -689,7 +689,7 @@ namespace BP.Web
                         WebUser.SetSessionByKey("Name", name);
                         return hc.Values["No"];
                     }
-                    throw new Exception("@err-001 登陆信息丢失。");
+                    throw new Exception("@err-001 登录信息丢失。");
                 }
                 return no;
             }

@@ -70,7 +70,7 @@ namespace BP.DTS
                 catch (Exception ex)
                 {
                     Log.DefaultLogWriteLine(LogType.Info, "@在把数据放在内存时出现错误:" + ex.Message + " cls=" + ens.ToString());
-                    /* 包含用户登陆信息的map 都不取它。 */
+                    /* 包含用户登录信息的map 都不取它。 */
                     continue;
                 }
 
