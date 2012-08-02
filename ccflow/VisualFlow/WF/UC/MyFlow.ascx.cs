@@ -588,7 +588,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-            if (btnLab.ShiftEnable)
+            if (btnLab.ShiftEnable && this.currND.IsStartNode == false)
             {
                 /*移交*/
                 this.ToolBar1.AddBtn("Btn_Shift", btnLab.ShiftLab);
@@ -602,7 +602,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/CC.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow="+this.FK_Flow+"&FID="+this.FID+"','ds'); \" />");
             }
 
-            if (btnLab.DeleteEnable)
+            if (btnLab.DeleteEnable && this.currND.IsStartNode == false )
             {
                 this.ToolBar1.AddBtn("Btn_Delete", btnLab.DeleteLab);
                 this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "将要执行删除流程，您确认吗？") + "')";
