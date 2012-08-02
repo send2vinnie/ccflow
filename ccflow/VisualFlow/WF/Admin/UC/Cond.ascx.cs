@@ -138,7 +138,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = "表单类型条件设置";
-
         if (this.Request.QueryString["DoType"] == "Del")
         {
             Cond nd = new Cond(this.MyPK);
@@ -147,11 +146,8 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             return;
         }
         this.BindCond();
-
         if (this.FK_Attr == null)
-        {
             this.FK_Attr = this.DDL_Attr.SelectedItemStringVal;
-        }
     }
     public void BindCond()
     {
@@ -171,28 +167,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             if (this.FK_Flow != null)
                 cond.FK_Flow = this.FK_Flow;
         }
-
-        //this.Clear();
-        //switch (this.HisCondType)
-        //{
-        //    case CondType.Node:
-        //        this.AddFieldSet(this.ToE("NodeT", "节点方向") + " - " + this.ToE("CondDesign", "表单条件设计"));
-        //        break;
-        //    case CondType.Flow:
-        //        this.AddFieldSet(this.ToE("FlowT", "流程完成条件") + " - " + this.ToE("CondDesign", "表单条件设计"));
-        //        break;
-        //    case CondType.Dir:
-        //        this.AddFieldSet(this.ToE("DirT", "方向条件") + " - " + this.ToE("CondDesign", "表单条件设计"));
-        //        break;
-        //    case CondType.FLRole:
-        //        this.AddFieldSet(this.ToE("DirT", "分流完成条件设计") + " - " + this.ToE("CondDesign", "表单条件设计"));
-        //        break;
-        //    default:
-        //        break;
-        //}
-
-        this.AddFieldSet("表单类型:条件设置");
-
         this.AddTable("border=0 widht='500px'");
         this.AddTR();
         this.AddTDTitle(this.ToE("Item", "项目"));
@@ -434,13 +408,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             this.AddTREnd();
         }
 
-        //this.AddTR();
-        //this.AddTD("优先计算级别");
-        //ddl = new DDL();
-        //this.AddTD(ddl);
-        //this.AddTD("对于多个条件有效");
-        //this.AddTREnd();
-        //this.AddTableEnd();
 
         this.AddTRSum();
         this.Add("<TD class=TD colspan=3 align=center>");
@@ -453,9 +420,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.AddTREnd();
         this.AddTableEnd();
 
-
         #region 条件
-
         this.AddTable("border=0 widht='500px'");
         this.AddTR();
         this.AddTDTitle("IDX");
@@ -477,7 +442,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 || mync.HisDataFrom.ToString() == "Depts")
                 continue;
             i++;
-            
+
 
             this.AddTR();
             this.AddTDIdx(i);
@@ -491,12 +456,8 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             this.AddTD("<a href='Cond.aspx?MyPK=" + mync.MyPK + "&CondType=" + (int)this.HisCondType + "&FK_Flow=" + this.FK_Flow + "&FK_Attr=" + mync.FK_Attr + "&FK_MainNode=" + mync.NodeID + "&OperatorValue=" + mync.OperatorValueStr + "&FK_Node=" + mync.FK_Node + "&DoType=Del&ToNodeID=" + mync.ToNodeID + "' >" + this.ToE("Del", "删除") + "</a>");
             this.AddTREnd();
         }
-
         this.AddTableEnd();
         #endregion
-
-        this.AddFieldSetEnd(); // ("条件设置");
-
     }
     public DDL DDL_Node
     {

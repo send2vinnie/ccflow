@@ -133,36 +133,15 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
     }
     public void BindCond()
     {
-        //string msg = "";
-        //string note = "";
-
         Cond cond = new Cond();
         cond.MyPK = this.GenerMyPK;
         cond.RetrieveFromDBSources();
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
+         
 
-
-        this.Pub1.AddFieldSet("部门类型:条件设置");
-
-        this.Pub1.Add( this.ToE("Node","选择节点") );
-
-        Nodes nds = new Nodes(this.FK_Flow);
-        Nodes ndsN = new Nodes();
-        foreach (BP.WF.Node mynd in nds)
-        {
-            ndsN.AddEntity(mynd);
-        }
-        DDL ddl = new DDL();
-        ddl.ID = "DDL_Node";
-        ddl.BindEntities(ndsN, "NodeID", "Name");
-        ddl.SetSelectItem(this.FK_Node);
-        ddl.AutoPostBack = true;
-        ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-        this.Pub1.Add(ddl);
-
-        this.Pub1.AddTable("width='500px;'"); 
+        this.Pub1.AddTable(); 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("colspan=4", "部门选择");
         this.Pub1.AddTREnd();
@@ -222,16 +201,6 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
-
-        this.Pub1.AddFieldSetEnd();// ("部门类型:条件设置");
-
-    }
-    public DDL DDL_Node
-    {
-        get
-        {
-            return this.Pub1.GetDDLByID("DDL_Node");
-        }
     }
     public Label Lab_Msg
     {
@@ -279,10 +248,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         }
     }
 
-    void ddl_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        this.Response.Redirect("CondDept.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.DDL_Node.SelectedItemStringVal + "&FK_MainNode=" + this.FK_MainNode + "&CondType=" + (int)this.HisCondType + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
-    }
+    
 
     void btn_Save_Click(object sender, EventArgs e)
     {
@@ -312,8 +278,8 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
             cond.Delete();
             return;
         }
-        val += "@";
 
+        val += "@";
         cond.OperatorValue = val;
         cond.FK_Flow = this.FK_Flow;
         cond.HisCondType = this.HisCondType;
@@ -322,7 +288,6 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         {
             case CondType.Flow:
             case CondType.Node:
-        //    case CondType.FLRole:
                 cond.Update();
                 this.Response.Redirect("CondDept.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr, true);
                 return;

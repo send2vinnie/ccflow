@@ -129,6 +129,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             this.Response.Redirect("CondStation.aspx?CondType=" + (int)this.HisCondType + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + nd.NodeID + "&FK_Node=" + this.FK_MainNode + "&ToNodeID=" + nd.ToNodeID, true);
             return;
         }
+
         this.BindCond();
     }
     public void BindCond()
@@ -143,34 +144,29 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
 
-        this.Pub1.AddFieldSet("岗位类型:条件设置");
+      //  this.Pub1.AddFieldSet("岗位类型:条件设置");
 
-        this.Pub1.AddB(this.ToE("Node", "选择节点"));
-
-       // this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> <br>要计算的节点:");
-        Nodes nds = new Nodes(this.FK_Flow);
-        Nodes ndsN = new Nodes();
-        foreach (BP.WF.Node mynd in nds)
-        {
-            ndsN.AddEntity(mynd);
-        }
-
-        DDL ddl = new DDL();
-        ddl.ID = "DDL_Node";
-        ddl.BindEntities(ndsN, "NodeID", "Name");
-        if (this.FK_Node==0)
-        ddl.SetSelectItem( cond.FK_Node );
-        else
-            ddl.SetSelectItem(this.FK_Node);
-
-        cond.OperatorValue = cond.OperatorValue + "@";
-
-        ddl.AutoPostBack = true;
-        ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-        this.Pub1.Add(ddl);
+       // this.Pub1.AddB(this.ToE("Node", "选择节点"));
+       //// this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> <br>要计算的节点:");
+       // Nodes nds = new Nodes(this.FK_Flow);
+       // Nodes ndsN = new Nodes();
+       // foreach (BP.WF.Node mynd in nds)
+       // {
+       //     ndsN.AddEntity(mynd);
+       // }
+       // DDL ddl = new DDL();
+       // ddl.ID = "DDL_Node";
+       // ddl.BindEntities(ndsN, "NodeID", "Name");
+       // if (this.FK_Node==0)
+       // ddl.SetSelectItem( cond.FK_Node );
+       // else
+       //     ddl.SetSelectItem(this.FK_Node);
+       // cond.OperatorValue = cond.OperatorValue + "@";
+       // ddl.AutoPostBack = true;
+       // ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
+       // this.Pub1.Add(ddl);
 
         this.Pub1.AddTable(); 
-
         SysEnums ses = new SysEnums("StaGrade");
         Stations sts = new Stations();
         sts.RetrieveAll();
@@ -229,22 +225,17 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         this.Pub1.Add("<TD class=TD colspan=4 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = this.ToE("Save", " 保 存 ");
+        btn.Text = this.ToE("Save", " Save ");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
 
-        this.Pub1.AddFieldSetEnd(); // ("岗位类型:条件设置");
+     // this.Pub1.AddFieldSetEnd(); // ("岗位类型:条件设置");
 
     }
-    public DDL DDL_Node
-    {
-        get
-        {
-            return this.Pub1.GetDDLByID("DDL_Node");
-        }
-    }
+   
     public Label Lab_Msg
     {
         get
@@ -290,11 +281,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             return this.FK_MainNode + "_" + this.ToNodeID + "_" + this.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
         }
     }
-    void ddl_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        this.Response.Redirect("CondStation.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.DDL_Node.SelectedItemStringVal + "&FK_MainNode=" + this.FK_MainNode + "&CondType=" + (int)this.HisCondType + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
-    }
-
     void btn_Save_Click(object sender, EventArgs e)
     {
         Cond cond = new Cond();
@@ -324,19 +310,16 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             cond.Delete();
             return;
         }
-
         val += "@";
-
         cond.OperatorValue = val;
         cond.HisDataFrom = ConnDataFrom.Stas;
         cond.FK_Flow = this.FK_Flow;
         cond.HisCondType = this.HisCondType;
-        cond.FK_Node = this.DDL_Node.SelectedItemIntVal;
+        cond.FK_Node = this.FK_MainNode;
         switch (this.HisCondType)
         {
             case CondType.Flow:
             case CondType.Node:
-       //     case CondType.FLRole:
                 cond.Update();
                 this.Response.Redirect("CondStation.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr, true);
                 return;
@@ -345,7 +328,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
                 cond.Update();
                 this.Response.Redirect("CondStation.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
                 return;
-                break;
             default:
                 throw new Exception("未设计的情况。");
         }
