@@ -17,7 +17,7 @@
 				<cc1:Btn id="Btn2" style="Z-INDEX: 102; LEFT: 136px; POSITION: absolute; TOP: 80px" runat="server"
 					Text="同步系统实体"></cc1:Btn>
 				<cc1:Btn id="Btn3" style="Z-INDEX: 103; LEFT: 136px; POSITION: absolute; TOP: 216px" runat="server"></cc1:Btn>
-				<asp:Button id="Button1" style="Z-INDEX: 104; LEFT: 152px; POSITION: absolute; TOP: 352px" runat="server"
+				<asp:Button id="Button1" class=Btn style="Z-INDEX: 104; LEFT: 152px; POSITION: absolute; TOP: 352px" runat="server"
 					Text="生成系统报表"></asp:Button></FONT>
 		</form>
 	</body>

@@ -89,6 +89,7 @@ public partial class Comm_Sys_EnsDataIO : BP.Web.WebPageAdmin
 
         Button btn = new Button();
         btn.ID = "Btn_Clear";
+        btn.CssClass = "Btn";
         btn.Text = "清空方式导入";
         btn.Attributes["onclick"] = "return window.confirm('您确定要执行吗？ 如果执行现有的数据将会被清空，Excel中的数据导入进去。');";
         this.Pub1.Add(btn);
@@ -109,6 +110,7 @@ public partial class Comm_Sys_EnsDataIO : BP.Web.WebPageAdmin
         ddl1.SetSelectItem(en.PK);
 
         btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Update";
         btn.Text = "为主键，执行更新方式导入。";
         btn.Attributes["onclick"] = "return window.confirm('您确定要执行吗？ 如果执行现有的数据将会按照主键更新。');";
@@ -346,6 +348,7 @@ public partial class Comm_Sys_EnsDataIO : BP.Web.WebPageAdmin
         this.Pub1.Add("<b>第1/3步：</b>上传Excel数据文件<hr>");
         this.Pub1.Add(file);
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Up";
         btn.Text = "上传数据文件";
         this.Pub1.Add(btn);

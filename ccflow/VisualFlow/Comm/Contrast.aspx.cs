@@ -193,12 +193,12 @@ namespace BP.Web.Comm
                     #endregion
 
                     this.BPToolBar1.InitByMapV2(this.HisEn.EnMap, 1);
-                    //this.BPToolBar1.InitByMapVGroup(this.HisEn.EnMap);
-                    //					this.BPToolBar1.AddSpt("spt1");
-                    //					this.BPToolBar1.AddLab("Lab_Result","记录个数[0]");
-                  //  this.BPToolBar1.AddSpt("spt2");
+                    // this.BPToolBar1.InitByMapVGroup(this.HisEn.EnMap);
+                    //	this.BPToolBar1.AddSpt("spt1");
+                    //	this.BPToolBar1.AddLab("Lab_Result","记录个数[0]");
+                    //  this.BPToolBar1.AddSpt("spt2");
                     //this.BPToolBar1.AddBtn(NamesOfBtn.Excel);
-                   // this.BPToolBar1.AddBtn(NamesOfBtn.Help);
+                    // this.BPToolBar1.AddBtn(NamesOfBtn.Help);
                     //	this.BPToolBar1.AddBtn(NamesOfBtn.DataIO);
 
                     this.BindContrastKey(map);
@@ -223,10 +223,8 @@ namespace BP.Web.Comm
 
             this.Label1.Text = this.GenerCaption(lab);
             //  this.Label1.Controls.Add(this.GenerLabel("<img src='../Images/Btn/DataGroup.gif' border=0  />" + lab));
-
             this.DDL_ContrastKey.AutoPostBack = true;
             this.DDL_ContrastKey.SelectedIndexChanged += new EventHandler(DDL_ContrastKey_SelectedIndexChanged);
-
             this.BindDDLMore();
         }
         public void InitState(BP.Sys.Contrast c)
@@ -241,13 +239,10 @@ namespace BP.Web.Comm
             this.DDL_GroupField.SetSelectItem(c.KeyOfNum);
             this.DDL_GroupWay.SetSelectItem(c.GroupWay);
             this.DDL_OrderWay.SetSelectItem(c.OrderWay);
-
-             
         }
         public void BindDDLMore()
         {
             Attr attr = this.HisEn.EnMap.GetAttrByKey(this.ContrastKey);
-
             string srip = "";
             string path = this.Request.ApplicationPath;
             this.UCBtn1.Clear();
@@ -257,10 +252,10 @@ namespace BP.Web.Comm
                 return;
 
             srip = "javascript:HalperOfDDL('" + path + "/','" + attr.UIBindKey + "','" + attr.UIRefKeyValue + "','" + attr.UIRefKeyText + "','" + this.DDL_M1.ClientID.ToString() + "');";
-            this.UCBtn1.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M1.ID + "'  ></td>");
+            this.UCBtn1.Add("<input class=Btn type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M1.ID + "'  ></td>");
 
             srip = "javascript:HalperOfDDL('" + path + "/','" + attr.UIBindKey + "','" + attr.UIRefKeyValue + "','" + attr.UIRefKeyText + "','" + this.DDL_M2.ClientID.ToString() + "');";
-            this.UCBtn2.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M2.ID + "'  ></td>");
+            this.UCBtn2.Add("<input class=Btn type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M2.ID + "'  ></td>");
 
         }
 		public void BindContrastKey(Map map)

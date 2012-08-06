@@ -194,6 +194,7 @@ public partial class Comm_Batch : WebPage
             Button btn = new Button();
             btn.ID = "Btn_" + rm.Index;
             btn.Text = rm.Title;
+            btn.CssClass = "Btn";
             if (rm.Warning == null)
                 btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗？") + "');";
             else
@@ -208,6 +209,8 @@ public partial class Comm_Batch : WebPage
         {
             Button btn = new Button();
             btn.ID = "Btn_Del";
+            btn.CssClass = "Btn";
+
             btn.Text = this.ToE("Del", "删除");
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             btn.Attributes["class"] = "Button";
@@ -234,6 +237,8 @@ public partial class Comm_Batch : WebPage
             {
                 Button btnM = new Button();
                 btnM.ID = "Btn_Move";
+                btnM.CssClass = "Btn";
+
                 btnM.Text = this.ToE("MoveTo", "移动到");
                 btnM.Attributes["onclick"] = "return confirm('" + this.ToE("AYS", "您确实要移动吗？") + "');";
                 this.UCSys3.Add("&nbsp;&nbsp;");
@@ -266,6 +271,8 @@ public partial class Comm_Batch : WebPage
                     foreach (SysEnum se in ses)
                     {
                         Button btn = new Button();
+                        btn.CssClass = "Btn";
+
                         btn.ID = "Btn_Move_" + se.IntKey;
                         btn.Text = this.ToE("Set", "设置") + ":" + se.Lab;
                         btn.Attributes["onclick"] = "return confirm('您确实要执行设置[" + se.Lab + "]吗？');";
@@ -281,6 +288,7 @@ public partial class Comm_Batch : WebPage
                     foreach (EntityNoName en1 in ens1)
                     {
                         Button btn = new Button();
+                        btn.CssClass = "Btn";
                         btn.ID = "Btn_Move_" + en1.No;
                         btn.Text = "设置:" + en1.Name;
                         btn.Attributes["onclick"] = "return confirm('您确实要设置[" + en1.Name + "]吗？');";

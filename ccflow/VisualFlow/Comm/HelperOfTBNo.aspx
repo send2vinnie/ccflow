@@ -33,7 +33,7 @@
                     关键字:<asp:TextBox ID="TextBox1" runat="server" Width="133px"></asp:TextBox>
                     <asp:DropDownList ID="DropDownList1" runat="server">
                     </asp:DropDownList>
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="  查  找  " /></td>
+                    <asp:Button ID="Button1" class=Btn runat="server" OnClick="Button1_Click" Text="  查  找  " /></td>
             </tr>
             <tr>
                 <td>

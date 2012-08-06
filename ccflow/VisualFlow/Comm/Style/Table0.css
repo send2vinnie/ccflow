@@ -13,6 +13,26 @@ table
     margin-bottom: 0px;
 }
 
+/*  时学业添加 开始位置 */
+a:link {
+color:#336699; 
+font-size:14px;
+font-weight:bold;
+}
+
+a:visited {
+color:#336699;
+font-size:14px;
+font-weight:bold;
+}
+
+a:hover {
+color:#336699;
+font-size:14px;
+font-weight:bold;
+}
+/*  时学业添加 结束位置 */
+
 th, .Title
 {
     font-size: 14px;
@@ -76,10 +96,10 @@ td input
 
 .TBcalendar
 {
-    background-position: right center;
-    background-image: url('Img/calendar.gif');
-    background-repeat: no-repeat;
-	    text-align: left;
+    background-position: left center;
+    border-style: none none dotted none;
+    border-width: 1px;
+    border-color: #003366;
 }
 
 caption,.TitleMsg
@@ -112,7 +132,7 @@ height:20px;
 line-height:20px;
 }
 
-table input[type="textbox"]
+table11 input11[type="textbox11111"]
 {
     border-top-width: 0px;
     border-right-width: 0px;
@@ -141,16 +161,16 @@ table input[type="textbox"]
 {
     border-style: none none dotted none;
     border-width: 1px;
-    border-color: #CCCCCC;
+    border-color: #003366;
     overflow: visible;
     width: 100%;
-    margin: 0px;
-    padding: 0px;
     word-break: keep-all;
+    font-size: 14px;
 }
 
+
 /*  input 类型风格 */
-input[type="button"], .Btn, input[type="submit"]
+.Btn
 {
     padding: 0px 6px 0px 6px;
     margin: 1px 2px 0px 2px;
@@ -165,6 +185,11 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     cursor: hand;
     color: black;
     border-bottom: #002D96 1px solid;
+}
+
+button
+{
+    background-color: #00FFFF;
 }
 
 
@@ -317,4 +342,4 @@ Img
 {
     background-color:InfoBackground;
 }
-  
+   

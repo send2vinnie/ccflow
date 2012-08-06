@@ -85,6 +85,8 @@ public partial class Comm_SelectMVals : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " OK ";
+        btn.CssClass = "Btn";
+
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
     }
@@ -118,6 +120,7 @@ public partial class Comm_SelectMVals : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " O K ";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add("&nbsp;&nbsp;&nbsp;");
         this.Pub1.Add(btn);

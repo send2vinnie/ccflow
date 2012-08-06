@@ -158,6 +158,7 @@ namespace BP.Web.Comm
                 this.UCEn1.BindAttrs(rm.HisAttrs);
             }
             Button btn = new Button();
+            btn.CssClass = "Btn";
             btn.Text = "功能执行";
             if (string.IsNullOrEmpty(rm.Warning) == false)
             {
@@ -177,7 +178,7 @@ namespace BP.Web.Comm
 
             this.UCEn1.Add(btn);
 
-            this.UCEn1.Add("<input type=button onclick='window.close();' value='关闭(Esc)' />");
+            this.UCEn1.Add("<input type=button class=Btn onclick='window.close();' value='关闭(Esc)' />");
             this.UCEn1.AddFieldSetEnd();
         }
 

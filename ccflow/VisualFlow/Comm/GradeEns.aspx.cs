@@ -47,6 +47,7 @@ public partial class Comm_GradeEns : WebPage
         Button btn = new Button();
         btn = new Button();
         btn.ID = "Btn_Del";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Del", "删除");
         btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
         btn.Click += new EventHandler(btn_Del_Click);
@@ -60,12 +61,14 @@ public partial class Comm_GradeEns : WebPage
         btn = new Button();
         btn.ID = "Btn_Insert";
         btn.Text = "增加下级";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Insert_Click);
         this.UCSys1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_InsertUp";
         btn.Text = "增加同级";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_InsertSameLevel_Click);
         this.UCSys1.Add(btn);
         #endregion 按钮
@@ -215,6 +218,7 @@ public partial class Comm_GradeEns : WebPage
         btn = new Button();
         btn.ID = "Btn_Del";
         btn.Text = "批量删除";
+        btn.CssClass = "Btn";
         btn.Attributes["onclick"] = "return window.confirm('您确定要删除吗？');";
         btn.Click += new EventHandler(btn_Del_Click);
         this.UCSys1.Add(btn);
