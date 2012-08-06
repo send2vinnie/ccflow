@@ -77,10 +77,10 @@
     </tr>
     <tr><td colspan="2">
      <asp:TextBox ID="txtPhotoUrl" runat="server"></asp:TextBox>
-     <asp:Button ID="btnSubmit" runat="server" Text="保 存" 
+     <asp:Button ID="btnSubmit" class=Btn runat="server" Text="保 存" 
             onclick="btnSubmit_Click"  />
     &nbsp;&nbsp;
-    <asp:Button ID="btnCancle" runat="server" Text="取 消"  
+    <asp:Button ID="btnCancle" runat="server" class=Btn Text="取 消"  
             onclick="btnCancle_Click" />
                </td></tr>
     </table>

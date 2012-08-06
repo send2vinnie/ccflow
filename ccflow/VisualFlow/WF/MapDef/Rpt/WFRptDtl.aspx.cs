@@ -124,6 +124,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "插入到报表";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.AddTD(btn);
         this.Pub1.AddTREnd();

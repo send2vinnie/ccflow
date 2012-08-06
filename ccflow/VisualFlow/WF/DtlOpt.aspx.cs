@@ -134,6 +134,7 @@ public partial class WF_DtlOpt : WebPage
 
             Button btn = new Button();
             btn.Text = "导入";
+            btn.CssClass = "Btn";
             btn.ID = "Btn_" + dtl.No;
             btn.Click += new EventHandler(btn_Click);
             this.Pub1.Add(btn);
@@ -356,6 +357,7 @@ public partial class WF_DtlOpt : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Delete";
+        btn.CssClass = "Btn";
         btn.Text = "批量删除";
         btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗？") + "');";
         btn.Click += new EventHandler(btn_DelUnPass_Click);
@@ -363,12 +365,14 @@ public partial class WF_DtlOpt : WebPage
 
         btn = new Button();
         btn.ID = "Btn_Imp";
+        btn.CssClass = "Btn";
         btn.Text = "导入并重新编辑(追加方式)";
         btn.Click += new EventHandler(btn_Imp_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_ImpClear";
+        btn.CssClass = "Btn";
         btn.Text = "导入并重新编辑(清空方式)";
         btn.Click += new EventHandler(btn_Imp_Click);
         this.Pub1.Add(btn);

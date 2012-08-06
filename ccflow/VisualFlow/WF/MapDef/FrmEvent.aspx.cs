@@ -105,6 +105,7 @@ public partial class WF_MapDef_FrmEvent : WebPage
         Button btn = new Button();
         btn.Click += new EventHandler(btn_Click);
         btn.Text = " Save ";
+        btn.CssClass = "Btn";
         this.Pub2.Add(btn);
     }
     void btn_Click(object sender, EventArgs e)

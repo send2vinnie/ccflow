@@ -140,6 +140,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         Button btn = new Button();
         btn.ID = "Btn_s";
         btn.Text = "下一步";
+        btn.CssClass = "Btn";
         btn.UseSubmitBehavior = false;
         btn.OnClientClick = "this.disabled=true;";
         btn.Click += new EventHandler(btn_Click);

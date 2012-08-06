@@ -113,6 +113,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
 
         Button btn = new Button();
         btn.Text = "查询";
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Search";
         btn.Click += new EventHandler(btn_Click);
         tb.Attributes["onfocus"] = "WdatePicker();";
@@ -120,6 +121,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
 
         btn = new Button();
         btn.Text = "导出Excel";
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Excel";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);

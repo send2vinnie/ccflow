@@ -119,17 +119,21 @@ public partial class WF_Admin_listen : WebPage
         Button btn = new Button();
         btn.Text = this.ToE("Save", "保存");
         btn.ID = "Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.Text = this.ToE("SaveAndNew", "保存并新建");
         btn.ID = "New";
+
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.Text = this.ToE("Del", "删除") ;
+        btn.CssClass = "Btn";
         btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
         btn.Click += new EventHandler(btn_Del_Click);
         if (this.RefOID == 0)

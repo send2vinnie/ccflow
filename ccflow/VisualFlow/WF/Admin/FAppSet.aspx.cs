@@ -84,6 +84,7 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.Add("<TD class=TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " "+this.ToE("Save","保存")+" ";
         this.Ucsys1.Add(btn);
         btn.Click += new EventHandler(btn_Click);
@@ -92,6 +93,7 @@ public partial class WF_Admin_FApp : WebPage
         {
             btn = new Button();
             btn.ID = "Btn_Del";
+            btn.CssClass = "Btn";
             btn.Text = " " + this.ToE("Del", "删除") + " ";
             this.Ucsys1.Add(btn);
             btn.Attributes["onclick"] += " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";

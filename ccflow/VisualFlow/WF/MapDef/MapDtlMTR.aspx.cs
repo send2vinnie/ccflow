@@ -31,6 +31,7 @@ public partial class WF_MapDef_MapDtlMTR : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = "保存";
         btn.OnClientClick += "javascript:Rep();";
        // btn.Attributes["onclick"] = "return Rep('" + tb.ClientID + "');";

@@ -184,6 +184,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             Button btn = new Button();
             btn.Text = "上传";
             btn.ID = "Btn_Upload";
+            btn.CssClass = "Btn";
             btn.Click += new EventHandler(btn_Click);
             this.Pub1.Add(btn);
             this.Pub1.AddTDEnd();

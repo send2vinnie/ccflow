@@ -367,12 +367,14 @@ public partial class WF_MapDef_MapFrame : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("SaveAndClose", "保存并关闭") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
@@ -381,6 +383,7 @@ public partial class WF_MapDef_MapFrame : WebPage
         {
             btn = new Button();
             btn.ID = "Btn_Del";
+            btn.CssClass = "Btn";
             btn.Text = this.ToE("Del", "删除"); // "删除";
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             btn.Click += new EventHandler(btn_Del_Click);
@@ -388,6 +391,7 @@ public partial class WF_MapDef_MapFrame : WebPage
 
             btn = new Button();
             btn.ID = "Btn_New";
+            btn.CssClass = "Btn";
             btn.Text = this.ToE("New", "新建"); // "删除";
             btn.Click += new EventHandler(btn_New_Click);
             this.Pub1.Add(btn);

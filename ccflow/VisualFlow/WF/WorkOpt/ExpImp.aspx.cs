@@ -74,10 +74,12 @@ public partial class WF_Opt_ExpImp : WebPage
 
             Button btn = new Button();
             btn.Text = "导入";
+            btn.CssClass = "Btn";
             btn.ID = "Btn_" + dtl.No;
             btn.Click += new EventHandler(btn_Click);
             this.Pub2.Add(btn);
             btn = new Button();
+            btn.CssClass = "Btn";
             btn.Text = "下载数据模板";
             btn.ID = "Btn_Exp" + dtl.No;
             btn.Click += new EventHandler(btn_Exp_Click);

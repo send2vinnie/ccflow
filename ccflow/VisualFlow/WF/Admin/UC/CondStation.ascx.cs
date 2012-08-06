@@ -18,7 +18,6 @@ using BP.WF;
 
 public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
 {
-
     #region 属性
     /// <summary>
     /// 主键
@@ -119,7 +118,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         }
     }
     #endregion 属性
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Request.QueryString["DoType"] == "Del")
@@ -144,39 +142,21 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
 
-      //  this.Pub1.AddFieldSet("岗位类型:条件设置");
-
-       // this.Pub1.AddB(this.ToE("Node", "选择节点"));
-       //// this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> <br>要计算的节点:");
-       // Nodes nds = new Nodes(this.FK_Flow);
-       // Nodes ndsN = new Nodes();
-       // foreach (BP.WF.Node mynd in nds)
-       // {
-       //     ndsN.AddEntity(mynd);
-       // }
-       // DDL ddl = new DDL();
-       // ddl.ID = "DDL_Node";
-       // ddl.BindEntities(ndsN, "NodeID", "Name");
-       // if (this.FK_Node==0)
-       // ddl.SetSelectItem( cond.FK_Node );
-       // else
-       //     ddl.SetSelectItem(this.FK_Node);
-       // cond.OperatorValue = cond.OperatorValue + "@";
-       // ddl.AutoPostBack = true;
-       // ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-       // this.Pub1.Add(ddl);
-
-        this.Pub1.AddTable(); 
+        this.Pub1.AddTable("width=50%"); 
         SysEnums ses = new SysEnums("StaGrade");
         Stations sts = new Stations();
         sts.RetrieveAll();
         foreach (SysEnum se in ses)
         {
             this.Pub1.AddTR();
-            this.Pub1.AddTDTitle("colspan=4", se.Lab);
+            CheckBox mycb = new CheckBox();
+            mycb.Text = se.Lab;
+            mycb.ID = "CB_s_d" + se.IntKey;
+            this.Pub1.AddTDTitle("colspan=4", mycb);
             this.Pub1.AddTREnd();
 
             int idx = -1;
+            string ctlIDs = "";
             foreach (Station st in sts)
             {
                 if (st.StaGrade != se.IntKey)
@@ -188,6 +168,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
 
                 CheckBox cb = new CheckBox();
                 cb.ID = "CB_" + st.No;
+                ctlIDs += cb.ID + ",";
                 cb.Text = st.Name;
                 if (cond.OperatorValue.ToString().Contains("@" + st.No+"@"))
                     cb.Checked = true;
@@ -200,6 +181,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
                     this.Pub1.AddTREnd();
                 }
             }
+            mycb.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
 
             switch (idx)
             {
@@ -225,6 +207,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         this.Pub1.Add("<TD class=TD colspan=4 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Save", " Save ");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);

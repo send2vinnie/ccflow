@@ -181,11 +181,13 @@ public partial class WF_MapDef_MapM2M : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_SaveAndClose";
         btn.Text = " " + this.ToE("SaveAndClose", "保存并关闭") + " ";
         btn.Click += new EventHandler(btn_Save_Click);
@@ -194,6 +196,7 @@ public partial class WF_MapDef_MapM2M : WebPage
         if (m2m.IsExits)
         {
             btn = new Button();
+            btn.CssClass = "Btn";
             btn.ID = "Btn_Del";
             btn.Text = this.ToE("Del", "删除");
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";

@@ -145,11 +145,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddHR();
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
+        mybtn.CssClass = "Btn";
         mybtn.Text = "保存";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullM2M_Click);
         this.Pub2.Add(mybtn);
 
         mybtn = new Button();
+        mybtn.CssClass = "Btn";
         mybtn.ID = "Btn_Cancel";
         mybtn.Text = "取消";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullM2M_Click);
@@ -236,6 +238,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddHR();
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
+        mybtn.CssClass = "Btn";
         mybtn.Text = "保存";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullDtl_Click);
         this.Pub2.Add(mybtn);
@@ -296,6 +299,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTableEndWithHR();
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
+        mybtn.CssClass = "Btn";
         mybtn.Text = "保存";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullDtl_Click);
         this.Pub2.Add(mybtn);
@@ -356,11 +360,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
+        mybtn.CssClass = "Btn";
         mybtn.Text = "保存";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullJilian_Click);
         this.Pub2.Add(mybtn);
 
         mybtn = new Button();
+        mybtn.CssClass = "Btn";
         mybtn.ID = "Btn_Cancel";
         mybtn.Text = "取消";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullJilian_Click);
@@ -589,6 +595,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = "Save";
         btn.Click += new EventHandler(BindLinkEdit_Click);
         this.Pub2.AddTR();
@@ -597,6 +604,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         {
             btn = new Button();
             btn.ID = "Btn_Del";
+            btn.CssClass = "Btn";
             btn.Text = "Delete";
             btn.Click += new EventHandler(BindLinkEdit_Click);
             btn.Attributes["onclick"] = "return window.confirm('您确定要删除吗？');";
@@ -704,6 +712,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
 
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Save";
         btn.Text = " Save ";
         btn.Click += new EventHandler(btn_SavePageLoadFull_Click);
@@ -814,6 +823,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddBR();
             Button btn = new Button();
             btn.ID = "Btn_Save_AutoFullDLL";
+            btn.CssClass = "Btn";
             btn.Text = " 保 存 ";
             btn.Click += new EventHandler(btn_Save_AutoFullDLL_Click);
             this.Pub2.Add(btn);
@@ -1080,6 +1090,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTRSum();
         Button btn = new Button();
         btn.ID = "BtnSave";
+        btn.CssClass = "Btn";
         btn.Text = "Save";
         btn.Click += new EventHandler(btn_SavePopVal_Click);
         this.Pub2.AddTD("colspan=3", btn);
@@ -1160,6 +1171,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTRSum();
         Button btn = new Button();
         btn.ID = "BtnSave";
+        btn.CssClass = "Btn";
         btn.Text = "Save";
         btn.Click += new EventHandler(btn_SaveInputCheck_Click);
 
@@ -1288,6 +1300,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTDBegin("colspan=2");
 
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "BtnSave";
         btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_SaveAutoFull_Click);
@@ -1388,6 +1401,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddTRSum();
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "BtnSave";
         btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_SaveAutoFull_Click);
@@ -1535,6 +1549,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddTRSum();
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "BtnSave";
         btn.Text = "Save";
         btn.Click += new EventHandler(btn_SaveJiLian_Click);

@@ -126,6 +126,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddTR();
         this.AddTDTitle("");
         Button btnSaveAthFlows = new Button();
+        btnSaveAthFlows.CssClass = "Btn";
         btnSaveAthFlows.ID = "Btn_Save";
         btnSaveAthFlows.Text = "Save";
         btnSaveAthFlows.Click += new EventHandler(btnSaveAthFlows_Click);
@@ -272,6 +273,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = "Save";
         btn.Click+=new EventHandler(btn_SaveSkin_Click);
         this.AddFieldSetEnd(); // ("风格设置");
@@ -984,6 +986,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         Button btnSaveIt = new Button();
         btnSaveIt.ID = "Btn_Save";
+        btnSaveIt.CssClass = "Btn";
         btnSaveIt.Text = "Save";
         btnSaveIt.Click += new EventHandler(btnSaveIt_Click);
         this.AddTR();

@@ -134,6 +134,7 @@ public partial class WF_Admin_Action : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = "  Save  ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub2.Add(btn);

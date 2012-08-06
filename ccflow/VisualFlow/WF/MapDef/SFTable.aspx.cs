@@ -100,6 +100,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         this.Ucsys1.Add("<TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         if (this.RefNo == null)
             btn.Text =  this.ToE("Create","创建");
         else
@@ -112,6 +113,8 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         {
             btn = new Button();
             btn.ID = "Btn_Edit";
+            btn.CssClass = "Btn";
+
             btn.Text = this.ToE("EditData", "编辑数据"); // "编辑数据"
             if (this.RefNo == null)
                 btn.Enabled = false;
@@ -124,6 +127,8 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
 
         btn = new Button();
         btn.ID = "Btn_Add";
+        btn.CssClass = "Btn";
+
         btn.Text = this.ToE("AddToSheet", "添加到表单"); ; // "添加到表单";
         btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
         btn.Click += new EventHandler(btn_Add_Click);
@@ -133,6 +138,8 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         this.Ucsys1.Add(btn);
         btn = new Button();
         btn.ID = "Btn_Del";
+        btn.CssClass = "Btn";
+
         btn.Text = this.ToE("Del", "删除");
         btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
         if (this.RefNo == null)

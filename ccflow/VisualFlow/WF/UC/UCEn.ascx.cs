@@ -1732,15 +1732,16 @@ namespace BP.Web.Comm.UC.WF
                 switch (btn.HisBtnEventType)
                 {
                     case BtnEventType.Disable:
-                        this.Add("<input type=button value='" + btn.Text.Replace("&nbsp;", " ") + "' disabled='disabled'/>");
+                        this.Add("<input type=button class=Btn value='" + btn.Text.Replace("&nbsp;", " ") + "' disabled='disabled'/>");
                         break;
                     case BtnEventType.RunExe:
                     case BtnEventType.RunJS:
-                        this.Add("<input type=button value=\"" + btn.Text.Replace("&nbsp;", " ") + "\" enable=true onclick=\"" + btn.EventContext.Replace("~", "'") + "\" />");
+                        this.Add("<input type=button class=Btn value=\"" + btn.Text.Replace("&nbsp;", " ") + "\" enable=true onclick=\"" + btn.EventContext.Replace("~", "'") + "\" />");
                         break;
                     default:
                         Button myBtn = new Button();
                         myBtn.Enabled = true;
+                        myBtn.CssClass = "Btn";
                         myBtn.ID = btn.MyPK;
                         myBtn.Text = btn.Text.Replace("&nbsp;", " ");
                         myBtn.Click += new EventHandler(myBtn_Click);
@@ -2231,6 +2232,8 @@ namespace BP.Web.Comm.UC.WF
                     this.Add(fu);
 
                     Button mybtn = new Button();
+                    mybtn.CssClass = "Btn";
+
                     if (ath.IsUpload && this.IsReadonly==false)
                     {
                         mybtn.ID = ath.MyPK;
@@ -2245,6 +2248,8 @@ namespace BP.Web.Comm.UC.WF
                     {
                         mybtn = new Button();
                         mybtn.Text = "下载";
+                        mybtn.CssClass = "Btn";
+
                         mybtn.ID = "Btn_Download_" + ath.MyPK + "_" + this.HisEn.PKVal;
                         mybtn.Click += new EventHandler(btnUpload_Click);
                         mybtn.CssClass = "bg";
@@ -2258,6 +2263,7 @@ namespace BP.Web.Comm.UC.WF
                     if (ath.IsDelete && this.IsReadonly==false)
                     {
                         mybtn = new Button();
+                        mybtn.CssClass = "Btn";
                         mybtn.Text = "删除";
                         mybtn.Attributes["onclick"] = " return confirm('您确定要执行删除吗？');";
                         mybtn.ID = "Btn_Delete_" + ath.MyPK + "_" + this.HisEn.PKVal;
@@ -3373,6 +3379,7 @@ namespace BP.Web.Comm.UC.WF
                 if (fileExt != "")
                 {
                     Button btn1 = new Button();
+                    btn1.CssClass = "Btn";
                     btn1.Text = "移除";
                     btn1.ID = "Btn_DelFile";
                     btn1.Attributes.Add("class", "Btn1");
@@ -3392,9 +3399,12 @@ namespace BP.Web.Comm.UC.WF
 
 
             Button btn = new Button();
+            btn.CssClass = "Btn";
+
             if (en.HisUAC.IsInsert)
             {
                 btn = new Button();
+                btn.CssClass = "Btn";
                 btn.ID = "Btn_New";
                 btn.Text = "  新 建  ";
                 btn.Attributes.Add("class", "Btn1");
@@ -3406,6 +3416,7 @@ namespace BP.Web.Comm.UC.WF
             if (en.HisUAC.IsUpdate)
             {
                 btn = new Button();
+                btn.CssClass = "Btn";
                 btn.ID = "Btn_Save";
                 btn.Text = "  保  存  ";
                 btn.Attributes.Add("class", "Btn1");
@@ -3418,6 +3429,7 @@ namespace BP.Web.Comm.UC.WF
             if (en.HisUAC.IsDelete)
             {
                 btn = new Button();
+                btn.CssClass = "Btn";
                 btn.ID = "Btn_Del";
                 btn.Text = "  删  除  ";
                 btn.Attributes.Add("class", "Btn1");
@@ -3427,7 +3439,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("&nbsp;");
             }
 
-            this.Add("&nbsp;<input class='Btn1' type=button onclick='javascript:window.close()' value='  关  闭  ' />");
+            this.Add("&nbsp;<input class='Btn' type=button onclick='javascript:window.close()' value='  关  闭  ' />");
 
             this.Add("</TD>");
             this.AddTREnd();
@@ -3515,8 +3527,8 @@ namespace BP.Web.Comm.UC.WF
 
                                     if (this.IsExit("TBF_" + attr.Key))
                                     {
-                                        FredCK.FCKeditorV2.FCKeditor fck = (FredCK.FCKeditorV2.FCKeditor)this.FindControl("TB_" + attr.Key);
-                                        en.SetValByKey(attr.Key, fck.Value);
+                                        //FredCK.FCKeditorV2.FCKeditor fck = (FredCK.FCKeditorV2.FCKeditor)this.FindControl("TB_" + attr.Key);
+                                        //en.SetValByKey(attr.Key, fck.Value);
                                         continue;
                                     }
                                 }

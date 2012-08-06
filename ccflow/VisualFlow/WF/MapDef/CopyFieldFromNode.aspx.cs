@@ -179,6 +179,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
         this.Pub2.AddTableEndWithBR();
         Button btn = new Button();
+        btn.CssClass = "Btn";
         if (isHave == false)
         {
             return;

@@ -210,6 +210,7 @@ public partial class WF_WorkOpt_SelectEmps : BP.Web.WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_OK";
+        btn.CssClass = "Btn";
         btn.Text = "确定";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);

@@ -119,11 +119,13 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         this.Pub1.Add("<TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Add";
         btn.Text = this.ToE("AddToSheet", "添加到表单"); // "添加到表单";
         btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
@@ -133,6 +135,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         this.Pub1.Add(btn);
 
         btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Del";
         btn.Text = " " + this.ToE("Del", "删除") + " ";
         btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";

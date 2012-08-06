@@ -167,12 +167,14 @@ public partial class WF_Admin_Personalize_GetTask : WebPage
         Button btn = new Button();
         btn.Text = "Save";
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.Text = "Cancel";
         btn.ID = "Btn_Cancel";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
@@ -185,6 +187,7 @@ public partial class WF_Admin_Personalize_GetTask : WebPage
     void btn_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
+
         if (btn.ID == "Btn_Cancel")
         {
             this.WinClose();

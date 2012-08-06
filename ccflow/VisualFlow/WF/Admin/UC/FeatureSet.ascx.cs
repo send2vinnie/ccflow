@@ -161,6 +161,7 @@ public partial class WF_Admin_UC_FeatureSet : BP.Web.UC.UCBase3
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " Save ";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub2.Add(btn);
         this.Pub2.AddFieldSetEnd();

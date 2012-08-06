@@ -414,12 +414,14 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
         this.Pub1.AddTDBegin("aligen=center");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("SaveAndClose", "保存并关闭") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);

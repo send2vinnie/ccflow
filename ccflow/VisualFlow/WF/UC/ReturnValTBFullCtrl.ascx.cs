@@ -53,6 +53,7 @@ public partial class WF_UC_ReturnValTBFullCtrl : BP.Web.UC.UCBase3
         this.Add(tb);
 
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Search";
         btn.Text = "查找";
         btn.Click += new EventHandler(btn_Search_Click);
@@ -91,6 +92,7 @@ public partial class WF_UC_ReturnValTBFullCtrl : BP.Web.UC.UCBase3
         this.AddTableEndWithHR();
         btn = new Button();
         btn.ID = "s";
+        btn.CssClass = "Btn";
         btn.Text = "确定";
         btn.Click += new EventHandler(btn_Click);
         this.Add(btn);

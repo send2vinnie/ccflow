@@ -186,6 +186,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
     }
     public MapData HisMD = null;
     #endregion
+
     protected void Page_Load(object sender, EventArgs e)
     {
         this.HisMD = new MapData(this.EnsName);
@@ -198,7 +199,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
             Entity en = this.HisEns.GetNewEntity;
             Map map = en.EnMap;
             this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
-      //      this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
+            //      this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
             searchs = map.SearchAttrs;
             string defVal = "";
             System.Data.DataTable dt = null;
@@ -222,7 +223,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                         mydll.SetSelectItem(defVal);
                         break;
                     case "FlowStarter":
-                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
+                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
                         mydll.Items.Clear();
                         mydll.Items.Add(new ListItem("=>发起人", "all"));
                         foreach (DataRow dr in dt.Rows)
@@ -235,7 +236,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                     case "FK_Dept":
                         if (WebUser.No != "admin")
                         {
-                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "')");
                             if (dt.Rows.Count == 0)
                             {
                                 this.UCSys1.AddMsgOfWarning("提示", "<h2>系统管理员没有给您设置查询权限。</h2>");
@@ -268,7 +269,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
             Entity en = this.HisEns.GetNewEntity;
             Map map = en.EnMap;
             this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
-         //   this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
+            //   this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
             searchs = map.SearchAttrs;
             string defVal = "";
             System.Data.DataTable dt = null;
@@ -292,7 +293,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                         mydll.SetSelectItem(defVal);
                         break;
                     case "FlowStarter":
-                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
+                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
                         mydll.Items.Clear();
                         mydll.Items.Add(new ListItem("=>发起人", "all"));
                         foreach (DataRow dr in dt.Rows)
@@ -305,7 +306,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                     case "FK_Dept":
                         if (WebUser.No != "admin")
                         {
-                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Flow='"+this.FK_Flow+"' AND FK_Emp='" + WebUser.No + "')");
                             if (dt.Rows.Count == 0)
                             {
                                 this.UCSys1.AddMsgOfWarning("提示", "<h2>系统管理员没有给您设置查询权限。</h2>");
@@ -333,7 +334,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
             #endregion 处理查询权限
 
             this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-          //  this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            //  this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
         }
         #endregion 处理查询设的默认。
 
@@ -456,7 +457,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                     mydll.SetSelectItem(defVal);
                     break;
                 case "FlowStarter":
-                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
+                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
                     mydll.Items.Clear();
                     mydll.Items.Add(new ListItem("=>发起人", "all"));
                     foreach (DataRow dr in dt.Rows)
@@ -503,7 +504,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         #endregion
 
         this.ToolBar1.AddSpt("spt1");
-        this.ToolBar1.AddBtn(NamesOfBtn.Excel,"导出到Excel");
+        this.ToolBar1.AddBtn(NamesOfBtn.Excel, "导出到Excel");
 
         #region 增加排序
         if (this.IsPostBack == false)
@@ -529,6 +530,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
 
         Attrs attrs = this.HisMD.AttrsInTableEns;
         attrs.AddTBInt("MyNum", 1, "流程数量", true, true);
+
         this.UCSys2.Add("<table border=0 cellPadding=0 BorderStyle=None Width=100%  >");
         foreach (Attr attr in attrs)
         {
@@ -924,14 +926,13 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         #endregion
 
         #region 加上 where like 条件
-        try
+        if (en.EnMap.IsShowSearchKey == true && this.ToolBar1.GetTBByID("TB_Key").Text.Trim().Length > 1)
         {
             string key = this.ToolBar1.GetTBByID("TB_Key").Text.Trim();
             if (key.Length > 1)
             {
                 string whereLike = "";
-
-                bool isAddAnd = false;
+                bool isAddOr = false;
                 foreach (Attr likeKey in attrs)
                 {
                     if (likeKey.IsNum)
@@ -950,22 +951,19 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                     }
 
 
-                    if (isAddAnd == false)
+                    if (isAddOr == false)
                     {
-                        isAddAnd = true;
+                        isAddOr = true;
                         whereLike += "      " + likeKey.Field + " LIKE '%" + key + "%' ";
                     }
                     else
                     {
-                        whereLike += "   AND   " + likeKey.Field + " LIKE '%" + key + "%'";
+                        whereLike += "   OR   " + likeKey.Field + " LIKE '%" + key + "%'";
                     }
                 }
                 whereLike += "          ";
-                where += whereLike;
+                where += "(" + whereLike + ")";
             }
-        }
-        catch
-        {
         }
         #endregion
 
@@ -975,18 +973,25 @@ public partial class WF_Rpt_G : BP.Web.WebPage
             string dtFrom = this.ToolBar1.GetTBByID("TB_S_From").Text.Trim();
             string dtTo = this.ToolBar1.GetTBByID("TB_S_To").Text.Trim();
             string field = en.EnMap.DTSearchKey;
+            string addAnd = "";
+            if (en.EnMap.IsShowSearchKey && this.ToolBar1.GetTBByID("TB_Key").Text.Trim().Length > 0)
+                addAnd = " AND ";
+
             if (en.EnMap.DTSearchWay == DTSearchWay.ByDate)
             {
-                where += "( " + field + ">='" + dtFrom + " 01:01' AND " + field + "<='" + dtTo + " 23:59')     ";
+                where += addAnd + "( " + field + ">='" + dtFrom + " 01:01' AND " + field + "<='" + dtTo + " 23:59')     ";
             }
             else
             {
-                where += "(";
+                where += addAnd + "(";
                 where += field + " >='" + dtFrom + "' AND " + field + "<='" + dtTo + "'";
                 where += ")";
             }
         }
         #endregion
+
+        where = where.Replace("AND  AND", " AND ");
+        
 
         if (where == " WHERE ")
         {
@@ -1134,7 +1139,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
             this.UCSys1.Add("<td rowspan=2 class='Title'>ID</td>");
             foreach (Attr attr in AttrsOfGroup)
             {
-                this.UCSys1.Add("<td rowspan=2 class='Title'>" + attr.Desc + "</td>");
+                this.UCSys1.Add("<td rowspan=2 class='GroupTitle'>" + attr.Desc + "</td>");
             }
             // 增加数据列
             foreach (Attr attr in AttrsOfNum)
@@ -1142,11 +1147,11 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                 if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") != -1)
                 {
                     /*  如果本数据列 包含累计 */
-                    this.UCSys1.Add("<td  colspan=2 class='Title' >" + attr.Desc + "</td>");
+                    this.UCSys1.Add("<td  colspan=2 class='GroupTitle' >" + attr.Desc + "</td>");
                 }
                 else
                 {
-                    this.UCSys1.Add("<td  rowspan=2 class='Title' >" + attr.Desc + "</td>");
+                    this.UCSys1.Add("<td  rowspan=2 class='GroupTitle' >" + attr.Desc + "</td>");
                 }
             }
             this.UCSys1.AddTREnd();  // end 开始第一列
@@ -1157,15 +1162,15 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                 if (StateNumKey.IndexOf(attr.Key + "=AMOUNT") == -1)
                     continue;
 
-                this.UCSys1.Add("<td class='Title'>" + this.ToE("CrrMonth", "本月") + "</td>"); //本月 this.ToE("OrderCondErr")
-                this.UCSys1.Add("<td class='Title'>" + this.ToE("Amount", "累计") + "</td>"); //累计
+                this.UCSys1.Add("<td class='GroupTitle'>" + this.ToE("CrrMonth", "本月") + "</td>"); //本月 this.ToE("OrderCondErr")
+                this.UCSys1.Add("<td class='GroupTitle'>" + this.ToE("Amount", "累计") + "</td>"); //累计
             }
             this.UCSys1.AddTR();
         }
         else  /* 没有合计的情况 */
         {
             this.UCSys1.AddTR();
-            this.UCSys1.AddTDTitle("IDX");
+            this.UCSys1.AddTDGroupTitle("IDX");
 
             // 分组条件
             foreach (Attr attr in AttrsOfGroup)
@@ -1175,17 +1180,17 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                     switch (this.OrderWay)
                     {
                         case "Down":
-                            this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Up' >" + attr.Desc + "<img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                            this.UCSys1.AddTDGroupTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Up' >" + attr.Desc + "<img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
                             break;
                         case "Up":
                         default:
-                            this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "<img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                            this.UCSys1.AddTDGroupTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "<img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
                             break;
                     }
                 }
                 else
                 {
-                    this.UCSys1.AddTDTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "</a>");
+                    this.UCSys1.AddTDGroupTitle("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&OrderWay=Down' >" + attr.Desc + "</a>");
                 }
             }
 
@@ -1208,28 +1213,28 @@ public partial class WF_Rpt_G : BP.Web.WebPage
                     {
                         case "Down":
                             if (this.NumKey == attr.Key)
-                                this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                                this.UCSys1.AddTDGroupTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
                             else
-                                this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
+                                this.UCSys1.AddTDGroupTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&OrderWay=Up&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrDown.gif' border=0/></a>");
                             break;
                         case "Up":
                         default:
                             if (this.NumKey == attr.Key)
-                                this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                                this.UCSys1.AddTDGroupTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
                             else
-                                this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
+                                this.UCSys1.AddTDGroupTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&OrderBy=" + attr.Key + "&NumKey=" + attr.Key + "&OrderWay=Down&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/ArrUp.gif' border=0/></a>");
                             break;
                     }
                 }
                 else
                 {
                     if (this.NumKey == attr.Key)
-                        this.UCSys1.AddTDTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
+                        this.UCSys1.AddTDGroupTitle(lab + "<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
                     else
-                        this.UCSys1.AddTDTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&FK_Flow=" + this.FK_Flow + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
+                        this.UCSys1.AddTDGroupTitle("<a href=\"Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType + "&EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "\" >" + lab + "</a><a href='Group.aspx?EnsName=" + this.EnsName + "&NumKey=" + attr.Key + "&OrderBy=" + attr.Key + "&FK_Flow=" + this.FK_Flow + "' ><img src='" + this.Request.ApplicationPath + "/Images/ArrDownUp.gif' border=0/></a>");
                 }
             }
-            this.UCSys1.AddTDTitle("挖掘");
+            this.UCSys1.AddTDGroupTitle("挖掘");
             this.UCSys1.AddTREnd();
         }
         #endregion 生成表头
@@ -1237,6 +1242,18 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         #region 生成要查询条件
         string YSurl = "GroupDtl.aspx?EnsName=" + this.EnsName;
         string keys = "";
+
+        if (this.ToolBar1.FindControl("TB_S_From") != null)
+        {
+            YSurl += "&DTFrom=" + this.ToolBar1.GetTBByID("TB_S_From").Text;
+            YSurl += "&DTTo=" + this.ToolBar1.GetTBByID("TB_S_To").Text;
+        }
+        if (this.ToolBar1.FindControl("TB_Key") != null)
+        {
+            YSurl += "&Key=" + this.ToolBar1.GetTBByID("TB_Key").Text;
+        }
+      
+      
 
         // 分组的信息中是否包含部门？
         bool IsHaveFK_Dept = false;
@@ -1566,7 +1583,7 @@ public partial class WF_Rpt_G : BP.Web.WebPage
         this.UCSys1.AddTableEnd();
         #endregion 生成表体
 
-        #region 生成 图形
+        #region 生成图形
         //this.BPTabStrip1.Visible = true;
         ///this.CB_IsShowPict.Checked;
         //if (AttrsOfGroup.Count==1)
@@ -1639,11 +1656,10 @@ public partial class WF_Rpt_G : BP.Web.WebPage
 
                 this.UCSys3.AddBR("<img src='" + url + "' />");
 
-
-                url = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.UCGraphics.GenerChart(dt,
-                   colOfGroupField + "T", colOfGroupName,
-                   colOfNumField, colOfNumName1
-                   , "", chartHeight, chartWidth, ChartType.Pie);
+                //url = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.cGraphics.GenerChart(dt,
+                //   colOfGroupField + "T", colOfGroupName,
+                //   colOfNumField, colOfNumName1
+                //   , "", chartHeight, chartWidth, ChartType.Pie);
 
                 this.UCSys3.AddBR("<img src='" + url + "' />");
 

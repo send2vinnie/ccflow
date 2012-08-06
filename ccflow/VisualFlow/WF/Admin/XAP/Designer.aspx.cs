@@ -18,7 +18,14 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             msg = "@在检查数据库连接出现错误。";
- 
+
+
+            WorkerList wl12 = new WorkerList();
+            wl12.CheckPhysicsTable();
+
+            GenerWorkFlow gwfss = new GenerWorkFlow();
+            gwfss.CheckPhysicsTable();
+
             // 抄送.
             CCList cl = new CCList();
             cl.CheckPhysicsTable();

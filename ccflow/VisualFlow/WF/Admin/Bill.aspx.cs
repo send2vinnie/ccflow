@@ -113,6 +113,7 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddTRSum();
         this.Ucsys1.Add("<TD class=TD colspan=3 align=center>");
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Save";
         btn.Text = this.ToE("Save", "保存");
         this.Ucsys1.Add(btn);
@@ -124,6 +125,7 @@ public partial class WF_Admin_BillSet : WebPage
 
             btn = new Button();
             btn.ID = "Btn_Del";
+            btn.CssClass = "Btn";
             btn.Text = this.ToE("Del", "删除"); // "删除单据";
             this.Ucsys1.Add(btn);
             btn.Attributes["onclick"] += " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
@@ -299,6 +301,7 @@ public partial class WF_Admin_BillSet : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "Save";
+        btn.CssClass = "Btn";
         btn.Click+=new EventHandler(btn_SaveTypes_Click);
         this.Ucsys1.Add(btn);
     }

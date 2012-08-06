@@ -136,6 +136,7 @@ public partial class WF_MapDef_ExpImp : WebPage
         this.Pub1.AddTR();
         this.Pub1.AddTD();
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Save";
         btn.Text="Share It";
         btn.Click += new EventHandler(btn_ShareIt_Click);
@@ -174,6 +175,7 @@ public partial class WF_MapDef_ExpImp : WebPage
         Button btn = new Button();
         btn.Text = "导入";
         btn.ID = "Btn_Net";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Imp_Click);
         this.Pub1.Add(btn);
         this.Pub1.AddFieldSetEnd();
@@ -186,6 +188,7 @@ public partial class WF_MapDef_ExpImp : WebPage
         btn = new Button();
         btn.Text = "导入";
         btn.ID = "Btn_Local";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Imp_Click);
         this.Pub1.Add(btn);
         this.Pub1.AddFieldSetEnd();

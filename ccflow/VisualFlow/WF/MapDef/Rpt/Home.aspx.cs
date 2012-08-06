@@ -310,6 +310,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
         Button btn = new Button();
         btn.Text = " Save ";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_SelectColumns_Click);
         this.Pub2.Add(btn);
 
@@ -422,6 +423,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         Button btn = new Button();
         btn.Text = this.ToE("Save", "保存");
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_SearchCond_Click);
         this.Pub2.Add(btn);
         #endregion
@@ -475,7 +477,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         info += "<b>关于流程数据表:</b><br>";
         info += "流程数据是一个流程上所有节点表单字段合集组成的物理表，是以NDxxxRpt命名的，流程发起后就向这个物理表中增加一条数据。";
         info += "<br><b>如何进行权限控制:</b><br>";
-        info += "数据权限是以查询与分析的部门条件进行控制的，一个操作员能够查询那些部门的数据是管理员在系统中维护的，存放在Port_DeptFlowScorp物理表中。";
+        info += "数据权限是以查询与分析的部门条件进行控制的，一个操作员能够查询那些部门的数据是管理员在系统中维护的，存放在WF_DeptFlowSearch物理表中。";
         this.Pub2.Add(info);
         this.Pub2.AddULEnd();
         this.Pub2.AddFieldSetEnd();

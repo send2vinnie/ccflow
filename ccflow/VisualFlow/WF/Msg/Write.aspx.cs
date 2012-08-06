@@ -123,6 +123,7 @@ public partial class WF_Msg_Write : WebPage
 
         this.Pub1.AddTRSum();
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Send";
         btn.Text = "  发 送  ";
         btn.Click += new EventHandler(btn_Click);

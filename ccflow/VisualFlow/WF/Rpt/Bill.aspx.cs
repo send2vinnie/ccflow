@@ -126,7 +126,7 @@ public partial class WF_Rpt_Bill : WebPage
                         mydll.SetSelectItem(defVal);
                         break;
                     case "FlowStarter":
-                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM WF_Bill WHERE FlowStarter!='')");
+                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "') AND No IN (SELECT DISTINCT FlowStarter FROM WF_Bill WHERE FlowStarter!='')");
                         mydll.Items.Clear();
                         mydll.Items.Add(new ListItem("=>发起人", "all"));
                         foreach (DataRow dr in dt.Rows)

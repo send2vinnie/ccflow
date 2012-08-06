@@ -480,6 +480,7 @@ public partial class WF_MapDef_WFRpt : WebPage
 
         this.Pub1.AddHR();
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Save", "保存");
         btn.ID = "Btn_Save";
         btn.Click += new EventHandler(btn_Click);

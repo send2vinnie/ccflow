@@ -71,7 +71,7 @@
 <td>
 </td>
 <td colspan=1>
-    <asp:Button ID="Button1" runat="server" Text="Save" onclick="Button1_Click" />
+    <asp:Button ID="Button1"  CssClass="Btn" runat="server" Text="Save" onclick="Button1_Click" />
 </td>
 </tr>
 </table>

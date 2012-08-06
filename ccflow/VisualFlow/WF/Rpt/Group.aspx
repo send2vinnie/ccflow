@@ -39,10 +39,10 @@
                     </TD>
 				</TR>
 				<TR vAlign="top" height="100%">
-					<TD vAlign="top" noWrap width="18%"  >
+					<TD vAlign="top" noWrap width="18%" class=Left  >
 						<TABLE width="100%" cellspacing="1" style="border:1px #abcbe6 solid;">
 							<TR>
-								<TD border="0" class="GroupTitle" ><b><%=BP.Sys.Language.GetValByUserLang("ShowDoc","显示内容")%> </b></TD>
+								<TD border="0" class="Title" ><b>显示内容</b></TD>
 							</TR>
 							<tr>
 								<TD  style="font-size:12px; border:0px">
@@ -51,7 +51,7 @@
                                 </TD>
 							</TR>
                             <TR>
-								<TD border="0" class="GroupTitle" ><b>分析项目</b></TD>
+								<TD border="0" class="Title" ><b>分析项目</b></TD>
 							</TR>
 							<tr>
 								<TD nowarp=true align="left"  style="font-size:12px;" BorderStyle=None Width="100%"  >
@@ -59,7 +59,7 @@
                                 </TD>
 							</TR>
 							<TR>
-								<TD class="GroupTitle" >
+								<TD class="Title" >
 								<asp:CheckBox ID="CB_IsShowPict" runat="server" Text="显示图形" AutoPostBack=true Font-Bold="True" />
 								</TD>
 							</TR>

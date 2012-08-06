@@ -123,6 +123,7 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
         Button btn = new Button();
         btn.Text = "选择要设置的权限人员后:下一步";
         btn.ID = "Btn_Next";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Next_Click);
         this.Pub1.Add(btn);
     }
@@ -181,6 +182,7 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
         Button btn = new Button();
         btn.Text = " 保存设置 ";
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
     }

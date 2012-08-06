@@ -436,12 +436,14 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("SaveAndClose", "保存并关闭") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
@@ -456,6 +458,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
             btn = new Button();
             btn.ID = "Btn_Del";
+            btn.CssClass = "Btn";
             btn.Text = this.ToE("Del", "删除"); // "删除";
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             btn.Click += new EventHandler(btn_Del_Click);
@@ -464,12 +467,14 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
             btn = new Button();
             btn.ID = "Btn_New";
+            btn.CssClass = "Btn";
             btn.Text = this.ToE("New", "新建"); // "删除";
             btn.Click += new EventHandler(btn_New_Click);
             this.Pub1.Add(btn);
 
             btn = new Button();
             btn.ID = "Btn_MapExt";
+            btn.CssClass = "Btn";
             btn.Text = this.ToE("MapExt", "扩展设置"); // "删除";
 
             btn.Click += new EventHandler(btn_MapExt_Click);
@@ -478,6 +483,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
             if (dtl.IsEnableAthM)
             {
                 btn = new Button();
+                btn.CssClass = "Btn";
                 btn.ID = "Btn_IsEnableAthM";
                 btn.Text = "附件属性"; // "删除";
                 btn.Click += new EventHandler(btn_MapAth_Click);

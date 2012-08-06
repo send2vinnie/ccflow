@@ -195,6 +195,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         this.Pub1.Add("<TD class=TD colspan=4 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Save", " 保 存 ");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);

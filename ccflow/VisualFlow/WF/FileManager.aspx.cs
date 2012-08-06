@@ -186,6 +186,7 @@ public partial class WF_FileManager : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Submit";
+        btn.CssClass = "Btn";
         btn.Text = "上传文件";
         // btn.Attributes.Add("style", "Font-Size:XX-Small");
         btn.Click += new EventHandler(btn_Upload_Click);

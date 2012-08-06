@@ -331,7 +331,7 @@ public partial class WF_Accpter : WebPage
         Button btn = new Button();
         btn.Text = this.ToE("Save", "保存");
         btn.ID = "Btn_Save";
-        btn.CssClass = "Btn1";
+        btn.CssClass = "Btn";
         //btn.Width = 80;
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);

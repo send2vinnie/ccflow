@@ -74,6 +74,7 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
         this.AddTRSum();
         this.AddTD();
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Copy";
         btn.Text = this.ToE("Copy", "复制");
         btn.Click += new EventHandler(btn_Click);

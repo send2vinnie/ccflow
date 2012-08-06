@@ -50,7 +50,7 @@
 <body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"> 
     <form id="form1" runat="server">
      <uc2:Pub ID="Pub1" runat="server" />
-     <asp:Button ID="Button1" runat="server" Text="Save" Visible=true
+     <asp:Button ID="Button1" runat="server" Text="Save"  CssClass="Btn" Visible=true
          onclick="Button1_Click" />
     </form>
 </body>

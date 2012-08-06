@@ -260,18 +260,21 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         this.Pub1.Add("<TD colspan=4 >");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Save", " 保存 ");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("SaveAndClose",   "保存并关闭" );
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndNew";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("SaveAndNew", "保存并新建");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
@@ -279,6 +282,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
+            btn.CssClass = "Btn";
             btn.Text = this.ToE("AutoFull", "扩展设置");
             //  btn.Click += new EventHandler(btn_Save_Click);
             btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData="+mapAttr.FK_MapData+"',''); return false;";
@@ -288,6 +292,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
             {
                 btn = new Button();
                 btn.ID = "Btn_Del";
+                btn.CssClass = "Btn";
                 btn.Text = this.ToE("Del", "删除");
                 btn.Click += new EventHandler(btn_Save_Click);
                 btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";

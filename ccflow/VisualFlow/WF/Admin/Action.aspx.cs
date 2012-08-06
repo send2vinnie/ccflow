@@ -51,7 +51,6 @@ public partial class WF_Admin_Action : WebPage
         }
 
         this.Pub3.AddCaptionLeft("节点表单/节点/流程:事件");
-        this.Title = "设置:节点事件接口";
 
         FrmEvents ndevs = new FrmEvents();
         ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
@@ -113,7 +112,12 @@ public partial class WF_Admin_Action : WebPage
             mynde = new FrmEvent();
 
 
-        this.Pub2.AddFieldSet(myEnentXml.Name);
+        this.Title = "设置:事件接口=》" + myEnentXml.Name;
+
+        this.Pub2.AddH3(myEnentXml.Name);
+        this.Pub2.AddHR();
+
+        int col = 80;
 
         this.Pub2.Add("内容类型:");
         DDL ddl = new DDL();
@@ -125,9 +129,9 @@ public partial class WF_Admin_Action : WebPage
         this.Pub2.Add("&nbsp;要执行的内容<br>");
         TextBox tb = new TextBox();
         tb.ID = "TB_Doc";
-        tb.Columns = 60;
+        tb.Columns = col;
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 7;
+        tb.Rows = 10;
         tb.Text = mynde.DoDoc;
         this.Pub2.Add(tb);
         this.Pub2.AddBR();
@@ -135,7 +139,7 @@ public partial class WF_Admin_Action : WebPage
 
         tb = new TextBox();
         tb.ID = "TB_MsgOK";
-        tb.Columns = 60;
+        tb.Columns = col;
         tb.Text = mynde.MsgOKString;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 4;
@@ -148,16 +152,19 @@ public partial class WF_Admin_Action : WebPage
         this.Pub2.Add("执行失败信息提示<br>");
         tb = new TextBox();
         tb.ID = "TB_MsgErr";
-        tb.Columns = 60;
+        tb.Columns = col;
         tb.Text = mynde.MsgErrorString;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 4;
         this.Pub2.Add(tb);
-        this.Pub2.AddFieldSetEnd();
+
+        this.Pub2.AddHR();
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "Save";
+        btn.CssClass = "Btn";
+
         btn.Click += new EventHandler(btn_Click);
         this.Pub2.Add("&nbsp;&nbsp;");
         this.Pub2.Add(btn);

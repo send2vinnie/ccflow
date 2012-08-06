@@ -83,6 +83,7 @@ public partial class Comm_SelectMValsWF : WebPage
         this.Pub1.AddTableEnd();
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " OK ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
@@ -92,6 +93,7 @@ public partial class Comm_SelectMValsWF : WebPage
         int idx = 0;
         bool is1 = false;
         Button btn = new Button();
+        btn.CssClass = "Btn";
         this.Pub1.AddTable("width='90%'");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
@@ -103,7 +105,7 @@ public partial class Comm_SelectMValsWF : WebPage
             if (WebUser.No == "admin")
                 dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept ");
             else
-                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "')");
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -120,6 +122,7 @@ public partial class Comm_SelectMValsWF : WebPage
             }
             this.Pub1.AddTableEndWithHR();
             btn = new Button();
+            btn.CssClass = "Btn";
             btn.ID = "Btn_Save";
             btn.Text = " OK ";
             btn.Click += new EventHandler(btn_Click);
@@ -191,7 +194,7 @@ public partial class Comm_SelectMValsWF : WebPage
                 if (WebUser.No == "admin")
                     dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept ");
                 else
-                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptFlowScorp WHERE FK_Emp='" + WebUser.No + "')");
+                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  WF_DeptFlowSearch WHERE FK_Emp='" + WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "')");
 
                 foreach (DataRow dr in dt.Rows)
                 {

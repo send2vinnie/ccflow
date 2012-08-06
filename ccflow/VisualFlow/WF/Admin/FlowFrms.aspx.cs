@@ -181,6 +181,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         Button btn = new Button();
         btn.ID = "Save";
         btn.Text = "Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_SavePowerOrders_Click);
         this.Pub1.AddTD("colspan=8", btn);
         this.Pub1.AddTREnd();
@@ -240,6 +241,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         
         Button btn = new Button();
         btn.Text = "Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_SaveFrmSort_Click);
         this.Pub1.Add(btn);
 
@@ -320,6 +322,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_SaveFlowFrms_Click);
         this.Pub1.AddTR();
         this.Pub1.AddTD("colspan=5", btn);
@@ -532,6 +535,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_SaveFrm_Click);
         this.Pub1.Add(btn);
 
@@ -540,6 +544,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
             btn = new Button();
             btn.ID = "Btn_Delete";
             btn.Text = "Delete";
+            btn.CssClass = "Btn";
             btn.Attributes["onclick"] = "return window.confirm('您确定要删除吗？')";
             btn.Click += new EventHandler(btn_SaveFrm_Click);
             this.Pub1.Add(btn);

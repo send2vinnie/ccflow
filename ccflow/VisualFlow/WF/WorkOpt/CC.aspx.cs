@@ -50,6 +50,7 @@ public partial class WF_WorkOpt_CC : BP.Web.WebPage
         tb.Width = 500;
         this.Pub1.AddTD(tb);
         Button mybtn = new Button();
+        mybtn.CssClass = "Btn";
         mybtn.Text = "选择接受人";
         mybtn.OnClientClick += "javascript:ShowIt(" + tb.ClientID + ");";
         this.Pub1.AddTD(mybtn);
@@ -77,6 +78,7 @@ public partial class WF_WorkOpt_CC : BP.Web.WebPage
         this.Pub1.AddTR();
         this.Pub1.AddTD("");
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "btn";
         btn.Click += new EventHandler(btn_Click);
         btn.Text = "执行抄送";

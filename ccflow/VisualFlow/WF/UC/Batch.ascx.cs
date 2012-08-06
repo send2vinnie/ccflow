@@ -72,6 +72,7 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
         this.AddTableEndWithHR();
 
         Button btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_Send";
         btn.Text = "批量处理:" + btnLab.SendLab;
         btn.Click += new EventHandler(btn_Click);
@@ -80,6 +81,7 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
         if (btnLab.DeleteEnable)
         {
             btn = new Button();
+            btn.CssClass = "Btn";
             btn.ID = "Btn_Del";
             btn.Text = "批量处理:" + btnLab.DeleteLab;
             btn.Click += new EventHandler(btn_Click);
@@ -89,6 +91,7 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
         if (btnLab.ReturnEnable)
         {
             btn = new Button();
+            btn.CssClass = "Btn";
             btn.ID = "Btn_Return";
             btn.Text = "批量处理:" + btnLab.ReturnLab;
             btn.Click += new EventHandler(btn_Click);

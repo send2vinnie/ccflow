@@ -76,6 +76,7 @@ public partial class WF_Admin_CCNode : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "  保 存  ";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Ucsys1.AddTD(btn);
         this.Ucsys1.AddTREnd();

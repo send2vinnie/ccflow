@@ -413,6 +413,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.Add("<TD class=TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Save", " 保 存 ");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Add(btn);

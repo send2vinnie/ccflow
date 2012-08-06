@@ -195,6 +195,7 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "  Save  ";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.AddTD(btn);
 
@@ -203,6 +204,7 @@ public partial class WF_MapDef_FrmAttachment : WebPage
             btn = new Button();
             btn.ID = "Btn_Delete";
             btn.Text = "  Delete  ";
+            btn.CssClass = "Btn";
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             btn.Click += new EventHandler(btn_Click);
             this.Pub1.AddTD(btn);

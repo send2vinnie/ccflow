@@ -126,6 +126,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         this.AddTRSum();
         this.AddTDBegin("colspan=3 align=center");
         Button btn = new Button();
+        btn.CssClass = "Btn";
 
         btn.Text = this.ToE("Login", "登 陆");
 

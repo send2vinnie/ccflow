@@ -66,7 +66,7 @@ public partial class WF_UC_FHLFlow : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = "Deal Work";
-        this.ToolBar1.Add("<input type=button onclick=\"javascript:window.location.href='ReturnWorkSmall.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&FID=" + this.FID + "'\" value='退回' >");
+        this.ToolBar1.Add("<input class=Btn type=button onclick=\"javascript:window.location.href='ReturnWorkSmall.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&FID=" + this.FID + "'\" value='退回' >");
         this.ToolBar1.AddBtn("Btn_Del", "终止");
         this.ToolBar1.AddBtn("Btn_Close", "关闭");
         this.Btn_Close.OnClientClick = "window.close();";

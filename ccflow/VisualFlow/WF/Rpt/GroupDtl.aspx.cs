@@ -29,6 +29,27 @@ namespace BP.Web.WF.Comm
     public partial class UIContrastDtl : WebPage
     {
         #region 属性
+        public string DTFrom
+        {
+            get
+            {
+                return this.Request.QueryString["DTFrom"];
+            }
+        }
+        public string DTTo
+        {
+            get
+            {
+                return this.Request.QueryString["DTTo"];
+            }
+        }
+        public string TBKey
+        {
+            get
+            {
+                return this.Request.QueryString["Key"];
+            }
+        }
         public string FK_Flow = null;
         public string FK_Dept
         {
@@ -136,8 +157,31 @@ namespace BP.Web.WF.Comm
                     qo.addAnd();
                 }
             }
-
             qo.AddHD();
+
+            #region 加上日期时间段.
+            if (en.EnMap.DTSearchWay != DTSearchWay.None)
+            {
+                string field = en.EnMap.DTSearchKey;
+                qo.addAnd();
+                qo.addLeftBracket();
+                if (en.EnMap.DTSearchWay == DTSearchWay.ByDate)
+                {
+                    qo.AddWhere(field, " >= ", this.DTFrom + " 01:01");
+                    qo.addAnd();
+                    qo.AddWhere(field, " >= ", this.DTTo + " 23:59");
+                }
+                else
+                {
+                    qo.AddWhere(field, " >= ", this.DTFrom);
+                    qo.addAnd();
+                    qo.AddWhere(field, " >= ", this.DTTo);
+                }
+                qo.addRightBracket();
+            }
+            #endregion
+
+
             int num = qo.DoQuery();
             this.DataPanelDtl(ens, null);
         }

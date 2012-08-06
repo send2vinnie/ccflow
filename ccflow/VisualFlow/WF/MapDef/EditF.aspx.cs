@@ -438,17 +438,20 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.Add("<TD colspan=4 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("SaveAndClose", "保存并关闭"); // "保存并关闭";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
+        btn.CssClass = "Btn";
         btn.ID = "Btn_SaveAndNew";
         btn.Text = this.ToE("SaveAndNew", "保存新建"); // "保存新建";
         btn.Click += new EventHandler(btn_Save_Click);
@@ -467,6 +470,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             {
                 btn = new Button();
                 btn.ID = "Btn_Del";
+                btn.CssClass = "Btn";
                 btn.Text = this.ToE("Del", "删除");
                 btn.Click += new EventHandler(btn_Save_Click);
                 btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
@@ -477,12 +481,14 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX;
         btn = new Button();
         btn.ID = "Btn_New";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("New", "新建");
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_Back";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Back", "返回");
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);

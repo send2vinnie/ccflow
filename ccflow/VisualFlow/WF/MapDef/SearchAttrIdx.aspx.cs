@@ -66,6 +66,7 @@ public partial class Comm_MapDef_SearchAttrIdx : WebPage
         this.Ucsys1.AddTRSum();
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Save","保存"); 
         btn.Click += new EventHandler(btn_Click);
         this.Ucsys1.AddTD("colspan=5 align=center", btn);

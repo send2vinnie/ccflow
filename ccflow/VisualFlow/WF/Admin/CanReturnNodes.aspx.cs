@@ -74,6 +74,7 @@ public partial class WF_Admin_CanReturnNodes : WebPage
         this.Pub1.AddTD();
         Button btn = new Button();
         btn.Text = "Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.AddTD(btn);
         this.Pub1.AddTREnd();

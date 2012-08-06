@@ -473,14 +473,14 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
             if (btnLab.PrintDocEnable)
             {
                 string urlr = "./WorkOpt/PrintDoc.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
-                this.ToolBar1.Add("<input type=button value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
             }
 
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField == "")
             {
                 /*如果没有焦点字段*/
                 string urlr = "ReturnWork" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
-                this.ToolBar1.Add("<input type=button value='" + btnLab.ReturnLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.ReturnLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
             }
 
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField != "")
@@ -500,7 +500,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
             }
 
             if (btnLab.CCRole== CCRole.HandCC)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
 
             if (btnLab.DeleteEnable)
             {
@@ -518,31 +518,31 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
 
 
             if (btnLab.RptEnable)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
 
             if (btnLab.TrackEnable)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
 
             if (currND.HisFJOpen != FJOpen.None)
             {
                 if (this.WorkID == 0)
-                    this.ToolBar1.Add("<input type=button value='" + this.ToE("Adjunct", "附件") + "' onclick=\"javascript:alert('" + this.ToE("ForFJ", "请保存后上传附件") + "');\" enable=false  />");
+                    this.ToolBar1.Add("<input class=Btn type=button value='" + this.ToE("Adjunct", "附件") + "' onclick=\"javascript:alert('" + this.ToE("ForFJ", "请保存后上传附件") + "');\" enable=false  />");
                 else
-                    this.ToolBar1.Add("<input type=button value='" + this.ToE("Adjunct", "附件") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/FileManager.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FJOpen=" + (int)currND.HisFJOpen + "&FID=" + this.FID + "','dds'); \" />");
+                    this.ToolBar1.Add("<input class=Btn type=button value='" + this.ToE("Adjunct", "附件") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/FileManager.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FJOpen=" + (int)currND.HisFJOpen + "&FID=" + this.FID + "','dds'); \" />");
             }
 
             if (btnLab.OptEnable)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
 
             if (btnLab.SearchEnable)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt&FK_Flow=" + this.FK_Flow + "','dsd0'); \" />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt&FK_Flow=" + this.FK_Flow + "','dsd0'); \" />");
             #endregion
 
             this.BindWork(currND, currWK);
             this.Session["Ect"] = null;
 
             if (btnLab.SelectAccepterEnable ==1)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+                this.ToolBar1.Add("<input class=Btn type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
         }
         catch (Exception ex)
         {

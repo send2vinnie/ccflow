@@ -109,8 +109,8 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server" >
-<asp:Button ID="Btn_Save" runat="server" Text="保存"  CssClass="HBtn" Visible="true"  
+<asp:Button ID="Btn_Save" runat="server" Text="保存"  CssClass="Btn" Visible="true"  
         onclick="Btn_Save_Click"  />
-<asp:Button ID="Btn_Print" runat="server" Text="打印"  CssClass="HBtn" Visible="true" />
+<asp:Button ID="Btn_Print" runat="server" Text="打印"  CssClass="Btn" Visible="true" />
     <uc1:UCEn ID="UCEn1" runat="server" />
 </asp:Content>
