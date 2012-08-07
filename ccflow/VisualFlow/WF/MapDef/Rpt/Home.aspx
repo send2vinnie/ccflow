@@ -37,7 +37,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <table width='100%' >
 <tr>
-<td align=left valign=top width='30%'>
+<td align=left valign=top width='25%' class=Left>
     <uc1:Pub ID="Pub1" runat="server" />
     </td>
 

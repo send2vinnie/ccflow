@@ -25,6 +25,13 @@ public partial class Comm_SelectMValsWF : WebPage
             return this.Request.QueryString["AttrKey"];
         }
     }
+    public string FK_Flow
+    {
+        get
+        {
+            return this.Request.QueryString["FK_Flow"];
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "您好:"+WebUser.No+";选择范围";

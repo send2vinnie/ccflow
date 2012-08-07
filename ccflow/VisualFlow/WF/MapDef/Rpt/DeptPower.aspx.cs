@@ -74,7 +74,7 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
     }
     public void BindDept()
     {
-        this.Pub1.AddTable("width='100%'");
+        this.Pub1.AddTable("width='90%'");
         this.Pub1.AddCaptionLeft("第一步:选择要设置的人员");
         Depts depts = new Depts();
         depts.RetrieveAll();
@@ -95,17 +95,23 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
             this.Pub1.AddTDBegin();
 
             string ctlDeptIDs = "";
+            int idx = 0;
             foreach (Emp emp in emps)
             {
                 if (emp.FK_Dept != dept.No)
                     continue;
-
+                idx++;
                 CheckBox cb = new CheckBox();
                 cb.ID = "CB_" + emp.No;
                 cb.Text = emp.Name;
                 this.Pub1.Add(cb);
                 ctlIDs += cb.ID + ",";
                 ctlDeptIDs += cb.ID + ",";
+                if (idx == 5)
+                {
+                    this.Pub1.AddHR();
+                    idx = 0;
+                }
             }
 
             cbDept.Attributes["onclick"] = "SetSelected(this,'" + ctlDeptIDs + "')";
@@ -180,8 +186,15 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
         this.Pub1.Add(cball);
 
         Button btn = new Button();
-        btn.Text = " 保存设置 ";
+        btn.Text = "保存";
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
+        this.Pub1.Add(btn);
+        btn.Click += new EventHandler(btn_Save_Click);
+
+        btn = new Button();
+        btn.Text = "保存并关闭";
+        btn.ID = "Btn_SaveAndClose";
         btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
@@ -223,6 +236,10 @@ public partial class WF_MapDef_Rpt_DeptPower :WebPage
                 dfs.Insert();
             }
         }
-        this.Alert("保存成功!!");
+        Button btn = sender as Button;
+        if (btn.ID == "Btn_SaveAndClose")
+            this.WinCloseWithMsg("保存成功");
+        else
+            this.Alert("保存成功!!");
     }
 }

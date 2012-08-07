@@ -1,10 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/Rpt/MasterPage.master" AutoEventWireup="true" CodeFile="D3.aspx.cs" Inherits="WF_Rpt_D3" %>
-
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc1" %>
 <%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc2" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-		<script language="JavaScript" src="./../../Comm/JScript.js"></script>
+<script language="JavaScript" src="./../../Comm/JScript.js"></script>
  <script type="text/javascript">
      //  事件.
      function DDL_mvals_OnChange(ctrl, ensName, attrKey) {

@@ -1656,13 +1656,12 @@ public partial class WF_Rpt_G : BP.Web.WebPage
 
                 this.UCSys3.AddBR("<img src='" + url + "' />");
 
-                //url = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.cGraphics.GenerChart(dt,
-                //   colOfGroupField + "T", colOfGroupName,
-                //   colOfNumField, colOfNumName1
-                //   , "", chartHeight, chartWidth, ChartType.Pie);
+                url = this.Request.ApplicationPath + "/Temp/" + BP.Web.Comm.UC.UCSys.GenerChart(dt,
+                   colOfGroupField + "T", colOfGroupName,
+                   colOfNumField, colOfNumName1
+                   , "", chartHeight, chartWidth, ChartType.Pie);
 
                 this.UCSys3.AddBR("<img src='" + url + "' />");
-
 
                 url = this.Request.ApplicationPath + "/Temp/" + BP.Web.UC.UCGraphics.GenerChart(dt,
                    colOfGroupField + "T", colOfGroupName,
