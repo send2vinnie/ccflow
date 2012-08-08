@@ -109,12 +109,10 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         btn.Click += new EventHandler(btn_Save_Click);
         this.Ucsys1.Add(btn);
 
-        if (en.IsEdit)
-        {
+        
             btn = new Button();
             btn.ID = "Btn_Edit";
             btn.CssClass = "Btn";
-
             btn.Text = this.ToE("EditData", "编辑数据"); // "编辑数据"
             if (this.RefNo == null)
                 btn.Enabled = false;
@@ -123,7 +121,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
             else
                 btn.Attributes["onclick"] = "WinOpen('SFTableEditData.aspx?RefNo=" + this.RefNo + "','dg' ); return false;";
             this.Ucsys1.Add(btn);
-        }
+         
 
         btn = new Button();
         btn.ID = "Btn_Add";
