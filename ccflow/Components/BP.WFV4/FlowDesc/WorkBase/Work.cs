@@ -88,7 +88,7 @@ namespace BP.WF
         /// <returns>true/false</returns>
         public bool IsPassCheckMD5()
         {
-            string md51 = this.GetValStrByKey(WorkAttr.MD5);
+            string md51 = this.GetValStringByKey(WorkAttr.MD5);
             string md52 = Glo.GenerMD5(this);
             if (md51 != md52)
                 return false;

@@ -2194,13 +2194,25 @@ namespace BP.WF
         public Node JumpToNode = null;
         public string JumpToEmp = null;
         /// <summary>
+        /// 保存后处理
+        /// </summary>
+        /// <returns></returns>
+        public string AfterNodeSave()
+        {
+            return AfterNodeSave(null, null);
+        }
+        /// <summary>
         /// 解决流程回滚的问题
         /// </summary>
         /// <param name="TransferPC"></param>
         /// <param name="ByTransfered"></param>
         /// <returns></returns>
-        public string AfterNodeSave()
+        public string AfterNodeSave(Node jumpToNode, string jumpToEmp)
         {
+            this.JumpToNode = jumpToNode;
+            this.JumpToEmp = jumpToEmp;
+
+
             // 检查是否是当前节点，如果不是就可能存在sdk用户刷新的可能，导致数据重复提交。
             //if (this.HisGenerWorkFlow.FK_Node != this.HisNode.NodeID)
             //    throw new Exception("@您不能重复提交，或者刷新界面。");

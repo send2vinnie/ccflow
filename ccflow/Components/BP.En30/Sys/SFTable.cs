@@ -26,10 +26,6 @@ namespace BP.Sys
         /// </summary>
         public const string DefVal = "DefVal";
         /// <summary>
-        /// IsEdit
-        /// </summary>
-        public const string IsEdit = "IsEdit";
-        /// <summary>
         /// 数据源
         /// </summary>
         public const string DBSrc = "DBSrc";
@@ -40,17 +36,6 @@ namespace BP.Sys
     public class SFTable : EntityNoName
     {
         #region 属性
-        public bool IsEdit
-        {
-            get
-            {
-                return this.GetValBooleanByKey(SFTableAttr.IsEdit);
-            }
-            set
-            {
-                this.SetValByKey(SFTableAttr.IsEdit, value);
-            }
-        }
         /// <summary>
         /// 是否是类
         /// </summary>
@@ -141,28 +126,28 @@ namespace BP.Sys
                         this.Name = "年月";
                       //  this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_NY";
-                        this.IsEdit = true;
+                     //   this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.YFs":
                         this.Name = "月";
                       //  this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_YF";
-                        this.IsEdit = true;
+                       // this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.Days":
                         this.Name = "天";
                      //   this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_Day";
-                        this.IsEdit = true;
+                        //this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.NDs":
                         this.Name = "年";
                      //   this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_ND";
-                        this.IsEdit = true;
+                       // this.IsEdit = true;
                         this.Insert();
                         break;
                     default:

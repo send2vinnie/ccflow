@@ -39,7 +39,6 @@ namespace BP.Rpt
 
 		#region 查询属性
 		public bool IsShowSearchKey=false;	 
-
 		/// <summary>
 		/// 单个实体查询属性。
 		/// </summary>
@@ -105,7 +104,6 @@ namespace BP.Rpt
 		/// </summary>
 		public  string Title="@xyer报表";
 		public  string LeftTitle="项目";
-
 		#endregion
 
 		#region 纬度1的基本属性。

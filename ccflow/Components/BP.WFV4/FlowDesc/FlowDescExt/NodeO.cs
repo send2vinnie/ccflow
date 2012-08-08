@@ -148,6 +148,8 @@ namespace BP.WF.Ext
         }
         protected override bool beforeUpdate()
         {
+            
+
             Node nd = new Node(this.NodeID);
             nd.Update();
             return base.beforeUpdate();
@@ -190,6 +192,7 @@ namespace BP.WF.Ext
                 // 基础属性
                 map.AddTBIntPK(NodeAttr.NodeID, 0, this.ToE("NodeID", "节点ID"), true, true);
                 map.AddTBInt(NodeAttr.Step, 0, "步骤", true, false);
+                map.AddTBString(NodeAttr.FK_Flow, null, "流程编号", false, false, 3, 3, 10, false);
 
                 map.AddTBString(NodeAttr.Name, null, this.ToE("Name", "名称"), true, true, 0, 100, 10, true);
                 map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, false);
@@ -343,16 +346,20 @@ namespace BP.WF.Ext
                 rm.Icon = "/Images/FileType/doc.gif";
                 map.AddRefMethod(rm);
 
-                rm = new RefMethod();
-                rm.Title = "DXReport设置"; //"单据&单据";
-                rm.ClassMethodName = this.ToString() + ".DXReport";
-                rm.Icon = "/Images/FileType/doc.gif";
-                map.AddRefMethod(rm);
+                if (BP.SystemConfig.CustomerNo == "HCBD")
+                {
+                    /* 为海成邦达设置的个性化需求. */
+                    rm = new RefMethod();
+                    rm.Title = "DXReport设置";
+                    rm.ClassMethodName = this.ToString() + ".DXReport";
+                    rm.Icon = "/Images/FileType/doc.gif";
+                    map.AddRefMethod(rm);
+                }
 
-                rm = new RefMethod();
-                rm.Title = this.ToE("DoFAppSet", "调用外部程序接口"); // "调用外部程序接口";
-                rm.ClassMethodName = this.ToString() + ".DoFAppSet";
-                map.AddRefMethod(rm);
+                //rm = new RefMethod();
+                //rm.Title = this.ToE("DoFAppSet", "调用外部程序接口"); // "调用外部程序接口";
+                //rm.ClassMethodName = this.ToString() + ".DoFAppSet";
+                //map.AddRefMethod(rm);
 
                 rm = new RefMethod();
                 rm.Title = this.ToE("DoAction", "事件"); // "调用事件接口";

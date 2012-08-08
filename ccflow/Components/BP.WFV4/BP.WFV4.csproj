@@ -132,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DemoData\EmpDemo.cs" />
+    <Compile Include="DemoData\CRM\Product.cs" />
+    <Compile Include="DemoData\CRM\SalesBill.cs" />
     <Compile Include="DynamicWebService.cs" />
     <Compile Include="WF\Dev2Interface.cs" />
     <Compile Include="AssemblyInfo.cs">

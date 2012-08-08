@@ -319,7 +319,7 @@ namespace BP.WF
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
             if (WebUser.IsAuthorize == false)
-                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow, ADT DESC ");
+                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ");
             else
             {
                 WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);

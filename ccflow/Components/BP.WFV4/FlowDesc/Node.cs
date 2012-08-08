@@ -3217,7 +3217,6 @@ namespace BP.WF
             attr.HisEditType = BP.En.EditType.UnDel;
             attr.DefVal = "0";
             attr.Insert();
-          
 
             attr = new BP.Sys.MapAttr();
             attr.FK_MapData = md.No;

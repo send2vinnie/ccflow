@@ -459,7 +459,7 @@ namespace BP
         /// </summary>
         public static void DoClearCash()
         {
-            HttpRuntime.UnloadAppDomain();
+           // HttpRuntime.UnloadAppDomain();
             BP.DA.Cash.Map_Cash.Clear();
             BP.DA.Cash.SQL_Cash.Clear();
             BP.DA.Cash.EnsData_Cash.Clear();
