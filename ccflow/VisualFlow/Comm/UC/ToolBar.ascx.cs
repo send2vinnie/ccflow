@@ -229,6 +229,12 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         en.Text = lab;
         this.Add(en);
     }
+    public bool IsExitsContral(string ctrlID)
+    {
+        if (this.FindControl(ctrlID) == null)
+            return false;
+        return true;
+    }
     public void AddBtn(string id, string text)
     {
         Btn en = new Btn();
@@ -501,7 +507,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         }
         #endregion.
 
-
         if (dw != DTSearchWay.None)
         {
             string dtFrom = this.GetTBByID("TB_S_From").Text.Trim();
@@ -549,7 +554,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         QueryObject qo = this.InitQueryObjectByEns(ens, en.EnMap.IsShowSearchKey, en.EnMap.DTSearchWay, en.EnMap.DTSearchKey, en.EnMap.Attrs,
             en.EnMap.AttrsOfSearch, en.EnMap.SearchAttrs);
 
-
         switch (en.PK)
         {
             case "No":
@@ -568,7 +572,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
     {
         if (string.IsNullOrEmpty(ensName))
             throw new Exception("@EnsName 为空" + ensName);
-
 
         UserRegedit ur = new UserRegedit();
         ur.MyPK = WebUser.No + ensName + "_SearchAttrs";

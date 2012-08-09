@@ -4,6 +4,7 @@
 <%@ Register TagPrefix="uc1" TagName="UCEn" Src="UC/UCEn.ascx" %>
 <%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
 <%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
+<%@ Register src="UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
 <!DocType HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
@@ -29,7 +30,8 @@ cellPadding=0 width="100%" height='100%' align=left border=1 >
 				</TR>
 				<TR>
 					<TD colSpan="2" >
-						<cc1:BPToolBar id="BPToolBar1" runat="server" CssClass="ToolBar"></cc1:BPToolBar></TD>
+						<uc2:ToolBar ID="ToolBar1" runat="server" />
+                    </TD>
 				</TR>
 				<TR  valign="top" height='100%'>
 					<TD vAlign="top" noWrap width='20%'>
