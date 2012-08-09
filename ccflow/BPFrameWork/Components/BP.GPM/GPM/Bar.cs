@@ -28,7 +28,13 @@ namespace BP.GPM
         /// tag1
         /// </summary>
         public const string Tag1 = "Tag1";
+        /// <summary>
+        /// Tag2
+        /// </summary>
         public const string Tag2 = "Tag2";
+        /// <summary>
+        /// Tag3
+        /// </summary>
         public const string Tag3 = "Tag3";
         /// <summary>
         /// 是否可删除
@@ -72,7 +78,21 @@ namespace BP.GPM
     /// </summary>
     public class Bar : EntityNoName
     {
+
+        public override UAC HisUAC
+        {
+            get
+            {
+                UAC uac = new UAC();
+                uac.IsInsert = false;
+               
+                return base.HisUAC;
+            }
+        }
         #region 属性
+        /// <summary>
+        /// 更多的URL
+        /// </summary>
         public string MoreUrl
         {
             get
@@ -84,6 +104,9 @@ namespace BP.GPM
                 this.SetValByKey(BarAttr.MoreUrl, value);
             }
         }
+        /// <summary>
+        /// 更多标签
+        /// </summary>
         public string MoreLab
         {
             get
@@ -96,7 +119,7 @@ namespace BP.GPM
             }
         }
         /// <summary>
-        /// Title
+        /// 标题
         /// </summary>
         public string Title
         {
@@ -109,6 +132,9 @@ namespace BP.GPM
                 this.SetValByKey(BarAttr.Title, value);
             }
         }
+        /// <summary>
+        /// 用户是否可以删除
+        /// </summary>
         public bool IsDel
         {
             get
@@ -134,6 +160,9 @@ namespace BP.GPM
                 this.SetValByKey(BarAttr.BarType, value);
             }
         }
+        /// <summary>
+        /// 打开方式
+        /// </summary>
         public int OpenWay
         {
             get
@@ -145,7 +174,9 @@ namespace BP.GPM
                 this.SetValByKey(BarAttr.OpenWay, value);
             }
         }
-        
+        /// <summary>
+        /// 顺序号
+        /// </summary>
         public int Idx
         {
             get
@@ -157,6 +188,9 @@ namespace BP.GPM
                 this.SetValByKey(BarAttr.Idx, value);
             }
         }
+        /// <summary>
+        /// Tag1
+        /// </summary>
         public string Tag1
         {
             get
@@ -168,6 +202,9 @@ namespace BP.GPM
                 this.SetValByKey(BarAttr.Tag1, value);
             }
         }
+        /// <summary>
+        /// Tag
+        /// </summary>
         public string Tag2
         {
             get
@@ -261,12 +298,9 @@ namespace BP.GPM
                     default:
                         break;
                 }
-
                 return this.GetValStrByKey(BarAttr.Doc);
             }
-            
         }
-
         #endregion
 
         #region 构造方法
@@ -300,9 +334,8 @@ namespace BP.GPM
                 map.EnDesc = "信息块";
                 map.EnType = EnType.Sys;
 
-                map.AddTBStringPK(BarAttr.No, null, "编号", true, false, 2, 30, 20);
+                map.AddTBStringPK(BarAttr.No, null, "编号", true, false, 2, 2, 2);
                 map.AddTBString(BarAttr.Name, null, "名称", true, false, 0, 3900, 20);
-
                 map.AddTBString(BarAttr.Title, null, "标题", true, false, 0, 3900, 20);
                 map.AddDDLSysEnum(BarAttr.BarType, 0, "信息块类型", true, false, 
                     BarAttr.BarType, "@0=标题消息列表(Tag1=SQL语句)@1=其它");
@@ -333,6 +366,9 @@ namespace BP.GPM
                 map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
                 map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
                 map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp, EmpAttr.Name, EmpAttr.No, "可访问的人员");
+
+                map.AddSearchAttr(STemAttr.CtrlWay);
+                map.AddSearchAttr(BarAttr.OpenWay);
 
                 this._enMap = map;
                 return this._enMap;

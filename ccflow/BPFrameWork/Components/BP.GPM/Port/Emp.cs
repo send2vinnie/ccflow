@@ -222,16 +222,13 @@ namespace BP.GPM
                 map.AddTBString(EmpAttr.Pass, "pub", "密码", false, false, 0, 20, 10);
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
                 map.AddTBString(EmpAttr.SID, null, "SID", false, false, 0, 200, 10);
-
                 map.AddTBInt(EmpAttr.StaffID, 0, "StaffID", false, false);
                 map.AddTBInt(EmpAttr.DepartmentID, 0, "DepartmentID", false, false);
-                
-                
                 #endregion 字段
 
                 map.AddSearchAttr(EmpAttr.FK_Dept);
 
-                #region 增加点对多属性
+                #region 增加一对多属性
                 //他的部门权限
                 map.AttrsOfOneVSM.Add(new EmpStations(), new Stations(), EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "岗位权限");
                 map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "工作部门");

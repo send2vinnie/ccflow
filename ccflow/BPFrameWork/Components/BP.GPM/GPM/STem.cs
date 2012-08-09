@@ -31,10 +31,9 @@ namespace BP.GPM
         /// </summary>
         public const string Url = "Url";
         /// <summary>
-        /// 
+        /// 是否启用.
         /// </summary>
         public const string IsEnable = "IsEnable";
-
     }
     /// <summary>
     /// 单点登陆系统
@@ -42,6 +41,9 @@ namespace BP.GPM
     public class STem : EntityNoName
     {
         #region 属性
+        /// <summary>
+        /// 打开方式
+        /// </summary>
         public string OpenWay
         {
             get
@@ -59,6 +61,9 @@ namespace BP.GPM
                 }
             }
         }
+        /// <summary>
+        /// 路径
+        /// </summary>
         public string WebPath
         {
             get
@@ -66,6 +71,9 @@ namespace BP.GPM
                 return this.GetValStringByKey("WebPath");
             }
         }
+        /// <summary>
+        /// ICON
+        /// </summary>
         public string ICON
         {
             get
@@ -77,16 +85,18 @@ namespace BP.GPM
                 this.SetValByKey(PerAlertAttr.ICON, value);
             }
         }
+        /// <summary>
+        /// 连接
+        /// </summary>
         public string Url
         {
             get
             {
-                string url= this.GetValStrByKey(STemAttr.Url);
+                string url = this.GetValStrByKey(STemAttr.Url);
                 if (url.Contains("?"))
-                    url += "&UserNo="+Web.WebUser.No+"&SID="+Web.WebUser.SID;
+                    url += "&UserNo=" + Web.WebUser.No + "&SID=" + Web.WebUser.SID;
                 else
-                    url += "?UserNo="+Web.WebUser.No+"&SID="+Web.WebUser.SID;
-
+                    url += "?UserNo=" + Web.WebUser.No + "&SID=" + Web.WebUser.SID;
                 return url;
             }
             set
@@ -95,7 +105,7 @@ namespace BP.GPM
             }
         }
         /// <summary>
-        /// 是否是ccSytem
+        /// 协议类型
         /// </summary>
         public int XieYi
         {
@@ -108,6 +118,9 @@ namespace BP.GPM
                 this.SetValByKey(STemAttr.XieYi, value);
             }
         }
+        /// <summary>
+        /// 是否启用
+        /// </summary>
         public bool IsEnable
         {
             get
@@ -119,6 +132,9 @@ namespace BP.GPM
                 this.SetValByKey(STemAttr.IsEnable, value);
             }
         }
+        /// <summary>
+        /// 顺序
+        /// </summary>
         public int Idx
         {
             get
@@ -165,34 +181,31 @@ namespace BP.GPM
 
                 map.AddTBStringPK(STemAttr.No, null, "编号", true, false, 2, 30, 20);
                 map.AddTBString(STemAttr.Name, null, "名称", true, false, 0, 3900, 20);
-                map.AddDDLSysEnum(STemAttr.XieYi, 0, "连接协议", true, true,
+                map.AddDDLSysEnum(STemAttr.XieYi, 0, "连接协议", true,true,
                     STemAttr.XieYi, "@0=基于SID@1=基于SSL@2=基于ACL@3=基于LDAP@4=基于http");
-
-                map.AddDDLSysEnum(STemAttr.CtrlWay, 0, "控制方式", true, true,
-                    STemAttr.CtrlWay, "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
-
+                map.AddDDLSysEnum(STemAttr.CtrlWay, 0, "控制方式", true, true,STemAttr.CtrlWay, "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
                 map.AddTBString(STemAttr.CtrlWay, null, "SQL表达式", true, false, 0, 3900, 20);
-
-
-                map.AddDDLSysEnum(STemAttr.AppModel, 0, "应用类型", true, true,
-                STemAttr.AppModel, "@0=BS系统@1=CS系统");
-
-                map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20,true);
-                map.AddDDLSysEnum(BarAttr.OpenWay, 0, "打开方式", true, true,
-                BarAttr.OpenWay, "@0=新窗口@1=本窗口@2=覆盖新窗口");
-
+                map.AddDDLSysEnum(STemAttr.AppModel, 0, "应用类型", true, true,STemAttr.AppModel, "@0=BS系统@1=CS系统");
+                map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
+                map.AddDDLSysEnum(BarAttr.OpenWay, 0, "打开方式", true, true, BarAttr.OpenWay, "@0=新窗口@1=本窗口@2=覆盖新窗口");
                 map.AddTBInt(STemAttr.Idx, 0, "显示顺序", true, false);
                 map.AddBoolean(STemAttr.IsEnable, true, "是否启用", true, false);
-
-
+                
                 map.AddMyFile("ICON");
 
+                map.AddSearchAttr(STemAttr.AppModel);
+                map.AddSearchAttr(STemAttr.XieYi);
+                map.AddSearchAttr(BarAttr.OpenWay);
 
-                map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
+
+
+
+                map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj,
+                    ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
                 map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
                 map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp, EmpAttr.Name, EmpAttr.No, "可访问的人员");
 
-               // map.AttrsOfOneVSM.Add(new TemStations(), new Stations(), TemStationAttr.FK_STem, TemStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "可访问的岗位");
+                // map.AttrsOfOneVSM.Add(new TemStations(), new Stations(), TemStationAttr.FK_STem, TemStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "可访问的岗位");
                 this._enMap = map;
                 return this._enMap;
             }

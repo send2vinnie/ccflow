@@ -68,10 +68,18 @@ namespace BP.GPM
         /// 系统
         /// </summary>
         public const string FK_STem = "FK_STem";
+        /// <summary>
+        /// 树形编号
+        /// </summary>
         public const string TreeNo = "TreeNo";
+        /// <summary>
+        /// 图片
+        /// </summary>
         public const string Img = "Img";
+        /// <summary>
+        /// 连接
+        /// </summary>
         public const string Url = "Url";
-
         /// <summary>
         /// 控制内容
         /// </summary>
@@ -233,40 +241,40 @@ namespace BP.GPM
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("GPM_Menu");
+                Map map = new Map("GPM_Menu");  // 类的基本属性.
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "系统";
                 map.EnType = EnType.Sys;
-
-                map.AddTBIntPKOID();
-
+                // 类的字段属性.
+                map.AddTBIntPKOID(); //增加一个int类型的PK. OID
                 map.AddTBString(MenuAttr.TreeNo, null, "编号", true, false, 2, 30, 20);
                 map.AddTBString(MenuAttr.Name, null, "名称", true, false, 0, 3900, 20);
-                map.AddDDLSysEnum(MenuAttr.MenuType, 0, "菜单类型", true, true,
-                    MenuAttr.MenuType, "@0=目录@1=功能@2=功能控制点");
 
+                map.AddDDLSysEnum(MenuAttr.MenuType, 0, "菜单类型", true, true,MenuAttr.MenuType, 
+                    "@0=目录@1=功能@2=功能控制点");
+                
                 map.AddDDLEntities(MenuAttr.FK_STem, null, "系统", new STems(), true);
 
-                map.AddDDLSysEnum(STemAttr.CtrlWay, 1, "控制方式", true, true,
-                  STemAttr.CtrlWay, "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
-
+                map.AddDDLSysEnum(STemAttr.CtrlWay, 1, "控制方式", true, true,STemAttr.CtrlWay, 
+                    "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
                 map.AddTBString(MenuAttr.CtrlObjs, null, "控制内容", false, false, 0, 4000, 20);
-
                 map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
+                map.AddMyFile("图标");  // 附件属性.
+
+                // 一对多的关系.
+                map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, 
+                    StationAttr.Name, StationAttr.No, "可访问的岗位");
+                map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept,
+                    DeptAttr.Name, DeptAttr.No, "可访问的部门");
+                map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp,
+                    EmpAttr.Name, EmpAttr.No, "可访问的人员");
+
+                map.AddSearchAttr(MenuAttr.FK_STem); // 查询属性.
 
 
-                map.AddMyFile("图标");
+ 
 
-                map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
-                map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
-                map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp, EmpAttr.Name, EmpAttr.No, "可访问的人员");
-                map.AddSearchAttr(MenuAttr.FK_STem);
-
-                //map.AddDtl(new MenuDots(), MenuDotAttr.RefOID);
-                //map.AttrsOfOneVSM.Add(new MenuStations(), new Stations(), MenuStationAttr.FK_Menu, MenuStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "可访问的岗位");
-                //map.AttrsOfOneVSM.Add(new MenuDepts(), new Depts(), MenuDeptAttr.FK_Menu, MenuDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
-                //map.AttrsOfOneVSM.Add(new MenuEmps(), new Emps(), MenuEmpAttr.FK_Menu, MenuEmpAttr.FK_Emp, DeptAttr.Name, DeptAttr.No, "可访问的人员");
 
                 this._enMap = map;
                 return this._enMap;
@@ -274,11 +282,18 @@ namespace BP.GPM
         }
         #endregion
 
-        protected override bool beforeUpdateInsertAction()
+        public string DoIt()
         {
-           // BP.DA.DBAccess.RunSQL("DELETE ");
-            //BP.Sys.SysConfigs.SetValByKey(BP.GPM.EmpAttr.UpdateMenu, DateTime.Now.ToString(DataType.CurrentDataTime));
-            return true;
+            PubClass.WinOpen("http://sina.com.cn?OID=" + this.OID, 100, 100);
+            return null;
+        }
+
+        public string DoItPara(decimal je)
+        {
+            string sql = "";
+            DBAccess.RunSQL(sql);
+            return "您对"+this.Name+"已经冲成功。"+je;
+            //return "执行成功能"+this.OID+" , "+this.Name;
         }
     }
     /// <summary>

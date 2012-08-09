@@ -7,6 +7,9 @@ using BP.En;
 
 namespace BP.GPM
 {
+    /// <summary>
+    /// 人员菜单
+    /// </summary>
     public class MenuEmpAttr
     {
         public const string FK_Emp = "FK_Emp";
@@ -216,6 +219,9 @@ namespace BP.GPM
         }
         #endregion
 
+        /// <summary>
+        /// 初试化人员菜单
+        /// </summary>
         public void InitMenu()
         {
             MenuEmp myme = new MenuEmp();
@@ -226,7 +232,6 @@ namespace BP.GPM
             foreach (Menu en in ens)
             {
                 /* 把此人能看到的菜单init 里面去。*/
-
                 if (Glo.IsCanDoIt(en.OID, en.HisCtrlWay) == false)
                     continue;
 

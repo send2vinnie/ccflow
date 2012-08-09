@@ -8,7 +8,7 @@ namespace BP.GPM
 {
 	
 	/// <summary>
-    /// 操作员与工作部门
+    /// 一人多部门
 	/// </summary>
 	public class EmpDeptAttr  
 	{
@@ -24,7 +24,7 @@ namespace BP.GPM
 		#endregion	
 	}
 	/// <summary>
-    /// 操作员与工作部门 的摘要说明。
+    /// 一人多部门 的摘要说明。
 	/// </summary>
 	public class EmpDept :Entity
 	{
@@ -86,7 +86,6 @@ namespace BP.GPM
 		#endregion
 
 		#region 扩展属性
-		 
 		#endregion		
 
 		#region 构造函数
@@ -117,13 +116,10 @@ namespace BP.GPM
 					return this._enMap;
 				
 				Map map = new Map("Port_EmpDept");
-				map.EnDesc="操作员与工作部门";	
+				map.EnDesc="一人多部门";	
 				map.EnType=EnType.Dot2Dot;
 
-
                 map.AddTBStringPK(EmpDeptAttr.FK_Emp, null, "操作员", false, false, 1, 15, 1);
-
-				//map.AddDDLEntitiesPK(EmpDeptAttr.FK_Emp,null,"操作员",new Emps(),true);
 				map.AddDDLEntitiesPK(EmpDeptAttr.FK_Dept,null,"部门",new Depts(),true);
 
 				this._enMap=map;
@@ -161,7 +157,7 @@ namespace BP.GPM
 	
 	}
 	/// <summary>
-	/// 操作员与工作部门 
+	/// 一人多部门 
 	/// </summary>
 	public class EmpDepts : Entities
 	{
