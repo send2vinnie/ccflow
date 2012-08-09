@@ -146,6 +146,7 @@ namespace BP.Web.Comm
             }
             this.UCSys1.AddTRSum();
             Button btn = new Button();
+            btn.CssClass = "Btn";
             btn.Text = " 上 传 ";
             btn.Click += new EventHandler(btn_Click);
             this.UCSys1.AddTD("colspan=3", btn);
@@ -220,6 +221,7 @@ namespace BP.Web.Comm
             this.UCSys1.AddTRSum();
             Button btn = new Button();
             btn.Text = " 上 传 ";
+            btn.CssClass = "Btn";
             btn.Click += new EventHandler(btn_SaveAttrFile_Click);
             this.UCSys1.AddTD("colspan=5", btn);
             this.UCSys1.AddTREnd();

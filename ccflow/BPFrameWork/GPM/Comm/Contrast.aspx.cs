@@ -59,18 +59,19 @@ namespace BP.Web.Comm
 				ViewState["ContrastLab"]=value;
 			}
 		}
-		public ToolbarDDL DDL_Page
+		public DDL DDL_Page
 		{
 			get
 			{
-				return this.BPToolBar1.GetDDLByKey("DDL_Page");
+				return this.ToolBar1.GetDDLByKey("DDL_Page");
 			}
 		}
-		public BP.Web.Controls.ToolbarLab Lab_Result
+		public Label Lab_Result
 		{
 			get
 			{
-				return  this.BPToolBar1.GetLabByKey("Lab_Result");
+                return new Label();
+				//return  this.ToolBar1.GetLabByKey("Lab_Result");
 			}
 		}
 		/// <summary>
@@ -176,7 +177,6 @@ namespace BP.Web.Comm
 
                     this.DDL_GroupField.SetSelectItem(this.ContrastObj);
 
-                    //this.DDL_GroupField.Items.Add(new ListItem("个数","COUNT(*)"));
 
                     this.DDL_GroupWay.Items.Add(new ListItem("求和", "0"));
                     this.DDL_GroupWay.Items.Add(new ListItem("求平均", "1"));
@@ -192,18 +192,9 @@ namespace BP.Web.Comm
                     }
                     #endregion
 
-                    this.BPToolBar1.InitByMapV2(this.HisEn.EnMap, 1);
-                    //this.BPToolBar1.InitByMapVGroup(this.HisEn.EnMap);
-                    //					this.BPToolBar1.AddSpt("spt1");
-                    //					this.BPToolBar1.AddLab("Lab_Result","记录个数[0]");
-                  //  this.BPToolBar1.AddSpt("spt2");
-                    //this.BPToolBar1.AddBtn(NamesOfBtn.Excel);
-                   // this.BPToolBar1.AddBtn(NamesOfBtn.Help);
-                    //	this.BPToolBar1.AddBtn(NamesOfBtn.DataIO);
-
+                    this.ToolBar1.InitByMapV2(this.HisEn.EnMap,1);
                     this.BindContrastKey(map);
                     InitState(c);
-
                     this.SetDGData();
                 }
                 catch (Exception ex)
@@ -213,7 +204,7 @@ namespace BP.Web.Comm
                 }
             }
 
-            this.BPToolBar1.ButtonClick += new System.EventHandler(this.BPToolBar1_ButtonClick);
+            //this.ToolBar1.ButtonClick += new System.EventHandler(this.ToolBar1_ButtonClick);
             string lab = SystemConfig.GetConfigXmlEns("Contrast", this.EnsName);
             if (lab == null)
                 lab = this.HisEn.EnMap.EnDesc;
@@ -223,10 +214,8 @@ namespace BP.Web.Comm
 
             this.Label1.Text = this.GenerCaption(lab);
             //  this.Label1.Controls.Add(this.GenerLabel("<img src='../Images/Btn/DataGroup.gif' border=0  />" + lab));
-
             this.DDL_ContrastKey.AutoPostBack = true;
             this.DDL_ContrastKey.SelectedIndexChanged += new EventHandler(DDL_ContrastKey_SelectedIndexChanged);
-
             this.BindDDLMore();
         }
         public void InitState(BP.Sys.Contrast c)
@@ -241,13 +230,10 @@ namespace BP.Web.Comm
             this.DDL_GroupField.SetSelectItem(c.KeyOfNum);
             this.DDL_GroupWay.SetSelectItem(c.GroupWay);
             this.DDL_OrderWay.SetSelectItem(c.OrderWay);
-
-             
         }
         public void BindDDLMore()
         {
             Attr attr = this.HisEn.EnMap.GetAttrByKey(this.ContrastKey);
-
             string srip = "";
             string path = this.Request.ApplicationPath;
             this.UCBtn1.Clear();
@@ -257,10 +243,10 @@ namespace BP.Web.Comm
                 return;
 
             srip = "javascript:HalperOfDDL('" + path + "/','" + attr.UIBindKey + "','" + attr.UIRefKeyValue + "','" + attr.UIRefKeyText + "','" + this.DDL_M1.ClientID.ToString() + "');";
-            this.UCBtn1.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M1.ID + "'  ></td>");
+            this.UCBtn1.Add("<input class=Btn type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M1.ID + "'  ></td>");
 
             srip = "javascript:HalperOfDDL('" + path + "/','" + attr.UIBindKey + "','" + attr.UIRefKeyValue + "','" + attr.UIRefKeyText + "','" + this.DDL_M2.ClientID.ToString() + "');";
-            this.UCBtn2.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M2.ID + "'  ></td>");
+            this.UCBtn2.Add("<input class=Btn type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M2.ID + "'  ></td>");
 
         }
 		public void BindContrastKey(Map map)
@@ -360,12 +346,12 @@ namespace BP.Web.Comm
                             continue;
 
                         // 把隶属与条件都设置为查询全部。
-                        if (this.BPToolBar1.IsExitsContral("DDL_" + s))
+                        if (this.ToolBar1.FindControl("DDL_" + s) !=null)
                         {
                             if (s == "FK_Dept")
-                                this.BPToolBar1.GetDDLByKey("DDL_FK_Dept").SelectedIndex = 0;
+                                this.ToolBar1.GetDDLByKey("DDL_FK_Dept").SelectedIndex = 0;
                             else
-                                this.BPToolBar1.GetDDLByKey("DDL_" + s).SetSelectItem("all");
+                                this.ToolBar1.GetDDLByKey("DDL_" + s).SetSelectItem("all");
                         }
                     }
 
@@ -376,25 +362,24 @@ namespace BP.Web.Comm
                     }
                 }
 
-
-                if (this.BPToolBar1.IsExitsContral("DDL_" + this.ContrastKey))
+                if (this.ToolBar1.IsExitsContral("DDL_" + this.ContrastKey))
                 {
                     /*如果在查询条件里面有，就自动设置它为全部的查询条件，因为比较对象的明细已经确定了。*/
                     if (this.ContrastKey == "FK_Dept")
                     {
                         /* 设置为最大的查询条件 */
-                        this.BPToolBar1.GetDDLByKey("DDL_FK_Dept").SelectedIndex = 0;
+                        this.ToolBar1.GetDDLByKey("DDL_FK_Dept").SelectedIndex = 0;
                     }
                     else
                     {
-                        this.BPToolBar1.GetDDLByKey("DDL_" + this.ContrastKey).SetSelectItem("all");
+                        this.ToolBar1.GetDDLByKey("DDL_" + this.ContrastKey).SetSelectItem("all");
                     }
                 }
 
-                //if (this.BPToolBar1.IsExitsContral("DDL_" + this.DDL_GroupField.SelectedItemStringVal))
+                //if (this.ToolBar1.IsExitsContral("DDL_" + this.DDL_GroupField.SelectedItemStringVal))
                 //{
                 //    /*如果在查询条件里面有。*/
-                //    this.BPToolBar1.GetDDLByKey("DDL_" + this.DDL_GroupField.SelectedItemStringVal).SetSelectItem("all");
+                //    this.ToolBar1.GetDDLByKey("DDL_" + this.DDL_GroupField.SelectedItemStringVal).SetSelectItem("all");
                 //}
             }
             catch (Exception ex)
@@ -404,10 +389,8 @@ namespace BP.Web.Comm
             }
             #endregion
 
-
             this.Label2.Text = this.ContrastLab + "1";
             this.Label3.Text = this.ContrastLab + "2";
-
 
             try
             {
@@ -415,7 +398,11 @@ namespace BP.Web.Comm
                 attrs.Add(map.GetAttrByKey(this.DDL_Key.SelectedItemStringVal));
 
                 Entities ens = this.HisEns;
-                QueryObject qo = this.BPToolBar1.InitTableByEnsV2(ens, ens.GetNewEntity, 10000, 1);
+              //  QueryObject qo = this.ToolBar1.InitTableByEnsV2(ens, ens.GetNewEntity, 10000, 1);
+               
+                QueryObject qo =new QueryObject();
+                //= this.ToolBar1.InitQueryObjectByEns(ens,
+                  //  map.IsShowSearchKey,map.DTSearchWay, map.DTSearchKey, map.Attrs, map.AttrsOfSearch, map.AttrsOfSearch);
 
                 Attr attr = new Attr();
                 attr = map.GetAttrByKey(this.DDL_GroupField.SelectedItemStringVal);
@@ -433,8 +420,10 @@ namespace BP.Web.Comm
                 attrs2.Add(map.GetAttrByKey(this.DDL_Key.SelectedItemStringVal));
 
                 Entities ens2 = this.HisEns;
-                QueryObject qo2 = this.BPToolBar1.InitTableByEnsV2(ens2, ens2.GetNewEntity, 10000, 1);
-                qo2.addAnd();
+                //QueryObject qo2 = this.ToolBar1.InitTableByEnsV2(ens2, ens2.GetNewEntity, 10000, 1);
+                QueryObject qo2 = new QueryObject();
+
+                //qo2.addAnd();
 
                 if (this.ContrastKey == "FK_Dept")
                     qo2.AddWhereDept(this.DDL_M2.SelectedItemStringVal);
@@ -455,7 +444,7 @@ namespace BP.Web.Comm
                     if (this.ContrastKey == attrS.Key)
                         continue;
 
-                    string s = this.BPToolBar1.GetDDLByKey("DDL_" + attrS.Key).SelectedItemStringVal;
+                    string s = this.ToolBar1.GetDDLByKey("DDL_" + attrS.Key).SelectedItemStringVal;
                     if (s == "all")
                         continue;
 
@@ -495,8 +484,6 @@ namespace BP.Web.Comm
             int i=c.Update();
             if (i == 0)
                 c.Insert();
-
- 
         }
 		public void Bind(DataTable dt1, DataTable dt2, string url )
 		{
@@ -613,7 +600,7 @@ namespace BP.Web.Comm
 	 
 		
 		#endregion
-        private void BPToolBar1_ButtonClick(object sender, System.EventArgs e)
+        private void ToolBar1_ButtonClick(object sender, System.EventArgs e)
         {
             ToolbarBtn btn = (ToolbarBtn)sender;
             switch (btn.ID)

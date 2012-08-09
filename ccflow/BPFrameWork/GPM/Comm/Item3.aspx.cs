@@ -370,13 +370,11 @@ namespace BP.Web.Comm
                             {
                                 
                                 /* doc 文本类型。　*/
-                                FredCK.FCKeditorV2.FCKeditor  area = new FredCK.FCKeditorV2.FCKeditor();
-                                area.ID = "TB_" + attr.Key;
-
-                                if (val.ToString() == "" && en.IsEmpty==false && attr.Key=="Doc" )
-                                    val = en.GetValDocText();
-
-                                area.Value = val.ToString();
+                                //FredCK.FCKeditorV2.FCKeditor  area = new FredCK.FCKeditorV2.FCKeditor();
+                                //area.ID = "TB_" + attr.Key;
+                                //if (val.ToString() == "" && en.IsEmpty==false && attr.Key=="Doc" )
+                                //    val = en.GetValDocText();
+                                //area.Value = val.ToString();
 
                                 this.UCEn1.AddTR();
                                 this.UCEn1.Add("<TD colspan=3 nowarp=true class='FDesc' >" + attr.Desc + "</TD>");
@@ -384,7 +382,7 @@ namespace BP.Web.Comm
 
                                 this.UCEn1.AddTR();
                                 this.UCEn1.Add("<TD colspan=3 class='DocCell' height='400' >");
-                                this.UCEn1.Add(area);
+                               // this.UCEn1.Add(area);
                                 this.UCEn1.Add("</TD>");
                                 this.UCEn1.AddTREnd();
                                 continue;
@@ -566,6 +564,7 @@ namespace BP.Web.Comm
                 {
                     Button btn1 = new Button();
                     btn1.Text = "移除";
+                    btn1.CssClass = "Btn";
                     btn1.Attributes.Add("class", "Btn1");
                     btn1.ID = "Btn_DelFile";
                     btn1.Attributes["onclick"] += " return confirm('此操作要执行移除附件或图片，是否继续？');";
@@ -594,6 +593,7 @@ namespace BP.Web.Comm
                 btn = new Button();
                 btn.ID = "Btn_New";
                 btn.Text = "  新 建  ";
+                btn.CssClass = "Btn";
                 btn.Attributes.Add("class", "Btn1");
 
                 this.UCEn1.Add(btn);
@@ -605,6 +605,8 @@ namespace BP.Web.Comm
                 btn = new Button();
                 btn.ID = "Btn_Save";
                 btn.Text = "  保 存  ";
+                btn.CssClass = "Btn";
+
                 btn.Attributes.Add("class", "Btn1");
                 this.UCEn1.Add(btn);
                 this.UCEn1.Add("&nbsp;");
@@ -616,6 +618,8 @@ namespace BP.Web.Comm
                 btn = new Button();
                 btn.ID = "Btn_Del";
                 btn.Text = "  删 除  ";
+                btn.CssClass = "Btn";
+
                 btn.Attributes.Add("class", "Btn1");
 
                 btn.Attributes["onclick"] = " return confirm('您确定要执行删除吗？');";
@@ -623,7 +627,7 @@ namespace BP.Web.Comm
                 this.UCEn1.Add("&nbsp;");
             }
 
-            this.UCEn1.Add("&nbsp;<input type=button class='Btn1' onclick='javascript:window.close()' value='  关  闭  ' />");
+            this.UCEn1.Add("&nbsp;<input type=button class=Btn onclick='javascript:window.close()' value='  关  闭  ' />");
 
             this.UCEn1.Add("</TD>");
             this.UCEn1.AddTREnd();

@@ -1798,6 +1798,8 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
                 {
                     Button btn1 = new Button();
                     btn1.Text = "移除";
+                    btn1.CssClass = "Btn";
+
                     btn1.ID = "Btn_DelFile";
                     btn1.Attributes.Add("class", "Btn1");
 
@@ -1816,11 +1818,15 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
 
 
             Button btn = new Button();
+            btn.CssClass = "Btn";
+
             if (en.HisUAC.IsInsert)
             {
                 btn = new Button();
                 btn.ID = "Btn_New";
                 btn.Text = "  新 建  ";
+                btn.CssClass = "Btn";
+
                 btn.Attributes.Add("class", "Btn1");
 
                 this.Add(btn);
@@ -1831,6 +1837,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
             {
                 btn = new Button();
                 btn.ID = "Btn_Save";
+                btn.CssClass = "Btn";
                 btn.Text = "  保  存  ";
                 btn.Attributes.Add("class", "Btn1");
 
@@ -1843,6 +1850,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
             {
                 btn = new Button();
                 btn.ID = "Btn_Del";
+                btn.CssClass = "Btn";
                 btn.Text = "  删  除  ";
                 btn.Attributes.Add("class", "Btn1");
 
@@ -1851,7 +1859,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
                 this.Add("&nbsp;");
             }
 
-            this.Add("&nbsp;<input class='Btn1' type=button onclick='javascript:window.close()' value='  关  闭  ' />");
+            this.Add("&nbsp;<input class='Btn' type=button onclick='javascript:window.close()' value='  关  闭  ' />");
 
             this.Add("</TD>");
             this.AddTREnd();
@@ -1938,8 +1946,8 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
 
                                     if (this.IsExit("TBF_" + attr.Key))
                                     {
-                                        FredCK.FCKeditorV2.FCKeditor fck = (FredCK.FCKeditorV2.FCKeditor)this.FindControl("TB_" + attr.Key);
-                                        en.SetValByKey(attr.Key, fck.Value);
+                                        //FredCK.FCKeditorV2.FCKeditor fck = (FredCK.FCKeditorV2.FCKeditor)this.FindControl("TB_" + attr.Key);
+                                        //en.SetValByKey(attr.Key, fck.Value);
                                         continue;
                                     }
                                 }

@@ -55,10 +55,10 @@
     <form id="aspnetForm" runat="server" >
     <table border="0"  width='100%' height='400px'  align=left >
     <tr>
-    <th  valign=top bgcolor="#e6f5ff" width='200px'   nowarp=true >
+    <td  valign=top  class="ToolBar" width='200px'   nowarp=true >
       <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
-    </th>
+    </td>
     <td    valign=top  style="text-align:left;bgcolor:red" >
       <asp:ContentPlaceHolder id="ContentPlaceHolder2" runat="server">
         </asp:ContentPlaceHolder>

@@ -229,6 +229,12 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         en.Text = lab;
         this.Add(en);
     }
+    public bool IsExitsContral(string ctrlID)
+    {
+        if (this.FindControl(ctrlID) == null)
+            return false;
+        return true;
+    }
     public void AddBtn(string id, string text)
     {
         Btn en = new Btn();
@@ -278,17 +284,17 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
     public QueryObject GetnQueryObjectOracle(Entities ens, Entity en)
     {
-        QueryObject qo = this.InitQueryObjectByEns(ens, en.EnMap.IsShowSearchKey, en.EnMap.Attrs, en.EnMap.AttrsOfSearch, en.EnMap.SearchAttrs);
+        QueryObject qo = this.InitQueryObjectByEns(ens, en.EnMap.IsShowSearchKey, en.EnMap.DTSearchWay, en.EnMap.DTSearchKey,
+            en.EnMap.Attrs, en.EnMap.AttrsOfSearch, en.EnMap.SearchAttrs);
         string pk = en.PK;
         if (en.EnMap.Attrs.Contains("No"))
             qo.addOrderBy("No");
         return qo;
     }
-    public QueryObject InitQueryObjectByEns(Entities ens, bool IsShowSearchKey, Attrs attrs, AttrsOfSearch attrsOfSearch, AttrSearchs searchAttrs)
+    public QueryObject InitQueryObjectByEns(Entities ens, bool IsShowSearchKey, DTSearchWay dw, string dtKey, Attrs attrs, AttrsOfSearch attrsOfSearch, AttrSearchs searchAttrs)
     {
         QueryObject qo = new QueryObject(ens);
 
@@ -303,8 +309,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
 
         if (keyVal.Length >= 1)
         {
-            //  this.Page.Session["KeyVal"+ens.GetNewEntity.ToString() ] = keyVal;
-
             Attr attrPK = new Attr();
             foreach (Attr attr in attrs)
             {
@@ -483,7 +487,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
 
                     qo.addAnd();
                     qo.addLeftBracket();
-                    qo.AddWhereIn(attr.Key, "("+instr+")" );
+                    qo.AddWhereIn(attr.Key, "(" + instr + ")");
                     qo.addRightBracket();
                     continue;
                 }
@@ -503,6 +507,43 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         }
         #endregion.
 
+        if (dw != DTSearchWay.None)
+        {
+            string dtFrom = this.GetTBByID("TB_S_From").Text.Trim();
+            string dtTo = this.GetTBByID("TB_S_To").Text.Trim();
+            if (dw == DTSearchWay.ByDate)
+            {
+                qo.addAnd();
+                qo.addLeftBracket();
+                qo.SQL = dtKey + " >= '" + dtFrom + " 01:01'";
+                qo.addAnd();
+                qo.SQL = dtKey + " <= '" + dtTo + " 23:59'";
+                qo.addRightBracket();
+
+                //qo.AddWhere(dtKey, ">=", dtFrom+" 01:01");
+                //qo.addAnd();
+                //qo.AddWhere(dtKey, "<=", dtTo + " 23:59");
+                //qo.addRightBracket();
+            }
+
+            if (dw == DTSearchWay.ByDateTime)
+            {
+                qo.addAnd();
+                qo.addLeftBracket();
+                qo.SQL = dtKey + " >= '" + dtFrom + "'";
+                qo.addAnd();
+                qo.SQL = dtKey + " <= '" + dtTo + "'";
+                qo.addRightBracket();
+
+                //qo.addAnd();
+                //qo.addLeftBracket();
+                //qo.AddWhere(dtKey, ">=", dtFrom);
+                //qo.addAnd();
+                //qo.AddWhere(dtKey, "<=", dtTo);
+                //qo.addRightBracket();
+            }
+        }
+        //  throw new Exception(qo.SQL);
         return qo;
     }
     public QueryObject GetnQueryObject(Entities ens, Entity en)
@@ -510,7 +551,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         if (en.EnMap.EnDBUrl.DBType == DBType.Oracle9i)
             return this.GetnQueryObjectOracle(ens, en);
 
-        QueryObject qo = this.InitQueryObjectByEns(ens, en.EnMap.IsShowSearchKey, en.EnMap.Attrs,
+        QueryObject qo = this.InitQueryObjectByEns(ens, en.EnMap.IsShowSearchKey, en.EnMap.DTSearchWay, en.EnMap.DTSearchKey, en.EnMap.Attrs,
             en.EnMap.AttrsOfSearch, en.EnMap.SearchAttrs);
 
         switch (en.PK)
@@ -532,14 +573,12 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         if (string.IsNullOrEmpty(ensName))
             throw new Exception("@EnsName 为空" + ensName);
 
-
         UserRegedit ur = new UserRegedit();
         ur.MyPK = WebUser.No + ensName + "_SearchAttrs";
         ur.RetrieveFromDBSources();
         ur.FK_Emp = WebUser.No;
         ur.CfgKey = "SearchAttrs";
-
-        ur.SearchKey = key; // this.Page.Session["SKey"] as string;
+        ur.SearchKey = key;  
 
         if (key == "" || key == null)
         {
@@ -550,6 +589,16 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             catch
             {
             }
+        }
+
+        //查询时间.
+        try
+        {
+            ur.DTFrom_Datatime = this.GetTBByID("TB_S_From").Text;
+            ur.DTTo_Datatime = this.GetTBByID("TB_S_To").Text;
+        }
+        catch
+        {
         }
 
         string str = "";
@@ -660,8 +709,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
     {
         UserRegedit ur = new UserRegedit(WebUser.No, ensName + "_SearchAttrs");
         string cfgKey = ur.Vals;
-
-        this.InitByMapV2(map.IsShowSearchKey, map.AttrsOfSearch, map.SearchAttrs, null, page, ur);
+        this.InitByMapV2(map.IsShowSearchKey,map.DTSearchWay,map.AttrsOfSearch, map.SearchAttrs, null, page, ur);
 
         #region 设置默认值
         string[] keys = cfgKey.Split('@');
@@ -676,6 +724,33 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 tb.Text = ur.SearchKey;
                 continue;
             }
+
+            if (ti.ID == "TB_S_From")
+            {
+                TB tb = (TB)ti;
+                if (map.DTSearchWay == DTSearchWay.ByDate)
+                {
+                    tb.Text = ur.DTFrom_Data;
+                    tb.Attributes["onfocus"]="WdatePicker();";
+                }
+                else
+                    tb.Text = ur.DTFrom_Datatime;
+                continue;
+            }
+
+            if (ti.ID == "TB_S_To")
+            {
+                TB tb = (TB)ti;
+                if (map.DTSearchWay == DTSearchWay.ByDate)
+                {
+                    tb.Text = ur.DTTo_Data;
+                    tb.Attributes["onfocus"] = "WdatePicker();";
+                }
+                else
+                    tb.Text = ur.DTFrom_Datatime;
+                continue;
+            }
+
 
             if (ti.ID.IndexOf("DDL_") == -1)
                 continue;
@@ -720,7 +795,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         {
             if (attr.RelationalDtlKey == null)
                 continue;
-
             bigAttrs.Add(attr);
         }
 
@@ -746,15 +820,12 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             // ddl.Attributes["onchange"] = "Redirect" + attr.Key + "(this.options.selectedIndex)";
 
             ddl.Attributes["onchange"] = "Redirect" + attr.Key + "()";
-
             DDL ddlSmil = this.GetDDLByID("DDL_" + attr.RelationalDtlKey);
-
             string script = "";
             // 判断级联的方式，是按照编号规则级联还是按照外键级联。
             if (en.EnMap.Attrs.Contains(attr.Key))
             {
                 /*按照外键或者枚举类型级联 */
-
             }
             else
             {
@@ -779,9 +850,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 script += "\t\n Redirect" + attr.Key + "();";
                 //数据联动
                 script += "\t\n function Redirect" + attr.Key + "(){";
-
                 // script += "\t\n alert('sss')";
-
                 script += "\t\n	var ddlBig" + attr.Key + " = document.getElementById(\"" + ddl.ClientID + "\");";
                 script += "\t\n	var ddlSmall" + attr.Key + " = document.getElementById(\"" + ddlSmil.ClientID + "\");";
                 script += "\t\n	var value_Big" + attr.Key + " = getSelectValue" + attr.Key + "( ddlBig" + attr.Key + " );";
@@ -795,26 +864,30 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 script += "\t\n	}";
                 script += "\t\n	ddlSmall" + attr.Key + ".options[0].selected = true;";
                 script += "\t\n	}";
-
                 script += " //获取指定下拉列表的值";
                 script += "\t\n function getSelectValue" + attr.Key + "(oper) { ";
                 script += "\t\n	return oper.options[oper.options.selectedIndex].value;";
                 script += "\t\n	} ";
-
                 script += "\t\n	//-->";
                 script += "\t\n	</script> ";
             }
-
             // 注册他
             this.Page.RegisterClientScriptBlock(attr.Key, script);
         }
         #endregion
     }
     /// <summary>
-    /// 根据Map, 构造一个ToolBar
+    /// 查询方式
     /// </summary>
-    /// <param name="map"></param>
-    public void InitByMapV2(bool isShowKey, AttrsOfSearch attrsOfSearch, AttrSearchs attrsOfFK, Attrs attrD1, int page, UserRegedit ur)
+    /// <param name="isShowKey"></param>
+    /// <param name="sw"></param>
+    /// <param name="dtSearchKey"></param>
+    /// <param name="attrsOfSearch"></param>
+    /// <param name="attrsOfFK"></param>
+    /// <param name="attrD1"></param>
+    /// <param name="page"></param>
+    /// <param name="ur"></param>
+    public void InitByMapV2(bool isShowKey,DTSearchWay sw, AttrsOfSearch attrsOfSearch, AttrSearchs attrsOfFK, Attrs attrD1, int page, UserRegedit ur)
     {
         int keysNum = 0;
         // 关键字。
@@ -828,6 +901,35 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             keysNum++;
         }
         this.Add("&nbsp;");
+
+        if (sw != DTSearchWay.None)
+        {
+            Label lab = new Label();
+            lab.ID = "Lab_From";
+            lab.Text = "日期从:";
+            this.Add(lab);
+            TB tbDT = new TB();
+            tbDT.ID = "TB_S_From";
+            if (sw == DTSearchWay.ByDate)
+                tbDT.ShowType = TBType.Date;
+            if (sw == DTSearchWay.ByDateTime)
+                tbDT.ShowType = TBType.DateTime;
+            this.Add(tbDT);
+
+            lab = new Label();
+            lab.ID = "Lab_To";
+            lab.Text = "到:";
+            this.Add(lab);
+
+            tbDT = new TB();
+            tbDT.ID = "TB_S_To";
+            if (sw == DTSearchWay.ByDate)
+                tbDT.ShowType = TBType.Date;
+            if (sw == DTSearchWay.ByDateTime)
+                tbDT.ShowType = TBType.DateTime;
+            this.Add(tbDT);
+        }
+
 
         // 非外键属性。
         foreach (AttrOfSearch attr in attrsOfSearch)

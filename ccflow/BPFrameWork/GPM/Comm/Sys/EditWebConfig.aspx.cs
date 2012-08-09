@@ -107,6 +107,8 @@ public partial class Comm_Sys_EditWebconfig : BP.Web.WebPageAdmin
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " 保存全局设置 ";
+        btn.CssClass = "Btn";
+
         this.UCSys1.AddTD(btn);
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.AddTD();

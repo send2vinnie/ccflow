@@ -110,12 +110,15 @@ public partial class Comm_Sys_EnsAppCfg : BP.Web.WebPageAdmin
         this.UCSys1.AddTableEnd();
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
+        btn.CssClass = "Btn";
+
         btn.Text = this.ToE("SaveAndClose", "保存并关闭");
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);
@@ -205,11 +208,13 @@ public partial class Comm_Sys_EnsAppCfg : BP.Web.WebPageAdmin
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = this.ToE("Save", "保存");
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
+        btn.CssClass = "Btn";
         btn.Text = this.ToE("SaveAndClose", "保存并关闭");
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);

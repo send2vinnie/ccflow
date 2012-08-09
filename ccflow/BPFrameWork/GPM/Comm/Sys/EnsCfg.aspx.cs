@@ -98,6 +98,7 @@ public partial class Comm_Sys_EnConfig : BP.Web.WebPageAdmin
         Button btn = new Button();
         btn.Text = "保存设置";
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.AddTD(btn);
 

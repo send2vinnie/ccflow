@@ -288,7 +288,7 @@ function SetDDLVal(ddlID, val) {
 
 function onDDLSelectedMore(ddlID, MainEns, EnsName, refkeyvalue, reftext) {
     var url = '';
-    url = "DataHelp.htm?HelperOfDDL.aspx?EnsName=" + EnsName + "&RefKey=" + refkeyvalue + "&RefText=" + reftext + "&MainEns=" + MainEns + "&DDLID=" + ddlID;
+    url = "/ccflow/Comm/DataHelp.htm?HelperOfDDL.aspx?EnsName=" + EnsName + "&RefKey=" + refkeyvalue + "&RefText=" + reftext + "&MainEns=" + MainEns + "&DDLID=" + ddlID;
     var str = window.showModalDialog(url, '', 'dialogHeight: 500px; dialogWidth:850px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no');
     ddlID = ddlID.replace('DDL_', '');
     if (str != null) {
@@ -320,7 +320,6 @@ function RSize() {
     } else {
         window.dialogHeight = (document.body.scrollHeight + 115).toString() + "px"
     }
-
     window.dialogLeft = ((window.screen.availWidth - document.body.clientWidth) / 2).toString() + "px"
     window.dialogTop = ((window.screen.availHeight - document.body.clientHeight) / 2).toString() + "px"
 }

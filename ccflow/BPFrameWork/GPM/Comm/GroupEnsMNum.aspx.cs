@@ -150,7 +150,6 @@ namespace BP.Web.Comm
             this.Page.RegisterClientScriptBlock("s",
        "<link href='./Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
-
             this.CB_IsShowPict.Text = this.ToE("IsShowPict", "显示图形");
             this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", "柱状图");
             this.BPTabStrip1.Items[4].Text = this.ToE("Pie", "饼图");
@@ -389,7 +388,6 @@ namespace BP.Web.Comm
                 DDL ddl = new DDL();
                 ddl.ID = "DDL_" + attr.Key;
                 ddl.Items.Add(new ListItem(this.ToE("ForSum", "求和"), "SUM"));
-
                 ddl.Items.Add(new ListItem(this.ToE("ForAvg", "求平均"), "AVG"));
                 if (this.IsContainsNDYF)
                     ddl.Items.Add(new ListItem(this.ToE("ForAMOUNT", "求累计"), "AMOUNT"));
@@ -700,6 +698,9 @@ namespace BP.Web.Comm
                         switch (SystemConfig.AppCenterDBType)
                         {
                             case DBType.Oracle9i:
+                                where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
+                                break;
+                            case DBType.Informix:
                                 where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
                                 break;
                             case DBType.SQL2000:

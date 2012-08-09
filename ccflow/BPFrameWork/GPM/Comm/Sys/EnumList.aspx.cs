@@ -18,6 +18,7 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
         this.UCSys1.AddTR();
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = "  Save  ";
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.AddTDTitle("colspan=3", btn);
@@ -89,6 +90,7 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
         this.UCSys1.AddTR();
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = "  Save  ";
         btn.Click += new EventHandler(btn_New_Click);
         this.UCSys1.AddTDTitle("colspan=3", btn);
