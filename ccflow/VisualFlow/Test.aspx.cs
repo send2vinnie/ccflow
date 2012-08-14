@@ -42,6 +42,69 @@ public partial class TestFrm : BP.Web.PageBase
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        BP.WF.Demo.EmpDemo ed = new BP.WF.Demo.EmpDemo();
+        ed.No = "zhangsan";
+        ed.Retrieve();
+        ed.Addr = "sdsfdsfsddddddddddddfffffffffffd";
+        ed.Update();
+        return;
+
+
+        this.Response.Write(ed.Name + "<br>");
+        this.Response.Write(ed.Tel + "<br>");
+        this.Response.Write(ed.Addr + "<br>");
+
+        this.Response.Write(ed.FK_Dept+"<br>");
+        this.Response.Write(ed.FK_Dept_Text+"<br>");
+
+        this.Response.Write(ed.XB + "<br>");
+        this.Response.Write(ed.XB_Text + "<br>");
+        return;
+
+
+     //   BP.WF.Demo.EmpDemo ed = new BP.WF.Demo.EmpDemo();
+     ////  ed.CheckPhysicsTable();
+
+     //   ed.No = "zhangsan";
+     //   ed.Name = "张三";
+     //   ed.FK_Dept = "02";
+     //   ed.Email = "zhangsans@ss.com";
+     //   ed.Addr = "shandong jinan";
+     //   ed.Tel = "1866018232323";
+     //   ed.XB = 1;
+     //   ed.Insert();
+     //   return;
+
+     
+        //BP.WF.Demo.Emp emp = new BP.WF.Demo.Emp();
+        //BP.En.QueryObject q1o = new QueryObject(emp);
+        //q1o.AddWhere("No", "zhangsan");
+        //q1o.DoQuery();
+        //this.Response.Write(q1o.SQL);
+
+        //BP.WF.Demo.Emp emp = new BP.WF.Demo.Emp();
+        //emp.No = "zhangsan";
+        //emp.Retrieve();
+
+        //this.Response.Write("<br>"+emp.Name);
+        //this.Response.Write("<br>" + emp.FK_Dept);
+        //this.Response.Write("<br>" + emp.FK_DeptText);
+        //this.Response.Write("<br>" + emp.XB);
+        //this.Response.Write("<br>" + emp.XBText);
+        //return;
+
+        //BP.WF.Demo.Emp emp = new BP.WF.Demo.Emp();
+        //emp.CheckPhysicsTable();
+        //emp.No = "zhangsan";
+        //emp.Name = "张三";
+        //emp.FK_Dept = "0102";
+        //emp.XB = 1;
+        //emp.Addr = "河南平顶山";
+        //emp.Tel = "1233";
+        //emp.Insert();
+        return;
+
         this.Response.Write(this.GetMac("192.168.1.13"));
         return;
        
