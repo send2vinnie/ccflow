@@ -1034,8 +1034,6 @@ namespace BP.WF
                     break;
             }
 
-
-
             WorkNode wn = new WorkNode(workid, fromNodeID);
             wn.JumpToEmp = WebUser.No;
             wn.JumpToNode = new Node(tackToNodeID);
