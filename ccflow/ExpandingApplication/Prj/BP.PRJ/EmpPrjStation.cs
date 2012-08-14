@@ -138,13 +138,10 @@ namespace BP.PRJ
                 Map map = new Map("Prj_EmpPrjStation");
                 map.EnDesc = "人员项目组";
                 map.EnType = EnType.Dot2Dot;
-
                 map.AddTBStringPK(EmpPrjStationAttr.FK_EmpPrj, null, "FK_EmpPrj", true, true, 0, 20, 20);
                 map.AddDDLEntitiesPK(EmpPrjStationAttr.FK_Station, null, "岗位", new Stations(), true);
-
                 map.AddTBString(EmpPrjStationAttr.FK_Emp, null, "FK_Emp", true, true, 0, 20, 20);
                 map.AddTBString(EmpPrjStationAttr.FK_Prj, null, "FK_Prj", true, true, 0, 20, 20);
-
                 this._enMap = map;
                 return this._enMap;
             }

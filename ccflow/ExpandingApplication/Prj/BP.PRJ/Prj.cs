@@ -247,6 +247,7 @@ namespace BP.PRJ
                 if (this._enMap != null)
                     return this._enMap;
 
+
                 Map map = new Map("Prj_Prj");
                 map.EnDesc = "ÏîÄ¿";
 
