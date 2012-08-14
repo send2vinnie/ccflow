@@ -14,12 +14,13 @@
     <OneWork No="Ath" CH="流程附件" />
 
     <RptFlow1 No="Home_My" CH="主页" URL="Home.aspx?DoType=My"   ICON="./../../Images/Btn/Home.gif" />
-
     <RptFlow No="Search_My" CH="我参与的流程" URL="Search.aspx?DoType=My"   ICON="./../../Images/Table.gif" />
     <RptFlow No="Search_Dept" CH="部门流程"   URL="Search.aspx?DoType=Dept"   ICON="./../../Images/Table.gif"  />
 
     <RptFlow No="Group_My" CH="我参与的流程" URL="Group.aspx?DoType=My"   ICON="./../../Images/Btn/Chart.gif" />
     <RptFlow No="Group_Dept" CH="部门流程"   URL="Group.aspx?DoType=Dept"   ICON="./../../Images/Btn/Chart.gif" />
+    <RptFlow No="D3_Dept" CH="交叉报表"   URL="D3.aspx?DoType=Dept"   ICON="./../../Images/Btn/Chart.gif" />
+    <RptFlow No="D3_DB" CH="对比分析"   URL="Contrast.aspx?DoType=Dept"   ICON="./../../Images/Btn/Chart.gif" />
 
     <!--<RptFlow No="Bill_MyFlow" CH="我打印的单据" URL="Bill.aspx?DoType=My"   ICON="./../../Images/Btn/Word.gif" />
     <RptFlow No="Bill_DeptFlow" CH="部门单据"   URL="Bill.aspx?DoType=Dept"   ICON="./../../Images/Btn/Word.gif" />-->
