@@ -1,5 +1,0 @@
-
-
-
-INSERT INTO ND405Dtl1 ( OID,FID,RDT,Rec,RefPK,bumen,renyuan,yijian) SELECT OID, FID,CDT,Rec, FID AS REFPK,bumen,Rec,yijianzhengji FROM ND404 WHERE  OID NOT IN (SELECT OID FROM ND405Dtl1)
-
