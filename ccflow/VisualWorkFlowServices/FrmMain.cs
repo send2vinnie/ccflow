@@ -216,7 +216,7 @@ namespace SMSServices
                     if (now.Contains(":13") || now.Contains(":33") || now.Contains(":53"))
                     {
                         this.SetText("检索自动节点任务....");
-                        this.DoAutoNode();
+                        this.DoAutoNode(); 
                     }
                 }
 
@@ -238,6 +238,9 @@ namespace SMSServices
                 }
             }
         }
+        /// <summary>
+        /// 自动执行节点
+        /// </summary>
         private void DoAutoNode()
         {
             string sql = "SELECT * FROM WF_GenerWorkerList WHERE FK_Node IN (SELECT NODEID FROM WF_Node WHERE (WhoExeIt=1 OR  WhoExeIt=2) AND IsPass=0 AND IsEnable=1) ORDER BY FK_Emp";
@@ -247,6 +250,8 @@ namespace SMSServices
                 Int64 workid = Int64.Parse(dr["WorkID"].ToString());
                 int fk_node = int.Parse(dr["FK_Node"].ToString());
                 string fk_emp = dr["FK_Emp"].ToString();
+                string fk_flow = dr["FK_Flow"].ToString();
+
                 try
                 {
                     if (WebUser.No != fk_emp)
@@ -255,8 +260,8 @@ namespace SMSServices
                         Emp emp = new Emp(fk_emp);
                         WebUser.SignInOfGener(emp);
                     }
-                    WorkNode wn = new WorkNode(workid, fk_node);
-                    string msg = wn.AfterNodeSave();
+
+                    string msg = BP.WF.Dev2Interface.Node_SendWork(fk_flow, workid, null);
                     this.SetText("@处理:" + WebUser.No + ",WorkID=" + workid + ",正确处理:" + msg);
                 }
                 catch (Exception ex)

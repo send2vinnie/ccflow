@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
+using BP;
+using BP.Port;
+using BP.Web;
+using BP.En;
+using BP.WF;
+using BP.DA;
 namespace SMSServices
 {
     static class Program
@@ -20,9 +25,14 @@ namespace SMSServices
             }
 
             Glo.LoadConfigByFile();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            //Emp emp = new Emp("zhanghaicheng");
+            //BP.Web.WebUser.SignInOfGener(emp);
+            //WorkNode wn = new WorkNode(499, 1301);
+            //wn.AfterNodeSave();
+
             Application.Run(new FrmMain());
         }
     }
