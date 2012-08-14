@@ -35,6 +35,10 @@ namespace BP.WF
                     case WorkAttr.CDT:
                     case WorkAttr.Rec:
                     case WorkAttr.Sender:
+                    case StartWorkAttr.Title:
+                    case StartWorkAttr.Emps:
+                    case StartWorkAttr.FK_Dept:
+                    case StartWorkAttr.PRI:
                         continue;
                     default:
                         break;
@@ -48,6 +52,7 @@ namespace BP.WF
 
                 s += wk.GetValStrByKey(attr.Key);
             }
+            s += "ccflow";
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5").ToLower();
 
             //MD5 md5 = new MD5CryptoServiceProvider();'

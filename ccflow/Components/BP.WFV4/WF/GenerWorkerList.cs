@@ -391,7 +391,7 @@ namespace BP.WF
 
                 map.AddTBIntPK(WorkerListAttr.WorkID, 0, "工作ID", true, true);
 
-                map.AddTBStringPK(WorkerListAttr.FK_Emp, null, "人员", true, false, 0, 100, 100);
+                map.AddTBStringPK(WorkerListAttr.FK_Emp, null, "人员", true, false, 0, 50, 100);
                 map.AddTBString(WorkerListAttr.FK_EmpText, null, "人员名称", true, false, 0, 100, 100);
 
                 map.AddTBIntPK(WorkerListAttr.FK_Node, 0, "节点ID", true, false);

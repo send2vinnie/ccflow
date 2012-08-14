@@ -4,7 +4,6 @@ using System.Text;
 
 namespace BitmapCutter.Core.API
 {
-
     /// <summary>
     /// Cutter Model
     /// </summary>

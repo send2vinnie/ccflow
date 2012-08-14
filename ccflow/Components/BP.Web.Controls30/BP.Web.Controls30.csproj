@@ -157,11 +157,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CTL\Lab.cs" />
-    <Compile Include="FCKeditor\FCKeditor.cs" />
-    <Compile Include="FCKeditor\FCKeditorConfigurations.cs" />
-    <Compile Include="FCKeditor\FCKeditorDesigner.cs" />
-    <Compile Include="FCKeditor\Util.cs" />
-    <Compile Include="FCKeditor\XmlUtil.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="IWCW\BPMultiPage.cs">
       <SubType>Code</SubType>
