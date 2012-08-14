@@ -44,14 +44,14 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
                 return;
             }
         }
-         
+
         if (this.Request.Browser.Cookies == false)
         {
             this.Alert("您的浏览器不支持cookies功能，无法使用改系统。");
             return;
         }
 
-       // if (this.DoType == "Logout")
+        // if (this.DoType == "Logout")
         if (this.DoType != null)
         {
             BP.Web.WebUser.Exit();
@@ -63,43 +63,15 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
         int colspan = 1;
 
-        this.AddTable();
-        //this.AddTR();
-        //this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
-        //this.AddTREnd();
+        this.AddTable("border=0");
 
         this.AddTR();
         this.Add("<TD class=C align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>系统登陆</b></TD>");
         this.AddTREnd();
-
-
-        //this.AddTR();
-        //this.Add("<TD class=BigDoc align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>" + this.ToE("Login", "系统登陆") + "</b> " + this.ToE("PlsChoseLang", "请选择系统支持的语言") + "</TD>");
-        //this.AddTREnd();
-
-        //this.AddTR();
-        //this.Add("<TD align=center >");
-
-        //BP.WF.XML.Langs langs = new BP.WF.XML.Langs();
-        //langs.RetrieveAll();
-
-        //foreach (BP.WF.XML.Lang lang in langs)
-        //{
-        //    this.Add("<a href='Login.aspx?Lang=" + lang.No + "'>" + lang.Name + "</a> &nbsp;&nbsp;");
-        //}
-
-        //this.AddTDEnd();
-        //this.AddTREnd();
-
         this.AddTR();
         this.Add("<TD align=center >");
 
-        this.AddTable("border=1px align=center ");
-        //this.AddTRSum();
-        //this.AddTD();
-        //this.AddTD();
-        //this.AddTREnd();
-
+        this.AddTable("border=0px align=center ");
         this.AddTR();
         this.AddTD(this.ToE("UserName", "用户名："));
 
@@ -111,28 +83,23 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         this.AddTD(tb);
         this.AddTREnd();
 
-
         this.AddTR();
         this.AddTD(this.ToE("PassWord", "密&nbsp;&nbsp;码："));
         tb = new TextBox();
         tb.ID = "TB_Pass";
         tb.TextMode = TextBoxMode.Password;
-        // tb.Attributes["class"] = "TB";
         tb.Columns = 22;
         this.AddTD(tb);
         this.AddTREnd();
-
 
         this.AddTRSum();
         this.AddTDBegin("colspan=3 align=center");
         Button btn = new Button();
         btn.CssClass = "Btn";
-
         btn.Text = this.ToE("Login", "登 陆");
 
         btn.Click += new EventHandler(btn_Click);
         this.Add(btn);
-
         if (WebUser.No != null)
         {
             string home = "";
@@ -147,9 +114,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
             this.Add(" - <a href='" + this.PageID + ".aspx?DoType=Logout' ><font color=green><b>安全退出</b></a>");
         }
         this.AddTDEnd();
-
         this.AddTREnd();
-
         this.AddTableEnd();
 
         this.AddBR();
@@ -157,17 +122,6 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
         this.AddTDEnd();
         this.AddTREnd();
-
-        //this.AddTR();
-        //this.AddTDBegin();
-        //if (WebUser.No != null)
-        //{
-        //    this.AddFieldSet("注销");
-        //    this.AddH4("<a href='"+this.PageID+".aspx?DoType=Logout' >安全退出</a>");
-        //    this.AddFieldSetEnd();
-        //}
-        //this.AddTDEnd();
-        //this.AddTREnd();
         this.AddTableEnd();
     }
     public string ToWhere

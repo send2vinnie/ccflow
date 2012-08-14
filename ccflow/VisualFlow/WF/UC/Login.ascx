@@ -9,5 +9,7 @@ function ExitAuth( fk_emp )
     WinShowModalDialog(url,'');
     window.location.href='Tools.aspx';
 }
+function NoSubmit(fk_emp) {
+}
 </script>
 

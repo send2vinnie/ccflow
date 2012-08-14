@@ -32,4 +32,10 @@
           word-wrap: break-word; 
       　　word-break: normal; 
         }
+        .ImgPRI
+        {
+            width:20px;
+            height:20px;
+            border:0px;
+        }
     </style>

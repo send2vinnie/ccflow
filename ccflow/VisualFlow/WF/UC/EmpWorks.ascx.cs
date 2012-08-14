@@ -133,14 +133,14 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 switch (g)
                 {
                     case "1,":
-                        s = "<img src='./Img/Flag_Red.png' />高";
+                        s = "<img src='./Img/Flag_Red.png' class=ImgPRI />高";
                         break;
                     case "2,":
-                        s = "<img src='./Img/Flag_Yellow.png' />中";
+                        s = "<img src='./Img/Flag_Yellow.png' class=ImgPRI />中";
                         break;
                     case "3,":
                     default:
-                        s = "<img src='./Img/Flag_Green.png' />低";
+                        s = "<img src='./Img/Flag_Green.png' class=ImgPRI />低";
                         break;
                 }
                 this.Pub1.AddTR();
@@ -172,14 +172,14 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                     switch (dr["PRI"].ToString())
                     {
                         case "1":
-                            this.Pub1.AddTD("<img src='./Img/Flag_Red.png' border=0 />高");
+                            this.Pub1.AddTD("<img src='./Img/Flag_Red.png' class=ImgPRI />高");
                             break;
                         case "2":
-                            this.Pub1.AddTD("<img src='./Img/Flag_Yellow.png' border=0 />中");
+                            this.Pub1.AddTD("<img src='./Img/Flag_Yellow.png' class=ImgPRI />中");
                             break;
                         case "3":
                         default:
-                            this.Pub1.AddTD("<img src='./Img/Flag_Green.png' border=0 />低");
+                            this.Pub1.AddTD("<img src='./Img/Flag_Green.png' class=ImgPRI/>低");
                             break;
                     }
                 }

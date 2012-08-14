@@ -111,7 +111,7 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
         if (this.PageSmall != "")
             this.Pub1.AddBR();
         int colspan = 9;
-        this.Pub1.AddTable("border=1px align=center width='960px' ");
+        this.Pub1.AddTable("width='960px' align=center");
         this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;" + this.GenerMenu());
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
@@ -154,8 +154,6 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
                 bool isRead = false;
-             //   if (dr["IsRead"].ToString() == "1")
-               //     isRead = true;
 
                 this.Pub1.AddTDIdx(i);
                 if (isRead == false)
@@ -163,7 +161,7 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
                 else
                     this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpen('" + dr["MyPK"] + ",'" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
 
-                this.Pub1.AddTD(DataType.ParseText2Html(dr["Doc"].ToString()));
+                this.Pub1.AddTDBigDoc(DataType.ParseText2Html(dr["Doc"].ToString()));
 
                 if (this.GroupBy != "FlowName")
                 {

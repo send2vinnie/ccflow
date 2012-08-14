@@ -1246,9 +1246,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         string sql = "SELECT FK_Emp FROM WF_GenerWorkerlist WHERE FK_Node='" + this.FK_Node + "' AND WorkID=" + this.WorkID + " AND FK_Emp='" + WebUser.No + "' AND IsEnable=1 AND IsPass=0";
         if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 1 && currND.IsStartNode == false)
         {
-            this.ToMsg("保存或发送错误", "您好：" + WebUser.No + "," + WebUser.Name + "：<br> 当前工作已经被其它人处理，您不能在执行保存或者发送!!!");
-            return;
+            //throw new Exception("sdsds");
+            throw new Exception("您好：" + WebUser.No + "," + WebUser.Name + "：<br> 当前工作已经被其它人处理，您不能在执行保存或者发送!!!");
         }
+
 
         System.Web.HttpContext.Current.Session["RunDT"] = DateTime.Now;
         if (this.FK_Node == 0)
@@ -1416,7 +1417,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         return;
                     }
                 }
-                throw new Exception("您定义的转向条件不成立，没有出口。");
+
+                #warning 为上海修改了如果找不到路径就让它按系统的信息提示。
+                
+                this.ToMsg(msg, "info");
+              //throw new Exception("您定义的转向条件不成立，没有出口。");
+                break;
             default:
                 this.ToMsg(msg, "info");
                 break;
