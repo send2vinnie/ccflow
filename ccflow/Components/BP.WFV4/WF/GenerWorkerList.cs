@@ -410,7 +410,7 @@ namespace BP.WF
                 map.AddBoolean(WorkerListAttr.IsEnable, true, "是否可用", true, true);
 
                 //对会签节点有效
-                map.AddTBInt(WorkerListAttr.IsPass, 0, "是否通过(对会签节点有效)", false, false);
+                map.AddTBInt(WorkerListAttr.IsPass, 0, "是否通过(对合流节点有效)", false, false);
 
                 // 谁执行它？
                 map.AddTBInt(WorkerListAttr.WhoExeIt, 0, "谁执行它", false, false);

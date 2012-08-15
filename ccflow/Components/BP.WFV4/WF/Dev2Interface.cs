@@ -668,7 +668,7 @@ namespace BP.WF
         /// <param name="ht">开始节点数据</param>
         /// <param name="fk_nodeOfJumpTo">将要跳转的节点</param>
         /// <returns>执行信息</returns>
-        public static string Node_StartWork(string flowNo, Hashtable ht, int fk_nodeOfJumpTo)
+        public static string Node_StartWork(string flowNo, Hashtable ht, int fk_nodeOfJumpTo,string nextWorker)
         {
             Node nd = new Node(int.Parse(flowNo + "01"));
             StartWork sw = nd.HisWork as StartWork;
@@ -687,8 +687,7 @@ namespace BP.WF
             sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
 
             WorkNode wn = new WorkNode(sw, nd);
-            wn.JumpToNode = new Node(fk_nodeOfJumpTo);
-            return wn.AfterNodeSave();
+            return wn.AfterNodeSave(new Node(fk_nodeOfJumpTo),nextWorker);
         }
         /// <summary>
         /// 发送工作
@@ -1035,10 +1034,7 @@ namespace BP.WF
             }
 
             WorkNode wn = new WorkNode(workid, fromNodeID);
-            wn.JumpToEmp = WebUser.No;
-            wn.JumpToNode = new Node(tackToNodeID);
-            string msg = wn.AfterNodeSave();
-
+            string msg = wn.AfterNodeSave(new Node(tackToNodeID),BP.Web.WebUser.No);
             wn.AddToTrack(ActionType.Tackback, WebUser.No, WebUser.Name, tackToNodeID, nd.Name, "执行跳转审核的取回.");
             return msg;
         }

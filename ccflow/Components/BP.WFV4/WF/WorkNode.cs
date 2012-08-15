@@ -2191,8 +2191,8 @@ namespace BP.WF
                 return _HisFlow;
             }
         }
-        public Node JumpToNode = null;
-        public string JumpToEmp = null;
+        private Node JumpToNode = null;
+        private string JumpToEmp = null;
         /// <summary>
         /// 保存后处理
         /// </summary>
@@ -2202,16 +2202,16 @@ namespace BP.WF
             return AfterNodeSave(null, null);
         }
         /// <summary>
-        /// 解决流程回滚的问题
+        /// 调用发送
         /// </summary>
-        /// <param name="TransferPC"></param>
-        /// <param name="ByTransfered"></param>
+        /// <param name="jumpToNode">跳转到的节点，可以为null</param>
+        /// <param name="jumpToEmp">跳转到的人员，可以为null</param>
         /// <returns></returns>
         public string AfterNodeSave(Node jumpToNode, string jumpToEmp)
         {
+            //设置跳转节点，如果有可以为null.
             this.JumpToNode = jumpToNode;
             this.JumpToEmp = jumpToEmp;
-
 
             // 检查是否是当前节点，如果不是就可能存在sdk用户刷新的可能，导致数据重复提交。
             //if (this.HisGenerWorkFlow.FK_Node != this.HisNode.NodeID)
@@ -2225,7 +2225,7 @@ namespace BP.WF
             // 调用发送前的接口。
             try
             {
-                #region 处理调用日志.
+                #region 处理流程被调用.
                 if (this.HisNode.IsStartNode)
                 {
                     /*如果是开始流程判断是不是被吊起的流程，如果是就要向父流程写日志。*/
@@ -2252,12 +2252,9 @@ namespace BP.WF
 
                             tkParent.NDTo = this.HisNode.NodeID;
                             tkParent.NDToT = this.HisNode.FlowName + " \t\n " + this.HisNode.Name;
-
                             tkParent.FK_Flow = ndFrom.FK_Flow;
-
                             tkParent.NDFrom = ndFrom.NodeID;
                             tkParent.NDFromT = ndFrom.Name;
-
                             tkParent.EmpTo = WebUser.No;
                             tkParent.EmpToT = WebUser.Name;
                             tkParent.Msg = "<a href='Track.aspx?FK_Flow=" + this.HisNode.FK_Flow + "&WorkID=" + this.HisWork.OID + "' target=_b >调起子流程(" + this.HisNode.FlowName + ")</a>";
@@ -2266,10 +2263,14 @@ namespace BP.WF
                         }
                     }
                 }
-                #endregion 处理调用日志.
+                #endregion 处理流程被调用.
 
+                #region 处理主要业务逻辑.
                 msg += AfterNodeSave_Do();
                 DBAccess.DoTransactionCommit(); //提交事务.
+                #endregion 处理主要业务逻辑.
+
+                #region 处理发送成功后事件.
                 try
                 {
                     // 调起发送成功后的事务。
@@ -2279,20 +2280,25 @@ namespace BP.WF
                 {
                     msg += ex.Message;
                 }
+                #endregion 处理发送成功后事件.
 
-                string msgOfSend = this.HisNode.TurnToDealDoc;
-                if (msgOfSend.Length > 3)
+                #region 处理发送成功后的消息提示
+                if (this.HisNode.HisTurnToDeal == TurnToDeal.SpecMsg)
                 {
+                    string msgOfSend = this.HisNode.TurnToDealDoc;
                     if (msgOfSend.Contains("@"))
                     {
                         Attrs attrs = this.HisWork.EnMap.Attrs;
                         foreach (Attr attr in attrs)
                         {
+                            if (msgOfSend.Contains("@") == false)
+                                continue;
                             msgOfSend = msgOfSend.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
                         }
                     }
                     return msgOfSend;
                 }
+                #endregion 处理发送成功后事件.
 
                 // 如果需要跳转.
                 if (town != null)
@@ -2300,7 +2306,6 @@ namespace BP.WF
                     if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
                         return town.AfterNodeSave();
                 }
-
                 return msg;
             }
             catch (Exception ex)
@@ -2310,6 +2315,10 @@ namespace BP.WF
                 throw ex;
             }
         }
+        /// <summary>
+        /// 手工的回滚提交失败信息.
+        /// </summary>
+        /// <param name="ex"></param>
         private void WhenTranscactionRollbackError(Exception ex)
         {
             /*在提交错误的情况下，回滚数据。*/
@@ -2369,6 +2378,7 @@ namespace BP.WF
                 throw new Exception(ex.Message + "@回滚发送失败数据出现错误：" + ex1.Message + "@有可能系统已经自动修复错误，请您在重新执行一次。");
             }
         }
+
         #region 用户到的变量
         public WorkerLists HisWorkerLists = null;
         public GenerWorkFlow _HisGenerWorkFlow;
@@ -2401,8 +2411,8 @@ namespace BP.WF
         /// <summary>
         /// 启动分流
         /// </summary>
-        /// <param name="toNode"></param>
-        /// <returns></returns>
+        /// <param name="toNode">转向的节点</param>
+        /// <returns>分流的返回的消息</returns>
         public string FeiLiuStartUp(Node toNode)
         {
             // 发起.
@@ -2538,7 +2548,6 @@ namespace BP.WF
                         }
                         #endregion  复制附件信息
 
-
                         #region  复制明细表信息.
                         if (dtlsFrom.Count > 0)
                         {
@@ -2645,11 +2654,6 @@ namespace BP.WF
                         gwf.WorkID = mywk.OID;
                         gwf.Title = this.GenerTitle(this.HisWork);
 
-                        //if (BP.WF.Glo.IsShowUserNoOnly == false)
-                        //    gwf.Title = WebUser.No + "," + WebUser.Name + " 发起：" + toNode.Name + "(分流节点)";
-                        //else
-                        //    gwf.Title = WebUser.No + " 发起：" + toNode.Name + "(分流节点)";
-
                         gwf.WFState = 0;
                         gwf.RDT = DataType.CurrentDataTime;
                         gwf.Rec = Web.WebUser.No;
@@ -2676,11 +2680,7 @@ namespace BP.WF
                 default:
                     throw new Exception("没有处理的类型：" + this.HisNode.HisFLRole.ToString());
             }
-
-            // return 。系统自动下达给如下几位同事。";
-
-            string info = this.ToE("WN28", "@分流节点:{0}已经发起。@任务自动下达给{1}如下{2}位同事,{3}.");
-
+            string info ="@分流节点:{0}已经发起。@任务自动下达给{1}如下{2}位同事,{3}.";
             msg += string.Format(info, toNode.Name,
                 this.nextStationName,
                 this._RememberMe.NumOfObjs.ToString(),
@@ -2710,8 +2710,6 @@ namespace BP.WF
 
             msg += "@<a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FID=" + wk.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
             return msg;
-            // +" <font color=blue><b>" + this.nextStationName + "</b></font>   " + this._RememberMe.NumOfObjs + " ：@" + this._RememberMe.EmpsExt;
-            // return this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt);  // +" <font color=blue><b>" + this.nextStationName + "</b></font>   " + this._RememberMe.NumOfObjs + " ：@" + this._RememberMe.EmpsExt;
         }
         /// <summary>
         /// 分流发起
@@ -3527,7 +3525,7 @@ namespace BP.WF
             */
         }
         /// <summary>
-        /// 会签节点是否全部完成？
+        /// 合流节点是否全部完成？
         /// </summary>
         private bool IsOverMGECheckStand = false;
         private bool IsStopFlow = false;

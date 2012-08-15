@@ -166,11 +166,9 @@ namespace BP.WF
 
                 Node ndStart = nd.HisFlow.HisStartNode;
                 WorkNode wn = new WorkNode(wk, ndStart);
-                wn.JumpToNode = nd;
-                wn.JumpToEmp = executer;
                 try
                 {
-                    info += "<hr>" + wn.AfterNodeSave();
+                    info += "<hr>" + wn.AfterNodeSave(nd,executer);
                 }
                 catch (Exception ex)
                 {
@@ -314,11 +312,9 @@ namespace BP.WF
 
                 Node ndStart =fl.HisStartNode;
                 WorkNode wn = new WorkNode(wk, ndStart);
-                wn.JumpToNode = ndOfEnd;
-                wn.JumpToEmp = executer;
                 try
                 {
-                    info += "<hr>" + wn.AfterNodeSave();
+                    info += "<hr>" + wn.AfterNodeSave(ndOfEnd, executer);
                 }
                 catch (Exception ex)
                 {
