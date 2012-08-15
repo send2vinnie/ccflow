@@ -29,8 +29,10 @@ public partial class _Default : System.Web.UI.Page
             return;
         }
 
-        //  this.Response.Redirect("./WF/Login.aspx", true);
-        this.Response.Redirect("./WF/Admin/XAP/Designer.aspx", true);
+        if (this.Request.QueryString["IsCheckUpdate"] == "1")
+            this.Response.Redirect("./WF/Admin/XAP/Designer.aspx?IsCheckUpdate=1", true);
+        else
+            this.Response.Redirect("./WF/Admin/XAP/Designer.aspx", true);
         return;
     }
 }
