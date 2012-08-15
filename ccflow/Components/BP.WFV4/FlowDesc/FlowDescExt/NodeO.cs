@@ -191,7 +191,7 @@ namespace BP.WF.Ext
 
                 // 基础属性
                 map.AddTBIntPK(NodeAttr.NodeID, 0, this.ToE("NodeID", "节点ID"), true, true);
-                map.AddTBInt(NodeAttr.Step, 0, "步骤", true, false);
+                map.AddTBInt(NodeAttr.Step, 0, "步骤(无计算意义)", true, false);
                 map.AddTBString(NodeAttr.FK_Flow, null, "流程编号", false, false, 3, 3, 10, false);
 
                 map.AddTBString(NodeAttr.Name, null, this.ToE("Name", "名称"), true, true, 0, 100, 10, true);

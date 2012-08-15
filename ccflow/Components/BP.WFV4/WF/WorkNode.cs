@@ -2236,7 +2236,7 @@ namespace BP.WF
                         {
                             Node ndFrom = new Node(int.Parse(fk_nodeFrom));
                             string fromWorkID = System.Web.HttpContext.Current.Request.QueryString["FromWorkID"];
-                            string pTitle = DBAccess.RunSQLReturnString("SELECT Title FROM  ND" + int.Parse(ndFrom.FK_Flow) + "01 WHERE OID=" + fromWorkID);
+                            string pTitle = DBAccess.RunSQLReturnStringIsNull("SELECT Title FROM  ND" + int.Parse(ndFrom.FK_Flow) + "01 WHERE OID=" + fromWorkID,"");
 
                             //记录当前流程被调起。
                             this.AddToTrack(ActionType.StartSubFlow, WebUser.No,
@@ -3347,7 +3347,6 @@ namespace BP.WF
                     string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
                     basePath += "/" + System.Web.HttpContext.Current.Request.ApplicationPath;
                     string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\CC_" + WebUser.SysLang + ".txt");
-
                     foreach (DataRow dr in ccers.Rows)
                     {
                         ccDoc = ccDoc.Replace("@Accepter", dr[1].ToString());
@@ -3388,7 +3387,7 @@ namespace BP.WF
 
                         BP.TA.SMS.AddMsg(list.RefWorkID + "_" + list.FK_Node + "_" + wfemp.No, wfemp.No, wfemp.HisAlertWay, wfemp.Tel,
                    this.ToEP3("WN27", "工作抄送:{0}.工作:{1},发送人:{2},需您查阅",
-                   this.HisNode.FlowName, this.HisNode.Name, WebUser.Name),  wfemp.Email, null, mytemp);
+                   this.HisNode.FlowName, this.HisNode.Name, WebUser.Name), wfemp.Email, null, mytemp);
                     }
                 }
                 //    BP.TA.SMS.AddMsg(
@@ -4233,7 +4232,7 @@ namespace BP.WF
             _SpanSubTheadNodes = "";
             SpanSubTheadNodes_DG(toHLNode.HisFromNodes);
             if (_SpanSubTheadNodes == "")
-                throw new Exception("获取分合流之间的子线程节点集合出现错。");
+                throw new Exception("获取分合流之间的子线程节点集合为空，请检查流程设计，在分合流之间的节点必须设置为子线程节点。");
             _SpanSubTheadNodes = _SpanSubTheadNodes.Substring(1);
             return _SpanSubTheadNodes;
 

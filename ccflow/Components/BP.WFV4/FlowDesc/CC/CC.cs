@@ -132,7 +132,10 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(CCAttr.CCTitle);
+                string s= this.GetValStringByKey(CCAttr.CCTitle);
+                if (string.IsNullOrEmpty(s))
+                    s = "来自@Rec的抄送信息.";
+                return s;
             }
             set
             {
@@ -146,7 +149,10 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(CCAttr.CCDoc);
+                string s = this.GetValStringByKey(CCAttr.CCDoc);
+                if (string.IsNullOrEmpty(s))
+                    s = "来自@Rec的抄送信息.";
+                return s;
             }
             set
             {

@@ -2370,9 +2370,6 @@ namespace BP.WF
 
                 map.AddTBInt(NodeAttr.NodeWorkType, 0, "节点类型", false, false);
 
-                //  map.AddDDLSysEnum(NodeAttr.NodeWorkType, 0, "节点类型", true, true, NodeAttr.NodeWorkType,
-                //  "@0=开始节点@1=开始分流节点@2=标准审核节点@3=数量审核节点@4=会签@5=合流节点@6=分流节点@7=分合流节点@8=普通节点");
-                // map.AddTBInt(NodeAttr.NodeWorkType, 0, "节点类型", false, false);
 
                 map.AddTBString(NodeAttr.FK_Flow, null, "FK_Flow", false, false, 0, 100, 10);
 

@@ -319,7 +319,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BP.En30\BP.En30.csproj">
+    <ProjectReference Include="..\..\..\ccflow.bakssss\Components\BP.En30\BP.En30.csproj">
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
       <Name>BP.En30</Name>
     </ProjectReference>
