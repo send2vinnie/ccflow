@@ -52,14 +52,12 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
     #endregion 属性.
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (this.DoType != null)
         {
+            //BP.WF.Dev2Interface.Node_SendWork(
             Node ndJump = new Node(this.GoNode);
             WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
-            wn.JumpToNode = ndJump;
-            string msg = wn.AfterNodeSave();
-
+            string msg = wn.AfterNodeSave(ndJump, null);
             this.AddFieldSet("发送提示");
             this.Add(msg.Replace("@", "<br>@"));
             this.AddFieldSetEnd();

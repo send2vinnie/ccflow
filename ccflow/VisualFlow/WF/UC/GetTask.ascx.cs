@@ -115,13 +115,38 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        string pageid = this.Request.RawUrl.ToLower();
+        if (pageid.Contains("small"))
+        {
+            if (pageid.Contains("single"))
+                pageid = "SmallSingle";
+            else
+                pageid = "Small";
+            this.AddBR();
+        }
+        else
+        {
+            pageid = "";
+        }
+
         if (this.DoType == "Tackback")
         {
             /* */
             try
             {
                string s= BP.WF.Dev2Interface.Node_Tackback(this.FK_Node, this.WorkID, this.ToNode);
-               this.AddMsgGreen("取回成功", "工作已经放入您的待办里，<a target='_"+this.WorkID+"' href='MyFlowSmall.aspx?FK_Flow="+this.FK_Flow+"&FK_Node="+this.FK_Node+"&WorkID="+this.WorkID+"'>点这里请执行</a>。");
+           //  s=s.Replace(
+               this.AddTable("width='960px' align=center");
+               this.AddCaptionLeft("<a href='GetTask" + pageid + ".aspx'><img src='./Img/Start.gif' > <b>取回处理</b></a> - <a href=GetTask"+pageid+".aspx?FK_Flow="+this.FK_Flow+"&FK_Node="+this.FK_Node+">返回</a>");
+               this.AddTR();
+               this.AddTDBegin();
+               this.AddMsgGreen("取回成功", "<h3>工作已经放入您的待办里</h3><hr><a href='MyFlow"+pageid+".aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.ToNode + "&WorkID=" + this.WorkID + "&FID=0' >点这里请执行</a>。<br><br>");
+               this.AddTDEnd();
+
+               this.AddTR();
+               this.AddTD(s);
+               this.AddTDEnd();
+               this.AddTableEnd();
             }
             catch (Exception ex)
             {
@@ -143,25 +168,12 @@ public partial class WF_UC_GetTask : BP.Web.UC.UCBase3
 
         //fls.RetrieveAll(FlowAttr.FK_FlowSort);
 
-        string pageid = this.Request.RawUrl.ToLower();
-        if (pageid.Contains("small"))
-        {
-            if (pageid.Contains("single"))
-                pageid = "SmallSingle";
-            else
-                pageid = "Small";
-            this.AddBR();
-        }
-        else
-        {
-            pageid = "";
-        }
+    
        
 
         int colspan = 5;
         this.AddTable("width='960px' align=center");
         this.AddCaptionLeft("<a href='GetTask" + pageid + ".aspx'><img src='./Img/Start.gif' > <b>取回处理</b></a>");
-
         this.AddTR();
         this.AddTDTitle(this.ToE("IDX", "序"));
         this.AddTDTitle(this.ToE("FlowSort", "流程类别"));

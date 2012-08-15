@@ -11,8 +11,42 @@ using BP.WF;
 
 public partial class Designer : System.Web.UI.Page
 {
+
+    public bool IsCheckUpdate
+    {
+        get
+        {
+            if (this.Request.QueryString["IsCheckUpdate"] == null)
+                return false;
+            return true;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.IsCheckUpdate == false)
+        {
+            #region 执行admin登陆.
+            Emp emp = new Emp();
+            emp.No = "admin";
+            if (emp.RetrieveFromDBSources() == 1)
+            {
+                BP.Web.WebUser.SignInOfGener(emp, true);
+            }
+            else
+            {
+                emp.No = "admin";
+                emp.Name = "admin";
+                emp.FK_Dept = "01";
+                emp.Pass = "pub";
+                emp.Insert();
+                BP.Web.WebUser.SignInOfGener(emp, true);
+                //throw new Exception("admin 用户丢失，请注意大小写。");
+            }
+            #endregion 执行admin登陆.
+            return;
+        }
+
+
         string sql = "";
         string msg = "";
         try
