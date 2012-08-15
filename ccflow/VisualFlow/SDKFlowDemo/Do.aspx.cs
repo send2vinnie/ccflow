@@ -20,10 +20,10 @@ public partial class SDKFlows_Do : System.Web.UI.Page
         }
     }
 
-    public void TurnTo2Node(string fk_flow, int FK_NodeOfJump,Int64 fromOID, Int64 fromFID)
-    {
-        //发起一下新流程直接跳转到103节点上去。
-        // 注意: 103 节点的人员接受规则是，与上一步的操作员一致。
-        BP.WF.Dev2Interface.Node_StartWork("001", null, 103);
-    }
+    //public void TurnTo2Node(string fk_flow, int FK_NodeOfJump,Int64 fromOID, Int64 fromFID)
+    //{
+    //    //发起一下新流程直接跳转到103节点上去。
+    //    // 注意: 103 节点的人员接受规则是，与上一步的操作员一致。
+    //    BP.WF.Dev2Interface.Node_StartWork("001", null, 103);
+    //}
 }
