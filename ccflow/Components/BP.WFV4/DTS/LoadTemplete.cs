@@ -108,13 +108,13 @@ namespace BP.WF.DTS
                         System.IO.FileInfo info = new System.IO.FileInfo(f);
                         if (info.Extension != ".xml")
                             continue;
+
                         DataSet ds = new DataSet();
                         ds.ReadXml(f);
 
                         MapData md = MapData.ImpMapData(ds);
                         md.FK_FrmSort = fs.No;
                         md.Update();
-
                     }
                     catch (Exception ex)
                     {

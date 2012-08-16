@@ -628,6 +628,7 @@ namespace BP.WF
                 dtNow = dtNow.AddMonths(1);
             }
             #endregion 初始化数据
+
         }
         public static void KillProcess(string processName) //杀掉进程的方法
         {

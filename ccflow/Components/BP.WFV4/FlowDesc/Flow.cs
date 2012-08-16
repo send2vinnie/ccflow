@@ -3476,8 +3476,12 @@ namespace BP.WF
                 }
                 #endregion 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
 
+                int timeKeyIdx = 0;
                 foreach (DataTable dt in ds.Tables)
                 {
+                    timeKeyIdx++;
+                    timeKey = timeKey + timeKeyIdx.ToString();
+
                     infoTable = "@导入:" + dt.TableName + " 出现异常。";
                     switch (dt.TableName)
                     {
