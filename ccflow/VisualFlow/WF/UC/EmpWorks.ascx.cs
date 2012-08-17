@@ -132,13 +132,13 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 string s = null;
                 switch (g)
                 {
-                    case "1,":
+                    case "0,":
                         s = "<img src='./Img/Flag_Red.png' class=ImgPRI />高";
                         break;
-                    case "2,":
+                    case "1,":
                         s = "<img src='./Img/Flag_Yellow.png' class=ImgPRI />中";
                         break;
-                    case "3,":
+                    case "2,":
                     default:
                         s = "<img src='./Img/Flag_Green.png' class=ImgPRI />低";
                         break;
@@ -171,13 +171,13 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 {
                     switch (dr["PRI"].ToString())
                     {
-                        case "1":
+                        case "0":
                             this.Pub1.AddTD("<img src='./Img/Flag_Red.png' class=ImgPRI />高");
                             break;
-                        case "2":
+                        case "1":
                             this.Pub1.AddTD("<img src='./Img/Flag_Yellow.png' class=ImgPRI />中");
                             break;
-                        case "3":
+                        case "2":
                         default:
                             this.Pub1.AddTD("<img src='./Img/Flag_Green.png' class=ImgPRI/>低");
                             break;
