@@ -2189,7 +2189,6 @@ namespace BP.WF
         {
             get
             {
-                //return false;
                 return this.GetValBooleanByKey(NodeAttr.IsCCFlow);
             }
             set

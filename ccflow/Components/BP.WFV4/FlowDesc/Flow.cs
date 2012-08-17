@@ -888,6 +888,9 @@ namespace BP.WF
         /// <returns></returns>
         public string DoCheck()
         {
+
+
+
             DBAccess.RunSQL("UPDATE WF_Node SET FlowName = (SELECT Name FROM WF_Flow WHERE NO=WF_Node.FK_Flow)");
             DBAccess.RunSQL("DELETE WF_Direction WHERE Node=ToNode");
             
@@ -914,6 +917,10 @@ namespace BP.WF
             foreach (Node nd in nds)
             {
                 nd.RepareMap();
+                if (DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM WF_Cond WHERE NodeID='"+nd.NodeID+"' AND CondType=1") == 0)
+                    nd.IsCCFlow = false;
+                else
+                    nd.IsCCFlow = true;
 
                 DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + nd.Name + "' WHERE No='ND" + nd.NodeID + "'");
                 try
@@ -1086,7 +1093,6 @@ namespace BP.WF
                         }
                     }
                 }
-
 
                 msg += "<br>";
                 //对单据进行检查。
@@ -3388,7 +3394,6 @@ namespace BP.WF
                 fl.FK_FlowSort = fk_flowSort;
                 fl.Insert();
                 #endregion 处理流程表数据
-
 
                 #region 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
                 DataTable mydtGF = ds.Tables["Sys_GroupField"];

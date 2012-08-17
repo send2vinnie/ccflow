@@ -2167,18 +2167,6 @@ namespace BP.WF
         {
             if (this.HisWorkFlow.IsComplete)  // 如果全局的工作已经完成.
                 return this.ToE("FlowOver", "当前的任务已经完成"); //当前的任务已经完成
-
-            #region 检查全局的完成条件,由于不经常用到,所以就暂时删除.
-            /*
-			GlobalCompleteConditions gcc = new GlobalCompleteConditions(this.HisNode.FK_Flow,this.HisWork.OID);
-			if (gcc.IsOneOfConditionPassed)
-			{
-				this.HisWorkFlow.DoFlowOver();
-				return "@工作流程["+this.HisNode.HisFlow.Name+"]执行过程中，在节点["+this.HisNode.Name+"]符合流程完成条件，"+gcc.GetOneOfConditionPassed.ConditionDesc+"，工作正常结束！";
-			}
-			*/
-            #endregion
-
             return null;
         }
         private Flow _HisFlow = null;
@@ -3588,20 +3576,19 @@ namespace BP.WF
                     this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                         this.HisNode.NodeID, this.HisNode.Name, "流程结束");
                     return "工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
-                    // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
-                    // return msg + "@符合工作流程完成条件" + this.HisFlowCompleteConditions.ConditionDesc + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
 
                 if ((this.HisNode.IsCCFlow && this.HisFlowCompleteConditions.IsPass))
                 {
+                    string stopMsg = this.HisFlowCompleteConditions.ConditionDesc;
                     /* 如果流程完成 */
-                    string overMsg = this.HisWorkFlow.DoFlowOver("");
+                    string overMsg = this.HisWorkFlow.DoFlowOver(stopMsg);
                     this.IsStopFlow = true;
 
                     this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                         this.HisNode.NodeID, this.HisNode.Name, "流程结束");
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
-                    return msg + "@符合工作流程完成条件" + this.HisFlowCompleteConditions.ConditionDesc + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
+                    return msg + "@符合工作流程完成条件" + stopMsg + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
             }
             catch (Exception ex)
