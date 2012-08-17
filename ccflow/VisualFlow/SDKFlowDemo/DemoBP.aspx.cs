@@ -234,6 +234,11 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
             this.Response.Write("<br>部门名称:" + emp.FK_DeptText);
         }
 
+        //把entities 数据转入到DataTable里。
+        DataTable empsDTfield = emps.ToDataTableField(); //以英文字段做为列名。
+        DataTable empsDTDesc = emps.ToDataTableDesc(); //以中文字段做为列名。
+
+
         // 从数据库里查询全部。
         emps = new Emps();
         num = emps.RetrieveAllFromDBSource();
@@ -254,6 +259,8 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
         qo.AddWhere(EmpAttr.FK_Dept, "01");
         qo.addOrderBy(EmpAttr.No); // 增加排序规则,Order  OrderByDesc, addOrderByDesc addOrderByRandom. 
         num = qo.DoQuery();  // 返回查询的个数.
+        DataTable mydt = qo.DoQueryToTable();  // 查询出来的数据转入到datatable里。.
+
 
         this.Response.Write("查询出来(" + num + ")个，部门编号=01的人员。");
         foreach (Emp emp in myEmps)
@@ -350,7 +357,6 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
             this.Response.Write("<br>没有找到: Name =郭宝庚 的实体.");
         else
             this.Response.Write("<br>已经找到了: Name =郭宝庚 的实体. 他的部门编号="+empFind.FK_Dept+"，部门名称="+empFind.FK_DeptText);
-
 
         // 批量更新实体。
         myEmps.Update(); // 等同于下一个循环。
