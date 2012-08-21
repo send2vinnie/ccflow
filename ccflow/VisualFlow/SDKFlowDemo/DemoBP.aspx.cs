@@ -149,8 +149,7 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
         #endregion  数据复制.
 
         #region 查询.
-        string msg = "";
-        // 查询这条数据.
+        string msg = "";     // 查询这条数据.
         BP.Port.Emp myEmp = new BP.Port.Emp();
         myEmp.No = "zhangsan";
         if (myEmp.RetrieveFromDBSources() == 0)  // RetrieveFromDBSources() 返回来的是查询数量.
@@ -188,18 +187,11 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
         emp.No = "zhangsan";
         int delNum = emp.Delete(); // 执行删除。
         if (delNum == 0)
-        {
             this.Response.Write("删除zhangsan失败.");
-        }
-
         if (delNum == 1)
-        {
             this.Response.Write("删除zhangsan 成功..");
-        }
         if (delNum > 1)
-        {
             this.Response.Write("不应该出现的异常。");
-        }
         // 初试化实例后，执行删除，这种方式要执行两个sql.
         emp = new BP.Port.Emp("abc");
         emp.Delete();
@@ -220,9 +212,7 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
     public void EntitiesBaseApp()
     {
         #region 查询全部
-        /*
-         * 查询全部分为两种方式，1 从缓存里查询全部。2，从数据库查询全部。
-         */
+        /* 查询全部分为两种方式，1 从缓存里查询全部。2，从数据库查询全部。  */
         Emps emps = new Emps();
         int num = emps.RetrieveAll(); //从缓存里查询全部数据.
         this.Response.Write("RetrieveAll查询出来(" + num + ")个");
@@ -233,12 +223,9 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
             this.Response.Write("<br>部门编号:" + emp.FK_Dept);
             this.Response.Write("<br>部门名称:" + emp.FK_DeptText);
         }
-
         //把entities 数据转入到DataTable里。
         DataTable empsDTfield = emps.ToDataTableField(); //以英文字段做为列名。
         DataTable empsDTDesc = emps.ToDataTableDesc(); //以中文字段做为列名。
-
-
         // 从数据库里查询全部。
         emps = new Emps();
         num = emps.RetrieveAllFromDBSource();
@@ -260,8 +247,6 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
         qo.addOrderBy(EmpAttr.No); // 增加排序规则,Order  OrderByDesc, addOrderByDesc addOrderByRandom. 
         num = qo.DoQuery();  // 返回查询的个数.
         DataTable mydt = qo.DoQueryToTable();  // 查询出来的数据转入到datatable里。.
-
-
         this.Response.Write("查询出来(" + num + ")个，部门编号=01的人员。");
         foreach (Emp emp in myEmps)
         {
@@ -303,8 +288,6 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
             this.Response.Write("<br>部门编号:" + emp.FK_Dept);
             this.Response.Write("<br>部门名称:" + emp.FK_DeptText);
         }
-
-
         // 具有where in 方式的查询。
         myEmps = new Emps();
         qo = new QueryObject(myEmps);
@@ -345,11 +328,9 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
             this.Response.Write("<br>部门编号:" + emp.FK_Dept);
             this.Response.Write("<br>部门名称:" + emp.FK_DeptText);
         }
-
         // 判断是否包含是指定的主键值.
         bool isHave = myEmps.Contains("Name", "郭宝庚"); //判断是否集合里面包含Name=郭宝庚的实体.
         bool isHave1 = myEmps.Contains("guobaogeng"); //判断是否集合里面主键No=guobaogeng的实体.
-
 
         // 获取Name=郭宝庚的实体，如果没有就返回空。
         Emp empFind = myEmps.GetEntityByKey("Name", "郭宝庚") as Emp;
@@ -357,21 +338,16 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
             this.Response.Write("<br>没有找到: Name =郭宝庚 的实体.");
         else
             this.Response.Write("<br>已经找到了: Name =郭宝庚 的实体. 他的部门编号="+empFind.FK_Dept+"，部门名称="+empFind.FK_DeptText);
-
         // 批量更新实体。
         myEmps.Update(); // 等同于下一个循环。
         foreach (Emp emp in myEmps)
-        {
             emp.Update();
-        }
-
         // 删除实体.
         myEmps.Delete(); // 等同于下一个循环。
         foreach (Emp emp in myEmps)
         {
             emp.Delete();
         }
-
         // 执行数据库删除，类于执行 DELETE Port_Emp WHERE FK_Dept='01' 的sql.
         myEmps.Delete("FK_Dept", "01");
         #endregion
