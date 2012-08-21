@@ -1176,8 +1176,10 @@ namespace BP.WF
         /// <returns></returns>
         public static bool CheckIsEnableWFEmp()
         {
-            string sql = "SELECT UseSta FROM WF_Emp WHERE No='" + Web.WebUser.No + "'";
-            string s = DBAccess.RunSQLReturnStringIsNull(sql, "1");
+            Paras ps = new Paras();
+            ps.SQL="SELECT UseSta FROM WF_Emp WHERE No="+SystemConfig.AppCenterDBVarStr+"FK_Emp";
+            ps.AddFK_Emp();
+            string s = DBAccess.RunSQLReturnStringIsNull(ps, "1");
             if (s == "1" || s==null)
                 return true;
             return false;
@@ -1216,6 +1218,27 @@ namespace BP.WF
                 return BP.SystemConfig.GetValByKeyBoolen("IsEnablePRI", false);
             }
         }
+        /// <summary>
+        /// 是否启动工作时打开新窗口
+        /// </summary>
+        public static bool IsWinOpenStartWork
+        {
+            get
+            {
+                return BP.SystemConfig.GetValByKeyBoolen("IsWinOpenStartWork", true);
+            }
+        }
+        /// <summary>
+        /// 是否打开待办工作时打开窗口
+        /// </summary>
+        public static bool IsWinOpenEmpWorks
+        {
+            get
+            {
+                return BP.SystemConfig.GetValByKeyBoolen("IsWinOpenEmpWorks", true);
+            }
+        }
+        
         /// <summary>
         /// 是否启用消息系统消息。
         /// </summary>

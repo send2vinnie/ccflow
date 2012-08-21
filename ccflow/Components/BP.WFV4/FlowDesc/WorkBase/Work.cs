@@ -128,7 +128,7 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// WID, 如果是空的就返回 0 . 
+        /// workid,如果是空的就返回 0 . 
         /// </summary>
         public virtual Int64 OID
         {
@@ -309,7 +309,6 @@ namespace BP.WF
         {
             get
             {
-
                 if (this.SpanDays == 0)
                     return 0;
                 float days = this.SpanDays - this.HisNode.DeductDays;
@@ -367,7 +366,6 @@ namespace BP.WF
                 _HisNode = value;
             }
         }
-        private MapDtls _HisMapDtls = null;
         /// <summary>
         /// 明细表.
         /// </summary>
@@ -375,14 +373,10 @@ namespace BP.WF
         {
             get
             {
-                if (this._HisMapDtls == null)
-                {
-                    this._HisMapDtls = new MapDtls( "ND"+this.NodeID);
-                }
-                return _HisMapDtls;
+                return this.HisNode.MapData.MapDtls;
             }
         }
-        private FrmAttachments _HisFrmAttachments = null;
+      
         /// <summary>
         /// 明细表.
         /// </summary>
@@ -390,159 +384,13 @@ namespace BP.WF
         {
             get
             {
-                if (this._HisFrmAttachments == null)
-                {
-                    this._HisFrmAttachments = new FrmAttachments("ND" + this.NodeID);
-                }
-                return _HisFrmAttachments;
-            }
-        }
-        #region 用于不是明细表的数据拷贝 .
-        /// <summary>
-        /// 他的相管联的 en . 
-        /// 用于数据同步处理.
-        /// 1, 此节点上采集的数据需要同步到另外一个数据库上去.
-        /// 2, 子类可以重写它.
-        /// 3, 如果是空的就可以不处理.
-        /// </summary>
-        public virtual Entity HisRefEn
-        {
-            get
-            {
-                return null;
-            }
-        }
-        public virtual Entity HisRefEn1
-        {
-            get
-            {
-                return null;
-            }
-        }
-        public virtual Entity HisRefEn2
-        {
-            get
-            {
-                return null;
-            }
-        }
-        public virtual Entity HisRefEn3
-        {
-            get
-            {
-                return null;
-            }
-        }
-        #endregion
-
-        #region 用于明细表的数据拷贝 .
-        /// <summary>
-        /// 他的相管联的 en . 
-        /// 用于数据同步处理.
-        /// 1, 此节点上采集的数据需要同步到另外一个数据库上去.
-        /// 2, 子类可以重写它.
-        /// 3, 如果是空的就可以不处理.
-        /// </summary>
-        public virtual Entities HisRefEnDtl
-        {
-            get
-            {
-                return null;
-            }
-        }
-        public virtual Entities HisRefEnDtlCopy
-        {
-            get
-            {
-                return null;
-            }
-        }
-        #endregion
-
-        /// <summary>
-        /// 执行copy .
-        /// </summary>
-        public void DoCopy()
-        {
-
-            try
-            {
-                Entity en = this.HisRefEn;
-
-                if (en != null)
-                {
-                    en.Copy(this);
-                    if (en.Update() == 0)
-                        en.Insert();
-                }
-
-                en = this.HisRefEn1;
-                if (en != null)
-                {
-                    en.Copy(this);
-                    if (en.EnMap.Attrs.Contains("WorkID"))
-                    {
-                        en.SetValByKey("WorkID", this.OID);
-                    }
-
-                    if (en.Update() == 0)
-                        en.Insert();
-                }
-
-                en = this.HisRefEn2;
-                if (en != null)
-                {
-                    en.Copy(this);
-                    if (en.EnMap.Attrs.Contains("WorkID"))
-                    {
-                        en.SetValByKey("WorkID", this.OID);
-                    }
-                    if (en.Update() == 0)
-                        en.Insert();
-                }
-
-                //对于验证流程，只允许插入，不允许更新。因为可以多次办理验证，所以可以插入多条数据
-                en = this.HisRefEn3;
-                if (en != null)
-                {
-                    en.Copy(this);
-                    if (en.EnMap.Attrs.Contains("WorkID"))
-                    {
-                        en.SetValByKey("WorkID", this.OID);
-                    }
-                    en.Insert();
-                }
-                return;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Copy 数据期间出现如下错误:" + ex.Message);
-            }
-
-            //拷贝明细表数据时的处理
-            if (this.HisRefEnDtl != null)
-            {
-                Entities dtls = this.HisRefEnDtl;
-                QueryObject qo = new QueryObject(dtls);
-                qo.AddWhere("WorkID", this.OID);
-                qo.DoQuery();
-
-                Entity refen = this.HisRefEnDtlCopy.GetNewEntity;
-                refen.RunSQL("DELETE FROM " + refen.EnMap.PhysicsTable + " WHERE WorkID=" + this.OID);
-
-                foreach (EntityOID dtl in dtls)
-                {
-                    Entity en = this.HisRefEnDtlCopy.GetNewEntity;
-                    en.Copy(this);
-                    en.Copy(dtl);
-                    en.Insert();
-                }
+                return this.HisNode.MapData.FrmAttachments;
             }
         }
         /// <summary>
         /// 他的工作流程
         /// </summary>
-        public WorkFlow HisWorkFlow
+        public WorkFlow HisWorkFlow_del
         {
             get
             {
@@ -575,26 +423,6 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(WorkAttr.NodeState, (int)value);
-            }
-        }
-        /// <summary>
-        /// 节点状态已经完成
-        /// 0,初始化
-        /// 1,已经完成
-        /// 2,警告状态
-        /// 3,扣分状态
-        /// 4,强制终止状态	 
-        /// 5,删除状态
-        /// </summary>
-        public int NodeState_del
-        {
-            get
-            {
-                return this.GetValIntByKey(WorkAttr.NodeState);
-            }
-            set
-            {
-                this.SetValByKey(WorkAttr.NodeState, value);
             }
         }
         /// <summary>
@@ -730,14 +558,14 @@ namespace BP.WF
             get
             {
                 string tp = "";
-                FAppSets sets = new FAppSets(this.NodeID);
-                foreach (FAppSet set in sets)
-                {
-                    if (set.DoWhat.Contains("?"))
-                        tp += "[<a href=\"javascript:WinOpen('" + set.DoWhat + "&WorkID=" + this.OID + "' ,'sd');\" ><img src='../images/Btn/Do.gif' border=0/>" + set.Name + "</a>]";
-                    else
-                        tp += "[<a href=\"javascript:WinOpen('" + set.DoWhat + "?WorkID=" + this.OID + "' ,'sd');\" ><img src='../images/Btn/Do.gif' border=0/>" + set.Name + "</a>]";
-                }
+                //FAppSets sets = new FAppSets(this.NodeID);
+                //foreach (FAppSet set in sets)
+                //{
+                //    if (set.DoWhat.Contains("?"))
+                //        tp += "[<a href=\"javascript:WinOpen('" + set.DoWhat + "&WorkID=" + this.OID + "' ,'sd');\" ><img src='../images/Btn/Do.gif' border=0/>" + set.Name + "</a>]";
+                //    else
+                //        tp += "[<a href=\"javascript:WinOpen('" + set.DoWhat + "?WorkID=" + this.OID + "' ,'sd');\" ><img src='../images/Btn/Do.gif' border=0/>" + set.Name + "</a>]";
+                //}
 
                 if (this.HisNode.IsHaveSubFlow)
                 {
@@ -906,7 +734,7 @@ namespace BP.WF
             //}
 
             // 执行保存前的事件。
-            this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SaveBefore, this);
+            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SaveBefore, this);
             return "";
         }
         #endregion
@@ -1020,7 +848,7 @@ namespace BP.WF
         /// </summary>
         protected override void afterDelete()
         {
-            MapDtls dtls = new MapDtls("ND" + this.NodeID);
+            MapDtls dtls = this.HisNode.MapData.MapDtls; 
             foreach (MapDtl dtl in dtls)
                 DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + this.OID);
 

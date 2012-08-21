@@ -676,6 +676,7 @@ namespace BP.WF
 
             #region 处理流程发起.
             string nodeTable = "ND" + int.Parse(this.No) + "01";
+            MapData md = new MapData(nodeTable);
             int idx = 0;
             foreach (DataRow dr in dtMain.Rows)
             {
@@ -712,7 +713,7 @@ namespace BP.WF
                 if (ds.Tables.Count != 0)
                 {
                     // MapData md = new MapData(nodeTable);
-                    MapDtls dtls = new MapDtls(nodeTable);
+                    MapDtls dtls = md.MapDtls; // new MapDtls(nodeTable);
                     foreach (MapDtl dtl in dtls)
                     {
                         foreach (DataTable dt in ds.Tables)
@@ -1112,20 +1113,20 @@ namespace BP.WF
                     }
                 }
                 msg += "<br>";
-                //外部程序调用接口检查
-                FAppSets sets = new FAppSets(nd.NodeID);
-                if (sets.Count == 0)
-                {
-                    //msg += " 。";
-                }
-                else
-                {
-                    msg += ":";
-                    foreach (FAppSet set in sets)
-                    {
-                        msg += set.Name + "," + this.ToE("DoWhat", "执行内容") + ":" + set.DoWhat + " 、";
-                    }
-                }
+                ////外部程序调用接口检查
+                //FAppSets sets = new FAppSets(nd.NodeID);
+                //if (sets.Count == 0)
+                //{
+                //    //msg += " 。";
+                //}
+                //else
+                //{
+                //    msg += ":";
+                //    foreach (FAppSet set in sets)
+                //    {
+                //        msg += set.Name + "," + this.ToE("DoWhat", "执行内容") + ":" + set.DoWhat + " 、";
+                //    }
+                //}
                 msg += "<br>";
                 // 节点完成条件的定义.
                 Conds conds = new Conds(CondType.Node, nd.NodeID, 1);
@@ -3735,35 +3736,35 @@ namespace BP.WF
                             }
                             break;
                         case "WF_FAppSet": //FAppSets.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                FAppSet fs = new FAppSet();
-                                fs.FK_Flow = fl.No;
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
+                            continue;
+                            //foreach (DataRow dr in dt.Rows)
+                            //{
+                            //    FAppSet fs = new FAppSet();
+                            //    fs.FK_Flow = fl.No;
+                            //    foreach (DataColumn dc in dt.Columns)
+                            //    {
+                            //        string val = dr[dc.ColumnName] as string;
+                            //        if (val == null)
+                            //            continue;
 
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    fs.SetValByKey(dc.ColumnName, val);
-                                }
-                                fs.OID = 0;
-                                fs.Insert();
-                            }
-                            break;
+                            //        switch (dc.ColumnName.ToLower())
+                            //        {
+                            //            case "fk_node":
+                            //                if (val.Length == 3)
+                            //                    val = flowID + val.Substring(1);
+                            //                else if (val.Length == 4)
+                            //                    val = flowID + val.Substring(2);
+                            //                else if (val.Length == 5)
+                            //                    val = flowID + val.Substring(3);
+                            //                break;
+                            //            default:
+                            //                break;
+                            //        }
+                            //        fs.SetValByKey(dc.ColumnName, val);
+                            //    }
+                            //    fs.OID = 0;
+                            //    fs.Insert();
+                            //}
                         case "WF_LabNote": //LabNotes.xml。
                             idx = 0;
                             foreach (DataRow dr in dt.Rows)

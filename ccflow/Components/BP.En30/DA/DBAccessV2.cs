@@ -2531,6 +2531,14 @@ namespace BP.DA
                 throw new Exception("@运行 RunSQLReturnString出现错误：" + ex.Message + sql);
             }
         }
+        public static string RunSQLReturnStringIsNull(Paras ps, string isNullAsVal)
+        {
+            string v = RunSQLReturnString(ps);
+            if (v == null)
+                return isNullAsVal;
+            else
+                return v;
+        }
         public static string RunSQLReturnStringIsNull(string sql,string isNullAsVal)
         {
             try

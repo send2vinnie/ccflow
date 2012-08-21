@@ -596,17 +596,46 @@ namespace BP.WF
     /// </summary>
     public class Node : Entity
     {
-        #region 初试化全局的 Nod
-        private FrmEvents _HisNDEvents = null;
-        public FrmEvents HisNDEvents
+        #region 外键属性
+        protected override void InitRefObjects()
+        {
+            this.SetRefObject("FrmNodes", new FrmNodes(this.NodeID));
+            this.SetRefObject("MapData", new MapData("ND" + this.NodeID));
+            base.InitRefObjects();
+        }
+        private Depts _HisDepts = null;
+        /// <summary>
+        /// 此节点所在的工作岗位
+        /// </summary>
+        public Depts HisDepts
         {
             get
             {
-                if (_HisNDEvents == null)
-                    _HisNDEvents = new FrmEvents( "ND"+this.NodeID);
-                return _HisNDEvents;
+                if (this._HisDepts == null)
+                {
+                    _HisDepts = new Depts();
+                    _HisDepts.AddEntities(this.HisDeptStrs);
+                }
+                return _HisDepts;
             }
         }
+        public FrmNodes FrmNodes
+        {
+            get
+            {
+                return this.GetRefObject("FrmNodes") as FrmNodes;
+            }
+        }
+        public MapData MapData
+        {
+            get
+            {
+                return  this.GetRefObject("MapData") as MapData;
+            }
+        }
+        #endregion
+
+        #region 初试化全局的 Node
         public override string PK
         {
             get
@@ -1646,7 +1675,7 @@ namespace BP.WF
                 if (this._HisFrms == null)
                 {
                     _HisFrms = new Frms();
-                    foreach (FrmNode fn in this.HisFrmNodes)
+                    foreach (FrmNode fn in this.FrmNodes)
                     {
                         _HisFrms.AddEntity(fn.HisFrm);
                     }
@@ -1654,39 +1683,8 @@ namespace BP.WF
                 return _HisFrms;
             }
         }
-
-        private FrmNodes _HisFrmNodes = null;
-        /// <summary>
-        /// HisFrms
-        /// </summary>
-        public FrmNodes HisFrmNodes
-        {
-            get
-            {
-                if (this._HisFrmNodes == null)
-                {
-                    _HisFrmNodes = new FrmNodes(this.NodeID);
-                }
-                return _HisFrmNodes;
-            }
-        }
-
-        private Depts _HisDepts = null;
-        /// <summary>
-        /// 此节点所在的工作岗位
-        /// </summary>
-        public Depts HisDepts
-        {
-            get
-            {
-                if (this._HisDepts == null)
-                {
-                    _HisDepts = new Depts();
-                    _HisDepts.AddEntities(this.HisDeptStrs);
-                }
-                return _HisDepts;
-            }
-        }
+ 
+      
         /// <summary>
         /// HisStationsStr
         /// </summary>

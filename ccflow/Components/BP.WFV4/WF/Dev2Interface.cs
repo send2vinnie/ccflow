@@ -99,8 +99,7 @@ namespace BP.WF
                 if (ds.Tables.Count != 0)
                 {
                     string refPK = dr["MainPK"].ToString();
-                    // MapData md = new MapData(nodeTable);
-                    MapDtls dtls = new MapDtls(nodeTable);
+                    MapDtls dtls = wk.HisNode.MapData.MapDtls; // new MapDtls(nodeTable);
                     foreach (MapDtl dtl in dtls)
                     {
                         foreach (DataTable dt in ds.Tables)

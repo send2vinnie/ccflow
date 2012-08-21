@@ -131,7 +131,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DemoData\EmpDemo.cs" />
+    <Compile Include="DemoData\Emp.cs" />
     <Compile Include="DemoData\CRM\Product.cs" />
     <Compile Include="DemoData\CRM\SalesBill.cs" />
     <Compile Include="DynamicWebService.cs" />
@@ -191,7 +191,6 @@
     <Compile Include="FlowDesc\FlowDescExt\FlowSheet.cs" />
     <Compile Include="FlowDesc\FlowDescExt\NodeO.cs" />
     <Compile Include="FlowDesc\LabNote.cs" />
-    <Compile Include="FlowDesc\FAppSet.cs" />
     <Compile Include="FlowDesc\NodeEmp.cs" />
     <Compile Include="FlowDesc\NodeReturn.cs" />
     <Compile Include="FlowDesc\Task.cs" />
@@ -319,7 +318,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ccflow.bakssss\Components\BP.En30\BP.En30.csproj">
+    <ProjectReference Include="..\BP.En30\BP.En30.csproj">
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
       <Name>BP.En30</Name>
     </ProjectReference>

@@ -162,18 +162,14 @@ namespace BP.WF.Port
             {
                 if (this._enMap != null)
                     return this._enMap;
-
-                Map map = new Map();
-
                 #region 基本属性
-                map.EnDBUrl =
-                    new DBUrl(DBUrlType.AppCenterDSN); //要连接的数据源（表示要连接到的那个系统数据库）。
+                Map map = new Map();
+                map.EnDBUrl =  new DBUrl(DBUrlType.AppCenterDSN); //要连接的数据源（表示要连接到的那个系统数据库）。
                 map.PhysicsTable = "Port_Emp"; // 要物理表。
                 map.DepositaryOfMap = Depositary.Application;    //实体map的存放位置.
                 map.DepositaryOfEntity = Depositary.Application; //实体存放位置
                 map.EnDesc = this.ToE("Emp", "用户"); // "用户";       // 实体的描述.
                 map.EnType = EnType.App;   //实体类型。
-                //       map.Helper = "Emp.html";
                 #endregion
 
                 #region 字段
@@ -181,49 +177,50 @@ namespace BP.WF.Port
                 map.AddTBStringPK(EmpAttr.No, null, "编号", true, false, 1, 20, 100);
                 map.AddTBString(EmpAttr.Name, null, "名称", true, false, 0, 100, 100);
                 map.AddTBString(EmpAttr.Pass, "pub", "密码", false, false, 0, 20, 10);
-                map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", 
-                    new BP.Port.Depts(), true);
+                map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
                 #endregion 字段
 
-                map.AddSearchAttr(EmpAttr.FK_Dept);
+                map.AddSearchAttr(EmpAttr.FK_Dept); //查询条件.
 
-                #region 增加点对多属性
-                //他的部门权限
-                map.AttrsOfOneVSM.Add(new EmpStations(), new Stations(), EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "岗位权限");
-                map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "工作部门");
-             //   map.AttrsOfOneVSM.Add(new DeptFlowScorps(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "查询权限");
-                #endregion
-
+                //增加点对多属性 一个操作员的部门查询权限与岗位权限.
+                map.AttrsOfOneVSM.Add(new EmpStations(), new Stations(), 
+                    EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "岗位权限");
+                map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp,
+                    EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "工作部门");
 
                 RefMethod rm = new RefMethod();
                 rm.Title = "禁用";
                 rm.Warning = "您确定要执行吗?";
                 rm.ClassMethodName = this.ToString() + ".DoDisableIt";
                 map.AddRefMethod(rm);
-
                 rm = new RefMethod();
                 rm.Title = "启用";
                 rm.Warning = "您确定要执行吗?";
                 rm.ClassMethodName = this.ToString() + ".DoEnableIt";
                 map.AddRefMethod(rm);
-
                 this._enMap = map;
                 return this._enMap;
             }
         }
+        /// <summary>
+        /// 执行禁用
+        /// </summary>
         public string DoDisableIt()
         {
             WFEmp emp = new WFEmp(this.No);
             emp.UseSta = 0;
             emp.Update();
-            return "已经执行成功";
+            return "已经执行(禁用)成功";
         }
+        /// <summary>
+        /// 执行启用
+        /// </summary>
         public string DoEnableIt()
         {
             WFEmp emp = new WFEmp(this.No);
             emp.UseSta = 1;
             emp.Update();
-            return "已经执行成功";
+            return "已经执行(启用)成功";
         }
 
         protected override bool beforeUpdate()

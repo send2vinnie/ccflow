@@ -432,7 +432,6 @@ namespace BP.En
         }
         #endregion
 
-
         #region 排序操作
         protected void DoOrderUp(string groupKeyAttr, string groupKeyVal, string idxAttr)
         {
@@ -1205,7 +1204,45 @@ namespace BP.En
 
 
         #region 通用方法
+        /// <summary>
+        /// 初始化相关的对象
+        /// </summary>
+        /// <returns></returns>
+        protected virtual void InitRefObjects()
+        {
+        }
+        /// <summary>
+        /// 获取实体
+        /// </summary>
+        /// <param name="key"></param>
+        public object GetRefObject(string key)
+        {
+            object obj = this.Row[key];
+            if (obj == null)
+            {
+                if (this.Row.ContainsKey(key) == false)
+                    this.InitRefObjects();
 
+                if (this.Row.ContainsKey(key) == false)
+                    throw new Exception("@没有找到key=" + key + "对象，请在 InitRefObjects 初始化它。");
+                
+                obj = this.Row[key];
+                if (obj == "")
+                    return null;
+            }
+            return obj;
+        }
+        /// <summary>
+        /// 设置实体
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="obj"></param>
+        public void SetRefObject(string key,object obj)
+        {
+            if (obj == null)
+                obj = "";
+            this.Row.SetValByKey(key, obj);
+        }
         #endregion
 
         #region insert

@@ -769,7 +769,6 @@ namespace BP.WF
                       + " AND  NO IN "
                       + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + empDept + "')";
                }
-
                if (flowAppType == FlowAppType.PRJ)
                {
                    sql = "SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")"
@@ -1215,7 +1214,7 @@ namespace BP.WF
         public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isBackTracking)
         {
             //退回前事件
-           this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnBefore, this.HisWork);
+            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnBefore, this.HisWork);
            if (this.HisNode.FocusField != "")
            {
                // 把数据更新它。
@@ -1325,7 +1324,7 @@ namespace BP.WF
             }
 
             //退回后事件
-            this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, this.HisWork);
+            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnAfter, this.HisWork);
             return wnOfBackTo;
         }
         private string infoLog = "";
@@ -2209,7 +2208,7 @@ namespace BP.WF
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
             this.WorkID = this.HisWork.OID;
-            string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
+            string msg = this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
             // 调用发送前的接口。
             try
             {
@@ -2262,7 +2261,7 @@ namespace BP.WF
                 try
                 {
                     // 调起发送成功后的事务。
-                    msg += this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendSuccess, this.HisWork);
+                    msg += this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendSuccess, this.HisWork);
                 }
                 catch (Exception ex)
                 {
@@ -2357,7 +2356,7 @@ namespace BP.WF
                     mwk.OID = this.WorkID;
                     mwk.DirectDelete();
                 }
-                this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendError, this.HisWork);
+                this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendError, this.HisWork);
             }
             catch (Exception ex1)
             {
@@ -3696,13 +3695,14 @@ namespace BP.WF
             if (toNodes.Count == 1)
                 return msg + StartNextNode((Node)toNodes[0]);
 
+            // 查询出来方向条件，找到下一个要转向的节点。
             Node toNode = null;
             int numOfWay = 0;
             string condMsg = "";
-            Conds dcs = new Conds();
+            Conds dcs = new Conds(); 
             QueryObject qo = new QueryObject(dcs);
             qo.AddWhere(CondAttr.NodeID, this.HisNode.NodeID);
-            qo.addOrderBy(CondAttr.PRI);
+            qo.addOrderBy(CondAttr.PRI); //按方向条件的优先级进行排序.
             qo.DoQuery();
             foreach (Cond cd in dcs)
             {

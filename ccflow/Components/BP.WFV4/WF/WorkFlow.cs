@@ -144,7 +144,7 @@ namespace BP.WF
             string info = "";
             WorkNode wn = this.GetCurrentWorkNode();
             // 处理事件。
-             wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.BeforeFlowDel, wn.HisWork);
+             wn.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.BeforeFlowDel, wn.HisWork);
 
             DBAccess.RunSQL("DELETE FROM WF_Track WHERE WorkID=" + this.WorkID);
             DBAccess.RunSQL("DELETE FROM ND"+int.Parse(this.HisFlow.No)+"Rpt WHERE OID=" + this.WorkID);
@@ -637,7 +637,7 @@ namespace BP.WF
 
             //geRpt.Update("Emps", emps);
             //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有明细表。
-            MapDtls dtls = new MapDtls("ND" + nd.NodeID);
+            MapDtls dtls = nd.MapData.MapDtls; // new MapDtls("ND" + nd.NodeID);
             int i = 0;
             foreach (MapDtl dtl in dtls)
             {
@@ -1411,7 +1411,7 @@ namespace BP.WF
                 return "@" + this.ToE("WF6", "您不能执行撤消发送，因为当前工作不是您发送的。");
 
             // 处理事件。
-            string msg = wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
+            string msg = wn.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
 
             // 删除工作者。
             WorkerLists wls = new WorkerLists();
@@ -1444,7 +1444,7 @@ namespace BP.WF
             #endregion
 
             // 处理事件。
-            msg += wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
+            msg += wn.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
 
             // 记录日志..
             wn.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "无");
@@ -1624,7 +1624,7 @@ namespace BP.WF
                 return "@" + this.ToE("WF6", "您不能执行撤消发送，因为当前工作不是您发送的。");
 
             // 调用撤消发送前事件。
-            string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
+            string msg = nd.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
 
             #region 删除当前节点数据。
             // 删除产生的工作列表。
@@ -1687,7 +1687,7 @@ namespace BP.WF
             #endregion 恢复工作轨迹，解决工作抢办。
 
             //调用撤消发送后事件。
-            msg += nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
+            msg += nd.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
 
             if (wnPri.HisNode.IsStartNode)
             {
@@ -1750,7 +1750,7 @@ namespace BP.WF
             Work wk = nd.HisWork;
             wk.OID = gwf.WorkID;
             wk.RetrieveFromDBSources();
-            string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wk);
+            string msg = nd.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneBefore, wk);
 
             // 记录日志..
             WorkNode wn = new WorkNode(wk, nd);
@@ -1792,7 +1792,7 @@ namespace BP.WF
             cWork.OID = this.WorkID;
             cWork.Update(WorkAttr.NodeState, 0);
 
-            msg += nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wk);
+            msg += nd.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneAfter, wk);
 
             if (cNode.IsStartNode)
             {

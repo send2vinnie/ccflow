@@ -146,16 +146,16 @@ namespace BP.WF.Demo
                     return this._enMap;
                 Map map = new Map("Demo_SaleBill");
                 map.EnDesc = "销售帐单";
-
                 map.AddTBIntPKOID();
-
                 map.AddDDLEntities(SaleBillAttr.FK_Dept, null, "部门", new BP.Port.Depts(), false);
                 map.AddDDLEntities(SaleBillAttr.FK_Emp, null, "人员", new BP.Port.Emps(),false);
                 map.AddDDLEntities(SaleBillAttr.FK_ND, null, "年度", new BP.Pub.NDs(), false);
                 map.AddDDLEntities(SaleBillAttr.FK_NY, null, "年月", new BP.Pub.NYs(), false);
                 map.AddDDLEntities(SaleBillAttr.FK_Product, null, "产品", new BP.WF.Demo.Products(), false);
                 map.AddTBDecimal(SaleBillAttr.JE, 0, "销售金额", true, false);
+                map.AddTBString(ProductAttr.Addr, null, "生产地址", true, false, 0, 50, 200);
 
+                //查询条件映射.
                 map.AddSearchAttr(SaleBillAttr.FK_Dept);
                 map.AddSearchAttr(SaleBillAttr.FK_NY);
                 map.AddSearchAttr(SaleBillAttr.FK_Product);

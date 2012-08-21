@@ -13,6 +13,8 @@ namespace BP.WF.Demo
 	{
 		#region 基本属性
 		public const  string FK_SF="FK_SF";
+        public const string Addr = "Addr";
+
 		#endregion
 	}
 	/// <summary>
@@ -71,6 +73,8 @@ namespace BP.WF.Demo
                 #region 字段
                 map.AddTBStringPK(ProductAttr.No, null, "编号", true, false, 0, 50, 50);
                 map.AddTBString(ProductAttr.Name, null, "名称", true, false, 0, 50, 200);
+                map.AddTBString(ProductAttr.Addr, null, "生产地址", true, false, 0, 50, 200);
+
                 #endregion
 
                 this._enMap = map;

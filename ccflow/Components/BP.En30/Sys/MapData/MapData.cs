@@ -135,65 +135,140 @@ namespace BP.Sys
 	/// </summary>
     public class MapData : EntityNoName
     {
-        #region 修饰属性
-        private FrmLines _HisFrmLines = null;
+        #region 外键属性
+        /// <summary>
+        /// 初始化外键属性
+        /// </summary>
+        protected override void InitRefObjects()
+        {
+            this.SetRefObject("FrmLines", new FrmLines(this.No));
+            this.SetRefObject("FrmLabs", new FrmLabs(this.No));
+            this.SetRefObject("FrmImgs", new FrmImgs(this.No));
+            this.SetRefObject("FrmAttachments", new FrmAttachments(this.No));
+            this.SetRefObject("FrmImgAths", new FrmImgAths(this.No));
+            this.SetRefObject("FrmRBs", new FrmRBs(this.No));
+            this.SetRefObject("MapAttrs", new MapAttrs(this.No));
+            this.SetRefObject("FrmEles", new FrmEles(this.No));
+            this.SetRefObject("FrmBtns", new FrmBtns(this.No));
+            this.SetRefObject("FrmLinks", new FrmLinks(this.No));
+            this.SetRefObject("MapM2Ms", new MapM2Ms(this.No));
+            this.SetRefObject("MapDtls", new MapDtls(this.No));
+            this.SetRefObject("FrmEvents", new FrmEvents(this.No));
+            this.SetRefObject("MapExts", new MapExts(this.No));
+            this.SetRefObject("GroupFields", new GroupFields(this.No));
+            this.SetRefObject("MapFrames", new MapFrames(this.No));
+            base.InitRefObjects();
+        }
+        public MapFrames MapFrames
+        {
+            get
+            {
+                return this.GetRefObject("MapFrames") as MapFrames;
+            }
+        }
+        public GroupFields GroupFields
+        {
+            get
+            {
+                return this.GetRefObject("GroupFields") as GroupFields;
+            }
+        }
+        public MapExts MapExts
+        {
+            get
+            {
+                return this.GetRefObject("MapExts") as MapExts;
+            }
+        }
+        public FrmEvents FrmEvents
+        {
+            get
+            {
+                return this.GetRefObject("FrmEvents") as FrmEvents;
+            }
+        }
+        public MapM2Ms MapM2Ms
+        {
+            get
+            {
+                return this.GetRefObject("MapM2Ms") as MapM2Ms;
+            }
+        }
+        public MapDtls MapDtls
+        {
+            get
+            {
+                return this.GetRefObject("MapDtls") as MapDtls;
+            }
+        }
+        public FrmLinks FrmLinks
+        {
+            get
+            {
+                return this.GetRefObject("FrmLinks") as FrmLinks;
+            }
+        }
+        public FrmBtns FrmBtns
+        {
+            get
+            {
+                return this.GetRefObject("FrmBtns") as FrmBtns;
+            }
+        }
+        public FrmEles FrmEles
+        {
+            get
+            {
+                return this.GetRefObject("FrmEles") as FrmEles;
+            }
+        }
         public FrmLines FrmLines
         {
             get
             {
-                if (_HisFrmLines == null)
-                    _HisFrmLines = new FrmLines(this.No);
-                return _HisFrmLines;
+                return this.GetRefObject("FrmLines") as FrmLines;
             }
         }
-        private FrmLabs _FrmLabs = null;
         public FrmLabs FrmLabs
         {
             get
             {
-                if (_FrmLabs == null)
-                    _FrmLabs = new FrmLabs(this.No);
-                return _FrmLabs;
+                return this.GetRefObject("FrmLabs") as FrmLabs;
             }
         }
-        private FrmImgs _FrmImgs = null;
         public FrmImgs FrmImgs
         {
             get
             {
-                if (_FrmImgs == null)
-                    _FrmImgs = new FrmImgs(this.No);
-                return _FrmImgs;
+                return this.GetRefObject("FrmImgs") as FrmImgs;
             }
         }
-        private FrmAttachments _FrmAttachments = null;
         public FrmAttachments FrmAttachments
         {
             get
             {
-                if (_FrmAttachments == null)
-                    _FrmAttachments = new FrmAttachments(this.No);
-                return _FrmAttachments;
+                return this.GetRefObject("FrmAttachments") as FrmAttachments;
             }
         }
-        private FrmImgAths _FrmImgAths = null;
         public FrmImgAths FrmImgAths
         {
             get
             {
-                if (_FrmImgAths == null)
-                    _FrmImgAths = new FrmImgAths(this.No);
-                return _FrmImgAths;
+                return this.GetRefObject("FrmImgAths") as FrmImgAths;
             }
         }
-        private FrmRBs _FrmRBs = null;
         public FrmRBs FrmRBs
         {
             get
             {
-                if (_FrmRBs == null)
-                    _FrmRBs = new FrmRBs(this.No);
-                return _FrmRBs;
+                return this.GetRefObject("FrmRBs") as FrmRBs;
+            }
+        }
+        public MapAttrs MapAttrs
+        {
+            get
+            {
+                return this.GetRefObject("MapAttrs") as MapAttrs;
             }
         }
         #endregion
@@ -476,11 +551,12 @@ namespace BP.Sys
         #region 构造方法
         public Map GenerHisMap()
         {
-            MapAttrs mapAttrs = new MapAttrs(this.No);
+            MapAttrs mapAttrs =this.MapAttrs;
             if (mapAttrs.Count == 0)
             {
                 this.RepairMap();
-                mapAttrs = new MapAttrs(this.No);
+                this.InitRefObjects(); //重新初始化它.
+                mapAttrs = this.MapAttrs; 
             }
 
             Map map = new Map(this.PTable);
@@ -644,7 +720,7 @@ namespace BP.Sys
         {
             get
             {
-                MapAttrs mattrs = new MapAttrs(this.No);
+                MapAttrs mattrs =  new MapAttrs(this.No);
                 MapAttrs attrs = new MapAttrs();
 
                 string[] strs = this.AttrsInTable.Split('@');
