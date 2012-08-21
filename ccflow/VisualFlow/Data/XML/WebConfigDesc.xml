@@ -10,12 +10,14 @@
     <identity impersonate="true"  userName="administrator" password="" /> 
     -->
   
-    <Item No="IsDebug" Name="是否测试状态" Note="是否测试状态" DBType="Boolen"  IsShow="1" />
+  <Item No="IsDebug" Name="是否测试状态" Note="是否测试状态" DBType="Boolen"  IsShow="1" />
   <Item No="IsAuth" Name="是否需要安全验证" Note="在嵌入方式工作时,是否要检查访问者的安全性" DBType="Boolen"  IsShow="1" />
 
-  <Item No="FlowDataViewExtFields" Name="流程数据视图扩展字段" Note="在生成流程数据视图时增加通用字段,以方便查询.比如:TaxpayerNo,TaxpayerName," DBType="String"  IsShow="1" />
+    <Item No="IsEnablePRI" Name="是否为流程增加一个优先级" Note="有的客户不需要流程的优先级，就设置为0" DBType="Boolen"  IsShow="1" />
+    <Item No="IsEnableCheckUseSta" Name="对禁用用户立即生效" Note="如果应用系统在需要禁用用户后立即生效的话就设置为1，设置为1后会经常检测，增加系统一些开销。"
+          DBType="Boolen"  IsShow="1" />
 
-  <Item No="SysLanguage" Name="系统语言" Note="系统语言" DBType="String"   IsEnable="0" />
+    <Item No="SysLanguage" Name="系统语言" Note="系统语言" DBType="String"   IsEnable="0" />
     <Item No="SysNo" Name="系统编号" Note="系统编号" DBType="String"  IsEnable="0" />
     <Item No="SysName" Name="系统名称"  Note="系统名称" DBType="String"  IsEnable=""  />
     <Item No="CopyRight" Name="版权所有"  Note="显示在系统的底部" DBType="String"  IsEnable="1"  />
@@ -49,8 +51,7 @@
   <Item No="CustomerShortName" Name=" 简称"  Note="本系统的名称" DBType="String" IsShow="0" />
   <Item No="CustomerTel" Name=" 电话"  Note="开发者电话" DBType="String"  IsShow="0" />
   <Item No="CustomerAddr" Name="地址"  Note="开发者" DBType="String"  IsShow="0" />
-  <Item No="ICP" Name="网站备案号"  Note="网站备案号码，没有需要申请。" DBType="String" IsEnable="1" />
-  <Item No="CityNo" Name="城市编号"  Note="以城市编号确定用户的个性化需求。" DBType="String" IsEnable="1" />
+  
   <Item No="SysIP" Name="系统IP"  Note="" DBType="String" IsEnable="1" />
   <Item No="TopNum" Name="显示条数"  Note="显示条数" DBType="String" />
 
@@ -71,29 +72,18 @@
   <Item No="Address" Name="地址" Note="联系方式页面信息 地址" DBType="String" />
   <Item No="Contacter" Name="联系人" Note="联系方式页面信息 联系人" DBType="String" />
 
-  <Item No="Partner" Name="合作伙伴" Note="" DBType="String" IsShow="0" IsEnable="0" />
-  <Item No="PartnerName" Name="名称"  DBType="String" IsShow="0"  IsEnable="0" />
-  <Item No="PartnerUrl" Name="网站"  DBType="String" IsShow="0"  IsEnable="0" />
-
 
   <Item No="AMFrom" Name="早晨上班时间" Note="以下数据用于计算流程时效考核" DBType="String" IsShow="0"  IsEnable="1" />
   <Item No="AMTo" Name="下班时间"  DBType="String" IsShow="0"  IsEnable="1" />
 
-  <Item No="PMFrom" Name="下午上班时间"  DBType="String" IsShow="0"  IsEnable="1" />
+    <Item No="PMFrom" Name="下午上班时间"  DBType="String" IsShow="0"  IsEnable="1" />
   <Item No="PMTo" Name="下班时间"  DBType="String" IsShow="0"  IsEnable="1" />
+
   <Item No="WeekResetType" Name="休息"  DBType="Enum" IsShow="0"  IsEnable="1"  Vals="@0=双休@1=单休@2=不休" />
   <Item No="Holiday" Name="节假日"  DBType="String" IsShow="0"  IsEnable="1" Note="格式：05-01,05-02,05-03表示5月前三天是节假日" />
-
-
-  <Item1 No="LocalFtpServer" Name="内部ftp服务器连接"  DBType="String" IsShow="1"  IsEnable="1" Note="可选项目，格式：ftp://ip地址 。" />
-
-  <Item No="IsShowTitle" Name="是否显示标题图片？" Note="是否显示标题图片" DBType="Boolen"  IsShow="1" />
 
   <Item No="IsShowFlowNum" Name="是否显示待办工作数量？" Note="独立运行模式下提示待办工作数量"
         DBType="Boolen"  IsShow="1" />
   <Item No="IsEnableStyle" Name="是否启用系统风格？" Note="是否允许用户设置系统风格" DBType="Boolen"  IsShow="1" />
-
   <Item No="BPMHost" Name="流程设计服务器地址" Note="" DBType="String"  IsShow="1" />
- 
-  
 </NewDataSet>
