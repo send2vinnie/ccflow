@@ -115,8 +115,11 @@ public partial class WF_Frm : WebPage
                 string[] kvs = str.Split('=');
                 dtlEn.SetValByKey(kvs[0], kvs[1]);
             }
-
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
+
+        
+
+
             this.AddJSEvent(dtlEn);
         }
         else
@@ -156,7 +159,17 @@ public partial class WF_Frm : WebPage
                 en.SetValByKey("OID", this.OID);
             }
 
-            this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
+            if (md.HisFrmType == FrmType.FreeFrm)
+            {
+                this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
+            }
+            else
+            {
+                this.UCEn1.IsReadonly = !this.IsEdit;
+                this.UCEn1.BindColumn4(dtlEn, this.FK_MapData);
+            }
+
+           // this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);
         }
 
