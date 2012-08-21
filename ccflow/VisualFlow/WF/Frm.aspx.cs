@@ -161,12 +161,12 @@ public partial class WF_Frm : WebPage
 
             if (md.HisFrmType == FrmType.FreeFrm)
             {
-                this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
+                this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             }
             else
             {
                 this.UCEn1.IsReadonly = !this.IsEdit;
-                this.UCEn1.BindColumn4(dtlEn, this.FK_MapData);
+                this.UCEn1.BindColumn4(en, this.FK_MapData);
             }
 
            // this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
