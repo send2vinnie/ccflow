@@ -781,42 +781,41 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                 this.Add("</p>");
             }
 
-            BP.WF.FAppSets sets = new FAppSets();
-            sets.Retrieve(FAppSetAttr.NodeID, wn.HisNode.NodeID);
+            //BP.WF.FAppSets sets = new FAppSets();
+            //sets.Retrieve(FAppSetAttr.NodeID, wn.HisNode.NodeID);
+            //if (sets.Count >= 1)
+            //{
+            //    bool isMyBill = false;
+            //    if (wn.HisWork.Rec == WebUser.No)
+            //        isMyBill = true;
 
-            if (sets.Count >= 1)
-            {
-                bool isMyBill = false;
-                if (wn.HisWork.Rec == WebUser.No)
-                    isMyBill = true;
+            //    this.Add("<p>");
+            //    string year = DateTime.Now.Year.ToString();
+            //    foreach (BP.WF.FAppSet s in sets)
+            //    {
+            //        string url = s.DoWhat;
+            //        url = url.Replace("@WebUser.No", WebUser.No);
+            //        url = url.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
 
-                this.Add("<p>");
-                string year = DateTime.Now.Year.ToString();
-                foreach (BP.WF.FAppSet s in sets)
-                {
-                    string url = s.DoWhat;
-                    url = url.Replace("@WebUser.No", WebUser.No);
-                    url = url.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+            //        url = url.Replace("@FK_Node", s.NodeID.ToString());
+            //        url = url.Replace("@FK_Flow", s.FK_Flow.ToString());
+            //        if (url.Contains("@"))
+            //        {
+            //            Work wk = wn.HisWork;
+            //            Map map = wk.EnMap;
+            //            foreach (Attr attr in map.Attrs)
+            //            {
+            //                if (url.Contains("@") == false)
+            //                    continue;
+            //                url = url.Replace("@" + attr.Key, wk.GetValStrByKey(attr.Key));
+            //            }
+            //        }
 
-                    url = url.Replace("@FK_Node", s.NodeID.ToString());
-                    url = url.Replace("@FK_Flow", s.FK_Flow.ToString());
-                    if (url.Contains("@"))
-                    {
-                        Work wk = wn.HisWork;
-                        Map map = wk.EnMap;
-                        foreach (Attr attr in map.Attrs)
-                        {
-                            if (url.Contains("@") == false)
-                                continue;
-                            url = url.Replace("@" + attr.Key, wk.GetValStrByKey(attr.Key));
-                        }
-                    }
-
-                    string strs = "<img src='" + this.Request.ApplicationPath + "/Images/Btn/DTS.gif' /><a href=\"javascript:WinOpen('" + url + "'," + s.W + "," + s.H + ");\" >" + s.Name + "</a>";
-                    this.Add(strs);
-                }
-                this.Add("</p>");
-            }
+            //        string strs = "<img src='" + this.Request.ApplicationPath + "/Images/Btn/DTS.gif' /><a href=\"javascript:WinOpen('" + url + "'," + s.W + "," + s.H + ");\" >" + s.Name + "</a>";
+            //        this.Add(strs);
+            //    }
+            //    this.Add("</p>");
+            //}
 
             if (Glo.IsQL)
                 this.Add("<a href=\"javascript:WinOpen('DoQL.aspx?WorkID=" + wn.HisWork.OID + "&FK_Node=" + wn.HisNode.NodeID + "','sds' )\" ><img src='../Images/Btn/Do.gif' border=0 />质量考核</a>");

@@ -24,7 +24,7 @@ public partial class WF_DtlSearch : BP.Web.WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        MapDtls dtls = new MapDtls( "ND"+int.Parse(this.FK_Flow)+"Rpt" );
+        MapDtls dtls = new MapDtls("ND" + int.Parse(this.FK_Flow) + "Rpt");
         if (dtls.Count == 0)
         {
             this.WinCloseWithMsg("该流程下没有明细表。");
@@ -37,7 +37,7 @@ public partial class WF_DtlSearch : BP.Web.WebPage
             return;
         }
 
-        this.Pub1.AddFieldSet("请选择您好查看的明细表。");
+        this.Pub1.AddFieldSet("请选择您要查看的明细表。");
 
         this.Pub1.AddUL();
         foreach (MapDtl dtl in dtls)
@@ -45,8 +45,6 @@ public partial class WF_DtlSearch : BP.Web.WebPage
             this.Pub1.AddLi("./../Comm/PanelEns.aspx?EnsName=" + dtls[0].GetValStrByKey("No"), dtl.Name);
         }
         this.Pub1.AddULEnd();
-
-        this.Pub1.AddFieldSetEnd(); 
-
+        this.Pub1.AddFieldSetEnd();
     }
 }

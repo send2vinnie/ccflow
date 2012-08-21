@@ -208,7 +208,7 @@ public partial class WF_Frm : WebPage
         wk.Rec = WebUser.No;
         wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
         wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
-        FrmEvents fes = new FrmEvents(this.FK_MapData);
+        FrmEvents fes = nd.MapData.FrmEvents; 
         fes.DoEventNode(FrmEventList.SaveBefore, wk);
         try
         {
@@ -247,7 +247,8 @@ public partial class WF_Frm : WebPage
             en.SetValByKey("OID", this.OID);
             int i = en.RetrieveFromDBSources();
             en = this.UCEn1.Copy(en) as GEEntity;
-            FrmEvents fes = new FrmEvents(this.FK_MapData);
+            FrmEvents fes = md.FrmEvents;
+            //new FrmEvents(this.FK_MapData);
             fes.DoEventNode(FrmEventList.SaveBefore, en);
             if (i == 0)
                 en.Insert();

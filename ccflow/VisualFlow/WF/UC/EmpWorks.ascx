@@ -25,6 +25,12 @@
                 document.getElementById(rowIdx + '_' + i).style.display = sta;
             }
         }
+
+        function WinOpenIt(url) {
+            var newWindow = window.open(url, 'newwindow', 'height=600,width=850,top=50,left=50,toolbar=no,menubar=no,scrollbars=no, resizable=yes,location=no, status=no');
+            newWindow.focus();
+            return;
+        }
     </script>
     <style>
         .TTD

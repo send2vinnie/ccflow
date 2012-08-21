@@ -763,7 +763,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
 
         #region 设置默认值
-        MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
+        MapAttrs mattrs = nd.MapData.MapAttrs;
         foreach (MapAttr attr in mattrs)
         {
             if (attr.UIIsEnable)
@@ -1259,7 +1259,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 case FormType.FreeForm:
                     currWK = (Work)this.UCEn1.Copy(this.currWK);
                     // 设置默认值
-                    MapAttrs mattrs = new MapAttrs("ND" + this.FK_Node);
+                    MapAttrs mattrs = currND.MapData.MapAttrs;
+
                     foreach (MapAttr attr in mattrs)
                     {
                         if (attr.UIIsEnable)
@@ -1306,10 +1307,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         currWK.SetValByKey("FK_Dept", WebUser.FK_Dept);
         currWK.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
 
-        // 处理节点表单保存事件h.
-        FrmEvents fes;
-          fes = new FrmEvents("ND" + this.FK_Node);
-        fes.DoEventNode(FrmEventList.SaveBefore, currWK);
+        // 处理节点表单保存事件.
+        currND.MapData.FrmEvents.DoEventNode(FrmEventList.SaveBefore, currWK);
         try
         {
             if (currND.IsStartNode)
@@ -1334,7 +1333,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         try
         {
             //处理表单保存后。
-            fes.DoEventNode(FrmEventList.SaveAfter, currWK);
+            currND.MapData.FrmEvents.DoEventNode(FrmEventList.SaveAfter, currWK);
         }
         catch (Exception ex)
         {

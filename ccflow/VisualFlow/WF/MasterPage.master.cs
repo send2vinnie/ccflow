@@ -66,22 +66,28 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
 
+        BP.DA.Paras ps = new BP.DA.Paras();
+      
         string sql,sql2;
         if (BP.Web.WebUser.IsAuthorize)
         {
             BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(BP.Web.WebUser.No);
-            sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows;
-          
-
+            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp=" + SystemConfig.AppCenterDBVarStr+ "FK_Emp  AND FK_Flow IN " + emp.AuthorFlows;
+            ps.AddFK_Emp();
         }
         else
         {
-            sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
+            ps.AddFK_Emp();
+            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp="+SystemConfig.AppCenterDBVarStr+"FK_Emp";
         }
+        int num = BP.DA.DBAccess.RunSQLReturnValInt(ps);
 
 
-        int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
-        int numCC = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(MyPK) FROM wf_cclist WHERE Sta=0 AND CCTo='"+BP.Web.WebUser.No+"'");
+        ps = new BP.DA.Paras();
+        ps.SQL = "SELECT COUNT(MyPK) FROM wf_cclist WHERE Sta=0 AND CCTo="+BP.SystemConfig.AppCenterDBVarStr+"FK_Emp";
+        ps.AddFK_Emp();
+
+        int numCC = BP.DA.DBAccess.RunSQLReturnValInt(ps);
         
         string msg = this.ToE("PendingWork", "待办");
         string msgCC="抄送";

@@ -45,17 +45,18 @@ namespace BP.Web.Comm.UC.WF
         {
             this.EnName = enName;
             this.HisEn = en;
+            this.mapData = new MapData(enName);
             currGF = new GroupField();
-            MapAttrs mattrs = new MapAttrs(enName);
-            gfs = new GroupFields(enName);
-            dtls = new MapDtls(enName);
-            frames = new MapFrames(enName);
-            m2ms = new MapM2Ms(enName);
-            aths = new FrmAttachments(enName);
-            mes = new MapExts(enName);
+            MapAttrs mattrs = this.mapData.MapAttrs;
+            gfs = this.mapData.GroupFields; 
+            dtls = this.mapData.MapDtls; 
+            frames = this.mapData.MapFrames; 
+            m2ms = this.mapData.MapM2Ms; 
+            aths = this.mapData.FrmAttachments; 
+            mes = this.mapData.MapExts;
 
             #region 处理事件.
-            fes = new FrmEvents(enName);
+            fes = this.mapData.FrmEvents;
             try
             {
                 string msg = fes.DoEventNode(FrmEventList.FrmLoadBefore, en);
@@ -669,18 +670,19 @@ namespace BP.Web.Comm.UC.WF
         public void BindColumn4(Entity en, string enName)
         {
             this.EnName = enName;
-            this.HisEn = en; 
+            this.HisEn = en;
+            this.mapData = new MapData(enName);
             currGF = new GroupField();
-            MapAttrs mattrs = new MapAttrs(enName);
-            gfs = new GroupFields(enName);
-            dtls = new MapDtls(enName);
-            frames = new MapFrames(enName);
-            m2ms = new MapM2Ms(enName);
-            aths = new FrmAttachments(enName);
-            mes = new MapExts(enName);
+            MapAttrs mattrs = this.mapData.MapAttrs;
+            gfs = this.mapData.GroupFields;
+            dtls = this.mapData.MapDtls;
+            frames = this.mapData.MapFrames;
+            m2ms = this.mapData.MapM2Ms;
+            aths = this.mapData.FrmAttachments;
+            mes = this.mapData.MapExts;
 
             #region 处理事件.
-            fes = new FrmEvents(enName);
+            fes = this.mapData.FrmEvents;
             try
             {
                 string msg = fes.DoEventNode(FrmEventList.FrmLoadBefore, en);
@@ -1105,7 +1107,7 @@ namespace BP.Web.Comm.UC.WF
         private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs,Entity en)
         {
             #region 处理事件.
-            fes = new FrmEvents(enName);
+            fes = this.mapData.FrmEvents;
             try
             {
                 string msg = fes.DoEventNode(FrmEventList.FrmLoadAfter, en);
@@ -1630,14 +1632,17 @@ namespace BP.Web.Comm.UC.WF
             this.mapData = new MapData(enName);
             string appPath = this.Request.ApplicationPath;
 
-            mes = new MapExts(enName);
+            mes = this.mapData.MapExts;
             this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
             this.HisEn = en;
             this.EnName = enName;
+            this.m2ms = this.mapData.MapM2Ms;
+            this.dtls = this.mapData.MapDtls;
+            this.mes = this.mapData.MapExts;
 
             #region 处理事件.
-            fes = new FrmEvents(enName);
+            fes = this.mapData.FrmEvents;
             try
             {
                 string msg = fes.DoEventNode(FrmEventList.FrmLoadBefore, en);
@@ -1651,19 +1656,15 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 处理事件.
 
-            m2ms = new MapM2Ms(enName);
-            dtls = new MapDtls(enName);
 
-            MapData md = new MapData();
-            MapAttrs mattrs = new MapAttrs(this.FK_MapData);
-
+            MapAttrs mattrs = this.mapData.MapAttrs;
             this.DealDefVal(mattrs);
 
             //处理装载前填充.
             this.LoadData(mattrs, en);
 
             #region 输出Ele
-            FrmEles eles = new FrmEles(this.FK_MapData);
+            FrmEles eles = this.mapData.FrmEles;
             if (eles.Count >= 1)
             {
                 string myjs = "\t\n<script type='text/javascript' >";
@@ -1724,7 +1725,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion 输出Ele
 
             #region 输出按钮
-            FrmBtns btns =  new FrmBtns(this.FK_MapData);
+            FrmBtns btns = this.mapData.FrmBtns;
             foreach (FrmBtn btn in btns)
             {
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + btn.X + "px;top:" + btn.Y + "px;text-align:left;' >");
@@ -1754,7 +1755,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion
 
             #region 输出竖线与标签 & 超连接 Img.
-            FrmLabs labs = new FrmLabs(this.FK_MapData);
+            FrmLabs labs = this.mapData.FrmLabs;
             foreach (FrmLab lab in labs)
             {
                 Color col = ColorTranslator.FromHtml(lab.FontColor);
@@ -1763,7 +1764,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n</DIV>");
             }
 
-            FrmLines lines = new FrmLines(this.FK_MapData);
+            FrmLines lines = this.mapData.FrmLines;
             foreach (FrmLine line in lines)
             {
                 if (line.X1 == line.X2)
@@ -1789,7 +1790,7 @@ namespace BP.Web.Comm.UC.WF
                 }
             }
 
-            FrmLinks links = new FrmLinks(this.FK_MapData);
+            FrmLinks links = this.mapData.FrmLinks;
             foreach (FrmLink link in links)
             {
                 string url = link.URL;
@@ -1807,14 +1808,14 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n</DIV>");
             }
 
-            FrmImgs imgs = new FrmImgs(this.FK_MapData);
+            FrmImgs imgs = this.mapData.FrmImgs;
             foreach (FrmImg img in imgs)
             {
                 float y = img.Y;
                 this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
                 if (string.IsNullOrEmpty(img.LinkURL) == false)
                 {
-                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='" + appPath + "/DataUser/ICON/"+SystemConfig.CompanyID+"/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' /></a>");
+                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='" + appPath + "/DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' /></a>");
                 }
                 else
                 {
@@ -2048,7 +2049,7 @@ namespace BP.Web.Comm.UC.WF
             }
 
             #region  输出 rb.
-            BP.Sys.FrmRBs myrbs = new FrmRBs();
+            BP.Sys.FrmRBs myrbs = this.mapData.FrmRBs;
             myrbs.RetrieveFromCash(FrmRBAttr.FK_MapData, enName);
             MapAttr attrRB = new MapAttr();
             foreach (BP.Sys.FrmRB rb in myrbs)
@@ -2110,7 +2111,7 @@ namespace BP.Web.Comm.UC.WF
                 if (dtl.HisDtlShowModel == DtlShowModel.Table)
                 {
                     if (isReadonly == true)
-                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID=" + en.GetValStrByKey("FID","0");
+                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID=" + en.GetValStrByKey("FID", "0");
                     else
                         src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID=" + en.GetValStrByKey("FID", "0");
                 }
@@ -2204,7 +2205,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion 多对多的关系
 
             #region 输出附件
-            FrmAttachments aths = new FrmAttachments(enName);
+            FrmAttachments aths = this.mapData.FrmAttachments;
             FrmAttachmentDBs athDBs = null;
             if (aths.Count > 0)
                 athDBs = new FrmAttachmentDBs(enName, en.PKVal.ToString());
@@ -2224,7 +2225,7 @@ namespace BP.Web.Comm.UC.WF
                     lab.ID = "Lab" + ath.MyPK;
                     this.Add(lab);
                     if (athDB != null)
-                        lab.Text = "<a href='"+this.Request.ApplicationPath+"/DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='"+appPath+"/Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
+                        lab.Text = "<a href='" + this.Request.ApplicationPath + "/DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='" + appPath + "/Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
 
                     FileUpload fu = new FileUpload();
                     fu.ID = ath.MyPK;
@@ -2234,7 +2235,7 @@ namespace BP.Web.Comm.UC.WF
                     Button mybtn = new Button();
                     mybtn.CssClass = "Btn";
 
-                    if (ath.IsUpload && this.IsReadonly==false)
+                    if (ath.IsUpload && this.IsReadonly == false)
                     {
                         mybtn.ID = ath.MyPK;
                         mybtn.Text = "上传";
@@ -2244,7 +2245,7 @@ namespace BP.Web.Comm.UC.WF
                         this.Add(mybtn);
                     }
 
-                    if (ath.IsDownload )
+                    if (ath.IsDownload)
                     {
                         mybtn = new Button();
                         mybtn.Text = "下载";
@@ -2260,7 +2261,7 @@ namespace BP.Web.Comm.UC.WF
                         this.Add(mybtn);
                     }
 
-                    if (ath.IsDelete && this.IsReadonly==false)
+                    if (ath.IsDelete && this.IsReadonly == false)
                     {
                         mybtn = new Button();
                         mybtn.CssClass = "Btn";
@@ -2286,7 +2287,7 @@ namespace BP.Web.Comm.UC.WF
                     if (this.IsReadonly)
                         src = this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal.ToString() + "&FK_FrmAttachment=" + ath.MyPK + "&IsReadonly=1";
                     else
-                        src = this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal.ToString() + "&FK_FrmAttachment=" + ath.MyPK ;
+                        src = this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal.ToString() + "&FK_FrmAttachment=" + ath.MyPK;
 
                     this.Add("<iframe ID='F" + ath.MyPK + "'    src='" + src + "' frameborder=0  style='position:absolute;width:" + ath.W + "px; height:" + ath.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=auto /></iframe>");
                     this.Add("</span>");
@@ -2296,7 +2297,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion 输出附件.
 
             #region 输出 img 附件
-            FrmImgAths imgAths = new FrmImgAths(enName);
+            FrmImgAths imgAths = this.mapData.FrmImgAths;
             if (imgAths.Count != 0 && this.IsReadonly == false)
             {
                 js = "\t\n<script type='text/javascript' >";
@@ -2333,7 +2334,6 @@ namespace BP.Web.Comm.UC.WF
                 this.AfterBindEn_DealMapExt(enName, mattrs, en);
             return;
         }
-
         void btnUpload_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;

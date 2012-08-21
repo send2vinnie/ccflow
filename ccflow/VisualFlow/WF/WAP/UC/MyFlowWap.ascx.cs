@@ -651,7 +651,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
         }
 
         #region 设置默认值
-        MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
+        MapAttrs mattrs = currND.MapData.MapAttrs;
         foreach (MapAttr attr in mattrs)
         {
             if (attr.UIIsEnable)
@@ -1067,7 +1067,8 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
                 case FormType.FreeForm:
                     currWK = (Work)this.UCEn1.Copy(this.currWK);
                     // 设置默认值
-                    MapAttrs mattrs = new MapAttrs("ND" + this.FK_Node);
+                    MapAttrs mattrs = currND.MapData.MapAttrs;
+                    //MapAttrs mattrs = new MapAttrs("ND" + this.FK_Node);
                     foreach (MapAttr attr in mattrs)
                     {
                         if (attr.UIIsEnable)
