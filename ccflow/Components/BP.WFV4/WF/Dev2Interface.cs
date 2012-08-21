@@ -551,6 +551,17 @@ namespace BP.WF
 
         #region 与流程有关的接口
         /// <summary>
+        /// 是否可以发起改流程?
+        /// </summary>
+        /// <param name="flowNo"></param>
+        /// <param name="fk_emp"></param>
+        /// <returns></returns>
+        public static bool Flow_IsCanStartThisFlow(string flowNo, string fk_emp)
+        {
+            Flows fls = DB_GenerCanStartFlowsOfEntities(fk_emp);
+            return fls.Contains(FlowAttr.No, flowNo);
+        }
+        /// <summary>
         /// 执行流程自检
         /// </summary>
         /// <param name="flowNo">流程编号</param>
@@ -1009,7 +1020,7 @@ namespace BP.WF
             mywn = wn.DoReturnWorkHL(workid, msg);
 
             // 调用退回事件.
-            mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
+            mywn.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
             return "@任务被你成功退回到【{" + mywn.HisNode.Name + "}】，退回给【{" + mywn.HisWork.Rec + "}】。";
         }
         /// <summary>
