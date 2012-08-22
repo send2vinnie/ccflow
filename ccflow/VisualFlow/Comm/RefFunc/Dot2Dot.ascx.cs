@@ -392,7 +392,15 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
-            ensOfM.GetNewEntity.CheckPhysicsTable();
+            try
+            {
+                ensOfM.GetNewEntity.CheckPhysicsTable();
+            }
+            catch(Exception ex1)
+            {
+                BP.DA.Log.DefaultLogWriteLineError(ex1.Message);
+            }
+
             this.UCSys1.ClearViewState();
             ErrMyNum++;
             if (ErrMyNum > 3)
@@ -628,7 +636,6 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
     }
     #endregion 方法
 
-
     #region 操作
     public void EditMEns()
     {
@@ -757,8 +764,6 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
             this.BindTree();
     }
     #endregion
-
-   
 }
 
 
