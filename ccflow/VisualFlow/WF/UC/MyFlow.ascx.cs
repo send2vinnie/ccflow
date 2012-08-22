@@ -1246,7 +1246,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         ps.Add("WorkID", this.WorkID);
         ps.Add("FK_Emp", WebUser.No);
         string dbStr = BP.SystemConfig.AppCenterDBVarStr;
-        ps.SQL = "SELECT FK_Emp FROM WF_GenerWorkerlist WHERE FK_Node=" + dbStr + "FK_Node' AND WorkID=" + dbStr + "WorkID AND FK_Emp=" + dbStr + "FK_Emp AND IsEnable=1 AND IsPass=0";
+        ps.SQL = "SELECT FK_Emp FROM WF_GenerWorkerlist WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID AND FK_Emp=" + dbStr + "FK_Emp AND IsEnable=1 AND IsPass=0";
         
         if (DBAccess.RunSQLReturnTable(ps).Rows.Count != 1 && currND.IsStartNode == false)
             throw new Exception("您好：" + WebUser.No + "," + WebUser.Name + "：<br> 当前工作已经被其它人处理，您不能在执行保存或者发送!!!");
