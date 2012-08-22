@@ -1418,11 +1418,11 @@ namespace BP.WF
             dt.TableName = "WF_Direction";
             ds.Tables.Add(dt);
 
-            // 应用设置 FAppSet
-            sql = "SELECT * FROM WF_FAppSet WHERE FK_Flow='" + this.No + "'";
-            dt = DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "WF_FAppSet";
-            ds.Tables.Add(dt);
+            //// 应用设置 FAppSet
+            //sql = "SELECT * FROM WF_FAppSet WHERE FK_Flow='" + this.No + "'";
+            //dt = DBAccess.RunSQLReturnTable(sql);
+            //dt.TableName = "WF_FAppSet";
+            //ds.Tables.Add(dt);
 
 
             // 流程标签.
@@ -4755,16 +4755,16 @@ namespace BP.WF
             // 删除d2d数据.
             //  sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
-            // 删除配置.
-            sql += "@ DELETE FROM WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            //// 删除配置.
+            //sql += "@ DELETE FROM WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
 
             // 删除配置.
             sql += "@ DELETE FROM WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
 
 
-            // 外部程序设置
-            sql += "@ DELETE FROM WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            //// 外部程序设置
+            //sql += "@ DELETE FROM WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除单据
             sql += "@ DELETE FROM WF_BillTemplate WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";

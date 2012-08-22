@@ -120,7 +120,7 @@ namespace BP.WF
         /// </summary>
         /// <param name="town">WorkNode</param>
         /// <returns></returns>
-        public WorkerLists InitWorkerLists_QingHai(WorkNode town)
+        public WorkerLists InitWorkerLists_QingHai_del(WorkNode town)
         {
             DataTable dt = new DataTable();
             // dt = DBAccess.RunSQLReturnTable("SELECT NO,NAME FROM PUB_EMP WHERE 1=2 ");
@@ -128,6 +128,7 @@ namespace BP.WF
 
             string sql;
             string fk_emp;
+
 
             // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node =" + town.HisNode.NodeID);
@@ -218,8 +219,12 @@ namespace BP.WF
             string sql;
             string fk_emp;
 
+            ps = new Paras();
+            ps.SQL = "";
+            ps.Add("WorkID", this.HisWork.FID);
+            ps.Add("FK_Node", town.HisNode.NodeID);
             // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
-            DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.FID + " AND FK_Node=" + town.HisNode.NodeID);
+            DBAccess.RunSQL(ps);
 
             #region 首先判断是否配置了获取下一步接受人员的sql.
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySQL)
@@ -258,15 +263,22 @@ namespace BP.WF
             // 按照选择的人员处理。
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
             {
-                sql = "SELECT FK_Emp FROM WF_SelectAccper WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
-                dt = DBAccess.RunSQLReturnTable(sql);
+                ps = new Paras();
+                ps.Add("FK_Node", this.HisNode.NodeID);
+                ps.Add("WorkID", this.WorkID);
+                ps.SQL = "SELECT FK_Emp FROM WF_SelectAccper WHERE FK_Node=" +  dbStr + "FK_Node AND WorkID=" +dbStr+"WorkID";
+                dt = DBAccess.RunSQLReturnTable(ps);
                 return WorkerListWayOfDept(town, dt);
             }
 
             // 按照节点指定的人员处理。
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpcEmp)
             {
-                dt = DBAccess.RunSQLReturnTable("SELECT FK_Emp FROM WF_NodeEmp WHERE FK_Node=" + town.HisNode.NodeID);
+                ps = new Paras();
+                ps.Add("FK_Node",  town.HisNode.NodeID);
+                ps.SQL = "SELECT FK_Emp FROM WF_NodeEmp WHERE FK_Node=" + dbStr + "FK_Node";
+                dt = DBAccess.RunSQLReturnTable(ps);
+
                 if (dt.Rows.Count == 0)
                     throw new Exception("@您设置的当前节点按照节点绑定人员，但是你没有为(" + town.HisNode.NodeID + "," + town.HisNode.Name + ")节点绑定人员。");
                 return WorkerListWayOfDept(town, dt);
@@ -1130,22 +1142,28 @@ namespace BP.WF
         {
             return DoReturnWork(backtoNodeID, msg, false);
         }
+        string dbStr = SystemConfig.AppCenterDBVarStr;
+        public Paras ps = new Paras();
         private WorkNode DoReturnSubFlow(int backtoNodeID, string msg, bool isHiden)
         {
             Node nd = new Node(backtoNodeID);
-
-            // 删除可能存在的数据.
-            string sql = "DELETE  FROM WF_GenerWorkerList WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.HisWork.OID + "  AND FID=" + this.HisWork.FID;
-            BP.DA.DBAccess.RunSQL(sql);
+            ps = new Paras();
+            ps.SQL = "DELETE  FROM WF_GenerWorkerList WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID  AND FID=" + dbStr+"FID";
+            ps.Add("FK_Node", backtoNodeID);
+            ps.Add("WorkID", this.HisWork.OID);
+            ps.Add("FID", this.HisWork.FID);
+            BP.DA.DBAccess.RunSQL(ps);
 
             // 找出分合流点处理的人员.
-            sql = "SELECT FK_Emp FROM WF_GenerWorkerList WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.HisWork.FID;
-            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            ps = new Paras();
+            ps.SQL="SELECT FK_Emp FROM WF_GenerWorkerList WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr+"FID";
+            ps.Add("FID", this.HisWork.FID);
+            ps.Add("FK_Node", backtoNodeID);
+            DataTable dt = DBAccess.RunSQLReturnTable(ps);
             if (dt.Rows.Count != 1)
                 throw new Exception("@ system error , this values must be =1");
 
             string fk_emp = dt.Rows[0][0].ToString();
-
             // 获取当前工作的信息.
             WorkerList wl = new WorkerList(this.HisWork.FID, this.HisNode.NodeID, fk_emp);
             Emp emp = new Emp(fk_emp);
@@ -1174,7 +1192,11 @@ namespace BP.WF
             gwf.NodeName = nd.Name;
             gwf.DirectUpdate();
 
-            BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
+            ps = new Paras();
+            ps.Add("FK_Node", backtoNodeID);
+            ps.Add("WorkID", this.HisWork.OID);
+            ps.SQL = "UPDATE WF_GenerWorkerList SET IsPass=3 WHERE FK_Node=" + dbStr + "WorkID AND WorkID=" + dbStr + "WorkID";
+            BP.DA.DBAccess.RunSQL(ps);
 
             /* 如果是隐性退回。*/
             BP.WF.ReturnWork rw = new ReturnWork();

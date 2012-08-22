@@ -364,7 +364,7 @@ namespace BP.WF
                 map.AddTBString(TurnToAttr.OperatorValue, "", "要运算的值", true, true, 0, 60, 20);
                 map.AddTBString(TurnToAttr.OperatorValueT, "", "要运算的值T", true, true, 0, 60, 20);
 
-                map.AddTBString(TurnToAttr.TurnToURL, null, "要转向的URL", true, true, 0, 60, 20);
+                map.AddTBString(TurnToAttr.TurnToURL, null, "要转向的URL", true, true, 0, 700, 20);
 
                 this._enMap = map;
                 return this._enMap;
