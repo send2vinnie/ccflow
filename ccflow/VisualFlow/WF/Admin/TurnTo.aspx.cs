@@ -152,7 +152,7 @@ public partial class WF_Admin_TurnTo : WebPage
         this.Pub1.AddTR();
         this.Pub1.AddTD(this.ToE("AttrFiled", "属性/字段"));
         this.Pub1.AddTD(ddl);
-        this.Pub1.AddTD("");
+        this.Pub1.AddTD("请选择节点表单字段。");
         this.Pub1.AddTREnd();
 
         MapAttr attrS = new MapAttr(this.DDL_Attr.SelectedItemStringVal);
@@ -192,7 +192,7 @@ public partial class WF_Admin_TurnTo : WebPage
         }
         ddl.SetSelectItem(cond.FK_Operator.ToString());
         this.Pub1.AddTD(ddl);
-        this.Pub1.AddTD("");
+        this.Pub1.AddTD("操作符号");
         this.Pub1.AddTREnd();
         switch (attrS.LGType)
         {
@@ -278,8 +278,8 @@ public partial class WF_Admin_TurnTo : WebPage
         TextBox mytb = new TextBox();
         mytb.ID = "TB_TurnToUrl";
         mytb.Text = cond.TurnToURL;
-        mytb.Columns = 60;
-        this.Pub1.AddTD("colspan=2", mytb);
+        mytb.Columns = 90;
+        this.Pub1.AddTD("colspan=3", mytb);
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTRSum();

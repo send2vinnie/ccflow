@@ -92,7 +92,7 @@ namespace BP.Web.WF.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_Node");
             DA.DBAccess.RunSQL("DELETE FROM WF_Flow");
             DA.DBAccess.RunSQL("DELETE FROM WF_FlowSort WHERE No Not in ('01','02') ");
-            DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
+          //  DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
             DA.DBAccess.RunSQL("DELETE FROM WF_FileManager");
             DA.DBAccess.RunSQL("DELETE FROM WF_RptStation");
             DA.DBAccess.RunSQL("DELETE FROM WF_Direction");
@@ -111,7 +111,7 @@ namespace BP.Web.WF.WF
 
             //   DA.DBAccess.RunSQL("DELETE FROM WF_FlowCompleteCondition");
 
-            DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
+        //    DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
             DA.DBAccess.RunSQL("DELETE FROM WF_ExpDtl");
             DA.DBAccess.RunSQL("DELETE FROM WF_Exp");
             DA.DBAccess.RunSQL("DELETE FROM WF_Direction");

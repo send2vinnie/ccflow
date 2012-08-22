@@ -159,6 +159,8 @@ public partial class WF_Frm : WebPage
                 en.SetValByKey("OID", this.OID);
             }
 
+            //FrmNode fm=new FrmNode(
+
             if (md.HisFrmType == FrmType.FreeFrm)
             {
                 this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
