@@ -676,7 +676,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
             qo.AddWhere(WorkerListAttr.IsPass, 1);
             qo.addAnd();
             qo.AddWhere(WorkerListAttr.FK_Node,
-                nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
+                nd.FromNodes[0].GetValByKey(NodeAttr.NodeID));
 
             int i = qo.DoQuery();
             if (i == 1)

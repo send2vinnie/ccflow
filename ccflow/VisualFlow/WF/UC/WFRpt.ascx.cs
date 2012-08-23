@@ -754,7 +754,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                 this.Add("<p align='left' style='line-height: 100%' >&nbsp;&nbsp;&nbsp;&nbsp;<a name='ND" + wn.HisNode.NodeID + "' >" + this.ToEP1("NStep", "@第{0}步", idx.ToString()) + "</a>" + wn.HisNode.Name + "，" + this.ToE("DealEmp", "处理人") + "：" + wn.HisWork.Rec + wn.HisWork.HisRec.Name + "，" + this.ToE("NodeState", "节点状态") + "：" + wn.HisWork.NodeStateText + "。");
             }
 
-            BillTemplates reffunc = wn.HisNode.HisBillTemplates;
+            BillTemplates reffunc = wn.HisNode.BillTemplates;
             if (reffunc.Count > 0)
             {
                 this.Add("&nbsp;" + this.ToE("Bill", "单据") + "：");

@@ -48,7 +48,7 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
             qo.AddWhere(WorkerListAttr.IsEnable, 1);
             qo.addAnd();
             qo.AddWhere(WorkerListAttr.FK_Node,
-                nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
+                nd.FromNodes[0].GetValByKey(NodeAttr.NodeID));
 
             int i = qo.DoQuery();
             if (i == 1)

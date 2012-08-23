@@ -132,7 +132,7 @@ public partial class WF_FileManager : WebPage
         string appPath = this.Request.ApplicationPath;
         int i = 1;
         Node nd = new Node(this.FK_Node);
-        Nodes nds = nd.HisFromNodes;
+        Nodes nds = nd.FromNodes;
         foreach (FileManager fm in fms)
         {
 

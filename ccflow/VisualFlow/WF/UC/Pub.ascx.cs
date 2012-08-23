@@ -212,7 +212,7 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
             Bills bills = new Bills();
             //   bills.rea
 
-            BillTemplates reffunc = wn.HisNode.HisBillTemplates;
+            BillTemplates reffunc = wn.HisNode.BillTemplates;
             if (reffunc.Count > 0)
             {
                 this.Add("&nbsp;" + this.ToE("Bill", "单据") + "：");

@@ -1247,7 +1247,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         ps.Add("FK_Emp", WebUser.No);
         string dbStr = BP.SystemConfig.AppCenterDBVarStr;
         ps.SQL = "SELECT FK_Emp FROM WF_GenerWorkerlist WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID AND FK_Emp=" + dbStr + "FK_Emp AND IsEnable=1 AND IsPass=0";
-        
         if (DBAccess.RunSQLReturnTable(ps).Rows.Count != 1 && currND.IsStartNode == false)
             throw new Exception("您好：" + WebUser.No + "," + WebUser.Name + "：<br> 当前工作已经被其它人处理，您不能在执行保存或者发送!!!");
 
@@ -1296,10 +1295,22 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 /*对特殊的流程进行检查，检查是否有权限。*/
                 string prjNo = currWK.GetValStringByKey("PrjNo");
-                if (DBAccess.RunSQLReturnTable("SELECT * FROM WF_NodeStation WHERE FK_Station IN ( SELECT FK_Station FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "' )  AND  FK_Node=" + this.FK_Node).Rows.Count == 0)
+                  ps = new Paras();
+                  ps.SQL = "SELECT * FROM WF_NodeStation WHERE FK_Station IN ( SELECT FK_Station FROM Prj_EmpPrjStation WHERE FK_Prj=" + dbStr + "FK_Prj AND FK_Emp=" + dbStr+ "FK_Emp )  AND  FK_Node=" + dbStr+"FK_Node ";
+                  ps.Add("FK_Prj", prjNo);
+                  ps.AddFK_Emp();
+                  ps.Add("FK_Node", this.FK_Node);
+
+                if (DBAccess.RunSQLReturnTable(ps).Rows.Count == 0)
                 {
                     string prjName = currWK.GetValStringByKey("PrjName");
-                    if (DBAccess.RunSQLReturnTable("SELECT * FROM Prj_EmpPrj WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "'").Rows.Count == 0)
+                    ps = new Paras();
+                    ps.SQL = "SELECT * FROM Prj_EmpPrj WHERE FK_Prj=" + dbStr + "FK_Prj AND FK_Emp=" + dbStr + "FK_Emp ";
+                    ps.Add("FK_Prj", prjNo);
+                    ps.AddFK_Emp();
+                    ps.AddFK_Emp();
+
+                    if (DBAccess.RunSQLReturnTable(ps).Rows.Count == 0)
                         throw new Exception("您不是(" + prjNo + "," + prjName + ")成员，您不能发起改流程。");
                     else
                         throw new Exception("您属于这个项目(" + prjNo + "," + prjName + ")，但是在此项目下您没有发起改流程的岗位。");
@@ -1474,8 +1485,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     }
     public void DoShift()
     {
-       
-
         GenerWorkFlow gwf = new GenerWorkFlow();
         if (gwf.Retrieve(GenerWorkFlowAttr.WorkID, this.WorkID) == 0)
         {
@@ -1499,11 +1508,5 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     #endregion
 
     #endregion
-
-    #region 处理工作.
-    /// <summary>
-    /// 新建一个工作
-    /// </summary>
-   
-    #endregion
+ 
 }

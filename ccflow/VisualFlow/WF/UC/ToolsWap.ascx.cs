@@ -178,12 +178,12 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                 if (nd.FK_Flow != fl.No)
                     continue;
 
-                if (nd.HisStations.Contains(WebUser.HisStations))
-                {
-                    mynds.AddEntity(nd);
-                }
+                //if (nd.NodeStations.Contains(WebUser.HisStations))
+                //{
+                //    mynds.AddEntity(nd);
+                //}
 
-                if (nd.HisNodeEmps.Contains(WebUser.No))
+                if (nd.NodeEmps.Contains(WebUser.No))
                     mynds.AddEntity(nd);
             }
 
