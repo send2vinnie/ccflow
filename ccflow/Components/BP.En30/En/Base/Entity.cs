@@ -1201,9 +1201,110 @@ namespace BP.En
         }
         #endregion
 
+        #region 参数字段
+        private AtPara atPara
+        {
+            get
+            {
+                AtPara at = this.Row.GetValByKey("_ATObj_") as AtPara;
+                if (at != null)
+                    return at;
+                try
+                {
+                    string atParaStr = this.GetValStringByKey("AtPara");
+                    if (string.IsNullOrEmpty(atParaStr))
+                    {
+                        /*没有发现数据，就执行初始化.*/
+                        this.InitParaFields();
 
+                        // 重新获取一次。
+                        atParaStr = this.GetValStringByKey("AtPara");
+                        if (string.IsNullOrEmpty(atParaStr))
+                            throw new Exception("@获取参数AtPara时出现异常，可能您没有初始化它Entity:" + this.ToString() + "");
+                        return at;
+                    }
+
+                    at = new AtPara(atParaStr);
+                    this.SetValByKey("_ATObj_", at);
+                    return at;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("@获取参数AtPara时出现异常" + ex.Message + "，可能是您没有加入约定的参数字段AtPara");
+                }
+            }
+        }
+        /// <summary>
+        /// 初始化参数字段(需要子类重写)
+        /// </summary>
+        /// <returns></returns>
+        protected virtual void InitParaFields()
+        {
+        }
+        /// <summary>
+        /// 获取参数
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetParaString(string key)
+        {
+            return atPara.GetValStrByKey(key);
+        }
+        /// <summary>
+        /// 获取参数Init值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public int GetParaInt(string key)
+        {
+            return atPara.GetValIntByKey(key);
+        }
+        /// <summary>
+        /// 获取参数boolen值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool GetParaBoolen(string key)
+        {
+            return atPara.GetValBoolenByKey(key);
+        }
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="obj"></param>
+        public void SetPara(string key, string obj)
+        {
+            string atParaStr = this.GetValStringByKey("AtPara");
+            if (atParaStr.Contains("@" + key + "=") == false)
+            {
+                atParaStr += "@" + key + "=" + obj;
+                this.SetValByKey("AtPara", atParaStr);
+                return;
+            }
+            else
+            {
+                AtPara at = new AtPara(atParaStr);
+                at.SetVal(key, obj);
+                this.SetValByKey("AtPara", at.GenerAtParaStrs());
+                return;
+            }
+        }
+        public void SetPara(string key, int obj)
+        {
+            SetPara(key, obj.ToString());
+        }
+        public void SetPara(string key, bool obj)
+        {
+            if (obj == false)
+                SetPara(key, "0");
+            else
+                SetPara(key, "1");
+        }
+        #endregion
 
         #region 通用方法
+
         /// <summary>
         /// 初始化相关的对象
         /// </summary>

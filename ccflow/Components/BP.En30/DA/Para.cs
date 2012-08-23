@@ -110,6 +110,13 @@ namespace BP.DA
         {
             this.Add("p", o);
         }
+        public string DBStr
+        {
+            get
+            {
+                return BP.SystemConfig.AppCenterDBVarStr;
+            }
+        }
         public Paras(string p,object v)
         {
             this.Add(p, v);

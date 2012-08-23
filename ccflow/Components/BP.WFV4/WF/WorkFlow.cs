@@ -223,7 +223,7 @@ namespace BP.WF
                     if (nextNode.PassRate > 0)
                     {
                         /* 找到等待处理节点的上一个点 */
-                        Nodes priNodes = nextNode.HisFromNodes;
+                        Nodes priNodes = nextNode.FromNodes;
                         if (priNodes.Count != 1)
                             throw new Exception("@没有实现子流程不同线程的需求。");
 

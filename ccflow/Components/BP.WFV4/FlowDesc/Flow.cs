@@ -864,6 +864,7 @@ namespace BP.WF
                 }
                 catch (Exception ex)
                 {
+                    continue;
                     try
                     {
                         fl.DoCheck();
@@ -878,6 +879,8 @@ namespace BP.WF
                 sql += mysql;
                 sql += "\t\n UNION ";
             }
+            if (sql.Contains("SELECT") == false)
+                return null;
             sql = sql.Substring(0, sql.Length - 6);
             if (sql.Length > 50)
                 DBAccess.RunSQL(sql);
@@ -889,8 +892,6 @@ namespace BP.WF
         /// <returns></returns>
         public string DoCheck()
         {
-
-
 
             DBAccess.RunSQL("UPDATE WF_Node SET FlowName = (SELECT Name FROM WF_Flow WHERE NO=WF_Node.FK_Flow)");
             DBAccess.RunSQL("DELETE WF_Direction WHERE Node=ToNode");
@@ -917,7 +918,14 @@ namespace BP.WF
             #region 对节点进行检查
             foreach (Node nd in nds)
             {
-                nd.RepareMap();
+                try
+                {
+                    nd.RepareMap();
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception(nd.Name + " - " + ex.Message);
+                }
                 if (DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM WF_Cond WHERE NodeID='"+nd.NodeID+"' AND CondType=1") == 0)
                     nd.IsCCFlow = false;
                 else
@@ -962,15 +970,15 @@ namespace BP.WF
                 {
                    
                     case DeliveryWay.ByStation:
-                        if (nd.HisStations.Count == 0)
+                        if (nd.NodeStations.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按岗位，但是您没有为节点绑定岗位。</font>";
                         break;
                     case DeliveryWay.ByDept:
-                        if (nd.HisDepts.Count == 0)
+                        if (nd.NodeDepts.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按部门，但是您没有为节点绑定部门。</font>";
                         break;
                     case DeliveryWay.ByEmp:
-                        if (nd.HisNodeEmps.Count == 0)
+                        if (nd.NodeEmps.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按人员，但是您没有为节点绑定人员。</font>";
                         break;
                     case DeliveryWay.BySpecNodeStation: /*按指定的岗位计算.*/
@@ -1045,7 +1053,7 @@ namespace BP.WF
 
                 // 岗位是否设置正确。
                 msg += "<b>《" + nd.Name + "》：</b>" + this.ToE("NodeWorkType", "节点类型") + "：" + nd.HisNodeWorkType + "<hr>";
-                if (nd.HisStations.Count == 0)
+                if (nd.NodeStations.Count == 0)
                 {
                     string infoAccept = "";
                     if (nd.HisDeliveryWay == DeliveryWay.BySelected)
@@ -1056,10 +1064,10 @@ namespace BP.WF
                             infoAccept = "@可执行的人员是用户在表单里的,人员选择器中选择出来的.";
                     }
 
-                    if (nd.HisNodeEmps.Count != 0)
+                    if (nd.NodeEmps.Count != 0)
                     {
                         infoAccept = "@节点上指定了如下可执行的如下人员.";
-                        foreach (NodeEmp ne in nd.HisNodeEmps)
+                        foreach (NodeEmp ne in nd.NodeEmps)
                             infoAccept += "@" + ne.FK_Emp + "," + ne.FK_EmpT;
                     }
 
@@ -1074,10 +1082,10 @@ namespace BP.WF
                 else
                 {
                     msg += this.ToE("Station", "岗位") + "：";
-                    foreach (BP.Port.Station st in nd.HisStations)
+                    foreach (NodeStation  st in nd.NodeStations)
                     {
-                        msg += st.Name + "、";
-                        rpt += st.Name + "、";
+                        msg += st.FK_StationT + "、";
+                        rpt += st.FK_StationT + "、";
                     }
 
                     emps.RetrieveInSQL("select fk_emp from Port_Empstation WHERE fk_station in (select fk_station from WF_NodeStation WHERE FK_Node=" + nd.NodeID + " )");
@@ -1097,7 +1105,7 @@ namespace BP.WF
 
                 msg += "<br>";
                 //对单据进行检查。
-                BillTemplates Bills = nd.HisBillTemplates;
+                BillTemplates Bills = nd.BillTemplates;
                 if (Bills.Count == 0)
                 {
                     msg += "";
@@ -2398,7 +2406,7 @@ namespace BP.WF
             bool is1 = false;
             foreach (Node nd in nds)
             {
-                //  nd.HisWork.CheckPhysicsTable();
+                nd.HisWork.CheckPhysicsTable();
                 if (is1 == false)
                     is1 = true;
                 else
@@ -4414,14 +4422,14 @@ namespace BP.WF
                 if (infoErr == "")
                 {
                     infoTable = "";
-                    try
-                    {
+                    //try
+                    //{
                         fl.DoCheck();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("@装载完成后,检查流程时出现错误." + ex.Message);
-                    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    throw new Exception("@装载完成后,检查流程时出现错误." + ex.Message);
+                    //}
                     return fl; // "完全成功。";
                 }
 

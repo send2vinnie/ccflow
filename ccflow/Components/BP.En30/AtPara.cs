@@ -90,6 +90,12 @@ namespace BP.DA
                 return null;
             }
         }
+        public bool GetValBoolenByKey(string key)
+        {
+            if (this.GetValIntByKey(key)==0)
+                return false;
+            return true;
+        }
         public int GetValIntByKey(string key)
         {
             try
@@ -110,6 +116,15 @@ namespace BP.DA
                     _HisHT = new Hashtable();
                 return _HisHT;
             }
+        }
+        public string GenerAtParaStrs()
+        {
+            string s = "";
+            foreach (string key in this.HisHT.Keys)
+            {
+                s += "@" + key + "=" + this._HisHT[key].ToString();
+            }
+            return s;
         }
     }
 }

@@ -1183,6 +1183,14 @@ namespace BP.DA
             ens.Add(paraKey2, val2);
             return RunSQL(sql, ens);
         }
+        public static int RunSQL(string sql, string paraKey1, object val1, string paraKey2, object val2, string k3, object v3)
+        {
+            Paras ens = new Paras();
+            ens.Add(paraKey1, val1);
+            ens.Add(paraKey2, val2);
+            ens.Add(k3, v3);
+            return RunSQL(sql, ens);
+        }
         public static int RunSQL(string sql, Paras paras)
         {
             RunSQLReturnTableCount++;

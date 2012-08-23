@@ -232,7 +232,6 @@
     <Compile Include="WF.cs" />
     <Compile Include="WF\GERpt.cs" />
     <Compile Include="WF\DataApply.cs" />
-    <Compile Include="WF\DevelopCallRequest.cs" />
     <Compile Include="WF\GenerFH.cs" />
     <Compile Include="FlowDesc\WorkBase\FileManager.cs" />
     <Compile Include="WF\GenerWorkFlow.cs">

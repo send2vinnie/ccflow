@@ -66,12 +66,12 @@ namespace BP.WF.DTS
                 {
                     //try
                     //{
-                        msg += "@开始调度流程模板文件:" + f;
-                        Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fs.No, f);
-                        msg += "@流程:" + myflow.Name + "装载成功。";
-                        System.IO.FileInfo info = new System.IO.FileInfo(f);
-                        myflow.Name = info.Name.Replace(".xml", "");
-                        myflow.DirectUpdate();
+                    msg += "@开始调度流程模板文件:" + f;
+                    Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fs.No, f);
+                    msg += "@流程:" + myflow.Name + "装载成功。";
+                    System.IO.FileInfo info = new System.IO.FileInfo(f);
+                    myflow.Name = info.Name.Replace(".xml", "");
+                    myflow.DirectUpdate();
                     //}
                     //catch (Exception ex)
                     //{
@@ -79,14 +79,14 @@ namespace BP.WF.DTS
                     //}
                 }
             }
- 
+
             // 调度表单文件。
             FrmSorts fss = new FrmSorts();
             fss.ClearTable();
 
             string frmPath = SystemConfig.PathOfData + "\\FlowDemo\\Form\\";
-              dirInfo =new DirectoryInfo(frmPath);
-              dirs = dirInfo.GetDirectories();
+            dirInfo = new DirectoryInfo(frmPath);
+            dirs = dirInfo.GetDirectories();
             foreach (DirectoryInfo item in dirs)
             {
                 if (item.FullName.Contains(".svn"))
@@ -125,59 +125,6 @@ namespace BP.WF.DTS
 
             BP.DA.Log.DefaultLogWriteLineInfo(msg);
             return msg;
-        }
-        /// <summary>
-        /// 执行
-        /// </summary>
-        /// <returns>返回执行结果</returns>
-        public   object Do11()
-        {
-            #region 2011-08-02 升级包 mapdata 数据有变化.
-            Nodes nds = new Nodes();
-            nds.RetrieveAll();
-            foreach (Node nd in nds)
-            {
-                MapData md = new MapData();
-                md.No = "ND" + nd.NodeID;
-                if (md.RetrieveFromDBSources() == 0)
-                {
-                    md.Name = nd.Name;
-                    md.EnPK = "OID";
-                    md.PTable = md.No;
-                    md.Insert();
-                }
-                else
-                {
-                    md.Name = nd.Name;
-                    md.EnPK = "OID";
-                    md.PTable = md.No;
-                    md.Update();
-                }
-            }
-            MapDtls dtls = new MapDtls();
-            dtls.RetrieveAll();
-            foreach (MapDtl dtl in dtls)
-            {
-                MapData md = new MapData();
-                md.No = dtl.No;
-                if (md.RetrieveFromDBSources() == 0)
-                {
-                    md.Name = dtl.Name;
-                    md.EnPK = "OID";
-                    md.PTable = dtl.PTable;
-                    md.Insert();
-                }
-                else
-                {
-                    md.Name = dtl.Name;
-                    md.EnPK = "OID";
-                    md.PTable = dtl.PTable;
-                    md.Update();
-                }
-            }
-            #endregion 2011-08-02 升级包 mapdata 数据有变化.
-
-            return "执行成功...";
         }
     }
 }

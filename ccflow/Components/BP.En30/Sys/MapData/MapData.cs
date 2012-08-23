@@ -668,7 +668,7 @@ namespace BP.Sys
                 if (this._enMap != null)
                     return this._enMap;
                 Map map = new Map("Sys_MapData");
-                map.DepositaryOfEntity = Depositary.None;
+                map.DepositaryOfEntity = Depositary.Application;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "映射基础";
                 map.EnType = EnType.Sys;
@@ -709,6 +709,9 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerContact, null, "联系方式", true, false, 0, 500, 20);
+
+                //增加参数字段.
+                map.AddTBAtParas(1000);
 
                 this._enMap = map;
                 return this._enMap;

@@ -2469,6 +2469,14 @@ namespace BP.En
             //this.Attrs.Add(attr);
         }
         /// <summary>
+        /// Ôö¼Ó  AtParas×Ö¶Î.
+        /// </summary>
+        /// <param name="fieldLength"></param>
+        public void AddTBAtParas(int fieldLength)
+        {
+            this.AddTBString("AtParas", null, "AtParas",false, true, 0, fieldLength, 10);
+        }
+        /// <summary>
         /// Ö÷¼ü
         /// </summary>
         public void AddMyPK()

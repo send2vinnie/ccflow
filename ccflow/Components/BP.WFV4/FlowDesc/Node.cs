@@ -597,26 +597,179 @@ namespace BP.WF
     public class Node : Entity
     {
         #region 外键属性
+      
+        
         protected override void InitRefObjects()
         {
+            this.SetRefObject("Flow", new Flow(this.FK_Flow));
             this.SetRefObject("FrmNodes", new FrmNodes(this.NodeID));
             this.SetRefObject("MapData", new MapData("ND" + this.NodeID));
+            this.SetRefObject("NodeDepts", new NodeDepts(this.NodeID));
+            this.SetRefObject("NodeStations", new NodeStations(this.NodeID));
+            this.SetRefObject("NodeEmps", new NodeEmps(this.NodeID));
+
+            this.SetRefObject("BillTemplates", new BillTemplates(this.NodeID));
+
+            // 根据方向生成到达此节点的节点。
+            Directions ens = new Directions();
+            if (this.IsStartNode)
+                this.SetRefObject("HisFromNodes", new Nodes());
+            else
+                this.SetRefObject("HisFromNodes", ens.GetHisFromNodes(this.NodeID));
+
+            // 它的到达节点.
+            this.SetRefObject("HisToNodes", ens.GetHisToNodes(this.NodeID,false) );
+
+          
+
+            #region 它的工作.
+            Work _Work = null;
+            if (this.IsStartNode)
+            {
+                _Work = new BP.WF.GEStartWork(this.NodeID);
+                _Work.HisNode = this;
+                _Work.NodeID = this.NodeID;
+                this.SetRefObject("HisWork", _Work);
+            }
+            else
+            {
+                _Work = new BP.WF.GEWork(this.NodeID);
+                _Work.HisNode = this;
+                _Work.NodeID = this.NodeID;
+                this.SetRefObject("HisWork", _Work);
+            }
+
+            this.SetRefObject("HisWorks", _Work.GetNewEntities);
+            #endregion 它的工作.
+
             base.InitRefObjects();
         }
-        private Depts _HisDepts = null;
+        #region 转换的工作
+
+        #region 节点的方向 (from nodes AND to nodes , 注意判断节点的生命周期的问题)
         /// <summary>
-        /// 此节点所在的工作岗位
+        /// 他的将要转向的方向集合
+        /// 如果他没有到转向方向,他就是结束节点.
+        /// 没有生命周期的概念,全部的节点.
         /// </summary>
-        public Depts HisDepts
+        public Nodes HisToNodes
         {
             get
             {
-                if (this._HisDepts == null)
+                return this.GetRefObject("HisToNodes") as Nodes;
+            }
+        }
+        #endregion
+
+        #region 条件
+        private Conds _HisFlowCompleteConditions = null;
+        /// <summary>
+        /// 他的完成任务的条件,此节点是完成任务的条件集合
+        /// 条件与条件之间是or 的关系, 就是说,如果任何一个条件满足,这个任务就完成了.
+        /// </summary>
+        public Conds HisFlowCompleteConditions_del
+        {
+            get
+            {
+                if (this._HisFlowCompleteConditions == null)
+                    _HisFlowCompleteConditions = new Conds(CondType.Flow, this.NodeID, this.HisWork.OID);
+                return _HisFlowCompleteConditions;
+            }
+        }
+        #endregion
+        /// <summary>
+        /// 他的工作
+        /// </summary>
+        public Work HisWork
+        {
+            get
+            {
+                return this.GetRefObject("HisWork") as Work;
+            }
+        }
+        /// <summary>
+        /// 他的工作s
+        /// </summary>
+        public Works HisWorks
+        {
+            get
+            {
+                return this.GetRefObject("HisWorks") as Works;
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// 流程
+        /// </summary>
+        public Flow HisFlow
+        {
+            get
+            {
+                return this.GetRefObject("Flow") as Flow;
+            }
+        }
+        private Frms  _HisFrms = null;
+        /// <summary>
+        /// HisFrms
+        /// </summary>
+        public Frms HisFrms
+        {
+            get
+            {
+                if (_HisFrms == null)
                 {
-                    _HisDepts = new Depts();
-                    _HisDepts.AddEntities(this.HisDeptStrs);
+                    #region 它的 HisFrms
+                    _HisFrms = new Frms();
+                    FrmNodes fns = new FrmNodes(this.NodeID);
+                    foreach (FrmNode fn in fns)
+                        _HisFrms.AddEntity(fn.HisFrm);
+                    //  this.SetRefObject("HisFrms", _HisFrms);
+                    #endregion 它的 HisFrms
                 }
-                return _HisDepts;
+
+                return _HisFrms;
+
+             //   return this.GetRefObject("HisFrms") as Frms;
+            }
+        }
+        /// <summary>
+        /// 他的将要来自的方向集合
+        /// 如果他没有到来的方向,他就是开始节点.
+        /// </summary>
+        public Nodes FromNodes
+        {
+            get
+            {
+                return this.GetRefObject("HisFromNodes") as Nodes;
+            }
+        }
+        public BillTemplates BillTemplates
+        {
+            get
+            {
+                return this.GetRefObject("BillTemplates") as BillTemplates;
+            }
+        }
+        public NodeStations NodeStations
+        {
+            get
+            {
+                return this.GetRefObject("NodeStations") as NodeStations;
+            }
+        }
+        public NodeDepts NodeDepts
+        {
+            get
+            {
+                return this.GetRefObject("NodeDepts") as NodeDepts;
+            }
+        }
+        public NodeEmps NodeEmps
+        {
+            get
+            {
+                return this.GetRefObject("NodeEmps") as NodeEmps;
             }
         }
         public FrmNodes FrmNodes
@@ -663,7 +816,7 @@ namespace BP.WF
             if (nodeid.Substring(nodeid.Length - 2) == "01")
                 return NodePosType.Start;
 
-            if (this.HisFromNodes.Count == 0)
+            if (this.FromNodes.Count == 0)
                 return NodePosType.Mid;
 
             if (this.HisToNodes.Count == 0)
@@ -979,7 +1132,7 @@ namespace BP.WF
                 }
 
                 // 查看能够转向到他的节点。
-                Nodes fNDs = this.HisFromNodes;
+                Nodes fNDs = this.FromNodes;
                 if (fNDs.Count == 0)
                 {
                     /*说明它是一个单个节点，就不处理它的情况。*/
@@ -1022,91 +1175,11 @@ namespace BP.WF
             }
             #endregion  判断流程节点类型。
 
-
             return base.beforeUpdate();
         }
-        /// <summary>
-        /// 注册流程
-        /// </summary>
-        /// <param name="fl"></param>
-        /// <returns></returns>
-        public static string RegFlow(Flow fl)
-        {
-
-            #region 取出来流程节点
-            string msg = "";
-            // 取出来流程节点.
-            Nodes alNodes = new Nodes();
-            ArrayList alWorks = BP.DA.ClassFactory.GetObjects("BP.WF.Works");
-            #endregion
-
-
-            #region 更新流程判断条件的标记。
-            DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='"+fl.No+"'");
-            DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=0) AND FK_Flow='"+fl.No+"'");
-            DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCFlow=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=1) AND FK_Flow='" + fl.No + "'");
-            #endregion
-
-
-            #region 删除方向节点
-           // DBAccess.RunSQL("DELETE FROM WF_FLOWCOMPLETECONDITION WHERE nodeid not in ( select nodeid from wf_node)");
-            //   DBAccess.RunSQL("DELETE FROM WF_NODECOMPLETECONDITION WHERE enclassName not in (select EnsName from wf_node)");
-            //  DBAccess.RunSQL("DELETE FROM WF_FLOWCOMPLETECONDITION WHERE enclassName not in (select EnsName from wf_node)");
-            DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE FK_Node not in( select NodeId from wf_node)");
-
-
-            //更新标准审核节点和数量审核节点的表名到WF_Node里去
-            // DBAccess.RunSQL("update wf_node set PTable='WF_GECheckStand' WHERE ensname='BP.WF.GECheckStands'");
-            // DBAccess.RunSQL("update wf_node set PTable='WF_NumCheck' WHERE ensname='BP.WF.NumChecks'");
-            #endregion
-
-
-            #region 调度节点的基本信息
-            // 检查开始节点的完整性
-            //string sql = "SELECT COUNT(*) FROM (SELECT NODEID, FK_FLOW, COUNT(FK_FLOW) AS NUM  FROM WF_NODE  WHERE WF_NODE.IsStartNode=1 GROUP BY NODEID ,FK_FLOW) WHERE NUM >1";
-            //if (DBAccess.RunSQLReturnValInt(sql) > 0)
-            //    msg += "流程的开始节点不唯一。" + sql;
-
-            //sql = "UPDATE WF_FLOW SET (StartNODEID ,EnsName,EnName )=( SELECT NODEID, EnsName,EnName  FROM WF_NODE WHERE WF_NODE.IsStartNode=1 AND WF_NODE.FK_FLOW=WF_FLOW.NO )";
-            //DBAccess.RunSQL(sql);
-            #endregion
-
-            return msg;
-        }
         #endregion
 
-        #region 条件
-        private Conds _HisNodeCompleteConditions = null;
-        /// <summary>
-        /// 节点完成任务的条件
-        /// 条件与条件之间是or 的关系, 就是说,如果任何一个条件满足,这个工作人员在这个节点上的任务就完成了.
-        /// </summary>
-        public Conds HisNodeCompleteConditions
-        {
-            get
-            {
-                if (this._HisNodeCompleteConditions == null)
-                {
-                    _HisNodeCompleteConditions = new Conds(CondType.Node, this.NodeID, this.HisWork.OID);
-                }
-                return _HisNodeCompleteConditions;
-            }
-        }
-        private Conds _HisFlowCompleteConditions = null;
-        /// <summary>
-        /// 他的完成任务的条件,此节点是完成任务的条件集合
-        /// 条件与条件之间是or 的关系, 就是说,如果任何一个条件满足,这个任务就完成了.
-        /// </summary>
-        public Conds HisFlowCompleteConditions
-        {
-            get
-            {
-                if (this._HisFlowCompleteConditions == null)
-                    _HisFlowCompleteConditions = new Conds(CondType.Flow, this.NodeID, this.HisWork.OID);
-                return _HisFlowCompleteConditions;
-            }
-        }
-        #endregion
+    
 
         #region 基本属性
         /// <summary>
@@ -1385,7 +1458,7 @@ namespace BP.WF
                 if (mynd.IsFL)
                     return mynd;
                 else
-                    return _GetHisPriFLNode(mynd.HisFromNodes);
+                    return _GetHisPriFLNode(mynd.FromNodes);
             }
             return null;
         }
@@ -1396,7 +1469,7 @@ namespace BP.WF
         {
             get
             {
-                return _GetHisPriFLNode(this.HisFromNodes);
+                return _GetHisPriFLNode(this.FromNodes);
             }
         }
         public string TurnToDealDoc
@@ -1582,11 +1655,7 @@ namespace BP.WF
         {
             get
             {
-                string str = this.GetValStrByKey(NodeAttr.HisBillIDs);
-                if (this.IsStartNode)
-                    if (str.Contains("@SLHZ") == false)
-                        str += "@SLHZ";
-                return str;
+                return this.GetValStrByKey(NodeAttr.HisBillIDs);
             }
             set
             {
@@ -1596,36 +1665,8 @@ namespace BP.WF
         #endregion
 
         #region 扩展属性
-        private BillTemplates _BillTemplates = null;
-        /// <summary>
-        /// HisNodeRefFuncs
-        /// </summary>
-        public BillTemplates HisBillTemplates
-        {
-            get
-            {
-                if (_BillTemplates == null)
-                {
-                    _BillTemplates = new BillTemplates();
-                    _BillTemplates.Retrieve(BillTemplateAttr.NodeID, this.NodeID);
-                    //  _BillTemplates.AddEntities(this.HisBillIDs);
-                }
-                return _BillTemplates;
-            }
-        }
-        private Flow _Flow = null;
-        /// <summary>
-        /// 此节点所在的事务.
-        /// </summary>
-        public Flow HisFlow
-        {
-            get
-            {
-                if (this._Flow == null)
-                    _Flow = new Flow(this.FK_Flow);
-                return _Flow;
-            }
-        }
+      
+     
         /// <summary>
         /// 是不是多岗位工作节点.
         /// </summary>
@@ -1633,112 +1674,26 @@ namespace BP.WF
         {
             get
             {
-                if (this.HisStations.Count > 1)
+                if (this.NodeStations.Count > 1)
                     return true;
                 return false;
             }
         }
-        private Stations _HisStations = null;
-        /// <summary>
-        /// 此节点所在的工作岗位
-        /// </summary>
-        public Stations HisStations
-        {
-            get
-            {
-                if (this._HisStations == null)
-                {
-                    _HisStations = new Stations();
-                    _HisStations.AddEntities(this.HisStas);
-                }
-                return _HisStations;
-            }
-        }
-        /// <summary>
-        /// 他的工作描述
-        /// </summary>
-        public string HisWorksDesc
-        {
-            get
-            {
-                return this.Name;
-            }
-        }
-        private Frms _HisFrms = null;
-        /// <summary>
-        /// HisFrms
-        /// </summary>
-        public Frms HisFrms
-        {
-            get
-            {
-                if (this._HisFrms == null)
-                {
-                    _HisFrms = new Frms();
-                    foreach (FrmNode fn in this.FrmNodes)
-                    {
-                        _HisFrms.AddEntity(fn.HisFrm);
-                    }
-                }
-                return _HisFrms;
-            }
-        }
- 
-      
-        /// <summary>
-        /// HisStationsStr
-        /// </summary>
         public string HisStationsStr
         {
             get
             {
-                string str = "";
-                foreach (Station st in this.HisStations)
+                string s = "";
+                foreach (NodeStation ns in this.NodeStations)
                 {
-                    str += st.Name + "，";
+                    s += ns.FK_StationT + ",";
                 }
-                return str;
+                return s;
             }
         }
+      
 
-        #region 转换的工作
-        private Work _Work = null;
-        /// <summary>
-        /// 得到他的一个工作实体
-        /// </summary>
-        public Work HisWork
-        {
-            get
-            {
-                if (_Work == null)
-                {
-                    if (this.IsStartNode)
-                    {
-                        _Work = new BP.WF.GEStartWork(this.NodeID);
-                        return _Work;
-                    }
-                    _Work = new BP.WF.GEWork(this.NodeID);
-                    _Work.HisNode = this;
-                    _Work.NodeID = this.NodeID;
-                    return _Work;
-                }
-                return _Work;
-            }
-        }
-        private Works _HisWorks = null;
-        /// <summary>
-        /// 他的工作s
-        /// </summary>
-        public Works HisWorks
-        {
-            get
-            {
-                if (_HisWorks == null)
-                    _HisWorks = (Works)this.HisWork.GetNewEntities;
-                return _HisWorks;
-            }
-        }
-        #endregion
+       
 
         
         #endregion
@@ -1753,8 +1708,6 @@ namespace BP.WF
         {
             Work wk = this.HisWork;
             wk.SetValByKey("OID", workId);
-            
-
             if (wk.RetrieveFromDBSources() == 0)
                 return null;
             else
@@ -1882,18 +1835,7 @@ namespace BP.WF
         #endregion
 
         #region 推算属性 (对于节点位置的判断)
-        private NodeEmps _HisNodeEmps = null;
-        public NodeEmps HisNodeEmps
-        {
-            get
-            {
-                if (_HisNodeEmps == null || _HisNodeEmps.Count == 0)
-                {
-                    _HisNodeEmps = new NodeEmps(this.NodeID);
-                }
-                return _HisNodeEmps;
-            }
-        }
+       
         /// <summary>
         /// 类型
         /// </summary>
@@ -2239,47 +2181,7 @@ namespace BP.WF
         }
         #endregion
 
-        #region 节点的方向 (from nodes AND to nodes , 注意判断节点的生命周期的问题)
-        /// <summary>
-        /// 他的将要可以转向的节点方向集合.
-        /// 没有生命周期的概念,全部的节点..
-        /// </summary>
-        private Nodes _HisToNodes = null;
-        /// <summary>
-        /// 他的将要转向的方向集合
-        /// 如果他没有到转向方向,他就是结束节点.
-        /// 没有生命周期的概念,全部的节点.
-        /// </summary>
-        public Nodes HisToNodes
-        {
-            get
-            {
-                if (this._HisToNodes == null)
-                {
-                    _HisToNodes = new Nodes();
-                    _HisToNodes.AddEntities(this.HisToNDs);
-                }
-                return this._HisToNodes;
-            }
-        }
-        private Nodes _HisFromNodes = null;
-        /// <summary>
-        /// 他的将要来自的方向集合
-        /// 如果他没有到来的方向,他就是开始节点.
-        /// </summary>
-        public Nodes HisFromNodes
-        {
-            get
-            {
-                if (this._HisFromNodes == null || this._HisFromNodes.Count == 0)
-                {
-                    Directions ens = new Directions();
-                    this._HisFromNodes = ens.GetHisFromNodes(this.NodeID);
-                }
-                return _HisFromNodes;
-            }
-        }
-        #endregion
+       
 
         #region 公共方法 (用户执行动作之后,所要做的工作)
         /// <summary>
@@ -2366,7 +2268,6 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.Step, (int)NodeWorkType.Work, this.ToE("FlowStep", "流程步骤"), true, false);
 
                 map.AddTBInt(NodeAttr.NodeWorkType, 0, "节点类型", false, false);
-
 
                 map.AddTBString(NodeAttr.FK_Flow, null, "FK_Flow", false, false, 0, 100, 10);
 
@@ -2465,6 +2366,8 @@ namespace BP.WF
 
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 100, 10);
                 map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 2000, 10, true);
+
+                map.AddTBAtParas(1000);
 
 
                 //map.AddTBDate(FlowAttr.LifeCycleFrom, BP.DA.DataType.CurrentData, "生命周期从", true, false);
@@ -2988,7 +2891,8 @@ namespace BP.WF
                 attr.Insert();
             }
 
-            if (this.HisFlow.IsMD5
+            Flow fl = new Flow(this.FK_Flow);
+            if (fl.IsMD5
                 && attr.IsExit(MapAttrAttr.KeyOfEn, WorkAttr.MD5, MapAttrAttr.FK_MapData, md.No) == false)
             {
                 /* 如果是MD5加密流程. */

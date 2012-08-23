@@ -268,7 +268,7 @@ namespace BP.WF
             qo.AddWhere(WorkerListAttr.IsEnable, 1);
             qo.addAnd();
             qo.AddWhere(WorkerListAttr.FK_Node,
-                nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
+                nd.FromNodes[0].GetValByKey(NodeAttr.NodeID));
 
             DataTable dt = qo.DoQueryToTable();
             if (dt.Rows.Count == 1)
@@ -344,7 +344,7 @@ namespace BP.WF
             if (nd.HisRunModel == RunModel.SubThread)
             {
                 /*如果是子线程，它只能退回它的上一个节点，现在写死了，其它的设置不起作用了。*/
-                Nodes nds = nd.HisFromNodes;
+                Nodes nds = nd.FromNodes;
                 foreach (Node ndFrom in nds)
                 {
                     Work wk;
