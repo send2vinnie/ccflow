@@ -137,138 +137,259 @@ namespace BP.Sys
     {
         #region 外键属性
         /// <summary>
-        /// 初始化外键属性
+        /// 框架
         /// </summary>
-        protected override void InitRefObjects()
-        {
-            this.SetRefObject("FrmLines", new FrmLines(this.No));
-            this.SetRefObject("FrmLabs", new FrmLabs(this.No));
-            this.SetRefObject("FrmImgs", new FrmImgs(this.No));
-            this.SetRefObject("FrmAttachments", new FrmAttachments(this.No));
-            this.SetRefObject("FrmImgAths", new FrmImgAths(this.No));
-            this.SetRefObject("FrmRBs", new FrmRBs(this.No));
-            this.SetRefObject("MapAttrs", new MapAttrs(this.No));
-            this.SetRefObject("FrmEles", new FrmEles(this.No));
-            this.SetRefObject("FrmBtns", new FrmBtns(this.No));
-            this.SetRefObject("FrmLinks", new FrmLinks(this.No));
-            this.SetRefObject("MapM2Ms", new MapM2Ms(this.No));
-            this.SetRefObject("MapDtls", new MapDtls(this.No));
-            this.SetRefObject("FrmEvents", new FrmEvents(this.No));
-            this.SetRefObject("MapExts", new MapExts(this.No));
-            this.SetRefObject("GroupFields", new GroupFields(this.No));
-            this.SetRefObject("MapFrames", new MapFrames(this.No));
-            base.InitRefObjects();
-        }
         public MapFrames MapFrames
         {
             get
             {
-                return this.GetRefObject("MapFrames") as MapFrames;
+                MapFrames obj = this.GetRefObject("MapFrames") as MapFrames;
+                if (obj == null)
+                {
+                    obj = new MapFrames(this.No);
+                    this.SetRefObject("MapFrames", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 分组字段
+        /// </summary>
         public GroupFields GroupFields
         {
             get
             {
-                return this.GetRefObject("GroupFields") as GroupFields;
+                GroupFields obj = this.GetRefObject("GroupFields") as GroupFields;
+                if (obj == null)
+                {
+                    obj = new GroupFields(this.No);
+                    this.SetRefObject("GroupFields", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 逻辑扩展
+        /// </summary>
         public MapExts MapExts
         {
             get
             {
-                return this.GetRefObject("MapExts") as MapExts;
+                MapExts obj = this.GetRefObject("MapExts") as MapExts;
+                if (obj == null)
+                {
+                    obj = new MapExts(this.No);
+                    this.SetRefObject("MapExts", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 事件
+        /// </summary>
         public FrmEvents FrmEvents
         {
             get
             {
-                return this.GetRefObject("FrmEvents") as FrmEvents;
+                FrmEvents obj = this.GetRefObject("FrmEvents") as FrmEvents;
+                if (obj == null)
+                {
+                    obj = new FrmEvents(this.No);
+                    this.SetRefObject("FrmEvents", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 一对多
+        /// </summary>
         public MapM2Ms MapM2Ms
         {
             get
             {
-                return this.GetRefObject("MapM2Ms") as MapM2Ms;
+                MapM2Ms obj = this.GetRefObject("MapM2Ms") as MapM2Ms;
+                if (obj == null)
+                {
+                    obj = new MapM2Ms(this.No);
+                    this.SetRefObject("MapM2Ms", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 明细表
+        /// </summary>
         public MapDtls MapDtls
         {
             get
             {
-                return this.GetRefObject("MapDtls") as MapDtls;
+                MapDtls obj = this.GetRefObject("MapDtls") as MapDtls;
+                if (obj == null)
+                {
+                    obj = new MapDtls(this.No);
+                    this.SetRefObject("MapDtls", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 超连接
+        /// </summary>
         public FrmLinks FrmLinks
         {
             get
             {
-                return this.GetRefObject("FrmLinks") as FrmLinks;
+                FrmLinks obj = this.GetRefObject("FrmLinks") as FrmLinks;
+                if (obj == null)
+                {
+                    obj = new FrmLinks(this.No);
+                    this.SetRefObject("FrmLinks", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 按钮
+        /// </summary>
         public FrmBtns FrmBtns
         {
             get
             {
-                return this.GetRefObject("FrmBtns") as FrmBtns;
+                FrmBtns obj = this.GetRefObject("FrmLinks") as FrmBtns;
+                if (obj == null)
+                {
+                    obj = new FrmBtns(this.No);
+                    this.SetRefObject("FrmBtns", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 元素
+        /// </summary>
         public FrmEles FrmEles
         {
             get
             {
-                return this.GetRefObject("FrmEles") as FrmEles;
+                FrmEles obj = this.GetRefObject("FrmEles") as FrmEles;
+                if (obj == null)
+                {
+                    obj = new FrmEles(this.No);
+                    this.SetRefObject("FrmEles", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 线
+        /// </summary>
         public FrmLines FrmLines
         {
             get
             {
-                return this.GetRefObject("FrmLines") as FrmLines;
+                FrmLines obj = this.GetRefObject("FrmLines") as FrmLines;
+                if (obj == null)
+                {
+                    obj = new FrmLines(this.No);
+                    this.SetRefObject("FrmLines", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 标签
+        /// </summary>
         public FrmLabs FrmLabs
         {
             get
             {
-                return this.GetRefObject("FrmLabs") as FrmLabs;
+                FrmLabs obj = this.GetRefObject("FrmLabs") as FrmLabs;
+                if (obj == null)
+                {
+                    obj = new FrmLabs(this.No);
+                    this.SetRefObject("FrmLabs", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 图片
+        /// </summary>
         public FrmImgs FrmImgs
         {
             get
             {
-                return this.GetRefObject("FrmImgs") as FrmImgs;
+                FrmImgs obj = this.GetRefObject("FrmLabs") as FrmImgs;
+                if (obj == null)
+                {
+                    obj = new FrmImgs(this.No);
+                    this.SetRefObject("FrmLabs", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 附件
+        /// </summary>
         public FrmAttachments FrmAttachments
         {
             get
             {
-                return this.GetRefObject("FrmAttachments") as FrmAttachments;
+                FrmAttachments obj = this.GetRefObject("FrmAttachments") as FrmAttachments;
+                if (obj == null)
+                {
+                    obj = new FrmAttachments(this.No);
+                    this.SetRefObject("FrmAttachments", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 图片附件
+        /// </summary>
         public FrmImgAths FrmImgAths
         {
             get
             {
-                return this.GetRefObject("FrmImgAths") as FrmImgAths;
+                FrmImgAths obj = this.GetRefObject("FrmImgAths") as FrmImgAths;
+                if (obj == null)
+                {
+                    obj = new FrmImgAths(this.No);
+                    this.SetRefObject("FrmImgAths", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 单选按钮
+        /// </summary>
         public FrmRBs FrmRBs
         {
             get
             {
-                return this.GetRefObject("FrmRBs") as FrmRBs;
+                FrmRBs obj = this.GetRefObject("FrmRBs") as FrmRBs;
+                if (obj == null)
+                {
+                    obj = new FrmRBs(this.No);
+                    this.SetRefObject("FrmRBs", obj);
+                }
+                return obj;
             }
         }
+        /// <summary>
+        /// 属性
+        /// </summary>
         public MapAttrs MapAttrs
         {
             get
             {
-                return this.GetRefObject("MapAttrs") as MapAttrs;
+                MapAttrs obj = this.GetRefObject("MapAttrs") as MapAttrs;
+                if (obj == null)
+                {
+                    obj = new MapAttrs(this.No);
+                    this.SetRefObject("MapAttrs", obj);
+                }
+                return obj;
             }
         }
         #endregion
@@ -555,7 +676,6 @@ namespace BP.Sys
             if (mapAttrs.Count == 0)
             {
                 this.RepairMap();
-                this.InitRefObjects(); //重新初始化它.
                 mapAttrs = this.MapAttrs; 
             }
 

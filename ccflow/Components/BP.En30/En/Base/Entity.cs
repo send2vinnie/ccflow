@@ -1304,34 +1304,21 @@ namespace BP.En
         #endregion
 
         #region 通用方法
-
-        /// <summary>
-        /// 初始化相关的对象
-        /// </summary>
-        /// <returns></returns>
-        protected virtual void InitRefObjects()
-        {
-        }
         /// <summary>
         /// 获取实体
         /// </summary>
         /// <param name="key"></param>
         public object GetRefObject(string key)
         {
-            object obj = this.Row[key];
-            if (obj == null)
-            {
-                if (this.Row.ContainsKey(key) == false)
-                    this.InitRefObjects();
-
-                if (this.Row.ContainsKey(key) == false)
-                    throw new Exception("@没有找到key=" + key + "对象，请在 InitRefObjects 初始化它。");
-                
-                obj = this.Row[key];
-                if (obj == "")
-                    return null;
-            }
-            return obj;
+            return this.Row["_"+key];
+            //object obj = this.Row[key];
+            //if (obj == null)
+            //{
+            //    if (this.Row.ContainsKey(key) == false)
+            //        return null;
+            //    obj = this.Row[key];
+            //}
+            //return obj;
         }
         /// <summary>
         /// 设置实体
@@ -1341,8 +1328,9 @@ namespace BP.En
         public void SetRefObject(string key,object obj)
         {
             if (obj == null)
-                obj = "";
-            this.Row.SetValByKey(key, obj);
+                return;
+
+            this.Row.SetValByKey("_"+key, obj);
         }
         #endregion
 
