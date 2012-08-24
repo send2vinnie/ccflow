@@ -596,57 +596,7 @@ namespace BP.WF
     /// </summary>
     public class Node : Entity
     {
-        #region 外键属性
-      
-        
-        protected override void InitRefObjects()
-        {
-            this.SetRefObject("Flow", new Flow(this.FK_Flow));
-            this.SetRefObject("FrmNodes", new FrmNodes(this.NodeID));
-            this.SetRefObject("MapData", new MapData("ND" + this.NodeID));
-            this.SetRefObject("NodeDepts", new NodeDepts(this.NodeID));
-            this.SetRefObject("NodeStations", new NodeStations(this.NodeID));
-            this.SetRefObject("NodeEmps", new NodeEmps(this.NodeID));
-
-            this.SetRefObject("BillTemplates", new BillTemplates(this.NodeID));
-
-            // 根据方向生成到达此节点的节点。
-            Directions ens = new Directions();
-            if (this.IsStartNode)
-                this.SetRefObject("HisFromNodes", new Nodes());
-            else
-                this.SetRefObject("HisFromNodes", ens.GetHisFromNodes(this.NodeID));
-
-            // 它的到达节点.
-            this.SetRefObject("HisToNodes", ens.GetHisToNodes(this.NodeID,false) );
-
-          
-
-            #region 它的工作.
-            Work _Work = null;
-            if (this.IsStartNode)
-            {
-                _Work = new BP.WF.GEStartWork(this.NodeID);
-                _Work.HisNode = this;
-                _Work.NodeID = this.NodeID;
-                this.SetRefObject("HisWork", _Work);
-            }
-            else
-            {
-                _Work = new BP.WF.GEWork(this.NodeID);
-                _Work.HisNode = this;
-                _Work.NodeID = this.NodeID;
-                this.SetRefObject("HisWork", _Work);
-            }
-
-            this.SetRefObject("HisWorks", _Work.GetNewEntities);
-            #endregion 它的工作.
-
-            base.InitRefObjects();
-        }
-        #region 转换的工作
-
-        #region 节点的方向 (from nodes AND to nodes , 注意判断节点的生命周期的问题)
+        #region 外键属性.
         /// <summary>
         /// 他的将要转向的方向集合
         /// 如果他没有到转向方向,他就是结束节点.
@@ -656,27 +606,16 @@ namespace BP.WF
         {
             get
             {
-                return this.GetRefObject("HisToNodes") as Nodes;
+                Nodes obj = this.GetRefObject("HisToNodes") as Nodes;
+                if (obj == null)
+                {
+                    obj = new Nodes();
+                    obj.AddEntities(this.HisToNDs);
+                    this.SetRefObject("HisToNodes", obj);
+                }
+                return obj;
             }
         }
-        #endregion
-
-        #region 条件
-        private Conds _HisFlowCompleteConditions = null;
-        /// <summary>
-        /// 他的完成任务的条件,此节点是完成任务的条件集合
-        /// 条件与条件之间是or 的关系, 就是说,如果任何一个条件满足,这个任务就完成了.
-        /// </summary>
-        public Conds HisFlowCompleteConditions_del
-        {
-            get
-            {
-                if (this._HisFlowCompleteConditions == null)
-                    _HisFlowCompleteConditions = new Conds(CondType.Flow, this.NodeID, this.HisWork.OID);
-                return _HisFlowCompleteConditions;
-            }
-        }
-        #endregion
         /// <summary>
         /// 他的工作
         /// </summary>
@@ -684,7 +623,25 @@ namespace BP.WF
         {
             get
             {
-                return this.GetRefObject("HisWork") as Work;
+                Work obj = this.GetRefObject("HisWork") as Work;
+                if (obj == null)
+                {
+                    if (this.IsStartNode)
+                    {
+                        obj = new BP.WF.GEStartWork(this.NodeID);
+                        obj.HisNode = this;
+                        obj.NodeID = this.NodeID;
+                        this.SetRefObject("HisWork", obj);
+                    }
+                    else
+                    {
+                        obj = new BP.WF.GEWork(this.NodeID);
+                        obj.HisNode = this;
+                        obj.NodeID = this.NodeID;
+                        this.SetRefObject("HisWork", obj);
+                    }
+                }
+                return obj;
             }
         }
         /// <summary>
@@ -694,10 +651,15 @@ namespace BP.WF
         {
             get
             {
-                return this.GetRefObject("HisWorks") as Works;
+                Works obj = this.GetRefObject("HisWorks") as Works;
+                if (obj == null)
+                {
+                    obj = this.HisWork.GetNewEntities as Works;
+                    this.SetRefObject("HisWorks",obj);
+                }
+                return obj;
             }
         }
-        #endregion
 
         /// <summary>
         /// 流程
@@ -706,10 +668,15 @@ namespace BP.WF
         {
             get
             {
-                return this.GetRefObject("Flow") as Flow;
+                Flow  obj =this.GetRefObject("Flow") as Flow;
+                if (obj == null)
+                {
+                    obj=new Flow(this.FK_Flow);
+                    this.SetRefObject("Flow", obj);
+                }
+                return obj;
             }
         }
-        private Frms  _HisFrms = null;
         /// <summary>
         /// HisFrms
         /// </summary>
@@ -717,20 +684,17 @@ namespace BP.WF
         {
             get
             {
-                if (_HisFrms == null)
+                Frms obj = this.GetRefObject("HisFrms") as Frms;
+                if (obj == null)
                 {
-                    #region 它的 HisFrms
-                    _HisFrms = new Frms();
+                    obj = new Frms();
                     FrmNodes fns = new FrmNodes(this.NodeID);
                     foreach (FrmNode fn in fns)
-                        _HisFrms.AddEntity(fn.HisFrm);
-                    //  this.SetRefObject("HisFrms", _HisFrms);
-                    #endregion 它的 HisFrms
+                        obj.AddEntity(fn.HisFrm);
+
+                    this.SetRefObject("HisFrms", obj);
                 }
-
-                return _HisFrms;
-
-             //   return this.GetRefObject("HisFrms") as Frms;
+                return obj;
             }
         }
         /// <summary>
@@ -741,49 +705,96 @@ namespace BP.WF
         {
             get
             {
-                return this.GetRefObject("HisFromNodes") as Nodes;
+                Nodes obj = this.GetRefObject("HisFromNodes") as Nodes;
+                if (obj == null)
+                {
+                    // 根据方向生成到达此节点的节点。
+                    Directions ens = new Directions();
+                    if (this.IsStartNode)
+                        obj = new Nodes();
+                    else
+                        obj = ens.GetHisFromNodes(this.NodeID);
+                    this.SetRefObject("HisFromNodes", obj);
+                }
+                return obj;
             }
         }
         public BillTemplates BillTemplates
         {
             get
             {
-                return this.GetRefObject("BillTemplates") as BillTemplates;
+                BillTemplates obj= this.GetRefObject("BillTemplates") as BillTemplates;
+                if (obj == null)
+                {
+                    obj = new BillTemplates(this.NodeID);
+                    this.SetRefObject("BillTemplates", obj);
+                }
+                return obj;
             }
         }
         public NodeStations NodeStations
         {
             get
             {
-                return this.GetRefObject("NodeStations") as NodeStations;
+                NodeStations obj = this.GetRefObject("NodeStations") as NodeStations;
+                if (obj == null)
+                {
+                    obj = new NodeStations(this.NodeID);
+                    this.SetRefObject("NodeStations", obj);
+                }
+                return obj;
             }
         }
         public NodeDepts NodeDepts
         {
             get
             {
-                return this.GetRefObject("NodeDepts") as NodeDepts;
+                NodeDepts obj = this.GetRefObject("NodeDepts") as NodeDepts;
+                if (obj == null)
+                {
+                    obj = new NodeDepts(this.NodeID);
+                    this.SetRefObject("NodeDepts", obj);
+                }
+                return obj;
             }
         }
         public NodeEmps NodeEmps
         {
             get
             {
-                return this.GetRefObject("NodeEmps") as NodeEmps;
+                NodeEmps obj = this.GetRefObject("NodeEmps") as NodeEmps;
+                if (obj == null)
+                {
+                    obj = new NodeEmps(this.NodeID);
+                    this.SetRefObject("NodeEmps", obj);
+                }
+                return obj;
             }
         }
         public FrmNodes FrmNodes
         {
             get
             {
-                return this.GetRefObject("FrmNodes") as FrmNodes;
+                FrmNodes obj = this.GetRefObject("FrmNodes") as FrmNodes;
+                if (obj == null)
+                {
+                    obj = new FrmNodes(this.NodeID);
+                    this.SetRefObject("FrmNodes", obj);
+                }
+                return obj;
             }
         }
         public MapData MapData
         {
             get
             {
-                return  this.GetRefObject("MapData") as MapData;
+                MapData obj = this.GetRefObject("MapData") as MapData;
+                if (obj == null)
+                {
+                    obj = new MapData("ND"+this.NodeID);
+                    this.SetRefObject("MapData", obj);
+                }
+                return obj;
             }
         }
         #endregion
@@ -1178,8 +1189,6 @@ namespace BP.WF
             return base.beforeUpdate();
         }
         #endregion
-
-    
 
         #region 基本属性
         /// <summary>
@@ -2180,8 +2189,6 @@ namespace BP.WF
             }
         }
         #endregion
-
-       
 
         #region 公共方法 (用户执行动作之后,所要做的工作)
         /// <summary>
