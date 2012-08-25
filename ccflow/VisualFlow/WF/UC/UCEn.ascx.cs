@@ -43,6 +43,7 @@ namespace BP.Web.Comm.UC.WF
 
         public void BindColumn2(Entity en, string enName)
         {
+            this.ctrlUseSta = "";
             this.EnName = enName;
             this.HisEn = en;
             this.mapData = new MapData(enName);
@@ -667,8 +668,10 @@ namespace BP.Web.Comm.UC.WF
                 }
             }
         }
+        public string ctrlUseSta = "";
         public void BindColumn4(Entity en, string enName)
         {
+            this.ctrlUseSta = "";
             this.EnName = enName;
             this.HisEn = en;
             this.mapData = new MapData(enName);
@@ -1369,8 +1372,10 @@ namespace BP.Web.Comm.UC.WF
             #region 明细表
             foreach (MapDtl dtl in dtls)
             {
-                if (dtl.IsView == false || dtl.IsUse)
+                if (dtl.IsView == false || this.ctrlUseSta.Contains(dtl.No) )
                     continue;
+
+
 
                 if (dtl.GroupID == 0)
                 {
@@ -1394,7 +1399,10 @@ namespace BP.Web.Comm.UC.WF
                     continue;
                 }
 
-                dtl.IsUse = true;
+               // dtl.IsUse = true;
+
+                this.ctrlUseSta += dtl.No;
+
                 rowIdx++;
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
@@ -1422,7 +1430,7 @@ namespace BP.Web.Comm.UC.WF
             #region 多对多的关系
             foreach (MapM2M m2m in m2ms)
             {
-                if (m2m.IsUse)
+                if (this.ctrlUseSta.Contains("@"+m2m.MyPK))
                     continue;
 
                 if (isJudgeRowIdx)
@@ -1445,7 +1453,10 @@ namespace BP.Web.Comm.UC.WF
                 {
                     continue;
                 }
-                m2m.IsUse = true;
+
+                this.ctrlUseSta += "@"+m2m.MyPK;
+
+
                 rowIdx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
 
@@ -1491,7 +1502,7 @@ namespace BP.Web.Comm.UC.WF
             #region 框架
             foreach (MapFrame fram in frames)
             {
-                if (fram.IsUse)
+                if ( this.ctrlUseSta.Contains( "@"+fram.MyPK) )
                     continue;
 
                 if (isJudgeRowIdx)
@@ -1508,13 +1519,13 @@ namespace BP.Web.Comm.UC.WF
                 }
                 else if (fram.GroupID == currGF.OID)
                 {
-
                 }
                 else
                 {
                     continue;
                 }
-                fram.IsUse = true;
+
+                this.ctrlUseSta += "@" + fram.MyPK;
                 rowIdx++;
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
@@ -1553,7 +1564,7 @@ namespace BP.Web.Comm.UC.WF
             #region 附件
             foreach (FrmAttachment ath in aths)
             {
-                if (ath.IsUse)
+                if (this.ctrlUseSta.Contains( "@"+ath.MyPK) )
                     continue;
                 if (isJudgeRowIdx)
                 {
@@ -1574,7 +1585,7 @@ namespace BP.Web.Comm.UC.WF
                 {
                     continue;
                 }
-                ath.IsUse = true;
+                this.ctrlUseSta += "@" + ath.MyPK;
                 rowIdx++;
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
@@ -1628,6 +1639,8 @@ namespace BP.Web.Comm.UC.WF
         }
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
+            this.ctrlUseSta = "";
+
             this.EnName = enName;
             this.mapData = new MapData(enName);
             string appPath = this.Request.ApplicationPath;
