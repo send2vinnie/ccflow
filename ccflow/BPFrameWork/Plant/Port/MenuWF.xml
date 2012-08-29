@@ -1,9 +1,0 @@
-<?xml version="1.0" standalone="yes" ?>
-<NewDataSet>
-    <!-- 流程系统模块  -->
-    <Item No="01" Name="流程发起"  Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-    <Item No="02" Name="待办工作"  Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-    <Item No="03" Name="在途工作"  Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-    <Item No="04" Name="流程查询"  Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-    <Item No="05" Name="工作日历"  Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-</NewDataSet>

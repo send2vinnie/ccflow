@@ -1,8 +1,0 @@
-<?xml version="1.0" standalone="yes" ?>
-<NewDataSet>
-    <!-- 信息发布  -->
-    <Item No="CCOA"    Name="办公在线"  Url="\CCOA\Menu.xml"       IsEnable="1"  Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-    <Item No="DevDemo" Name="开发演示"  Url="\DevDemo\Menu.xml"    IsEnable="1"  Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-    <Item No="WF"      Name="工作流"    Url="\Port\MenuWF.xml"     IsEnable="1"  Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-    <Item No="System"  Name="系统管理"  Url="\Port\MenuSystem.xml" IsEnable="1"  Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-</NewDataSet>
