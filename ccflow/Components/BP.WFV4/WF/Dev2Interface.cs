@@ -550,6 +550,16 @@ namespace BP.WF
 
         #region 与流程有关的接口
         /// <summary>
+        /// 产生一个新的工作ID
+        /// </summary>
+        /// <param name="flowNo"></param>
+        /// <returns></returns>
+        public static Int64 Flow_GenerWorkID(string flowNo)
+        {
+            Flow fl = new Flow(flowNo);
+            return fl.NewWork().OID;
+        }
+        /// <summary>
         /// 是否可以发起改流程?
         /// </summary>
         /// <param name="flowNo"></param>
