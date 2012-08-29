@@ -560,6 +560,16 @@ namespace BP.WF
             return fl.NewWork().OID;
         }
         /// <summary>
+        /// 产生一个新的工作
+        /// </summary>
+        /// <param name="flowNo"></param>
+        /// <returns></returns>
+        public static Work Flow_GenerWork(string flowNo)
+        {
+            Flow fl = new Flow(flowNo);
+            return fl.NewWork();
+        }
+        /// <summary>
         /// 是否可以发起改流程?
         /// </summary>
         /// <param name="flowNo"></param>
