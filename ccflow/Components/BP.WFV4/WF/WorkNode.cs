@@ -3150,9 +3150,10 @@ namespace BP.WF
             #endregion
 
             #region 生成单据
-            BillTemplates reffunc = this.HisNode.BillTemplates;
-            if (reffunc.Count > 0)
+            if (this.HisNode.BillTemplates.Count > 0)
             {
+                BillTemplates reffunc = this.HisNode.BillTemplates;
+
                 #region 生成单据信息
                 Int64 workid = this.HisWork.OID;
                 int nodeId = this.HisNode.NodeID;
@@ -3160,7 +3161,7 @@ namespace BP.WF
                 #endregion
 
                 DateTime dt = DateTime.Now;
-                Flow fl = new Flow(this.HisNode.FK_Flow);
+                Flow fl = this.HisNode.HisFlow;
                 string year = dt.Year.ToString();
                 string billInfo = "";
                 foreach (BillTemplate func in reffunc)
@@ -3178,13 +3179,7 @@ namespace BP.WF
                         rtf.EnsDataDtls.Clear();
                         if (func.NodeID == 0)
                         {
-                            // 判断是否是受理回执
-                            //if (fl.DateLit == 0)
-                            //    continue;
-                            //HisCHOfFlow.DateLitFrom = DateTime.Now.AddDays(fl.DateLit).ToString(DataType.SysDataFormat);
-                            //HisCHOfFlow.DateLitTo = DateTime.Now.AddDays(fl.DateLit + 10).ToString(DataType.SysDataFormat);
-                            //HisCHOfFlow.Update();
-                            //   rtf.AddEn(HisCHOfFlow);
+                            
                         }
                         else
                         {
@@ -3207,8 +3202,6 @@ namespace BP.WF
                                 foreach (Entities ens in al)
                                     rtf.AddDtlEns(ens);
                             }
-                            //    w = new BP.Port.WordNo(WebUser.FK_DeptOfXJ);
-                            // rtf.AddEn(w);
                         }
 
                         paths = file.Split('_');
@@ -3226,9 +3219,7 @@ namespace BP.WF
                             billInfo += "<img src='" + this.VirPath + "/Images/FileType/doc.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
                         }
 
-                        //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;
                         path = BP.WF.Glo.FlowFileBill + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
-
                         if (System.IO.Directory.Exists(path) == false)
                             System.IO.Directory.CreateDirectory(path);
 
@@ -3241,7 +3232,6 @@ namespace BP.WF
                         {
                             string rtfPath = path + file;
                             string pdfPath = rtfPath.Replace(".doc", ".pdf");
-                            //  string pdfPath = path + func.Url + ".pdf";
                             try
                             {
                                 Glo.Rtf2PDF(rtfPath, pdfPath);
@@ -3259,7 +3249,6 @@ namespace BP.WF
                         bill.FID = this.HisWork.FID;
                         bill.WorkID = this.HisWork.OID;
                         bill.FK_Node = this.HisNode.NodeID;
-                        //  bill.FK_Bill = func.No;
                         bill.FK_Dept = WebUser.FK_Dept;
                         bill.FK_Emp = WebUser.No;
                         bill.Url = billUrl;
@@ -3288,7 +3277,6 @@ namespace BP.WF
                     {
                         BP.WF.DTS.InitBillDir dir = new BP.WF.DTS.InitBillDir();
                         dir.Do();
-
                         path = BP.WF.Glo.FlowFileBill + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
                         string msgErr = "@" + this.ToE("WN5", "生成单据失败，请让管理员检查目录设置") + "[" + BP.WF.Glo.FlowFileBill + "]。@Err：" + ex.Message + " @File=" + file + " @Path:" + path;
                         billInfo += "@<font color=red>" + msgErr + "</font>";
@@ -3314,16 +3302,14 @@ namespace BP.WF
             if (this.HisNode.HisCCRole == CCRole.AutoCC || this.HisNode.HisCCRole == CCRole.HandAndAuto)
             {
                 /*如果是自动抄送*/
-                CC cc = new CC();
-                cc.NodeID = this.HisNode.NodeID;
-                cc.Retrieve();
+                CC cc = this.HisNode.HisCC;
+
                 string ccTitle = cc.CCTitle.Clone() as string;
                 ccTitle = ccTitle.Replace("@WebUser.No", WebUser.No);
                 ccTitle = ccTitle.Replace("@WebUser.Name", WebUser.Name);
                 ccTitle = ccTitle.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                 ccTitle = ccTitle.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
                 ccTitle = ccTitle.Replace("@RDT", DataType.CurrentData);
-
 
                 string ccDoc = cc.CCDoc.Clone() as string;
                 ccDoc = ccDoc.Replace("@WebUser.No", WebUser.No);

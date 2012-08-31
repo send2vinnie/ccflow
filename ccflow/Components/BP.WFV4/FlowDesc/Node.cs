@@ -597,6 +597,21 @@ namespace BP.WF
     public class Node : Entity
     {
         #region 外键属性.
+        public CC HisCC
+        {
+            get
+            {
+                CC obj = this.GetRefObject("HisCC") as CC;
+                if (obj == null)
+                {
+                    obj = new CC();
+                    obj.NodeID = this.NodeID;
+                    obj.Retrieve();
+                    this.SetRefObject("HisCC", obj);
+                }
+                return obj;
+            }
+        }
         /// <summary>
         /// 他的将要转向的方向集合
         /// 如果他没有到转向方向,他就是结束节点.

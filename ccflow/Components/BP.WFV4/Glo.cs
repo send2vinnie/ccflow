@@ -39,15 +39,18 @@ namespace BP.WF
                     case StartWorkAttr.Emps:
                     case StartWorkAttr.FK_Dept:
                     case StartWorkAttr.PRI:
+                    case StartWorkAttr.WFState:
+                    case StartWorkAttr.NodeState:
+                    case StartWorkAttr.FID:
                         continue;
                     default:
                         break;
                 }
 
                 string obj = attr.DefaultVal as string;
-                if (obj == null)
-                    continue;
-                if (obj.Contains("@"))
+                //if (obj == null)
+                //    continue;
+                if (obj!=null && obj.Contains("@"))
                     continue;
 
                 s += wk.GetValStrByKey(attr.Key);
@@ -57,7 +60,6 @@ namespace BP.WF
 
             //MD5 md5 = new MD5CryptoServiceProvider();'
             //return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5").ToLower().Substring(8, 16);
-
             //byte[] result = md5.ComputeHash(System.Text.Encoding.Default.GetBytes(s));
             //string mys= System.Text.Encoding.Default.GetString(result);
             //return mys;

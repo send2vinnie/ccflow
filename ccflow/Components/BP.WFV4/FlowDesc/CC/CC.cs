@@ -223,7 +223,6 @@ namespace BP.WF
 
                 map.AddSearchAttr(CCAttr.CCCtrlWay);
 
-
                 // 相关功能。
                 map.AttrsOfOneVSM.Add(new BP.WF.CCStations(), new BP.WF.Port.Stations(),
                     NodeStationAttr.FK_Node, NodeStationAttr.FK_Station,
