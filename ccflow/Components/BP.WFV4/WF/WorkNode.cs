@@ -4135,9 +4135,9 @@ namespace BP.WF
 
             #region 复制报表上面的数据到合流点上去。
             ps = new Paras();
-            ps.SQL = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID=" + this.HisWork.FID;
+            ps.SQL = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID="+dbStr+"OID";
             ps.Add("OID", this.HisWork.FID);
-            DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID=" + dbStr+"OID" );
+            DataTable dt = DBAccess.RunSQLReturnTable(ps);
             foreach (DataColumn dc in dt.Columns)
                 mainWK.SetValByKey(dc.ColumnName, dt.Rows[0][dc.ColumnName]);
 
@@ -4438,7 +4438,8 @@ namespace BP.WF
                 mainWK.Delete();
 
             // 复制报表上面的数据到合流点上去。
-            DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID="+dbStr+"OID","OID",this.HisWork.FID );
+            DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID="+dbStr+"OID",
+                "OID",this.HisWork.FID );
             foreach (DataColumn dc in dt.Columns)
                 mainWK.SetValByKey(dc.ColumnName, dt.Rows[0][dc.ColumnName]);
 
