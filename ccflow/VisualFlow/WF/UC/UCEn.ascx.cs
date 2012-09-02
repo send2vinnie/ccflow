@@ -1959,13 +1959,22 @@ namespace BP.Web.Comm.UC.WF
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker();";
 
-                                tb.Attributes["class"] = "TBcalendar";
+                                if (attr.UIIsEnable)
+                                     tb.Attributes["class"] = "TB";
+                                else
+                                     tb.Attributes["class"] = "TBReadonly";
+
                                 tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppDateTime:
                                 tb.ShowType = TBType.DateTime;
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["class"] = "TBcalendar";
+                                else
+                                    tb.Attributes["class"] = "TBReadonly";
 
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
@@ -1992,15 +2001,30 @@ namespace BP.Web.Comm.UC.WF
                                 // tb.ShowType = TBType.Num;
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;word-break: keep-all;";
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["class"] = "TBNum";
+                                else
+                                    tb.Attributes["class"] = "TBReadonly";
+
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppMoney:
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["class"] = "TBNum";
+                                else
+                                    tb.Attributes["class"] = "TBReadonly";
+
                                 //  tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppRate:
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["class"] = "TBNum";
+                                else
+                                    tb.Attributes["class"] = "TBReadonly";
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";

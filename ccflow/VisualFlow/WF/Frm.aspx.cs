@@ -117,8 +117,6 @@ public partial class WF_Frm : WebPage
             }
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
 
-        
-
 
             this.AddJSEvent(dtlEn);
         }
@@ -159,17 +157,17 @@ public partial class WF_Frm : WebPage
                 en.SetValByKey("OID", this.OID);
             }
 
+            this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             //FrmNode fm=new FrmNode(
-
-            if (md.HisFrmType == FrmType.FreeFrm)
-            {
-                this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
-            }
-            else
-            {
-                this.UCEn1.IsReadonly = !this.IsEdit;
-                this.UCEn1.BindColumn4(en, this.FK_MapData);
-            }
+            //if (md.HisFrmType == FrmType.FreeFrm)
+            //{
+            //    this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
+            //}
+            //else
+            //{
+            //    this.UCEn1.IsReadonly = !this.IsEdit;
+            //    this.UCEn1.BindColumn4(en, this.FK_MapData);
+            //}
 
            // this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);
