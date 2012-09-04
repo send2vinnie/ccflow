@@ -704,35 +704,7 @@ namespace BP.WF
         public virtual string BeforeSave()
         {
             this.AutoFull(); /*处理自动计算。*/
-            //// 检查日期
-            //Attrs attrs = this.EnMap.Attrs;
-            //foreach (Attr attr in attrs)
-            //{
-            //    if (attr.MyDataType == DataType.AppDate)
-            //    {
-            //        try
-            //        {
-            //            DateTime dt = DataType.ParseSysDate2DateTime(this.GetValStringByKey(attr.Key));
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            //   throw new Exception("@日期格式错误[" + this.GetValStringByKey(attr.Key) + "],正确的格式：yyyy-MM-dd 比如：2005-05-01");
-            //        }
-            //    }
-
-            //    if (attr.MyDataType == DataType.AppDateTime)
-            //    {
-            //        try
-            //        {
-            //            DateTime dt = DataType.ParseSysDate2DateTime(this.GetValStringByKey(attr.Key));
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            // throw new Exception("@日期时间格式错误[" + this.GetValStringByKey(attr.Key) + "],正确的格式：yyyy-MM-dd  hh:mm比如：2005-05-01 08:30");
-            //        }
-            //    }
-            //}
-
+           
             // 执行保存前的事件。
             this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SaveBefore, this);
             return "";

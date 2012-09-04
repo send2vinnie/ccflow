@@ -4149,44 +4149,50 @@ namespace BP.WF
             #endregion 复制报表上面的数据到合流点上去。
 
             #region 复制附件。
-            FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
-                  this.WorkID.ToString());
-            if (athDBs.Count > 0)
+            if (this.HisNode.MapData.FrmAttachments.Count != 0)
             {
-                /*说明当前节点有附件数据*/
-                int idx = 0;
-                foreach (FrmAttachmentDB athDB in athDBs)
+                FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
+                      this.WorkID.ToString());
+                if (athDBs.Count > 0)
                 {
-                    idx++;
-                    FrmAttachmentDB athDB_N = new FrmAttachmentDB();
-                    athDB_N.Copy(athDB);
-                    athDB_N.FK_MapData = "ND" + nd.NodeID;
-                    athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID) + "_" + idx;
-                    athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
-                       "ND" + nd.NodeID);
-                    athDB_N.RefPKVal = this.HisWork.FID.ToString();
-                    athDB_N.Save();
+                    /*说明当前节点有附件数据*/
+                    int idx = 0;
+                    foreach (FrmAttachmentDB athDB in athDBs)
+                    {
+                        idx++;
+                        FrmAttachmentDB athDB_N = new FrmAttachmentDB();
+                        athDB_N.Copy(athDB);
+                        athDB_N.FK_MapData = "ND" + nd.NodeID;
+                        athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID) + "_" + idx;
+                        athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                           "ND" + nd.NodeID);
+                        athDB_N.RefPKVal = this.HisWork.FID.ToString();
+                        athDB_N.Save();
+                    }
                 }
             }
             #endregion 复制附件。
 
             #region 复制EleDB。
-            FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
-                  this.WorkID.ToString());
-            if (eleDBs.Count > 0)
+            if (this.HisNode.MapData.FrmEles.Count != 0)
             {
-                /*说明当前节点有附件数据*/
-                int idx = 0;
-                foreach (FrmEleDB eleDB in eleDBs)
+                FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
+                      this.WorkID.ToString());
+                if (eleDBs.Count > 0)
                 {
-                    idx++;
-                    FrmEleDB eleDB_N = new FrmEleDB();
-                    eleDB_N.Copy(eleDB);
-                    eleDB_N.FK_MapData = "ND" + nd.NodeID;
-                    eleDB_N.MyPK = eleDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                    /*说明当前节点有附件数据*/
+                    int idx = 0;
+                    foreach (FrmEleDB eleDB in eleDBs)
+                    {
+                        idx++;
+                        FrmEleDB eleDB_N = new FrmEleDB();
+                        eleDB_N.Copy(eleDB);
+                        eleDB_N.FK_MapData = "ND" + nd.NodeID;
+                        eleDB_N.MyPK = eleDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
 
-                    eleDB_N.RefPKVal = this.HisWork.FID.ToString();
-                    eleDB_N.Save();
+                        eleDB_N.RefPKVal = this.HisWork.FID.ToString();
+                        eleDB_N.Save();
+                    }
                 }
             }
             #endregion 复制EleDB。

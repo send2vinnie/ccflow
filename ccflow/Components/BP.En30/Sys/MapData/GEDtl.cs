@@ -169,6 +169,11 @@ namespace BP.Sys
             }
             return false;
         }
+        protected override bool beforeUpdate()
+        {
+            this.AutoFull(); /*处理自动计算。*/
+            return base.beforeUpdate();
+        }
         /// <summary>
         /// 记录人
         /// </summary>
@@ -182,7 +187,6 @@ namespace BP.Sys
             {
                 if (isC)
                     break;
-
                 switch (mattr.KeyOfEn)
                 {
                     case "Rec":
@@ -220,6 +224,8 @@ namespace BP.Sys
 
             this.Rec = BP.Web.WebUser.No;
             this.RDT = DataType.CurrentDataTime;
+
+            this.AutoFull(); /*处理自动计算。*/
             return base.beforeInsert();
         }
         #endregion

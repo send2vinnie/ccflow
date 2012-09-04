@@ -818,6 +818,9 @@ namespace BP.En
                 Attrs attrs = this.EnMap.Attrs;
                 foreach (Attr attr in attrs)
                 {
+                    if (attr.UIIsReadonly)
+                        continue;
+
                     string str = this.GetValStrByKey(attr.Key);
                     if (str == "" || str == attr.DefaultVal.ToString() || str == null)
                         continue;
@@ -833,6 +836,14 @@ namespace BP.En
                         continue;
                     }
 
+                    if (attr.IsNum)
+                    {
+                        if (decimal.Parse(str) != decimal.Parse(attr.DefaultVal.ToString()))
+                            return false;
+                        else
+                            continue;
+                    }
+
                     if (attr.IsFKorEnum)
                     {
                         //if (attr.DefaultVal == null || attr.DefaultVal == "")
@@ -844,7 +855,7 @@ namespace BP.En
                             continue;
                     }
 
-                    if (str != attr.DefaultVal.ToString())
+                    if (str != attr.DefaultVal.ToString() )
                         return false;
                 }
                 return true;
