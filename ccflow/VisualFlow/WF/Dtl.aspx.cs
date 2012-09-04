@@ -924,10 +924,8 @@ public partial class Comm_Dtl : WebPage
 
                     if (attr.LGType != FieldTypeS.Normal)
                         continue;
-                    if (attr.AutoFullDoc != "")
-                    {
+                    if (attr.HisAutoFull== AutoFullWay.Way1_JS &&  attr.AutoFullDoc != "")
                         script += this.GenerAutoFull(dtl.OID.ToString(), attrs, attr);
-                    }
                 }
                 string end = " \n  } ";
                 this.Response.Write(top + script + end);

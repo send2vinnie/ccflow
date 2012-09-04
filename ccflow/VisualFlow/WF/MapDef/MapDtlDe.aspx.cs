@@ -563,7 +563,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                 if (attr.LGType != FieldTypeS.Normal)
                     continue;
 
-                if (attr.AutoFullDoc != "")
+                if ( attr.HisAutoFull== AutoFullWay.Way1_JS && attr.AutoFullDoc != "")
                 {
                     script += this.GenerAutoFull(i.ToString(), attrs, attr);
                 }
