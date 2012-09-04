@@ -1,4 +1,4 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <WF_Flow>
     <No>008</No>
@@ -1045,7 +1045,7 @@
   </WF_Direction>
   <WF_LabNote>
     <MyPK>008_239_62_1</MyPK>
-    <Name>异步分合流的另外一种形式，子线程中有多个节点。</Name>
+    <Name>异表单分合流的另外一种形式，子线程中有多个节点。</Name>
     <FK_Flow>008</FK_Flow>
     <X>239</X>
     <Y>62</Y>

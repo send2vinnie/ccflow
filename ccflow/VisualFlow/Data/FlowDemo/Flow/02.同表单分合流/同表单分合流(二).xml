@@ -1,9 +1,9 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <WF_Flow>
     <No>006</No>
     <FK_FlowSort>02</FK_FlowSort>
-    <Name>同步分合流(二)</Name>
+    <Name>同表单分合流(二)</Name>
     <IsOK>1</IsOK>
     <FlowRunWay>0</FlowRunWay>
     <RunObj />
@@ -77,7 +77,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>1</NodeWorkType>
-    <FlowName>同步分合流(二)</FlowName>
+    <FlowName>同表单分合流(二)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -164,7 +164,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>4</NodeWorkType>
-    <FlowName>同步分合流(二)</FlowName>
+    <FlowName>同表单分合流(二)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -251,7 +251,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>6</NodeWorkType>
-    <FlowName>同步分合流(二)</FlowName>
+    <FlowName>同表单分合流(二)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -338,7 +338,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>3</NodeWorkType>
-    <FlowName>同步分合流(二)</FlowName>
+    <FlowName>同表单分合流(二)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -425,7 +425,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>同步分合流(二)</FlowName>
+    <FlowName>同表单分合流(二)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -921,7 +921,7 @@
   </Sys_MapData>
   <Sys_MapData>
     <No>ND6Rpt</No>
-    <Name>同步分合流(二)</Name>
+    <Name>同表单分合流(二)</Name>
     <EnPK />
     <SearchKeys />
     <PTable>ND6Rpt</PTable>

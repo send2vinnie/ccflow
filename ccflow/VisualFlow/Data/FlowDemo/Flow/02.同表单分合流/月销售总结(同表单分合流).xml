@@ -1,9 +1,9 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <WF_Flow>
     <No>006</No>
     <FK_FlowSort>02</FK_FlowSort>
-    <Name>月销售总结(同步分合流)</Name>
+    <Name>月销售总结(同表单分合流)</Name>
     <IsOK>1</IsOK>
     <FlowRunWay>0</FlowRunWay>
     <FlowRunObj />
@@ -77,7 +77,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>1</NodeWorkType>
-    <FlowName>月销售总结(同步分合流)</FlowName>
+    <FlowName>月销售总结(同表单分合流)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -163,7 +163,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>6</NodeWorkType>
-    <FlowName>月销售总结(同步分合流)</FlowName>
+    <FlowName>月销售总结(同表单分合流)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -249,7 +249,7 @@
     <DoOutTime />
     <FK_Flow>006</FK_Flow>
     <NodeWorkType>3</NodeWorkType>
-    <FlowName>月销售总结(同步分合流)</FlowName>
+    <FlowName>月销售总结(同表单分合流)</FlowName>
     <FK_FlowSort>01</FK_FlowSort>
     <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
@@ -504,7 +504,7 @@
   </Sys_MapData>
   <Sys_MapData>
     <No>ND6Rpt</No>
-    <Name>CopyOf月销售总结(同步分合流)_02月16日21时53分</Name>
+    <Name>CopyOf月销售总结(同表单分合流)_02月16日21时53分</Name>
     <EnPK />
     <SearchKeys />
     <PTable>ND6Rpt</PTable>
