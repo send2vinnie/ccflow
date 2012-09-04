@@ -1265,7 +1265,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     currWK = (Work)this.UCEn1.Copy(this.currWK);
                     // 设置默认值
                     MapAttrs mattrs = currND.MapData.MapAttrs;
-
                     foreach (MapAttr attr in mattrs)
                     {
                         if (attr.UIIsEnable)

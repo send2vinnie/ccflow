@@ -4,6 +4,12 @@
     <script language="JavaScript" src="../Comm/JScript.js" ></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<script>
+    if (window.opener && !window.opener.closed) {
+        window.opener.location.href = window.opener.location.href;
+        window.opener.top.leftFrame.location.href = window.opener.top.leftFrame.location.href;
+    }
+</script>
 <br>
 <table width='80%' align=center >
 <tr>
