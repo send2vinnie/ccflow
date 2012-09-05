@@ -231,6 +231,7 @@ public partial class Comm_Dtl : WebPage
         this.FK_MapData = mdtl.FK_MapData;
 
         GEEntity mainEn = null;
+
         #region 生成标题
         MapAttrs attrs = new MapAttrs(this.EnsName);
         MapAttrs attrs2 = new MapAttrs();
@@ -599,9 +600,11 @@ public partial class Comm_Dtl : WebPage
                             case FieldTypeS.FK:
                                 DDL ddl1 = new DDL();
                                 ddl1.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
+                                ddl1.Attributes["onchange"] = "isChange=true;";
+                                ddl1.Attributes["onfocus"] = "isChange=true;";
                                 if (attr.UIIsEnable)
                                 {
-                                    ddl1.Attributes["onchange"] = "isChange=true;";
+                                 //   ddl1.Attributes["onchange"] = "isChange=true;";
                                     EntitiesNoName ens = attr.HisEntitiesNoName;
                                     ens.RetrieveAll();
                                     ddl1.BindEntities(ens);
