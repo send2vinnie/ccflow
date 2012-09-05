@@ -818,7 +818,8 @@ namespace BP.En
                 Attrs attrs = this.EnMap.Attrs;
                 foreach (Attr attr in attrs)
                 {
-                    if (attr.UIIsReadonly)
+
+                    if (attr.UIIsReadonly && attr.IsFKorEnum==false)
                         continue;
 
                     string str = this.GetValStrByKey(attr.Key);
