@@ -207,11 +207,17 @@ namespace BP.WF.Ext
             {
                 if (wk.NodeState == NodeState.Init)
                     continue;
-
                 if (wk.Rec != WebUser.No)
                 {
-                    Emp emp = new Emp(wk.Rec);
-                    BP.Web.WebUser.SignInOfGener(emp);
+                    try
+                    {
+                        Emp emp = new Emp(wk.Rec);
+                        BP.Web.WebUser.SignInOfGener(emp);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
 
                 string sql = "";
