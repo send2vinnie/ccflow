@@ -86,7 +86,6 @@ namespace BP.WF.Ext
                   true, true, "FlowAppType", "@0=正常的@1=工程类(具有项目组概念)");
 
 
-
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
 
                 RefMethod rm = new RefMethod();
@@ -154,6 +153,14 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoDataManger()";
                 map.AddRefMethod(rm);
 
+                rm = new RefMethod();
+                rm.Title = "重新生成流程标题";
+                rm.Icon = "/Images/Btn/DTS.gif";
+                rm.ClassMethodName = this.ToString() + ".DoGenerTitle()";
+                rm.Warning = "您确定要根据新的规则重新产生标题吗？";
+                map.AddRefMethod(rm);
+
+
                 //rm = new RefMethod();
                 //rm.Title = "设置自动发起"; // "报表运行";
                 //rm.Icon = "/Images/Btn/View.gif";
@@ -183,6 +190,29 @@ namespace BP.WF.Ext
         #endregion
 
         #region  公共方法
+        /// <summary>
+        /// 重新产生标题，根据新的规则.
+        /// </summary>
+        public string DoGenerTitle()
+        {
+            Flow fl=new Flow(this.No);
+            Node nd = fl.HisStartNode;
+            Works wks = nd.HisWorks;
+            wks.RetrieveAllFromDBSource();
+            string table=nd.HisWork.EnMap.PhysicsTable;
+            string tableRpt ="ND"+int.Parse(this.No)+"Rpt";
+            foreach (Work wk in wks)
+            {
+                string sql="";
+                string title= WorkNode.GenerTitle(wk);
+                sql += "@UPDATE " + table + " SET Title='" + title + "' WHERE OID="+wk.OID;
+                sql += "@UPDATE " + tableRpt + " SET Title='" + title + "' WHERE OID=" + wk.OID;
+                sql += "@UPDATE WF_GenerWorkFlow SET Title='" + title + "' WHERE WorkID=" + wk.OID;
+                sql += "@UPDATE WF_GenerFH SET Title='" + title + "' WHERE FID=" + wk.OID;
+                DBAccess.RunSQLs(sql);
+            }
+            return "全部生成成功,影响数据(" + wks.Count + ")条";
+        }
         /// <summary>
         /// 流程数据管理
         /// </summary>

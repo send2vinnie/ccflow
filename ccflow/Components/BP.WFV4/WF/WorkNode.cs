@@ -2640,7 +2640,7 @@ namespace BP.WF
                         GenerWorkFlow gwf = new GenerWorkFlow();
                         gwf.FID = this.WorkID;
                         gwf.WorkID = mywk.OID;
-                        gwf.Title = this.GenerTitle(this.HisWork);
+                        gwf.Title = WorkNode.GenerTitle(this.HisWork);
 
                         gwf.WFState = 0;
                         gwf.RDT = DataType.CurrentDataTime;
@@ -2824,7 +2824,12 @@ namespace BP.WF
             }
         }
         #endregion
-        public string GenerTitle(Work wk)
+        /// <summary>
+        /// 生成标题
+        /// </summary>
+        /// <param name="wk"></param>
+        /// <returns></returns>
+        public static string GenerTitle(Work wk)
         {
             // 生成标题.
             Attr myattr = wk.EnMap.Attrs.GetAttrByKey("Title");
@@ -2841,6 +2846,7 @@ namespace BP.WF
             titleRole = titleRole.Replace("@WebUser.No", wk.Rec);
             titleRole = titleRole.Replace("@WebUser.Name", wk.RecText);
             titleRole = titleRole.Replace("@WebUser.FK_DeptName", wk.RecOfEmp.FK_DeptText);
+            titleRole = titleRole.Replace("@WebUser.FK_Dept", wk.RecOfEmp.FK_Dept);
             titleRole = titleRole.Replace("@RDT", wk.RDT);
             if (titleRole.Contains("@"))
             {
@@ -2862,7 +2868,7 @@ namespace BP.WF
             /* 产生开始工作流程记录. */
             GenerWorkFlow gwf = new GenerWorkFlow();
             gwf.WorkID = this.HisWork.OID;
-            gwf.Title = this.GenerTitle(this.HisWork);
+            gwf.Title = WorkNode.GenerTitle(this.HisWork);
             gwf.WFState = 0;
             gwf.RDT = this.HisWork.RDT;
             gwf.Rec = Web.WebUser.No;
@@ -3851,7 +3857,7 @@ namespace BP.WF
 
 #warning 需要修改成标题生成规则。
 
-                    gwf.Title = this.GenerTitle(this.HisWork);
+                    gwf.Title = WorkNode.GenerTitle(this.HisWork);
 
                     gwf.WFState = 0;
                     gwf.RDT = DataType.CurrentDataTime;

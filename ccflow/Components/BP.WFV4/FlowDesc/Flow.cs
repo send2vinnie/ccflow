@@ -2298,7 +2298,7 @@ namespace BP.WF
 
                 //ÐÞ¸´±êÌâ×Ö¶Î¡£
                 WorkNode wn = new WorkNode(startWork, this.HisStartNode);
-                rpt.Title = wn.GenerTitle(startWork);
+                rpt.Title = WorkNode.GenerTitle(startWork);
                 try
                 {
                     TimeSpan ts = endWK.RDT_DateTime - startWork.RDT_DateTime;
