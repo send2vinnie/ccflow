@@ -195,22 +195,35 @@ namespace BP.WF.Ext
         /// </summary>
         public string DoGenerTitle()
         {
-            Flow fl=new Flow(this.No);
+            if (WebUser.No != "admin")
+                return "非admin用户不能执行。";
+            Flow fl = new Flow(this.No);
             Node nd = fl.HisStartNode;
             Works wks = nd.HisWorks;
             wks.RetrieveAllFromDBSource();
-            string table=nd.HisWork.EnMap.PhysicsTable;
-            string tableRpt ="ND"+int.Parse(this.No)+"Rpt";
+            string table = nd.HisWork.EnMap.PhysicsTable;
+            string tableRpt = "ND" + int.Parse(this.No) + "Rpt";
             foreach (Work wk in wks)
             {
-                string sql="";
-                string title= WorkNode.GenerTitle(wk);
-                sql += "@UPDATE " + table + " SET Title='" + title + "' WHERE OID="+wk.OID;
+                if (wk.NodeState == NodeState.Init)
+                    continue;
+
+                if (wk.Rec != WebUser.No)
+                {
+                    Emp emp = new Emp(wk.Rec);
+                    BP.Web.WebUser.SignInOfGener(emp);
+                }
+
+                string sql = "";
+                string title = WorkNode.GenerTitle(wk);
+                sql += "@UPDATE " + table + " SET Title='" + title + "' WHERE OID=" + wk.OID;
                 sql += "@UPDATE " + tableRpt + " SET Title='" + title + "' WHERE OID=" + wk.OID;
                 sql += "@UPDATE WF_GenerWorkFlow SET Title='" + title + "' WHERE WorkID=" + wk.OID;
                 sql += "@UPDATE WF_GenerFH SET Title='" + title + "' WHERE FID=" + wk.OID;
                 DBAccess.RunSQLs(sql);
             }
+            Emp emp1 = new Emp("admin");
+            BP.Web.WebUser.SignInOfGener(emp1);
             return "全部生成成功,影响数据(" + wks.Count + ")条";
         }
         /// <summary>
