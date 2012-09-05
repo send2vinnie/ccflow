@@ -1707,6 +1707,9 @@ namespace BP.WF
             if (this.HisFlow.IsMD5)
                 this.HisWork.SetValByKey("MD5", Glo.GenerMD5(this.HisWork));
 
+            if (this.HisNode.IsStartNode)
+                this.HisWork.SetValByKey(StartWorkAttr.Title, this.HisGenerWorkFlow.Title);
+
             this.HisWork.DirectUpdate();
 
             // 清除其他的工作者.
@@ -2856,8 +2859,8 @@ namespace BP.WF
                     if (titleRole.Contains("@") == false)
                         break;
 
-                    //if (attr.IsFKorEnum)
-                    //    continue;
+                    if (attr.IsFKorEnum)
+                        continue;
                     titleRole = titleRole.Replace("@" + attr.Key, wk.GetValStrByKey(attr.Key));
                 }
             }
@@ -2873,6 +2876,7 @@ namespace BP.WF
             GenerWorkFlow gwf = new GenerWorkFlow();
             gwf.WorkID = this.HisWork.OID;
             gwf.Title = WorkNode.GenerTitle(this.HisWork);
+            this.HisWork.SetValByKey("Title", gwf.Title);
             gwf.WFState = 0;
             gwf.RDT = this.HisWork.RDT;
             gwf.Rec = Web.WebUser.No;
