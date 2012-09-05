@@ -14,7 +14,7 @@ namespace BP.DA
     {
         static Cash()
         {
-            if (!SystemConfig.IsBSsystem)
+            if (SystemConfig.IsBSsystem==false)
             {
                 CS_Cash = new Hashtable();
             }
@@ -391,9 +391,7 @@ namespace BP.DA
         }
         #endregion
 
-
         #region 取出对象
-
         /// <summary>
         /// 从 Cash 里面取出对象.
         /// </summary>
@@ -617,7 +615,7 @@ namespace BP.DA
         #endregion
     }
 
-    public class Cash1
+    public class CashEntity
     {
         #region SQL cash
         private static Hashtable _Cash;
@@ -632,27 +630,39 @@ namespace BP.DA
         }
         #endregion
 
+        /// <summary>
+        /// 设置对象.
+        /// </summary>
+        /// <param name="cashKey"></param>
+        /// <param name="key"></param>
+        /// <param name="o"></param>
+        /// <param name="maxNum"></param>
         public static void Set(string cashKey, string key, object o, int maxNum)
         {
-            Hashtable ht = Cash1.DCash[cashKey] as Hashtable;
+            Hashtable ht = CashEntity.DCash[cashKey] as Hashtable;
             if (ht == null)
             {
                 ht = new Hashtable();
-                Cash1.DCash[cashKey] = ht;
+                CashEntity.DCash[cashKey] = ht;
             }
             ht[key] = o;
         }
+        /// <summary>
+        /// 获取对象
+        /// </summary>
+        /// <param name="cashKey"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static object Get(string cashKey, string key)
         {
-            Hashtable ht = Cash1.DCash[cashKey] as Hashtable;
+            Hashtable ht = CashEntity.DCash[cashKey] as Hashtable;
             if (ht == null)
                 return null;
-
             return ht[key];
         }
         public static void Remove(string cashKey, string key)
         {
-            Hashtable ht = Cash1.DCash[cashKey] as Hashtable;
+            Hashtable ht = CashEntity.DCash[cashKey] as Hashtable;
             if (ht == null)
             {
                 Log.DefaultLogWriteLineWarning("不应该出现。");

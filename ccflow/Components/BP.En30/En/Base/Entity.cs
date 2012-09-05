@@ -761,7 +761,7 @@ namespace BP.En
             // 判断缓存是否存在
             if (this.CashKey != null)
             {
-                object obj = Cash1.Get(this.CashKey, this.PKVal.ToString());
+                object obj = CashEntity.Get(this.CashKey, this.PKVal.ToString());
                 if (obj != null)
                 {
                     Entity en = obj as Entity;
@@ -808,7 +808,7 @@ namespace BP.En
                 }
 
                 if (this.CashKey != null)
-                    Cash1.Set(this.CashKey, this.PKVal.ToString(), this, 0);
+                    CashEntity.Set(this.CashKey, this.PKVal.ToString(), this, 0);
                 return i;
             }
 
@@ -1111,7 +1111,7 @@ namespace BP.En
             {
                 i = EnDA.Delete(this);
                 if (this.CashKey != null)
-                    Cash1.Remove(this.CashKey, this.PKVal.ToString());
+                    CashEntity.Remove(this.CashKey, this.PKVal.ToString());
             }
             catch (Exception ex)
             {
@@ -1365,10 +1365,8 @@ namespace BP.En
             this.DirectInsert();
 
             if (this.CashKey != null)
-                Cash1.Set(this.CashKey, this.PKVal.ToString(), this, 0);
+                CashEntity.Set(this.CashKey, this.PKVal.ToString(), this, 0);
 
-            //EnDA.Insert(this);
-            //this.Retrieve();
             this.afterInsert();
             this.afterInsertUpdateAction();
         }
@@ -1672,7 +1670,7 @@ namespace BP.En
                 str = "@更新之后出现错误";
 
                 if (this.CashKey != null)
-                    Cash1.Set(this.CashKey, this.PKVal.ToString(), this, 0);
+                    CashEntity.Set(this.CashKey, this.PKVal.ToString(), this, 0);
 
                 // 开始更新内存数据。
                 switch (this.EnMap.DepositaryOfEntity)
@@ -2963,6 +2961,12 @@ namespace BP.En
         public virtual int RetrieveAllFromDBSource()
         {
             QueryObject qo = new QueryObject(this);
+            return qo.DoQuery();
+        }
+        public virtual int RetrieveAllFromDBSource(string orderByAttr)
+        {
+            QueryObject qo = new QueryObject(this);
+            qo.addOrderBy(orderByAttr);
             return qo.DoQuery();
         }
 

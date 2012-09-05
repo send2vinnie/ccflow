@@ -2859,7 +2859,9 @@ namespace BP.WF
                     titleRole = titleRole.Replace("@" + attr.Key, wk.GetValStrByKey(attr.Key));
                 }
             }
-            wk.SetValByKey("Title", titleRole);
+            titleRole = titleRole.Replace('~', '-');
+            titleRole = titleRole.Replace("'", "¡±");
+            wk.SetValByKey("Title",titleRole);
             return titleRole;
         }
         public GEEntity rptGe = null;

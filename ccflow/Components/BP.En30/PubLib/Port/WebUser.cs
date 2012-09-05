@@ -664,6 +664,8 @@ namespace BP.Web
                     if (IsBSMode == false)
                         return "admin";
 
+                  //  System.Web.HttpContext.Current.
+
                     string key = "CCS";
                     HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies[key];
                     if (hc == null)

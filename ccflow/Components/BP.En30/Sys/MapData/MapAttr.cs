@@ -164,9 +164,7 @@ namespace BP.Sys
                 attr.MaxLength = this.MaxLen;
                 attr.MinLength = this.MinLen;
                 attr.UIBindKey = this.UIBindKey;
-
                 attr.UIIsLine = this.UIIsLine;
-
                 attr.UIHeight = 0;
                 if (this.MaxLen > 3000)
                     attr.UIHeight = 10;

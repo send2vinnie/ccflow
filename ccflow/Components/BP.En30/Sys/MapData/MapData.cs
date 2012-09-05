@@ -680,10 +680,8 @@ namespace BP.Sys
             }
 
             Map map = new Map(this.PTable);
-
             DBUrl u = new DBUrl(this.HisDBUrl);
             map.EnDBUrl = u;
-
             map.EnDesc = this.Name;
             map.EnType = EnType.App;
             map.DepositaryOfEntity = Depositary.None;
@@ -717,7 +715,7 @@ namespace BP.Sys
             }
 
             // 产生明细表。
-            MapDtls dtls = new MapDtls(this.No);
+            MapDtls dtls = this.MapDtls; // new MapDtls(this.No);
             foreach (MapDtl dtl in dtls)
             {
                 BP.Sys.GEDtls dtls1 = new GEDtls(dtl.No);
@@ -747,7 +745,6 @@ namespace BP.Sys
                 MapData md = new MapData();
                 md.No = no;
                 md.Retrieve();
-
                 return md.GenerHisMap();
             }
             else

@@ -200,7 +200,7 @@ namespace BP.WF.Ext
             Flow fl = new Flow(this.No);
             Node nd = fl.HisStartNode;
             Works wks = nd.HisWorks;
-            wks.RetrieveAllFromDBSource();
+            wks.RetrieveAllFromDBSource(WorkAttr.Rec);
             string table = nd.HisWork.EnMap.PhysicsTable;
             string tableRpt = "ND" + int.Parse(this.No) + "Rpt";
             foreach (Work wk in wks)
@@ -209,6 +209,7 @@ namespace BP.WF.Ext
                     continue;
                 if (wk.Rec != WebUser.No)
                 {
+                    BP.Web.WebUser.Exit();
                     try
                     {
                         Emp emp = new Emp(wk.Rec);
@@ -219,13 +220,21 @@ namespace BP.WF.Ext
                         continue;
                     }
                 }
-
                 string sql = "";
                 string title = WorkNode.GenerTitle(wk);
-                sql += "@UPDATE " + table + " SET Title='" + title + "' WHERE OID=" + wk.OID;
-                sql += "@UPDATE " + tableRpt + " SET Title='" + title + "' WHERE OID=" + wk.OID;
-                sql += "@UPDATE WF_GenerWorkFlow SET Title='" + title + "' WHERE WorkID=" + wk.OID;
-                sql += "@UPDATE WF_GenerFH SET Title='" + title + "' WHERE FID=" + wk.OID;
+                Paras ps = new Paras();
+                ps.Add("Title", title);
+                ps.Add("OID", wk.OID);
+                ps.SQL = "UPDATE " + table + " SET Title=" + SystemConfig.AppCenterDBVarStr + "Title WHERE OID=" + SystemConfig.AppCenterDBVarStr + "OID";
+                DBAccess.RunSQL(ps);
+
+                ps.SQL = "UPDATE " + tableRpt + " SET Title=" + SystemConfig.AppCenterDBVarStr + "Title WHERE OID=" + SystemConfig.AppCenterDBVarStr + "OID";
+                DBAccess.RunSQL(ps);
+
+                ps.SQL = "UPDATE WF_GenerWorkFlow SET Title=" + SystemConfig.AppCenterDBVarStr + "Title WHERE WorkID=" + SystemConfig.AppCenterDBVarStr + "OID";
+                DBAccess.RunSQL(ps);
+
+                ps.SQL = "UPDATE WF_GenerFH SET Title=" + SystemConfig.AppCenterDBVarStr + "Title WHERE FID=" + SystemConfig.AppCenterDBVarStr + "OID";
                 DBAccess.RunSQLs(sql);
             }
             Emp emp1 = new Emp("admin");
