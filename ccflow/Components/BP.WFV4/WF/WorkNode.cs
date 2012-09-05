@@ -2850,12 +2850,14 @@ namespace BP.WF
             titleRole = titleRole.Replace("@RDT", wk.RDT);
             if (titleRole.Contains("@"))
             {
-                foreach (Attr attr in wk.EnMap.Attrs)
+                Attrs attrs = wk.EnMap.Attrs;
+                foreach (Attr attr in attrs)
                 {
                     if (titleRole.Contains("@") == false)
                         break;
-                    if (attr.IsFKorEnum)
-                        continue;
+
+                    //if (attr.IsFKorEnum)
+                    //    continue;
                     titleRole = titleRole.Replace("@" + attr.Key, wk.GetValStrByKey(attr.Key));
                 }
             }
