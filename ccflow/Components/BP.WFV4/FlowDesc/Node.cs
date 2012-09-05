@@ -699,17 +699,26 @@ namespace BP.WF
         {
             get
             {
-                Frms obj = this.GetRefObject("HisFrms") as Frms;
-                if (obj == null)
-                {
-                    obj = new Frms();
-                    FrmNodes fns = new FrmNodes(this.NodeID);
-                    foreach (FrmNode fn in fns)
-                        obj.AddEntity(fn.HisFrm);
+                Frms frms = new Frms();
+                FrmNodes fns = new FrmNodes(this.NodeID);
+                foreach (FrmNode fn in fns)
+                    frms.AddEntity(fn.HisFrm);
+                return frms;
 
-                    this.SetRefObject("HisFrms", obj);
-                }
-                return obj;
+
+                //this.SetRefObject("HisFrms", obj);
+
+                //Frms obj = this.GetRefObject("HisFrms") as Frms;
+                //if (obj == null)
+                //{
+                //    obj = new Frms();
+                //    FrmNodes fns = new FrmNodes(this.NodeID);
+                //    foreach (FrmNode fn in fns)
+                //        obj.AddEntity(fn.HisFrm);
+
+                //    this.SetRefObject("HisFrms", obj);
+                //}
+                //return obj;
             }
         }
         /// <summary>
