@@ -927,8 +927,11 @@ public partial class Comm_Dtl : WebPage
 
                     if (attr.LGType != FieldTypeS.Normal)
                         continue;
-                    if (attr.HisAutoFull== AutoFullWay.Way1_JS &&  attr.AutoFullDoc != "")
+
+                    if (attr.HisAutoFull == AutoFullWay.Way1_JS)
+                    {
                         script += this.GenerAutoFull(dtl.OID.ToString(), attrs, attr);
+                    }
                 }
                 string end = " \n  } ";
                 this.Response.Write(top + script + end);
@@ -1252,13 +1255,19 @@ public partial class Comm_Dtl : WebPage
         string right = attr.AutoFullDoc;
         foreach (MapAttr mattr in attrs)
         {
+            //if (mattr.IsNum == false)
+            //    continue;
+
+            //if (mattr.LGType != FieldTypeS.Normal)
+            //    continue;
+
             string tbID = "TB_" + mattr.KeyOfEn + "_" + pk;
             TextBox tb = this.Pub1.GetTextBoxByID(tbID);
             if (tb == null)
                 continue;
 
-            right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Pub1.GetTextBoxByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
-            right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Pub1.GetTextBoxByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+            right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) ) ");
+            right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) ) ");
         }
         string s = left + right;
         s += "\t\n  document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";

@@ -1307,7 +1307,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     ps.SQL = "SELECT * FROM Prj_EmpPrj WHERE FK_Prj=" + dbStr + "FK_Prj AND FK_Emp=" + dbStr + "FK_Emp ";
                     ps.Add("FK_Prj", prjNo);
                     ps.AddFK_Emp();
-                    ps.AddFK_Emp();
+                 //   ps.AddFK_Emp();
 
                     if (DBAccess.RunSQLReturnTable(ps).Rows.Count == 0)
                         throw new Exception("您不是(" + prjNo + "," + prjName + ")成员，您不能发起改流程。");

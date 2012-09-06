@@ -447,6 +447,26 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
         {
             mattr.HisAutoFull = AutoFullWay.Way1_JS;
             mattr.AutoFullDoc = this.Pub1.GetTextBoxByID("TB_JS").Text;
+
+            /*检查字段是否填写正确.*/
+            MapAttrs attrsofCheck=new MapAttrs(mattr.FK_MapData);
+            string docC = mattr.AutoFullDoc;
+            foreach (MapAttr attrC  in attrsofCheck)
+            {
+                if (attrC.IsNum == false)
+                    continue;
+                docC = docC.Replace("@" + attrC.KeyOfEn, "");
+                docC = docC.Replace("@" + attrC.Name, "");
+            }
+
+            if (docC.Contains("@"))
+            {
+                this.Alert("您填写的表达公式不正确，导致一些数值类型的字段没有被正确的替换。" + docC);
+                return;
+            }
+
+
+
         }
 
         // 外键方式。
