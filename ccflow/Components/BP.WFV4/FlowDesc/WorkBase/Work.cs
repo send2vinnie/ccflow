@@ -490,11 +490,12 @@ namespace BP.WF
         {
             get
             {
-                Emp emp = this.GetValByKey("HisRec") as Emp;
+              //  return new Emp(this.Rec);
+                Emp emp = this.GetValByKey("HisRec"+this.Rec) as Emp;
                 if (emp == null)
                 {
                     emp = new Emp(this.Rec);
-                    this.SetValByKey("HisRec", emp);
+                    this.SetValByKey("HisRec" + this.Rec, emp);
                 }
                 return emp;
             }
