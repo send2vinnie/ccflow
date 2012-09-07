@@ -529,7 +529,8 @@ namespace BP.WF
                  * 2012-10-15 偶然发现一次工作丢失情况, WF_GenerWorkerlist WF_GenerWorkFlow 都有这笔数据，没有查明丢失原因。 zp
                  * 用如下代码自动修复，但是会遇到数据copy不完全的问题。
                  * */
-#warning 2012-10-15 偶然发现一次工作丢失情况.
+#warning 2011-10-15 偶然发现一次工作丢失情况.
+
                 GERpt rpt = new GERpt("ND" + int.Parse(this.No) + "Rpt");
                 rpt.OID = int.Parse(workid.ToString());
                 if (rpt.RetrieveFromDBSources() != 0)
@@ -537,6 +538,7 @@ namespace BP.WF
                     wk.Copy(rpt);
                     wk.NodeState = NodeState.Init;
                     wk.Rec = WebUser.No;
+                    wk.ResetDefaultVal();
                     wk.Insert();
                 }
                 else

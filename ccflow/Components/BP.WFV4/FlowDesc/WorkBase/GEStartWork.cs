@@ -66,6 +66,7 @@ namespace BP.WF
         /// <param name="nodeid">½ÚµãID</param>
         public GEStartWork(int nodeid)
         {
+            this.ResetDefaultVal();
             this.NodeID = nodeid;
             this.SQLCash=null; 
         }
@@ -76,6 +77,7 @@ namespace BP.WF
         /// <param name="_oid">OID</param>
         public GEStartWork(int nodeid, Int64 _oid)
         {
+            this.ResetDefaultVal();
             this.NodeID = nodeid;
             this.OID = _oid;
             this.SQLCash = null;

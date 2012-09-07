@@ -33,6 +33,10 @@ namespace BP.WF
         /// Msg
         /// </summary>
         public const string Msg = "Msg";
+        /// <summary>
+        /// 发起时间
+        /// </summary>
+        public const string StartDT = "StartDT";
         #endregion
     }
 	/// <summary>
@@ -83,6 +87,20 @@ namespace BP.WF
                 this.SetValByKey(TaskAttr.FK_Flow, value);
             }
         }
+        /// <summary>
+        /// 发起时间（可以为空）
+        /// </summary>
+        public string StartDT
+        {
+            get
+            {
+                return this.GetValStringByKey(TaskAttr.StartDT);
+            }
+            set
+            {
+                this.SetValByKey(TaskAttr.StartDT, value);
+            }
+        }
         #endregion
 
         #region 构造函数
@@ -114,6 +132,8 @@ namespace BP.WF
                 map.AddTBInt(TaskAttr.TaskSta, 0, "任务状态", true, false);
 
                 map.AddTBString(TaskAttr.Msg, null, "消息", true, false, 0, 4000, 10);
+                map.AddTBString(TaskAttr.StartDT, null, "发起时间", true, false, 0, 20, 10);
+                
                 this._enMap = map;
                 return this._enMap;
             }
