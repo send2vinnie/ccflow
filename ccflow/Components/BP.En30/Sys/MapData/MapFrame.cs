@@ -215,11 +215,8 @@ namespace BP.Sys
                 //map.AddTBInt(MapFrameAttr.W, 400, "宽度", false, false);
 
                 map.AddBoolean(MapFrameAttr.IsAutoSize, true, "是否自动设置大小", false, false);
-
-                
                 map.AddTBInt(MapFrameAttr.RowIdx, 99, "位置", false, false);
                 map.AddTBInt(MapFrameAttr.GroupID, 0, "GroupID", false, false);
-
                 
                 this._enMap = map;
                 return this._enMap;

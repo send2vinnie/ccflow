@@ -243,6 +243,7 @@
     <Compile Include="PubLib\Port\Unit.cs" />
     <Compile Include="DA\Right.cs">
     </Compile>
+    <Compile Include="PubLib\Pub\Day.cs" />
     <Compile Include="Sys\GroupEnsTemplate.cs">
       <SubType>Code</SubType>
     </Compile>

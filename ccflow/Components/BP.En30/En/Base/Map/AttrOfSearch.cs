@@ -164,6 +164,32 @@ namespace BP.En
                 _DefaultVal = value;
             }
         }
+        public string DefaultValRun
+        {
+            get
+            {
+                if (_DefaultVal == null)
+                    return null;
+
+                if (_DefaultVal.Contains("@"))
+                {
+                    switch(_DefaultVal)
+                    {
+                        case "@WebUser.No":
+                            return BP.Web.WebUser.No;
+                        case "@WebUser.Name":
+                            return BP.Web.WebUser.Name;
+                        case "@WebUser.FK_Dept":
+                            return BP.Web.WebUser.FK_Dept;
+                        case "@WebUser.FK_DeptName":
+                            return BP.Web.WebUser.FK_DeptName;
+                        default:
+                            throw new Exception("没有识别的系统变量");
+                    }
+                }
+                return _DefaultVal;
+            }
+        }
         /// <summary>
         /// 默认的操作符号.
         /// </summary>
