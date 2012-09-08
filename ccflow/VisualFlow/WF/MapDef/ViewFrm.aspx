@@ -6,7 +6,6 @@ Inherits="WF_MapDef_FreeFrm_ViewFrm" %>
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="./../Style/Verify.js"></script>
-    <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <uc1:UCEn ID="UCEn1" runat="server" />

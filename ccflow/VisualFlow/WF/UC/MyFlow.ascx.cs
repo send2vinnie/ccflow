@@ -206,9 +206,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             case "Runing":
                 ShowRuning();
                 return;
-            case "History":
-                ShowHistory();
-                return;
             case "Warting":
                 ShowWarting();
                 return;
@@ -341,20 +338,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
-    public void ShowHistory()
-    {
-        BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        this.ToolBar1.AddLab("s", this.ToE("HistoryWork", "历史工作") + ":" + nd.Name);
-        Works wks = nd.HisWorks;
-        QueryObject qo = new QueryObject(wks);
-        qo.AddWhere(WorkAttr.Rec, WebUser.No);
-        qo.addAnd();
-        qo.AddWhereInSQL(WorkAttr.OID,
-            "SELECT OID FROM  ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE WFState=" + (int)WFState.Complete);
-        //qo.AddWhere(WorkAttr.NodeState, 1);
-        qo.DoQuery();
-        this.Pub1.BindWorkDtl(nd, wks);
-    }
+   
     #endregion
 
     #region 变量
@@ -1294,11 +1278,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 /*对特殊的流程进行检查，检查是否有权限。*/
                 string prjNo = currWK.GetValStringByKey("PrjNo");
-                  ps = new Paras();
-                  ps.SQL = "SELECT * FROM WF_NodeStation WHERE FK_Station IN ( SELECT FK_Station FROM Prj_EmpPrjStation WHERE FK_Prj=" + dbStr + "FK_Prj AND FK_Emp=" + dbStr+ "FK_Emp )  AND  FK_Node=" + dbStr+"FK_Node ";
-                  ps.Add("FK_Prj", prjNo);
-                  ps.AddFK_Emp();
-                  ps.Add("FK_Node", this.FK_Node);
+                ps = new Paras();
+                ps.SQL = "SELECT * FROM WF_NodeStation WHERE FK_Station IN ( SELECT FK_Station FROM Prj_EmpPrjStation WHERE FK_Prj=" + dbStr + "FK_Prj AND FK_Emp=" + dbStr + "FK_Emp )  AND  FK_Node=" + dbStr + "FK_Node ";
+                ps.Add("FK_Prj", prjNo);
+                ps.AddFK_Emp();
+                ps.Add("FK_Node", this.FK_Node);
 
                 if (DBAccess.RunSQLReturnTable(ps).Rows.Count == 0)
                 {
@@ -1307,7 +1291,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     ps.SQL = "SELECT * FROM Prj_EmpPrj WHERE FK_Prj=" + dbStr + "FK_Prj AND FK_Emp=" + dbStr + "FK_Emp ";
                     ps.Add("FK_Prj", prjNo);
                     ps.AddFK_Emp();
-                 //   ps.AddFK_Emp();
+                    //   ps.AddFK_Emp();
 
                     if (DBAccess.RunSQLReturnTable(ps).Rows.Count == 0)
                         throw new Exception("您不是(" + prjNo + "," + prjName + ")成员，您不能发起改流程。");

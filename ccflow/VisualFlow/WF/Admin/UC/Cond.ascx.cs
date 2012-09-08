@@ -382,10 +382,10 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         }
 
 
-        ddl = new DDL();
-        ddl.ID = "DDL_ConnJudgeWay";
-        ddl.BindSysEnum(BP.WF.CondAttr.ConnJudgeWay);
-        ddl.SetSelectItem((int)cond.HisConnJudgeWay);
+        //ddl = new DDL();
+        //ddl.ID = "DDL_ConnJudgeWay";
+        //ddl.BindSysEnum(BP.WF.CondAttr.ConnJudgeWay);
+        //ddl.SetSelectItem((int)cond.HisConnJudgeWay);
 
 
         Conds conds = new Conds();
@@ -401,24 +401,18 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         int num = qo.DoQuery();
         if (num >= 1)
         {
-            this.AddTR();
-            this.AddTD(this.ToE("CondWay", "条件计算方式"));
-            this.AddTD(ddl);
-            this.AddTD(this.ToE("CondWayD", "对于多个条件有效"));
+
+            this.AddTRSum();
+            this.Add("<TD class=TD colspan=3 align=center>");
+            Button btn = new Button();
+            btn.ID = "Btn_Save";
+            btn.CssClass = "Btn";
+            btn.Text = this.ToE("Save", " 保 存 ");
+            btn.Click += new EventHandler(btn_Save_Click);
+            this.Add(btn);
+            this.Add("</TD>");
             this.AddTREnd();
         }
-
-
-        this.AddTRSum();
-        this.Add("<TD class=TD colspan=3 align=center>");
-        Button btn = new Button();
-        btn.ID = "Btn_Save";
-        btn.CssClass = "Btn";
-        btn.Text = this.ToE("Save", " 保 存 ");
-        btn.Click += new EventHandler(btn_Save_Click);
-        this.Add(btn);
-        this.Add("</TD>");
-        this.AddTREnd();
         this.AddTableEnd();
 
         #region 条件
