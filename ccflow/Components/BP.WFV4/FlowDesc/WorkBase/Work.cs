@@ -376,7 +376,6 @@ namespace BP.WF
                 return this.HisNode.MapData.MapDtls;
             }
         }
-      
         /// <summary>
         /// Ã÷Ï¸±í.
         /// </summary>
