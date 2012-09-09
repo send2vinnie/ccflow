@@ -66,9 +66,10 @@ namespace BP.WF
         /// <param name="nodeid">节点ID</param>
         public GEStartWork(int nodeid)
         {
-            this.ResetDefaultVal();
             this.NodeID = nodeid;
-            this.SQLCash=null; 
+            this.SQLCash=null;
+            this.ResetDefaultVal();
+
         }
         /// <summary>
         /// 开始工作节点
@@ -77,10 +78,10 @@ namespace BP.WF
         /// <param name="_oid">OID</param>
         public GEStartWork(int nodeid, Int64 _oid)
         {
-            this.ResetDefaultVal();
             this.NodeID = nodeid;
             this.OID = _oid;
             this.SQLCash = null;
+            this.ResetDefaultVal();
         }
         #endregion
 
