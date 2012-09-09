@@ -727,15 +727,28 @@ namespace BP.WF
         /// <returns>返回执行信息</returns>
         public static string Node_SendWork(string fk_flow, Int64 workID)
         {
-            return Node_SendWork(fk_flow, workID, new Hashtable());
+            return Node_SendWork(fk_flow, workID, new Hashtable(),null);
         }
         /// <summary>
         /// 发送工作
         /// </summary>
+        /// <param name="fk_flow">流程编号</param>
         /// <param name="workID">工作ID</param>
-        /// <param name="htWork">工作数据</param>
-        /// <returns>返回执行信息</returns>
+        /// <param name="htWork">节点表单数据(Hashtable中的key与节点表单的字段名相同,value 就是字段值)</param>
+        /// <returns>执行信息</returns>
         public static string Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork)
+        {
+            return Node_SendWork(fk_flow, workID, new Hashtable(), null);
+        }
+        /// <summary>
+        /// 发送工作
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="workID">工作ID</param>
+        /// <param name="htWork">节点表单数据(Hashtable中的key与节点表单的字段名相同,value 就是字段值)</param>
+        /// <param name="workDtls">节点表单明从表数据(dataset可以包含多个table，每个table的名称与从表名称相同，列名与从表的字段相同)</param>
+        /// <returns>执行信息</returns>
+        public static string Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork, DataSet workDtls)
         {
             Node nd = new Node(Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
             Work sw = nd.HisWork;
@@ -752,6 +765,40 @@ namespace BP.WF
             }
             sw.BeforeSave();
             sw.Save();
+
+            if (workDtls != null)
+            {
+                //保存明细表
+                foreach (DataTable dt in workDtls.Tables)
+                {
+                    foreach (MapDtl dtl in sw.HisMapDtls)
+                    {
+                        if (dt.TableName != dtl.No)
+                            continue;
+                        //获取dtls
+                        GEDtls daDtls = new GEDtls(dtl.No);
+                        daDtls.Delete(GEDtlAttr.RefPK, workID); // 清除现有的数据.
+
+                        GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
+                        daDtl.RefPK = workID.ToString();
+
+                        // 为明细表复制数据.
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            daDtl.ResetDefaultVal();
+                            daDtl.RefPK = workID.ToString();
+
+                            //明细列.
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                //设置属性.
+                                daDtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName]);
+                            }
+                            daDtl.InsertAsNew(); //插入数据.
+                        }
+                    }
+                }
+            }
             WorkNode wn = new WorkNode(sw, nd);
             return wn.AfterNodeSave();
         }
