@@ -638,25 +638,45 @@ namespace BP.WF
         {
             get
             {
-                Work obj = this.GetRefObject("HisWork") as Work;
-                if (obj == null)
+                Work obj=null;
+                if (this.IsStartNode)
                 {
-                    if (this.IsStartNode)
-                    {
-                        obj = new BP.WF.GEStartWork(this.NodeID);
-                        obj.HisNode = this;
-                        obj.NodeID = this.NodeID;
-                        this.SetRefObject("HisWork", obj);
-                    }
-                    else
-                    {
-                        obj = new BP.WF.GEWork(this.NodeID);
-                        obj.HisNode = this;
-                        obj.NodeID = this.NodeID;
-                        this.SetRefObject("HisWork", obj);
-                    }
+                    obj = new BP.WF.GEStartWork(this.NodeID);
+                    obj.HisNode = this;
+                    obj.NodeID = this.NodeID;
+                    this.SetRefObject("HisWork", obj);
+                }
+                else
+                {
+                    obj = new BP.WF.GEWork(this.NodeID);
+                    obj.HisNode = this;
+                    obj.NodeID = this.NodeID;
+                    this.SetRefObject("HisWork", obj);
                 }
                 return obj;
+
+
+               // Work obj = this.GetRefObject("HisWork") as Work;
+               // if (obj == null)
+               // {
+               //     if (this.IsStartNode)
+               //     {
+               //         obj = new BP.WF.GEStartWork(this.NodeID);
+               //         obj.HisNode = this;
+               //         obj.NodeID = this.NodeID;
+               //         this.SetRefObject("HisWork", obj);
+               //     }
+               //     else
+               //     {
+               //         obj = new BP.WF.GEWork(this.NodeID);
+               //         obj.HisNode = this;
+               //         obj.NodeID = this.NodeID;
+               //         this.SetRefObject("HisWork", obj);
+               //     }
+               // }
+               //// obj.GetNewEntities.GetNewEntity;
+               //// obj.Row = null;
+               // return obj;
             }
         }
         /// <summary>

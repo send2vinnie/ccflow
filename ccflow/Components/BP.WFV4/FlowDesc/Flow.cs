@@ -317,8 +317,6 @@ namespace BP.WF
 
             //从草稿里看看是否有新工作？
             StartWork wk = (StartWork)nd.HisWork;
-            wk.ResetDefaultVal();
-
             int num = 0;
             try
             {
@@ -501,6 +499,9 @@ namespace BP.WF
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
 
+        
+
+
             //string msg = "";
             //if (WebUser.SysLang == "CH")
             //    msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
@@ -523,6 +524,8 @@ namespace BP.WF
         public Work GenerWork(Int64 workid, Node nd)
         {
             Work wk = nd.HisWork;
+            wk.ResetDefaultVal();
+
             wk.OID = workid;
             if (wk.RetrieveFromDBSources() == 0)
             {

@@ -82,8 +82,7 @@ namespace BP.WF
             {
                 //if (this._enMap != null)
                 //    return this._enMap;
-
-             //   BP.Sys.MapData md = new BP.Sys.MapData();
+                //   BP.Sys.MapData md = new BP.Sys.MapData();
                 this._enMap = BP.Sys.MapData.GenerHisMap("ND" + this.NodeID.ToString());
                 return this._enMap;
             }
