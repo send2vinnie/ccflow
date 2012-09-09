@@ -1669,7 +1669,6 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 处理事件.
 
-
             MapAttrs mattrs = this.mapData.MapAttrs;
             this.DealDefVal(mattrs);
 
@@ -1726,6 +1725,35 @@ namespace BP.Web.Comm.UC.WF
                                 //string myjs = "javascript:window.open('" + appPath + "/WF/FreeFrm/BPPaint.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "&H=" + ele.HandSiganture_WinOpenH + "&W=" + ele.HandSiganture_WinOpenW + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
                                 this.Add("\t\n<img id='Ele" + ele.MyPK + "' onclick=\"" + myjs + "\" onerror=\"this.src='" + appPath + "/DataUser/BPPaint/Def.png'\" src='" + dbFile + "' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
                             }
+                            break;
+                        case FrmEle.iFrame:
+                            string paras = this.RequestParas;
+                            if (paras.Contains("FID=") == false)
+                                paras += "&FID=" + this.HisEn.GetValStrByKey("FID");
+
+                            if (paras.Contains("WorkID=") == false)
+                                paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
+
+                            string src = ele.Tag1.Clone() as string; // url 
+                            if (src.Contains("?"))
+                                src += "&r=q" + paras;
+                            else
+                                src += "?r=q" + paras;
+
+                            if (src.Contains("UserNo") == false)
+                                src += "&UserNo=" + WebUser.No;
+                            if (src.Contains("SID") == false)
+                                src += "&SID=" + WebUser.SID;
+                            if (src.Contains("@"))
+                            {
+                                foreach (Attr m in en.EnMap.Attrs)
+                                {
+                                    if (src.Contains("@") == false)
+                                        break;
+                                    src = src.Replace("@" + m.Key, en.GetValStrByKey(m.Key));
+                                }
+                            }
+                            this.Add("<iframe ID='F" + ele.EleID + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + ele.W + "' height='" + ele.H + "' scrolling=auto /></iframe>");
                             break;
                         case FrmEle.EleSiganture:
                         default:
