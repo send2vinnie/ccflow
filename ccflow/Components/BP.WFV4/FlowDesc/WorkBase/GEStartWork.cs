@@ -68,7 +68,6 @@ namespace BP.WF
         {
             this.NodeID = nodeid;
             this.SQLCash=null;
-            this.ResetDefaultVal();
 
         }
         /// <summary>
@@ -81,7 +80,6 @@ namespace BP.WF
             this.NodeID = nodeid;
             this.OID = _oid;
             this.SQLCash = null;
-            this.ResetDefaultVal();
         }
         #endregion
 

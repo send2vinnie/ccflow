@@ -164,7 +164,6 @@ namespace BP.WF
 		}
         protected StartWork(Int64 oid):base(oid)
         {
-
         }
 		#endregion
 		

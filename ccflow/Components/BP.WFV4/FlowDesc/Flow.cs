@@ -334,6 +334,7 @@ namespace BP.WF
 
             if (num == 0)
             {
+                wk.ResetDefaultVal();
                 wk.Rec = WebUser.No;
                 wk.SetValByKey("RecText", WebUser.Name);
                 wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
