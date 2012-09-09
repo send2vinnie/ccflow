@@ -107,6 +107,10 @@ namespace BP.Sys
         /// 电子签名
         /// </summary>
         public const string EleSiganture = "EleSiganture";
+        /// <summary>
+        /// 网页框架
+        /// </summary>
+        public const string iFrame = "iFrame";
         #endregion 类型
 
         #region 属性
