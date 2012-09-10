@@ -254,6 +254,8 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
     void btn_Save_Click(object sender, EventArgs e)
     {
         Cond cond = new Cond();
+        cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
+
         cond.MyPK = this.GenerMyPK;
         if (cond.RetrieveFromDBSources() == 0)
         {

@@ -137,7 +137,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Page.Title = "表单类型条件设置";
+        this.Page.Title = "表单类型的方向条件设置";
         if (this.Request.QueryString["DoType"] == "Del")
         {
             Cond nd = new Cond(this.MyPK);
@@ -399,8 +399,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             qo.AddWhere(CondAttr.ToNodeID, this.ToNodeID);
         }
         int num = qo.DoQuery();
-        if (num >= 1)
-        {
+        
 
             this.AddTRSum();
             this.Add("<TD class=TD colspan=3 align=center>");
@@ -412,7 +411,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             this.Add(btn);
             this.Add("</TD>");
             this.AddTREnd();
-        }
+         
         this.AddTableEnd();
 
         #region 条件
@@ -424,8 +423,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Attr", "属性"));
         this.AddTDTitle(this.ToE("OperS", "操作符"));
         this.AddTDTitle(this.ToE("Value", "值"));
-        if (num > 1)
-            this.AddTDTitle(this.ToE("RunWay", "计算方式"));
         this.AddTDTitle(this.ToE("Oper", "操作"));
         this.AddTREnd();
 
@@ -514,6 +511,8 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         }
 
         Cond cond = new Cond();
+        cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
+
         cond.HisDataFrom = ConnDataFrom.Form;
         cond.NodeID = this.FK_MainNode;
         cond.FK_Attr = this.FK_Attr;

@@ -127,7 +127,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             this.Response.Redirect("CondStation.aspx?CondType=" + (int)this.HisCondType + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + nd.NodeID + "&FK_Node=" + this.FK_MainNode + "&ToNodeID=" + nd.ToNodeID, true);
             return;
         }
-
         this.BindCond();
     }
     public void BindCond()
@@ -267,6 +266,8 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
     void btn_Save_Click(object sender, EventArgs e)
     {
         Cond cond = new Cond();
+        cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
+
         cond.MyPK = this.GenerMyPK;
         if (cond.RetrieveFromDBSources() == 0)
         {
