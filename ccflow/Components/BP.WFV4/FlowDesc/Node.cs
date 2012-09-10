@@ -644,6 +644,7 @@ namespace BP.WF
                     obj = new BP.WF.GEStartWork(this.NodeID);
                     obj.HisNode = this;
                     obj.NodeID = this.NodeID;
+                    return obj;
                     this.SetRefObject("HisWork", obj);
                 }
                 else
@@ -651,10 +652,12 @@ namespace BP.WF
                     obj = new BP.WF.GEWork(this.NodeID);
                     obj.HisNode = this;
                     obj.NodeID = this.NodeID;
-                    this.SetRefObject("HisWork", obj);
+                    return obj;
+                    //this.SetRefObject("HisWork", obj);
                 }
-                return obj;
+               // return obj;
 
+                /* 放入缓存就没有办法执行数据的clone. */
 
                // Work obj = this.GetRefObject("HisWork") as Work;
                // if (obj == null)
@@ -686,13 +689,14 @@ namespace BP.WF
         {
             get
             {
-                Works obj = this.GetRefObject("HisWorks") as Works;
-                if (obj == null)
-                {
-                    obj = this.HisWork.GetNewEntities as Works;
-                    this.SetRefObject("HisWorks",obj);
-                }
+                Works obj = this.HisWork.GetNewEntities as Works;
                 return obj;
+                ////Works obj = this.GetRefObject("HisWorks") as Works;
+                ////if (obj == null)
+                ////{
+                //    this.SetRefObject("HisWorks",obj);
+                //}
+                //return obj;
             }
         }
 
@@ -725,9 +729,7 @@ namespace BP.WF
                     frms.AddEntity(fn.HisFrm);
                 return frms;
 
-
                 //this.SetRefObject("HisFrms", obj);
-
                 //Frms obj = this.GetRefObject("HisFrms") as Frms;
                 //if (obj == null)
                 //{
@@ -735,7 +737,6 @@ namespace BP.WF
                 //    FrmNodes fns = new FrmNodes(this.NodeID);
                 //    foreach (FrmNode fn in fns)
                 //        obj.AddEntity(fn.HisFrm);
-
                 //    this.SetRefObject("HisFrms", obj);
                 //}
                 //return obj;

@@ -755,7 +755,6 @@ namespace BP.Sys
                     MapData md = new MapData();
                     md.No = no;
                     md.Retrieve();
-
                     map = md.GenerHisMap();
                     BP.DA.Cash.SetMap(no, map);
                 }

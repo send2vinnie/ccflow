@@ -3198,7 +3198,7 @@ namespace BP.En
         /// 创建一个该集合的元素的类型的新实例
         /// </summary>
         /// <returns></returns>
-        public abstract Entity      GetNewEntity { get; }
+        public abstract Entity  GetNewEntity { get; }
         /// <summary>
         /// 根据位置取得数据
         /// </summary>

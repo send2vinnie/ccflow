@@ -22,6 +22,13 @@ namespace BP.DA
     /// </summary>
     public class ConnOfSQLs : System.Collections.CollectionBase
     {
+        public ConnOfSQL GetByID(int id)
+        {
+            foreach (ConnOfSQL conn in this)
+                if (conn.IDX == id)
+                    return conn;
+            return null;
+        }
         /// <summary>
         /// SqlConnections
         /// </summary>

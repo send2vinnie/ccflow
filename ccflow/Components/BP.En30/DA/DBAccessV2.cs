@@ -2029,10 +2029,12 @@ namespace BP.DA
                 Log.DebugWriteError(msg);
                 throw new Exception(msg);
             }
-            finally
-            {
-                HisConnOfSQLs.PutPool(connofObj);
-            }
+            //finally
+            //{
+            //    conn.Close();
+            //    HisConnOfSQLs.PutPool(connofObj);
+            //}
+            //return RunSQLReturnTable_200705_SQL(selectSQL);
         }
         private static DataTable RunSQLReturnTable_200705_SQL(string sql, Paras paras)
         {
