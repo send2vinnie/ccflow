@@ -91,13 +91,9 @@ function Esc() {
 function VirtyInt(ctrl) {
 
 }
+
 function VirtyNum(ctrl) {
 
-    // alert(event.keyCode);
-//    if (event.keyCode == 8) {
-//        // type del]
-//        alert(ctrl.value);
-//    }
     if (event.keyCode == 190) {
         if (ctrl.value.indexOf('.') == -1) {
             return true;
@@ -305,7 +301,6 @@ function onkeydown() {
     if (event.keyCode == 13)
         event.keyCode = 9;
 }
-
 
 function RSize() {
 

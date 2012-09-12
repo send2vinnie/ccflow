@@ -2552,7 +2552,39 @@ namespace BP.Web.Comm.UC
                 }
             }
         }
-        //		public void UIEn1ToM_OneLine(Entities ens, string showVal, string showText, Entities selectedEns, string selecteVal)
+        public void UIEn1ToM_Tree(Entities ens, string showVal, string showText, Entities selectedEns, string selecteVal)
+        {
+            this.Controls.Clear();
+            //this.Add("<table border=0 width='500px'>");
+            //this.AddTR();
+            //this.AddTDBegin();
+           // this.Add("<font size=14px >");
+            string no = null;
+            foreach (Entity en in ens)
+            {
+                no = en.GetValStrByKey(showVal);
+                CheckBox cb = new CheckBox();
+                cb.ID = "CB_" + no;
+                cb.Text = no + "&nbsp;" + en.GetValStrByKey(showText);
+                this.Add(DataType.GenerSpace(no.Length / 2));
+                this.Add(cb);
+                this.AddBR();
+            }
+            //this.Add("</font>");
+            //this.AddTDEnd();
+            //this.AddTREnd();
+            //this.AddTableEnd();
+
+            // 设置选择的 ens .
+            foreach (Entity en in selectedEns)
+            {
+                string key = en.GetValStringByKey(selecteVal);
+                CheckBox bp = (CheckBox)this.FindControl("CB_" + key);
+                bp.Checked = true;
+            }
+        }
+
+        //./././ public void UIEn1ToM_OneLine(Entities ens, string showVal, string showText, Entities selectedEns, string selecteVal)
         public void UIEn1ToM_OneLine(Entities ens, string showVal, string showText, Entities selectedEns, string selecteVal)
         {
             this.Controls.Clear();
@@ -2562,7 +2594,7 @@ namespace BP.Web.Comm.UC
             {
                 is1 = this.AddTR(is1); //("<TR>");
                 CheckBox cb = new CheckBox();
-                cb.ID = "CB_" + en.GetValStringByKey(showVal);
+                cb.ID = "CB_" + en.GetValStrByKey(showVal);
                 cb.Text = en.GetValStringByKey(showText);
                 this.AddTD(cb);
                 this.AddTREnd();
@@ -2572,7 +2604,7 @@ namespace BP.Web.Comm.UC
             // 设置选择的 ens .
             foreach (Entity en in selectedEns)
             {
-                string key = en.GetValStringByKey(selecteVal);
+                string key = en.GetValStrByKey(selecteVal);
                 CheckBox bp = (CheckBox)this.FindControl("CB_" + key);
                 bp.Checked = true;
             }

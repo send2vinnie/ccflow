@@ -267,7 +267,15 @@ namespace BP.Web.Comm
             }
             catch(Exception ex)
             {
-                en.CheckPhysicsTable();
+                try
+                {
+                    en.CheckPhysicsTable();
+                }
+                catch(Exception wx)
+                {
+                    BP.DA.Log.DefaultLogWriteLineError(wx.Message);
+                }
+
                 maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "PanelEns.aspx?EnsName=" + this.EnsName);
             }
 

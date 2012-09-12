@@ -380,7 +380,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             {
                 qo.addAnd();
                 qo.addLeftBracket();
-                qo.AddWhere(attr.RefAttrKey, attr.DefaultSymbol, attr.DefaultVal);
+                qo.AddWhere(attr.RefAttrKey, attr.DefaultSymbol, attr.DefaultValRun);
                 qo.addRightBracket();
                 continue;
             }
@@ -543,6 +543,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 //qo.addRightBracket();
             }
         }
+
         //  throw new Exception(qo.SQL);
         return qo;
     }

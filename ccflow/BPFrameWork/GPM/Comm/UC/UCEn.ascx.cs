@@ -1118,7 +1118,6 @@ namespace BP.Web.Comm.UC
                         }
                         else
                         {
-
                             EditerType type = (EditerType)EnsAppCfgs.GetValInt(en.ToString() + "s", "EditerType");
                             switch (type)
                             {
@@ -1333,7 +1332,7 @@ namespace BP.Web.Comm.UC
                                         tb.Text = decimal.Parse(val.ToString()).ToString("0.00");
                                         tb.Attributes["Class"] = "TBNum";
                                     }
-                                    catch (Exception ex)
+                                    catch
                                     {
                                         tb.Text = decimal.Parse("0").ToString("0.00");
                                         tb.Attributes["Class"] = "TBNum";
@@ -1354,7 +1353,6 @@ namespace BP.Web.Comm.UC
                                     tb.IsHelpKey = true;
                                     if (attr.UIIsReadonly == false)
                                         tb.Attributes["onfocus"] = "WdatePicker();";
-
                                     break;
                                 case DataType.AppDateTime:
                                     tb.Text = val.ToString();
