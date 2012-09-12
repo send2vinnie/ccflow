@@ -1,0 +1,84 @@
+<%@ Register TagPrefix="uc1" TagName="UCRpt" Src="UCRpt.ascx" %>
+<%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
+<%@ Register TagPrefix="uc1" TagName="UCGraphics" Src="UCGraphics.ascx" %>
+<%@ Page language="c#" CodeFile="RptOf3DV3.aspx.cs" AutoEventWireup="false" Inherits="BP.Web.Comm.Rpt.RptOf3DV3" %>
+<%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<title>通用3维报表</title>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
+		<meta content="C#" name="CODE_LANGUAGE">
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<LINK href="../Rpt.css" type="text/css" rel="stylesheet">
+		<LINK href="../Style.css" type="text/css" rel="stylesheet">
+		<LINK href="../Menu.css" type="text/css" rel="stylesheet">
+		<script language="JavaScript" src='RptMenu.js'></script>
+		<script language="javascript">
+		function openit( url)
+		{
+		   //var url=webAppPath+"/Comm/"+'UIEn.aspx?EnName='+className+url;
+           var newWindow=window.open( url, 'card1',  'width=950,top=10,left=20,height=500,scrollbars=yes,resizable=yes,toolbar=false,location=false' );
+           newWindow.focus();           
+           return;
+		}
+		</script>
+	</HEAD>
+	<body topmargin="0" leftmargin="0"   onkeypress="Esc()" onclick=" "  >
+		<form id="Form1" method="post" runat="server">
+			<TABLE id="Table1" style="WIDTH: 100%; HEIGHT: 100%" cellSpacing="1" cellPadding="1" border="1"
+				align="left">
+				<TR>
+					<TD>
+						<asp:Label id="Label1" runat="server"></asp:Label></TD>
+				</TR>
+				<TR>
+					<TD><cc1:bptoolbar id="BPToolBar1" runat="server"></cc1:bptoolbar></TD>
+				</TR>
+				<TR align="left">
+					<TD align="left" bgcolor='ButtonHighlight' >
+						<cc1:BPTabStrip id="BPTabStrip1" runat="server" TargetID="BPMultiPage1" >
+							<iewc:Tab Text="选项" DefaultImageUrl="../../Images/Pub/Option.gif" SelectedImageUrl="../../Images/Pub/Option.gif"
+								HoverImageUrl="../../Images/Pub/Option.gif"></iewc:Tab>
+							<iewc:TabSeparator></iewc:TabSeparator>
+							<iewc:Tab Text="报表" DefaultImageUrl="../../Images/Pub/Rpts.ico" SelectedImageUrl="../../Images/Pub/Rpts.ico"
+								></iewc:Tab>
+							<iewc:TabSeparator></iewc:TabSeparator>
+							<iewc:Tab Text="柱状图" DefaultImageUrl="../../Images/Pub/Histogram.ico" SelectedImageUrl="../../Images/Pub/Histogram.ico"
+								HoverImageUrl="../../Images/Pub/Histogram.ico"></iewc:Tab>
+							<iewc:TabSeparator></iewc:TabSeparator>
+							<iewc:Tab Text="折线图" DefaultImageUrl="../../Images/Pub/Pie.ico" SelectedImageUrl="../../Images/Pub/Pie.ico"
+								HoverImageUrl="../../Images/Pub/Pie.ico"></iewc:Tab>
+							<iewc:TabSeparator></iewc:TabSeparator>
+							<iewc:Tab Text="饼图" DefaultImageUrl="../../Images/Pub/ZX.ico" SelectedImageUrl="../../Images/Pub/ZX.ico"
+								HoverImageUrl="../../Images/Pub/ZX.ico"></iewc:Tab>
+						</cc1:BPTabStrip>
+					</TD>
+				</TR>
+				<TR align="left">
+					<TD align="left"  valign="top">
+						<cc1:BPmultipage id="BPMultiPage1" runat="server" Width="100%" Height="800px" BorderWidth="2px">
+							<IEWC:PAGEVIEW id="PG1" Width="100%">
+								<uc1:UCRpt id="UCRptOpention" runat="server"></uc1:UCRpt>
+							</IEWC:PAGEVIEW>
+							<IEWC:PAGEVIEW id="PG2" Width="100%" >
+									<uc1:UCRpt id="UCRpt1" runat="server"></uc1:UCRpt> 
+							</IEWC:PAGEVIEW>
+							<IEWC:PAGEVIEW id="PG3" Width="100%" >
+									<uc1:UCRpt id="UCRptCol" runat="server"></uc1:UCRpt> 
+							</IEWC:PAGEVIEW>
+							<IEWC:PAGEVIEW id="PG4" Width="100%" >
+									<uc1:UCRpt id="UCRptLine" runat="server"></uc1:UCRpt> 
+							</IEWC:PAGEVIEW>
+							<IEWC:PAGEVIEW id="PG5" Width="100%" >
+									<uc1:UCRpt id="UCRptPie" runat="server"></uc1:UCRpt> 
+							</IEWC:PAGEVIEW>
+						</cc1:BPmultipage>
+					</TD>
+				</TR>
+			</TABLE>
+			</FONT>
+		</form>
+	</body>
+</HTML>

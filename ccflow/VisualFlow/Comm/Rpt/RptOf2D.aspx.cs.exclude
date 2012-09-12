@@ -1,0 +1,346 @@
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using Microsoft.Web.UI.WebControls;
+using BP.Rpt;
+using BP.En;
+using BP.DA;
+using BP.Web.Controls;
+
+namespace BP.Web.Comm.Rpt
+{
+	/// <summary>
+	/// GEnsNum 的摘要说明。
+	/// </summary>
+    public partial  class GEnsNum : PageBase
+	{
+		#region attr
+		public bool IsChart
+		{
+			get
+			{
+				if (this.DDL_D3.SelectedItemStringVal=="rpt")
+					return false;
+				else
+					return true;
+			}
+		}
+        public string EnsName
+        {
+            get
+            {
+                return "BP.WF.Nodes";
+                return this.Request.QueryString["EnsName"];
+            }
+        }
+        private Entity _HisEn = null;
+        /// <summary>
+        /// 报表描述实体。
+        /// </summary>
+        public Entity HisEn
+        {
+            get
+            {
+                if (_HisEn == null)
+                {
+                    try
+                    {
+                        Entities ens = (Entities)DA.ClassFactory.GetEns(this.EnsName);
+                        _HisEn = ens.GetNewEntity;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+                return _HisEn;
+            }
+        }
+		/// <summary>
+		/// 
+		/// </summary>
+		public DDL DDL_D1
+		{
+			get
+			{
+				return this.ToolBar1.GetDDLByID("DDL_D1");
+			}
+		}
+        public DDL DDL_D2
+		{
+			get
+			{
+				return this.ToolBar1.GetDDLByID("DDL_D2");
+			}
+		}
+        public DDL DDL_D3
+		{
+			get
+			{
+				return this.ToolBar1.GetDDLByKey("DDL_D3");
+			}
+		}
+		#endregion
+
+		public TB TB_Width
+		{
+			get
+			{
+				return this.ToolBar1.GetTBByID("TB_Width");
+			}
+		}
+        public TB TB_Height
+        {
+            get
+            {
+                return this.ToolBar1.GetTBByID("TB_Height");
+            }
+        }
+		/// <summary>
+		/// CB_ShowRate
+		/// </summary>
+        public CheckBox CB_Rate
+        {
+            get
+            {
+                return this.ToolBar2.GetCBByID("CB_Rate");
+            }
+        }
+	
+		private void Page_Load(object sender, System.EventArgs e)
+		{
+			//this.ToolBar2.ButtonClick += new System.EventHandler(this.ToolBar2_ButtonClick);
+
+            if (this.IsPostBack == false)
+            {
+                //this.ToolBar2.InitByMap(false,HisRpt3D.HisAttrsOfSearch,this.HisRpt3D.HisFKSearchAttrs,null); 
+                // 根据
+                //this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
+
+                //  this.ToolBar2.InitByMapV2(HisRpt2DNum.IsShowSearchKey,HisRpt2DNum.HisAttrsOfSearch,this.HisRpt2DNum.HisFKSearchAttrs,null);
+
+                this.ToolBar1.AddLab("Lab_ChoseD", "纬度");
+                this.ToolBar1.AddDDL("DDL_D1");
+
+                this.ToolBar1.AddLab("Lab_ChoseNum", "数值");
+                this.ToolBar1.AddDDL("DDL_D2");
+
+                this.ToolBar1.AddLab("Lab_ChoseChart", "方式");
+                this.ToolBar1.AddDDL("DDL_D3");
+
+                this.ToolBar1.AddLab("Lab_ChoseWidth", "宽度");
+                this.ToolBar1.AddTB("TB_Width", "4");
+
+                this.ToolBar1.AddLab("Lab_ChoseHeight", "高度");
+                this.ToolBar1.AddTB("TB_Height", "4");
+
+                this.TB_Height.Text = "500";
+                this.TB_Width.Text = "800";
+
+                CheckBox cb = new CheckBox();
+                cb.ID = "CB_Rate";
+                cb.Text = "显示百分比";
+                this.ToolBar2.Add(cb);
+
+                this.ToolBar1.AddSpt("sptD1");
+                this.ToolBar1.AddBtn(NamesOfBtn.Help);
+                this.BindToolBarDDL();
+                this.Bind();
+            }
+
+			this.DDL_D1.SelectedIndexChanged+=new EventHandler(DDL_SelectedIndexChanged);
+			this.DDL_D2.SelectedIndexChanged+=new EventHandler(DDL_SelectedIndexChanged);
+			this.DDL_D3.SelectedIndexChanged+=new EventHandler(DDL_SelectedIndexChanged);
+		}
+
+		/// <summary>
+		/// BindToolBarDDL
+		/// </summary>
+        public void BindToolBarDDL()
+        {
+            // add 分组列
+
+            if (this.HisEn.EnMap..AttrsOfD1.Count == 0)
+                throw new Exception("分组列的属性不能为0 .");
+            foreach (Attr attrDd in this.HisRpt2DNum.AttrsOfD1)
+            {
+                DDL_D1.Items.Add(new ListItem(attrDd.Desc, attrDd.Key));
+            }
+
+            // 增加 数值 列 。 
+            foreach (DAttr attrDd in this.HisRpt2DNum.DAttrs)
+            {
+                DDL_D2.Items.Add(new ListItem(attrDd.Attr.Desc, attrDd.Attr.Key));
+            }
+
+            DDL_D3.Items.Add(new ListItem("报表", "rpt"));
+            DDL_D3.Items.Add(new ListItem("柱状图", "a"));
+            DDL_D3.Items.Add(new ListItem("折线图", "b"));
+            DDL_D3.Items.Add(new ListItem("饼图", "c"));
+        }
+
+		#region Web 窗体设计器生成的代码
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: 该调用是 ASP.NET Web 窗体设计器所必需的。
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// 设计器支持所需的方法 - 不要使用代码编辑器修改
+		/// 此方法的内容。
+		/// </summary>
+		private void InitializeComponent()
+		{    
+			this.Load += new System.EventHandler(this.Page_Load);
+		}
+		#endregion
+
+		private void ToolBar2_ButtonClick(object sender, System.EventArgs e)
+		{
+			
+			ToolbarButton btn  = (ToolbarButton)sender;
+			switch(btn.ID)
+			{
+				case NamesOfBtn.Help:
+					//this.WinOpen("Help.htm");
+					break;
+				case NamesOfBtn.Search:					
+					this.Bind();
+					break;
+				default:
+					this.Bind();
+					break;
+			}
+		}
+		public void Bind()
+		{
+			if (this.IsChart)
+			{
+				this.BindRptOfG();
+			}
+			else
+			{
+				this.BindRptOfTable();
+			}
+		}
+		private void DDL_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ToolbarDDL ddl = (ToolbarDDL)sender;
+			switch(ddl.ID)
+			{
+				case "DDL_D1": //删除2，3纬度的中的项目。
+					break;
+				case "DDL_D2":				 
+					break;
+				case "DDL_D3":					 
+					break;
+				case "DDL_D4":					
+					break;
+				default:
+					throw new Exception("error "+ ddl.ID);
+			}
+			this.Bind();
+		}
+		public RptEntitiesNoNameWithNum GenerRpt()
+		{
+			EntitiesNoName d1 = this.HisRpt2DNum.GetDEns( this.DDL_D1.SelectedItemStringVal );
+			//d1.RetrieveAll();
+
+			string d1Field=this.HisRpt2DNum.HisEn.EnMap.GetAttrByKey( this.DDL_D1.SelectedItemStringVal).Field  ; 
+			string d2Field=this.HisRpt2DNum.HisEn.EnMap.GetAttrByKey( this.DDL_D2.SelectedItemStringVal ).Field  ; 
+			string table=this.HisRpt2DNum.HisEn.EnMap.PhysicsTable;
+
+			string sql="";
+			string obj="" ; //定义对此列的分析方法。
+			DAttr dattr =this.HisRpt2DNum.DAttrs.GetDAttrByKey(this.DDL_D2.SelectedItemStringVal) ; 
+			switch(dattr.WorkWay)
+			{
+				case WorkWay.Sum:
+					obj="SUM( "+d2Field+" )";
+					break;
+				case WorkWay.Avg:
+					obj="AVG( "+d2Field+" )";
+					break;
+				case WorkWay.Count:
+					obj="Count( "+d2Field+" )";
+					break;
+				case WorkWay.Self:
+					obj=dattr.Tag;
+					break;
+				default:
+					break;
+			}
+
+            //sql="SELECT "+d1Field+", "+obj+" FROM "+
+            //    table +" "+this.ToolBar2.InitTableSqlByEns(this.HisRpt2DNum.HisEns,this.HisRpt2DNum.HisAttrsOfSearch,this.HisRpt2DNum.HisFKSearchAttrs) +
+            //    " GROUP BY "+d1Field;
+
+            sql="SELECT "+d1Field+", "+obj+" FROM "+ table +"     GROUP BY "+d1Field;
+
+			//this.Response.Write(sql);
+			DataTable dt = DBAccess.RunSQLReturnTable(sql);
+
+			//RptEntitiesNoNameWithNum rpt = new RptEntitiesNoNameWithNum(d1,dt,"RptOf3DDtl.aspx");
+			RptEntitiesNoNameWithNum rpt = new RptEntitiesNoNameWithNum(d1,dt,"RptOf3D2DDtl.aspx");
+
+			if (dattr.IsCutIfIsZero)
+				rpt.CutIsZero();
+		
+			rpt.LeftTitle = HisRpt2DNum.LeftTitle;
+		
+			rpt.Title=this.HisRpt2DNum.Title.Replace("@xyer",this.DDL_D2.SelectedItem.Text) ;
+			return rpt;
+		}
+		/// <summary>
+		/// 显示报表。
+		/// </summary>
+		public void BindRptOfTable()
+		{
+			this.UCRpt1.BindRpt(this.GenerRpt(),this.DDL_D2.SelectedItem.Text,this.CB_Rate.Checked );
+		}
+		/// <summary>
+		/// BindRptOfG
+		/// </summary>
+		public void BindRptOfG()
+		{
+			try
+			{
+				RptEntitiesNoNameWithNum rpt =this.GenerRpt();
+
+				int Height=int.Parse(this.TB_Height.Text) ;
+				int width=int.Parse(this.TB_Width.Text) ;
+				//rpt.Author=
+				rpt.CellUrlTarget="ss";
+				rpt.Title=this.HisRpt2DNum.Title.Replace("@xyer",this.DDL_D2.SelectedItem.Text) ;
+				if (this.DDL_D3.SelectedItemStringVal=="a")
+				{
+					this.UCGraphics1.BindHistogram(rpt, width, Height) ;
+				}
+				else if (this.DDL_D3.SelectedItemStringVal=="b" )
+				{
+					this.UCGraphics1.BindLine(rpt, width, Height );
+				}
+				else
+				{
+					this.UCGraphics1.BindPie(rpt,width, Height);
+				}
+			}
+			catch(Exception ex)
+			{
+				this.ResponseWriteRedMsg(ex);
+			}
+
+		}
+	}
+}

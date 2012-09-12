@@ -1,0 +1,41 @@
+<%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
+<%@ Page language="c#" CodeFile="RptOf3DDtlV2.aspx.cs" AutoEventWireup="false" Inherits="BP.Web.Comm.Rpt.RptOf3DDtlV2" %>
+<%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<title>通用3维报表数据挖掘</title>
+		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" Content="C#">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<LINK href="../Style.css" type="text/css" rel="stylesheet">
+		<script language="JavaScript" src="../JScript.js"></script>
+		<script language="JavaScript" src="../Menu.js"></script>
+		<LINK href="../Style.css" type="text/css" rel="stylesheet">
+		<LINK href="../Menu.css" type="text/css" rel="stylesheet">
+	</HEAD>
+	<body  onclick="HideMenu( 'WebMenu1' )" onkeypress="Esc()">
+		<form id="Form1" method="post" runat="server">
+			<FONT face="宋体">
+				<TABLE id="Table1" style="Z-INDEX: 101; LEFT: 8px; POSITION: absolute; TOP: 8px" cellSpacing="1"
+					cellPadding="1" width="300" border="1">
+					<TR>
+						<TD>
+							<cc1:BPToolBar id="BPToolBar1" runat="server"></cc1:BPToolBar></TD>
+					</TR>
+					<TR>
+						<TD>
+							<cc1:DG id="DG1" runat="server" PageSize="15"></cc1:DG></TD>
+					</TR>
+					<TR>
+						<TD></TD>
+					</TR>
+				</TABLE>
+				<cc1:WebMenu id="WebMenu1" style="Z-INDEX: 102; LEFT: 496px; POSITION: absolute; TOP: 528px"
+					runat="server" Width="152px"></cc1:WebMenu>
+			</FONT>
+		</form>
+	</body>
+</HTML>
