@@ -665,15 +665,22 @@ namespace BP.En
         /// <returns></returns>
         public bool GetValBooleanByKey(string key)
         {
-            if (this.GetValStringByKey(key).ToUpper() == "FALSE")
+            string s = this.GetValStrByKey(key);
+            if (this.GetValStrByKey(key) == null)
+            {
+                s = this.EnMap.GetAttrByKey(key).DefaultVal.ToString();
+            }
+            if (s.ToUpper() == "FALSE")
                 return false;
-            if (this.GetValStringByKey(key).ToUpper() == "TRUE")
+            if (s.ToUpper() == "TRUE")
                 return true;
-            if (int.Parse(this.GetValStringByKey(key)) == 0)
+
+            if (int.Parse(s) == 0)
                 return false;
             else
                 return true;
         }
+
         public bool GetValBooleanByKey(string key, bool defval)
         {
             try

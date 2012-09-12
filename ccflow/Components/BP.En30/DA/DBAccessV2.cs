@@ -2520,7 +2520,7 @@ namespace BP.DA
                 ps = new Paras();
 
             object obj = DBAccess.RunSQLReturnVal(sql, ps);
-            if (obj == DBNull.Value )
+            if (obj == DBNull.Value || obj ==null )
                 return null;
             else
                 return obj.ToString();
