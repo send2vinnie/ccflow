@@ -10,7 +10,7 @@
         window.location.href = 'MyFlow' + pageid + '.aspx?FK_Flow=' + fk_flow + v;
     }
     function WinOpenIt(url) {
-        var newWindow = window.open(url, 'newwindow', 'height=600,width=850,top=50,left=50,toolbar=no,menubar=no,scrollbars=no, resizable=yes,location=no, status=no');
+        var newWindow = window.open(url, 'newwindow', 'height=600,width=850,top=50,left=50,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no');
         newWindow.focus();
         return;
     }
