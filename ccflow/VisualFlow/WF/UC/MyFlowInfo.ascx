@@ -2,12 +2,7 @@
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc4" %>
 <%@ Register src="MyFlowInfoWap.ascx" tagname="MyFlowInfoWap" tagprefix="uc3" %>
-<%--<script>
- if (window.opener && !window.opener.closed) {
-        window.opener.location.href = window.opener.location.href;
-        window.opener.top.leftFrame.location.href = window.opener.top.leftFrame.location.href;
-    }
-</script>--%>
+
 <br>
 <div align="center">
 <span >
