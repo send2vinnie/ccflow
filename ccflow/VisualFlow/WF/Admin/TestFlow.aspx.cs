@@ -157,6 +157,9 @@ public partial class WF_Admin_TestFlow : WebPage
             emps.RetrieveInSQL("select fk_emp from wf_NodeEmp WHERE fk_node=" + int.Parse(this.FK_Flow + "01") + " ");
 
         if (emps.Count == 0)
+            emps.RetrieveInSQL("select no from port_emp where fk_dept in (select fk_dept from wf_nodeDept where fk_node='"+nodeid+"') ");
+
+        if (emps.Count == 0)
         {
             this.Ucsys1.AddMsgOfWarning("Error",
                 this.ToE("StartError", "错误原因 <h2>@1，可能是您没有正确的设置岗位、部门、人员。<br>@2，可能是没有给开始节点设置工作岗位。</h2>"));
