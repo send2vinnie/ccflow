@@ -6,8 +6,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <script>
     if (window.opener && !window.opener.closed) {
+        try{
         window.opener.location.href = window.opener.location.href;
         window.opener.top.leftFrame.location.href = window.opener.top.leftFrame.location.href;
+        }catch
+        {
+        }
     }
 </script>
 <br>
@@ -18,7 +22,6 @@
     <br />
     <br />
     <br />
-
 </td>
 </tr>
 </table>
