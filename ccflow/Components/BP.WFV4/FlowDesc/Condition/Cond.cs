@@ -693,7 +693,6 @@ namespace BP.WF
             foreach (Cond en in this)
                 en.WorkID = workid;
         }
-
         public string ConditionDesc
         {
             get

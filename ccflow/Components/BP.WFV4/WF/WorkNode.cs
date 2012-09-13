@@ -3600,7 +3600,6 @@ namespace BP.WF
                     /* 如果流程完成 */
                     string overMsg = this.HisWorkFlow.DoFlowOver(stopMsg);
                     this.IsStopFlow = true;
-
                     this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                         this.HisNode.NodeID, this.HisNode.Name, "流程结束");
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;

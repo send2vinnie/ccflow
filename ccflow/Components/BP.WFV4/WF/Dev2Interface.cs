@@ -149,6 +149,7 @@ namespace BP.WF
         #endregion
 
         #region 数据接口
+
         #region 获取流程事例的轨迹图
         /// <summary>
         /// 获取流程事例的轨迹图
@@ -210,17 +211,21 @@ namespace BP.WF
         /// <returns>bp.wf.flows</returns>
         public static Flows DB_GenerCanStartFlowsOfEntities()
         {
-            return DB_GenerCanStartFlowsOfEntities(WebUser.No);
+            return DB_GenerCanStartFlowsOfEntities(WebUser.No,WebUser.FK_Dept);
         }
-        public static Flows DB_GenerCanStartFlowsOfEntities(string userNo)
+        public static Flows DB_GenerCanStartFlowsOfEntities(string userNo, string userDept)
         {
+            // 按岗位计算.
             string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
-            string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
-            //   string sql3 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
-            // System.Web.cont
+            sql+= " UNION  "; // 按指定的人员计算.
+            sql+=" SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+            sql += " UNION  "; // 按岗位计算.
+            sql += " SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept='" + WebUser.FK_Dept + "' ) ";
+
+           
             Flows fls = new Flows();
             BP.En.QueryObject qo = new BP.En.QueryObject(fls);
-            qo.AddWhereInSQL("No", sql + sql2);
+            qo.AddWhereInSQL("No", sql);
             qo.addAnd();
             qo.AddWhere(FlowAttr.IsOK, true);
             qo.addAnd();
@@ -243,9 +248,9 @@ namespace BP.WF
         /// </summary>
         /// <param name="userNo"></param>
         /// <returns></returns>
-        public static DataTable DB_GenerCanStartFlowsOfDataTable(string userNo)
+        public static DataTable DB_GenerCanStartFlowsOfDataTable(string userNo,string userDept)
         {
-            return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();
+            return DB_GenerCanStartFlowsOfEntities(userNo, userDept).ToDataTableField();
         }
         /// <summary>
         /// 获取(同步)合流点上的子线程
@@ -575,9 +580,9 @@ namespace BP.WF
         /// <param name="flowNo"></param>
         /// <param name="fk_emp"></param>
         /// <returns></returns>
-        public static bool Flow_IsCanStartThisFlow(string flowNo, string fk_emp)
+        public static bool Flow_IsCanStartThisFlow(string flowNo, string fk_emp,string userDept)
         {
-            Flows fls = DB_GenerCanStartFlowsOfEntities(fk_emp);
+            Flows fls = DB_GenerCanStartFlowsOfEntities(fk_emp,userDept);
             return fls.Contains(FlowAttr.No, flowNo);
         }
         /// <summary>
