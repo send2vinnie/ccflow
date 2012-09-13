@@ -530,6 +530,11 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         {
         }
 
+        /* 执行同步*/
+        string sqls="UPDATE WF_Node SET IsCCFlow=0";
+        sqls += "@UPDATE WF_Node  SET IsCCFlow=1 WHERE NodeID IN (SELECT NODEID FROM WF_Cond a WHERE a.NodeID= NodeID AND CondType=1 )";
+        BP.DA.DBAccess.RunSQLs(sqls);
+
         string sql = "UPDATE WF_Cond SET ConnJudgeWay=" + (int)cond.HisConnJudgeWay + ", DataFrom=" + (int)ConnDataFrom.Form + " WHERE NodeID=" + cond.NodeID + "  AND FK_Node=" + cond.FK_Node + " AND ToNodeID=" + this.ToNodeID;
         switch (this.HisCondType)
         {
