@@ -2560,6 +2560,11 @@ namespace BP.WF
 
         protected override bool beforeDelete()
         {
+            //判断是否可以被删除.
+            DataTable dt = DBAccess.RunSQLReturnTable("SELECT COUNT(*) FROM WF_GenerWorkerlist WHERE FK_Node="+this.NodeID);
+            if (dt.Rows.Count != 0)
+                throw new Exception("@该节点有待办工作存在，您不能删除它.");
+
             // 删除它的节点。
             BP.Sys.MapData md = new BP.Sys.MapData();
             md.No = "ND" + this.NodeID;
