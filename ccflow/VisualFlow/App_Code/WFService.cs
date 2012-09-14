@@ -32,9 +32,9 @@ public class WFService : System.Web.Services.WebService
     /// <param name="userNo">用户编号</param>
     /// <returns>datatable</returns>
     [WebMethod]
-    public DataTable DB_GenerCanStartFlowsOfDataTable(string userNo)
+    public DataTable DB_GenerCanStartFlowsOfDataTable(string userNo,string userDept)
     {
-        return Dev2Interface.DB_GenerCanStartFlowsOfDataTable(userNo);
+       return Dev2Interface.DB_GenerCanStartFlowsOfDataTable(userNo,userDept);
     }
     /// <summary>
     /// 获取当前工作的列表
