@@ -901,7 +901,7 @@ namespace BP.WF
 
             DBAccess.RunSQL("UPDATE WF_Node SET FlowName = (SELECT Name FROM WF_Flow WHERE NO=WF_Node.FK_Flow)");
             DBAccess.RunSQL("DELETE WF_Direction WHERE Node=ToNode");
-            
+
             this.NumOfBill = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM WF_BillTemplate WHERE NodeID IN (select NodeID from WF_Flow WHERE no='" + this.No + "')");
             this.NumOfDtl = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM Sys_MapDtl WHERE FK_MapData='ND" + int.Parse(this.No) + "Rpt'");
             this.DirectUpdate();
@@ -928,14 +928,12 @@ namespace BP.WF
                 {
                     nd.RepareMap();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw new Exception(nd.Name + " - " + ex.Message);
                 }
-                if (DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM WF_Cond WHERE NodeID='"+nd.NodeID+"' AND CondType=1") == 0)
-                    nd.IsCCFlow = false;
-                else
-                    nd.IsCCFlow = true;
+
+
 
                 DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + nd.Name + "' WHERE No='ND" + nd.NodeID + "'");
                 try
@@ -974,7 +972,7 @@ namespace BP.WF
                 #region 对访问规则进行检查
                 switch (nd.HisDeliveryWay)
                 {
-                   
+
                     case DeliveryWay.ByStation:
                         if (nd.NodeStations.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按岗位，但是您没有为节点绑定岗位。</font>";
@@ -996,7 +994,7 @@ namespace BP.WF
                         {
                             if (DataType.IsNumStr(nd.RecipientSQL) == false)
                             {
-                                rpt += "<font color=red>您没有设置指定岗位的节点编号，目前设置的为{"+nd.RecipientSQL+"}</font>";
+                                rpt += "<font color=red>您没有设置指定岗位的节点编号，目前设置的为{" + nd.RecipientSQL + "}</font>";
                                 //Node mynd = new Node(int.Parse(nd.RecipientSQL));
                                 //if (mynd.FK_Flow != this.No)
                                 //{
@@ -1021,7 +1019,7 @@ namespace BP.WF
                             }
                             catch (Exception ex)
                             {
-                                rpt += "<font color=red>您设置了该节点的访问规则是按SQL查询,执行此语句错误."+ex.Message+"</font>";
+                                rpt += "<font color=red>您设置了该节点的访问规则是按SQL查询,执行此语句错误." + ex.Message + "</font>";
                             }
                         }
                         break;
@@ -1088,7 +1086,7 @@ namespace BP.WF
                 else
                 {
                     msg += this.ToE("Station", "岗位") + "：";
-                    foreach (NodeStation  st in nd.NodeStations)
+                    foreach (NodeStation st in nd.NodeStations)
                     {
                         msg += st.FK_StationT + "、";
                         rpt += st.FK_StationT + "、";
@@ -1213,6 +1211,11 @@ namespace BP.WF
             }
             #endregion
 
+            string sqls = "UPDATE WF_Node SET IsCCFlow=0";
+            sqls += "@UPDATE WF_Node  SET IsCCFlow=1 WHERE NodeID IN (SELECT NODEID FROM WF_Cond a WHERE a.NodeID= NodeID AND CondType=1 )";
+            BP.DA.DBAccess.RunSQLs(sqls);
+
+
             msg += "<br><a href='../../DataUser/FlowDesc/" + this.Name + ".htm' target=_s>" + this.ToE("DesignRpt", "设计报告") + "</a>";
             msg += "<hr><b> </b> &nbsp; <br>" + DataType.CurrentDataTime + "<br><br><br>";
             rpt += "\r\n</td></tr>\r\n</table>\r\n</body>\r\n</html>";
@@ -1227,7 +1230,6 @@ namespace BP.WF
             }
             catch
             {
-
             }
 
             msg += "<hr>" + this.ToE("CheckBaseData", "开始检查基础数据是否完整") + "<hr>";
