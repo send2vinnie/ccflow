@@ -114,6 +114,15 @@ namespace SMSServices
                 string paras = dr["Paras"].ToString();
                 string starter = dr["Starter"].ToString();
                 string fk_flow = dr["FK_Flow"].ToString();
+
+                string startDT = dr[TaskAttr.StartDT].ToString();
+                if (string.IsNullOrEmpty(startDT) == false)
+                {
+                    /*如果设置了发起时间,就检查当前时间是否与现在的时间匹配.*/
+                    if (DateTime.Now.ToString("yyyy-MM-dd HH:mm").Contains(startDT) == false)
+                        continue;
+                }
+
                 Flow fl = new Flow(fk_flow);
                 this.SetText("开始执行(" + starter + ")发起(" + fl.Name + ")流程.");
                 try
