@@ -116,22 +116,30 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         this.AddTREnd();
       
 
-        int i = 0;
-        bool is1 = false;
+        int i = 1;
         string fk_sort = null;
+        int idx = 0;
+        int gIdx = 0;
         foreach (Flow fl in fls)
         {
             if (fl.HisFlowSheetType == FlowSheetType.DocFlow)
                 continue;
-
-            i++;
-            is1 = this.AddTR(is1);
-            this.AddTDIdx(i);
+            idx++;
             if (fl.FK_FlowSort == fk_sort)
+            {
+                this.AddTR("ID='" + gIdx + "_" + idx + "'");
+                this.AddTDIdx(i++);
                 this.AddTD();
+            }
             else
-                this.AddTDB(fl.FK_FlowSortText);
-
+            {
+                gIdx++;
+                this.AddTDB("colspan=5 class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
+                this.AddTREnd();
+                fk_sort = fl.FK_FlowSort;
+                continue;
+            }
+            
             fk_sort = fl.FK_FlowSort;
             if (fl.StartListUrl == "")
             {

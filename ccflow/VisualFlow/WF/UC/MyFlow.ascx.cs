@@ -450,7 +450,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
        #region 判断权限
         if (this.IsPostBack == false)
         {
-            if (currND.IsStartNode == false && WorkerLists.CheckUserPower(this.WorkID, WebUser.No) == false)
+            if (currND.IsStartNode == false && Dev2Interface.Flow_CheckIsCanDoCurrentWork(this.WorkID, WebUser.No) == false)
             {
                 this.ToolBar1.Clear();
                 this.ToolBar1.Add("&nbsp;");
