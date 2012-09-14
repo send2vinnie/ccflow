@@ -958,6 +958,10 @@ namespace BP.Sys
                                     continue;
                                 dtl.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
+                            //if (dtl.IsExit==true)
+                            //{
+                            //    dtl.No="ND"
+                            //}
                             dtl.Insert();
                         }
                         break;

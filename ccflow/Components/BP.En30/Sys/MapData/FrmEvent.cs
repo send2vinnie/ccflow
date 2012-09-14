@@ -339,17 +339,23 @@ namespace BP.Sys
     {
         public string DoEventNode(string dotype, Entity en)
         {
+           return DoEventNode(dotype,en,null);
+        }
+        public string DoEventNode(string dotype, Entity en, string atPara)
+        {
             if (this.Count == 0)
                 return null;
-            return _DoEventNode(dotype, en);
+            return _DoEventNode(dotype, en, atPara);
         }
+
         /// <summary>
         /// 执行事件，事件标记是 EventList.
         /// </summary>
-        /// <param name="dotype"></param>
-        /// <param name="en"></param>
+        /// <param name="dotype">执行类型</param>
+        /// <param name="en">数据实体</param>
+        /// <param name="atPara">特殊的参数格式@key=value 方式.</param>
         /// <returns></returns>
-        private string _DoEventNode(string dotype, Entity en)
+        private string _DoEventNode(string dotype, Entity en, string atPara)
         {
             if (this.Count == 0)
                 return null;
@@ -430,6 +436,13 @@ namespace BP.Sys
                 doc += "&FK_Unit=" + WebUser.FK_Unit;
             }
             #endregion 处理执行内容
+
+            if (atPara != null)
+            {
+                AtPara ap = new AtPara(atPara);
+                foreach (string s in ap.HisHT.Keys)
+                    doc = doc.Replace("@" + s, ap.GetValStrByKey(s));
+            }
 
             switch (nev.HisDoType)
             {

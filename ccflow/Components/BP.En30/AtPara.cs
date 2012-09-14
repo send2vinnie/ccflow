@@ -77,7 +77,6 @@ namespace BP.DA
         public void SetVal(string key, string val)
         {
             this.HisHT.Add(key, val);
-           
         }
         public string GetValStrByKey(string key)
         {
