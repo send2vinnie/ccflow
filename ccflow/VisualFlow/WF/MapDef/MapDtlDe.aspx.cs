@@ -442,7 +442,10 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         string val = ddlPerant.SelectedItemStringVal;
 
                         string valC1 = ddlChild.SelectedItemStringVal;
+                       
+                          
                         DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
+
                         ddlChild.Items.Clear();
                         foreach (DataRow dr in dt.Rows)
                         {

@@ -14,4 +14,10 @@
         newWindow.focus();
         return;
     }
+
+    function WinOpen(url, winName) {
+        var newWindow = window.open(url, winName, 'height=800,width=1030,top=' + (window.screen.availHeight - 800) / 2 + ',left=' + (window.screen.availWidth - 1030) / 2 + ',scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');
+        newWindow.focus();
+        return;
+    }
 </script>

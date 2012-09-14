@@ -226,7 +226,7 @@ function DDLFullCtrl(e, ddlChild, fk_mapExt) {
 /* 级联下拉框*/
 function DDLAnsc(e, ddlChild, fk_mapExt) {
     GenerPageKVs();
-    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "KVs" : kvs };
+    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "KVs": kvs };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -271,6 +271,7 @@ function DDLAnsc(e, ddlChild, fk_mapExt) {
                 mylen--;
             }
             if (isInIt == false) {
+
                 $("#" + ddlChild).append("<option value='" + oldVal + "' selected='selected' >*请选择</option");
             }
             //  alert(oldVal);
@@ -283,6 +284,7 @@ function DDLAnsc(e, ddlChild, fk_mapExt) {
         }
     });
 }
+
 
 function FullM2M(key, fk_mapExt) {
     //alert(key);
