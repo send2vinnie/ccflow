@@ -6,11 +6,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <script>
     if (window.opener && !window.opener.closed) {
-        try{
-        window.opener.location.href = window.opener.location.href;
-        window.opener.top.leftFrame.location.href = window.opener.top.leftFrame.location.href;
-        }catch
-        {
+        if (window.opener.name == "main") {
+            window.opener.location.href = window.opener.location.href;
+            window.opener.top.leftFrame.location.href = window.opener.top.leftFrame.location.href;
         }
     }
 </script>
