@@ -736,6 +736,25 @@ namespace BP.WF
                 return false;
             return true;
         }
+        /// <summary>
+        /// 检查当前人员是否有查看指定流程的权限
+        /// 2012-09-12 for lijian
+        /// </summary>
+        /// <param name="workID">工作ID</param>
+        /// <param name="userNo">用户编号</param>
+        /// <returns>返回是否可以查看</returns>
+        public static bool Flow_CheckIsCanViewCurrentWork(Int64 workID, string userNo)
+        {
+            string dbstr = SystemConfig.AppCenterDBVarStr;
+            Paras ps = new Paras();
+            ps.SQL = "SELECT COUNT(*) FROM WF_Track WHERE WorkID=" + dbstr + "WorkID AND (EmpFrom=" + dbstr + "user1 OR EmpTo=" + dbstr + "user2)";
+            ps.Add("WorkID", workID);
+            ps.Add("user1", userNo);
+            ps.Add("user2", userNo);
+            if (DBAccess.RunSQLReturnValInt(ps) == 0)
+                return false;
+            return true;
+        }
         #endregion 与流程有关的接口
 
         #region 工作有关接口
