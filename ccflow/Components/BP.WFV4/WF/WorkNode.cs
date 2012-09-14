@@ -1290,12 +1290,15 @@ namespace BP.WF
         public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isBackTracking)
         {
             //退回前事件
-            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnBefore, this.HisWork);
-           if (this.HisNode.FocusField != "")
-           {
-               // 把数据更新它。
-               this.HisWork.Update(this.HisNode.FocusField, "");
-           }
+
+            string atPara = "@ToNode=" + backtoNodeID;
+            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnBefore, this.HisWork, atPara);
+
+            if (this.HisNode.FocusField != "")
+            {
+                // 把数据更新它。
+                this.HisWork.Update(this.HisNode.FocusField, "");
+            }
 
             Node backToNode = new Node(backtoNodeID);
             switch (this.HisNode.HisNodeWorkType)
@@ -1345,14 +1348,14 @@ namespace BP.WF
 
             // 改变当前待办工作节点。
             ps = new Paras();
-            ps.SQL = "UPDATE WF_GenerWorkFlow  SET FK_Node=" + dbStr + "FK_Node,NodeName=" + dbStr + "NodeName WHERE  WorkID=" + dbStr+"WorkID";
+            ps.SQL = "UPDATE WF_GenerWorkFlow  SET FK_Node=" + dbStr + "FK_Node,NodeName=" + dbStr + "NodeName WHERE  WorkID=" + dbStr + "WorkID";
             ps.Add("FK_Node", backtoNodeID);
             ps.Add("NodeName", backToNode.Name);
             ps.Add("WorkID", this.WorkID);
             DBAccess.RunSQL(ps);
 
             ps = new Paras();
-             ps.SQL ="UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" +dbStr+"WorkID";
+            ps.SQL = "UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID";
             ps.Add("FK_Node", backtoNodeID);
             ps.Add("WorkID", this.WorkID);
             DBAccess.RunSQL(ps);
@@ -1372,7 +1375,7 @@ namespace BP.WF
             rw.Insert();
 
             // 加入track.
-            this.AddToTrack(ActionType.Return, wnOfBackTo.HisWork.Rec, wnOfBackTo.HisWork.RecText, 
+            this.AddToTrack(ActionType.Return, wnOfBackTo.HisWork.Rec, wnOfBackTo.HisWork.RecText,
                 backtoNodeID, wnOfBackTo.HisNode.Name, msg);
 
             try
@@ -1380,7 +1383,7 @@ namespace BP.WF
                 // 记录退回日志.
                 ReorderLog(backToNode, this.HisNode, rw);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log.DebugWriteWarning(ex.Message);
             }
@@ -1398,8 +1401,7 @@ namespace BP.WF
 
             //向他发送消息。
             WorkNode backWN = new WorkNode(this.WorkID, backtoNodeID);
-
-            if (Glo.IsEnableSysMessage ==true)
+            if (Glo.IsEnableSysMessage == true)
             {
                 WF.Port.WFEmp wfemp = new Port.WFEmp(wnOfBackTo.HisWork.Rec);
                 BP.TA.SMS.AddMsg(rw.MyPK, wfemp.No,
@@ -1410,7 +1412,7 @@ namespace BP.WF
             }
 
             //退回后事件
-            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnAfter, this.HisWork);
+            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnAfter, this.HisWork, atPara);
             return wnOfBackTo;
         }
         private string infoLog = "";
@@ -3594,7 +3596,7 @@ namespace BP.WF
                     return "工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
 
-                if ((this.HisNode.IsCCFlow && this.HisFlowCompleteConditions.IsPass))
+                if (this.HisNode.IsCCFlow && this.HisFlowCompleteConditions.IsPass)
                 {
                     string stopMsg = this.HisFlowCompleteConditions.ConditionDesc;
                     /* 如果流程完成 */

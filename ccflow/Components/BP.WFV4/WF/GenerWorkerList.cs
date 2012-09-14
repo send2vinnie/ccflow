@@ -553,48 +553,6 @@ namespace BP.WF
             qo.AddWhere(WorkerListAttr.FK_Flow, flowNo);
             qo.DoQuery();
         }
-        /// <summary>
-        /// 检查用户的权限
-        /// </summary>
-        /// <param name="workId"></param>
-        /// <param name="fk_emp"></param>
-        /// <returns></returns>
-        public static bool CheckUserPower(Int64 workId, string fk_emp)
-        {
-            if (workId == 0)
-                return true;
-
-            Paras ps = new Paras();
-            ps.SQL="SELECT c.RunModel FROM WF_GenerWorkFlow a , WF_GenerWorkerlist b, WF_Node c WHERE  b.FK_Node=c.NodeID AND a.workid=b.workid AND a.FK_Node=b.FK_Node  AND b.fk_emp="+SystemConfig.AppCenterDBVarStr+"FK_Emp AND b.IsEnable=1 AND a.workid="+SystemConfig.AppCenterDBVarStr+"WorkID";
-            ps.Add("FK_Emp", fk_emp);
-            ps.Add("WorkID", workId);
-
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(ps);
-            if (dt.Rows.Count == 0)
-                return false;
-
-            int i = int.Parse(dt.Rows[0][0].ToString());
-            RunModel rm = (RunModel)i;
-            switch (rm)
-            {
-                case RunModel.Ordinary:
-                    return true;
-                case RunModel.FL:
-                    return true;
-                case RunModel.HL:
-                    return true;
-                case RunModel.FHL:
-                    return true;
-                case RunModel.SubThread:
-                    return true;
-                default:
-                    break;
-            }
-
-            if (DBAccess.RunSQLReturnValInt(ps) == 0)
-                return false;
-            return true;
-        }
         #endregion
     }
 }

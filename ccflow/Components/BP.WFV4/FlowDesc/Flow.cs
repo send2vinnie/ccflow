@@ -284,6 +284,10 @@ namespace BP.WF
         /// 轨迹字段
         /// </summary>
         public const string AppType = "AppType";
+        /// <summary>
+        /// 顺序号
+        /// </summary>
+        public const string Idx = "Idx";
     }
     /// <summary>
     /// 流程
@@ -3205,6 +3209,8 @@ namespace BP.WF
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
                 map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
                 map.AddTBInt(FlowAttr.IsMD5, 0, "IsMD5", false, false);
+                map.AddTBInt(FlowAttr.Idx, 0, "显示顺序号(在发起列表中)",true, false);
+
 
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);
                 map.AddSearchAttr(FlowAttr.FlowRunWay);

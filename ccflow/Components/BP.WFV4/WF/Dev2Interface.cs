@@ -221,7 +221,6 @@ namespace BP.WF
             sql+=" SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
             sql += " UNION  "; // 按岗位计算.
             sql += " SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept='" + WebUser.FK_Dept + "' ) ";
-
            
             Flows fls = new Flows();
             BP.En.QueryObject qo = new BP.En.QueryObject(fls);
@@ -238,7 +237,7 @@ namespace BP.WF
                 qo.AddWhereIn("No", wfEmp.AuthorFlows);
             }
 
-            qo.addOrderBy("FK_FlowSort", "No");
+            qo.addOrderBy("FK_FlowSort", FlowAttr.Idx);
             qo.DoQuery();
             return fls;
         }
@@ -477,6 +476,7 @@ namespace BP.WF
             return DB_GenerRuningOfEntities(userNo).ToDataTableField();
         }
         #endregion 获取当前操作员的待办工作
+
         #endregion
 
         #region UI 接口
@@ -666,6 +666,75 @@ namespace BP.WF
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
             return wf.DoFlowOver(msg);
+        }
+        /// <summary>
+        /// 获取指定的workid 在运行到的节点编号
+        /// 2012-09-12 for lijian
+        /// </summary>
+        /// <param name="workID">需要找到的workid</param>
+        /// <returns>如果没有找到，就会抛出异常.</returns>
+        public static int Flow_GetCurrentNode(Int64 workID)
+        {
+            Paras ps = new Paras();
+            ps.SQL = "SELECT FK_Node FROM WF_GenerWorkFlow WHERE WorkID=" + SystemConfig.AppCenterDBVarStr + "@WorkID";
+            ps.Add("WorkID", workID);
+            return BP.DA.DBAccess.RunSQLReturnValInt(ps);
+        }
+        /// <summary>
+        /// 获取指定的workid 当前节点由哪些人可以执行.
+        /// 2012-09-12 for lijian
+        /// </summary>
+        /// <param name="workID">需要找到的workid</param>
+        /// <returns>返回当前处理人员列表.</returns>
+        public static DataTable Flow_GetWorkerList(Int64 workID)
+        {
+            Paras ps = new Paras();
+            ps.SQL = "SELECT * FROM WF_GenerWorkerList WHERE IsEnable=1 AND IsPass=0 AND WorkID=" + SystemConfig.AppCenterDBVarStr + "WorkID";
+            ps.Add("WorkID", workID);
+            return BP.DA.DBAccess.RunSQLReturnTable(ps);
+        }
+        /// <summary>
+        /// 检查当前人员是否有权限处理当前的工作.
+        /// 2012-09-12 for lijian
+        /// </summary>
+        /// <param name="workID">工作ID</param>
+        /// <param name="userNo">要判断的操作人员</param>
+        /// <returns>返回指定的人员是否有操作当前工作的权限</returns>
+        public static bool Flow_CheckIsCanDoCurrentWork(Int64 workID,string userNo)
+        {
+            if (workID == 0)
+                return true;
+
+            Paras ps = new Paras();
+            ps.SQL = "SELECT c.RunModel FROM WF_GenerWorkFlow a , WF_GenerWorkerlist b, WF_Node c WHERE  b.FK_Node=c.NodeID AND a.workid=b.workid AND a.FK_Node=b.FK_Node  AND b.fk_emp=" + SystemConfig.AppCenterDBVarStr + "FK_Emp AND b.IsEnable=1 AND a.workid=" + SystemConfig.AppCenterDBVarStr + "WorkID";
+            ps.Add("FK_Emp", userNo);
+            ps.Add("WorkID", workID);
+
+            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(ps);
+            if (dt.Rows.Count == 0)
+                return false;
+
+            int i = int.Parse(dt.Rows[0][0].ToString());
+            RunModel rm = (RunModel)i;
+            switch (rm)
+            {
+                case RunModel.Ordinary:
+                    return true;
+                case RunModel.FL:
+                    return true;
+                case RunModel.HL:
+                    return true;
+                case RunModel.FHL:
+                    return true;
+                case RunModel.SubThread:
+                    return true;
+                default:
+                    break;
+            }
+
+            if (DBAccess.RunSQLReturnValInt(ps) == 0)
+                return false;
+            return true;
         }
         #endregion 与流程有关的接口
 
