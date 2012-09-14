@@ -676,7 +676,7 @@ namespace BP.WF
         public static int Flow_GetCurrentNode(Int64 workID)
         {
             Paras ps = new Paras();
-            ps.SQL = "SELECT FK_Node FROM WF_GenerWorkFlow WHERE WorkID=" + SystemConfig.AppCenterDBVarStr + "@WorkID";
+            ps.SQL = "SELECT FK_Node FROM WF_GenerWorkFlow WHERE WorkID=" + SystemConfig.AppCenterDBVarStr + "WorkID";
             ps.Add("WorkID", workID);
             return BP.DA.DBAccess.RunSQLReturnValInt(ps);
         }
