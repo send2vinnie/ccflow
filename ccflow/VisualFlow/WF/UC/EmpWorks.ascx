@@ -1,12 +1,60 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="EmpWorks.ascx.cs" Inherits="WF_UC_EmpWorks" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
+	<script type="text/javascript" language="JavaScript" src="./../Scripts/Search.js" ></script>
     <div style="width:100%;" >
     <uc1:Pub ID="Pub1" runat="server" />
     </div>
     <script   type="text/javascript">
-        function GroupBarClick(rowIdx) {
+        var NS4 = (document.layers);
+        var IE4 = (document.all);
+        var win = window;
+        var n = 0;
+        function findInPage(str) {
 
+            alert(document.getElementById('string1'));
+            str = document.getElementById('string1').value;
+            alert(str);
+
+            var txt, i, found;
+            if (str == "")
+                return false;
+            if (NS4) {
+                if (!win.find(str))
+                    while (win.find(str, false, true))
+                        n++;
+                else
+                    n++;
+                if (n == 0)
+                    alert("对不起！没有你要找的内容。");
+            }
+            if (IE4) {
+                txt = win.document.body.createTextRange();
+                for (i = 0; i <= n && (found = txt.findText(str)) != false; i++) {
+                    txt.moveStart("character", 1);
+                    txt.moveEnd("textedit");
+                }
+                if (found) {
+                    txt.moveStart("character", -1);
+                    txt.findText(str);
+                    txt.select();
+                    txt.scrollIntoView();
+                    n++;
+                }
+                else {
+                    if (n > 0) {
+                        n = 0;
+                        findInPage(str);
+                    }
+                    else
+                        alert("对不起！没有你要找的内容。");
+                }
+            }
+            return false;
+        } 
+
+
+        function GroupBarClick(rowIdx) {
             var alt = document.getElementById('Img' + rowIdx).alert;
             var sta = 'block';
             if (alt == 'Max') {
