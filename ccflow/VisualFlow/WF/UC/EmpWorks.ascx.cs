@@ -66,8 +66,13 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     }
     public void BindList()
     {
-        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
+        if (this.GroupBy == "PRI")
+        {
+            this.BindList_PRI();
+            return;
+        }
 
+        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
         bool isPRI = Glo.IsEnablePRI;
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
@@ -80,7 +85,6 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         int colspan = 9;
         if (this.PageSmall != "")
             this.Pub1.AddBR();
-
         this.Pub1.AddTable("width='960px' align=center");
         this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
 
@@ -89,7 +93,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
 
         if (this.GroupBy != "FlowName")
-            this.Pub1.AddTDTitle( "<a href='"+this.PageID+".aspx?GroupBy=FlowName' >"+this.ToE("Flow", "流程")+"</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName' >" + this.ToE("Flow", "流程") + "</a>");
 
         if (this.GroupBy != "NodeName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "节点") + "</a>");
@@ -97,15 +101,13 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         if (this.GroupBy != "StarterName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName' >" + this.ToE("Starter", "发起人") + "</a>");
 
-        if (isPRI &&  this.GroupBy != "PRI")
+        if (isPRI)
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=PRI' >优先级</a>");
 
-        this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
-
-        //this.Pub1.AddTDTitle("发送人");
-        this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
-        this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
-        this.Pub1.AddTDTitle(this.ToE("Sta", "状态"));
+        this.Pub1.AddTDTitle("发起日期");
+        this.Pub1.AddTDTitle("接受日期");
+        this.Pub1.AddTDTitle("期限");
+        this.Pub1.AddTDTitle("状态");
         this.Pub1.AddTREnd();
 
         int i = 0;
@@ -119,35 +121,14 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 continue;
 
             gIdx++;
-            if (this.GroupBy != "PRI")
-            {
-                this.Pub1.AddTR();
-                if (this.GroupBy == "Rec")
-                    this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
-                else
-                    this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
-                this.Pub1.AddTREnd();
-            }
+
+            this.Pub1.AddTR();
+            if (this.GroupBy == "Rec")
+                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
             else
-            {
-                string s = null;
-                switch (g)
-                {
-                    case "0,":
-                        s = "<img src='./Img/Flag_Red.png' class=ImgPRI />高";
-                        break;
-                    case "1,":
-                        s = "<img src='./Img/Flag_Yellow.png' class=ImgPRI />中";
-                        break;
-                    case "2,":
-                    default:
-                        s = "<img src='./Img/Flag_Green.png' class=ImgPRI />低";
-                        break;
-                }
-                this.Pub1.AddTR();
-                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + s + "</b>");
-                this.Pub1.AddTREnd();
-            }
+                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
+            this.Pub1.AddTREnd();
+
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -172,22 +153,103 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (this.GroupBy != "StarterName")
                     this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
 
-                if (isPRI && this.GroupBy != "PRI")
+                if (isPRI)
+                    this.Pub1.AddTD("<img src='./Img/PRI/" + dr["PRI"].ToString() + ".png' class=ImgPRI />");
+
+                this.Pub1.AddTD(dr["RDT"].ToString());
+                this.Pub1.AddTD(dr["ADT"].ToString());
+                this.Pub1.AddTD(dr["SDT"].ToString());
+
+                DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
+                if (cdt >= mysdt)
                 {
-                    switch (dr["PRI"].ToString())
-                    {
-                        case "0":
-                            this.Pub1.AddTD("<img src='./Img/Flag_Red.png' class=ImgPRI />高");
-                            break;
-                        case "1":
-                            this.Pub1.AddTD("<img src='./Img/Flag_Yellow.png' class=ImgPRI />中");
-                            break;
-                        case "2":
-                        default:
-                            this.Pub1.AddTD("<img src='./Img/Flag_Green.png' class=ImgPRI/>低");
-                            break;
-                    }
+                    if (cdt.ToString("yyyy-MM-dd") == mysdt.ToString("yyyy-MM-dd"))
+                        this.Pub1.AddTDCenter("正常");
+                    else
+                        this.Pub1.AddTDCenter("<font color=red>逾期</font>");
                 }
+                else
+                {
+                    this.Pub1.AddTDCenter("正常");
+                }
+                this.Pub1.AddTREnd();
+            }
+        }
+        this.Pub1.AddTRSum();
+        this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
+        return;
+    }
+    public void BindList_PRI()
+    {
+        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
+        int colspan = 9;
+        if (this.PageSmall != "")
+            this.Pub1.AddBR();
+
+        this.Pub1.AddTable("width='960px' align=center");
+        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("ID");
+        this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
+
+        if (this.GroupBy != "FlowName")
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName' >" + this.ToE("Flow", "流程") + "</a>");
+
+        if (this.GroupBy != "NodeName")
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "节点") + "</a>");
+
+        if (this.GroupBy != "StarterName")
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName' >" + this.ToE("Starter", "发起人") + "</a>");
+
+        this.Pub1.AddTDTitle("优先级");
+
+        this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
+
+        this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
+        this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
+        this.Pub1.AddTDTitle(this.ToE("Sta", "状态"));
+        this.Pub1.AddTREnd();
+
+        int i = 0;
+        bool is1 = false;
+        DateTime cdt = DateTime.Now;
+        int gIdx = 0;
+        SysEnums ses = new SysEnums("PRI");
+        foreach (SysEnum se in ses)
+        {
+
+            gIdx++;
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<img src='./Img/PRI/" + se.IntKey + ".png' class=ImgPRI />");
+            this.Pub1.AddTREnd();
+
+            string pri = se.IntKey.ToString();
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["PRI"].ToString() != pri)
+                    continue;
+
+                string sdt = dr["SDT"] as string;
+                this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
+                i++;
+                this.Pub1.AddTDIdx(i);
+                if (Glo.IsWinOpenEmpWorks == true)
+                    this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  >" + dr["Title"].ToString());
+                else
+                    this.Pub1.AddTD("Class=TTD", "<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+
+                if (this.GroupBy != "FlowName")
+                    this.Pub1.AddTD(dr["FlowName"].ToString());
+
+                if (this.GroupBy != "NodeName")
+                    this.Pub1.AddTD(dr["NodeName"].ToString());
+
+                if (this.GroupBy != "StarterName")
+                    this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
+
+
 
                 this.Pub1.AddTD(dr["RDT"].ToString());
                 this.Pub1.AddTD(dr["ADT"].ToString());

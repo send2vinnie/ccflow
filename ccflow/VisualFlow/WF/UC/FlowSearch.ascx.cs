@@ -655,7 +655,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Page.Title = "Flow Search";
+        this.Page.Title = "查询与分析";
         switch (this.DoType)
         {
             case "Bill":
@@ -689,7 +689,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             return;
         }
 
-        int colspan = 8;
+        int colspan = 5;
         if (this.PageSmall != "")
             this.Pub1.AddBR();
 
@@ -710,9 +710,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         string sql = "";  
         Flows fls = new Flows();
         fls.RetrieveAll();
-        int i = 0;
-        bool is1 = false;
-        string fk_sort = null;
         FlowSorts fss = new FlowSorts();
         fss.RetrieveAll();
         string open = this.ToE("Open", "打开");
@@ -723,21 +720,23 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         string FX = this.ToE("FX", "分析");
         string myWork = this.ToE("MyWork", "我的工作");
         string BPR = this.ToE("BPR", "成本分析");
+        int idx = 1;
+        int gIdx = 0;
         foreach (FlowSort fs in fss)
         {
+            gIdx++;
+            this.Pub1.AddTR();
+            this.Pub1.AddTDB("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fs.Name + "</b>");
+            this.Pub1.AddTREnd();
             foreach (Flow fl in fls)
             {
                 if (fl.FK_FlowSort != fs.No)
                     continue;
-                i++;
-                is1 = this.Pub1.AddTR(is1);
-                this.Pub1.AddTDIdx(i);
-                if (fl.FK_FlowSort == fk_sort)
-                    this.Pub1.AddTD();
-                else
-                    this.Pub1.AddTDB(fl.FK_FlowSortText);
 
-                fk_sort = fl.FK_FlowSort;
+                this.Pub1.AddTR("ID='" + gIdx + "_" + idx + "'");
+                this.Pub1.AddTDIdx(idx++);
+                this.Pub1.AddTD();
+
                 if (WebUser.IsWap == false)
                     this.Pub1.AddTD("<a href=\"javascript:WinOpen('Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart','sd');\"  >" + fl.Name + "</a>");
                 else
