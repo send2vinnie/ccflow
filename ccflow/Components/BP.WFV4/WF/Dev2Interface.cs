@@ -839,7 +839,7 @@ namespace BP.WF
         /// <param name="fk_flow">流程编号</param>
         /// <param name="workID">工作ID</param>
         /// <param name="htWork">节点表单数据(Hashtable中的key与节点表单的字段名相同,value 就是字段值)</param>
-        /// <param name="workDtls">节点表单明从表数据(dataset可以包含多个table，每个table的名称与从表名称相同，列名与从表的字段相同)</param>
+        /// <param name="workDtls">节点表单明从表数据(dataset可以包含多个table，每个table的名称与从表名称相同，列名与从表的字段相同, OID,RefPK列需要为空或者null )</param>
         /// <returns>执行信息</returns>
         public static string Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork, DataSet workDtls)
         {
@@ -987,6 +987,36 @@ namespace BP.WF
             {
                 return "保存失败:" + ex.Message;
             }
+        }
+       
+        /// <summary>
+        /// 保存流程表单
+        /// For shanghai lijian 2012-09-20
+        /// </summary>
+        /// <param name="fk_mapdata">流程表单ID</param>
+        /// <param name="workID">工作ID</param>
+        /// <param name="htData">流程表单数据Key Value 格式存放.</param>
+        /// <returns>返回执行信息</returns>
+        public static void Node_SaveFlowSheet(string fk_mapdata, Int64 workID, Hashtable htData)
+        {
+            MapData md = new MapData(fk_mapdata);
+            GEEntity en = md.HisGEEn;
+            en.SetValByKey("OID", workID);
+            int i = en.RetrieveFromDBSources();
+
+            foreach (string key in htData.Keys)
+                en.SetValByKey(key, htData[key].ToString());
+
+            en.SetValByKey("OID", workID);
+
+            FrmEvents fes = md.FrmEvents;
+            fes.DoEventNode(FrmEventList.SaveBefore, en);
+            if (i == 0)
+                en.Insert();
+            else
+                en.Update();
+
+            fes.DoEventNode(FrmEventList.SaveAfter, en);
         }
         /// <summary>
         /// 增加下一步骤的接受人(用于当前步骤向下一步骤发送时增加接受人)
