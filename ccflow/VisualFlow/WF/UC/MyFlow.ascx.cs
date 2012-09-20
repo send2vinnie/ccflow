@@ -663,7 +663,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         if (nd.HisFlow.IsMD5 && nd.IsStartNode == false && wk.IsPassCheckMD5() == false)
         {
-            this.UCEn1.AddMsgOfWarning("错误", "<h1><font color=red>数据已经被非法篡改，请通知管理员解决问题。</font></h1>");
+            this.UCEn1.AddMsgOfWarning("错误", "<h2><font color=red>数据已经被非法篡改，请通知管理员解决问题。</font></h2>");
             this.ToolBar1.EnableAllBtn(false);
             this.ToolBar1.Clear();
             return;
@@ -1313,6 +1313,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             if (currND.IsStartNode)
                 currWK.FID = 0;
+
+            if (currND.HisFlow.IsMD5)
+            {
+                /*重新更新md5值.*/
+                currWK.SetValByKey("MD5", Glo.GenerMD5(currWK));
+            }
+
             currWK.Update(); /* 如果是保存 */
         }
         catch (Exception ex)
