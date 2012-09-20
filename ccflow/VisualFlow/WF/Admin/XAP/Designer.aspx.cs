@@ -23,30 +23,7 @@ public partial class Designer : System.Web.UI.Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        #region 检查一下数据库是否链接成功.
-        try
-        {
-            switch (BP.SystemConfig.AppCenterDBType)
-            {
-                case DBType.SQL2000:
-                    BP.DA.DBAccess.RunSQL("SELECT 1+2 ");
-                    break;
-                case DBType.Oracle9i:
-                    BP.DA.DBAccess.RunSQL("SELECT 1+2 FROM DUAL ");
-                    break;
-                case DBType.Informix:
-                    BP.DA.DBAccess.RunSQL("SELECT 1+2 FROM DUAL ");
-                    break;
-                default:
-                    break;
-            }
-        }
-        catch(Exception ex)
-        {
-            this.Response.Write("<h1>数据库连接错误</h1><hr>请参考安装说明书检查web.config数据库连接设置，错误信息:"+ex.Message);
-            return;
-        }
-        #endregion
+      
 
         try
         {

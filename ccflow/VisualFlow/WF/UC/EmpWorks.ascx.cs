@@ -249,8 +249,6 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (this.GroupBy != "StarterName")
                     this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
 
-
-
                 this.Pub1.AddTD(dr["RDT"].ToString());
                 this.Pub1.AddTD(dr["ADT"].ToString());
                 this.Pub1.AddTD(dr["SDT"].ToString());

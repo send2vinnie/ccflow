@@ -4,11 +4,37 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.Sys;
+using BP.DA;
 
 public partial class WF_Admin_DBInstall : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        #region 检查一下数据库是否链接成功.
+        try
+        {
+            switch (BP.SystemConfig.AppCenterDBType)
+            {
+                case DBType.SQL2000:
+                    BP.DA.DBAccess.RunSQL("SELECT 1+2 ");
+                    break;
+                case DBType.Oracle9i:
+                    BP.DA.DBAccess.RunSQL("SELECT 1+2 FROM DUAL ");
+                    break;
+                case DBType.Informix:
+                    BP.DA.DBAccess.RunSQL("SELECT 1+2 FROM DUAL ");
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            this.Response.Write("<h1>数据库连接错误</h1><hr> <font color=red>请参考安装说明书检查web.config数据库连接设置，错误信息:</font><br>" + ex.Message);
+            return;
+        }
+        #endregion
+
         this.Pub1.AddH3("ccflow 数据库修复与安装工具");
         this.Pub1.AddHR();
         if (this.Request.QueryString["DoType"] == "OK")
@@ -37,12 +63,12 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                 string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);
                 this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.",
                     "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。<br> <a href='./XAP/Designer.aspx'>进入流程设计器.</a>");
-
                 //string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
                 //BP.DA.DBAccess.RunSQLScript(scrpts);
             }
             return;
         }
+
         //}
         //catch (Exception ex)
         //{
