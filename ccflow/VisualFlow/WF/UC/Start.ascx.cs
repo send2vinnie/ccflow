@@ -125,6 +125,15 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             if (fl.HisFlowSheetType == FlowSheetType.DocFlow)
                 continue;
             idx++;
+            //2012.9.16by李健
+            if (fl.FK_FlowSort != fk_sort)
+            {
+                gIdx++;
+                this.AddTDB("colspan=5 class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
+                this.AddTREnd();
+                fk_sort = fl.FK_FlowSort;
+            }
+
             if (fl.FK_FlowSort == fk_sort)
             {
                 this.AddTR("ID='" + gIdx + "_" + idx + "'");
@@ -133,11 +142,11 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             }
             else
             {
-                gIdx++;
-                this.AddTDB("colspan=5 class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
-                this.AddTREnd();
-                fk_sort = fl.FK_FlowSort;
-                continue;
+            //    gIdx++;
+            //    this.AddTDB("colspan=5 class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
+            //    this.AddTREnd();
+            //    fk_sort = fl.FK_FlowSort;
+            //    continue;
             }
             
             fk_sort = fl.FK_FlowSort;
