@@ -988,7 +988,6 @@ namespace BP.WF
                 return "保存失败:" + ex.Message;
             }
         }
-       
         /// <summary>
         /// 保存流程表单
         /// For shanghai lijian 2012-09-20
@@ -998,6 +997,19 @@ namespace BP.WF
         /// <param name="htData">流程表单数据Key Value 格式存放.</param>
         /// <returns>返回执行信息</returns>
         public static void Node_SaveFlowSheet(string fk_mapdata, Int64 workID, Hashtable htData)
+        {
+            Node_SaveFlowSheet(fk_mapdata, workID, htData, null);
+        }
+        /// <summary>
+        /// 保存流程表单
+        /// For shanghai lijian 2012-09-20
+        /// </summary>
+        /// <param name="fk_mapdata">流程表单ID</param>
+        /// <param name="workID">工作ID</param>
+        /// <param name="htData">流程表单数据Key Value 格式存放.</param>
+        /// <param name="workDtls">明细表数据</param>
+        /// <returns>返回执行信息</returns>
+        public static void Node_SaveFlowSheet(string fk_mapdata, Int64 workID, Hashtable htData, DataSet workDtls)
         {
             MapData md = new MapData(fk_mapdata);
             GEEntity en = md.HisGEEn;
@@ -1016,8 +1028,46 @@ namespace BP.WF
             else
                 en.Update();
 
+
+            if (workDtls != null)
+            {
+
+                MapDtls dtls = new MapDtls(fk_mapdata);
+                //保存明细表
+                foreach (DataTable dt in workDtls.Tables)
+                {
+                    foreach (MapDtl dtl in dtls)
+                    {
+                        if (dt.TableName != dtl.No)
+                            continue;
+                        //获取dtls
+                        GEDtls daDtls = new GEDtls(dtl.No);
+                        daDtls.Delete(GEDtlAttr.RefPK, workID); // 清除现有的数据.
+
+                        GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
+                        daDtl.RefPK = workID.ToString();
+
+                        // 为明细表复制数据.
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            daDtl.ResetDefaultVal();
+                            daDtl.RefPK = workID.ToString();
+
+                            //明细列.
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                //设置属性.
+                                daDtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName]);
+                            }
+                            daDtl.InsertAsNew(); //插入数据.
+                        }
+                    }
+                }
+            }
+
             fes.DoEventNode(FrmEventList.SaveAfter, en);
         }
+
         /// <summary>
         /// 增加下一步骤的接受人(用于当前步骤向下一步骤发送时增加接受人)
         /// </summary>
