@@ -15,6 +15,7 @@
     <script type="text/javascript" language="javascript">
         var timer;
         function startTimer() {
+            return;
             timer = setInterval("alert()", 60000);  //1分执行一次
         }
         function alert() {

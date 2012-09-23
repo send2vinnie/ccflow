@@ -71,6 +71,6 @@ public partial class AppDemo_Top : System.Web.UI.Page
     }
     protected void Unnamed1_Click(object sender, ImageClickEventArgs e)
     {
-        this.Session.Clear();
+      //  this.Session.Clear();
     }
 }
