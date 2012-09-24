@@ -126,14 +126,8 @@
     <Compile Include="Controls\FlowFrm.xaml.cs">
       <DependentUpon>FlowFrm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FrmLoginTemLib.xaml.cs">
-      <DependentUpon>FrmLoginTemLib.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\FrmNew.xaml.cs">
       <DependentUpon>FrmNew.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FrmRegTemLib.xaml.cs">
-      <DependentUpon>FrmRegTemLib.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
@@ -251,16 +245,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Text.resx</DependentUpon>
     </Compile>
-    <Compile Include="Service References\CYFtpClient\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\CYManagerClient\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\WS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -271,14 +255,6 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
-    <None Include="Service References\CYFtpClient\CYFtp.wsdl" />
-    <None Include="Service References\CYFtpClient\WF.CYFtpClient.FsFileItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\CYFtpClient\WF.CYFtpClient.FsItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\CYManagerClient\webservice.wsdl" />
     <None Include="Service References\WS\WebService.wsdl" />
     <None Include="Service References\WS\WF.WS.UploadfileCCFormResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -300,13 +276,6 @@
     </None>
     <Resource Include="Images\Logo\CCFlow\LogoW.jpg" />
     <Resource Include="Images\Logo\CCFlow\Welcome.jpg" />
-    <None Include="Service References\CYFtpClient\CYFtp.disco" />
-    <None Include="Service References\CYFtpClient\configuration91.svcinfo" />
-    <None Include="Service References\CYFtpClient\configuration.svcinfo" />
-    <None Include="Service References\CYFtpClient\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Resource Include="Images\arrow.png" />
     <Content Include="Images\Folder_Icon.png" />
     <Resource Include="Images\FTP_Download.png" />
@@ -318,13 +287,6 @@
     <Resource Include="Images\Icons\CCFlowWelcome.jpg" />
     <Resource Include="Images\Icons\Flow.jpg" />
     <Resource Include="Images\Icons\FlowWelcome.jpg" />
-    <None Include="Service References\CYManagerClient\configuration91.svcinfo" />
-    <None Include="Service References\CYManagerClient\configuration.svcinfo" />
-    <None Include="Service References\CYManagerClient\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\CYManagerClient\webservice.disco" />
     <Content Include="Library\System.Windows.Controls.Layout.Toolkit.dll" />
     <Content Include="Library\System.Windows.Controls.Toolkit.dll" />
     <Content Include="ServiceReferences.ClientConfig" />
@@ -345,15 +307,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FrmLoginTemLib.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\FrmNew.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\FrmRegTemLib.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -573,8 +527,6 @@
     <Resource Include="Themes\img2.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\CYFtpClient\" />
-    <WCFMetadataStorage Include="Service References\CYManagerClient\" />
     <WCFMetadataStorage Include="Service References\WS\" />
   </ItemGroup>
   <ItemGroup>

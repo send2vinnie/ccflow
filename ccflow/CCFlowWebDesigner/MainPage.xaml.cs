@@ -23,8 +23,6 @@ using BP;
 using BP.CY;
 using BP.CY.ExportAsPNG;
 
-using WF.CYFtpClient;
-
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
     /// <summary>
@@ -327,7 +325,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// </summary>
         public void DeleteFlow(string flowid)
         {
-            if (HtmlPage.Window.Confirm(Text.DeleteFlow))
+            if (HtmlPage.Window.Confirm("您确定要删除编号为【"+flowid+"】的工作流吗？"))
             {
                 _Service.DoAsync("DelFlow", flowid, true);
                 _Service.DoCompleted += Server_DoCompletedToRefreshSortTree;
@@ -336,6 +334,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         void Server_DoCompletedToRefreshSortTree(object sender, DoCompletedEventArgs e)
         {
             _Service.DoCompleted -= Server_DoCompletedToRefreshSortTree;
+            if (e.Result != null)
+            {
+                MessageBox.Show(e.Result, "Err", MessageBoxButton.OK);
+                return;
+            }
             foreach (TabItem t in tbDesigner.Items)
             {
                 var ct = t.Content as Container;

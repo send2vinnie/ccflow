@@ -983,7 +983,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public void RemoveFlowNode(FlowNode a)
         {
-
             if (cnsDesignerContainer.Children.Contains(a))
                 cnsDesignerContainer.Children.Remove(a);
             if (FlowNodeCollections.Contains(a))

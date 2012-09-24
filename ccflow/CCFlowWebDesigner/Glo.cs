@@ -270,7 +270,7 @@ namespace BP
             if (WindowModelEnum.Dialog == windowModel)
             {
                 HtmlPage.Window.Eval(
-                    string.Format("window.showModalDialog('{0}',window,'dialogHeight:600px;dialogWidth:800px;help:no;scroll:auto;resizable:yes;status:no;');",
+                    string.Format("window.showModalDialog('{0}',window,'dialogHeight:600px;dialogWidth:950px;help:no;scroll:auto;resizable:yes;status:no;');",
                         url));
             }
             else

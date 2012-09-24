@@ -97,10 +97,12 @@ namespace BP
             errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
 
             string alert = "请您按如下方式处理这个错误。";
-            alert += "\t\n1，如果是第一次使用，请打开安装文件中有常见的问题,此文件位于D:\\ccflow\\Documents\\.";
-            alert += "\t\n2，进入官方网站(http://ccflow.org)加入QQ群，获得更多的ccflow爱好者帮助。";
-            alert += "\t\n3，把此屏幕copy一个图片(一定是全屏)，发送到 ccflow@ccflow.org，我们会尽快给您回复。";
-            alert += "\t\n4，请baidu或者google一下 ccflow 常见问题，也许可以找到答案。";
+            alert += "\t\n1，请按F5刷新一次本网页。";
+            alert += "\t\n2，请将iis重新启动一下，用administrator进入服务器,在cmd执行iisreset之后刷新网页。";
+            alert += "\t\n3，如果是第一次使用，请打开安装文件中有常见的问题,此文件位于D:\\ccflow\\Documents\\.";
+            alert += "\t\n4，进入官方网站(http://ccflow.org)加入QQ群，获得更多的ccflow爱好者帮助。";
+            alert += "\t\n5，把此屏幕copy一个图片(一定是全屏)，发送到 ccflow@ccflow.org 或http://bbs.ccflow.org 我们会有回复。";
+            alert += "\t\n6，请baidu或者google一下 ccflow 常见问题，也许可以找到答案。";
             alert += "\t\n";
 
             MessageBox.Show(alert + errorMsg, "ccflow err:",
@@ -118,11 +120,12 @@ namespace BP
             {
                 var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
                 var hrefObject = location.GetProperty("href");
+
+                if (hrefObject.ToString().ToLower().Contains("flow") == false)
+                    throw new Exception("@您没有把ccflow安装在80端口下面的ccflow虚拟目录上，导致无法工作。请参考安装常见问题与安装步骤，位于D:\\ccflow\\Documents。");
+
                 string url = hrefObject.ToString();
                 string[] strs = url.Split('/');
-
-                if (strs[3].ToLower().Contains("flow") == false)
-                    throw new Exception("@您没有把ccflow安装在虚拟目录上，导致无法工作。请参考安装常见问题与安装步骤，位于D:\\ccflow\\Documents。");
 
                 return strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
             }
@@ -132,9 +135,6 @@ namespace BP
                     "安装步骤错误", MessageBoxButton.OK);
                 throw ex;
             }
-
-            //string url = hrefObject.ToString().Substring(0, hrefObject.ToString().IndexOf("Flow/") + 5);
-            //return url;
         }
     }
 }

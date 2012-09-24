@@ -46,21 +46,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetTrack">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="fk_flow" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="workid" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetTrackResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetTrackResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="LetAdminLogin">
         <s:complexType>
           <s:sequence>
@@ -480,12 +465,6 @@
   <wsdl:message name="GetDTOfWorkListSoapOut">
     <wsdl:part name="parameters" element="tns:GetDTOfWorkListResponse" />
   </wsdl:message>
-  <wsdl:message name="GetTrackSoapIn">
-    <wsdl:part name="parameters" element="tns:GetTrack" />
-  </wsdl:message>
-  <wsdl:message name="GetTrackSoapOut">
-    <wsdl:part name="parameters" element="tns:GetTrackResponse" />
-  </wsdl:message>
   <wsdl:message name="LetAdminLoginSoapIn">
     <wsdl:part name="parameters" element="tns:LetAdminLogin" />
   </wsdl:message>
@@ -662,13 +641,6 @@
     <wsdl:part name="workid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="GetDTOfWorkListHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="GetTrackHttpGetIn">
-    <wsdl:part name="fk_flow" type="s:string" />
-    <wsdl:part name="workid" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="GetTrackHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="LetAdminLoginHttpGetIn">
@@ -870,13 +842,6 @@
   <wsdl:message name="GetDTOfWorkListHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="GetTrackHttpPostIn">
-    <wsdl:part name="fk_flow" type="s:string" />
-    <wsdl:part name="workid" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="GetTrackHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
   <wsdl:message name="LetAdminLoginHttpPostIn">
     <wsdl:part name="lang" type="s:string" />
     <wsdl:part name="islogin" type="s:string" />
@@ -1067,10 +1032,6 @@
       <wsdl:input message="tns:GetDTOfWorkListSoapIn" />
       <wsdl:output message="tns:GetDTOfWorkListSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="GetTrack">
-      <wsdl:input message="tns:GetTrackSoapIn" />
-      <wsdl:output message="tns:GetTrackSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="LetAdminLogin">
       <wsdl:input message="tns:LetAdminLoginSoapIn" />
       <wsdl:output message="tns:LetAdminLoginSoapOut" />
@@ -1189,10 +1150,6 @@
       <wsdl:input message="tns:GetDTOfWorkListHttpGetIn" />
       <wsdl:output message="tns:GetDTOfWorkListHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="GetTrack">
-      <wsdl:input message="tns:GetTrackHttpGetIn" />
-      <wsdl:output message="tns:GetTrackHttpGetOut" />
-    </wsdl:operation>
     <wsdl:operation name="LetAdminLogin">
       <wsdl:input message="tns:LetAdminLoginHttpGetIn" />
       <wsdl:output message="tns:LetAdminLoginHttpGetOut" />
@@ -1310,10 +1267,6 @@
     <wsdl:operation name="GetDTOfWorkList">
       <wsdl:input message="tns:GetDTOfWorkListHttpPostIn" />
       <wsdl:output message="tns:GetDTOfWorkListHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetTrack">
-      <wsdl:input message="tns:GetTrackHttpPostIn" />
-      <wsdl:output message="tns:GetTrackHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="LetAdminLogin">
       <wsdl:input message="tns:LetAdminLoginHttpPostIn" />
@@ -1442,15 +1395,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetDTOfWorkList">
       <soap:operation soapAction="http://tempuri.org/GetDTOfWorkList" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetTrack">
-      <soap:operation soapAction="http://tempuri.org/GetTrack" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1722,15 +1666,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetTrack">
-      <soap12:operation soapAction="http://tempuri.org/GetTrack" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="LetAdminLogin">
       <soap12:operation soapAction="http://tempuri.org/LetAdminLogin" style="document" />
       <wsdl:input>
@@ -1995,15 +1930,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetTrack">
-      <http:operation location="/GetTrack" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="LetAdminLogin">
       <http:operation location="/LetAdminLogin" />
       <wsdl:input>
@@ -2261,15 +2187,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetDTOfWorkList">
       <http:operation location="/GetDTOfWorkList" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetTrack">
-      <http:operation location="/GetTrack" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
