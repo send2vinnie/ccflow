@@ -678,10 +678,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         }
 
         if (this.FK_Node != 0)
-        {
-            this.BindSearch();
             return;
-        }
 
         if (WebUser.IsWap)
         {

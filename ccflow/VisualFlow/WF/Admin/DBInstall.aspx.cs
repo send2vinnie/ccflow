@@ -16,13 +16,13 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             switch (BP.SystemConfig.AppCenterDBType)
             {
                 case DBType.SQL2000:
-                    BP.DA.DBAccess.RunSQL("SELECT 1+2 ");
+                    BP.DA.DBAccess.RunSQLReturnString("SELECT 1+2 ");
                     break;
                 case DBType.Oracle9i:
-                    BP.DA.DBAccess.RunSQL("SELECT 1+2 FROM DUAL ");
+                    BP.DA.DBAccess.RunSQLReturnString("SELECT 1+2 FROM DUAL ");
                     break;
                 case DBType.Informix:
-                    BP.DA.DBAccess.RunSQL("SELECT 1+2 FROM DUAL ");
+                    BP.DA.DBAccess.RunSQLReturnString("SELECT 1+2 FROM DUAL ");
                     break;
                 default:
                     break;
@@ -41,7 +41,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         {
             this.Pub1.AddFieldSet("提示");
             this.Pub1.Add("ccflow数据库初始化成功.");
-            this.Pub1.AddBR("<a href='./XAP/Designer.aspx' >进入流程设计器.</a>");
+            this.Pub1.AddBR("<a href='./XAP/Designer.aspx?IsCheckUpdate=1' >进入流程设计器.</a>");
             this.Pub1.AddFieldSetEnd();
             return;
         }

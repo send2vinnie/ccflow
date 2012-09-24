@@ -100,6 +100,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
                     case "ReqCtrl":
                         // 获取填充 ctrl 值的信息.
                         sql = this.DealSQL(me.DocOfSQLDeal, key);
+                        System.Web.HttpContext.Current.Session["DtlKey"] = key;
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
@@ -156,7 +157,10 @@ public class Handler : IHttpHandler, IRequiresSessionState
 
                             string[] ss = str.Split(':');
                             string fk_dtl = ss[0];
-                            string mysql = DealSQL(ss[1], key);
+                            string dtlKey= System.Web.HttpContext.Current.Session["DtlKey"] as string;
+                            if (dtlKey == null)
+                                dtlKey = key;
+                            string mysql = DealSQL(ss[1], dtlKey);
 
                             GEDtls dtls = new GEDtls(fk_dtl);
                             MapDtl dtl = new MapDtl(fk_dtl);

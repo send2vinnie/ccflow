@@ -24,7 +24,6 @@ public partial class Designer : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
       
-
         try
         {
             //如果没有Port_Dept 表就可能没有安装ccflow.
