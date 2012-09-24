@@ -2834,11 +2834,11 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     if (obj.IndexOf(".") != -1)
                         obj = obj.Split('.')[1];
-                    return IsExits("select tname from tab WHERE  tname = upper(:obj) ",ps);
+                    return IsExits("select tname from tab WHERE  tname = upper(:obj) ", ps);
                 case DBType.SQL2000:
                     return IsExits("SELECT name  FROM sysobjects  WHERE  name = '" + obj + "'");
                 case DBType.Informix:
-                    return IsExits("select tabname from systables where tabname = '"+obj.ToLower()+"'");
+                    return IsExits("select tabname from systables where tabname = '" + obj.ToLower() + "'");
                 case DBType.MySQL:
                     if (obj.IndexOf(".") != -1)
                         obj = obj.Split('.')[1];
