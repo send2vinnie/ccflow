@@ -225,8 +225,10 @@ namespace SMSServices
                     if (now.Contains(":13") || now.Contains(":33") || now.Contains(":53"))
                     {
                         this.SetText("检索自动节点任务....");
-                        this.DoAutoNode(); 
+                        this.DoAutoNode();
                     }
+
+                    this.DoCopyTrack();
                 }
 
                 System.Threading.Thread.Sleep(1000);
@@ -246,6 +248,28 @@ namespace SMSServices
                         break;
                 }
             }
+        }
+        /// <summary>
+        /// 执行cop
+        /// </summary>
+        private void DoCopyTrack()
+        {
+            if (DateTime.Now.ToString("HH") != "23")
+                return;
+
+            TrackTemps tmps = new TrackTemps();
+            tmps.RetrieveAll();
+            if (tmps.Count == 0)
+                return;
+
+            foreach (TrackTemp item in tmps)
+            {
+                Track tk = new Track();
+                tk.Row = item.Row;
+                tk.Insert();
+                item.Delete();
+            }
+
         }
         /// <summary>
         /// 自动执行节点
