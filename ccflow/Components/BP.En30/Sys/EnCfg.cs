@@ -18,6 +18,9 @@ namespace BP.Sys
         /// 附件路径
         /// </summary>
         public const string FJSavePath = "FJSavePath";
+        /// <summary>
+        /// 附件路径
+        /// </summary>
         public const string FJWebPath = "FJWebPath";
         /// <summary>
         /// 数据分析方式
