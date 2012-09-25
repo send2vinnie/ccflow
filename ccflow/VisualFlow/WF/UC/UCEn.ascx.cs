@@ -1170,7 +1170,7 @@ namespace BP.Web.Comm.UC.WF
                             }
                             ddlFull.Items.Clear();
                             ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
-                            ddlFull.SetSelectItem(valOld);
+                            ddlFull.SetSelectItem( en.GetValStrByKey(me.AttrOfOper) );
                             break;
                         default:
                             break;
