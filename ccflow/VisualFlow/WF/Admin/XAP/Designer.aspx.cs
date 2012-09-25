@@ -64,15 +64,30 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             msg = "@在检查数据库连接出现错误。";
+
+            #region 升级 09-24 增加临时的trackTemp 表.
+            TrackTemp tmp = new TrackTemp();
+            tmp.CheckPhysicsTable();
+            #endregion 升级 09-24
+
+
+            #region 升级 06-12
             WorkerList wl12 = new WorkerList();
             wl12.CheckPhysicsTable();
+            #endregion 升级 06-12
 
+
+            #region 升级 07-01
             GenerWorkFlow gwfss = new GenerWorkFlow();
             gwfss.CheckPhysicsTable();
+            #endregion  升级 07-01
 
-            // 抄送.
+            #region 升级 06-12
+            // 升级抄送. 
             CCList cl = new CCList();
             cl.CheckPhysicsTable();
+            #endregion 升级 06-12
+
 
             #region 升级退回规则 05-10
             ReturnWork rw1 = new ReturnWork();

@@ -323,51 +323,79 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.AddTDTitle("执行人");
         this.AddTREnd();
 
-        Tracks tks = new Tracks();
-        QueryObject qo = new QueryObject(tks);
+        string sqlOfWhere = "";
+        string dbStr = BP.SystemConfig.AppCenterDBVarStr;
+        Paras prs = new Paras();
         if (this.FID == 0)
         {
-            qo.addLeftBracket();
-            qo.AddWhere(TrackAttr.FID, this.WorkID);
-            qo.addOr();
-            qo.AddWhere(TrackAttr.WorkID, this.WorkID);
-            qo.addRightBracket();
-            qo.addAnd();
-            qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
-            qo.addOrderBy(TrackAttr.RDT);
-            qo.DoQuery();
+            sqlOfWhere = " WHERE (FID=" + dbStr + "WorkID1 OR WorkID=" + dbStr + "WorkID2 ) AND FK_Flow=" + dbStr + "FK_Flow ";
+            prs.Add("WorkID1", this.WorkID);
+            prs.Add("WorkID2", this.WorkID);
+            prs.Add("FK_Flow", this.FK_Flow);
+
+            //qo.addLeftBracket();
+            //qo.AddWhere(TrackAttr.FID, this.WorkID);
+            //qo.addOr();
+            //qo.AddWhere(TrackAttr.WorkID, this.WorkID);
+            //qo.addRightBracket();
+            //qo.addAnd();
+            //qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
+            //qo.addOrderBy(TrackAttr.RDT);
+            //qo.DoQuery();
         }
         else
         {
-            qo.addLeftBracket();
-            qo.AddWhere(TrackAttr.FID, this.FID);
-            qo.addOr();
-            qo.AddWhere(TrackAttr.WorkID, this.FID);
-            qo.addRightBracket();
-            qo.addAnd();
-            qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
-            qo.addOrderBy(TrackAttr.RDT);
-            qo.DoQuery();
+            sqlOfWhere = " WHERE (FID=" + dbStr + "FID1 OR WorkID=" + dbStr + "FID2 ) AND FK_Flow=" + dbStr + "FK_Flow ";
+
+            prs.Add("FID1", this.FID);
+            prs.Add("FID2", this.FID);
+            prs.Add("FK_Flow", this.FK_Flow);
+
+            //qo.addLeftBracket();
+            //qo.AddWhere(TrackAttr.FID, this.FID);
+            //qo.addOr();
+            //qo.AddWhere(TrackAttr.WorkID, this.FID);
+            //qo.addRightBracket();
+            //qo.addAnd();
+            //qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
+            //qo.addOrderBy(TrackAttr.RDT);
+            //qo.DoQuery();
         }
+        string sql = "";
+        sql = "SELECT MyPK,FK_Flow,ActionType,FID,WorkID,NDFrom,NDFromT,NDTo,NDToT,EmpFrom,EmpFromT,EmpTo,EmpToT,RDT,WorkTimeSpan,Msg,NodeData,Exer FROM WF_Track " + sqlOfWhere;
+        sql += " UNION ";
+        sql += "SELECT MyPK,FK_Flow,ActionType,FID,WorkID,NDFrom,NDFromT,NDTo,NDToT,EmpFrom,EmpFromT,EmpTo,EmpToT,RDT,WorkTimeSpan,Msg,NodeData,Exer FROM WF_TrackTemp " + sqlOfWhere;
+        prs.SQL = sql;
+        DataTable dt = DBAccess.RunSQLReturnTable(prs);
+        DataView dv = dt.DefaultView;
+        dv.Sort = "RDT";
+       // dv.RowFilter
 
         int idx = 1;
-        foreach (Track item in tks)
+        foreach (DataRowView dr in dv)
         {
             this.AddTR();
             this.AddTDIdx(idx++);
-            DateTime dt = DataType.ParseSysDateTime2DateTime(item.RDT);
-            this.AddTD(dt.ToString("MM月dd日HH:mm"));
+            DateTime dtt = DataType.ParseSysDateTime2DateTime(dr[TrackAttr.RDT].ToString());
+            this.AddTD(dtt.ToString("MM月dd日HH:mm"));
 
-            this.AddTD(item.NDFromT);
-            this.AddTD(item.EmpFromT);
+            this.AddTD(dr[TrackAttr.NDFromT].ToString());
+            this.AddTD(dr[TrackAttr.EmpFromT].ToString());
 
-            this.AddTD(item.NDToT);
-            this.AddTD(item.EmpToT);
-            this.AddTD(item.HisActionTypeT);
-            this.AddTDDoc(item.MsgHtml);
+            this.AddTD(dr[TrackAttr.NDToT].ToString());
+            this.AddTD(dr[TrackAttr.EmpToT].ToString());
+            ActionType at = (ActionType)int.Parse(dr[TrackAttr.ActionType].ToString());
+            this.AddTD(Track.GetActionTypeT(at));
 
-            this.AddTD("<a href=\"javascript:WinOpen('" + this.Request.ApplicationPath + "/WF/WFRpt.aspx?WorkID=" + item.WorkID + "&FK_Flow=" + item.FK_Flow + "&DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">表单</a>");
-            this.AddTD(item.Exer);
+            this.AddTD(DataType.ParseText2Html( dr[TrackAttr.Msg].ToString()));
+
+            //this.AddTD(item.NDToT);
+            //this.AddTD(item.EmpToT);
+            //this.AddTD(item.HisActionTypeT);
+            //this.AddTDDoc(item.MsgHtml);
+
+            this.AddTD("<a href=\"javascript:WinOpen('" + this.Request.ApplicationPath + "/WF/WFRpt.aspx?WorkID=" + dr[TrackAttr.WorkID].ToString() + "&FK_Flow=" + dr[TrackAttr.FK_Flow].ToString() + "&DoType=View&MyPK=" + dr[TrackAttr.MyPK].ToString() + "','" + dr[TrackAttr.MyPK].ToString() + "');\">表单</a>");
+            this.AddTD(dr[TrackAttr.Exer].ToString());
             this.AddTREnd();
         }
         this.AddTableEnd();
@@ -397,8 +425,6 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             return this.Request.QueryString["CCID"];
         }
     }
-
-
     protected void Page_Load(object sender, EventArgs e)
     {
         this.BindTrack();
