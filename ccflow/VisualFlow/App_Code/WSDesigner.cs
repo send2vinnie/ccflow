@@ -349,7 +349,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 {
                     BP.DA.Log.DefaultLogWriteLineError("Do Method DelNode Branch has a error , para:\t" + para1 + ex.Message);
                 }
-
                 return null;
             case "NewLab":
                 BP.WF.LabNote lab = new BP.WF.LabNote(); ;
