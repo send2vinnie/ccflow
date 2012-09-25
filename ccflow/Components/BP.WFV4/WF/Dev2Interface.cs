@@ -158,31 +158,31 @@ namespace BP.WF
         /// <param name="workid">工作ID</param>
         /// <param name="fid">流程ID</param>
         /// <returns></returns>
-        public static DataTable DB_GenerTrack(string fk_flow, Int64 workid, Int64 fid)
+        public static DataTable DB_GenerTrackTemp(string fk_flow, Int64 workid, Int64 fid)
         {
-            Tracks tks = new Tracks();
+            TrackTemps tks = new TrackTemps();
             QueryObject qo = new QueryObject(tks);
             if (fid == 0)
             {
                 qo.addLeftBracket();
-                qo.AddWhere(TrackAttr.FID, workid);
+                qo.AddWhere(TrackTempAttr.FID, workid);
                 qo.addOr();
-                qo.AddWhere(TrackAttr.WorkID, workid);
+                qo.AddWhere(TrackTempAttr.WorkID, workid);
                 qo.addRightBracket();
                 qo.addAnd();
-                qo.AddWhere(TrackAttr.FK_Flow, fk_flow);
-                qo.addOrderBy(TrackAttr.RDT);
+                qo.AddWhere(TrackTempAttr.FK_Flow, fk_flow);
+                qo.addOrderBy(TrackTempAttr.RDT);
             }
             else
             {
                 qo.addLeftBracket();
-                qo.AddWhere(TrackAttr.FID, fid);
+                qo.AddWhere(TrackTempAttr.FID, fid);
                 qo.addOr();
-                qo.AddWhere(TrackAttr.WorkID, fid);
+                qo.AddWhere(TrackTempAttr.WorkID, fid);
                 qo.addRightBracket();
                 qo.addAnd();
-                qo.AddWhere(TrackAttr.FK_Flow, fk_flow);
-                qo.addOrderBy(TrackAttr.RDT);
+                qo.AddWhere(TrackTempAttr.FK_Flow, fk_flow);
+                qo.addOrderBy(TrackTempAttr.RDT);
             }
             return qo.DoQueryToTable();
         }
@@ -747,7 +747,7 @@ namespace BP.WF
         {
             string dbstr = SystemConfig.AppCenterDBVarStr;
             Paras ps = new Paras();
-            ps.SQL = "SELECT COUNT(*) FROM WF_Track WHERE WorkID=" + dbstr + "WorkID AND (EmpFrom=" + dbstr + "user1 OR EmpTo=" + dbstr + "user2)";
+            ps.SQL = "SELECT COUNT(*) FROM WF_TrackTemp WHERE WorkID=" + dbstr + "WorkID AND (EmpFrom=" + dbstr + "user1 OR EmpTo=" + dbstr + "user2)";
             ps.Add("WorkID", workID);
             ps.Add("user1", userNo);
             ps.Add("user2", userNo);

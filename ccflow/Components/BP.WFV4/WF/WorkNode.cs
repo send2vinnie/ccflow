@@ -2224,7 +2224,7 @@ namespace BP.WF
                                 WebUser.Name, ndFrom.NodeID, ndFrom.FlowName + "\t\n" + ndFrom.FlowName, "被父流程(" + ndFrom.FlowName + ":" + pTitle + ")唤起.");
 
                             //记录父流程被调起。
-                            Track tkParent = new Track();
+                            TrackTemp tkParent = new TrackTemp();
                             tkParent.WorkID = Int64.Parse(fromWorkID);
                             tkParent.RDT = DataType.CurrentDataTimess;
                             tkParent.HisActionType = ActionType.CallSubFlow;
@@ -3413,7 +3413,7 @@ namespace BP.WF
         /// <param name="msg">消息</param>
         public void AddToTrack(ActionType at, string toEmp, string toEmpName, int toNDid, string toNDName, string msg)
         {
-            Track t = new Track();
+            TrackTemp t = new TrackTemp();
             t.WorkID = this.HisWork.OID;
             t.FID = this.HisWork.FID;
             t.RDT = DataType.CurrentDataTimess;

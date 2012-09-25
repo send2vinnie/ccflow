@@ -7,11 +7,65 @@ using BP.Sys;
 
 namespace BP.WF
 {
- 
+    public enum ActionType
+    {
+        /// <summary>
+        /// 发起
+        /// </summary>
+        Start,
+        /// <summary>
+        /// 前进
+        /// </summary>
+        Forward,
+        /// <summary>
+        /// 退回
+        /// </summary>
+        Return,
+        /// <summary>
+        /// 移交
+        /// </summary>
+        Shift,
+        /// <summary>
+        /// 撤消移交
+        /// </summary>
+        UnShift,
+        /// <summary>
+        /// 撤消
+        /// </summary>
+        Undo,
+        /// <summary>
+        /// 分流前进
+        /// </summary>
+        ForwardFL,
+        /// <summary>
+        /// 合流前进
+        /// </summary>
+        ForwardHL,
+        /// <summary>
+        /// 流程结束
+        /// </summary>
+        FlowOver,
+        /// <summary>
+        /// 调用起子流程
+        /// </summary>
+        CallSubFlow,
+        /// <summary>
+        /// 启动子流程
+        /// </summary>
+        StartSubFlow,
+        /// <summary>
+        /// 子线程前进
+        /// </summary>
+        SubFlowForward,
+        /// <summary>
+        /// 取回
+        /// </summary>
+        Tackback
+    }
     /// <summary>
     ///  属性
     /// </summary>
-    public class TrackAttr:EntityMyPKAttr
+    public class TrackTempAttr
     {
         /// <summary>
         /// 记录日期
@@ -46,9 +100,9 @@ namespace BP.WF
         /// </summary>
         public const string FK_Flow = "FK_Flow";
         /// <summary>
-        /// 轨迹字段
+        /// 轨迹临时表字段
         /// </summary>
-        public const string TrackFields = "TrackFields";
+        public const string TrackTempFields = "TrackTempFields";
         /// <summary>
         /// 备注
         /// </summary>
@@ -95,11 +149,11 @@ namespace BP.WF
         public const string Exer = "Exer";
     }
     /// <summary>
-    /// 轨迹
+    /// 轨迹临时表
     /// </summary>
-    public class Track : BP.En.EntityMyPK
+    public class TrackTemp : BP.En.EntityMyPK
     {
-        #region attrs
+        #region 轨迹临时表
         /// <summary>
         /// 节点从
         /// </summary>
@@ -107,11 +161,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValIntByKey(TrackAttr.NDFrom);
+                return this.GetValIntByKey(TrackTempAttr.NDFrom);
             }
             set
             {
-                this.SetValByKey(TrackAttr.NDFrom, value);
+                this.SetValByKey(TrackTempAttr.NDFrom, value);
             }
         }
         /// <summary>
@@ -121,11 +175,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValIntByKey(TrackAttr.NDTo);
+                return this.GetValIntByKey(TrackTempAttr.NDTo);
             }
             set
             {
-                this.SetValByKey(TrackAttr.NDTo, value);
+                this.SetValByKey(TrackTempAttr.NDTo, value);
             }
         }
         /// <summary>
@@ -135,11 +189,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.FK_Flow);
+                return this.GetValStringByKey(TrackTempAttr.FK_Flow);
             }
             set
             {
-                this.SetValByKey(TrackAttr.FK_Flow, value);
+                this.SetValByKey(TrackTempAttr.FK_Flow, value);
             }
         }
         /// <summary>
@@ -149,11 +203,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.EmpFrom);
+                return this.GetValStringByKey(TrackTempAttr.EmpFrom);
             }
             set
             {
-                this.SetValByKey(TrackAttr.EmpFrom, value);
+                this.SetValByKey(TrackTempAttr.EmpFrom, value);
             }
         }
         /// <summary>
@@ -163,11 +217,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.EmpTo);
+                return this.GetValStringByKey(TrackTempAttr.EmpTo);
             }
             set
             {
-                this.SetValByKey(TrackAttr.EmpTo, value);
+                this.SetValByKey(TrackTempAttr.EmpTo, value);
             }
         }
         /// <summary>
@@ -177,11 +231,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.RDT);
+                return this.GetValStringByKey(TrackTempAttr.RDT);
             }
             set
             {
-                this.SetValByKey(TrackAttr.RDT, value);
+                this.SetValByKey(TrackTempAttr.RDT, value);
             }
         }
         /// <summary>
@@ -191,11 +245,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValInt64ByKey(TrackAttr.FID);
+                return this.GetValInt64ByKey(TrackTempAttr.FID);
             }
             set
             {
-                this.SetValByKey(TrackAttr.FID, value);
+                this.SetValByKey(TrackTempAttr.FID, value);
             }
         }
         /// <summary>
@@ -205,11 +259,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValInt64ByKey(TrackAttr.WorkID);
+                return this.GetValInt64ByKey(TrackTempAttr.WorkID);
             }
             set
             {
-                this.SetValByKey(TrackAttr.WorkID, value);
+                this.SetValByKey(TrackTempAttr.WorkID, value);
             }
         }
         /// <summary>
@@ -219,11 +273,11 @@ namespace BP.WF
         {
             get
             {
-                return (ActionType)this.GetValIntByKey(TrackAttr.ActionType);
+                return (ActionType)this.GetValIntByKey(TrackTempAttr.ActionType);
             }
             set
             {
-                this.SetValByKey(TrackAttr.ActionType, (int)value);
+                this.SetValByKey(TrackTempAttr.ActionType, (int)value);
             }
         }
         public static string GetActionTypeT(ActionType at)
@@ -262,7 +316,7 @@ namespace BP.WF
         {
             get
             {
-                return Track.GetActionTypeT(this.HisActionType);
+                return TrackTemp.GetActionTypeT(this.HisActionType);
             }
         }
         /// <summary>
@@ -272,22 +326,22 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.NodeData);
+                return this.GetValStringByKey(TrackTempAttr.NodeData);
             }
             set
             {
-                this.SetValByKey(TrackAttr.NodeData, value);
+                this.SetValByKey(TrackTempAttr.NodeData, value);
             }
         }
         public string Exer
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.Exer);
+                return this.GetValStringByKey(TrackTempAttr.Exer);
             }
             set
             {
-                this.SetValByKey(TrackAttr.Exer, value);
+                this.SetValByKey(TrackTempAttr.Exer, value);
             }
         }
         /// <summary>
@@ -297,40 +351,40 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.Msg);
+                return this.GetValStringByKey(TrackTempAttr.Msg);
             }
             set
             {
-                this.SetValByKey(TrackAttr.Msg, value);
+                this.SetValByKey(TrackTempAttr.Msg, value);
             }
         }
         public string MsgHtml
         {
             get
             {
-                return this.GetValHtmlStringByKey(TrackAttr.Msg);
+                return this.GetValHtmlStringByKey(TrackTempAttr.Msg);
             }
         }
         public string EmpToT
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.EmpToT);
+                return this.GetValStringByKey(TrackTempAttr.EmpToT);
             }
             set
             {
-                this.SetValByKey(TrackAttr.EmpToT, value);
+                this.SetValByKey(TrackTempAttr.EmpToT, value);
             }
         }
         public string EmpFromT
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.EmpFromT);
+                return this.GetValStringByKey(TrackTempAttr.EmpFromT);
             }
             set
             {
-                this.SetValByKey(TrackAttr.EmpFromT, value);
+                this.SetValByKey(TrackTempAttr.EmpFromT, value);
             }
         }
 
@@ -338,22 +392,22 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.NDFromT);
+                return this.GetValStringByKey(TrackTempAttr.NDFromT);
             }
             set
             {
-                this.SetValByKey(TrackAttr.NDFromT, value);
+                this.SetValByKey(TrackTempAttr.NDFromT, value);
             }
         }
         public string NDToT
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.NDToT);
+                return this.GetValStringByKey(TrackTempAttr.NDToT);
             }
             set
             {
-                this.SetValByKey(TrackAttr.NDToT, value);
+                this.SetValByKey(TrackTempAttr.NDToT, value);
             }
         }
         #endregion attrs
@@ -366,43 +420,43 @@ namespace BP.WF
             {
                 if (this._enMap != null)
                     return this._enMap;
-
+                
                 Map map = new Map();
 
                 #region 基本属性
                 map.EnDBUrl = new DBUrl(DBUrlType.AppCenterDSN); //要连接的数据源（表示要连接到的那个系统数据库）。
-                map.PhysicsTable = "WF_Track"; // 要物理表。
-                map.EnDesc = "轨迹表";
+                map.PhysicsTable = "WF_TrackTemp"; // 要物理表。
+                map.EnDesc = "轨迹临时表";
                 map.EnType = EnType.App;
                 #endregion
 
                 #region 字段
                 map.AddMyPK();
-                map.AddTBString(TrackAttr.FK_Flow, null, "流程", true, false, 0, 100, 100);
-                map.AddTBInt(TrackAttr.ActionType, 0, "操作类型", true, false);
+                map.AddTBString(TrackTempAttr.FK_Flow, null, "流程", true, false, 0, 100, 100);
+                map.AddTBInt(TrackTempAttr.ActionType, 0, "操作类型", true, false);
 
-                map.AddTBInt(TrackAttr.FID, 0, "流程ID", true, false);
-                map.AddTBInt(TrackAttr.WorkID, 0, "工作ID", true, false);
+                map.AddTBInt(TrackTempAttr.FID, 0, "流程ID", true, false);
+                map.AddTBInt(TrackTempAttr.WorkID, 0, "工作ID", true, false);
 
-                map.AddTBInt(TrackAttr.NDFrom, 0, "从节点", true, false);
-                map.AddTBString(TrackAttr.NDFromT, null, "从节点(名称)", true, false, 0, 100, 100);
+                map.AddTBInt(TrackTempAttr.NDFrom, 0, "从节点", true, false);
+                map.AddTBString(TrackTempAttr.NDFromT, null, "从节点(名称)", true, false, 0, 100, 100);
 
-                map.AddTBInt(TrackAttr.NDTo, 0, "到节点", true, false);
-                map.AddTBString(TrackAttr.NDToT, null, "到节点(名称)", true, false, 0, 100, 100);
+                map.AddTBInt(TrackTempAttr.NDTo, 0, "到节点", true, false);
+                map.AddTBString(TrackTempAttr.NDToT, null, "到节点(名称)", true, false, 0, 100, 100);
 
-                map.AddTBString(TrackAttr.EmpFrom, null, "从人员", true, false, 0, 100, 100);
-                map.AddTBString(TrackAttr.EmpFromT, null, "从人员(名称)", true, false, 0, 100, 100);
+                map.AddTBString(TrackTempAttr.EmpFrom, null, "从人员", true, false, 0, 100, 100);
+                map.AddTBString(TrackTempAttr.EmpFromT, null, "从人员(名称)", true, false, 0, 100, 100);
 
-                map.AddTBString(TrackAttr.EmpTo, null, "到人员", true, false, 0, 4000, 100);
-                map.AddTBString(TrackAttr.EmpToT, null, "到人员(名称)", true, false, 0, 100, 100);
+                map.AddTBString(TrackTempAttr.EmpTo, null, "到人员", true, false, 0, 4000, 100);
+                map.AddTBString(TrackTempAttr.EmpToT, null, "到人员(名称)", true, false, 0, 100, 100);
 
-                map.AddTBString(TrackAttr.RDT, null, "日期", true, false, 0, 30, 100);
+                map.AddTBString(TrackTempAttr.RDT, null, "日期", true, false, 0, 30, 100);
 
-                map.AddTBFloat(TrackAttr.WorkTimeSpan, 0, "时间跨度(天)", true, false);
-                map.AddTBStringDoc(TrackAttr.Msg, null, "消息", true, false);
-                map.AddTBStringDoc(TrackAttr.NodeData, null, "节点数据(日志信息)", true, false);
+                map.AddTBFloat(TrackTempAttr.WorkTimeSpan, 0, "时间跨度(天)", true, false);
+                map.AddTBStringDoc(TrackTempAttr.Msg, null, "消息", true, false);
+                map.AddTBStringDoc(TrackTempAttr.NodeData, null, "节点数据(日志信息)", true, false);
 
-                map.AddTBString(TrackAttr.Exer, null, "执行人", true, false, 0, 30, 100);
+                map.AddTBString(TrackTempAttr.Exer, null, "执行人", true, false, 0, 30, 100);
                 #endregion 字段
 
                 this._enMap = map;
@@ -410,22 +464,18 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 轨迹
+        /// 轨迹临时表
         /// </summary>
         /// <param name="rptName"></param>
-        public Track(string mypk)
+        public TrackTemp(string mypk)
         {
             this.MyPK = mypk;
-            if (this.RetrieveFromDBSources() == 0)
-            {
-                TrackTemp t = new TrackTemp(this.MyPK);
-                this.Row = t.Row;
-            }
+            this.Retrieve();
         }
         /// <summary>
-        /// 轨迹
+        /// 轨迹临时表
         /// </summary>
-        public Track()
+        public TrackTemp()
         {
         }
         /// <summary>
@@ -443,21 +493,21 @@ namespace BP.WF
         #endregion attrs
     }
     /// <summary>
-    /// 轨迹集合
+    /// 轨迹临时表集合
     /// </summary>
-    public class Tracks : BP.En.Entities
+    public class TrackTemps : BP.En.Entities
     {
         /// <summary>
-        /// 轨迹集合
+        /// 轨迹临时表集合
         /// </summary>
-        public Tracks()
+        public TrackTemps()
         {
         }
         public override Entity GetNewEntity
         {
             get
             {
-                return new Track();
+                return new TrackTemp();
             }
         }
     }
