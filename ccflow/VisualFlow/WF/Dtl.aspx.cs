@@ -260,8 +260,8 @@ public partial class Comm_Dtl : WebPage
 
                 if (attr.IsPK)
                     continue;
-
-                this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
+                //for lijian 增加了 @符号是一个换行符. 
+                this.Pub1.AddTDTitle(attr.Name.Replace("@", "<br>"));// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
             }
 
             if (mdtl.IsEnableAthM)
