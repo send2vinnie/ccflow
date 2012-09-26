@@ -1,7 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="EmpWorks.ascx.cs" Inherits="WF_UC_EmpWorks" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
-	<script type="text/javascript" language="JavaScript" src="./../Scripts/Search.js" ></script>
     <div style="width:100%;" >
     <uc1:Pub ID="Pub1" runat="server" />
     </div>
@@ -14,8 +13,7 @@
 
             alert(document.getElementById('string1'));
             str = document.getElementById('string1').value;
-            alert(str);
-
+        //    alert(str);
             var txt, i, found;
             if (str == "")
                 return false;
