@@ -37,6 +37,10 @@ namespace BP.WF
         /// 发起时间
         /// </summary>
         public const string StartDT = "StartDT";
+        /// <summary>
+        /// 插入日期
+        /// </summary>
+        public const string RDT = "RDT";
         #endregion
     }
 	/// <summary>
@@ -133,6 +137,7 @@ namespace BP.WF
 
                 map.AddTBString(TaskAttr.Msg, null, "消息", true, false, 0, 4000, 10);
                 map.AddTBString(TaskAttr.StartDT, null, "发起时间", true, false, 0, 20, 10);
+                map.AddTBString(TaskAttr.RDT, null, "插入数据时间", true, false, 0, 20, 10);
                 
                 this._enMap = map;
                 return this._enMap;

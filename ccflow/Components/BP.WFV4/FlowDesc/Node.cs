@@ -1455,6 +1455,21 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 水执行它？
+        /// </summary>
+        public int WhoExeIt
+        {
+            get
+            {
+                return this.GetValIntByKey(NodeAttr.WhoExeIt);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.WhoExeIt, value);
+            }
+        }
+         
+        /// <summary>
         /// 位置
         /// </summary>
         public NodePosType NodePosType
@@ -2380,7 +2395,8 @@ namespace BP.WF
 
                 map.AddTBInt(NodeAttr.FLRole, 0, "分流规则", true, true);
                 map.AddTBInt(NodeAttr.FJOpen, 0, "附件权限", true, true);
-
+                map.AddTBInt(NodeAttr.WhoExeIt, 0, "谁执行它", true, true);
+                
                 //map.AddDDLSysEnum(NodeAttr.FJOpen, 0, "附件权限", true, true, NodeAttr.FJOpen,
                 //    "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
 

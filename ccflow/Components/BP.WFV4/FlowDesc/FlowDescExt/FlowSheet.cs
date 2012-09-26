@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Collections;
 using BP.DA;
 using BP.Port;
@@ -161,6 +162,15 @@ namespace BP.WF.Ext
                 map.AddRefMethod(rm);
 
 
+                rm = new RefMethod();
+                rm.Title = "回滚已经完成的流程数据";
+                rm.Icon = "/Images/Btn/DTS.gif";
+                rm.ClassMethodName = this.ToString() + ".DoRebackFlowData()";
+               // rm.Warning = "您确定要回滚它吗？";
+                rm.HisAttrs.AddTBInt("OID", 0, "请输入要会滚WorkID", true, false);
+                map.AddRefMethod(rm);
+
+
                 //rm = new RefMethod();
                 //rm.Title = "设置自动发起"; // "报表运行";
                 //rm.Icon = "/Images/Btn/View.gif";
@@ -190,6 +200,107 @@ namespace BP.WF.Ext
         #endregion
 
         #region  公共方法
+        public string DoRebackFlowData(int workid)
+        {
+            GenerWorkFlow gwf = new GenerWorkFlow();
+            gwf.WorkID = workid;
+            int startNode = int.Parse(this.No + "01");
+            try
+            {
+                string sql = "SELECT a.* FROM V" + this.No + " a, WF_Node b WHERE a.FK_Node=b.NodeID and OID=" + workid + " ORDER  a.RDT DESC ";
+                System.Data.DataTable dt = DBAccess.RunSQLReturnTable(sql);
+                if (dt.Rows.Count == 0)
+                    return "@工作ID为:" + workid + "的数据不存在.";
+
+                gwf.WorkID = workid;
+                if (gwf.RetrieveFromDBSources() == 1)
+                    return "@当前工作ID为:" + workid + "的流程没有结束。";
+
+                int endNode = int.Parse(dt.Rows[0]["FK_Node"].ToString());
+                Node endN = new Node(endNode);
+
+                Flow fl = new Flow(this.No);
+                string starter = "";
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (dr["FK_Node"].ToString() == startNode.ToString())
+                    {
+                        /*如果是开始节点 */
+                        gwf.WorkID = workid;
+                        gwf.FK_Dept = dr["FK_Dept"].ToString();
+                        gwf.FK_Flow = this.No;
+                        gwf.FK_Node = endNode;
+                        //结束节点.
+                        gwf.NodeName = endN.Name;
+
+                        Dept dept = new Dept(gwf.FK_Dept);
+                        gwf.DeptName = dept.Name;
+
+                        gwf.Rec = dr["Rec"].ToString();
+                        gwf.WFState = 0;
+                        gwf.Title = DBAccess.RunSQLReturnString("select Title from nd" + startNode + " where oid=" + workid);
+                        gwf.RDT = dr["RDT"].ToString();
+                        gwf.FK_FlowSort = fl.FK_FlowSort;
+                        gwf.FlowName = this.Name;
+                        Emp emp = new Emp(gwf.Rec);
+                        gwf.RecName = emp.Name;
+                        gwf.PRI = 1;
+                        gwf.Insert();
+                        break;
+                    }
+                }
+
+                WorkerList currWl = new WorkerList();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    WorkerList wl = new WorkerList();
+                    wl.FID = 0;
+                    wl.WorkID = workid;
+                    wl.FK_Emp = dr["Rec"].ToString();
+                    Emp emp = new Emp(wl.FK_Emp);
+                    wl.FK_EmpText = emp.Name;
+
+                    wl.FK_Node = int.Parse(dr["FK_Node"].ToString());
+
+                    Node nd = new Node(wl.FK_Node);
+                    wl.FK_NodeText = nd.Name;
+                    wl.FID = 0;
+                    wl.FK_Flow = this.No;
+                    wl.FK_Dept = emp.FK_Dept;
+                    wl.SDT = dr["RDT"].ToString();
+                    wl.SDT = dr["RDT"].ToString();
+                    wl.DTOfWarning = dr["RDT"].ToString();
+                    wl.WarningDays = nd.WarningDays;
+                    wl.IsEnable = true;
+                    if (gwf.FK_Node == wl.FK_Node)
+                    {
+                        currWl=wl;
+                        wl.IsPass = true;
+                    }
+                    else
+                        wl.IsPass = false;
+                    wl.WhoExeIt = nd.WhoExeIt;
+                    wl.Insert();
+                }
+
+                string sqls = "UPDATE ND" + startNode + " SET WFState=0 WHERE OID=" + workid;
+                sqls += "@UPDATE ND" + int.Parse(this.No) + "Rpt SET WFState=0 WHERE OID=" + workid;
+                sqls += "@UPDATE ND" + endNode + " SET NodeState=0 WHERE OID=" + workid;
+
+                DBAccess.RunSQLs(sqls);
+                return "已经还原成功,当前工作处理人为("+currWl.FK_Emp+" , "+currWl.FK_EmpText+"), 当前节点为:" + endN.Name;
+            }
+            catch (Exception ex)
+            {
+                gwf.Delete();
+                WorkerList wl = new WorkerList();
+                wl.Delete(WorkerListAttr.WorkID, workid);
+                string sqls = "UPDATE ND" + startNode + " SET WFState=1 WHERE OID=" + workid;
+                sqls += "@UPDATE ND" + int.Parse(this.No) + "Rpt SET WFState=1 WHERE OID=" + workid;
+                DBAccess.RunSQLs(sqls);
+                return "<font color=red>会滚期间出现错误</font><hr>" + ex.Message;
+            }
+        }
         /// <summary>
         /// 重新产生标题，根据新的规则.
         /// </summary>
