@@ -103,6 +103,20 @@ namespace BP.WF
     {
         #region 基本属性
         /// <summary>
+        /// 谁来执行它
+        /// </summary>
+        public int WhoExeIt
+        {
+            get
+            {
+                return this.GetValIntByKey(WorkerListAttr.WhoExeIt);
+            }
+            set
+            {
+                SetValByKey(WorkerListAttr.WhoExeIt, value);
+            }
+        }
+        /// <summary>
         /// 优先级
         /// </summary>
         public int PRI

@@ -211,16 +211,16 @@ namespace BP.WF
         /// <returns>bp.wf.flows</returns>
         public static Flows DB_GenerCanStartFlowsOfEntities()
         {
-            return DB_GenerCanStartFlowsOfEntities(WebUser.No,WebUser.FK_Dept);
+            return DB_GenerCanStartFlowsOfEntities(WebUser.No);
         }
-        public static Flows DB_GenerCanStartFlowsOfEntities(string userNo, string userDept)
+        public static Flows DB_GenerCanStartFlowsOfEntities(string userNo)
         {
             // 按岗位计算.
             string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
-            sql+= " UNION  "; // 按指定的人员计算.
-            sql+=" SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+            sql+= " UNION  "; //按指定的人员计算.
+            sql+="  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
             sql += " UNION  "; // 按岗位计算.
-            sql += " SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept='" + WebUser.FK_Dept + "' ) ";
+            sql += " SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept IN(SELECT FK_Dept FROM Port_Emp WHERE No='"+userNo+"' UNION SELECT FK_DEPT FROM Port_EmpDept WHERE FK_Emp='"+userNo+"') ) ";
            
             Flows fls = new Flows();
             BP.En.QueryObject qo = new BP.En.QueryObject(fls);
@@ -247,9 +247,9 @@ namespace BP.WF
         /// </summary>
         /// <param name="userNo"></param>
         /// <returns></returns>
-        public static DataTable DB_GenerCanStartFlowsOfDataTable(string userNo,string userDept)
+        public static DataTable DB_GenerCanStartFlowsOfDataTable(string userNo)
         {
-            return DB_GenerCanStartFlowsOfEntities(userNo, userDept).ToDataTableField();
+            return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();
         }
         /// <summary>
         /// 获取(同步)合流点上的子线程
@@ -580,9 +580,9 @@ namespace BP.WF
         /// <param name="flowNo"></param>
         /// <param name="fk_emp"></param>
         /// <returns></returns>
-        public static bool Flow_IsCanStartThisFlow(string flowNo, string fk_emp,string userDept)
+        public static bool Flow_IsCanStartThisFlow(string flowNo, string fk_emp)
         {
-            Flows fls = DB_GenerCanStartFlowsOfEntities(fk_emp,userDept);
+            Flows fls = DB_GenerCanStartFlowsOfEntities(fk_emp);
             return fls.Contains(FlowAttr.No, flowNo);
         }
         /// <summary>
