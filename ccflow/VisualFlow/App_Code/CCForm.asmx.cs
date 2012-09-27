@@ -789,9 +789,19 @@ namespace BP.Web
         [WebMethod]
         public string GenerFrm(string fk_mapdata, int workID)
         {
-            MapData md = new MapData(fk_mapdata);
-            this.ds = md.GenerHisDataSet();
-            return Connector.ToXml(ds);
+            try
+            {
+                MapData md = new MapData();
+                md.No = fk_mapdata;
+                if (md.RetrieveFromDBSources() == 0)
+                    throw new Exception("装载错误，该表单ID=" + fk_mapdata + "丢失，请修复一次流程重新加载一次.");
+                this.ds = md.GenerHisDataSet();
+                return Connector.ToXml(ds);
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
         }
         #endregion 产生 frm
 
