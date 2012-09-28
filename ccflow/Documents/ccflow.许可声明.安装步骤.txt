@@ -222,14 +222,21 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
    2, web.config 中的 数据库类型设置错误.
        <add key="AppCenterDBType" value="MSSQL" />
 
-10. 如果以上方式都不奏效.
+10, 如果出现:
+    C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files”的写访问权限。的错误提示.
+ 
+  解决办法:
+  把“IIS_IUSERS”和你自己的系统用户赋予它操作 C：\ WINDOWS\ TEMP文件夹的权利，重新启动IIS，并尝试再次运行Web应用程序。
+   
+
+11. 如果以上方式都不奏效.
    cd C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319
    aspnet_regiis.exe -ua
    aspnet_regiis.exe -i
    
    重新安装，就有可能解决，此时可以寻求你的同事解决。
  
-11.  Windows server 2008应用之IIS 7中配置ISAPI和CGI限.
+12.  Windows server 2008应用之IIS 7中配置ISAPI和CGI限.
     ISAPI 和 CGI 限制是允许在服务器上执行动态内容的请求处理程序。这些限制为 CGI 文件 (.exe) 或 ISAPI 扩展 (.dll)。如果 IIS 配置系统允许添加自定义 ISAPI 或 CGI 限制，则我们可以添加它们。
 
 　　(一)添加 ISAPI 或 CGI 限制
@@ -308,7 +315,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 =  如果您需要得到更好的服务，请按照如下方式联系我们.
 =  济南驰骋信息技术有限公司
 =  qq: hiflow@qq.com
-=  Tel:0531-88553730.
+=  Tel:0531-82374939
 =  URL: http://ccflow.org
 
 您可以按照如下两种方式与ccflow合作。
