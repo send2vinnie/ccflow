@@ -120,6 +120,8 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
     #endregion 属性
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.Title = "岗位条件";
+
         if (this.Request.QueryString["DoType"] == "Del")
         {
             Cond nd = new Cond(this.MyPK);
@@ -266,7 +268,10 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
     void btn_Save_Click(object sender, EventArgs e)
     {
         Cond cond = new Cond();
-        cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
+      //DBAccess.RunSQL("DELETE WF_Cond WHERE FK_Node=" + this.FK_Node + " AND ToNodeID=" + this.ToNodeID + " AND CondType!=" + (int)this.HisCondType);
+      //cond.Delete(CondAttr.NodeID, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
+        cond.Delete(CondAttr.ToNodeID, this.ToNodeID);
+
 
         cond.MyPK = this.GenerMyPK;
         if (cond.RetrieveFromDBSources() == 0)

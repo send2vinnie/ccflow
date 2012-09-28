@@ -145,6 +145,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             this.Response.Redirect("Cond.aspx?CondType=" + (int)this.HisCondType + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + nd.NodeID + "&FK_Node=" + this.FK_MainNode + "&ToNodeID=" + nd.ToNodeID, true);
             return;
         }
+
         this.BindCond();
         if (this.FK_Attr == null)
             this.FK_Attr = this.DDL_Attr.SelectedItemStringVal;
@@ -392,7 +393,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         QueryObject qo = new QueryObject(conds);
         qo.AddWhere(CondAttr.NodeID, this.FK_MainNode);
         qo.addAnd();
-        qo.AddWhere(CondAttr.CondType, (int)this.HisCondType);
+        qo.AddWhere(CondAttr.DataFrom, (int)ConnDataFrom.Form);
         if (this.ToNodeID != 0)
         {
             qo.addAnd();
@@ -414,11 +415,16 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
          
         this.AddTableEnd();
 
+        if (num == 0)
+            return;
+
+
         #region 条件
         this.AddTable("border=0 widht='500px'");
+        this.AddCaptionLeft("说明:同时满足如下条件转向成立,只能删除不能编辑.");
         this.AddTR();
         this.AddTDTitle("IDX");
-        this.AddTDTitle(this.ToE("NodeFrom", "数据来源"));
+       // this.AddTDTitle(this.ToE("NodeFrom", "数据来源"));
         this.AddTDTitle(this.ToE("Node", "节点"));
         this.AddTDTitle(this.ToE("Attr", "属性"));
         this.AddTDTitle(this.ToE("OperS", "操作符"));
@@ -426,25 +432,23 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Oper", "操作"));
         this.AddTREnd();
 
-
         int i = 0;
         foreach (Cond mync in conds)
         {
-            if (mync.HisDataFrom.ToString() == "Stas"
-                || mync.HisDataFrom.ToString() == "Depts")
+            if (mync.HisDataFrom != ConnDataFrom.Form )
                 continue;
-            i++;
 
+            i++;
 
             this.AddTR();
             this.AddTDIdx(i);
-            this.AddTD(mync.HisDataFrom.ToString());
+          //  this.AddTD(mync.HisDataFrom.ToString());
             this.AddTD(mync.FK_NodeT);
             this.AddTD(mync.AttrName);
             this.AddTDCenter(mync.FK_Operator);
             this.AddTD(mync.OperatorValueT);
-            if (num > 1)
-                this.AddTD(mync.HisConnJudgeWayT);
+            //if (num > 1)
+            //    this.AddTD(mync.HisConnJudgeWayT);
             this.AddTD("<a href='Cond.aspx?MyPK=" + mync.MyPK + "&CondType=" + (int)this.HisCondType + "&FK_Flow=" + this.FK_Flow + "&FK_Attr=" + mync.FK_Attr + "&FK_MainNode=" + mync.NodeID + "&OperatorValue=" + mync.OperatorValueStr + "&FK_Node=" + mync.FK_Node + "&DoType=Del&ToNodeID=" + mync.ToNodeID + "' >" + this.ToE("Del", "删除") + "</a>");
             this.AddTREnd();
         }
@@ -510,9 +514,12 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             return;
         }
 
-        Cond cond = new Cond();
-        cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
+        DBAccess.RunSQL("DELETE WF_Cond WHERE  ToNodeID=" + this.ToNodeID + " AND DataFrom!=" + (int)ConnDataFrom.Form );
 
+        Cond cond = new Cond();
+        //cond.Delete(CondAttr.ToNodeID, this.ToNodeID, CondAttr.DataFrom);
+
+       //cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID, CondAttr.CondType,this.HisCondType);
         cond.HisDataFrom = ConnDataFrom.Form;
         cond.NodeID = this.FK_MainNode;
         cond.FK_Attr = this.FK_Attr;
@@ -522,13 +529,17 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         cond.OperatorValueT = this.GetOperValText;
         cond.FK_Flow = this.FK_Flow;
         cond.HisCondType = this.HisCondType;
-        try
-        {
-            cond.HisConnJudgeWay = (ConnJudgeWay)this.DDL_ConnJudgeWay.SelectedItemIntVal;
-        }
-        catch
-        {
-        }
+
+        // 2012-09-01 去掉了 or 的混淆概念.
+        cond.HisConnJudgeWay = ConnJudgeWay.ByAnd;
+        //try
+        //{
+        //    cond.HisConnJudgeWay = (ConnJudgeWay)this.DDL_ConnJudgeWay.SelectedItemIntVal;
+        //}
+        //catch
+        //{
+
+        //}
 
         /* 执行同步*/
         string sqls="UPDATE WF_Node SET IsCCFlow=0";
@@ -552,11 +563,8 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 cond.ToNodeID = this.ToNodeID;
                 cond.Insert();
                 BP.DA.DBAccess.RunSQL(sql);
-                //if (cond.Update() == 0)
-                //    cond.Insert();
                 this.Response.Redirect("Cond.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
                 return;
-                break;
             default:
                 throw new Exception("未设计的情况。");
         }

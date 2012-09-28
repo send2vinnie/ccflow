@@ -18,7 +18,6 @@ using BP.Web;
 
 public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
 {
-
     #region 属性
     /// <summary>
     /// 主键
@@ -122,6 +121,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.Title = "部门条件";
         if (this.Request.QueryString["DoType"] == "Del")
         {
             Cond nd = new Cond(this.MyPK);
@@ -139,7 +139,6 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
-         
 
         this.Pub1.AddTable(); 
         this.Pub1.AddTR();
@@ -245,16 +244,21 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
     {
         get
         {
-            return this.FK_MainNode + "_" + this.ToNodeID + "_" + this.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
+            return this.FK_MainNode + "_" + this.ToNodeID + "_" + this.HisCondType.ToString() + "_" + ConnDataFrom.Depts.ToString();
         }
     }
-
-    
 
     void btn_Save_Click(object sender, EventArgs e)
     {
         Cond cond = new Cond();
-        cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
+        cond.Delete(CondAttr.ToNodeID, this.ToNodeID);
+
+       // cond.Delete(CondAttr.ToNodeID, this.ToNodeID, CondAttr.CondType,(int)this.HisCondType);
+        
+        //if (this.HisCondType== CondType.Dir)
+        //   cond.Delete(CondAttr.ToNodeID, this.ToNodeID);
+        //else
+        //    cond.Delete(CondAttr.NodeID, this.FK_Node, CondAttr);
 
         cond.MyPK = this.GenerMyPK;
         if (cond.RetrieveFromDBSources() == 0)

@@ -71,10 +71,14 @@ public partial class WF_Admin_CondPRI : BP.Web.WebPage
             case "Up":
                 Cond up = new Cond(this.MyPK);
                 up.DoUp(this.FK_MainNode);
+                up.RetrieveFromDBSources();
+                DBAccess.RunSQL("UPDATE WF_Cond SET PRI=" + up.PRI + " WHERE ToNodeID=" + up.ToNodeID);
                 break;
             case "Down":
                 Cond down = new Cond(this.MyPK);
                 down.DoDown(this.FK_MainNode);
+                down.RetrieveFromDBSources();
+                DBAccess.RunSQL("UPDATE WF_Cond SET PRI=" + down.PRI + " WHERE ToNodeID=" + down.ToNodeID);
                 break;
             default:
                 break;
@@ -92,12 +96,16 @@ public partial class WF_Admin_CondPRI : BP.Web.WebPage
         this.Pub1.AddTDTitle("优先级");
         this.Pub1.AddTDTitle("colspan=2","操作");
         this.Pub1.AddTREnd();
-    //    BP.WF.Nodes nds = nd.HisToNodes;
-
         Conds cds = new Conds();
         cds.Retrieve(CondAttr.FK_Node, this.FK_MainNode, CondAttr.PRI);
+        string strs = "";
         foreach (Cond cd in cds)
         {
+            if (strs.Contains("," + cd.ToNodeID.ToString()))
+                continue;
+
+            strs += "," + cd.ToNodeID.ToString();
+
             BP.WF.Node mynd = new BP.WF.Node(cd.ToNodeID);
             this.Pub1.AddTR();
             this.Pub1.AddTD(nd.NodeID);
