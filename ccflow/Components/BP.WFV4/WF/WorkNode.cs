@@ -11,7 +11,7 @@ namespace BP.WF
     /// <summary>
     /// WF 的摘要说明。
     /// 工作流.
-    /// 这里包含了两个方面
+    /// 这里包含了两个方面 
     /// 工作的信息．
     /// 流程的信息．
     /// </summary>
@@ -3725,26 +3725,64 @@ namespace BP.WF
             qo.AddWhere(CondAttr.NodeID, this.HisNode.NodeID);
             qo.addOrderBy(CondAttr.PRI); //按方向条件的优先级进行排序.
             qo.DoQuery();
-            foreach (Cond cd in dcs)
+
+            // 获得判断顺序.
+            string nodeIdx = "";
+            foreach (Cond  item in dcs)
             {
-                cd.WorkID = this.WorkID;
-                foreach (Node nd in toNodes)
+                if (nodeIdx.Contains("@" + item.ToNodeID) == false)
+                    nodeIdx += "@" + item.ToNodeID;
+            }
+
+            // 遍历判断顺序, 就是方向条件的优先级.
+            string[] strs = nodeIdx.Split('@');
+            foreach (string s in strs)
+            {
+                if (string.IsNullOrEmpty(s))
+                    continue;
+
+                bool isPass = false;
+                foreach (Cond cd in dcs)
                 {
-                    if (cd.ToNodeID != nd.NodeID)
+                    if (cd.ToNodeID != int.Parse(s) )
                         continue;
-                    if (cd.IsPassed) // 如果多个转向条件中有一个成立.
+
+                    cd.WorkID = this.WorkID;
+                    if (cd.IsPassed == false)
                     {
-                        numOfWay++;
-                        toNode = nd;
+                        isPass = false;
                         break;
                     }
-                    condMsg += "<b>@检查方向条件：到节点：" + nd.Name + "</b>";
-                    condMsg += dcs.MsgOfDesc;
+                    else
+                        isPass = true;
                 }
 
-                if (toNode != null)
-                    break;
+                if (isPass == false)
+                    continue;
+                // 找到了这个转向条件.
+                toNode = toNodes.GetEntityByKey(int.Parse(s)) as Node;
+                break;
             }
+
+            //foreach (Cond cd in dcs)
+            //{
+            //    cd.WorkID = this.WorkID;
+            //    foreach (Node nd in toNodes)
+            //    {
+            //        if (cd.ToNodeID != nd.NodeID)
+            //            continue;
+            //        if (cd.IsPassed) // 如果多个转向条件中有一个成立.
+            //        {
+            //            numOfWay++;
+            //            toNode = nd;
+            //            break;
+            //        }
+            //        condMsg += "<b>@检查方向条件：到节点：" + nd.Name + "</b>";
+            //        condMsg += dcs.MsgOfDesc;
+            //    }
+            //    if (toNode != null)
+            //        break;
+            //}
 
             if (toNode == null)
                 throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误,节点名称:{0}, 系统无法投递。"),

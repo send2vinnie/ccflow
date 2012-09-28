@@ -5,6 +5,9 @@ using BP.En;
 
 namespace BP.WF
 {
+    /// <summary>
+    /// 计算的数据来源
+    /// </summary>
     public enum ConnDataFrom
     {
         /// <summary>
@@ -18,7 +21,11 @@ namespace BP.WF
         /// <summary>
         /// Depts
         /// </summary>
-        Depts
+        Depts,
+        /// <summary>
+        /// 按sql计算.
+        /// </summary>
+        SQL
     }
     public enum ConnJudgeWay
     {
@@ -468,6 +475,31 @@ namespace BP.WF
                     return false;
                 }
 
+                if (this.HisDataFrom == ConnDataFrom.SQL)
+                {
+                    //this.MsgOfCond = "@以表单值判断方向，值 " + en.EnDesc + "." + this.AttrKey + " (" + en.GetValStringByKey(this.AttrKey) + ") 操作符:(" + this.FK_Operator + ") 判断值:(" + this.OperatorValue.ToString() + ")";
+                    string sql = this.OperatorValueStr;
+                    sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                    sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                    sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                    if (sql.Contains("@") == true)
+                    {
+                        /* 如果包含 @ */
+                        foreach (Attr attr in en.EnMap.Attrs)
+                        {
+                            sql = sql.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key));
+                        }
+                    }
+
+                    int result = DBAccess.RunSQLReturnValInt(sql, 2);
+                    if (result == 0)
+                        return false;
+
+                    if (result == 1)
+                        return true;
+                    throw new Exception("@您设置的sql返回值，不符合ccflow的要求，必须是0或1。");
+                }
+
 
                 try
                 {
@@ -549,7 +581,9 @@ namespace BP.WF
 
                 map.AddTBInt(CondAttr.DataFrom, 0, "条件数据来源0表单,1岗位(对方向条件有效)", true, true);
                 map.AddTBString(CondAttr.FK_Flow, null, "流程", true, true, 0, 60, 20);
-                map.AddTBInt(CondAttr.NodeID, 0, "发生的事件", true, true);
+                
+                map.AddTBInt(CondAttr.NodeID, 0, "发生的事件MainNode", true, true);
+
                 map.AddTBInt(CondAttr.FK_Node, 0, "节点ID", true, true);
                 map.AddTBString(CondAttr.FK_Attr, null, "属性", true, true, 0, 80, 20);
                 map.AddTBString(CondAttr.AttrKey, null, "属性键", true, true, 0, 60, 20);

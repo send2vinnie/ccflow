@@ -198,7 +198,6 @@
     <Compile Include="FlowDesc\SelectAccper.cs" />
     <Compile Include="FlowDesc\NodeDept.cs" />
     <Compile Include="FlowDesc\NodeUnitData.cs" />
-    <Compile Include="FlowData.cs" />
     <Compile Include="FlowDesc\FrmNode.cs" />
     <Compile Include="FlowDesc\CC\CC.cs" />
     <Compile Include="Glo.cs" />
@@ -298,7 +297,6 @@
     <Compile Include="Xml\WatchDogXml.cs" />
     <Compile Include="Xml\EventListDtl.cs" />
     <Compile Include="Xml\MapDef\FrmEventXml.cs" />
-    <Compile Include="TestNDRpt.cs" />
     <Compile Include="Xml\OneWorkXml.cs" />
     <Compile Include="Xml\DBSrc.cs" />
     <Compile Include="Xml\RptXml.cs" />
@@ -326,6 +324,7 @@
       <Name>BP.En30</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

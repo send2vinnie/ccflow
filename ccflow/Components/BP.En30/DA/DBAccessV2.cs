@@ -2025,7 +2025,16 @@ namespace BP.DA
             catch (System.Exception ex)
             {
                 HisConnOfSQLs.PutPool(connofObj);
-                string msg = "@运行查询在(RunSQLReturnTable_200705_SQL)出错 sql=" + selectSQL + " @异常信息：" + ex.Message;
+
+                string msgErr = ex.Message;
+                //if (msgErr.Contains("DataReader"))
+                //{
+                //    /*数据连接的问题*/
+                //    conn.Close();
+                //    return RunSQLReturnTable_200705_SQL(selectSQL);
+                //}
+
+                string msg = "@运行查询在(RunSQLReturnTable_200705_SQL)出错 sql=" + selectSQL + " @异常信息：" + msgErr;
                 Log.DebugWriteError(msg);
                 throw new Exception(msg);
             }

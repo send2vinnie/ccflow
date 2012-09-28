@@ -163,13 +163,13 @@ namespace BP.WF.Ext
 
 
                 rm = new RefMethod();
-                rm.Title = "回滚已经完成的流程数据";
+                rm.Title = "回滚已经完成的流程";
                 rm.Icon = "/Images/Btn/DTS.gif";
                 rm.ClassMethodName = this.ToString() + ".DoRebackFlowData()";
                // rm.Warning = "您确定要回滚它吗？";
-                rm.HisAttrs.AddTBInt("OID", 0, "请输入要会滚WorkID", true, false);
+                rm.HisAttrs.AddTBInt("workid", 0, "请输入要会滚WorkID", true, false);
+                rm.HisAttrs.AddTBString("note", null, "回滚原因", true, false,0,600,200);
                 map.AddRefMethod(rm);
-
 
                 //rm = new RefMethod();
                 //rm.Title = "设置自动发起"; // "报表运行";
@@ -200,8 +200,11 @@ namespace BP.WF.Ext
         #endregion
 
         #region  公共方法
-        public string DoRebackFlowData(int workid)
+        public string DoRebackFlowData(int workid, string note)
         {
+            if (note.Length <= 2)
+                return "请填写恢复已完成的流程原因.";
+
             GenerWorkFlow gwf = new GenerWorkFlow();
             gwf.WorkID = workid;
             int startNode = int.Parse(this.No + "01");
@@ -274,7 +277,7 @@ namespace BP.WF.Ext
                     wl.IsEnable = true;
                     if (gwf.FK_Node == wl.FK_Node)
                     {
-                        currWl=wl;
+                        currWl = wl;
                         wl.IsPass = true;
                     }
                     else
@@ -286,9 +289,11 @@ namespace BP.WF.Ext
                 string sqls = "UPDATE ND" + startNode + " SET WFState=0 WHERE OID=" + workid;
                 sqls += "@UPDATE ND" + int.Parse(this.No) + "Rpt SET WFState=0 WHERE OID=" + workid;
                 sqls += "@UPDATE ND" + endNode + " SET NodeState=0 WHERE OID=" + workid;
-
                 DBAccess.RunSQLs(sqls);
-                return "已经还原成功,当前工作处理人为("+currWl.FK_Emp+" , "+currWl.FK_EmpText+"), 当前节点为:" + endN.Name;
+
+                WorkNode wn = new WorkNode(workid, currWl.FK_Node);
+                wn.AddToTrack(ActionType.RebackOverFlow, currWl.FK_Emp, currWl.FK_EmpText, currWl.FK_Node, currWl.FK_NodeText, note);
+                return "@已经还原成功,现在的流程已经复原到最后一个节点处理人身上. @当前工作处理人为(" + currWl.FK_Emp + " , " + currWl.FK_EmpText + "), 当前节点为:" + endN.Name + ". @请通知他处理工作.";
             }
             catch (Exception ex)
             {

@@ -666,10 +666,9 @@ namespace BP.En
         public bool GetValBooleanByKey(string key)
         {
             string s = this.GetValStrByKey(key);
-            if (this.GetValStrByKey(key) == null)
-            {
+            if (string.IsNullOrEmpty(s))
                 s = this.EnMap.GetAttrByKey(key).DefaultVal.ToString();
-            }
+
             if (s.ToUpper() == "FALSE")
                 return false;
             if (s.ToUpper() == "TRUE")

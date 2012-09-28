@@ -60,7 +60,11 @@ namespace BP.WF
         /// <summary>
         /// 取回
         /// </summary>
-        Tackback
+        Tackback,
+        /// <summary>
+        /// 恢复已完成的流程
+        /// </summary>
+        RebackOverFlow
     }
     /// <summary>
     ///  属性
@@ -308,6 +312,8 @@ namespace BP.WF
                     return "子流程发起";
                 case ActionType.SubFlowForward:
                     return "子流程前进";
+                case ActionType.RebackOverFlow:
+                    return "恢复已完成的流程";
                 default:
                     return "未知";
             }
