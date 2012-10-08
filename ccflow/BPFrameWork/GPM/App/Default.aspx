@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/App/WinOpen.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="App_Default" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
  <style type="text/css">
         .style1
