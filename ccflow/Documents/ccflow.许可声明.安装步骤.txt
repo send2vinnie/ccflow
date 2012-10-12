@@ -125,7 +125,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 ）
 
 3, 建立虚拟目录 ccflow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
-   执行权限为纯脚本，应用程序池选择为：步骤2新增的应用程序池。
+   执行权限为 [脚本和可执行文件] ，应用程序池选择为：步骤2新增的应用程序池。
 
 4, 创建数据库.
 
@@ -235,8 +235,14 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
    aspnet_regiis.exe -i
    
    重新安装，就有可能解决，此时可以寻求你的同事解决。
+
+12, 如果sl工作正常，进入流程设计器的登录界面，但是admin登录不进去，提示错误。
+
+    原因:有可能是: *.asmx 文件解析的方式不对，不是 Framework 4.0.
+
+    处理方法: 在IIS的“处理程序映射”，添加脚本映射 *.asmx     %windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll
  
-12.  Windows server 2008应用之IIS 7中配置ISAPI和CGI限.
+13.  Windows server 2008应用之IIS 7中配置ISAPI和CGI限.
     ISAPI 和 CGI 限制是允许在服务器上执行动态内容的请求处理程序。这些限制为 CGI 文件 (.exe) 或 ISAPI 扩展 (.dll)。如果 IIS 配置系统允许添加自定义 ISAPI 或 CGI 限制，则我们可以添加它们。
 
 　　(一)添加 ISAPI 或 CGI 限制
