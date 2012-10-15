@@ -229,10 +229,11 @@ namespace BP.WF.Ext
                 map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 2000, 10, true);
 
                 //map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
-
                 map.AddTBDateTime("DTFrom", "生命周期从", true, true);
                 map.AddTBDateTime("DTTo", "生命周期到", true, true);
 
+                //保存方式.
+                map.AddDDLSysEnum(NodeAttr.SaveModel, 0, "保存方式", true, true);
 
                 #region  功能按钮状态
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);

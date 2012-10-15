@@ -2970,7 +2970,7 @@ namespace BP.WF
         /// Ö´ÐÐÊý¾Ýcopy.
         /// </summary>
         /// <param name="fromWK"></param>
-        private void DoCopyRptWork(Work fromWK)
+        public void DoCopyRptWork(Work fromWK)
         {
             foreach (Attr attr in fromWK.EnMap.Attrs)
             {

@@ -1000,10 +1000,35 @@ namespace BP.WF
                         sw.SetValByKey(str, htWork[str]);
                 }
                 sw.BeforeSave();
-                //if (sw.GetValStringByKey("Title") == "")
-                //{
-                //}
                 sw.Save();
+
+
+                if (nd.SaveModel == SaveModel.NDAndRpt)
+                {
+                    /* 如果保存模式是节点表与Node与Rpt表. */
+                    WorkNode wn = new WorkNode(sw, nd);
+                    GEEntity rptGe = nd.HisFlow.HisFlowData;
+                    rptGe.SetValByKey("OID", workID);
+                    wn.rptGe = rptGe;
+                    if (rptGe.RetrieveFromDBSources() == 0)
+                    {
+                        rptGe.SetValByKey("OID", workID);
+                        wn.DoCopyRptWork(sw);
+
+                        rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
+                        rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
+                        rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
+                        rptGe.SetValByKey(GERptAttr.WFState, 0);
+                        rptGe.SetValByKey(GERptAttr.FK_NY, DataType.CurrentYearMonth);
+                        rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
+                        rptGe.Insert();
+                    }
+                    else
+                    {
+                        wn.DoCopyRptWork(sw);
+                        rptGe.Update();
+                    }
+                }
                 return "保存成功.";
             }
             catch (Exception ex)

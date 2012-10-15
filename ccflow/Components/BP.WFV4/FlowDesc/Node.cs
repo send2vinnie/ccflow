@@ -9,6 +9,20 @@ using BP.Port;
 namespace BP.WF
 {
     /// <summary>
+    /// 保存模式
+    /// </summary>
+    public enum SaveModel
+    {
+        /// <summary>
+        /// 仅节点表.
+        /// </summary>
+        NDOnly,
+        /// <summary>
+        /// 节点表与Rpt表.
+        /// </summary>
+        NDAndRpt
+    }
+    /// <summary>
     /// 节点完成转向处理
     /// </summary>
     public enum TurnToDeal
@@ -589,6 +603,10 @@ namespace BP.WF
         /// 操送规则
         /// </summary>
         public const string CCRole = "CCRole";
+        /// <summary>
+        /// 保存模式
+        /// </summary>
+        public const string SaveModel = "SaveModel";
         #endregion
     }
     /// <summary>
@@ -1358,6 +1376,20 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(NodeAttr.SwinkCent, value);
+            }
+        }
+        /// <summary>
+        /// 保存方式 @0=仅节点表 @1=节点与NDxxxRtp表.
+        /// </summary>
+        public SaveModel SaveModel
+        {
+            get
+            {
+                return (SaveModel)this.GetValIntByKey(NodeAttr.SaveModel);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.SaveModel, (int)value);
             }
         }
         /// <summary>
@@ -2367,7 +2399,7 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.ReturnRole, 2, "退回规则", true, true);
                 map.AddTBInt(NodeAttr.DeliveryWay, 0, "访问规则", true, true);
                 map.AddTBInt(NodeAttr.CCRole, 0, "抄送规则", true, true);
-
+                map.AddTBInt(NodeAttr.SaveModel, 0, "保存模式", true, true);
 
                 //map.AddBoolean(NodeAttr.IsCanReturn, true, "是否可以退回", true, true);
                 //map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true);
