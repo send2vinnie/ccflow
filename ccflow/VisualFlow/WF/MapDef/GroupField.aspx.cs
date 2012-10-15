@@ -69,7 +69,7 @@ public partial class WF_MapDef_GroupField : WebPage
         attr = new MapAttr();
         attr.FK_MapData = this.RefNo;
         attr.KeyOfEn = Prx + "_Note";
-        attr.Name = this.ToE("CheckNote", "审核意见");
+        attr.Name = "审核意见"; // sta;  // this.ToE("CheckNote", "审核意见");
         attr.MyDataType = DataType.AppString;
         attr.UIContralType = UIContralType.TB;
         attr.UIIsEnable = true;

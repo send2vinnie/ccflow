@@ -53,7 +53,7 @@ public partial class WF_MapDef_ExpImp : WebPage
                 break;
             case "Imp":
                 MapData mdForm = new MapData(this.FromMap);
-                MapData.ImpMapData(this.RefNo, mdForm.GenerHisDataSet());
+                MapData.ImpMapData(this.RefNo, mdForm.GenerHisDataSet(),true);
                 this.WinClose();
                 return;
             case "Share":
@@ -252,7 +252,7 @@ public partial class WF_MapDef_ExpImp : WebPage
             {
                 DataSet ds = new DataSet();
                 ds.ReadXml(file);
-                BP.Sys.MapData.ImpMapData(this.RefNo, ds);
+                BP.Sys.MapData.ImpMapData(this.RefNo, ds,true);
                 this.WinClose();
             }
             catch (Exception ex)

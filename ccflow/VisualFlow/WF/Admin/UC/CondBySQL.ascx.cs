@@ -136,7 +136,7 @@ public partial class WF_Admin_UC_CondBySQL : BP.Web.UC.UCBase3
         this.Add(btn);
         btn.Click += new EventHandler(btn_Click);
         this.AddHR();
-        this.Add("<b>说明:</b>这里配置一个sql语句，它范围一行一列，此值必须是0或1，来表示这个条件是否成立。<br><b>其它:</b>SQL语句支持ccflow的表达式。");
+        this.Add("<b>说明:</b>在文本框里设置一个SQL，它返回一行一列，此值必须为0或大于等于1的正<BR>整数, 来表示该条件是否成立。SQL 支持ccflow的表达式。");
         this.AddFieldSetEnd();
 
         //this.AddTable();

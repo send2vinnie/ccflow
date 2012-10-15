@@ -67,7 +67,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         ens.RetrieveAll();
 
         BP.DA.Paras ps = new BP.DA.Paras();
-      
         string sql,sql2;
         if (BP.Web.WebUser.IsAuthorize)
         {
