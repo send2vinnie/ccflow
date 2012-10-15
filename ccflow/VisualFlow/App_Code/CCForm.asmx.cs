@@ -89,7 +89,7 @@ namespace BP.Web
                 string file = "\\Temp\\" + fk_mapData + ".xml";
                 UploadFile(fileByte, file);
                 string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + file;
-                this.LoadFrmTempleteFile(path, fk_mapData, isClear);
+                this.LoadFrmTempleteFile(path, fk_mapData, isClear,true);
                 return null;
             }
             catch (Exception ex)
@@ -97,21 +97,23 @@ namespace BP.Web
                 return ex.Message;
             }
         }
+        
         /// <summary>
-        /// 
+        /// 导入表单
         /// </summary>
-        /// <param name="fileByte"></param>
-        /// <param name="fk_mapData"></param>
-        /// <param name="isClear"></param>
-        /// <returns></returns>
+        /// <param name="file">文件</param>
+        /// <param name="fk_mapData">表单ID</param>
+        /// <param name="isClear">是否清除现有的元素</param>
+        /// <param name="isSetReadonly">是否设置的只读？</param>
+        /// <returns>导入结果</returns>
         [WebMethod]
-        public string LoadFrmTempleteFile(string file, string fk_mapData, bool isClear)
+        public string LoadFrmTempleteFile(string file, string fk_mapData, bool isClear, bool isSetReadonly)
         {
             try
             {
                 DataSet ds = new DataSet();
                 ds.ReadXml(file);
-                MapData.ImpMapData(fk_mapData, ds);
+                MapData.ImpMapData(fk_mapData, ds, isSetReadonly);
                 if (fk_mapData.Contains("ND"))
                 {
                     /* 判断是否是节点表单 */
@@ -278,7 +280,7 @@ namespace BP.Web
                         attrN = new MapAttr();
                         attrN.FK_MapData = enName1;
                         attrN.KeyOfEn = gKey + "_Note";
-                        attrN.Name = "审核意见";
+                        attrN.Name =  "审核意见";
                         attrN.MyDataType = DataType.AppString;
                         attrN.UIContralType = UIContralType.TB;
                         attrN.UIIsEnable = true;
@@ -487,7 +489,7 @@ namespace BP.Web
                         DataSet dsImp = new DataSet();
                         string fileImp = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + v1 + ".xml";
                         dsImp.ReadXml(fileImp); //读取文件.
-                        MapData.ImpMapData(v1, dsImp);
+                        MapData.ImpMapData(v1, dsImp,true);
                         return null;
                     case "NewHidF":
                         string fk_mapdataHid = v1;
@@ -727,7 +729,7 @@ namespace BP.Web
                          /*下载文件到指定的目录: */
                         string tempFile = BP.SystemConfig.PathOfTemp+"\\"+v2+".xml";
                         conn.GetFile(v1, tempFile, false, FileAttributes.Archive, FtpSupport.FtpTransferType.Ascii);
-                        return this.LoadFrmTempleteFile(tempFile, v2, true);
+                        return this.LoadFrmTempleteFile(tempFile, v2,true,true);
                     default:
                         return null;
                 }
@@ -822,15 +824,17 @@ namespace BP.Web
         /// </summary>
         /// <param name="fromMapData"></param>
         /// <param name="fk_mapdata"></param>
-        /// <param name="isClear"></param>
+        /// <param name="isClear">是否清除</param>
+        /// <param name="isSetReadonly">是否设置为只读?</param>
         /// <returns></returns>
         [WebMethod(EnableSession = true)]
-        public string CopyFrm(string fromMapData, string fk_mapdata, bool isClear)
+        public string CopyFrm(string fromMapData, string fk_mapdata, bool isClear, bool isSetReadonly)
         {
+            isSetReadonly = true;
             this.LetAdminLogin();
 
             MapData md = new MapData(fromMapData);
-            MapData.ImpMapData(fk_mapdata, md.GenerHisDataSet());
+            MapData.ImpMapData(fk_mapdata, md.GenerHisDataSet(), isSetReadonly);
 
             // 如果是节点表单，就要执行一次修复，以免漏掉应该有的系统字段。
             if (fk_mapdata.Contains("ND") == true )
