@@ -256,11 +256,11 @@ namespace BP.Sys
         /// <summary>
         /// IsEnable
         /// </summary>
-        public string IsEnable
+        public bool IsEnable
         {
             get
             {
-                return this.GetValStringByKey(FrmBtnAttr.IsEnable);
+                return this.GetValBooleanByKey(FrmBtnAttr.IsEnable);
             }
             set
             {

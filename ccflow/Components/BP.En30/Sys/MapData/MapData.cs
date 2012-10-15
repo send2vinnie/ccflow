@@ -857,10 +857,21 @@ namespace BP.Sys
             }
         }
         /// <summary>
+        /// 导入
+        /// </summary>
+        /// <param name="ds"></param>
+        /// <returns></returns>
+        public static MapData ImpMapData(DataSet ds)
+        {
+            return ImpMapData(ds, true);
+        }
+        /// <summary>
         /// 导入数据
         /// </summary>
         /// <param name="ds"></param>
-        public static MapData ImpMapData(DataSet ds)
+        /// <param name="isSetReadony"></param>
+        /// <returns></returns>
+        public static MapData ImpMapData(DataSet ds,bool isSetReadony)
         {
             string errMsg = "";
             if (ds.Tables.Contains("WF_Node") == true)
@@ -880,15 +891,16 @@ namespace BP.Sys
                 throw new Exception("已经存在(" + fk_mapData + ")的数据。");
 
             //导入.
-            return ImpMapData(fk_mapData, ds);
+            return ImpMapData(fk_mapData, ds, isSetReadony);
         }
         /// <summary>
-        /// 导入
+        /// 导入表单
         /// </summary>
-        /// <param name="fk_mapdata"></param>
-        /// <param name="ds"></param>
+        /// <param name="fk_mapdata">表单ID</param>
+        /// <param name="ds">表单数据</param>
+        /// <param name="isSetReadonly">是否设置只读？</param>
         /// <returns></returns>
-        public static MapData ImpMapData(string fk_mapdata, DataSet ds)
+        public static MapData ImpMapData(string fk_mapdata, DataSet ds, bool isSetReadonly)
         {
             #region 检查导入的数据是否完整.
             string errMsg = "";
@@ -958,10 +970,15 @@ namespace BP.Sys
                                     continue;
                                 dtl.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //if (dtl.IsExit==true)
-                            //{
-                            //    dtl.No="ND"
-                            //}
+                            if (isSetReadonly)
+                            {
+                                //dtl.IsReadonly = true;
+
+                                dtl.IsInsert = false;
+                                dtl.IsUpdate = false;
+                                dtl.IsDelete = false;
+                            }
+
                             dtl.Insert();
                         }
                         break;
@@ -996,6 +1013,9 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
+                            if (isSetReadonly == true)
+                                en.IsEnable = false;
+
 
                             en.MyPK = "Btn_" + idx + "_" + fk_mapdata;
                             en.Insert();
@@ -1063,6 +1083,9 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
+                            if (isSetReadonly == true)
+                                en.IsEnable = false;
+
                             en.Insert();
                         }
                         break;
@@ -1112,6 +1135,7 @@ namespace BP.Sys
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
 
+                           
                             try
                             {
                                 en.Save();
@@ -1134,6 +1158,12 @@ namespace BP.Sys
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             en.MyPK = "Ath_" + idx + "_" + fk_mapdata;
+                            if (isSetReadonly == true)
+                            {
+                                en.IsDelete = false;
+                                en.IsUpload = false;
+                            }
+
                             try
                             {
                                 en.Insert();
@@ -1156,6 +1186,11 @@ namespace BP.Sys
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //   en.NoOfObj = "M2M_" + idx + "_" + fk_mapdata;
+                            if (isSetReadonly == true)
+                            {
+                                en.IsDelete = false;
+                                en.IsInsert = false;
+                            }
                             en.Insert();
                         }
                         break;
@@ -1203,6 +1238,29 @@ namespace BP.Sys
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
 
+                            if (isSetReadonly == true)
+                            {
+                                if (en.DefValReal != null && (en.DefValReal.Contains("@WebUser.") || en.DefValReal.Contains("@RDT")))
+                                    en.DefValReal = "";
+
+                                switch (en.UIContralType)
+                                {
+                                    case UIContralType.DDL:
+                                        en.UIIsEnable = false;
+                                        break;
+                                    case UIContralType.TB:
+                                        en.UIIsEnable = false;
+                                        break;
+                                    case UIContralType.RadioBtn:
+                                        en.UIIsEnable = false;
+                                        break;
+                                    case UIContralType.CheckBok:
+                                        en.UIIsEnable = false;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
                             en.MyPK = en.FK_MapData + "_" + en.KeyOfEn;
                             en.DirectInsert();
                         }

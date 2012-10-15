@@ -357,9 +357,6 @@
     <Compile Include="Sys\XML\Language.cs" />
     <Compile Include="Sys\XML\WebConfig.cs" />
     <Compile Include="Sys\XML\EnumInfoXml.cs" />
-    <Compile Include="PubLib\SystemConfigOfTax.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Rpt\DocRpt\Dimension.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -489,7 +486,6 @@
     <Compile Include="Sys\EnsAppCfg\EnsAppCfg.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PubLib\SysApp\" />
     <Folder Include="Rpt\RptEn\RptEn\" />
     <Folder Include="Rpt\Self\" />
   </ItemGroup>

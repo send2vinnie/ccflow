@@ -156,6 +156,13 @@ namespace BP.Web
         {
             SignInOfGener(em, lang, em.No, true,false);
         }
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="em">登录人</param>
+        /// <param name="lang">语言</param>
+        /// <param name="auth">被授权登录人</param>
+        /// <param name="isRememberMe">是否记忆我</param>
         public static void SignInOfGener(Emp em, string lang, string auth, bool isRememberMe)
         {
             SignInOfGener(em, lang, auth, isRememberMe, false);
@@ -855,7 +862,7 @@ namespace BP.Web
         {
             get
             {
-                return (string)GetSessionByKey("AuthorizerEmpID", false);
+                return (string)GetSessionByKey("AuthorizerEmpID", null);
 
             }
             set
