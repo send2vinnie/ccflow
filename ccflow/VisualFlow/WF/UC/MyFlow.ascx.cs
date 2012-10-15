@@ -1320,7 +1320,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 currWK.SetValByKey("MD5", Glo.GenerMD5(currWK));
             }
 
-            currWK.Update(); /* 如果是保存 */
+            currWK.Update(); 
+            /*如果是保存*/
         }
         catch (Exception ex)
         {
@@ -1336,6 +1337,35 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Pub1.AlertMsg_Warning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
             return;
         }
+
+        #region for lijian 2012-10-15  数据也要保存到Rpt表里.
+        if (currND.SaveModel == SaveModel.NDAndRpt)
+        {
+            /* 如果保存模式是节点表与Node与Rpt表. */
+            WorkNode wn = new WorkNode(currWK, currND);
+            GEEntity rptGe = currND.HisFlow.HisFlowData;
+            rptGe.SetValByKey("OID", this.WorkID);
+            wn.rptGe = rptGe;
+            if (rptGe.RetrieveFromDBSources() == 0)
+            {
+                rptGe.SetValByKey("OID", this.WorkID);
+                wn.DoCopyRptWork(currWK);
+
+                rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
+                rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
+                rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
+                rptGe.SetValByKey(GERptAttr.WFState, 0);
+                rptGe.SetValByKey(GERptAttr.FK_NY, DataType.CurrentYearMonth);
+                rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
+                rptGe.Insert();
+            }
+            else
+            {
+                wn.DoCopyRptWork(currWK);
+                rptGe.Update();
+            }
+        }
+        #endregion
 
         try
         {
