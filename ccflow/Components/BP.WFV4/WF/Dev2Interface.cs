@@ -317,17 +317,40 @@ namespace BP.WF
         /// <returns>当前操作员待办工作</returns>
         public static DataTable DB_GenerEmpWorksOfDataTable()
         {
-            return DB_GenerEmpWorksOfDataTable(WebUser.No);
+            if (WebUser.IsAuthorize == false)
+                return DB_GenerEmpWorksOfDataTable(WebUser.No); // 如果不是授权状态.
+            else
+                return DB_GenerEmpWorksOfDataTable(WebUser.Auth);
         }
+        /// <summary>
+        /// 获取当前操作员的待办工作
+        /// </summary>
+        /// <param name="fk_emp"></param>
+        /// <returns></returns>
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
             if (WebUser.IsAuthorize == false)
-                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ");
-            else
             {
-                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
-                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ");
+                /*如果不是授权状态*/
+                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ");
             }
+
+            /*如果是授权状态, 获取当前委托人的信息. */
+            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+            switch (emp.HisAuthorWay)
+            {
+                case Port.AuthorWay.All:
+                    return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ");
+                    break;
+                case Port.AuthorWay.SpecFlows:
+                    return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ");
+                    break;
+                case Port.AuthorWay.None:
+                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
+                default:
+                    throw new Exception("no such way...");
+            }
+
         }
         #endregion 获取当前操作员的待办工作
 
@@ -831,7 +854,7 @@ namespace BP.WF
         /// <returns>执行信息</returns>
         public static string Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork)
         {
-            return Node_SendWork(fk_flow, workID, new Hashtable(), null);
+            return Node_SendWork(fk_flow, workID, htWork, null);
         }
         /// <summary>
         /// 发送工作

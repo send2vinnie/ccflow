@@ -112,7 +112,7 @@ namespace BP.WF.DTS
                         DataSet ds = new DataSet();
                         ds.ReadXml(f);
 
-                        MapData md = MapData.ImpMapData(ds);
+                        MapData md = MapData.ImpMapData(ds,true);
                         md.FK_FrmSort = fs.No;
                         md.Update();
                     }

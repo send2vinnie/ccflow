@@ -1205,8 +1205,10 @@ namespace BP.WF
             {
                 if (nd.FocusField.Trim() == "")
                     continue;
+
                 if (nd.HisWork.EnMap.Attrs.Contains(nd.FocusField) == false)
                     msg += "<font color=red><br>@焦点字段（" + nd.FocusField + "）在节点(step:" + nd.Step + " 名称:" + nd.Name + ")属性里的设置已无效，表单里不存在该字段。</font>";
+
                 if (this.IsMD5)
                 {
                     if (nd.HisWork.EnMap.Attrs.Contains(WorkAttr.MD5) == false)
@@ -2478,7 +2480,7 @@ namespace BP.WF
 
             if (SystemConfig.AppCenterDBType == DBType.MySQL)
             {
-                #warning 没有处理好mysql的删除。
+#warning 没有处理好mysql的删除。
                 //DataTable delDt = DBAccess.RunSQLReturnTable(sql);
                 //foreach (DataRow dr in delDt.Rows)
                 //{
@@ -2782,6 +2784,9 @@ namespace BP.WF
 
             DBAccess.RunSQL("DELETE FROM Sys_GroupField WHERE EnName='" + fk_mapData + "' AND OID NOT IN (SELECT GroupID FROM Sys_MapAttr WHERE FK_MapData = '" + fk_mapData + "')");
             DBAccess.RunSQL("UPDATE ND" + flowId + "Rpt SET MyNum=1");
+
+            DBAccess.RunSQL("UPDATE Sys_MapAttr SET Name='活动时间' WHERE FK_MapData='ND" + flowId + "Rpt' AND KeyOfEn='CDT'");
+            DBAccess.RunSQL("UPDATE Sys_MapAttr SET Name='参与者' WHERE FK_MapData='ND" + flowId + "Rpt' AND KeyOfEn='Emps'");
         }
 
         #region 基本属性

@@ -13,6 +13,24 @@ using System.IO;
 
 namespace BP.WF.Port
 {
+    /// <summary>
+    /// 授权方式
+    /// </summary>
+    public enum AuthorWay
+    {
+        /// <summary>
+        /// 不授权
+        /// </summary>
+        None,
+        /// <summary>
+        /// 全部授权
+        /// </summary>
+        All,
+        /// <summary>
+        /// 指定流程授权
+        /// </summary>
+        SpecFlows
+    }
     public enum AlertWay
     {
         /// <summary>
@@ -298,6 +316,16 @@ namespace BP.WF.Port
             set
             {
                 SetValByKey(WFEmpAttr.Stas, value);
+            }
+        }
+        /// <summary>
+        /// 授权方式
+        /// </summary>
+        public AuthorWay HisAuthorWay
+        {
+            get
+            {
+                return (AuthorWay)this.AuthorWay;
             }
         }
         /// <summary>

@@ -491,12 +491,13 @@ namespace BP.WF
                         }
                     }
 
-                    int result = DBAccess.RunSQLReturnValInt(sql, 2);
+                    int result = DBAccess.RunSQLReturnValInt(sql, -1);
                     if (result == 0)
                         return false;
 
                     if (result == 1)
                         return true;
+
                     throw new Exception("@您设置的sql返回值，不符合ccflow的要求，必须是0或1。");
                 }
 
