@@ -93,14 +93,16 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         if (WebUser.IsWap)
             this.AddFieldSet("<a href='./WAP/Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a> - " + this.ToE("AT0", "工作分配"));
         else
-            this.AddFieldSet( this.ToE("AT0","工作分配") );
+            this.AddFieldSet(this.ToE("AT0", "工作分配"));
 
-        if (dt.Rows.Count == 0) 
+        if (dt.Rows.Count == 0)
             throw new Exception("@系统错误..." + sql);
 
         string[] objs = dt.Rows[0]["Objs"].ToString().Split('@');
         string[] emps = dt.Rows[0]["Emps"].ToString().Split('@');
 
+        string ids = "";
+        this.AddUL();
         foreach (string fk_emp in emps)
         {
             if (fk_emp == null || fk_emp == "")
@@ -109,6 +111,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             Emp emp = new Emp(fk_emp);
             CheckBox cb = new CheckBox();
             cb.ID = "CB_" + fk_emp;
+            ids += "," + cb.ID;
 
             if (Glo.IsShowUserNoOnly)
                 cb.Text = emp.No;
@@ -122,19 +125,27 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             {
                 cb.Checked = wl.IsEnable;
             }
-
+            this.Add("<li>");
             this.Add(cb);
-            this.AddBR();
+            this.Add("</li>");
+            //this.AddBR();
         }
+        this.AddULEnd();
+
         this.AddHR();
         Btn btn = new Btn();
         btn.ID = "Btn_Do";
-        btn.Text = this.ToE("OK", "确定");
+        btn.Text = this.ToE("OK", "  确定  ");
         btn.Click += new EventHandler(BPToolBar1_ButtonClick);
         this.Add(btn);
 
+        CheckBox cbx = new CheckBox();
+        cbx.ID = "seleall";
+        cbx.Text = "选择全部";
+        cbx.Checked = true;
+        cbx.Attributes["onclick"] = "SetSelected(this,'" + ids + "')";
+        this.Add(cbx);
         //this.Add("<input type=button value='取消' onclick='window.close();'  />");
-
         this.Add("<br><br>" + this.ToE("AT1", "帮助:系统会记住本次的工作指定，下次您在发送时间它会自动把工作投递给您本次指定的人。"));
         this.AddFieldSetEnd();
 
