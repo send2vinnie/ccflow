@@ -2114,8 +2114,7 @@ namespace BP.Web.Comm.UC.WF
             }
 
             #region  输出 rb.
-            BP.Sys.FrmRBs myrbs = this.mapData.FrmRBs;
-            myrbs.RetrieveFromCash(FrmRBAttr.FK_MapData, enName);
+           BP.Sys.FrmRBs myrbs = this.mapData.FrmRBs;
             MapAttr attrRB = new MapAttr();
             foreach (BP.Sys.FrmRB rb in myrbs)
             {
