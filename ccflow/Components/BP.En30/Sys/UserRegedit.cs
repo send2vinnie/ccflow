@@ -30,8 +30,10 @@ namespace BP.Sys
         /// 查询
         /// </summary>
         public const string SearchKey = "SearchKey";
+        /// <summary>
+        /// MyPK
+        /// </summary>
         public const string MyPK = "MyPK";
-
         /// <summary>
         /// OrderBy
         /// </summary>
@@ -40,12 +42,20 @@ namespace BP.Sys
         /// OrderWay
         /// </summary>
         public const string OrderWay = "OrderWay";
-
+        /// <summary>
+        /// 产生的sql
+        /// </summary>
         public const string GenerSQL = "GenerSQL";
+        /// <summary>
+        /// 参数
+        /// </summary>
         public const string Paras = "Paras";
+        /// <summary>
+        /// 数值
+        /// </summary>
         public const string NumKey = "NumKey";
         /// <summary>
-        /// 查询中
+        /// 查询
         /// </summary>
         public const string MVals = "MVals";
         /// <summary>
@@ -66,6 +76,9 @@ namespace BP.Sys
 		#endregion
 
 		#region 基本属性
+        /// <summary>
+        /// 是否显示图片
+        /// </summary>
         public bool IsPic
         {
             get
@@ -77,6 +90,9 @@ namespace BP.Sys
                 this.SetValByKey(UserRegeditAttr.IsPic, value);
             }
         }
+        /// <summary>
+        /// 数值键
+        /// </summary>
         public string NumKey
         {
             get
@@ -88,6 +104,9 @@ namespace BP.Sys
                 this.SetValByKey(UserRegeditAttr.NumKey, value);
             }
         }
+        /// <summary>
+        /// 参数
+        /// </summary>
         public string Paras
         {
             get
@@ -99,6 +118,9 @@ namespace BP.Sys
                 this.SetValByKey(UserRegeditAttr.Paras, value);
             }
         }
+        /// <summary>
+        /// 产生的sql
+        /// </summary>
         public string GenerSQL
         {
             get
@@ -112,6 +134,9 @@ namespace BP.Sys
                 this.SetValByKey(UserRegeditAttr.GenerSQL, value);
             }
         }
+        /// <summary>
+        /// 排序方式
+        /// </summary>
         public string OrderWay
         {
             get
@@ -296,16 +321,6 @@ namespace BP.Sys
 		public UserRegedit()
 		{
 		}
-        public UserRegedit(string mypk)
-        {
-           // this.MyPK = mypk;
-           //int i=  this.RetrieveFromDBSources();
-           //if (i == 0)
-           //{
-           //    this.CfgKey = cfgkey;
-           //    this.FK_Emp = fk_emp;
-           //}
-        }
 		/// <summary>
 		/// 用户注册表
 		/// </summary>
@@ -340,7 +355,6 @@ namespace BP.Sys
 
                 map.EnDesc = "用户注册表";
                 map.EnType = EnType.Sys;
-
                 map.AddMyPK();
                 map.AddTBString(UserRegeditAttr.FK_Emp, null, "用户", false, false, 1, 30, 20);
                 map.AddTBString(UserRegeditAttr.CfgKey, null, "键", true, false, 1, 200, 20);
@@ -356,12 +370,14 @@ namespace BP.Sys
 
                 map.AddTBString(UserRegeditAttr.DTFrom, null, "查询时间从", true, false, 0, 20, 20);
                 map.AddTBString(UserRegeditAttr.DTTo, null, "到", true, false, 0, 20, 20);
-
+                
                 this._enMap = map;
                 return this._enMap;
             }
         }
 		#endregion 
+
+        #region 重写
         public override Entities GetNewEntities
         {
             get { return new UserRegedits(); }
@@ -371,36 +387,41 @@ namespace BP.Sys
             this.MyPK = this.FK_Emp + this.CfgKey;
             return base.beforeUpdateInsertAction();
         }
-	}
+        #endregion 重写
+    }
 	/// <summary>
 	/// 用户注册表s
 	/// </summary>
-	public class UserRegedits : EntitiesOID
-	{		
-		#region 构造
-		public UserRegedits()
-		{
-		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="emp"></param>
-		public UserRegedits(string emp)
-		{
-			QueryObject qo = new QueryObject(this);
-			qo.AddWhere(UserRegeditAttr.FK_Emp, emp);
-			qo.DoQuery();
-		}
-		/// <summary>
-		/// 得到它的 Entity
-		/// </summary>
-		public override Entity GetNewEntity 
-		{
-			get
-			{
-				return new UserRegedit();
-			}
-		}
-		#endregion
-	}
+    public class UserRegedits : EntitiesMyPK
+    {
+        #region 构造
+        public UserRegedits()
+        {
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="emp"></param>
+        public UserRegedits(string emp)
+        {
+            QueryObject qo = new QueryObject(this);
+            qo.AddWhere(UserRegeditAttr.FK_Emp, emp);
+            qo.DoQuery();
+        }
+        #endregion
+
+        #region 重写
+        /// <summary>
+        /// 得到它的 Entity
+        /// </summary>
+        public override Entity GetNewEntity
+        {
+            get
+            {
+                return new UserRegedit();
+            }
+        }
+        #endregion
+
+    }
 }

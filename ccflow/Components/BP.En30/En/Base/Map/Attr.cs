@@ -223,10 +223,9 @@ namespace BP.En
         {
             get
             {
-                if (this.Key.Contains("Text"))
+                if (this.MyFieldType == FieldType.RefText)
                     return true;
-                else
-                    return false;
+                return false;
             }
         }
 		/// <summary>

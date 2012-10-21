@@ -1223,7 +1223,7 @@ namespace BP.DA
                     msg += "@" + p.ParaName + "=" + p.val + "," + p.DAType.ToString();
                     mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "',");
                 }
-                throw new Exception(ex.Message + " Paras=" + msg + "<hr>" + mysql);
+                throw new Exception(ex.Message + " Paras("+paras.Count+")=" + msg + "<hr>" + mysql);
             }
         }
         /// <summary>
@@ -2079,6 +2079,9 @@ namespace BP.DA
         }
         private static string DealInformixSQL(string sql)
         {
+            if (sql.Contains("?") == false)
+                return sql;
+
             string mysql = "";
             if (sql.Contains("? ") == true || sql.Contains("?,") == true)
             {
@@ -2102,11 +2105,44 @@ namespace BP.DA
                         case ")":
                             mysql += "?" + str;
                             break;
+                        case ",":
+                            mysql += "?" + str;
+                            break;
                         default:
-                            if (str.Contains(" ") == true)
-                                mysql += "?" + str.Substring(str.IndexOf(" "));
-                            else
-                                mysql += "?" + str;
+                            char[] chs = str.ToCharArray();
+                            foreach (char c in chs)
+                            {
+                                if (c == ',')
+                                {
+                                    int idx1 = str.IndexOf(",");
+                                    mysql += "?" + str.Substring(idx1);
+                                    break;
+                                }
+
+                                if (c == ')')
+                                {
+                                    int idx1 = str.IndexOf(")");
+                                    mysql += "?" + str.Substring(idx1);
+                                    break;
+                                }
+
+                                if (c == ' ')
+                                {
+                                    int idx1 = str.IndexOf(" ");
+                                    mysql += "?" + str.Substring(idx1);
+                                    break;
+                                }
+                            }
+
+                            //else
+                            //{
+                            //    mysql += "?" + str;
+                            //}
+
+                            //if (str.Contains(")") == true)
+                            //    mysql += "?" + str.Substring(str.IndexOf(")"));
+                            //else
+                            //    mysql += "?" + str;
                             break;
                     }
                 }
@@ -2120,10 +2156,11 @@ namespace BP.DA
         /// <returns>返回table</returns>
         private static DataTable RunSQLReturnTable_201205_Informix(string sql, Paras paras)
         {
-            if (paras.Count != 0 && sql.Contains("?") == false)
-            {
-                sql = DealInformixSQL(sql);
-            }
+            //if (paras.Count != 0 && sql.Contains("?") == false)
+            //{
+            //    sql = DealInformixSQL(sql);
+            //}
+            sql = DealInformixSQL(sql);
 
             IfxConnection conn = new IfxConnection(SystemConfig.AppCenterDSN);
             if (conn.State != ConnectionState.Open)
@@ -2481,13 +2518,15 @@ namespace BP.DA
         public static int RunSQLReturnValInt(Paras ps)
         {
             string str = DBAccess.RunSQLReturnString(ps.SQL, ps);
+            if (str.Contains("."))
+                str = str.Substring(0, str.IndexOf("."));
             try
             {
                 return Convert.ToInt32(str);
             }
             catch (Exception ex)
             {
-                throw new Exception("@" + ps.SQL + "Val=" + str + ex.Message);
+                throw new Exception("@" + ps.SQL + "   Val=" + str + ex.Message);
             }
         }
         public static int RunSQLReturnValInt(string sql)
@@ -2495,7 +2534,10 @@ namespace BP.DA
             object obj = DBAccess.RunSQLReturnVal(sql);
             if (obj == null || obj == DBNull.Value )
                 throw new Exception("@没有获取您要查询的数据,请检查SQL:" + sql + " @关于查询出来的详细信息已经记录日志文件，请处理。");
-            return Convert.ToInt32(obj);
+            string s = obj.ToString();
+            if (s.Contains("."))
+                s = s.Substring(0, s.IndexOf("."));
+            return Convert.ToInt32(s);
         }
         public static int RunSQLReturnValInt(string sql, Paras paras)
         {

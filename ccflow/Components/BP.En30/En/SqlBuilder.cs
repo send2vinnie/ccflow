@@ -2140,7 +2140,7 @@ namespace BP.En
                 if (attr.MyFieldType == FieldType.RefText)
                     continue;
 
-                if (attr.IsPK )
+                if (attr.IsPK)
                     continue;
 
                 switch (attr.MyDataType)
@@ -2193,15 +2193,34 @@ namespace BP.En
                 }
             }
 
-
-            switch (en.PK)
+            string pk = en.PK;
+            switch (pk)
             {
                 case "OID":
                 case "WorkID":
-                    ps.Add(en.PK, en.GetValIntByKey(en.PK));
+                    ps.Add(en.PK, en.GetValIntByKey(pk));
+                    break;
+                case "No":
+                case "MyPK":
+                    ps.Add(en.PK, en.GetValStrByKey(pk));
                     break;
                 default:
-                    ps.Add(en.PK, en.GetValStrByKey(en.PK));
+                    foreach (Attr attr in map.Attrs)
+                    {
+                        if (attr.IsPK == false)
+                            continue;
+                        switch (attr.MyDataType)
+                        {
+                            case DataType.AppString:
+                                ps.Add(attr.Key, en.GetValStrByKey(attr.Key).Replace('\'', '~'));
+                                break;
+                            case DataType.AppInt:
+                                ps.Add(attr.Key, en.GetValIntByKey(attr.Key));
+                                break;
+                            default:
+                                throw new Exception("@SqlBulider.update, 没有这个数据类型...");
+                        }
+                    }
                     break;
             }
             return ps;
@@ -2299,7 +2318,7 @@ namespace BP.En
             string mykey = "";
             if (keys != null)
                 foreach (string s in keys)
-                    mykey += "@" + s;
+                    mykey += "@" + s+",";
 
             string dbVarStr = en.HisDBVarStr;
             //  string dbstr = en.HisDBVarStr;
@@ -2307,23 +2326,27 @@ namespace BP.En
             string val = "";
             foreach (Attr attr in map.Attrs)
             {
-                if (attr.MyFieldType == FieldType.RefText)
+                if (attr.MyFieldType == FieldType.RefText || attr.IsPK)
                     continue;
 
-                if (attr.IsPK)
-                {
-                    // #warning add 2009 - 11- 04
-                    // 两个PK 的情况。
-                    // continue;
-                    if (en.PKCount == 1)
+                if (keys != null)
+                    if (mykey.Contains("@" + attr.Key + ",") == false)
                         continue;
-                }
-                else
-                {
-                    if (keys != null)
-                        if (mykey.Contains("@" + attr.Key) == false)
-                            continue;
-                }
+
+                //if (attr.IsPK)
+                //{
+                //    // #warning add 2009 - 11- 04
+                //    // 两个PK 的情况。
+                //    // continue;
+                //    if (en.PKCount == 1)
+                //        continue;
+                //}
+                //else
+                //{
+                //    if (keys != null)
+                //        if (mykey.Contains("@" + attr.Key+",") == false)
+                //            continue;
+                //}
 
                 if (dbVarStr == "?")
                     val = val + "," + attr.Field + "=" + dbVarStr;
@@ -2331,7 +2354,20 @@ namespace BP.En
                     val = val + "," + attr.Field + "=" + dbVarStr + attr.Key;
             }
             if (string.IsNullOrEmpty(val))
-                throw new Exception("@生成sql出现错误:" + map.EnDesc + "，" + en.ToString() + "，要更新的字段为空。");
+            {
+                foreach (Attr attr in map.Attrs)
+                {
+                    if (attr.MyFieldType == FieldType.RefText)
+                        continue;
+
+                    if (keys != null)
+                        if (mykey.Contains("@" + attr.Key + ",") == false)
+                            continue;
+
+                    val = val + "," + attr.Field + "=" + attr.Field;
+                }
+                //   throw new Exception("@生成SQL出现错误:" + map.EnDesc + "，" + en.ToString() + "，要更新的字段为空。");
+            }
 
             string sql = "";
             switch (en.EnMap.EnDBUrl.DBType)

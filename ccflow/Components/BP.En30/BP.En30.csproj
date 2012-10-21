@@ -484,6 +484,7 @@
     <Compile Include="Sys\SysEnumMain.cs" />
     <Compile Include="Sys\EnCfg.cs" />
     <Compile Include="Sys\EnsAppCfg\EnsAppCfg.cs" />
+    <Compile Include="Sys\UserLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Rpt\RptEn\RptEn\" />

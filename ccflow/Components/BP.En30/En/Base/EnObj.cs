@@ -989,14 +989,17 @@ namespace BP.En
         {
             get
             {
-                // throw new Exception(this.ToString()+"求PK");
+                string pks = "";
                 foreach (Attr attr in this.EnMap.Attrs)
                 {
-                    if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKEnum || attr.MyFieldType == FieldType.PKFK)
-                        return attr.Key;
+                    if (attr.MyFieldType == FieldType.PK
+                        || attr.MyFieldType == FieldType.PKEnum || attr.MyFieldType == FieldType.PKFK)
+                        pks += attr.Key + ",";
                 }
-                throw new Exception("@没有给【" + this.EnDesc + "，" + this.EnMap.PhysicsTable + "】定义主键。");
-                // throw new Exception("@没有给【" + this.EnDesc + "】定义主键。");
+                if (pks == "")
+                    throw new Exception("@没有给【" + this.EnDesc + "，" + this.EnMap.PhysicsTable + "】定义主键。");
+                pks = pks.Substring(0, pks.Length-1);
+                return pks;
             }
         }
         public virtual string PKField

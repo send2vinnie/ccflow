@@ -88,7 +88,7 @@ namespace BP.En
                 string sql = this.SQL;
                 foreach (Para en in this.MyParas)
                 {
-                    sql = sql.Replace("@" + en.ParaName, "'"+en.val.ToString()+"'" );
+                    sql = sql.Replace(SystemConfig.AppCenterDBVarStr + en.ParaName, "'" + en.val.ToString() + "'");
                 }
                 return sql;
             }
