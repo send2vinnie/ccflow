@@ -76,7 +76,11 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("表单");
         this.Pub1.AddTREnd();
 
-        DataTable dtLog = DBAccess.RunSQLReturnTable("SELECT a.*,b.Name FROM WF_Track a, WF_Flow b WHERE a.FK_Flow=b.No  AND  a.RDT LIKE '" + dt.ToString("yyyy-MM-dd") + "%' AND a.EmpFrom='" + WebUser.No + "'");
+        string sql = "SELECT a.*,b.Name FROM WF_Track a, WF_Flow b WHERE a.FK_Flow=b.No  AND  a.RDT LIKE '" + dt.ToString("yyyy-MM-dd") + "%' AND a.EmpFrom='" + WebUser.No + "'";
+        sql += " UNION ";
+        sql += "SELECT a.*,b.Name FROM WF_TrackTemp a, WF_Flow b WHERE a.FK_Flow=b.No  AND  a.RDT LIKE '" + dt.ToString("yyyy-MM-dd") + "%' AND a.EmpFrom='" + WebUser.No + "'";
+
+        DataTable dtLog = DBAccess.RunSQLReturnTable(sql);
         int idx = 0;
         foreach (DataRow dr in dtLog.Rows)
         {
@@ -104,8 +108,10 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
         string ny = dt.ToString("yyyy-MM");
         string today = DataType.CurrentData;
         string selectedDay = dt.ToString("yyyy-MM-dd");
+        string sql = "SELECT * FROM WF_Track_NYR WHERE FK_NY='" + dt.ToString("yyyy-MM") + "' AND FK_Emp='" + WebUser.No + "'";
 
-        DataTable dtLog = DBAccess.RunSQLReturnTable("SELECT * FROM WF_Track_NYR WHERE FK_NY='" + dt.ToString("yyyy-MM")  + "' AND FK_Emp='" + WebUser.No + "'");
+
+        DataTable dtLog = DBAccess.RunSQLReturnTable(sql);
 
         // 一个月份的第一天
         DateTime firstDay = DataType.ParseSysDate2DateTime(year + "-" + month.PadLeft(2, '0') + "-01");

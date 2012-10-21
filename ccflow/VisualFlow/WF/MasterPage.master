@@ -3,14 +3,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>业务流程</title>
+    <title>驰骋工作流程</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <script language="JavaScript" src="./../Comm/JScript.js"></script>
-
-    <script language="JavaScript" src="./../Comm/Ext/ext-all.js"></script>
-    <script language="JavaScript" src="./../Comm/Ext/resources/css/ext-all.css" />
-
    <Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)">
    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" defer="defer" ></script>
    <meta http-equiv="Cache-Control" content="no-store" />
