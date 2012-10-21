@@ -14,6 +14,22 @@ namespace CCForm
 {
     public partial class FrmEle : ChildWindow
     {
+        public string GetEleType(string eleTypeStr)
+        {
+            string s = "";
+            if (eleTypeStr == "0")
+                s = "HandSiganture";
+
+            if (eleTypeStr == "1")
+                s = "EleSiganture";
+
+            if (eleTypeStr == "2")
+                s = "CheckGroup";
+
+            if (eleTypeStr == "3")
+                s = "iFrame";
+            return s;
+        }
         public int NodeID = 0;
         public Boolean IsNew = false;
         public BPEle HisEle
@@ -21,14 +37,7 @@ namespace CCForm
             get
             {
                 string eleType = this.DDL_EleType.SelectedIndex.ToString();
-                if (eleType == "0")
-                    eleType = "HandSiganture";
-
-                if (eleType == "1")
-                    eleType = "EleSiganture";
-
-                if (eleType == "2")
-                    eleType = "CheckGroup";
+              
 
                 BPEle ele = new BPEle();
                 ele.Name = Glo.FK_MapData + "_" + eleType + "_" + this.TB_EleID.Text;
@@ -64,7 +73,10 @@ namespace CCForm
         }
         public void BindData(string mypk)
         {
-            FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
+              FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
+                da.GetXmlDataAsync("FrmEle.xml");
+                da.GetXmlDataCompleted += new EventHandler<FF.GetXmlDataCompletedEventArgs>(da_GetXmlDataCompleted);
+             da = Glo.GetCCFormSoapClientServiceInstance();
             da.RunSQLReturnTableAsync("SELECT * FROM Sys_FrmEle WHERE MyPK='" + mypk + "'");
             da.RunSQLReturnTableCompleted += new EventHandler<FF.RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
         }
@@ -96,6 +108,9 @@ namespace CCForm
                 if (dt.Rows[0]["EleType"] == "CheckGroup")
                     idx = 2;
 
+                if (dt.Rows[0]["EleType"] == "iFrame")
+                    idx = 3;
+
                 this.DDL_EleType.SelectedIndex = idx;
                 this.TB_Tag1.Text = dt.Rows[0]["Tag1"].ToString();
                 this.TB_Tag2.Text = dt.Rows[0]["Tag2"].ToString();
@@ -114,6 +129,9 @@ namespace CCForm
 
             if (eleType == "2")
                 eleType = "CheckGroup";
+
+            if (eleType == "3")
+                eleType = "iFrame";
 
             string mypk = Glo.FK_MapData + "_" + eleType + "_" + this.TB_EleID.Text.Trim();
             string strs = "@EnName=BP.Sys.FrmEle@PKVal=" + mypk;
@@ -146,16 +164,7 @@ namespace CCForm
         }
         private void DDL_EleType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dtConfig == null)
-            {
-                FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-                da.GetXmlDataAsync("FrmEle.xml");
-                da.GetXmlDataCompleted += new EventHandler<FF.GetXmlDataCompletedEventArgs>(da_GetXmlDataCompleted);
-            }
-            else
-            {
-                this.ReSetConfig();
-            }
+           // this.ReSetConfig();
         }
         public DataTable dtConfig = null;
         void da_GetXmlDataCompleted(object sender, FF.GetXmlDataCompletedEventArgs e)
@@ -163,7 +172,6 @@ namespace CCForm
             DataSet ds = new DataSet();
             ds.FromXml(e.Result);
             this.dtConfig = ds.Tables[0];
-            this.ReSetConfig();
         }
         public void ReSetConfig()
         {
@@ -182,6 +190,9 @@ namespace CCForm
 
             if (eleType == "2")
                 eleType = "CheckGroup";
+
+            if (eleType == "3")
+                eleType = "iFrame";
 
             foreach (DataRow dr in dtConfig.Rows)
             {
@@ -208,7 +219,6 @@ namespace CCForm
                                 TextBox tb = this.FindName("TB_Tag" + i) as TextBox;
                                 if (tb.Text.Trim() == "")
                                     tb.Text = kk[1];
-
                                 break;
                             case "FType":
                                 break;
@@ -219,7 +229,6 @@ namespace CCForm
                 }
             }
         }
-
         private void TB_EleName_TextChanged(object sender, TextChangedEventArgs e)
         {
         }

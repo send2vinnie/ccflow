@@ -125,7 +125,8 @@ namespace CCForm
             == MessageBoxResult.Cancel)
                 return;
 
-            bool isClear = (bool)this.CB_IsCheck.IsChecked;
+            bool isClear = (bool)this.CB_IsClear.IsChecked;
+            bool IsSetReadonly = (bool)this.CB_IsSetReadonly.IsChecked;
             switch (this.tabControl1.SelectedIndex)
             {
                 case 0:
@@ -147,7 +148,7 @@ namespace CCForm
                     loadingWindow.Show();
                     ListBoxItem lb = this.listBox1.SelectedItem as ListBoxItem;
                     CCFormSoapClient fda = Glo.GetCCFormSoapClientServiceInstance();
-                    fda.CopyFrmAsync(lb.Tag.ToString(), Glo.FK_MapData, isClear);
+                    fda.CopyFrmAsync(lb.Tag.ToString(), Glo.FK_MapData, isClear, IsSetReadonly);
                     fda.CopyFrmCompleted += new EventHandler<CopyFrmCompletedEventArgs>(da_CopyFrmCompleted);
                     break;
                 case 3: // 从流程表单.
@@ -156,7 +157,6 @@ namespace CCForm
                     ListBoxItem lb44 = this.listBox_FrmLab.SelectedItem as ListBoxItem;
                     if (lb44 == null)
                         return;
-
                     CCFormSoapClient fdaa = Glo.GetCCFormSoapClientServiceInstance();
                     fdaa.CopyFrmAsync(lb44.Tag.ToString(), Glo.FK_MapData, isClear);
                     fdaa.CopyFrmCompleted += new EventHandler<CopyFrmCompletedEventArgs>(da_CopyFrmCompleted);

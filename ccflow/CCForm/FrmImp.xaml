@@ -44,6 +44,7 @@
                 </Grid>
             </sdk:TabItem>
         </controls:TabControl>
-        <CheckBox Content="清除当前表单的元素" Grid.Row="1" Height="16" HorizontalAlignment="Left" Margin="124,16,0,3" Name="CB_IsCheck" IsChecked="True" />
+        <CheckBox Content="清除当前表单的元素" Grid.Row="1" Height="16"      HorizontalAlignment="Left" Margin="130,16,0,3" Name="CB_IsClear" IsChecked="True" />
+        <CheckBox Content="导入字段设置为只读" Grid.Row="1" Height="16" HorizontalAlignment="Left" Margin="5,16,0,3" Name="CB_IsSetReadonly" IsChecked="True" />
     </Grid>
 </controls:ChildWindow>

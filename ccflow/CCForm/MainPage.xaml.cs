@@ -917,6 +917,8 @@ namespace CCForm
             if (this.canvasMain.Children.Contains(muFrm) == false)
                 this.canvasMain.Children.Add(muFrm);
 
+            return;
+
             muFrm.Visibility = System.Windows.Visibility.Visible;
             muFrm.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
             muFrm.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
@@ -1269,6 +1271,8 @@ namespace CCForm
         {
             try
             {
+                if (e.Result.Length < 30)
+                    throw new Exception(e.Result);
                 BindFrm(e.Result);
             }
             catch (Exception ex)
@@ -1282,6 +1286,8 @@ namespace CCForm
             this.FrmDS = new DataSet();
             try
             {
+               if (xmlStrs.Length < 200)
+                    throw new Exception(xmlStrs);
                 this.FrmDS.FromXml(xmlStrs);
                 loadingWindow.DialogResult = true;
             }
@@ -1292,496 +1298,505 @@ namespace CCForm
                 return;
             }
 
-            foreach (DataTable dt in this.FrmDS.Tables)
+            string table = "";
+            try
             {
-                Glo.TempVal = dt.TableName;
-                switch (dt.TableName)
+                foreach (DataTable dt in this.FrmDS.Tables)
                 {
-                    case "Sys_FrmEle":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            BPEle img = new BPEle();
-                            img.Name = dr["MyPK"].ToString();
-                            img.EleType = dr["EleType"].ToString();
-                            img.EleName = dr["EleName"].ToString();
-                            img.EleID = dr["EleID"].ToString();
-
-                            img.Cursor = Cursors.Hand;
-                            img.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
-                            img.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
-
-                            img.Width = double.Parse(dr["W"].ToString());
-                            img.Height = double.Parse(dr["H"].ToString());
-
-                            MouseDragElementBehavior mdeImg = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(img).Add(mdeImg);
-                            this.canvasMain.Children.Add(img);
-
-                            img.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            img.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_MapData":
-                        if (dt.Rows.Count == 0)
-                            continue;
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["No"] != Glo.FK_MapData)
-                                continue;
-
-                            Glo.HisMapData = new MapData();
-                            Glo.HisMapData.FrmH = double.Parse(dt.Rows[0]["FrmH"]);
-                            Glo.HisMapData.FrmW = double.Parse(dt.Rows[0]["FrmW"]);
-                            Glo.HisMapData.No = (string)dt.Rows[0]["No"];
-                            Glo.HisMapData.Name = (string)dt.Rows[0]["Name"];
-                            Glo.IsDtlFrm = false;
-
-                            this.canvasMain.Width = Glo.HisMapData.FrmW;
-                            this.canvasMain.Height = Glo.HisMapData.FrmH;
-                            this.scrollViewer1.Width = Glo.HisMapData.FrmW;
-                        }
-                        break;
-                    case "Sys_FrmBtn":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            BPBtn btn = new BPBtn();
-                            btn.Name = dr["MyPK"];
-                            btn.Content = dr["Text"].Replace("&nbsp;", " ");
-                            btn.HisBtnType = (BtnType)int.Parse(dr["BtnType"]);
-                            btn.HisEventType = (EventType)int.Parse(dr["EventType"]);
-
-                            if (dr["EventContext"] != null)
-                                btn.EventContext = dr["EventContext"].Replace("~", "'");
-
-                            if (dr["MsgErr"] != null)
-                                btn.MsgErr = dr["MsgErr"].Replace("~", "'");
-
-                            if (dr["MsgOK"] != null)
-                                btn.MsgOK = dr["MsgOK"].Replace("~", "'");
-
-                            btn.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                            btn.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-                            this.canvasMain.Children.Add(btn);
-                            btn.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            btn.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_FrmLine":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            string color = dr["BorderColor"];
-                            if (string.IsNullOrEmpty(color))
-                                color = "Black";
-
-                            BPLine myline = new BPLine(dr["MyPK"], color, double.Parse(dr["BorderWidth"]),
-                                double.Parse(dr["X1"]), double.Parse(dr["Y1"]), double.Parse(dr["X2"]),
-                                double.Parse(dr["Y2"]));
-
-                            myline.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                            myline.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-
-                            this.canvasMain.Children.Add(myline);
-                            myline.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            myline.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_FrmLab":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            BPLabel lab = new BPLabel();
-                            lab.Name = dr["MyPK"];
-                            string text = dr["Text"].Replace("&nbsp;", " ");
-                            text = text.Replace("@", "\n");
-                            lab.Content = text;
-                            lab.FontSize = double.Parse(dr["FontSize"]);
-                            lab.Cursor = Cursors.Hand;
-                            lab.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                            lab.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-
-                            if (dr["IsBold"] == "1")
-                                lab.FontWeight = FontWeights.Bold;
-                            else
-                                lab.FontWeight = FontWeights.Normal;
-
-
-                            string color = dr["FontColor"];
-                            lab.Foreground = new SolidColorBrush(Glo.ToColor(color));
-                            this.canvasMain.Children.Add(lab);
-                            MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(lab).Add(DragBehavior);
-                            lab.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            lab.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_FrmLink":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            BPLink link = new BPLink();
-                            link.Name = dr["MyPK"];
-                            link.Content = dr["Text"];
-                            link.URL = dr["URL"];
-
-                            link.WinTarget = dr["Target"];
-
-                            link.FontSize = double.Parse(dr["FontSize"]);
-                            link.Cursor = Cursors.Hand;
-                            link.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                            link.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-
-                            string color = dr["FontColor"];
-                            if (string.IsNullOrEmpty(color))
-                                color = "Black";
-
-                            link.Foreground = new SolidColorBrush(Glo.ToColor(color));
-
-                            this.canvasMain.Children.Add(link);
-
-                            link.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            link.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-
-                            MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(link).Add(DragBehavior);
-                        }
-                        continue;
-                    case "Sys_FrmImg":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            BPImg img = new BPImg();
-                            img.Name = dr["MyPK"];
-                            img.Cursor = Cursors.Hand;
-                            img.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
-                            img.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
-
-                            img.Width = double.Parse(dr["W"].ToString());
-                            img.Height = double.Parse(dr["H"].ToString());
-
-                            MouseDragElementBehavior mdeImg = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(img).Add(mdeImg);
-                            this.canvasMain.Children.Add(img);
-
-                            img.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            img.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_FrmImgAth":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            BPImgAth ath = new BPImgAth();
-                            ath.Name = dr["MyPK"];
-                            ath.Cursor = Cursors.Hand;
-                            ath.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
-                            ath.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
-
-                            ath.Height = double.Parse(dr["H"].ToString());
-                            ath.Width = double.Parse(dr["W"].ToString());
-
-                            MouseDragElementBehavior mde = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(ath).Add(mde);
-                            this.canvasMain.Children.Add(ath);
-
-                            ath.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            ath.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_FrmRB":
-                        DataTable dtRB = this.FrmDS.Tables["Sys_FrmRB"];
-                        foreach (DataRow dr in dtRB.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            BPRadioBtn btn = new BPRadioBtn();
-                            btn.Name = dr["MyPK"];
-                            btn.GroupName = dr["KeyOfEn"];
-                            btn.Content = dr["Lab"];
-                            btn.UIBindKey = dr["EnumKey"];
-                            btn.Tag = dr["IntKey"];
-                            btn.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
-                            btn.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
-
-                            MouseDragElementBehavior mde = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(btn).Add(mde);
-                            this.canvasMain.Children.Add(btn);
-
-                            btn.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            btn.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_MapAttr":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["UIVisible"] == "0")
-                                continue;
-
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            string myPk = dr["MyPK"];
-                            string FK_MapData = dr["FK_MapData"];
-                            string keyOfEn = dr["KeyOfEn"];
-                            string name = dr["Name"];
-                            string defVal = dr["DefVal"];
-                            string UIContralType = dr["UIContralType"]; 
-                            string MyDataType = dr["MyDataType"];
-                            string lgType = dr["LGType"];
-                            double X = double.Parse(dr["X"]);
-                            double Y = double.Parse(dr["Y"]);
-                            if (X == 0)
-                                X = 100;
-                            if (Y == 0)
-                                Y = 100;
-
-                            string UIBindKey = dr["UIBindKey"];
-                            switch (UIContralType)
+                    Glo.TempVal = dt.TableName;
+                    table = dt.TableName;
+                    switch (dt.TableName)
+                    {
+                        case "Sys_FrmEle":
+                            foreach (DataRow dr in dt.Rows)
                             {
-                                case CtrlType.TextBox:
-                                    TBType tp = TBType.String;
-                                    switch (MyDataType)
-                                    {
-                                        case DataType.AppInt:
-                                            tp = TBType.Int;
-                                            break;
-                                        case DataType.AppFloat:
-                                        case DataType.AppDouble:
-                                            tp = TBType.Float;
-                                            break;
-                                        case DataType.AppMoney:
-                                            tp = TBType.Money;
-                                            break;
-                                        case DataType.AppString:
-                                            tp = TBType.String;
-                                            break;
-                                        case DataType.AppDateTime:
-                                            tp = TBType.DateTime;
-                                            break;
-                                        case DataType.AppDate:
-                                            tp = TBType.Date;
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
 
-                                    BPTextBox tb = new BPTextBox(tp);
-                                    tb.NameOfReal = keyOfEn;
-                                    tb.Name = keyOfEn;
-                                    tb.SetValue(Canvas.LeftProperty, X);
-                                    tb.SetValue(Canvas.TopProperty, Y);
-                                    tb.X = X;
-                                    tb.Y = Y;
+                                BPEle img = new BPEle();
+                                img.Name = dr["MyPK"].ToString();
+                                img.EleType = dr["EleType"].ToString();
+                                img.EleName = dr["EleName"].ToString();
+                                img.EleID = dr["EleID"].ToString();
 
-                                    tb.Width = double.Parse(dr["UIWidth"]);
-                                    tb.Height = double.Parse(dr["UIHeight"]);
-                                    if (this.canvasMain.FindName(tb.Name) != null)
-                                    {
-                                        MessageBox.Show("已经存在" + tb.Name);
-                                        continue;
-                                    }
+                                img.Cursor = Cursors.Hand;
+                                img.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
+                                img.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
 
-                                    this.canvasMain.Children.Add(tb);
+                                img.Width = double.Parse(dr["W"].ToString());
+                                img.Height = double.Parse(dr["H"].ToString());
 
-                                    MouseDragElementBehavior mymdee = new MouseDragElementBehavior();
-                                    Interaction.GetBehaviors(tb).Add(mymdee);
+                                MouseDragElementBehavior mdeImg = new MouseDragElementBehavior();
+                                Interaction.GetBehaviors(img).Add(mdeImg);
+                                this.canvasMain.Children.Add(img);
 
-                                    tb.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                                    tb.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                                    //   }
-                                    break;
-                                case CtrlType.DDL:
-                                    BPDDL ddl = new BPDDL();
-                                    ddl.Name = keyOfEn;
-                                    ddl.HisLGType = lgType;
-                                    ddl.Width = double.Parse(dr["UIWidth"]);
-                                    ddl.UIBindKey = UIBindKey;
-                                    ddl.HisLGType = lgType;
-                                    if (lgType == LGType.Enum)
-                                    {
-                                        ddl.BindEnum(UIBindKey);
-                                    }
-                                    else
-                                    {
-                                        ddl.BindEns(UIBindKey);
-                                    }
-
-                                    ddl.SetValue(Canvas.LeftProperty, X);
-                                    ddl.SetValue(Canvas.TopProperty, Y);
-
-                                    this.canvasMain.Children.Add(ddl);
-
-                                    ddl.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                                    ddl.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                                    break;
-                                case CtrlType.CheckBox:
-                                    BPCheckBox cb = new BPCheckBox();
-                                    cb.Name = keyOfEn;
-                                    cb.Content = name;
-
-                                    Label cbLab = new Label();
-                                    cbLab.Name = "CBLab" + cb.Name;
-                                    cbLab.Content = name;
-                                    cbLab.Tag = keyOfEn;
-                                    cb.Content = cbLab;
-
-                                    if (defVal == "1")
-                                        cb.IsChecked = true;
-                                    else
-                                        cb.IsChecked = false;
-
-                                    cb.SetValue(Canvas.LeftProperty, X);
-                                    cb.SetValue(Canvas.TopProperty, Y);
-
-                                    MouseDragElementBehavior mdeCB = new MouseDragElementBehavior();
-                                    Interaction.GetBehaviors(cb).Add(mdeCB);
-                                    this.canvasMain.Children.Add(cb);
-
-                                    cbLab.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                                    cb.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                                    break;
-                                case CtrlType.RB:
-                                    break;
-                                default:
-                                    break;
+                                img.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                img.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                             }
-                        }
-                        continue;
-                    case "Sys_MapM2M":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                            continue;
+                        case "Sys_MapData":
+                            if (dt.Rows.Count == 0)
                                 continue;
-
-                            BPM2M m2m = new BPM2M(dr["NoOfObj"]);
-                            m2m.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                            m2m.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-
-                            m2m.Width = double.Parse(dr["W"]);
-                            m2m.Height = double.Parse(dr["H"]);
-
-                            MouseDragElementBehavior mde = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(m2m).Add(mde);
-                            this.canvasMain.Children.Add(m2m);
-
-                            m2m.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            m2m.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_MapDtl":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            BPDtl dtl = new BPDtl(dr["No"]);
-                            dtl.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                            dtl.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-                            dtl.Width = double.Parse(dr["W"]);
-                            dtl.Height = double.Parse(dr["H"]);
-
-                            MouseDragElementBehavior mde = new MouseDragElementBehavior();
-                            Interaction.GetBehaviors(dtl).Add(mde);
-                            this.canvasMain.Children.Add(dtl);
-                            dtl.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                            dtl.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                        }
-                        continue;
-                    case "Sys_FrmAttachment":
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
-                                continue;
-
-                            string uploadTypeInt = dr["UploadType"].ToString();
-                            if (uploadTypeInt == null)
-                                uploadTypeInt = "0";
-
-                            AttachmentUploadType uploadType = (AttachmentUploadType)int.Parse(uploadTypeInt);
-                            if (uploadType == AttachmentUploadType.Single)
+                            foreach (DataRow dr in dt.Rows)
                             {
+                                if (dr["No"] != Glo.FK_MapData)
+                                    continue;
 
-                                BPAttachment ath = new BPAttachment(dr["NoOfObj"],
-                                    dr["Name"], dr["Exts"],
-                                    double.Parse(dr["W"]), dr["SaveTo"].ToString());
+                                Glo.HisMapData = new MapData();
+                                Glo.HisMapData.FrmH = double.Parse(dt.Rows[0]["FrmH"]);
+                                Glo.HisMapData.FrmW = double.Parse(dt.Rows[0]["FrmW"]);
+                                Glo.HisMapData.No = (string)dt.Rows[0]["No"];
+                                Glo.HisMapData.Name = (string)dt.Rows[0]["Name"];
+                                Glo.IsDtlFrm = false;
 
-                                ath.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                                ath.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+                                this.canvasMain.Width = Glo.HisMapData.FrmW;
+                                this.canvasMain.Height = Glo.HisMapData.FrmH;
+                                this.scrollViewer1.Width = Glo.HisMapData.FrmW;
+                            }
+                            break;
+                        case "Sys_FrmBtn":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
 
-                                ath.Label = dr["Name"] as string;
-                                ath.Exts = dr["Exts"] as string;
-                                ath.SaveTo = dr["SaveTo"] as string;
+                                BPBtn btn = new BPBtn();
+                                btn.Name = dr["MyPK"];
+                                btn.Content = dr["Text"].Replace("&nbsp;", " ");
+                                btn.HisBtnType = (BtnType)int.Parse(dr["BtnType"]);
+                                btn.HisEventType = (EventType)int.Parse(dr["EventType"]);
 
-                                ath.X = double.Parse(dr["X"]);
-                                ath.Y = double.Parse(dr["Y"]);
+                                if (dr["EventContext"] != null)
+                                    btn.EventContext = dr["EventContext"].Replace("~", "'");
 
-                                if (dr["IsUpload"] == "1")
-                                    ath.IsUpload = true;
+                                if (dr["MsgErr"] != null)
+                                    btn.MsgErr = dr["MsgErr"].Replace("~", "'");
+
+                                if (dr["MsgOK"] != null)
+                                    btn.MsgOK = dr["MsgOK"].Replace("~", "'");
+
+                                btn.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                btn.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+                                this.canvasMain.Children.Add(btn);
+                                btn.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                btn.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                            }
+                            continue;
+                        case "Sys_FrmLine":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                string color = dr["BorderColor"];
+                                if (string.IsNullOrEmpty(color))
+                                    color = "Black";
+
+                                BPLine myline = new BPLine(dr["MyPK"], color, double.Parse(dr["BorderWidth"]),
+                                    double.Parse(dr["X1"]), double.Parse(dr["Y1"]), double.Parse(dr["X2"]),
+                                    double.Parse(dr["Y2"]));
+
+                                myline.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                myline.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+
+                                this.canvasMain.Children.Add(myline);
+                                myline.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                myline.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                            }
+                            continue;
+                        case "Sys_FrmLab":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                BPLabel lab = new BPLabel();
+                                lab.Name = dr["MyPK"];
+                                string text = dr["Text"].Replace("&nbsp;", " ");
+                                text = text.Replace("@", "\n");
+                                lab.Content = text;
+                                lab.FontSize = double.Parse(dr["FontSize"]);
+                                lab.Cursor = Cursors.Hand;
+                                lab.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                lab.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+
+                                if (dr["IsBold"] == "1")
+                                    lab.FontWeight = FontWeights.Bold;
                                 else
-                                    ath.IsUpload = false;
+                                    lab.FontWeight = FontWeights.Normal;
 
-                                if (dr["IsDelete"] == "1")
-                                    ath.IsDelete = true;
-                                else
-                                    ath.IsDelete = false;
 
-                                if (dr["IsDownload"] == "1")
-                                    ath.IsDownload = true;
-                                else
-                                    ath.IsDownload = false;
+                                string color = dr["FontColor"];
+                                lab.Foreground = new SolidColorBrush(Glo.ToColor(color));
+                                this.canvasMain.Children.Add(lab);
+                                MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
+                                Interaction.GetBehaviors(lab).Add(DragBehavior);
+                                lab.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                lab.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                            }
+                            continue;
+                        case "Sys_FrmLink":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                BPLink link = new BPLink();
+                                link.Name = dr["MyPK"];
+                                link.Content = dr["Text"];
+                                link.URL = dr["URL"];
+
+                                link.WinTarget = dr["Target"];
+
+                                link.FontSize = double.Parse(dr["FontSize"]);
+                                link.Cursor = Cursors.Hand;
+                                link.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                link.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+
+                                string color = dr["FontColor"];
+                                if (string.IsNullOrEmpty(color))
+                                    color = "Black";
+
+                                link.Foreground = new SolidColorBrush(Glo.ToColor(color));
+
+                                this.canvasMain.Children.Add(link);
+
+                                link.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                link.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+
+                                MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
+                                Interaction.GetBehaviors(link).Add(DragBehavior);
+                            }
+                            continue;
+                        case "Sys_FrmImg":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                BPImg img = new BPImg();
+                                img.Name = dr["MyPK"];
+                                img.Cursor = Cursors.Hand;
+                                img.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
+                                img.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
+
+                                img.Width = double.Parse(dr["W"].ToString());
+                                img.Height = double.Parse(dr["H"].ToString());
+
+                                MouseDragElementBehavior mdeImg = new MouseDragElementBehavior();
+                                Interaction.GetBehaviors(img).Add(mdeImg);
+                                this.canvasMain.Children.Add(img);
+
+                                img.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                img.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                            }
+                            continue;
+                        case "Sys_FrmImgAth":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                BPImgAth ath = new BPImgAth();
+                                ath.Name = dr["MyPK"];
+                                ath.Cursor = Cursors.Hand;
+                                ath.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
+                                ath.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
+
+                                ath.Height = double.Parse(dr["H"].ToString());
+                                ath.Width = double.Parse(dr["W"].ToString());
 
                                 MouseDragElementBehavior mde = new MouseDragElementBehavior();
                                 Interaction.GetBehaviors(ath).Add(mde);
                                 this.canvasMain.Children.Add(ath);
 
-                                ath.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                                 ath.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                                continue;
+                                ath.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                             }
-
-                            if (uploadType == AttachmentUploadType.Multi)
+                            continue;
+                        case "Sys_FrmRB":
+                            DataTable dtRB = this.FrmDS.Tables["Sys_FrmRB"];
+                            foreach (DataRow dr in dtRB.Rows)
                             {
-                                BPAttachmentM athM = new BPAttachmentM();
-                                athM.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
-                                athM.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-                                athM.Name = dr["NoOfObj"];
-                                athM.Width = double.Parse(dr["W"]);
-                                athM.Height = double.Parse(dr["H"]);
-                                athM.X = double.Parse(dr["X"]);
-                                athM.Y = double.Parse(dr["Y"]);
-                                athM.SaveTo = dr["SaveTo"];
-                                athM.Text = dr["Name"];
-                                athM.Label = dr["Name"];
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                BPRadioBtn btn = new BPRadioBtn();
+                                btn.Name = dr["MyPK"];
+                                btn.GroupName = dr["KeyOfEn"];
+                                btn.Content = dr["Lab"];
+                                btn.UIBindKey = dr["EnumKey"];
+                                btn.Tag = dr["IntKey"];
+                                btn.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
+                                btn.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
 
                                 MouseDragElementBehavior mde = new MouseDragElementBehavior();
-                                Interaction.GetBehaviors(athM).Add(mde);
-                                this.canvasMain.Children.Add(athM);
+                                Interaction.GetBehaviors(btn).Add(mde);
+                                this.canvasMain.Children.Add(btn);
 
-                                athM.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                                athM.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                                continue;
+                                btn.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                btn.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                             }
-                        }
-                        continue;
-                    default:
-                        break;
+                            continue;
+                        case "Sys_MapAttr":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["UIVisible"] == "0")
+                                    continue;
+
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                string myPk = dr["MyPK"];
+                                string FK_MapData = dr["FK_MapData"];
+                                string keyOfEn = dr["KeyOfEn"];
+                                string name = dr["Name"];
+                                string defVal = dr["DefVal"];
+                                string UIContralType = dr["UIContralType"];
+                                string MyDataType = dr["MyDataType"];
+                                string lgType = dr["LGType"];
+                                double X = double.Parse(dr["X"]);
+                                double Y = double.Parse(dr["Y"]);
+                                if (X == 0)
+                                    X = 100;
+                                if (Y == 0)
+                                    Y = 100;
+
+                                string UIBindKey = dr["UIBindKey"];
+                                switch (UIContralType)
+                                {
+                                    case CtrlType.TextBox:
+                                        TBType tp = TBType.String;
+                                        switch (MyDataType)
+                                        {
+                                            case DataType.AppInt:
+                                                tp = TBType.Int;
+                                                break;
+                                            case DataType.AppFloat:
+                                            case DataType.AppDouble:
+                                                tp = TBType.Float;
+                                                break;
+                                            case DataType.AppMoney:
+                                                tp = TBType.Money;
+                                                break;
+                                            case DataType.AppString:
+                                                tp = TBType.String;
+                                                break;
+                                            case DataType.AppDateTime:
+                                                tp = TBType.DateTime;
+                                                break;
+                                            case DataType.AppDate:
+                                                tp = TBType.Date;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+
+                                        BPTextBox tb = new BPTextBox(tp);
+                                        tb.NameOfReal = keyOfEn;
+                                        tb.Name = keyOfEn;
+                                        tb.SetValue(Canvas.LeftProperty, X);
+                                        tb.SetValue(Canvas.TopProperty, Y);
+                                        tb.X = X;
+                                        tb.Y = Y;
+
+                                        tb.Width = double.Parse(dr["UIWidth"]);
+                                        tb.Height = double.Parse(dr["UIHeight"]);
+                                        if (this.canvasMain.FindName(tb.Name) != null)
+                                        {
+                                            MessageBox.Show("已经存在" + tb.Name);
+                                            continue;
+                                        }
+
+                                        this.canvasMain.Children.Add(tb);
+
+                                        MouseDragElementBehavior mymdee = new MouseDragElementBehavior();
+                                        Interaction.GetBehaviors(tb).Add(mymdee);
+
+                                        tb.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                        tb.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                                        //   }
+                                        break;
+                                    case CtrlType.DDL:
+                                        BPDDL ddl = new BPDDL();
+                                        ddl.Name = keyOfEn;
+                                        ddl.HisLGType = lgType;
+                                        ddl.Width = double.Parse(dr["UIWidth"]);
+                                        ddl.UIBindKey = UIBindKey;
+                                        ddl.HisLGType = lgType;
+                                        if (lgType == LGType.Enum)
+                                        {
+                                            ddl.BindEnum(UIBindKey);
+                                        }
+                                        else
+                                        {
+                                            ddl.BindEns(UIBindKey);
+                                        }
+
+                                        ddl.SetValue(Canvas.LeftProperty, X);
+                                        ddl.SetValue(Canvas.TopProperty, Y);
+
+                                        this.canvasMain.Children.Add(ddl);
+
+                                        ddl.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                                        ddl.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                        break;
+                                    case CtrlType.CheckBox:
+                                        BPCheckBox cb = new BPCheckBox();
+                                        cb.Name = keyOfEn;
+                                        cb.Content = name;
+
+                                        Label cbLab = new Label();
+                                        cbLab.Name = "CBLab" + cb.Name;
+                                        cbLab.Content = name;
+                                        cbLab.Tag = keyOfEn;
+                                        cb.Content = cbLab;
+
+                                        if (defVal == "1")
+                                            cb.IsChecked = true;
+                                        else
+                                            cb.IsChecked = false;
+
+                                        cb.SetValue(Canvas.LeftProperty, X);
+                                        cb.SetValue(Canvas.TopProperty, Y);
+
+                                        MouseDragElementBehavior mdeCB = new MouseDragElementBehavior();
+                                        Interaction.GetBehaviors(cb).Add(mdeCB);
+                                        this.canvasMain.Children.Add(cb);
+
+                                        cbLab.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                        cb.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                                        break;
+                                    case CtrlType.RB:
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            continue;
+                        case "Sys_MapM2M":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                BPM2M m2m = new BPM2M(dr["NoOfObj"]);
+                                m2m.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                m2m.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+
+                                m2m.Width = double.Parse(dr["W"]);
+                                m2m.Height = double.Parse(dr["H"]);
+
+                                MouseDragElementBehavior mde = new MouseDragElementBehavior();
+                                Interaction.GetBehaviors(m2m).Add(mde);
+                                this.canvasMain.Children.Add(m2m);
+
+                                m2m.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                m2m.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                            }
+                            continue;
+                        case "Sys_MapDtl":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                BPDtl dtl = new BPDtl(dr["No"]);
+                                dtl.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                dtl.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+                                dtl.Width = double.Parse(dr["W"]);
+                                dtl.Height = double.Parse(dr["H"]);
+
+                                MouseDragElementBehavior mde = new MouseDragElementBehavior();
+                                Interaction.GetBehaviors(dtl).Add(mde);
+                                this.canvasMain.Children.Add(dtl);
+                                dtl.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                dtl.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                            }
+                            continue;
+                        case "Sys_FrmAttachment":
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["FK_MapData"] != Glo.FK_MapData)
+                                    continue;
+
+                                string uploadTypeInt = dr["UploadType"].ToString();
+                                if (uploadTypeInt == null)
+                                    uploadTypeInt = "0";
+
+                                AttachmentUploadType uploadType = (AttachmentUploadType)int.Parse(uploadTypeInt);
+                                if (uploadType == AttachmentUploadType.Single)
+                                {
+
+                                    BPAttachment ath = new BPAttachment(dr["NoOfObj"],
+                                        dr["Name"], dr["Exts"],
+                                        double.Parse(dr["W"]), dr["SaveTo"].ToString());
+
+                                    ath.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                    ath.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+
+                                    ath.Label = dr["Name"] as string;
+                                    ath.Exts = dr["Exts"] as string;
+                                    ath.SaveTo = dr["SaveTo"] as string;
+
+                                    ath.X = double.Parse(dr["X"]);
+                                    ath.Y = double.Parse(dr["Y"]);
+
+                                    if (dr["IsUpload"] == "1")
+                                        ath.IsUpload = true;
+                                    else
+                                        ath.IsUpload = false;
+
+                                    if (dr["IsDelete"] == "1")
+                                        ath.IsDelete = true;
+                                    else
+                                        ath.IsDelete = false;
+
+                                    if (dr["IsDownload"] == "1")
+                                        ath.IsDownload = true;
+                                    else
+                                        ath.IsDownload = false;
+
+                                    MouseDragElementBehavior mde = new MouseDragElementBehavior();
+                                    Interaction.GetBehaviors(ath).Add(mde);
+                                    this.canvasMain.Children.Add(ath);
+
+                                    ath.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                                    ath.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                    continue;
+                                }
+
+                                if (uploadType == AttachmentUploadType.Multi)
+                                {
+                                    BPAttachmentM athM = new BPAttachmentM();
+                                    athM.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
+                                    athM.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+                                    athM.Name = dr["NoOfObj"];
+                                    athM.Width = double.Parse(dr["W"]);
+                                    athM.Height = double.Parse(dr["H"]);
+                                    athM.X = double.Parse(dr["X"]);
+                                    athM.Y = double.Parse(dr["Y"]);
+                                    athM.SaveTo = dr["SaveTo"];
+                                    athM.Text = dr["Name"];
+                                    athM.Label = dr["Name"];
+
+                                    MouseDragElementBehavior mde = new MouseDragElementBehavior();
+                                    Interaction.GetBehaviors(athM).Add(mde);
+                                    this.canvasMain.Children.Add(athM);
+
+                                    athM.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                                    athM.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                                    continue;
+                                }
+                            }
+                            continue;
+                        default:
+                            break;
+                    }
                 }
+                loadingWindow.DialogResult = true;
             }
-            loadingWindow.DialogResult = true;
+            catch (Exception ex)
+            {
+                MessageBox.Show("err:" + table, ex.Message, MessageBoxButton.OK);
+            }
             this.SetGridLines();
         }
 
@@ -3933,7 +3948,6 @@ namespace CCForm
             eleDT.Columns.Add(new DataColumn("W", typeof(double)));
             eleDT.Columns.Add(new DataColumn("H", typeof(double)));
             #endregion eleDT
-
 
             #region Sys_FrmImgAth
             DataTable imgAthDT = new DataTable();

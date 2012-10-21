@@ -69,7 +69,16 @@ namespace CCForm
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
-            MessageBox.Show(errorMsg);
+
+            string alert = "请您按如下方式处理这个错误。";
+            alert += "\t\n1，请按F5刷新一次本网页。";
+            alert += "\t\n2，请将iis重新启动一下，用administrator进入服务器,在cmd执行iisreset之后刷新网页。";
+            alert += "\t\n3，如果是第一次使用，请打开安装文件中有常见的问题,此文件位于D:\\ccflow\\Documents\\.";
+            alert += "\t\n4，进入官方网站(http://ccflow.org)加入QQ群，获得更多的ccflow爱好者帮助。";
+            alert += "\t\n5，把此屏幕copy一个图片(一定是全屏)，发送到 ccflow@ccflow.org 或http://bbs.ccflow.org 我们会有回复。";
+            alert += "\t\n6，请baidu或者google一下 ccflow 常见问题，也许可以找到答案。";
+            alert += "\t\n";
+            MessageBox.Show(alert+errorMsg);
             return;
         }
     }
