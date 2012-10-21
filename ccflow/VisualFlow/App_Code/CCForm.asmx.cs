@@ -917,6 +917,16 @@ namespace BP.Web
             {
                 if (igF.Contains("@" + dc.ColumnName + "@"))
                     continue;
+                
+                switch (dc.ColumnName)
+                {
+                    case "MyPK":
+                    case "OID":
+                    case "No":
+                        continue;
+                    default:
+                        break;
+                }
 
                 try
                 {
@@ -962,9 +972,12 @@ namespace BP.Web
                 BP.DA.Paras ps = new BP.DA.Paras();
                 foreach (DataColumn dc in dt.Columns)
                 {
+                    if (dc.ColumnName == pk)
+                        continue;
                     if (updataSQL.Contains(BP.SystemConfig.AppCenterDBVarStr + dc.ColumnName))
                         ps.Add(dc.ColumnName, dr[dc.ColumnName]);
                 }
+                ps.Add(pk, dr[pk]);
                 ps.SQL = updataSQL;
                 try
                 {
