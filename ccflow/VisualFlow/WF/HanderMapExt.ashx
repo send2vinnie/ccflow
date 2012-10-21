@@ -26,6 +26,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
     string fk_dept;
     string oid;
     string kvs;
+    string dealSQL;
     public string DealSQL(string sql, string key)
     {
         sql = sql.Replace("@Key", key);
@@ -60,6 +61,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
                     break;
             }
         }
+        dealSQL = sql;
         return sql;
     }
     public void ProcessRequest(HttpContext context)
@@ -254,13 +256,43 @@ public class Handler : IHttpHandler, IRequiresSessionState
     }
     public string JSONTODT(DataTable dt)
     {
-        
-        foreach (DataColumn dc in dt.Columns)
+   if ((BP.SystemConfig.AppCenterDBType == DBType.Informix
+            || BP.SystemConfig.AppCenterDBType == DBType.Oracle9i) && dealSQL!=null)
         {
-            if (dc.ColumnName.ToLower() == "no")
-                dc.ColumnName = "No";
-            if (dc.ColumnName.ToLower() == "name")
-                dc.ColumnName = "Name";
+            /*如果数据库不区分大小写, 就要按用户输入的sql进行二次处理。*/
+            string mysql = dealSQL.Trim();
+            mysql = mysql.Substring(6, mysql.ToLower().IndexOf("from")-6);
+            mysql=mysql.Replace(",", " ");
+            string[] strs=mysql.Split(' ');
+            foreach (string s in strs)
+            {
+                if (string.IsNullOrEmpty(s))
+                    continue;
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    if (dc.ColumnName.ToLower() == s.ToLower())
+                    {
+                        dc.ColumnName = s;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            foreach (DataColumn dc in dt.Columns)
+            {
+                if (dc.ColumnName.ToLower() == "no")
+                {
+                    dc.ColumnName = "No";
+                    continue;
+                }
+                if (dc.ColumnName.ToLower() == "name")
+                {
+                    dc.ColumnName = "Name";
+                    continue;
+                }
+            }
         }
         
         StringBuilder JsonString = new StringBuilder();

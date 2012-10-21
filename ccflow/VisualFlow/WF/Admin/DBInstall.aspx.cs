@@ -116,7 +116,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         this.Pub1.AddBR();
 
         rb = new RadioButton();
-        rb.Text = "Informix";
+        rb.Text = "Informix (首先需要执行:D:\\ccflow\\VisualFlow\\Data\\Install\\Informix.sql)";
         rb.ID = "RB_DB2";
         rb.GroupName = "sd";
         this.Pub1.Add(rb);

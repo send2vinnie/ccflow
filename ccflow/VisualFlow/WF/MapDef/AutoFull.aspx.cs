@@ -258,6 +258,7 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             switch (BP.SystemConfig.AppCenterDBType)
             {
                 case DBType.Oracle9i:
+                case DBType.Informix:
                     continue;
                     sql = "Select fname as 'No' ,fDesc as 'Name' FROM Sys_FieldDesc WHERE tableName='" + attr.HisFKEn.EnMap.PhysicsTable + "'";
                     break;
