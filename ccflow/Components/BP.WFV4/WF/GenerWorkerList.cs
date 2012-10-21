@@ -137,7 +137,7 @@ namespace BP.WF
         {
             get
             {
-                return WorkerListAttr.WorkID;
+                return "WorkID,FK_Emp,FK_Node";
             }
         }
         /// <summary>
@@ -371,6 +371,7 @@ namespace BP.WF
         #endregion
 
         #region 构造函数
+         
         /// <summary>
         /// 工作者
         /// </summary>
@@ -404,11 +405,11 @@ namespace BP.WF
                 map.DepositaryOfMap = Depositary.Application;
 
                 map.AddTBIntPK(WorkerListAttr.WorkID, 0, "工作ID", true, true);
-
                 map.AddTBStringPK(WorkerListAttr.FK_Emp, null, "人员", true, false, 0, 50, 100);
+                map.AddTBIntPK(WorkerListAttr.FK_Node, 0, "节点ID", true, false);
+
                 map.AddTBString(WorkerListAttr.FK_EmpText, null, "人员名称", true, false, 0, 100, 100);
 
-                map.AddTBIntPK(WorkerListAttr.FK_Node, 0, "节点ID", true, false);
                 map.AddTBString(WorkerListAttr.FK_NodeText, null, "节点名称", true, false, 0, 100, 100);
 
                 map.AddTBInt(WorkerListAttr.FID, 0, "流程ID", true, false);

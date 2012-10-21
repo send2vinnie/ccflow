@@ -41,7 +41,7 @@ namespace BP.WF
         /// </summary>
         public const string RDT = "RDT";
         /// <summary>
-        /// 当前点应完成日期
+        /// 流程应完成日期
         /// </summary>
         public const string SDT = "SDT";
         /// <summary>
@@ -375,7 +375,7 @@ namespace BP.WF
                     return this._enMap;
 
                 Map map = new Map("WF_GenerWorkFlow");
-                map.EnDesc = "未完成流程";
+                map.EnDesc = "流程注册表";
 
                 map.AddTBIntPK(GenerWorkFlowAttr.WorkID, 0, "WorkID", true, true);
                 map.AddTBInt(GenerWorkFlowAttr.FID, 0, "流程ID", true, true);
@@ -397,7 +397,7 @@ namespace BP.WF
                 map.AddTBString(GenerWorkFlowAttr.FK_Dept, null, "部门", true, false, 0, 500, 10);
                 map.AddTBString(GenerWorkFlowAttr.DeptName, null, "部门名称", true, false, 0, 500, 10);
                 map.AddTBInt(GenerWorkFlowAttr.PRI, 1, "优先级", true, true);
-
+                map.AddTBDateTime(GenerWorkFlowAttr.SDT, "应完成日期", true, true);
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("WorkRpt", "工作报告");  // "工作报告";

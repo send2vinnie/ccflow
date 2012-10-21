@@ -2219,6 +2219,7 @@ namespace BP.WF
             Nodes nds = this.HisNodes;
             CheckRpt(nds);
             CheckRptDtl(nds);
+
             this.CheckRptView(nds);
 
             //// 检查报表数据是否丢失。
@@ -2496,7 +2497,6 @@ namespace BP.WF
 
 
             // 补充上没有字段。
-
             switch (SystemConfig.AppCenterDBType)
             {
                 case DBType.Oracle9i:
@@ -2511,7 +2511,6 @@ namespace BP.WF
             }
 
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
-
             sql = "SELECT KeyOfEn FROM Sys_MapAttr WHERE FK_MapData='ND" + flowId + "Rpt'";
             DataTable dtExits = DBAccess.RunSQLReturnTable(sql);
             string pks = "@";
@@ -2523,13 +2522,18 @@ namespace BP.WF
                 string mypk = dr["MyPK"].ToString();
                 if (pks.Contains("@" + dr["KeyOfEn"].ToString() + "@"))
                     continue;
-
                 pks += dr["KeyOfEn"].ToString() + "@";
                 BP.Sys.MapAttr ma = new BP.Sys.MapAttr(mypk);
                 ma.MyPK = "ND" + flowId + "Rpt" + "_" + ma.KeyOfEn;
                 ma.FK_MapData = "ND" + flowId + "Rpt";
                 ma.UIIsEnable = false;
-                ma.DefVal = "";
+                
+                if (ma.DefValReal.Contains("@"))
+                {
+                    /*如果是一个有变量的参数.*/
+                    ma.DefVal = "";
+                }
+
                 try
                 {
                     ma.Insert();

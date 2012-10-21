@@ -136,6 +136,13 @@ namespace BP.WF
                 return "Send,Save,Return,CC,Shift,Del,Rpt,Ath,Track,Opt,EndFLow";
             }
         }
+        //public override string PK
+        //{
+        //    get
+        //    {
+        //        return NodeAttr.NodeID;
+        //    }
+        //}
 
         #region 基本属性
         public int NodeID

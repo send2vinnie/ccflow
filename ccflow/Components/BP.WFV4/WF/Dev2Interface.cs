@@ -217,11 +217,12 @@ namespace BP.WF
         {
             // 按岗位计算.
             string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
-            sql+= " UNION  "; //按指定的人员计算.
-            sql+="  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+            sql += " UNION  "; //按指定的人员计算.
+            sql += "  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
             sql += " UNION  "; // 按岗位计算.
-            sql += " SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept IN(SELECT FK_Dept FROM Port_Emp WHERE No='"+userNo+"' UNION SELECT FK_DEPT FROM Port_EmpDept WHERE FK_Emp='"+userNo+"') ) ";
-           
+            sql += " SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept IN(SELECT FK_Dept FROM Port_Emp WHERE No='" + userNo + "' UNION SELECT FK_DEPT FROM Port_EmpDept WHERE FK_Emp='" + userNo + "') ) ";
+
+
             Flows fls = new Flows();
             BP.En.QueryObject qo = new BP.En.QueryObject(fls);
             qo.AddWhereInSQL("No", sql);
@@ -249,7 +250,63 @@ namespace BP.WF
         /// <returns></returns>
         public static DataTable DB_GenerCanStartFlowsOfDataTable(string userNo)
         {
-            return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();
+            // 按岗位计算.
+            string sql = "";
+            sql += "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_Emp='" + WebUser.No + "')) ";
+            sql += " UNION  "; //按指定的人员计算.
+            sql += "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+            sql += " UNION  "; // 按岗位计算.
+            sql += "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept IN(SELECT FK_Dept FROM Port_Emp WHERE No='" + userNo + "' UNION SELECT FK_DEPT FROM Port_EmpDept WHERE FK_Emp='" + userNo + "') ) ";
+
+            Flows fls = new Flows();
+            BP.En.QueryObject qo = new BP.En.QueryObject(fls);
+            qo.AddWhereInSQL("No", sql);
+            qo.addAnd();
+            qo.AddWhere(FlowAttr.IsOK, true);
+            qo.addAnd();
+            qo.AddWhere(FlowAttr.IsCanStart, true);
+            if (WebUser.IsAuthorize)
+            {
+                /*如果是授权状态*/
+                qo.addAnd();
+                WF.Port.WFEmp wfEmp = new Port.WFEmp(WebUser.No);
+                qo.AddWhereIn("No", wfEmp.AuthorFlows);
+            }
+            qo.addOrderBy("FK_FlowSort", FlowAttr.Idx);
+            return qo.DoQueryToTable();
+        }
+        /// <summary>
+        /// For lizheng: 2012-10-17 
+        /// 获取能够发起流程的sql
+        /// </summary>
+        /// <param name="userNo">操作人员编号</param>
+        /// <returns>返回获取该操作人员的SQL</returns>
+        public static string DB_GenerCanStartFlowsOfSQL(string userNo)
+        {
+            // 按岗位计算.
+            string sql = "";
+            sql += "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_Emp='" + WebUser.No + "')) ";
+            sql += " UNION  "; //按指定的人员计算.
+            sql += "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+            sql += " UNION  "; // 按岗位计算.
+            sql += "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeDept WHERE FK_Dept IN(SELECT FK_Dept FROM Port_Emp WHERE No='" + userNo + "' UNION SELECT FK_DEPT FROM Port_EmpDept WHERE FK_Emp='" + userNo + "') ) ";
+
+            Flows fls = new Flows();
+            BP.En.QueryObject qo = new BP.En.QueryObject(fls);
+            qo.AddWhereInSQL("No", sql);
+            qo.addAnd();
+            qo.AddWhere(FlowAttr.IsOK, true);
+            qo.addAnd();
+            qo.AddWhere(FlowAttr.IsCanStart, true);
+            if (WebUser.IsAuthorize)
+            {
+                /*如果是授权状态*/
+                qo.addAnd();
+                WF.Port.WFEmp wfEmp = new Port.WFEmp(WebUser.No);
+                qo.AddWhereIn("No", wfEmp.AuthorFlows);
+            }
+            qo.addOrderBy("FK_FlowSort", FlowAttr.Idx);
+            return qo.SQLWithOutPara;
         }
         /// <summary>
         /// 获取(同步)合流点上的子线程
@@ -344,6 +401,36 @@ namespace BP.WF
                     break;
                 case Port.AuthorWay.SpecFlows:
                     return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ");
+                    break;
+                case Port.AuthorWay.None:
+                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
+                default:
+                    throw new Exception("no such way...");
+            }
+
+        }
+        /// <summary>
+        /// For Lizheng: 2012-10-17
+        /// 获取指定人员能够发起人员sql.
+        /// </summary>
+        /// <param name="fk_emp">指定人中编号</param>
+        /// <returns>获取指定人员能够发起人员sql</returns>
+        public static string DB_GenerEmpWorksOfSQL(string fk_emp)
+        {
+            if (WebUser.IsAuthorize == false)
+            {
+                /*如果不是授权状态*/
+                return  "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ";
+            }
+            /*如果是授权状态, 获取当前委托人的信息. */
+            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+            switch (emp.HisAuthorWay)
+            {
+                case Port.AuthorWay.All:
+                    return "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
+                    break;
+                case Port.AuthorWay.SpecFlows:
+                    return "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.None:
                     throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
@@ -470,6 +557,11 @@ namespace BP.WF
         {
             return DB_GenerRuningOfEntities(WebUser.No);
         }
+        /// <summary>
+        /// 获取指定人员当前运行的工作
+        /// </summary>
+        /// <param name="userNo"></param>
+        /// <returns></returns>
         public static GenerWorkFlows DB_GenerRuningOfEntities(string userNo)
         {
             string sql;
@@ -485,6 +577,26 @@ namespace BP.WF
             GenerWorkFlows gwfs = new GenerWorkFlows();
             gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
             return gwfs;
+        }
+        /// <summary>
+        /// For Lizheng: 2012-10-12
+        /// 获取指定人员在途工作
+        /// </summary>
+        /// <param name="userNo">指定人员编号</param>
+        /// <returns></returns>
+        public static string DB_GenerRuningOfSQL(string userNo)
+        {
+            string sql;
+            if (WebUser.IsAuthorize)
+            {
+                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+                sql = "SELECT a.* FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+            }
+            else
+            {
+                sql = "SELECT a.* FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 ";
+            }
+            return sql;
         }
         /// <summary>
         /// 获取当前操作员的在途工作

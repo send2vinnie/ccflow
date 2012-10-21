@@ -69,6 +69,7 @@ namespace BP.WF.DTS
                     msg += "@开始调度流程模板文件:" + f;
                     Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fs.No, f);
                     msg += "@流程:" + myflow.Name + "装载成功。";
+
                     System.IO.FileInfo info = new System.IO.FileInfo(f);
                     myflow.Name = info.Name.Replace(".xml", "");
                     myflow.DirectUpdate();
@@ -112,7 +113,7 @@ namespace BP.WF.DTS
                         DataSet ds = new DataSet();
                         ds.ReadXml(f);
 
-                        MapData md = MapData.ImpMapData(ds,true);
+                        MapData md = MapData.ImpMapData(ds,false);
                         md.FK_FrmSort = fs.No;
                         md.Update();
                     }
