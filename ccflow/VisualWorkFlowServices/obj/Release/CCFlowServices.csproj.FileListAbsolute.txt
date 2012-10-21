@@ -6,7 +6,6 @@ D:\ccflow\VisualWorkFlowServices\bin\Release\BP.WFV4.dll
 D:\ccflow\VisualWorkFlowServices\bin\Release\MySql.Data.dll
 D:\ccflow\VisualWorkFlowServices\bin\Release\IBM.Data.Informix.dll
 D:\ccflow\VisualWorkFlowServices\bin\Release\ChineseConverter.dll
-D:\ccflow\VisualWorkFlowServices\bin\Release\BP.En30.pdb
 D:\ccflow\VisualWorkFlowServices\obj\Release\ResolveAssemblyReference.cache
 D:\ccflow\VisualWorkFlowServices\obj\Release\SMSServices.FrmMain.resources
 D:\ccflow\VisualWorkFlowServices\obj\Release\CCFlowServices.Properties.Resources.resources
