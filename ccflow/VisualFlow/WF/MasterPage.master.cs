@@ -71,23 +71,21 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         if (BP.Web.WebUser.IsAuthorize)
         {
             BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(BP.Web.WebUser.No);
-            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp=" + SystemConfig.AppCenterDBVarStr+ "FK_Emp  AND FK_Flow IN " + emp.AuthorFlows;
+            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp=" + SystemConfig.AppCenterDBVarStr + "FK_Emp  AND FK_Flow IN " + emp.AuthorFlows;
             ps.AddFK_Emp();
         }
         else
         {
             ps.AddFK_Emp();
-            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp="+SystemConfig.AppCenterDBVarStr+"FK_Emp";
+            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp=" + SystemConfig.AppCenterDBVarStr + "FK_Emp";
         }
         int num = BP.DA.DBAccess.RunSQLReturnValInt(ps);
 
-
         ps = new BP.DA.Paras();
-        ps.SQL = "SELECT COUNT(MyPK) FROM wf_cclist WHERE Sta=0 AND CCTo="+BP.SystemConfig.AppCenterDBVarStr+"FK_Emp";
+        ps.SQL = "SELECT COUNT(MyPK) FROM WF_CCList WHERE Sta=0 AND CCTo=" + BP.SystemConfig.AppCenterDBVarStr + "FK_Emp";
         ps.AddFK_Emp();
 
         int numCC = BP.DA.DBAccess.RunSQLReturnValInt(ps);
-        
         string msg = this.ToE("PendingWork", "待办");
         string msgCC="抄送";
         if (num != 0)
@@ -118,6 +116,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             script += "</script> ";
             this.Page.ClientScript.RegisterClientScriptBlock(typeof(string), "scc", script);
         }
+
         #region 菜单输出区域
 
 

@@ -217,14 +217,16 @@ public partial class WF_Accpter : WebPage
             else
                 info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
         }
-        string sql = "select tonode from wf_direction where node =" + FK_Node;
-        var o = DBAccess.RunSQLReturnVal(sql);
-#warning 刘文辉 下一步流程名
-        BP.WF.Node nd = new BP.WF.Node();
-        QueryObject qo = new QueryObject(nd);
-        qo.AddWhere("NodeID", o);
-        qo.DoQuery();
-        this.Pub1.AddCaptionLeft("<span style='color:red'>选择 [" + nd.Name + "]</span>  可选择范围：" + dt.Rows.Count + " 位。" + info);
+      //  string sql = "select tonode from wf_direction where node =" + FK_Node;
+//        var toNodeID = DBAccess.RunSQLReturnVal(sql);
+//#warning 刘文辉 下一步流程名
+//        BP.WF.Node nd = new BP.WF.Node();
+//        QueryObject qo = new QueryObject(nd);
+//        qo.AddWhere("NodeID", toNodeID);
+//        qo.DoQuery();
+
+        BP.WF.Node toNode = new BP.WF.Node(this.MyToNode);
+        this.Pub1.AddCaptionLeft("<span style='color:red'>选择 [" + toNode.Name + "]</span>  可选择范围：" + dt.Rows.Count + " 位。" + info);
         if (dt.Rows.Count > 50)
         {
             /*多于一定的数，就显示导航。*/

@@ -349,7 +349,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
     #region Page load 事件
     /// <summary>
-    /// Page_Load
+    /// 
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

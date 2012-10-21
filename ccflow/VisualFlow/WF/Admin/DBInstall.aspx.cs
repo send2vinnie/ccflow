@@ -116,7 +116,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         this.Pub1.AddBR();
 
         rb = new RadioButton();
-        rb.Text = "DB2";
+        rb.Text = "Informix";
         rb.ID = "RB_DB2";
         rb.GroupName = "sd";
         this.Pub1.Add(rb);
@@ -218,9 +218,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             BP.Web.WebUser.SignInOfGener(emp);
             BP.WF.DTS.LoadTemplete l = new BP.WF.DTS.LoadTemplete();
             string msg = l.Do() as string;
-
         }
-     
 
         try
         {

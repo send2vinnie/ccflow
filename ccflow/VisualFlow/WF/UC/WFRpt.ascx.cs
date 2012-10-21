@@ -323,49 +323,44 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.AddTDTitle("执行人");
         this.AddTREnd();
 
-        string sqlOfWhere = "";
+        string sqlOfWhere2 = "";
+        string sqlOfWhere1 = "";
+
         string dbStr = BP.SystemConfig.AppCenterDBVarStr;
         Paras prs = new Paras();
         if (this.FID == 0)
         {
-            sqlOfWhere = " WHERE (FID=" + dbStr + "WorkID1 OR WorkID=" + dbStr + "WorkID2 ) AND FK_Flow=" + dbStr + "FK_Flow ";
-            prs.Add("WorkID1", this.WorkID);
-            prs.Add("WorkID2", this.WorkID);
-            prs.Add("FK_Flow", this.FK_Flow);
+            sqlOfWhere1 = " WHERE (FID=" + dbStr + "WorkID11 OR WorkID=" + dbStr + "WorkID12 ) AND FK_Flow=" + dbStr + "FK_Flow1 ";
+            sqlOfWhere2 = " WHERE (FID=" + dbStr + "WorkID21 OR WorkID=" + dbStr + "WorkID22 ) AND FK_Flow=" + dbStr + "FK_Flow2 ";
 
-            //qo.addLeftBracket();
-            //qo.AddWhere(TrackAttr.FID, this.WorkID);
-            //qo.addOr();
-            //qo.AddWhere(TrackAttr.WorkID, this.WorkID);
-            //qo.addRightBracket();
-            //qo.addAnd();
-            //qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
-            //qo.addOrderBy(TrackAttr.RDT);
-            //qo.DoQuery();
+            prs.Add("WorkID11", this.WorkID);
+            prs.Add("WorkID12", this.WorkID);
+            prs.Add("FK_Flow1", this.FK_Flow);
+
+
+            prs.Add("WorkID21", this.WorkID);
+            prs.Add("WorkID22", this.WorkID);
+            prs.Add("FK_Flow2", this.FK_Flow);
+
         }
         else
         {
-            sqlOfWhere = " WHERE (FID=" + dbStr + "FID1 OR WorkID=" + dbStr + "FID2 ) AND FK_Flow=" + dbStr + "FK_Flow ";
+            sqlOfWhere1 = " WHERE (FID=" + dbStr + "FID11 OR WorkID=" + dbStr + "FID12 ) AND FK_Flow=" + dbStr + "FK_Flow1";
+            sqlOfWhere2 = " WHERE (FID=" + dbStr + "FID21 OR WorkID=" + dbStr + "FID22 ) AND FK_Flow=" + dbStr + "FK_Flow2";
+            prs.Add("FID11", this.FID);
+            prs.Add("FID12", this.FID);
+            prs.Add("FK_Flow1", this.FK_Flow);
 
-            prs.Add("FID1", this.FID);
-            prs.Add("FID2", this.FID);
-            prs.Add("FK_Flow", this.FK_Flow);
-
-            //qo.addLeftBracket();
-            //qo.AddWhere(TrackAttr.FID, this.FID);
-            //qo.addOr();
-            //qo.AddWhere(TrackAttr.WorkID, this.FID);
-            //qo.addRightBracket();
-            //qo.addAnd();
-            //qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
-            //qo.addOrderBy(TrackAttr.RDT);
-            //qo.DoQuery();
+            prs.Add("FID21", this.FID);
+            prs.Add("FID22", this.FID);
+            prs.Add("FK_Flow2", this.FK_Flow);
         }
         string sql = "";
-        sql = "SELECT MyPK,FK_Flow,ActionType,FID,WorkID,NDFrom,NDFromT,NDTo,NDToT,EmpFrom,EmpFromT,EmpTo,EmpToT,RDT,WorkTimeSpan,Msg,NodeData,Exer FROM WF_Track " + sqlOfWhere;
+        sql = "SELECT MyPK,FK_Flow,ActionType,FID,WorkID,NDFrom,NDFromT,NDTo,NDToT,EmpFrom,EmpFromT,EmpTo,EmpToT,RDT,WorkTimeSpan,Msg,NodeData,Exer FROM WF_Track " + sqlOfWhere1;
         sql += " UNION ";
-        sql += "SELECT MyPK,FK_Flow,ActionType,FID,WorkID,NDFrom,NDFromT,NDTo,NDToT,EmpFrom,EmpFromT,EmpTo,EmpToT,RDT,WorkTimeSpan,Msg,NodeData,Exer FROM WF_TrackTemp " + sqlOfWhere;
+        sql += "SELECT MyPK,FK_Flow,ActionType,FID,WorkID,NDFrom,NDFromT,NDTo,NDToT,EmpFrom,EmpFromT,EmpTo,EmpToT,RDT,WorkTimeSpan,Msg,NodeData,Exer FROM WF_TrackTemp " + sqlOfWhere2;
         prs.SQL = sql;
+
         DataTable dt = DBAccess.RunSQLReturnTable(prs);
         DataView dv = dt.DefaultView;
         dv.Sort = "RDT";
