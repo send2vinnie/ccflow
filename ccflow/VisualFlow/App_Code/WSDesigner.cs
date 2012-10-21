@@ -141,9 +141,12 @@ public class WSDesigner : WSBase
             }
 
             DataSet ds = new DataSet();
-            sql = "SELECT NDFrom, NDTo FROM WF_TRACK WHERE WorkID=" + workid;
+            sql = "SELECT NDFrom, NDTo FROM WF_TRACK WHERE WorkID=" + workid +"   ";
+            sql += " UNION ";
+            sql = "SELECT NDFrom, NDTo FROM WF_TrackTemp WHERE WorkID=" + workid + "   ";
+
             DataTable mydt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            mydt.TableName = "WF_TRACK";
+            mydt.TableName = "WF_Track";
             ds.Tables.Add(mydt);
             ds.Tables.Add(dt);
             return Connector.ToXml(ds);
