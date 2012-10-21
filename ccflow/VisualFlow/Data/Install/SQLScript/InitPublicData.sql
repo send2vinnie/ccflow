@@ -10,6 +10,12 @@ INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('CN_PQ','地区
 DELETE FROM Sys_SFTable WHERE No='CN_SF';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('CN_SF','省份','FK_SF','中国的省份。','');
 
+DELETE FROM Sys_SFTable WHERE No='CN_City';
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('CN_City','城市','FK_City','中国的市级城市','');
+
+DELETE FROM Sys_SFTable WHERE No='CN_City';
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('CN_City','城市','FK_City','中国的市级城市','');
+
 DELETE FROM Sys_SFTable WHERE No='BP.Port.Depts';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('BP.Port.Depts','部门','FK_Dept','部门','');
 
@@ -23,7 +29,7 @@ DELETE FROM Sys_SFTable WHERE No='BP.Pub.Days';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('BP.Pub.Days','日','FK_Day','1-31日','');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Pub.YFs';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('BP.Pub.YFs','月','FK_NY','1-12月','');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('BP.Pub.YFs','月','FK_YF','1-12月','');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Pub.NYs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal)VALUES ('BP.Pub.NYs','年月','FK_NY','年度与月份','');
