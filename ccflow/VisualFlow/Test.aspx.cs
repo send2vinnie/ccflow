@@ -42,25 +42,30 @@ public partial class TestFrm : BP.Web.PageBase
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        BP.WF.Demo.EmpDemo ed = new BP.WF.Demo.EmpDemo();
-        ed.No = "zhangsan";
-        ed.Retrieve();
-        ed.Addr = "sdsfdsfsddddddddddddfffffffffffd";
-        ed.Update();
         return;
 
+        //BP.WF.DTS.LoadTemplete d = new BP.WF.DTS.LoadTemplete();
+        //d.Do();
+        //return;
 
-        this.Response.Write(ed.Name + "<br>");
-        this.Response.Write(ed.Tel + "<br>");
-        this.Response.Write(ed.Addr + "<br>");
+        ////BP.WF.Demo.EmpDemo ed = new BP.WF.Demo.EmpDemo();
+        ////ed.No = "zhangsan";
+        ////ed.Retrieve();
+        ////ed.Addr = "sdsfdsfsddddddddddddfffffffffffd";
+        ////ed.Update();
+        //return;
 
-        this.Response.Write(ed.FK_Dept+"<br>");
-        this.Response.Write(ed.FK_Dept_Text+"<br>");
 
-        this.Response.Write(ed.XB + "<br>");
-        this.Response.Write(ed.XB_Text + "<br>");
-        return;
+        //this.Response.Write(ed.Name + "<br>");
+        //this.Response.Write(ed.Tel + "<br>");
+        //this.Response.Write(ed.Addr + "<br>");
+
+        //this.Response.Write(ed.FK_Dept+"<br>");
+        //this.Response.Write(ed.FK_Dept_Text+"<br>");
+
+        //this.Response.Write(ed.XB + "<br>");
+        //this.Response.Write(ed.XB_Text + "<br>");
+        //return;
 
 
      //   BP.WF.Demo.EmpDemo ed = new BP.WF.Demo.EmpDemo();
