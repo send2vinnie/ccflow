@@ -1089,7 +1089,7 @@ namespace BP.WF
         /// <returns>返回保存的信息</returns>
         public static string Node_SaveWork(string fk_flow, Int64 workID)
         {
-            return Node_SaveWork(fk_flow, workID, new Hashtable());
+            return Node_SaveWork(fk_flow, workID, new Hashtable(),null);
         }
         /// <summary>
         /// 保存
@@ -1098,7 +1098,7 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="htWork">工作数据</param>
         /// <returns>返回执行信息</returns>
-        public static string Node_SaveWork(string fk_flow, Int64 workID, Hashtable htWork)
+        public static string Node_SaveWork(string fk_flow, Int64 workID, Hashtable htWork, DataSet dsDtls)
         {
             try
             {
@@ -1114,6 +1114,39 @@ namespace BP.WF
                 sw.BeforeSave();
                 sw.Save();
 
+                if (dsDtls != null)
+                {
+                    //保存明细表
+                    foreach (DataTable dt in dsDtls.Tables)
+                    {
+                        foreach (MapDtl dtl in sw.HisMapDtls)
+                        {
+                            if (dt.TableName != dtl.No)
+                                continue;
+                            //获取dtls
+                            GEDtls daDtls = new GEDtls(dtl.No);
+                            daDtls.Delete(GEDtlAttr.RefPK, workID); // 清除现有的数据.
+
+                            GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
+                            daDtl.RefPK = workID.ToString();
+
+                            // 为明细表复制数据.
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                daDtl.ResetDefaultVal();
+                                daDtl.RefPK = workID.ToString();
+
+                                //明细列.
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    //设置属性.
+                                    daDtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName]);
+                                }
+                                daDtl.InsertAsNew(); //插入数据.
+                            }
+                        }
+                    }
+                }
 
                 if (nd.SaveModel == SaveModel.NDAndRpt)
                 {
