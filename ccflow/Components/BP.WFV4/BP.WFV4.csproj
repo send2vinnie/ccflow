@@ -136,6 +136,7 @@
     <Compile Include="DemoData\CRM\SalesBill.cs" />
     <Compile Include="DTS\GenerTitle.cs" />
     <Compile Include="DynamicWebService.cs" />
+    <Compile Include="FlowDesc\HungUp\HungUp.cs" />
     <Compile Include="WF\Dev2Interface.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>

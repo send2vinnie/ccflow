@@ -8,7 +8,7 @@ using BP.Port;
 namespace BP.WF
 {
     /// <summary>
-    /// 控制方式
+    /// 抄送控制方式
     /// </summary>
     public enum CtrlWay
     {
@@ -30,7 +30,7 @@ namespace BP.WF
         BySQL
     }
 	/// <summary>
-	/// 抄送 属性
+	/// 抄送属性
 	/// </summary>
     public class CCAttr
     {
