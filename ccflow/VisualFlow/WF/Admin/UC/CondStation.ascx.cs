@@ -212,6 +212,15 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         btn.Text = this.ToE("Save", " Save ");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
+
+        btn = new Button();
+        btn.ID = "Btn_Del";
+        btn.CssClass = "Btn";
+        btn.Text = "Delete";
+        btn.Attributes["onclick"] = " return confirm('您确定要删除吗？');";
+        btn.Click += new EventHandler(btn_Save_Click);
+        this.Pub1.Add(btn);
+
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
@@ -268,10 +277,16 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
     void btn_Save_Click(object sender, EventArgs e)
     {
         Cond cond = new Cond();
-      //DBAccess.RunSQL("DELETE WF_Cond WHERE FK_Node=" + this.FK_Node + " AND ToNodeID=" + this.ToNodeID + " AND CondType!=" + (int)this.HisCondType);
-      //cond.Delete(CondAttr.NodeID, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID);
-        cond.Delete(CondAttr.ToNodeID, this.ToNodeID);
-
+        cond.Delete(CondAttr.ToNodeID, this.ToNodeID, CondAttr.DataFrom, (int)ConnDataFrom.Stas);
+      
+        Button btn = sender as Button;
+        if (btn.ID == "Btn_Del")
+        {
+            this.Response.Redirect(this.Request.RawUrl, true);
+            return;
+        }
+      
+        // 删除岗位条件.
 
         cond.MyPK = this.GenerMyPK;
         if (cond.RetrieveFromDBSources() == 0)

@@ -195,9 +195,18 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.CssClass = "Btn";
-        btn.Text = this.ToE("Save", " 保 存 ");
+        btn.Text = "Save";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
+
+        btn = new Button();
+        btn.ID = "Btn_Del";
+        btn.CssClass = "Btn";
+        btn.Text = "Delete";
+        btn.Attributes["onclick"] = " return confirm('您确定要删除吗？');";
+        btn.Click += new EventHandler(btn_Save_Click);
+        this.Pub1.Add(btn);
+
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
@@ -251,14 +260,14 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
     void btn_Save_Click(object sender, EventArgs e)
     {
         Cond cond = new Cond();
-        cond.Delete(CondAttr.ToNodeID, this.ToNodeID);
+        cond.Delete(CondAttr.ToNodeID, this.ToNodeID, CondAttr.DataFrom, (int)ConnDataFrom.Depts);
 
-       // cond.Delete(CondAttr.ToNodeID, this.ToNodeID, CondAttr.CondType,(int)this.HisCondType);
-        
-        //if (this.HisCondType== CondType.Dir)
-        //   cond.Delete(CondAttr.ToNodeID, this.ToNodeID);
-        //else
-        //    cond.Delete(CondAttr.NodeID, this.FK_Node, CondAttr);
+        Button btn = sender as Button;
+        if (btn.ID == "Btn_Del")
+        {
+            this.Response.Redirect(this.Request.RawUrl, true);
+            return;
+        }
 
         cond.MyPK = this.GenerMyPK;
         if (cond.RetrieveFromDBSources() == 0)

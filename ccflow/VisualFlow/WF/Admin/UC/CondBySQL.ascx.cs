@@ -131,10 +131,20 @@ public partial class WF_Admin_UC_CondBySQL : BP.Web.UC.UCBase3
         this.Add(tb);
         Button btn = new Button();
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
         btn.Text = " Save ";
         this.AddBR();
         this.Add(btn);
         btn.Click += new EventHandler(btn_Click);
+
+        btn = new Button();
+        btn.ID = "Btn_Del";
+        btn.CssClass = "Btn";
+        btn.Text = "Delete";
+        btn.Attributes["onclick"] = " return confirm('您确定要删除吗？');";
+        btn.Click += new EventHandler(btn_Click);
+        this.Add(btn);
+
         this.AddHR();
         this.Add("<b>说明:</b>在文本框里设置一个SQL，它返回一行一列，此值必须为0或大于等于1的正<BR>整数, 来表示该条件是否成立。SQL 支持ccflow的表达式。");
         this.AddFieldSetEnd();
@@ -149,6 +159,16 @@ public partial class WF_Admin_UC_CondBySQL : BP.Web.UC.UCBase3
 
     void btn_Click(object sender, EventArgs e)
     {
+        Cond cond = new Cond();
+        cond.Delete(CondAttr.ToNodeID, this.ToNodeID, CondAttr.DataFrom, (int)ConnDataFrom.SQL);
+
+        Button btn = sender as Button;
+        if (btn.ID == "Btn_Del")
+        {
+            this.Response.Redirect(this.Request.RawUrl, true);
+            return;
+        }
+
         string sql = this.GetTextBoxByID("TB_SQL").Text;
         if (string.IsNullOrEmpty(sql))
         {
@@ -156,11 +176,7 @@ public partial class WF_Admin_UC_CondBySQL : BP.Web.UC.UCBase3
             return;
         }
 
-        Cond cond = new Cond();
-        cond.Delete(CondAttr.ToNodeID, this.ToNodeID);
         cond.MyPK = this.GenerMyPK;
-        cond.Delete();
-
         cond.HisDataFrom = ConnDataFrom.SQL;
         cond.NodeID = this.FK_MainNode;
         cond.FK_Flow = this.FK_Flow;

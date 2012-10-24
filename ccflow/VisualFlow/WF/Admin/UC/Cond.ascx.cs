@@ -169,6 +169,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 cond.FK_Flow = this.FK_Flow;
         }
         this.AddTable("border=0 widht='500px'");
+        //this.AddCaptionLeft("");
         this.AddTR();
         this.AddTDTitle(this.ToE("Item", "项目"));
         this.AddTDTitle(this.ToE("Input", "采集"));
@@ -383,12 +384,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         }
 
 
-        //ddl = new DDL();
-        //ddl.ID = "DDL_ConnJudgeWay";
-        //ddl.BindSysEnum(BP.WF.CondAttr.ConnJudgeWay);
-        //ddl.SetSelectItem((int)cond.HisConnJudgeWay);
-
-
         Conds conds = new Conds();
         QueryObject qo = new QueryObject(conds);
         qo.AddWhere(CondAttr.NodeID, this.FK_MainNode);
@@ -400,19 +395,30 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             qo.AddWhere(CondAttr.ToNodeID, this.ToNodeID);
         }
         int num = qo.DoQuery();
-        
 
-            this.AddTRSum();
-            this.Add("<TD class=TD colspan=3 align=center>");
-            Button btn = new Button();
-            btn.ID = "Btn_Save";
-            btn.CssClass = "Btn";
-            btn.Text = this.ToE("Save", " 保 存 ");
-            btn.Click += new EventHandler(btn_Save_Click);
-            this.Add(btn);
-            this.Add("</TD>");
-            this.AddTREnd();
+
+        this.AddTRSum();
+        this.Add("<TD class=TD colspan=3 align=center>");
+        Button btn = new Button();
+        btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
+        btn.Text = " Save ";
          
+        btn.Click += new EventHandler(btn_Save_Click);
+        this.Add(btn);
+
+        btn = new Button();
+        btn.ID = "Btn_Del";
+        btn.CssClass = "Btn";
+        btn.Text = "Clear";
+        btn.Attributes["onclick"] = " return confirm('您确定要删除吗？');";
+        btn.Click += new EventHandler(btn_Save_Click);
+
+        this.Add(btn);
+
+        this.Add("</TD>");
+        this.AddTREnd();
+
         this.AddTableEnd();
 
         if (num == 0)
@@ -424,7 +430,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.AddCaptionLeft("说明:同时满足如下条件转向成立,只能删除不能编辑.");
         this.AddTR();
         this.AddTDTitle("IDX");
-       // this.AddTDTitle(this.ToE("NodeFrom", "数据来源"));
+        // this.AddTDTitle(this.ToE("NodeFrom", "数据来源"));
         this.AddTDTitle(this.ToE("Node", "节点"));
         this.AddTDTitle(this.ToE("Attr", "属性"));
         this.AddTDTitle(this.ToE("OperS", "操作符"));
@@ -435,14 +441,14 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         int i = 0;
         foreach (Cond mync in conds)
         {
-            if (mync.HisDataFrom != ConnDataFrom.Form )
+            if (mync.HisDataFrom != ConnDataFrom.Form)
                 continue;
 
             i++;
 
             this.AddTR();
             this.AddTDIdx(i);
-          //  this.AddTD(mync.HisDataFrom.ToString());
+            //  this.AddTD(mync.HisDataFrom.ToString());
             this.AddTD(mync.FK_NodeT);
             this.AddTD(mync.AttrName);
             this.AddTDCenter(mync.FK_Operator);
@@ -508,18 +514,21 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
 
     void btn_Save_Click(object sender, EventArgs e)
     {
+        Button btn = sender as Button;
+        if (btn.ID == "Btn_Del")
+        {
+            DBAccess.RunSQL("DELETE WF_Cond WHERE  ToNodeID=" + this.ToNodeID + " AND DataFrom=" + (int)ConnDataFrom.Form);
+            this.Response.Redirect(this.Request.RawUrl, true);
+            return;
+        }
+
         if (this.GetOperVal == "" || this.GetOperVal == null)
         {
             this.Alert(this.ToE("CondBlankWarning", "您没有设置条件，请在值文本框中输入值。"));
             return;
         }
 
-        DBAccess.RunSQL("DELETE WF_Cond WHERE  ToNodeID=" + this.ToNodeID + " AND DataFrom!=" + (int)ConnDataFrom.Form );
-
         Cond cond = new Cond();
-        //cond.Delete(CondAttr.ToNodeID, this.ToNodeID, CondAttr.DataFrom);
-
-       //cond.Delete(CondAttr.FK_Node, this.FK_Node, CondAttr.ToNodeID, this.ToNodeID, CondAttr.CondType,this.HisCondType);
         cond.HisDataFrom = ConnDataFrom.Form;
         cond.NodeID = this.FK_MainNode;
         cond.FK_Attr = this.FK_Attr;
