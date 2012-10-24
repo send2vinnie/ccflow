@@ -158,33 +158,12 @@ namespace BP.WF
         /// <param name="workid">工作ID</param>
         /// <param name="fid">流程ID</param>
         /// <returns></returns>
-        public static DataTable DB_GenerTrackTemp(string fk_flow, Int64 workid, Int64 fid)
+        public static DataTable DB_GenerTrack(string fk_flow, Int64 workid, Int64 fid)
         {
-            TrackTemps tks = new TrackTemps();
-            QueryObject qo = new QueryObject(tks);
-            if (fid == 0)
-            {
-                qo.addLeftBracket();
-                qo.AddWhere(TrackTempAttr.FID, workid);
-                qo.addOr();
-                qo.AddWhere(TrackTempAttr.WorkID, workid);
-                qo.addRightBracket();
-                qo.addAnd();
-                qo.AddWhere(TrackTempAttr.FK_Flow, fk_flow);
-                qo.addOrderBy(TrackTempAttr.RDT);
-            }
-            else
-            {
-                qo.addLeftBracket();
-                qo.AddWhere(TrackTempAttr.FID, fid);
-                qo.addOr();
-                qo.AddWhere(TrackTempAttr.WorkID, fid);
-                qo.addRightBracket();
-                qo.addAnd();
-                qo.AddWhere(TrackTempAttr.FK_Flow, fk_flow);
-                qo.addOrderBy(TrackTempAttr.RDT);
-            }
-            return qo.DoQueryToTable();
+            string sql = "SELECT * FROM WF_TrackTemp WHERE FID=" + fid + " AND WorkID=" + workid + " AND FK_Flow=" + fk_flow;
+            sql += " UNION ";
+            sql += " SELECT * FROM WF_Track WHERE FID=" + fid + " AND WorkID=" + workid + " AND FK_Flow=" + fk_flow;
+            return DBAccess.RunSQLReturnTable(sql);
         }
         #endregion 获取流程事例的轨迹图
 
