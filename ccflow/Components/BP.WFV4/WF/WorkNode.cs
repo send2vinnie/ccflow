@@ -258,7 +258,7 @@ namespace BP.WF
             #region 按指定的节点人员，做为下一步骤的流程接受人。
             string empNo = WebUser.No;
             string empDept = WebUser.FK_Dept;
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeStation)
+            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeEmp)
             {
                 /* 按指定节点岗位上的人员计算 */
                 string fk_node = town.HisNode.RecipientSQL;
@@ -635,14 +635,13 @@ namespace BP.WF
            #endregion 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
 
            #region 按指定的节点人员，做为下一步骤的流程接受人。
-           string empNo = WebUser.No;
-           string empDept = WebUser.FK_Dept;
-           if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeStation)
+        
+           if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeEmp)
            {
                /* 按指定节点岗位上的人员计算 */
                string fk_node = town.HisNode.RecipientSQL;
                if (DataType.IsNumStr(fk_node) == false)
-                   throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点岗位投递，但是您没有在访问规则设置中设置节点编号。");
+                   throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点人员投递，但是您没有在访问规则设置中设置节点编号。");
 
                ps = new Paras();
                ps.SQL = "SELECT Rec FROM ND" + fk_node + " WHERE OID=" + dbStr + "OID";
@@ -654,6 +653,9 @@ namespace BP.WF
                throw new Exception("@流程设计错误，到达的节点（" + town.HisNode.Name + "）在指定的节点中没有数据，无法找到工作的人员。");
            }
            #endregion 按指定的节点人员，做为下一步骤的流程接受人。
+
+          
+
 
            #region 按节点岗位与人员部门集合两个纬度计算.
            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByStationAndEmpDept)
@@ -678,8 +680,32 @@ namespace BP.WF
            }
            #endregion
 
-           if (town.HisNode.HisDeliveryWay != DeliveryWay.ByStation)
-               throw new Exception("@没有判断的执行规则:" + town.HisNode.HisDeliveryWay);
+          
+
+
+           string empNo = WebUser.No;
+           string empDept = WebUser.FK_Dept;
+
+           #region 按指定的节点的人员岗位，做为下一步骤的流程接受人。
+           if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeEmpStation)
+           {
+               /* 按指定的节点的人员岗位 */
+               string fk_node = town.HisNode.RecipientSQL;
+               if (DataType.IsNumStr(fk_node) == false)
+                   throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点人员岗位投递，但是您没有在访问规则设置中设置节点编号。");
+
+               ps = new Paras();
+               ps.SQL = "SELECT Rec,FK_Dept FROM ND" + fk_node + " WHERE OID=" + dbStr + "OID";
+               ps.Add("OID", this.WorkID);
+               dt = DBAccess.RunSQLReturnTable(ps);
+               if (dt.Rows.Count != 1)
+                   throw new Exception("@流程设计错误，到达的节点（" + town.HisNode.Name + "）在指定的节点中没有数据，无法找到工作的人员。");
+
+               empNo = dt.Rows[0][0].ToString();
+               empDept = dt.Rows[0][1].ToString();
+           }
+           #endregion 按指定的节点人员，做为下一步骤的流程接受人。
+
 
            #region 最后判断 - 按照岗位来执行。
            if (this.HisNode.IsStartNode == false)

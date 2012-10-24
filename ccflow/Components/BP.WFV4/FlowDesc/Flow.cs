@@ -989,10 +989,11 @@ namespace BP.WF
                         if (nd.NodeEmps.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按人员，但是您没有为节点绑定人员。</font>";
                         break;
-                    case DeliveryWay.BySpecNodeStation: /*按指定的岗位计算.*/
+                    case DeliveryWay.BySpecNodeEmp: /*按指定的岗位计算.*/
+                    case DeliveryWay.BySpecNodeEmpStation: /*按指定的岗位计算.*/
                         if (nd.RecipientSQL.Trim().Length == 0)
                         {
-                            rpt += "<font color=red>您设置了该节点的访问规则是按指定的岗位计算，但是你没有在</font>";
+                            rpt += "<font color=red>您设置了该节点的访问规则是按指定的岗位计算，但是您没有设置节点编号.</font>";
                         }
                         else
                         {

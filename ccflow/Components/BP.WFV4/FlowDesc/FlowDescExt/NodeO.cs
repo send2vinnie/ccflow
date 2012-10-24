@@ -209,7 +209,7 @@ namespace BP.WF.Ext
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, this.ToE("FLRole", "分流规则"), true, true, NodeAttr.FLRole,
                 //    "@0=按接受人@1=按部门@2=按岗位");
 
-                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", true, false, 0, 100, 10);
+                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", true, false, 0, 50, 10);
 
                 map.AddDDLSysEnum(NodeAttr.DeliveryWay, 0, "访问规则", true, true);
                 map.AddTBString(NodeAttr.RecipientSQL, null, "访问规则处理内容", true, false, 0, 500, 10, true);
@@ -218,15 +218,15 @@ namespace BP.WF.Ext
               true, true, NodeAttr.WhoExeIt, "@0=操作员执行@1=机器执行@2=混合执行");
 
                 map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "节点表单类型"), true, true);
-                map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
-                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 500, 10, false);
+                map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 200, 10, true);
+                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 50, 10, false);
 
                 map.AddDDLSysEnum(NodeAttr.TurnToDeal, 0, "发送后转向",
                  true, true, NodeAttr.TurnToDeal, "@0=提示ccflow默认信息@1=提示指定信息@2=转向指定的url@3=按照条件转向");
 
-                map.AddTBString(NodeAttr.TurnToDealDoc, null, "转向处理内容", true, false, 0, 2000, 10, true);
+                map.AddTBString(NodeAttr.TurnToDealDoc, null, "转向处理内容", true, false, 0, 999, 10, true);
 
-                map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 2000, 10, true);
+                map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 200, 10, true);
 
                 //map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
                 map.AddTBDateTime("DTFrom", "生命周期从", true, true);
@@ -300,7 +300,7 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.OutTimeDeal, 0, this.ToE("OutTimeDeal", "超时处理"),
                 true, true, NodeAttr.OutTimeDeal, "@0=不处理@1=自动转入下一步@2=自动转到指定的人员@3=向指定的人员发送消息@4=删除流程@5=执行SQL");
 
-                map.AddTBString(NodeAttr.DoOutTime, null, "处理内容", true, false, 0, 500, 10, true);
+                map.AddTBString(NodeAttr.DoOutTime, null, "处理内容", true, false, 0, 300, 10, true);
         //        map.AddTBString(NodeAttr.FK_Flows, null, "flow", false, false, 0, 100, 10);
 
                 map.AddDDLSysEnum(NodeAttr.CHWay, 0, "考核方式", true, true, NodeAttr.CHWay, "@0=不考核@1=按时效@2=按工作量");

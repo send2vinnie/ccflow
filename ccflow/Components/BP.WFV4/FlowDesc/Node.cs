@@ -82,9 +82,9 @@ namespace BP.WF
         /// </summary>
         ByPreviousOperSkip = 7,
         /// <summary>
-        /// 按指定节点的岗位计算
+        /// 按指定节点的人员计算
         /// </summary>
-        BySpecNodeStation = 8,
+        BySpecNodeEmp = 8,
         /// <summary>
         /// 按岗位与部门交集计算
         /// </summary>
@@ -92,7 +92,11 @@ namespace BP.WF
         /// <summary>
         /// 按岗位计算(以部门集合为纬度)
         /// </summary>
-        ByStationAndEmpDept
+        ByStationAndEmpDept=10,
+        /// <summary>
+        /// 按指定节点的人员岗位计算
+        /// </summary>
+        BySpecNodeEmpStation=11
     }
     /// <summary>
     /// 节点工作退回规则
@@ -2368,12 +2372,12 @@ namespace BP.WF
 
                 map.AddTBInt(NodeAttr.NodeWorkType, 0, "节点类型", false, false);
 
-                map.AddTBString(NodeAttr.FK_Flow, null, "FK_Flow", false, false, 0, 100, 10);
+                map.AddTBString(NodeAttr.FK_Flow, null, "FK_Flow", false, false, 0, 3, 10);
 
                 map.AddTBString(NodeAttr.FlowName, null, "流程名", false, true, 0, 100, 10);
-                map.AddTBString(NodeAttr.FK_FlowSort, null, "FK_FlowSort", false, true, 0, 100, 10);
+                map.AddTBString(NodeAttr.FK_FlowSort, null, "FK_FlowSort", false, true, 0, 4, 10);
                 map.AddTBString(NodeAttr.FK_FlowSortT, null, "FK_FlowSortT", false, true, 0, 100, 10);
-                map.AddTBString(NodeAttr.FrmAttr, null, "FrmAttr", false, true, 0, 500, 10);
+                map.AddTBString(NodeAttr.FrmAttr, null, "FrmAttr", false, true, 0, 300, 10);
 
                 //map.AddTBString(NodeAttr.EnsName, null, "工作s", false, false, 0, 100, 10);
                 //map.AddTBString(NodeAttr.EnName, null, "工作", false, false, 0, 100, 10);
@@ -2438,9 +2442,9 @@ namespace BP.WF
                 //默认为自由表单.
                 map.AddDDLSysEnum(NodeAttr.FormType, 1, this.ToE("FormType", "表单类型"), true, true);
 
-                map.AddTBString(NodeAttr.FormUrl, "http://", "表单URL", true, false, 0, 500, 10);
+                map.AddTBString(NodeAttr.FormUrl, "http://", "表单URL", true, false, 0, 200, 10);
 
-                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
+                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 300, 10, true);
 
                 map.AddTBInt(NodeAttr.TurnToDeal, 0, "转向处理", false, false);
                 map.AddTBString(NodeAttr.TurnToDealDoc, null, "发送后提示信息", true, false, 0, 2000, 10, true);
@@ -2449,8 +2453,8 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.IsCCNode, 0, "是否有节点完成条件", false, false);
                 map.AddTBInt(NodeAttr.IsCCFlow, 0, "是否有流程完成条件", false, false);
 
-                map.AddTBString(NodeAttr.HisStas, null, "岗位", false, false, 0, 4000, 10);
-                map.AddTBString(NodeAttr.HisDeptStrs, null, "部门", false, false, 0, 4000, 10);
+                map.AddTBString(NodeAttr.HisStas, null, "岗位", false, false, 0, 1000, 10);
+                map.AddTBString(NodeAttr.HisDeptStrs, null, "部门", false, false, 0, 1000, 10);
 
                 map.AddTBString(NodeAttr.HisToNDs, null, "转到的节点", false, false, 0, 300, 10);
                 map.AddTBString(NodeAttr.HisBillIDs, null, "单据IDs", false, false, 0, 200, 10);
@@ -2464,8 +2468,8 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.X, 0, "X坐标", false, false);
                 map.AddTBInt(NodeAttr.Y, 0, "Y坐标", false, false);
 
-                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 100, 10);
-                map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 2000, 10, true);
+                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 30, 10);
+                map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 200, 10, true);
 
                 map.AddTBAtParas(1000);
 
