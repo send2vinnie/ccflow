@@ -1168,7 +1168,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         this.Alert("请输入强制终止流程的原因。");
                         return;
                     }
-                    this.ToMsg("结束流程提示:<hr>" + mywf.DoFlowOver(ActionType.FlowOverByCoercion, info));
+                    this.ToMsg("结束流程提示:<hr>" + mywf.DoFlowOver(ActionType.FlowOverByCoercion,info),"info");
                     break;
                 case NamesOfBtn.Delete:
                 case "Btn_Del":
