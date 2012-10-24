@@ -1094,6 +1094,17 @@ namespace BP.WF
         /// <summary>
         /// 保存
         /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="workID">workid</param>
+        /// <param name="wk">节点表单参数</param>
+        /// <returns></returns>
+        public static string Node_SaveWork(string fk_flow, Int64 workID,Hashtable wk)
+        {
+            return Node_SaveWork(fk_flow, workID, wk, null);
+        }
+        /// <summary>
+        /// 保存
+        /// </summary>
         /// <param name="nodeID">节点ID</param>
         /// <param name="workID">工作ID</param>
         /// <param name="htWork">工作数据</param>
