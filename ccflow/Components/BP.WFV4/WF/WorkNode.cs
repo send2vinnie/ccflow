@@ -681,8 +681,6 @@ namespace BP.WF
            #endregion
 
           
-
-
            string empNo = WebUser.No;
            string empDept = WebUser.FK_Dept;
 
