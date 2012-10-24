@@ -800,7 +800,7 @@ namespace BP.WF
         public static string Flow_DoFlowOver(string flowNo, Int64 workID, string msg)
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
-            return wf.DoFlowOver(msg);
+            return wf.DoFlowOver(ActionType.FlowOver,msg);
         }
         /// <summary>
         /// 获取指定的workid 在运行到的节点编号

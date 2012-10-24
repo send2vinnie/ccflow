@@ -3369,10 +3369,9 @@ namespace BP.WF
                 if (this.HisNode.HisToNodes.Count == 0 && this.HisNode.IsStartNode)
                 {
                     /* 如果流程完成 */
-                    string overMsg = this.HisWorkFlow.DoFlowOver("");
+                    string overMsg = this.HisWorkFlow.DoFlowOver(ActionType.FlowOver,"符合流程完成条件");
                     this.IsStopFlow = true;
-                    this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
-                        this.HisNode.NodeID, this.HisNode.Name, "流程结束");
+                     
                     return "工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
 
@@ -3380,10 +3379,9 @@ namespace BP.WF
                 {
                     string stopMsg = this.HisFlowCompleteConditions.ConditionDesc;
                     /* 如果流程完成 */
-                    string overMsg = this.HisWorkFlow.DoFlowOver(stopMsg);
+                    string overMsg = this.HisWorkFlow.DoFlowOver(ActionType.FlowOver, "符合流程完成条件:"+stopMsg);
                     this.IsStopFlow = true;
-                    this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
-                        this.HisNode.NodeID, this.HisNode.Name, "流程结束");
+                     
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
                     return msg + "@符合工作流程完成条件" + stopMsg + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
@@ -3475,7 +3473,7 @@ namespace BP.WF
             if (toNodes.Count == 0)
             {
                 /* 如果是最后一个节点，就设置流程结束。*/
-                string ovrMsg = this.HisWorkFlow.DoFlowOver("无");
+                string ovrMsg = this.HisWorkFlow.DoFlowOver(ActionType.FlowOver,"流程到了最后节点");
                 
                 this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                     this.HisNode.NodeID, this.HisNode.Name, "流程结束");

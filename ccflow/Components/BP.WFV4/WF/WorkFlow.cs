@@ -240,7 +240,7 @@ namespace BP.WF
                             WorkFlow wf = new WorkFlow(this.HisFlow, this.FID);
                             info += "@所有的子线程已经结束。";
                             info += "@结束主流程信息。";
-                            info += "@" + wf.DoFlowOver("");
+                            info += "@" + wf.DoFlowOver(ActionType.FlowOver,"合流点流程结束");
                         }
 
                         decimal passRate = ok / all * 100;
@@ -272,7 +272,7 @@ namespace BP.WF
                                 WorkFlow wf = new WorkFlow(this.HisFlow, this.FID);
                                 info += "@所有的子线程已经结束。";
                                 info += "@结束主流程信息。";
-                                info += "@" + wf.DoFlowOver("");
+                                info += "@" + wf.DoFlowOver(ActionType.FlowOver,"主流程结束");
                             }
                             break;
                     }
@@ -461,7 +461,7 @@ namespace BP.WF
             gwf.WorkID = this.WorkID;
             if (gwf.RetrieveFromDBSources() == 0)
             {
-                this.DoFlowOver("非正常结束，没有找到当前的流程记录。");
+                this.DoFlowOver(ActionType.FlowOver,"非正常结束，没有找到当前的流程记录。");
                 throw new Exception("@" + this.ToEP1("WF2", "工作流程{0}已经完成。", this.HisStartWork.Title));
             }
 
@@ -567,7 +567,7 @@ namespace BP.WF
             {
                 /*说明这是最后一个*/
                 WorkFlow wf = new WorkFlow(gwf.FK_Flow, this.FID);
-                wf.DoFlowOver("");
+                wf.DoFlowOver(ActionType.FlowOver,"子流程结束");
                 return "@当前子流程已完成，主流程已完成。";
             }
             else
@@ -575,14 +575,16 @@ namespace BP.WF
                 return "@当前子流程已完成，主流程还有(" + num + ")个子流程未完成。";
             }
         }
-
-        /// <summary>
-        /// 结束流程
-        /// </summary>
-        /// <param name="stopMsg">结束原因</param>
-        /// <returns></returns>
-        public string DoFlowOver(string stopMsg)
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="at"></param>
+       /// <param name="stopMsg"></param>
+       /// <returns></returns>
+        public string DoFlowOver(ActionType at, string stopMsg)
         {
+            if (string.IsNullOrEmpty(stopMsg))
+                stopMsg="流程结束";
             string msg = "";
             if (this.IsMainFlow == false)
             {
@@ -687,27 +689,9 @@ namespace BP.WF
 
             //记录日志 thanks for itdos and 888 , 提出了这个bug.
             WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
-            if (wn.HisNode.FocusField.Length > 2)
-            {
-                try
-                {
-                    /* 写入日志. */
-                    wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
-                        wn.HisWork.GetValStrByKey(wn.HisNode.FocusField));
-                }
-                catch
-                {
-                    wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
-                     "执行流程结束");
-                }
-            }
-            else
-            {
-                wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
-                   "执行流程结束");
-                // wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
-                //  "执行流程结束");
-            }
+            wn.AddToTrack(at, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                    stopMsg);
+             
             return msg;
         }
         /// <summary>

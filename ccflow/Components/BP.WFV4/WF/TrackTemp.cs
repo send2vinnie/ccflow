@@ -64,7 +64,11 @@ namespace BP.WF
         /// <summary>
         /// 恢复已完成的流程
         /// </summary>
-        RebackOverFlow
+        RebackOverFlow,
+        /// <summary>
+        /// 强制终止流程 For lijian:2012-10-24
+        /// </summary>
+        FlowOverByCoercion
     }
     /// <summary>
     ///  属性
@@ -314,6 +318,8 @@ namespace BP.WF
                     return "子流程前进";
                 case ActionType.RebackOverFlow:
                     return "恢复已完成的流程";
+                case ActionType.FlowOverByCoercion:
+                    return "强制结束流程";
                 default:
                     return "未知";
             }
