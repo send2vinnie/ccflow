@@ -189,15 +189,38 @@ namespace BP.WF
         #endregion 获取流程事例的轨迹图
 
         #region 获取操送列表
+        /// <summary>
+        /// 获取抄送列表
+        /// </summary>
+        /// <param name="fk_emp">人员编号</param>
+        /// <returns></returns>
+        public static DataTable DB_CCList(string fk_emp)
+        {
+            return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "'");
+        }
+        /// <summary>
+        /// 获取未读的抄送
+        /// </summary>
+        /// <param name="fk_emp">人员编号</param>
+        /// <returns></returns>
         public static DataTable DB_CCList_UnRead(string fk_emp)
         {
-            //Paras ps = new Paras();
             return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "' AND Sta=0");
         }
+        /// <summary>
+        /// 获取已读的抄送
+        /// </summary>
+        /// <param name="fk_emp">人员编号</param>
+        /// <returns></returns>
         public static DataTable DB_CCList_Read(string fk_emp)
         {
             return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "' AND Sta=1");
         }
+        /// <summary>
+        /// 获取已删除的抄送
+        /// </summary>
+        /// <param name="fk_emp">人员编号</param>
+        /// <returns></returns>
         public static DataTable DB_CCList_Delete(string fk_emp)
         {
             return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "' AND Sta=2");
