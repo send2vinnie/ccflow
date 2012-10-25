@@ -3546,7 +3546,7 @@ namespace BP.WF
                 bool isPass = false;
                 foreach (Cond cd in dcs)
                 {
-                    if (cd.ToNodeID != int.Parse(s) )
+                    if (cd.ToNodeID != int.Parse(s))
                         continue;
 
                     cd.WorkID = this.WorkID;
@@ -3563,31 +3563,18 @@ namespace BP.WF
                     continue;
                 // 找到了这个转向条件.
                 toNode = toNodes.GetEntityByKey(int.Parse(s)) as Node;
+                if (toNode == null)
+                {
+                    continue;
+                    //Flow fl = new Flow();
+                    //fl.DoCheck();
+                    //throw new Exception("@节点编号=" + s + "在toNodes集合没有找到，ccflow已经做了体检,请退出iisreset后重新调试。");
+                }
                 break;
             }
 
-            //foreach (Cond cd in dcs)
-            //{
-            //    cd.WorkID = this.WorkID;
-            //    foreach (Node nd in toNodes)
-            //    {
-            //        if (cd.ToNodeID != nd.NodeID)
-            //            continue;
-            //        if (cd.IsPassed) // 如果多个转向条件中有一个成立.
-            //        {
-            //            numOfWay++;
-            //            toNode = nd;
-            //            break;
-            //        }
-            //        condMsg += "<b>@检查方向条件：到节点：" + nd.Name + "</b>";
-            //        condMsg += dcs.MsgOfDesc;
-            //    }
-            //    if (toNode != null)
-            //        break;
-            //}
-
             if (toNode == null)
-                throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误,节点名称:{0}, 系统无法投递。"),
+                throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误,节点名称:{0}，没有找到出口，系统无法投递，请检查设置的方向条件是否是闭环。"),
                     this.HisNode.Name));
 
             /* 删除曾经在这个步骤上的流程运行数据。

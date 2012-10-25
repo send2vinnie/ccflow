@@ -157,12 +157,13 @@ namespace BP.WF
         /// <param name="fk_flow">流程编号</param>
         /// <param name="workid">工作ID</param>
         /// <param name="fid">流程ID</param>
-        /// <returns></returns>
+        /// <returns>从临时表与轨迹表获取的track.</returns>
         public static DataTable DB_GenerTrack(string fk_flow, Int64 workid, Int64 fid)
         {
-            string sql = "SELECT * FROM WF_TrackTemp WHERE FID=" + fid + " AND WorkID=" + workid + " AND FK_Flow=" + fk_flow;
+            string sql = "";
+            sql = "SELECT * FROM WF_TrackTemp WHERE FID=" + fid + " AND WorkID=" + workid + " AND FK_Flow=" + fk_flow + " ORDER BY RDT";
             sql += " UNION ";
-            sql += " SELECT * FROM WF_Track WHERE FID=" + fid + " AND WorkID=" + workid + " AND FK_Flow=" + fk_flow;
+            sql += " SELECT * FROM WF_Track WHERE FID=" + fid + " AND WorkID=" + workid + " AND FK_Flow=" + fk_flow + " ORDER BY RDT";
             return DBAccess.RunSQLReturnTable(sql);
         }
         #endregion 获取流程事例的轨迹图
