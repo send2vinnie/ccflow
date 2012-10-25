@@ -3556,7 +3556,9 @@ namespace BP.WF
                         break;
                     }
                     else
+                    {
                         isPass = true;
+                    }
                 }
 
                 if (isPass == false)
@@ -3566,9 +3568,6 @@ namespace BP.WF
                 if (toNode == null)
                 {
                     continue;
-                    //Flow fl = new Flow();
-                    //fl.DoCheck();
-                    //throw new Exception("@节点编号=" + s + "在toNodes集合没有找到，ccflow已经做了体检,请退出iisreset后重新调试。");
                 }
                 break;
             }
