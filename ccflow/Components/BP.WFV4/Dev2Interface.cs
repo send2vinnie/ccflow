@@ -831,6 +831,7 @@ namespace BP.WF
             Node nd = new Node(nodeID);
             Work wk = nd.HisWork;
             wk.OID = workID;
+            wk.Retrieve();
             return wk;
         }
         /// <summary>
@@ -844,6 +845,7 @@ namespace BP.WF
             Node nd = new Node(Flow_GetCurrentNode(workID));
             Work wk = nd.HisWork;
             wk.OID = workID;
+            wk.Retrieve();
             wk.ResetDefaultVal();
             return wk;
         }
