@@ -821,6 +821,33 @@ namespace BP.WF
             return BP.DA.DBAccess.RunSQLReturnValInt(ps);
         }
         /// <summary>
+        /// 获取指定节点的Work
+        /// </summary>
+        /// <param name="nodeID">节点ID</param>
+        /// <param name="workID"></param>
+        /// <returns></returns>
+        public static Work Flow_GetCurrentWork(int nodeID,Int64 workID)
+        {
+            Node nd = new Node(nodeID);
+            Work wk = nd.HisWork;
+            wk.OID = workID;
+            return wk;
+        }
+        /// <summary>
+        /// 获取当前工作节点的Work
+        /// </summary>
+        /// <param name="fk_flow">节点ID</param>
+        /// <param name="workID"></param>
+        /// <returns></returns>
+        public static Work Flow_GetCurrentWork(Int64 workID)
+        {
+            Node nd = new Node(Flow_GetCurrentNode(workID));
+            Work wk = nd.HisWork;
+            wk.OID = workID;
+            wk.ResetDefaultVal();
+            return wk;
+        }
+        /// <summary>
         /// 获取指定的workid 当前节点由哪些人可以执行.
         /// 2012-09-12 for lijian
         /// </summary>
