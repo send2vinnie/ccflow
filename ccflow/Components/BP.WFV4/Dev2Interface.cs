@@ -13,7 +13,13 @@ using BP.Sys;
 namespace BP.WF
 {
     /// <summary>
-    /// 此接口为程序员二次开发使用
+    /// 此接口为程序员二次开发使用,在阅读代码前请注意如下事项.
+    /// 1, CCFlow的对外的接口都是以静态方法来实现的.
+    /// 2, 以 DB_ 开头的是需要返回结果集合的接口.
+    /// 3, 以 Flow_ 是流程接口.
+    /// 4, 以 Node_ 是节点接口。
+    /// 5, 以 Port_ 是组织架构接口.
+    /// 6, 以 DTS_是调度．
     /// </summary>
     public class Dev2Interface
     {
@@ -1026,7 +1032,6 @@ namespace BP.WF
                 foreach (string str in htWork.Keys)
                     sw.SetValByKey(str, htWork[str]);
             }
-
 
             sw.SetValByKey(StartWorkAttr.FK_Dept, WebUser.FK_Dept);
             sw.Rec = WebUser.No;
