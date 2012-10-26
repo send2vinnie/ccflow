@@ -710,7 +710,9 @@ namespace BP.WF
         public static Work Flow_GenerWork(string flowNo)
         {
             Flow fl = new Flow(flowNo);
-            return fl.NewWork();
+            Work wk= fl.NewWork();
+            wk.ResetDefaultVal();
+            return wk;
         }
         /// <summary>
         /// 是否可以发起改流程?
