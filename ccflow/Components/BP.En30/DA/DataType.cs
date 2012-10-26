@@ -1250,7 +1250,6 @@ namespace BP.DA
         public const int AppRate = 9;
         #endregion
 
-
         public static string StringToDateStr(string str)
         {
             try

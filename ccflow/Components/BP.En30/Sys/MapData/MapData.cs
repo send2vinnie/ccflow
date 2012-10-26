@@ -1240,7 +1240,9 @@ namespace BP.Sys
 
                             if (isSetReadonly == true)
                             {
-                                if (en.DefValReal != null && (en.DefValReal.Contains("@WebUser.") || en.DefValReal.Contains("@RDT")))
+                                if (en.DefValReal != null 
+                                    && (en.DefValReal.Contains("@WebUser.") 
+                                    || en.DefValReal.Contains("@RDT")))
                                     en.DefValReal = "";
 
                                 switch (en.UIContralType)

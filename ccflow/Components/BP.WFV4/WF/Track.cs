@@ -226,43 +226,11 @@ namespace BP.WF
                 this.SetValByKey(TrackAttr.ActionType, (int)value);
             }
         }
-        public static string GetActionTypeT(ActionType at)
-        {
-            switch (at)
-            {
-                case ActionType.Forward:
-                    return "前进";
-                case ActionType.Return:
-                    return "退回";
-                case ActionType.Shift:
-                    return "移交";
-                case ActionType.UnShift:
-                    return "撤消移交";
-                case ActionType.Start:
-                    return "发起";
-                case ActionType.Undo:
-                    return "撤消发起";
-                case ActionType.ForwardFL:
-                    return " -前进(分流点)";
-                case ActionType.ForwardHL:
-                    return " -向合流点发送";
-                case ActionType.FlowOver:
-                    return "流程结束";
-                case ActionType.CallSubFlow:
-                    return "调用起子流程";
-                case ActionType.StartSubFlow:
-                    return "子流程发起";
-                case ActionType.SubFlowForward:
-                    return "子流程前进";
-                default:
-                    return "未知";
-            }
-        }
         public string HisActionTypeT
         {
             get
             {
-                return Track.GetActionTypeT(this.HisActionType);
+                return TrackTemp.GetActionTypeT(this.HisActionType);
             }
         }
         /// <summary>

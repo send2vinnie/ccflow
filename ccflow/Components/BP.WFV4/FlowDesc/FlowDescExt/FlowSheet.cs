@@ -210,7 +210,7 @@ namespace BP.WF.Ext
             int startNode = int.Parse(this.No + "01");
             try
             {
-                string sql = "SELECT a.* FROM V" + this.No + " a, WF_Node b WHERE a.FK_Node=b.NodeID and OID=" + workid + " ORDER  a.RDT DESC ";
+                string sql = "SELECT a.* FROM V" + this.No + " a, WF_Node b WHERE a.FK_Node=b.NodeID and OID=" + workid + " ORDER BY a.CDT DESC ";
                 System.Data.DataTable dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
                     return "@工作ID为:" + workid + "的数据不存在.";
@@ -278,10 +278,11 @@ namespace BP.WF.Ext
                     if (gwf.FK_Node == wl.FK_Node)
                     {
                         currWl = wl;
-                        wl.IsPass = true;
+                        wl.IsPass = false;
                     }
                     else
-                        wl.IsPass = false;
+                        wl.IsPass = true;
+
                     wl.WhoExeIt = nd.WhoExeIt;
                     wl.Insert();
                 }
