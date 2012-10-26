@@ -446,9 +446,15 @@ namespace BP.Sys
                     case "@fk_yf":
                         return DataType.CurrentMonth;
                     case "@rdt":
-                        return DataType.CurrentDataTime;
+                        if (this.MyDataType == DataType.AppDate)
+                            return DataType.CurrentData;
+                        else
+                            return DataType.CurrentDataTime;
                     case "@rd":
-                        return DataType.CurrentData;
+                        if (this.MyDataType == DataType.AppDate)
+                            return DataType.CurrentData;
+                        else
+                            return DataType.CurrentDataTime;
                     case "@yyyy年mm月dd日":
                         return DataType.CurrentDataCNOfLong;
                     case "@yy年mm月dd日":
