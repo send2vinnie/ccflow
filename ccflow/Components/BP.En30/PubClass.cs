@@ -1,4 +1,6 @@
 using System;
+using System.Net;
+using System.Net.Mail;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
@@ -433,6 +435,47 @@ namespace BP
 	/// </summary>
 	public class PubClass 
 	{
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="maillAddr">地址</param>
+        /// <param name="title">标题</param>
+        /// <param name="doc">内容</param>
+        public static void SendMail(string maillAddr, string title, string doc)
+        {
+            System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
+            myEmail.From = new System.Net.Mail.MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);
+
+            myEmail.To.Add(maillAddr);
+            myEmail.Subject = title;
+            myEmail.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
+
+            myEmail.Body = doc;
+            myEmail.BodyEncoding = System.Text.Encoding.UTF8;//邮件内容编码
+            myEmail.IsBodyHtml = true;//是否是HTML邮件
+
+            myEmail.Priority = MailPriority.High;//邮件优先级
+
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential(SystemConfig.GetValByKey("SendEmailAddress", "ccflow.cn@gmail.com"),
+                SystemConfig.GetValByKey("SendEmailPass", "ccflow123"));
+
+            //上述写你的邮箱和密码
+            client.Port = SystemConfig.GetValByKeyInt("SendEmailPort", 587); //使用的端口
+            client.Host = SystemConfig.GetValByKey("SendEmailHost", "smtp.gmail.com");
+            client.EnableSsl = true; //经过ssl加密.
+            object userState = myEmail;
+            try
+            {
+                client.Send(myEmail);
+
+             //   client.SendAsync(myEmail, userState);
+            }
+            catch (System.Net.Mail.SmtpException ex)
+            {
+                throw ex;
+            }
+        }
         public static string ToHtmlColor(string colorName)
         {
             try

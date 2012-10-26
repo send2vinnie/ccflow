@@ -225,7 +225,10 @@ namespace BP.En
                         this.SetValByKey(attr.Key, Web.WebUser.FK_DeptName);
                         break;
                     case "@RDT":
-                        this.SetValByKey(attr.Key, DataType.CurrentData);
+                        if (attr.MyDataType == DataType.AppDate)
+                            this.SetValByKey(attr.Key, DataType.CurrentData);
+                        else
+                            this.SetValByKey(attr.Key, DataType.CurrentDataTime);
                         break;
                     default:
                         break;
