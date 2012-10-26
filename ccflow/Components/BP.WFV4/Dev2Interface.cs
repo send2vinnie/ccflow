@@ -1019,12 +1019,14 @@ namespace BP.WF
                 sw.OID = workID;
                 sw.RetrieveFromDBSources();
             }
+            sw.ResetDefaultVal();
 
             if (htWork != null)
             {
                 foreach (string str in htWork.Keys)
                     sw.SetValByKey(str, htWork[str]);
             }
+
 
             sw.SetValByKey(StartWorkAttr.FK_Dept, WebUser.FK_Dept);
             sw.Rec = WebUser.No;
@@ -1156,6 +1158,8 @@ namespace BP.WF
                 Work sw = nd.HisWork;
                 sw.OID = workID;
                 sw.Retrieve();
+                sw.ResetDefaultVal();
+
                 if (htWork != null)
                 {
                     foreach (string str in htWork.Keys)
