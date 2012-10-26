@@ -380,7 +380,8 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTD(dr[TrackAttr.NDToT].ToString());
             this.AddTD(dr[TrackAttr.EmpToT].ToString());
             ActionType at = (ActionType)int.Parse(dr[TrackAttr.ActionType].ToString());
-            this.AddTD(Track.GetActionTypeT(at));
+
+            this.AddTD(TrackTemp.GetActionTypeT(at));
 
             this.AddTD(DataType.ParseText2Html( dr[TrackAttr.Msg].ToString()));
 
