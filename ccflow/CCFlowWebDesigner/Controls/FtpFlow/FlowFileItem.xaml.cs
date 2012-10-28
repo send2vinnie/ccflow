@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 using Ccflow.Web.UI.Control.Workflow.Designer;
-using WF.CYFtpClient;
+using WF.WSFtp;
 using WF.WS;
 using BP;
 using BP.CY;

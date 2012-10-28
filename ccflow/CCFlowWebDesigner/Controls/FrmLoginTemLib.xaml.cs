@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 using BP;
-using WF.CYFtpClient;
+using WF.WSFtp;
 
 namespace WF.Controls
 {

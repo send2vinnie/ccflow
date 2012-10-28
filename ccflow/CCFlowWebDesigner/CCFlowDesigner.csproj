@@ -130,8 +130,41 @@
     <Compile Include="Controls\FlowFrm.xaml.cs">
       <DependentUpon>FlowFrm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FrmLoginTemLib.xaml.cs">
+      <DependentUpon>FrmLoginTemLib.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FrmNew.xaml.cs">
       <DependentUpon>FrmNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FrmRegTemLib.xaml.cs">
+      <DependentUpon>FrmRegTemLib.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\DirNavBar.xaml.cs">
+      <DependentUpon>DirNavBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\DirNavBarItem.xaml.cs">
+      <DependentUpon>DirNavBarItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\FlowFileItem.xaml.cs">
+      <DependentUpon>FlowFileItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\FrmFlowPreview.xaml.cs">
+      <DependentUpon>FrmFlowPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\FrmSelectFlowType.xaml.cs">
+      <DependentUpon>FrmSelectFlowType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\FrmShareFlow.xaml.cs">
+      <DependentUpon>FrmShareFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\FrmTemNote.xaml.cs">
+      <DependentUpon>FrmTemNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\FtpFileView.xaml.cs">
+      <DependentUpon>FtpFileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FtpFlow\FtpFolderView.xaml.cs">
+      <DependentUpon>FtpFolderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
@@ -249,7 +282,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Text.resx</DependentUpon>
     </Compile>
-    <Compile Include="Service References\CYFtpClient\Reference.cs">
+    <Compile Include="Service References\WSFtp\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -264,11 +297,11 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
-    <None Include="Service References\CYFtpClient\CYFtp.wsdl" />
-    <None Include="Service References\CYFtpClient\WF.CYFtpClient.FsFileItem.datasource">
+    <None Include="Service References\WSFtp\CYFtp.wsdl" />
+    <None Include="Service References\WSFtp\WF.WSFtp.FsFileItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\CYFtpClient\WF.CYFtpClient.FsItem.datasource">
+    <None Include="Service References\WSFtp\WF.WSFtp.FsItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WS\WebService.wsdl" />
@@ -305,6 +338,13 @@
     <Resource Include="Images\Icons\FlowWelcome.jpg" />
     <Content Include="Library\System.Windows.Controls.Layout.Toolkit.dll" />
     <Content Include="Library\System.Windows.Controls.Toolkit.dll" />
+    <None Include="Service References\WSFtp\CYFtp.disco" />
+    <None Include="Service References\WSFtp\configuration91.svcinfo" />
+    <None Include="Service References\WSFtp\configuration.svcinfo" />
+    <None Include="Service References\WSFtp\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -323,7 +363,51 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\FrmLoginTemLib.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\FrmNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FrmRegTemLib.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\DirNavBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\DirNavBarItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\FlowFileItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\FrmFlowPreview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\FrmSelectFlowType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\FrmShareFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\FrmTemNote.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\FtpFileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FtpFlow\FtpFolderView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -543,7 +627,7 @@
     <Resource Include="Themes\img2.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\CYFtpClient\" />
+    <WCFMetadataStorage Include="Service References\WSFtp\" />
     <WCFMetadataStorage Include="Service References\WS\" />
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,7 @@ using System.IO;
 using Silverlight;
 using Ccflow.Web.UI.Control.Workflow.Designer;
 using WF.WS;
+using WF.WSFtp;
 
 namespace BP
 {
@@ -256,6 +257,27 @@ namespace BP
                 typeof(WSDesignerSoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
             return (WSDesignerSoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
         }
+
+
+        /// <summary>
+        /// 得到WebService对象
+        /// </summary>
+        /// <returns></returns>
+        public static CYFtpSoapClient GetFtpServiceInstance()
+        {
+            var basicBinding = new BasicHttpBinding()
+            {
+                MaxBufferSize = 2147483647,
+                MaxReceivedMessageSize = 2147483647,
+                Name = "CYFtp"
+            };
+            basicBinding.Security.Mode = BasicHttpSecurityMode.None;
+            var endPoint = new EndpointAddress(Glo.BPMHost + "/WF/Admin/XAP/CYFtp.asmx");
+            var ctor =
+                typeof(CYFtpSoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
+            return (CYFtpSoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
+        }
+
         #endregion 共用方法
 
         /// <summary>
