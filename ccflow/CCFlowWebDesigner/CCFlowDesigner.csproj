@@ -34,6 +34,10 @@
     <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
     <SignManifests>false</SignManifests>
     <TargetFrameworkProfile />
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -245,6 +249,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Text.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service References\CYFtpClient\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\WS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -255,6 +264,13 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
+    <None Include="Service References\CYFtpClient\CYFtp.wsdl" />
+    <None Include="Service References\CYFtpClient\WF.CYFtpClient.FsFileItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CYFtpClient\WF.CYFtpClient.FsItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WS\WebService.wsdl" />
     <None Include="Service References\WS\WF.WS.UploadfileCCFormResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -527,6 +543,7 @@
     <Resource Include="Themes\img2.png" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CYFtpClient\" />
     <WCFMetadataStorage Include="Service References\WS\" />
   </ItemGroup>
   <ItemGroup>
