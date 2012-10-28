@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.SL", "..\Components\BP.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitmapCutter.Core", "..\Components\BitmapCutter.Core\BitmapCutter.Core.csproj", "{32429F5B-6E39-407F-A682-96484AAC3078}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.CY", "..\Components\BP.CY\BP.CY.csproj", "{F50BF5F0-7921-416D-B049-AB342A0813B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscuzToolkit", "..\Components\DiscuzToolkit\DiscuzToolkit.csproj", "{0C26C374-2313-4675-BD1A-8CA94A728B1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,12 @@ Global
 		{32429F5B-6E39-407F-A682-96484AAC3078}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32429F5B-6E39-407F-A682-96484AAC3078}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32429F5B-6E39-407F-A682-96484AAC3078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F50BF5F0-7921-416D-B049-AB342A0813B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F50BF5F0-7921-416D-B049-AB342A0813B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C26C374-2313-4675-BD1A-8CA94A728B1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C26C374-2313-4675-BD1A-8CA94A728B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C26C374-2313-4675-BD1A-8CA94A728B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C26C374-2313-4675-BD1A-8CA94A728B1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
