@@ -24,13 +24,6 @@ namespace BP.CY.Net
             this.Server = server;
         }
 
-        public FTP(string server, string userName, string password)
-            : this(server)
-        {
-            this.UserName = userName;
-            this.Password = password;
-        }
-
         #endregion
 
         #region 字段
