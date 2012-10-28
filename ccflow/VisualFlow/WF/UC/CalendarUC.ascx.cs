@@ -87,7 +87,7 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(idx);
             this.Pub1.AddTD(dr["RDT"].ToString().Substring(10, 6));
-            this.Pub1.AddTD(BP.WF.Track.GetActionTypeT((ActionType)int.Parse(dr["ActionType"].ToString())));
+            this.Pub1.AddTD(BP.WF.TrackTemp.GetActionTypeT((ActionType)int.Parse(dr["ActionType"].ToString())));
             this.Pub1.AddTD(dr["Name"].ToString());
             this.Pub1.AddTD(dr["NDFromT"].ToString());
             this.Pub1.AddTD(dr["NDToT"].ToString());
