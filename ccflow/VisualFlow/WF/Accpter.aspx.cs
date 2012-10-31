@@ -72,6 +72,20 @@ public partial class WF_Accpter : WebPage
 
         string sql = "";
 
+        if (this.Request.QueryString["IsNextDept"] != null)
+        {
+            int len = this.FK_Dept.Length + 2;
+
+            string sqlDept = "SELECT No FROM Port_Dept WHERE LEN(No)=" + len + " AND No LIKE '" + this.FK_Dept + "%'";
+            sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
+            sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
+            sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
+            sql += ") AND A.No IN( SELECT No FROM Port_Emp WHERE  LEN(FK_Dept)=" + len + " AND FK_Dept LIKE '" + this.FK_Dept + "%')";
+            sql += " ORDER BY FK_DEPT ";
+            return BP.DA.DBAccess.RunSQLReturnTable(sql);
+        }
+
+
         // 优先解决本部门的问题。
         if (this.FK_Dept == WebUser.FK_Dept)
         {
@@ -84,6 +98,8 @@ public partial class WF_Accpter : WebPage
             if (dt.Rows.Count != 0)
                 return dt;
         }
+
+
 
         sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
@@ -213,11 +229,40 @@ public partial class WF_Accpter : WebPage
         if (WebUser.FK_Dept.Length > 2)
         {
             if (this.FK_Dept == WebUser.FK_Dept)
-                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 2) + "'>更多人员...</b></a>";
+                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 2) + "'>上一级部门人员</b></a>|<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + this.FK_Dept + "&IsNextDept=1' >下一级部门人员</b></a>";
             else
-                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
+                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员</a></b>";
         }
-      //  string sql = "select tonode from wf_direction where node =" + FK_Node;
+        else
+        {
+            info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员</a> | <a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + this.FK_Dept + "&IsNextDept=1' >下一级部门人员</b></a>";
+        }
+
+        //if (this.Request.QueryString["IsNextDept"] != null)
+        //{
+
+        //    string sql = "SELECT No,Name FROM Port_Dept WHERE LENGTH(No)=" + this.FK_Dept.Length + 2 + " AND FK_Dept LIKE '" + this.FK_Dept + "%'";
+        //    dt = DBAccess.RunSQLReturnTable(sql);
+
+        //    this.Pub1.AddTR();
+        //    this.Pub1.AddTDTitle(info);
+        //    this.Pub1.AddTREnd();
+
+        //    this.Pub1.AddTR();
+        //    this.Pub1.AddTDBegin();
+        //    this.Pub1.Add("请选择部门");
+        //    foreach (DataRow dr in dt.Rows)
+        //    {
+               
+        //    }
+        //    this.Pub1.AddTDEnd();
+        //    this.Pub1.AddTREnd();
+
+        //    this.Pub1.AddTableEnd();
+        //    return;
+        //}
+
+        //  string sql = "select tonode from wf_direction where node =" + FK_Node;
 //        var toNodeID = DBAccess.RunSQLReturnVal(sql);
 //#warning 刘文辉 下一步流程名
 //        BP.WF.Node nd = new BP.WF.Node();
