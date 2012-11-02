@@ -392,9 +392,12 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoTurn";
                 map.AddRefMethod(rm);
 
-                //rm.Title = this.ToE("DoFeatureSet", "特性集"); // "调用事件接口";
-                //rm.ClassMethodName = this.ToString() + ".DoFeatureSet";
-                //map.AddRefMethod(rm);
+
+                rm = new RefMethod();
+                rm.Title = "个性化接受人窗口"; // "个性化接受人窗口";
+                rm.ClassMethodName = this.ToString() + ".DoAccepter";
+                map.AddRefMethod(rm);
+                 
 
                 this._enMap = map;
                 return this._enMap;
@@ -412,6 +415,15 @@ namespace BP.WF.Ext
         public string DoCCRole()
         {
             PubClass.WinOpen("./RefFunc/UIEn.aspx?EnName=BP.WF.CC&PK=" + this.NodeID , "抄送规则", "Bill", 800, 500, 200, 300);
+            return null;
+        }
+        /// <summary>
+        /// 个性化接受人窗口
+        /// </summary>
+        /// <returns></returns>
+        public string DoAccepter()
+        {
+            PubClass.WinOpen("./RefFunc/UIEn.aspx?EnName=BP.WF.Accepters&PK=" + this.NodeID, "个性化接受人窗口", "acce", 800, 500, 200, 300);
             return null;
         }
         /// <summary>

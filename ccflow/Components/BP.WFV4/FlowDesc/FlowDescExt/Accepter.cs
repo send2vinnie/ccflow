@@ -8,9 +8,9 @@ using BP.WF.Port;
 namespace BP.WF
 {
     /// <summary>
-    /// Btn属性
+    /// Accpter属性
     /// </summary>
-    public class BtnAttr : EntityNoNameAttr
+    public class AccpterAttr : EntityNoNameAttr
     {
         /// <summary>
         /// 流程
@@ -125,63 +125,43 @@ namespace BP.WF
         public const string CCEmps = "CCEmps";
     }
     /// <summary>
-    /// Btn
+    /// Accpter
     /// </summary>
-    public class BtnLab : Entity
+    public class Accepter : Entity
     {
-        /// <summary>
-        /// but
-        /// </summary>
-        public static string Btns
-        {
-            get
-            {
-                return "Send,Save,Return,CC,Shift,Del,Rpt,Ath,Track,Opt,EndFLow";
-            }
-        }
-        /// <summary>
-        /// PK
-        /// </summary>
-        public override string PK
-        {
-            get
-            {
-                return NodeAttr.NodeID;
-            }
-        }
 
         #region 基本属性
         public int NodeID
         {
             get
             {
-                return this.GetValIntByKey(BtnAttr.NodeID);
+                return this.GetValIntByKey(AccpterAttr.NodeID);
             }
             set
             {
-                this.SetValByKey(BtnAttr.NodeID, value);
+                this.SetValByKey(AccpterAttr.NodeID, value);
             }
         }
         public string SearchLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.SearchLab);
+                return this.GetValStringByKey(AccpterAttr.SearchLab);
             }
             set
             {
-                this.SetValByKey(BtnAttr.SearchLab, value);
+                this.SetValByKey(AccpterAttr.SearchLab, value);
             }
         }
         public bool SearchEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.SearchEnable);
+                return this.GetValBooleanByKey(AccpterAttr.SearchEnable);
             }
             set
             {
-                this.SetValByKey(BtnAttr.SearchEnable, value);
+                this.SetValByKey(AccpterAttr.SearchEnable, value);
             }
         }
 
@@ -189,71 +169,71 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.ShiftLab);
+                return this.GetValStringByKey(AccpterAttr.ShiftLab);
             }
             set
             {
-                this.SetValByKey(BtnAttr.ShiftLab, value);
+                this.SetValByKey(AccpterAttr.ShiftLab, value);
             }
         }
         public bool ShiftEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.ShiftEnable);
+                return this.GetValBooleanByKey(AccpterAttr.ShiftEnable);
             }
             set
             {
-                this.SetValByKey(BtnAttr.ShiftEnable, value);
+                this.SetValByKey(AccpterAttr.ShiftEnable, value);
             }
         }
         public string SelectAccepterLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.SelectAccepterLab);
+                return this.GetValStringByKey(AccpterAttr.SelectAccepterLab);
             }
         }
         public int SelectAccepterEnable
         {
             get
             {
-                return this.GetValIntByKey(BtnAttr.SelectAccepterEnable);
+                return this.GetValIntByKey(AccpterAttr.SelectAccepterEnable);
             }
         }
         public string RptLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.RptLab);
+                return this.GetValStringByKey(AccpterAttr.RptLab);
             }
         }
         public bool RptEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.RptEnable);
+                return this.GetValBooleanByKey(AccpterAttr.RptEnable);
             }
         }
         public string SaveLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.SaveLab);
+                return this.GetValStringByKey(AccpterAttr.SaveLab);
             }
         }
         public bool SaveEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.SaveEnable);
+                return this.GetValBooleanByKey(AccpterAttr.SaveEnable);
             }
         }
         public string JumpWayLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.JumpWayLab);
+                return this.GetValStringByKey(AccpterAttr.JumpWayLab);
             }
         }
         public JumpWay JumpWayEnum
@@ -274,14 +254,14 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.ReturnLab);
+                return this.GetValStringByKey(AccpterAttr.ReturnLab);
             }
         }
         public bool ReturnEnable
         {
             get
             {
-                return  this.GetValBooleanByKey(BtnAttr.ReturnRole);
+                return  this.GetValBooleanByKey(AccpterAttr.ReturnRole);
             }
         }
 
@@ -289,14 +269,14 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.AthLab);
+                return this.GetValStringByKey(AccpterAttr.AthLab);
             }
         }
         public bool AthEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.FJOpen);
+                return this.GetValBooleanByKey(AccpterAttr.FJOpen);
             }
         }
 
@@ -304,21 +284,21 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.PrintDocLab);
+                return this.GetValStringByKey(AccpterAttr.PrintDocLab);
             }
         }
         public bool PrintDocEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.PrintDocEnable);
+                return this.GetValBooleanByKey(AccpterAttr.PrintDocEnable);
             }
         }
         public string SendLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.SendLab);
+                return this.GetValStringByKey(AccpterAttr.SendLab);
             }
         }
         public bool SendEnable
@@ -332,63 +312,63 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.SendJS).Replace("~","'");
+                return this.GetValStringByKey(AccpterAttr.SendJS).Replace("~","'");
             }
         }
         public string TrackLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.TrackLab);
+                return this.GetValStringByKey(AccpterAttr.TrackLab);
             }
         }
         public bool TrackEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.TrackEnable);
+                return this.GetValBooleanByKey(AccpterAttr.TrackEnable);
             }
         }
         public string OptLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.OptLab);
+                return this.GetValStringByKey(AccpterAttr.OptLab);
             }
         }
         public bool OptEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.OptEnable);
+                return this.GetValBooleanByKey(AccpterAttr.OptEnable);
             }
         }
         public string CCLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.CCLab);
+                return this.GetValStringByKey(AccpterAttr.CCLab);
             }
         }
         public CCRole CCRole
         {
             get
             {
-                return (CCRole)this.GetValIntByKey(BtnAttr.CCRole);
+                return (CCRole)this.GetValIntByKey(AccpterAttr.CCRole);
             }
         }
         public string DeleteLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.DelLab);
+                return this.GetValStringByKey(AccpterAttr.DelLab);
             }
         }
         public bool DeleteEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.DelEnable);
+                return this.GetValBooleanByKey(AccpterAttr.DelEnable);
             }
         }
 
@@ -399,7 +379,7 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.EndFlowLab);
+                return this.GetValStringByKey(AccpterAttr.EndFlowLab);
             }
         }
         /// <summary>
@@ -409,21 +389,21 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.EndFlowEnable);
+                return this.GetValBooleanByKey(AccpterAttr.EndFlowEnable);
             }
         }
         #endregion
 
         #region 构造方法
         /// <summary>
-        /// Btn
+        /// Accpter
         /// </summary>
-        public BtnLab() { }
+        public Accepter() { }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="nodeid"></param>
-        public BtnLab(int nodeid)
+        public Accepter(int nodeid)
         {
             this.NodeID = nodeid;
             this.Retrieve();
@@ -445,64 +425,66 @@ namespace BP.WF
                 map.DepositaryOfEntity = Depositary.Application;
                 map.DepositaryOfMap = Depositary.Application;
 
-                map.AddTBIntPK(BtnAttr.NodeID, 0, "NodeID", true, false);
+                map.AddTBIntPK(AccpterAttr.NodeID, 0, "NodeID", true, false);
 
-                map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
-                map.AddTBString(BtnAttr.SendJS, "", "按钮JS函数", true, false, 0, 50, 10);
+             //   map.AddDDLSysEnum(AccpterAttr.SendEnable,
+
+                map.AddTBString(AccpterAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
+                map.AddTBString(AccpterAttr.SendJS, "", "按钮JS函数", true, false, 0, 50, 10);
                 
-             //   map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, true);
+             //   map.AddBoolean(AccpterAttr.SendEnable, true, "是否启用", true, true);
 
 
-                map.AddTBString(BtnAttr.JumpWayLab, "跳转", "跳转按钮标签", true, false, 0, 50, 10);
+                map.AddTBString(AccpterAttr.JumpWayLab, "跳转", "跳转按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(NodeAttr.JumpWay, false, "是否启用", true, true);
 
 
-                map.AddTBString(BtnAttr.SaveLab, "保存", "保存按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.SaveEnable, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.SaveLab, "保存", "保存按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.SaveEnable, true, "是否启用", true, true);
 
 
-                map.AddTBString(BtnAttr.ReturnLab, "退回", "退回按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.ReturnRole, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.ReturnLab, "退回", "退回按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.ReturnRole, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
-                map.AddDDLSysEnum(BtnAttr.CCRole, 0, "抄送规则",true, true, BtnAttr.CCRole);
+                map.AddTBString(AccpterAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
+                map.AddDDLSysEnum(AccpterAttr.CCRole, 0, "抄送规则",true, true, AccpterAttr.CCRole);
 
-            //  map.AddBoolean(BtnAttr, true, "是否启用", true, true);
+            //  map.AddBoolean(AccpterAttr, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.ShiftLab, "移交", "移交按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.ShiftEnable, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.ShiftLab, "移交", "移交按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.ShiftEnable, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.DelLab, "删除流程", "删除流程按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.DelEnable, false, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.DelLab, "删除流程", "删除流程按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.DelEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.EndFlowLab, "结束流程", "结束流程按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.EndFlowEnable, false, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.EndFlowLab, "结束流程", "结束流程按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.EndFlowEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.RptEnable, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.PrintDocEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.FJOpen, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.FJOpen, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.TrackEnable, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.SelectAccepterLab, "接受人", "接受人按钮标签", true, false, 0, 50, 10);
-                map.AddDDLSysEnum(BtnAttr.SelectAccepterEnable, 0, "方式",
-          true, true, BtnAttr.SelectAccepterEnable);
+                map.AddTBString(AccpterAttr.SelectAccepterLab, "接受人", "接受人按钮标签", true, false, 0, 50, 10);
+                map.AddDDLSysEnum(AccpterAttr.SelectAccepterEnable, 0, "方式",
+          true, true, AccpterAttr.SelectAccepterEnable);
 
-               // map.AddBoolean(BtnAttr.SelectAccepterEnable, false, "是否启用", true, true);
+               // map.AddBoolean(AccpterAttr.SelectAccepterEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.OptEnable, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.SearchLab, "查询", "查询按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.SearchEnable, true, "是否启用", true, true);
+                map.AddTBString(AccpterAttr.SearchLab, "查询", "查询按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(AccpterAttr.SearchEnable, true, "是否启用", true, true);
 
-                //map.AddTBString(BtnAttr.URL, null, "URL", true, false, 0, 50, 10);
+                //map.AddTBString(AccpterAttr.URL, null, "URL", true, false, 0, 50, 10);
 
                 this._enMap = map;
                 return this._enMap;
@@ -511,29 +493,15 @@ namespace BP.WF
         #endregion
     }
     /// <summary>
-    /// Btn
+    /// Accpter
     /// </summary>
-    public class BtnLabs : Entities
+    public class Accepters : Entities
     {
         /// <summary>
-        /// Btn
+        /// Accpter
         /// </summary>
-        public BtnLabs()
+        public Accepters()
         {
-        }
-        /// <summary>
-        /// Btn
-        /// </summary>
-        /// <param name="NodeID"></param>
-        public BtnLabs(string NodeID)
-        {
-            this.Retrieve(BtnAttr.NodeID, NodeID);
-        }
-        public BtnLabs(int fk_node)
-        {
-            QueryObject qo = new QueryObject(this);
-            qo.AddWhereInSQL(BtnAttr.No, "SELECT FK_Btn FROM WF_BtnNode WHERE FK_Node=" + fk_node);
-            qo.DoQuery();
         }
         /// <summary>
         /// 得到它的 Entity 
@@ -542,7 +510,7 @@ namespace BP.WF
         {
             get
             {
-                return new BtnLab();
+                return new Accepter();
             }
         }
     }
