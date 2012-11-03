@@ -61,7 +61,6 @@ namespace SMSServices
             }
             #endregion
 
-
             if (this.Btn_StartStop.Text == "启动")
             {
                 if (this.thread == null)
@@ -196,7 +195,7 @@ namespace SMSServices
             HisScanSta = ScanSta.Working;
             while (true)
             {
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(20000);
                 while (this.HisScanSta == ScanSta.Pause)
                 {
                     System.Threading.Thread.Sleep(3000);
@@ -238,10 +237,10 @@ namespace SMSServices
                         this.toolStripStatusLabel1.Text = "服务启动..";
                         break;
                     case "服务启动..":
-                        this.toolStripStatusLabel1.Text = "服务启动....";
+                        this.toolStripStatusLabel1.Text = "服务启动........";
                         break;
                     case "服务启动....":
-                        this.toolStripStatusLabel1.Text = "服务启动......";
+                        this.toolStripStatusLabel1.Text = "服务启动.............";
                         break;
                     default:
                         this.toolStripStatusLabel1.Text = "服务启动";
@@ -618,11 +617,7 @@ namespace SMSServices
             object userState = myEmail;
             try
             {
-                //简单一点儿可以client.Send(msg);
-                // MessageBox.Show("发送成功");
-
                 client.SendAsync(myEmail, userState);
-
                 sms.HisSMSSta = BP.TA.SMSSta.RunOK;
                 sms.Update();
             }
