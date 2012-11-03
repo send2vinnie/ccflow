@@ -215,7 +215,9 @@ namespace BP.Web.Comm
                 this.ToolBar1.AddLab("inse",
       "<input type=button id='ToolBar1$Btn_New' class=Btn name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建(N)") + "'  />");
 
-            this.ToolBar1.AddLab("sw", "<input type=button class=Btn  id='ToolBar1$Btn_P' class=Btn name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置(P)") + "'  />");
+            if (WebUser.No=="admin")
+                this.ToolBar1.AddLab("sw", "<input type=button class=Btn  id='ToolBar1$Btn_P' class=Btn name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置(P)") + "'  />");
+
             #endregion
 
             #region 设置选择的 默认值

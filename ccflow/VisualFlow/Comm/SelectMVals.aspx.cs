@@ -27,8 +27,6 @@ public partial class Comm_SelectMVals : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Title = "选择范围";
-
 
         UserRegedit ur = new UserRegedit();
         ur.MyPK = this.MyPK;
@@ -58,10 +56,21 @@ public partial class Comm_SelectMVals : WebPage
     }
     public void BindEnum(UserRegedit ur, Attr attr, string cfgVal)
     {
-        this.Pub1.AddTable();
+        this.Pub1.AddTable("width=95%");
+        this.Pub1.AddCaptionLeft("请选择其中的一项或者多项");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
-        this.Pub1.AddTDTitle("<input type=checkbox text='选择全部' name=checkedAll onclick='SelectAll()' >选择全部");
+
+        this.Pub1.Add("<TD class=Title>");
+        this.Pub1.Add("<input type=checkbox text='选择全部' name=checkedAll onclick='SelectAll()' >选择全部");
+        Button btn = new Button();
+        btn.ID = "Btn_Save1";
+        btn.Text = " OK ";
+        btn.CssClass = "Btn";
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
+        this.Pub1.Add("</TD>");
+
         this.Pub1.AddTREnd();
 
         SysEnums ses = new SysEnums(attr.UIBindKey);
@@ -82,11 +91,11 @@ public partial class Comm_SelectMVals : WebPage
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();
-        Button btn = new Button();
+
+        btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " OK ";
         btn.CssClass = "Btn";
-
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
     }
@@ -96,9 +105,21 @@ public partial class Comm_SelectMVals : WebPage
         ens.RetrieveAll();
 
         this.Pub1.AddTable("width='90%'");
+        this.Pub1.AddCaptionLeftTX("请选择其中的一项或者多项");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
-        this.Pub1.AddTDTitle("<input type=checkbox   text='选择全部' name=checkedAll onclick='SelectAll()' >选择全部");
+
+        this.Pub1.Add("<TD class=Title>");
+        this.Pub1.Add("<input type=checkbox text='选择全部' name=checkedAll onclick='SelectAll()' >选择全部");
+        Button btn = new Button();
+        btn.ID = "Btn_Save1";
+        btn.Text = " OK ";
+        btn.CssClass = "Btn";
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
+
+        this.Pub1.Add("</TD>");
+        //this.Pub1.AddTDTitle("<input type=checkbox   text='选择全部' name=checkedAll onclick='SelectAll()' >选择全部");
         this.Pub1.AddTREnd();
 
         int idx = 0;
@@ -117,9 +138,10 @@ public partial class Comm_SelectMVals : WebPage
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEndWithHR();
-        Button btn = new Button();
+
+        btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = " O K ";
+        btn.Text = " OK ";
         btn.CssClass = "Btn";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add("&nbsp;&nbsp;&nbsp;");

@@ -94,6 +94,24 @@ td input
     word-break: keep-all;
 }
 
+/*  input 类型风格 */
+input[type="button"], .Btn, input[type="submit"]
+{
+ padding:0 8px;
+    margin: 3px;
+    height: 25px;
+    border-right: #002D96 1px solid;
+    border-top: #002D96 1px solid;
+    font-size: 14px;
+    line-height:25px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
+StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
+    border-left: #002D96 1px solid;
+    cursor: hand;
+    color: black;
+    border-bottom: #002D96 1px solid;
+}
+
 .TBcalendar
 {
     background-position: left center;
@@ -187,11 +205,7 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     border-bottom: #002D96 1px solid;
 }
 
-button
-{
-    background-color: #00FFFF;
-}
-
+ 
 
 /** 其它  */
 .ToolBar

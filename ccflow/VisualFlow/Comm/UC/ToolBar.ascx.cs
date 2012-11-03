@@ -648,6 +648,8 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         if (uac.IsUpdate)
         {
             this.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存(S)"));
+            this.AddBtn(NamesOfBtn.SaveAndClose, this.ToE("SaveAndClose", "保存并关闭"));
+
             this.GetBtnByID(NamesOfBtn.Save).UseSubmitBehavior = false;
             this.GetBtnByID(NamesOfBtn.Save).OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
             // this.AddBtn(NamesOfBtn.SaveAndClose, this.ToE("SaveAndClose", "保存并关闭(C)")   );
@@ -658,6 +660,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             if (en.EnMap.EnType != EnType.Dtl)
             {
                 this.AddBtn(NamesOfBtn.SaveAndNew, this.ToE("SaveAndNew", "保存并新建(R)"));
+
                 this.GetBtnByID(NamesOfBtn.SaveAndNew).UseSubmitBehavior = false;
                 this.GetBtnByID(NamesOfBtn.SaveAndNew).OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                 //this.AddBtn(NamesOfBtn.SaveAndClose );

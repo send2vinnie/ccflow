@@ -98,7 +98,10 @@ public partial class Comm_Batch : WebPage
             this.ToolBar1.AddLab("inse",
                 "<input type=button class=Btn id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建") + "(N)' />");
 
-        this.ToolBar1.AddLab("sw", "<input type=button class=Btn  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置") + "(P)'  />");
+        if (WebUser.No == "admin")
+            this.ToolBar1.AddLab("sw", "<input type=button class=Btn  id='ToolBar1$Btn_P' class=Btn name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置(P)") + "'  />");
+
+        //this.ToolBar1.AddLab("sw", "<input type=button class=Btn  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置") + "(P)'  />");
 
         // this.ToolBar1.AddLab("s", "<input type=button onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(S)'  />");
         this.SetDGData();

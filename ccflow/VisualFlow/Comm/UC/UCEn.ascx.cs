@@ -1045,7 +1045,7 @@ namespace BP.Web.Comm.UC
             this.Controls.Clear();
 
            // this.Add("<table border=0 cellpadding='0'  style='border-collapse: collapse;width:30%' cellspacing='0'  >");
-            this.Add("<table border=1 width='400px;' >");
+            this.Add("<table border=1 width='90%;' >");
             bool isLeft = true;
             object val = null;
             Map map = en.EnMap;

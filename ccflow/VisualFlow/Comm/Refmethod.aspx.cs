@@ -59,8 +59,9 @@ namespace BP.Web.Comm
                 }
 
                 string info = obj.ToString();
+                info = info.Replace("@", "<br>@");
                 if (info.Contains("<"))
-                    this.ToMsgPage(obj.ToString().Replace("@", "<BR>@"));
+                    this.ToMsgPage(info);
                 else
                     this.WinCloseWithMsg(info);
                 return;

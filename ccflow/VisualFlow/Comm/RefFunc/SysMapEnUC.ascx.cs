@@ -534,7 +534,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
             gfs = new GroupFields(enName);
             dtls = new MapDtls(enName);
 
-            this.Add("<table class=TableFrom id=tabForm width='600px'  >");
+            this.Add("<table class=TableFrom id=tabForm width='900px'  >");
             foreach (GroupField gf in gfs)
             {
                 currGF = gf;

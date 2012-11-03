@@ -27,6 +27,8 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             //如果没有Port_Dept 表就可能没有安装ccflow.
+            BP.WF.Flow.RepareV_FlowData_View();
+
             DBAccess.RunSQL("SELECT * FROM Port_Dept where 1=2");
         }
         catch
