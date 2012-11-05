@@ -152,6 +152,16 @@ namespace BP.WF
         }
         #endregion attrs
 
+
+        public override UAC HisUAC
+        {
+            get
+            {
+                UAC uac = new UAC();
+                uac.Readonly();
+                return uac;
+            }
+        }
         #region attrs - attrs 
         public string RptName = null;
         public override Map EnMap
@@ -161,19 +171,18 @@ namespace BP.WF
                 if (this._enMap != null)
                     return this._enMap;
 
-                Map map = new Map("V_WF_Data");
+                Map map = new Map("V_FlowData");
                 map.EnDesc = "流程数据";
                 map.EnType = EnType.Admin;
 
                 map.AddTBIntPKOID(FlowDataAttr.OID, "WorkID");
-                map.AddTBInt(FlowDataAttr.FID, 0, "FID", true, true);
+                map.AddTBInt(FlowDataAttr.FID, 0, "FID", false, false);
+
                 map.AddDDLEntities(FlowDataAttr.FK_Dept, null, "部门", new Port.Depts(), false);
                 map.AddTBString(FlowDataAttr.Title, null, "标题", true, true, 0, 100, 100);
                 map.AddTBString(FlowDataAttr.FlowStarter, null, "发起人", true, true, 0, 100, 100);
                 map.AddTBDateTime(FlowDataAttr.FlowStartRDT, null, "发起日期", true, true);
-                //map.AddDDLEntities(FlowDataAttr.FlowStarter, null, "发起人", new WF.Port.WFEmps(), false);
                 map.AddDDLSysEnum(FlowDataAttr.WFState, 0, "流程状态", true, true);
-
                 map.AddDDLEntities(FlowDataAttr.FK_NY, null, "年月", new BP.Pub.NYs(), false);
                 map.AddDDLEntities(FlowDataAttr.FK_Flow, null, "流程", new Flows(), false);
                 map.AddTBDateTime(FlowDataAttr.FlowEnderRDT, null, "结束日期", true, true);
@@ -186,7 +195,7 @@ namespace BP.WF
                 map.AddSearchAttr(FlowDataAttr.WFState);
                 map.AddSearchAttr(FlowDataAttr.FK_Flow);
 
-                map.AddHidden(FlowDataAttr.FlowEmps, " LIKE ", "%"+BP.Web.WebUser.No+"%");
+               map.AddHidden(FlowDataAttr.FlowEmps, " LIKE ", "%"+BP.Web.WebUser.No+"%");
 
                 RefMethod rm = new RefMethod();
                 rm.Title = "工作报告";
