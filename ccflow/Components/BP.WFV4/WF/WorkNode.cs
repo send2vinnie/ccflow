@@ -4075,9 +4075,16 @@ namespace BP.WF
             else
             {
 #warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
+                //ps = new Paras();
+                //ps.SQL = "UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + dbStr + "WorkID1,FID=0 WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID2";
+                //ps.Add("WorkID1",this.HisWork.FID );
+                //ps.Add("FK_Node", nd.NodeID);
+                //ps.Add("WorkID2", this.HisWork.OID);
+                //DBAccess.RunSQL(ps);
+
                 ps = new Paras();
-                ps.SQL = "UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + dbStr + "WorkID1,FID=0 WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID2";
-                ps.Add("WorkID1",this.HisWork.FID );
+                ps.SQL = "UPDATE WF_GenerWorkerList SET IsPass=3  WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID2";
+              //  ps.Add("WorkID1", this.HisWork.FID);
                 ps.Add("FK_Node", nd.NodeID);
                 ps.Add("WorkID2", this.HisWork.OID);
                 DBAccess.RunSQL(ps);
