@@ -778,7 +778,7 @@ namespace BP.WF
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Width = img.Width; // 图片宽度
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Height = img.Height; // 图片高度
                 }
-                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[驰骋业务流程管理系统 http://ccFlow.org]");
+                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[亚通业务流程管理系统 http://ccFlow.org]");
                 WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft; // 设置右对齐
                 WordApp.ActiveWindow.View.SeekView = Word.WdSeekView.wdSeekMainDocument; // 跳出页眉设置
                 WordApp.Selection.ParagraphFormat.LineSpacing = 15f; // 设置文档的行间距

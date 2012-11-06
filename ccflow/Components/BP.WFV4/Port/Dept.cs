@@ -7,67 +7,14 @@ using BP.Web;
 namespace BP.WF.Port
 {
 	/// <summary>
-	/// 岗位类型
-	/// </summary>
-	public enum DeptType
-	{
-		/// <summary>
-		/// 内勤
-		/// </summary>
-		InsideJob=0,
-		/// <summary>
-		/// 外勤
-		/// </summary>
-		Itinerancy=1,
-		/// <summary>
-		/// 普通的
-		/// </summary>
-		Ordinary=2
-	}
-	/// <summary>
-	/// 岗位类型
-	/// </summary>
-	public enum DeptTypeDS
-	{
-		/// <summary>
-		/// 独立的(征管科室)
-		/// </summary>
-		AbsoluteNormal=0,
-		/// <summary>
-		/// 非独立的(分局(所)长)
-		/// </summary>
-		UnAbsoluteNormal=1,
-		/// <summary>
-		/// 内勤
-		/// </summary>
-		InsideJob=3,
-		/// <summary>
-		/// 外勤
-		/// </summary>
-		Itinerancy=2,
-		 
-	}	 
-	/// <summary>
 	/// 部门属性
 	/// </summary>
     public class DeptAttr : EntityNoNameAttr
 	{
 		/// <summary>
-		/// 部门性质
-		/// </summary>
-		public const string WorkCharacter="WorkCharacter";
-		/// <summary>
 		/// 部门
 		/// </summary>
 		public const string FK_Dept="FK_Dept";
-		/// <summary>
-		/// 工作基次
-		/// </summary>
-		public const string WorkFloor="WorkFloor";
-		/// <summary>
-		/// 部门性质
-		/// </summary>
-		public const string DeptType="DeptType";
 	}
 	/// <summary>
 	/// 部门
@@ -145,15 +92,12 @@ namespace BP.WF.Port
                 map.AdjunctType = AdjunctType.None;
                 map.AddTBStringPK(DeptAttr.No, null, null, true, false, 2, 20, 40);
                 map.AddTBString(DeptAttr.Name, null,null, true, false, 0, 60, 400);
-                //   map.AddTBInt(DeptAttr.Grade, 0, "级次", true, false);
-                //  map.AddBoolean(DeptAttr.IsDtl, false, "是否明细", true, true);
                 this._enMap = map;
                 return this._enMap;
             }
 		}
         protected override bool beforeUpdateInsertAction()
         {
-           // this.Grade = this.No.Length / 2;
             return base.beforeUpdateInsertAction();
         }
 		#endregion
@@ -161,12 +105,12 @@ namespace BP.WF.Port
 	/// <summary>
 	///得到集合
 	/// </summary>
-	public class Depts: EntitiesNoName
-	{
-		/// <summary>
-		/// 查询全部。
-		/// </summary>
-		/// <returns></returns>
+    public class Depts : EntitiesNoName
+    {
+        /// <summary>
+        /// 查询全部。
+        /// </summary>
+        /// <returns></returns>
         public override int RetrieveAll()
         {
 
@@ -177,20 +121,22 @@ namespace BP.WF.Port
             qo11.AddWhere(DeptAttr.No, " like ", Web.WebUser.FK_Dept + "%");
             return qo11.DoQuery();
         }
-		/// <summary>
-		/// 得到一个新实体
-		/// </summary>
-		public override Entity GetNewEntity
-		{
-			get
-			{
-				return new Dept();
-			}
-		}
-		/// <summary>
-		/// create ens
-		/// </summary>
-		public Depts(){}
-		
-	}
+        /// <summary>
+        /// 得到一个新实体
+        /// </summary>
+        public override Entity GetNewEntity
+        {
+            get
+            {
+                return new Dept();
+            }
+        }
+        /// <summary>
+        /// create ens
+        /// </summary>
+        public Depts()
+        {
+
+        }
+    }
 }

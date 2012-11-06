@@ -394,7 +394,7 @@ namespace BP.WF.Ext
 
 
                 rm = new RefMethod();
-                rm.Title = "个性化接受人窗口"; // "个性化接受人窗口";
+                rm.Title = "接受人选择器"; // "个性化接受人窗口";
                 rm.ClassMethodName = this.ToString() + ".DoAccepter";
                 map.AddRefMethod(rm);
                  
@@ -423,7 +423,7 @@ namespace BP.WF.Ext
         /// <returns></returns>
         public string DoAccepter()
         {
-            PubClass.WinOpen("./RefFunc/UIEn.aspx?EnName=BP.WF.Accepters&PK=" + this.NodeID, "个性化接受人窗口", "acce", 800, 500, 200, 300);
+            PubClass.WinOpen("./RefFunc/UIEn.aspx?EnName=BP.WF.Selector&PK=" + this.NodeID, "个性化接受人窗口", "acce", 800, 500, 200, 300);
             return null;
         }
         /// <summary>

@@ -137,7 +137,7 @@
     <Compile Include="DTS\GenerTitle.cs" />
     <Compile Include="DynamicWebService.cs" />
     <Compile Include="FlowData.cs" />
-    <Compile Include="FlowDesc\FlowDescExt\Accepter.cs" />
+    <Compile Include="FlowDesc\FlowDescExt\Selector.cs" />
     <Compile Include="FlowDesc\Hung.cs" />
     <Compile Include="Dev2Interface.cs" />
     <Compile Include="AssemblyInfo.cs">

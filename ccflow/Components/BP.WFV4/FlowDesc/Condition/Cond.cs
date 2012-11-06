@@ -393,11 +393,13 @@ namespace BP.WF
 
         public void DoUp(int fk_node)
         {
-            this.DoOrderUp(CondAttr.FK_Node, fk_node.ToString(), CondAttr.PRI);
+            int condtypeInt = (int)this.HisCondType;
+            this.DoOrderUp(CondAttr.FK_Node, fk_node.ToString(),CondAttr.CondType, condtypeInt.ToString(), CondAttr.PRI);
         }
         public void DoDown(int fk_node)
         {
-            this.DoOrderDown(CondAttr.FK_Node, fk_node.ToString(), CondAttr.PRI);
+            int condtypeInt = (int)this.HisCondType;
+            this.DoOrderDown(CondAttr.FK_Node, fk_node.ToString(), CondAttr.CondType, condtypeInt.ToString(), CondAttr.PRI);
         }
         #endregion
 
