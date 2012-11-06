@@ -389,6 +389,9 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         qo.AddWhere(CondAttr.NodeID, this.FK_MainNode);
         qo.addAnd();
         qo.AddWhere(CondAttr.DataFrom, (int)ConnDataFrom.Form);
+        qo.addAnd();
+        qo.AddWhere(CondAttr.CondType, (int)this.HisCondType);
+
         if (this.ToNodeID != 0)
         {
             qo.addAnd();

@@ -97,7 +97,12 @@ public partial class WF_Admin_CondPRI : BP.Web.WebPage
         this.Pub1.AddTDTitle("colspan=2","操作");
         this.Pub1.AddTREnd();
         Conds cds = new Conds();
-        cds.Retrieve(CondAttr.FK_Node, this.FK_MainNode, CondAttr.PRI);
+        //BP.En.QueryObject qo = new QueryObject(cds);
+        //qo.AddWhere(CondAttr.FK_Node, this.FK_MainNode);
+        //qo.addAnd();
+        //qo.AddWhere(CondAttr.FK_Node, this.FK_MainNode);
+
+        cds.Retrieve(CondAttr.FK_Node, this.FK_MainNode, CondAttr.CondType, 2, CondAttr.PRI);
         string strs = "";
         foreach (Cond cd in cds)
         {
