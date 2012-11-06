@@ -166,6 +166,24 @@ namespace BP.En
 
         #region 关于缓存问题
         /// <summary>
+        /// 显示方式
+        /// </summary>
+        private FormShowType _FormShowType = FormShowType.FixForm;
+        /// <summary>
+        /// 存放位置OfEntity
+        /// </summary>
+        public FormShowType FormShowType
+        {
+            get
+            {
+                return _FormShowType;
+            }
+            set
+            {
+                _FormShowType = value;
+            }
+        }
+        /// <summary>
         /// 存放位置
         /// </summary>
         private Depositary _DepositaryOfEntity = Depositary.None;

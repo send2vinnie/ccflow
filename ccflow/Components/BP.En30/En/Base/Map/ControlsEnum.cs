@@ -287,4 +287,18 @@ namespace BP.Web.Controls
 		/// </summary>
 		BindTable
 	}
+    /// <summary>
+    /// 显示方式
+    /// </summary>
+    public enum FormShowType
+    {
+        /// <summary>
+        /// 傻瓜表单
+        /// </summary>
+        FixForm,
+        /// <summary>
+        /// 自由表单
+        /// </summary>
+        FreeForm
+    }
 }

@@ -13,7 +13,6 @@ namespace BP.WF
 	{
 		public WebRtfReport()
 		{
-
 		}
 	
 		#region к╫сп

@@ -780,6 +780,8 @@ namespace BP.Web
         protected void ToMsgPage(string mess)
         {
             mess = mess.Replace("@", "<BR>@");
+            mess = mess.Replace("~", "@");
+
             System.Web.HttpContext.Current.Session["info"] = mess;
             if (SystemConfig.AppSettings["PageMsg"] == null)
                 System.Web.HttpContext.Current.Response.Redirect(System.Web.HttpContext.Current.Request.ApplicationPath + "/Comm/Port/InfoPage.aspx?d=" + DateTime.Now.ToString(), false);

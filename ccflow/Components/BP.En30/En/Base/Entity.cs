@@ -299,7 +299,7 @@ namespace BP.En
                 string sql = null;
                 Attr attr = this.EnMap.GetAttrByKey(attrKey);
                 if (attr.UIIsReadonly == false)
-                    return "";
+                    throw new Exception("@需要自动生成编号的列("+attr.Key+")必须为只读。");
 
                 string field = this.EnMap.GetFieldByKey(attrKey);
                 switch (this.EnMap.EnDBUrl.DBType)
