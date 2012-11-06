@@ -27,9 +27,8 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             //如果没有Port_Dept 表就可能没有安装ccflow.
-            BP.WF.Flow.RepareV_FlowData_View();
-
             DBAccess.RunSQL("SELECT * FROM Port_Dept where 1=2");
+
         }
         catch
         {
@@ -66,6 +65,9 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             msg = "@在检查数据库连接出现错误。";
+
+            BP.WF.Flow.RepareV_FlowData_View();
+
 
             #region 升级 09-24 增加临时的trackTemp 表.
             TrackTemp tmp = new TrackTemp();
