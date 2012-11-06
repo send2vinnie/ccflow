@@ -86,7 +86,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         if (this.PageSmall != "")
             this.Pub1.AddBR();
         this.Pub1.AddTable("width='960px' align=center");
-        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
+        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
+       // this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");

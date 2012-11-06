@@ -490,7 +490,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             BtnLab btnLab = new BtnLab(currND.NodeID);
             if (currND.IsEndNode)
             {
-                //this.ToolBar1.Add("<input type=button value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','选择收件人', 'height=500, width=400');this.disabled=true \" />");
+                //this.ToolBar1.Add("<input type=button value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accepter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','选择收件人', 'height=500, width=400');this.disabled=true \" />");
                 if (btnLab.SendEnable)
                 {
                     this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
@@ -506,7 +506,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     if (btnLab.SelectAccepterEnable == 2)
                     {
 
-                        this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&type=1','选择收件人', 'height=500, width=400,scrollbars=yes'); \" />");
+                        this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accepter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&type=1','选择收件人', 'height=500, width=400,scrollbars=yes'); \" />");
                         this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                         Btn_Send.Style.Add("display", "none");
                         this.Btn_Send.UseSubmitBehavior = false;
@@ -614,8 +614,19 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.OptEnable)
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','opt'); \"  />");
-            if (btnLab.SelectAccepterEnable == 1)
-                this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+
+            switch (btnLab.SelectAccepterEnable)
+            {
+                case 1:
+                    this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accepter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+                    break;
+                case 2:
+                    this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accepter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+                    break;
+                default:
+                    break;
+            }
+
             if (btnLab.SearchEnable)
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt&FK_Flow=" + this.FK_Flow + "','dsd0'); \" />");
             
@@ -624,7 +635,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.BindWork(currND, currWK);
             this.Session["Ect"] = null;
             //if (btnLab.SelectAccepterEnable == 2) /*在发送前打开.*/
-            //    this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&type=1','dds'); \" />");
+            //    this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accepter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&type=1','dds'); \" />");
 
         }
         catch (Exception ex)

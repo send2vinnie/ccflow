@@ -483,15 +483,16 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.AddHR();
 
         Node ndStart = fl.HisStartNode;
-        StartWork sw = ndStart.HisWork as StartWork;
-        sw.OID = this.WorkID;
-        if (sw.RetrieveFromDBSources() == 0)
-        {
-            sw.FID = this.WorkID;
-            int i = sw.Retrieve("FID", this.WorkID);
-        }
+        //StartWork sw = ndStart.HisWork as StartWork;
+        //sw.OID = this.WorkID;
+        //if (sw.RetrieveFromDBSources() == 0)
+        //{
+        //    sw.FID = this.WorkID;
+        //    int i = sw.Retrieve("FID", this.WorkID);
+        //}
 
-        this.Add("流程发起人：" + sw.RecText + "，发起日期：" + sw.RDT + " ；流程状态：" + sw.WFStateT);
+        GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+        this.Add("流程发起人：" + gwf.RecName + "，发起日期：" + gwf.RDT + " ；流程状态：" + gwf.WFStateText);
 
 
         ReturnWorks rws = new ReturnWorks();
@@ -587,12 +588,13 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.AddHR();
 
         Node nd = fl.HisStartNode;
-        StartWork sw = nd.HisWork as StartWork;
-        sw.FID = this.FID;
-        sw.OID = this.WorkID;
-        sw.RetrieveFID();
+        //StartWork sw = nd.HisWork as StartWork;
+        //sw.FID = this.FID;
+        //sw.OID = this.WorkID;
+        //sw.RetrieveFID();
 
-        this.Add("流程发起人：" + sw.RecText + "，发起日期：" + sw.RDT + " ；流程状态：" + sw.WFStateT);
+        GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+        this.Add("流程发起人：" + gwf.RecName + "，发起日期：" + gwf.RDT + " ；流程状态：" + gwf.WFStateText);
 
         ReturnWorks rws = new ReturnWorks();
         rws.Retrieve(ReturnWorkAttr.WorkID, this.WorkID);
