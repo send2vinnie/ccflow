@@ -293,6 +293,10 @@ namespace BP.Web.Controls
     public enum FormShowType
     {
         /// <summary>
+        /// Œ¥…Ë÷√
+        /// </summary>
+        NotSet,
+        /// <summary>
         /// …µπœ±Ìµ•
         /// </summary>
         FixForm,

@@ -3025,22 +3025,6 @@ namespace BP.WF
 
             if (this.NodePosType == NodePosType.Start)
             {
-                //开始节点信息 
-                if (attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.WFState, MapAttrAttr.FK_MapData, md.No) == false)
-                {
-                    attr = new BP.Sys.MapAttr();
-                    attr.FK_MapData = md.No;
-                    attr.HisEditType = BP.En.EditType.Readonly;
-                    attr.KeyOfEn = StartWorkAttr.WFState;
-                    attr.DefVal = "0";
-                    attr.Name = BP.Sys.Language.GetValByUserLang("FlowState", "流程状态"); //"流程状态";
-                    attr.MyDataType = BP.DA.DataType.AppInt;
-                    attr.LGType = FieldTypeS.Normal;
-                    attr.UIBindKey = attr.KeyOfEn;
-                    attr.UIVisible = false;
-                    attr.UIIsEnable = false;
-                    attr.Insert();
-                }
 
                 if (Glo.IsEnablePRI && this.IsStartNode
                     && attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.PRI, MapAttrAttr.FK_MapData, md.No) == false)
@@ -3321,20 +3305,6 @@ namespace BP.WF
             if (this.NodePosType == NodePosType.Start)
             {
                 //开始节点信息.
-                attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.En.EditType.Readonly;
-                attr.KeyOfEn = StartWorkAttr.WFState;
-                attr.DefVal = "0";
-                attr.Name = BP.Sys.Language.GetValByUserLang("FlowState", "流程状态"); //"流程状态";
-                attr.MyDataType = BP.DA.DataType.AppInt;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIBindKey = attr.KeyOfEn;
-                attr.UIVisible = false;
-                attr.UIIsEnable = false;
-                attr.Insert();
-               
-
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = md.No;
                 attr.HisEditType = BP.En.EditType.Edit;

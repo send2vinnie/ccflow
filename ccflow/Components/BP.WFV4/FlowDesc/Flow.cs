@@ -341,7 +341,6 @@ namespace BP.WF
                 wk.SetValByKey("RecText", WebUser.Name);
                 wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
                 wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-                wk.WFState = 0;
                 wk.NodeState = 0;
                 wk.OID = DBAccess.GenerOID();
                 wk.DirectInsert();
@@ -495,7 +494,7 @@ namespace BP.WF
             wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
             wk.SetValByKey("FK_NY", DataType.CurrentYearMonth);
-            wk.WFState = 0;
+            //wk.WFState = 0;
             wk.NodeState = 0;
             wk.FK_Dept = WebUser.FK_Dept;
             wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
@@ -862,12 +861,12 @@ namespace BP.WF
             {
             }
 
-            sql = "CREATE VIEW V_FlowData (FK_FlowSort,FK_Flow,OID,FID,Title,WFState,CDT,FlowStarter,FlowStartRDT,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,MyNum) ";
+            sql = "CREATE VIEW V_FlowData (FK_FlowSort,FK_Flow,OID,FID,Title,WFState,CDT,FlowStarter,FlowStartRDT,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,FlowEndNode,MyNum) ";
             //     sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
             foreach (Flow fl in fls)
             {
-                string mysql = "\t\n SELECT '" + fl.FK_FlowSort + "' AS FK_FlowSort,'" + fl.No + "' AS FK_Flow,OID,FID,Title,WFState,CDT,FlowStarter,FlowStartRDT,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,1 as MyNum FROM ND" + int.Parse(fl.No) + "Rpt";
+                string mysql = "\t\n SELECT '" + fl.FK_FlowSort + "' AS FK_FlowSort,'" + fl.No + "' AS FK_Flow,OID,FID,Title,WFState,CDT,FlowStarter,FlowStartRDT,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,FlowEndNode,1 as MyNum FROM ND" + int.Parse(fl.No) + "Rpt";
                 try
                 {
                     DBAccess.RunSQLReturnTable(mysql);
@@ -1312,7 +1311,7 @@ namespace BP.WF
             msg += "\r\n<body>";
             msg += "\r\n<h1>" + this.Name + "</h1>";
 
-            msg += "\r\n<h3>亚通工作流引擎,工作流程管理系统自动生成，更多请到<a href='http://doc.ccFlow.org' target=_blank >流程模板交流网，免费下载。</a>联系:QQ:793719823,Tel:18660153393</h3>";
+            msg += "\r\n<h3>驰骋工作流引擎,工作流程管理系统自动生成，更多请到<a href='http://doc.ccFlow.org' target=_blank >流程模板交流网，免费下载。</a>联系:QQ:793719823,Tel:18660153393</h3>";
             msg += "\r\n<hr>";
 
             msg += "\r\n<h3><a href='" + this.Name + ".xml' target=_blank>ccflow可识别的(" + this.Name + ")流程模板(xml格式)</a> </h3>";
@@ -1337,7 +1336,7 @@ namespace BP.WF
             msg += "\r\n<h3>特别说明：本流程所有表单模板有ccflow及ccflow的客户设计者辛苦劳动所得，所有转载、引用、使用请注明出处，并且征得ccflow同意。</h3>";
 
             msg += "\r\n<ul>";
-            msg += "\r\n<li><a href='http://ccFlow.org' target=_blank >亚通工作流引擎官方网站 http://ccFlow.org </a></li>";
+            msg += "\r\n<li><a href='http://ccFlow.org' target=_blank >驰骋工作流引擎官方网站 http://ccFlow.org </a></li>";
             msg += "\r\n<li><a href='http://doc.ccFlow.org' target=_blank >标准流程模板网 http://doc.ccFlow.org </a></li>";
             msg += "\r\n</ul>";
 
@@ -1358,7 +1357,7 @@ namespace BP.WF
 
                 msg += "\r\n<h1>" + this.Name + " - " + nd.Name + "</h1>";
 
-                msg += "\r\n<h3>返回：<a href='Index.htm' >" + this.Name + "</a>，此模板有ccflow自动生成，更多的单据模板 <a href='http://doc.ccFlow.org' target=_blank >亚通流程模板网免费下载</a>。</h3>";
+                msg += "\r\n<h3>返回：<a href='Index.htm' >" + this.Name + "</a>，此模板有ccflow自动生成，更多的单据模板 <a href='http://doc.ccFlow.org' target=_blank >驰骋流程模板网免费下载</a>。</h3>";
                 msg += "\r\n<hr>";
 
                 msg += this.GenerWorkTempleteHtml(nd.HisWork, "ND" + nd.NodeID);
@@ -1366,7 +1365,7 @@ namespace BP.WF
                 msg += "\r\n<hr>";
                 msg += "\r\n<h3>特别说明：本流程所有表单模板有ccflow及ccflow的客户设计者辛苦劳动所得，所有转载、引用、使用请注明出处，并且征得ccflow同意。</h3>";
                 msg += "\r\n<ul>";
-                msg += "\r\n<li><a href='http://ccFlow.org' target=_blank >亚通工作流引擎官方网站 http://ccFlow.org </a></li>";
+                msg += "\r\n<li><a href='http://ccFlow.org' target=_blank >驰骋工作流引擎官方网站 http://ccFlow.org </a></li>";
                 msg += "\r\n<li><a href='http://doc.ccFlow.org' target=_blank >标准流程模板网 http://doc.ccFlow.org </a></li>";
                 msg += "\r\n</ul>";
                 msg += "\r\n</body>";
@@ -1736,7 +1735,7 @@ namespace BP.WF
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Width = img.Width; // 图片宽度
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Height = img.Height; // 图片高度
                 }
-                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[亚通业务流程管理系统 http://ccFlow.org ] - [" + nd.FlowName + "-" + nd.Name + "模板]");
+                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[驰骋业务流程管理系统 http://ccFlow.org ] - [" + nd.FlowName + "-" + nd.Name + "模板]");
                 WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight; // 设置右对齐
                 WordApp.ActiveWindow.View.SeekView = Word.WdSeekView.wdSeekMainDocument; // 跳出页眉设置
                 WordApp.Selection.ParagraphFormat.LineSpacing = 15f; // 设置文档的行间距
@@ -2320,6 +2319,7 @@ namespace BP.WF
                 rpt.FlowEmps = flowEmps;
                 rpt.FlowEnder = endWK.Rec;
                 rpt.FlowEnderRDT = endWK.RDT;
+                rpt.FlowEndNode = endWK.NodeID;
                 rpt.MyNum = 1;
 
                 //修复标题字段。
@@ -2596,19 +2596,6 @@ namespace BP.WF
                     case StartWorkAttr.NodeState:
                         attr.DirectDelete();
                         break;
-                    case StartWorkAttr.WFState:
-
-                        if (attr.UIContralType != UIContralType.DDL || attr.UIBindKey != "WFState")
-                        {
-                            attr.UIBindKey = attr.KeyOfEn;
-                            attr.UIContralType = UIContralType.DDL;
-                            attr.LGType = FieldTypeS.Enum;
-                            attr.UIVisible = false;
-                            attr.DefVal = "";
-                            attr.UIIsEnable = false;
-                            attr.Update();
-                        }
-                        break;
                     case StartWorkAttr.FK_Dept:
                         attr.UIBindKey = "BP.Port.Depts";
                         attr.UIContralType = UIContralType.DDL;
@@ -2734,6 +2721,26 @@ namespace BP.WF
                 attr.Insert();
             }
 
+            if (attrs.Contains(md.No + "_" + GERptAttr.FlowEndNode) == false)
+            {
+                /* 结束节点 */
+                MapAttr attr = new BP.Sys.MapAttr();
+                attr.FK_MapData = md.No;
+                attr.HisEditType = EditType.UnDel;
+                attr.KeyOfEn = GERptAttr.FlowEndNode;
+                attr.Name = "结束节点";
+                attr.MyDataType = DataType.AppInt;
+                attr.DefVal = "0";
+                attr.UIContralType = UIContralType.TB;
+                attr.LGType = FieldTypeS.Normal;
+                attr.UIVisible = true;
+                attr.UIIsEnable = false;
+                attr.UIIsLine = false;
+                attr.HisEditType = EditType.UnDel;
+                attr.IDX = -101;
+                attr.Insert();
+            }
+
             if (attrs.Contains(md.No + "_" + GERptAttr.FlowDaySpan) == false)
             {
                 /* MyNum */
@@ -2791,7 +2798,7 @@ namespace BP.WF
                 flowGF.Insert();
             }
 
-            DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + flowGF.OID + " WHERE  FK_MapData='" + fk_mapData + "'  AND KeyOfEn IN('" + GERptAttr.MyNum + "','" + GERptAttr.FK_Dept + "','" + GERptAttr.FK_NY + "','" + GERptAttr.FlowDaySpan + "','" + GERptAttr.FlowEmps + "','" + GERptAttr.FlowEnder + "','" + GERptAttr.FlowEnderRDT + "','" + GERptAttr.FlowStarter + "','" + GERptAttr.FlowStartRDT + "','" + GERptAttr.WFState + "')");
+            DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + flowGF.OID + " WHERE  FK_MapData='" + fk_mapData + "'  AND KeyOfEn IN('" + GERptAttr.MyNum + "','" + GERptAttr.FK_Dept + "','" + GERptAttr.FK_NY + "','" + GERptAttr.FlowDaySpan + "','" + GERptAttr.FlowEmps + "','" + GERptAttr.FlowEnder + "','" + GERptAttr.FlowEnderRDT + "','" + GERptAttr.FlowEndNode + "','" + GERptAttr.FlowStarter + "','" + GERptAttr.FlowStartRDT + "','" + GERptAttr.WFState + "')");
             #endregion 为流程字段设置分组
 
             BP.Sys.GEEntity sw = this.HisFlowData;
@@ -4869,7 +4876,7 @@ namespace BP.WF
 
             msg += "\r\n<body>";
 
-            msg += "\r\n<h1>亚通流程模板网</h1> <br><a href=index.htm >返回首页</a> - <a href='http://ccFlow.org' >访问亚通工作流程管理系统，工作流引擎官方网站</a> 流程系统建设请联系:QQ:793719823,Tel:18660153393<hr>";
+            msg += "\r\n<h1>驰骋流程模板网</h1> <br><a href=index.htm >返回首页</a> - <a href='http://ccFlow.org' >访问驰骋工作流程管理系统，工作流引擎官方网站</a> 流程系统建设请联系:QQ:793719823,Tel:18660153393<hr>";
 
             foreach (Flow fl in fls)
             {

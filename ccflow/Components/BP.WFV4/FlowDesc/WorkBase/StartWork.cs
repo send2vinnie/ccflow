@@ -26,14 +26,9 @@ namespace BP.WF
         /// </summary>
         public const string Title = "Title";
         /// <summary>
-        /// 工作流程状态( 0, 进行中,1 完成任务, 2强制终止) 
-        /// </summary>
-        public const string WFState = "WFState";
-        /// <summary>
         /// PRI
         /// </summary>
         public const string PRI = "PRI";
-
     }
 	/// <summary>	 
 	/// 开始工作基类,所有开始工作都要从这里继承
@@ -117,39 +112,6 @@ namespace BP.WF
 				this.SetValByKey(StartWorkAttr.Title,value);
 			} 
 		}
-		/// <summary>
-		/// 工作流程状态( 0, 未完成,1 完成, 2 强制终止 3, 删除状态,) 
-		/// </summary>
-		public WFState WFState
-		{
-			get
-			{
-				return (WFState)this.GetValIntByKey(StartWorkAttr.WFState);
-			}
-			set
-			{
-				this.SetValByKey(StartWorkAttr.WFState,(int)value);
-			}
-		}
-        public string WFStateT
-        {
-            get
-            {
-                switch (this.WFState)
-                {
-                    case WFState.Complete:
-                        return "流程完成";
-                    case WFState.Delete:
-                        return "删除";
-                    case WFState.Runing:
-                        return "运行中";
-                    case WFState.Stop:
-                        return "停止";
-                    default:
-                        throw new Exception("@没有判断的状态。");
-                }
-            }
-        }
 		#endregion
 
 		#region 构造函数
@@ -226,22 +188,6 @@ namespace BP.WF
 		#endregion 
 
 		#region 公共查询方法
-		/// <summary>
-		/// sss
-		/// </summary>
-		/// <param name="DeptNo"></param>
-		/// <param name="wfState"></param>
-		/// <returns></returns>
-		public DataTable RetrieveByDeptWFStatePRI( string wfState )
-		{
-			//return this.RetrieveAllToTable();
-			QueryObject qo = new QueryObject(this);
-			qo.AddWhere(StartWorkAttr.WFState,wfState);
-			qo.DoQuery();
-			//Log.DefaultLogWriteLine(LogType.Info,qo.SQL) ;
-			return this.ToDataTableField();
-		}
-
 		/// <summary>
 		/// 查询到我的任务.
 		/// </summary>		 

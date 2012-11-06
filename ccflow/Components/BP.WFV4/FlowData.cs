@@ -68,6 +68,10 @@ namespace BP.WF
         /// 跨度
         /// </summary>
         public const string FlowDaySpan = "FlowDaySpan";
+        /// <summary>
+        /// 流程结束节点
+        /// </summary>
+        public const string FlowEndNode = "FlowEndNode";
     }
     /// <summary>
     /// 报表
@@ -186,6 +190,7 @@ namespace BP.WF
                 map.AddDDLEntities(FlowDataAttr.FK_NY, null, "年月", new BP.Pub.NYs(), false);
                 map.AddDDLEntities(FlowDataAttr.FK_Flow, null, "流程", new Flows(), false);
                 map.AddTBDateTime(FlowDataAttr.FlowEnderRDT, null, "结束日期", true, true);
+                map.AddTBInt(FlowDataAttr.FlowEndNode, 0, "结束节点", true, true);
                 map.AddTBInt(FlowDataAttr.FlowDaySpan, 0, "跨度(天)", true, true);
                 map.AddTBInt(FlowDataAttr.MyNum, 1, "个数", true, true);
 

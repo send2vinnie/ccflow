@@ -215,20 +215,20 @@ namespace BP.WF
             }
             catch (Exception ex)
             {
-                WorkFlow wf = new WorkFlow(new Flow(flowNo), FID, FID);
-                StartWork wk = wf.HisStartWork;
-                if (wk.WFState == BP.WF.WFState.Complete)
-                {
-                    throw new Exception("@已经完成流程，不存在于当前工作集合里，如果要得到此流程的详细信请查看历史工作。技术信息:" + ex.Message);
-                }
-                else
-                {
-                    this.Copy(wk);
-                    //string msg = "@流程内部错误，给您带来的不便，深表示抱歉，请把此情况通知给系统管理员。error code:0001更多的信息:" + ex.Message;
-                    string msg = "@流程内部错误，给您带来的不便，深表示抱歉，请把此情况通知给系统管理员。error code:0001更多的信息:" + ex.Message;
-                    Log.DefaultLogWriteLine(LogType.Error, "@工作完成后在使用它抛出的异常：" + msg);
-                    //throw new Exception(msg);
-                }
+                //WorkFlow wf = new WorkFlow(new Flow(flowNo), FID, FID);
+                //StartWork wk = wf.HisStartWork;
+                //if (wf.WFState == BP.WF.WFState.Complete)
+                //{
+                //    throw new Exception("@已经完成流程，不存在于当前工作集合里，如果要得到此流程的详细信请查看历史工作。技术信息:" + ex.Message);
+                //}
+                //else
+                //{
+                //    this.Copy(wk);
+                //    //string msg = "@流程内部错误，给您带来的不便，深表示抱歉，请把此情况通知给系统管理员。error code:0001更多的信息:" + ex.Message;
+                //    string msg = "@流程内部错误，给您带来的不便，深表示抱歉，请把此情况通知给系统管理员。error code:0001更多的信息:" + ex.Message;
+                //    Log.DefaultLogWriteLine(LogType.Error, "@工作完成后在使用它抛出的异常：" + msg);
+                //    //throw new Exception(msg);
+                //}
             }
         }
         /// <summary>

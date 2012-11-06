@@ -30,6 +30,10 @@ namespace BP.WF
         /// 跨度
         /// </summary>
         public const string FlowDaySpan = "FlowDaySpan";
+        /// <summary>
+        /// 结束节点
+        /// </summary>
+        public const string FlowEndNode = "FlowEndNode";
     }
     /// <summary>
     /// 报表
@@ -137,6 +141,19 @@ namespace BP.WF
                 this.SetValByKey(GERptAttr.FlowEnderRDT, value);
             }
         }
+        public int FlowEndNode
+        {
+            get
+            {
+                return this.GetValIntByKey(GERptAttr.FlowEndNode);
+            }
+            set
+            {
+                this.SetValByKey(GERptAttr.FlowEndNode, value);
+            }
+        }
+
+        
         public string Title
         {
             get

@@ -293,16 +293,13 @@ namespace BP.WF
                 WorkNode nd = GetCurrentWorkNode();
                 nd.HisWork.NodeState = NodeState.Stop;
                 nd.HisWork.DirectUpdate();
-                //设置当前的工作节点是强制终止状态
-                StartWork sw = this.HisStartWork;
-                sw.WFState = BP.WF.WFState.Delete;
-                sw.DirectUpdate();
+             
                 //设置产生的工作流程为.
-                GenerWorkFlow gwf = new GenerWorkFlow(sw.OID);
-                gwf.WFState = 3;
+                GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+                gwf.WFState = WFState.Delete;
                 gwf.Update();
                 // 删除消息.
-                BP.WF.MsgsManager.DeleteByWorkID(sw.OID);
+                BP.WF.MsgsManager.DeleteByWorkID(this.WorkID);
                 //WorkerLists wls = new WorkerLists(this
             }
             catch (Exception ex)
@@ -332,18 +329,13 @@ namespace BP.WF
                 //				nd.HisWork.NodeState = 4;
                 //				nd.HisWork.Update();
 
-                //设置当前的工作节点是强制终止状态
-                StartWork sw = this.HisStartWork;
-                sw.WFState = BP.WF.WFState.Stop;
-                //sw.NodeState=4;
-                sw.DirectUpdate();
-
                 //设置产生的工作流程为
-                GenerWorkFlow gwf = new GenerWorkFlow(sw.OID);
-                gwf.WFState = 2;
+
+                GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+                gwf.WFState = WFState.Stop;
                 gwf.DirectUpdate();
                 // 删除消息.
-                BP.WF.MsgsManager.DeleteByWorkID(sw.OID);
+                BP.WF.MsgsManager.DeleteByWorkID(this.WorkID);
                 //WorkerLists wls = new WorkerLists(this
             }
             catch (Exception ex)
@@ -359,7 +351,7 @@ namespace BP.WF
                 return "流程已经结束您不能在体检。";
 
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
-            if (gwf.WFState == (int)WFState.Complete)
+            if (gwf.WFState == WFState.Complete)
                 return "流程已经结束您不能在体检。";
 
 
@@ -423,8 +415,8 @@ namespace BP.WF
             {
                 // 设置当前的工作节点是强制终止状态
                 StartWork sw = this.HisStartWork;
-                sw.WFState = 0;
-                sw.DirectUpdate();
+                //sw.WFState = 0;
+                //sw.DirectUpdate();
 
                 //设置产生的工作流程为
                 GenerWorkFlow gwf = new GenerWorkFlow(sw.OID);
@@ -537,7 +529,6 @@ namespace BP.WF
 
                     StartWork wk = this.HisFlow.HisStartNode.HisWork as StartWork;
                     wk.OID = gwf.FID;
-                    wk.WFState = WFState.Complete;
                     wk.NodeState = NodeState.Complete;
                     wk.Update();
 
@@ -629,6 +620,9 @@ namespace BP.WF
             geRpt.SetValByKey(GERptAttr.FlowEmps, emps);
             geRpt.SetValByKey(GERptAttr.FlowEnder, Web.WebUser.No);
             geRpt.SetValByKey(GERptAttr.FlowEnderRDT, DataType.CurrentDataTime);
+
+            geRpt.SetValByKey(GERptAttr.FlowEndNode, gwf.FK_Node);
+
             geRpt.SetValByKey(GERptAttr.WFState, (int)WFState.Complete);
             geRpt.SetValByKey(GERptAttr.MyNum, 1);
 
@@ -1959,14 +1953,14 @@ namespace BP.WF
         /// <param name="flowState">工作ID</param> 
         public WorkFlows(Flow flow, int flowState)
         {
-            StartWorks ens = (StartWorks)flow.HisStartNode.HisWorks;
-            QueryObject qo = new QueryObject(ens);
-            qo.AddWhere(StartWorkAttr.WFState, flowState);
-            qo.DoQuery();
-            foreach (StartWork sw in ens)
-            {
-                this.Add(new WorkFlow(flow, sw.OID, sw.FID));
-            }
+            //StartWorks ens = (StartWorks)flow.HisStartNode.HisWorks;
+            //QueryObject qo = new QueryObject(ens);
+            //qo.AddWhere(StartWorkAttr.WFState, flowState);
+            //qo.DoQuery();
+            //foreach (StartWork sw in ens)
+            //{
+            //    this.Add(new WorkFlow(flow, sw.OID, sw.FID));
+            //}
         }
 
         #endregion
@@ -1979,12 +1973,14 @@ namespace BP.WF
         /// <returns>StartWorks</returns>
         public static StartWorks GetNotCompleteWork(string flowNo)
         {
-            Flow flow = new Flow(flowNo);
-            StartWorks ens = (StartWorks)flow.HisStartNode.HisWorks;
-            QueryObject qo = new QueryObject(ens);
-            qo.AddWhere(StartWorkAttr.WFState, "!=", 1);
-            qo.DoQuery();
-            return ens;
+            return null;
+
+            //Flow flow = new Flow(flowNo);
+            //StartWorks ens = (StartWorks)flow.HisStartNode.HisWorks;
+            //QueryObject qo = new QueryObject(ens);
+            //qo.AddWhere(StartWorkAttr.WFState, "!=", 1);
+            //qo.DoQuery();
+            //return ens;
 
             /*
             foreach(StartWork sw in ens)

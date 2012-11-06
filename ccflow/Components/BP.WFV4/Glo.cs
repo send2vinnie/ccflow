@@ -39,7 +39,6 @@ namespace BP.WF
                     case StartWorkAttr.Emps:
                     case StartWorkAttr.FK_Dept:
                     case StartWorkAttr.PRI:
-                    case StartWorkAttr.WFState:
                     case StartWorkAttr.NodeState:
                     case StartWorkAttr.FID:
                         continue;
@@ -493,6 +492,7 @@ namespace BP.WF
                     _AttrsOfRpt.AddTBString(GERptAttr.FlowEmps, null, "参与人", true, false, 0, 10, 10);
                     _AttrsOfRpt.AddTBString(GERptAttr.FlowEnder, null, "结束人", true, false, 0, 10, 10);
                     _AttrsOfRpt.AddTBString(GERptAttr.FlowEnderRDT, null, "结束时间", true, false, 0, 10, 10);
+                    _AttrsOfRpt.AddTBDecimal(GERptAttr.FlowEndNode, 0, "结束节点", true, false);
                     _AttrsOfRpt.AddTBDecimal(GERptAttr.FlowDaySpan, 0, "跨度(天)", true, false);
                     //_AttrsOfRpt.AddTBString(GERptAttr.FK_NY, null, "隶属月份", true, false, 0, 10, 10);
                 }
@@ -778,7 +778,7 @@ namespace BP.WF
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Width = img.Width; // 图片宽度
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Height = img.Height; // 图片高度
                 }
-                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[亚通业务流程管理系统 http://ccFlow.org]");
+                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[驰骋业务流程管理系统 http://ccFlow.org]");
                 WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft; // 设置右对齐
                 WordApp.ActiveWindow.View.SeekView = Word.WdSeekView.wdSeekMainDocument; // 跳出页眉设置
                 WordApp.Selection.ParagraphFormat.LineSpacing = 15f; // 设置文档的行间距

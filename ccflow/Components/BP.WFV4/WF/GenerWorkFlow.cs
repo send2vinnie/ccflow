@@ -297,17 +297,18 @@ namespace BP.WF
         /// <summary>
 		/// 工作流程状态( 0, 未完成,1 完成, 2 强制终止 3, 删除状态,) 
 		/// </summary>
-        public int WFState
+        public WFState WFState
         {
             get
             {
-                return this.GetValIntByKey(GenerWorkFlowAttr.WFState);
+                return (WFState)this.GetValIntByKey(GenerWorkFlowAttr.WFState);
             }
             set
             {
-                SetValByKey(GenerWorkFlowAttr.WFState, value);
+                SetValByKey(GenerWorkFlowAttr.WFState, (int)value);
             }
         }
+       
         public string WFStateText
         {
             get

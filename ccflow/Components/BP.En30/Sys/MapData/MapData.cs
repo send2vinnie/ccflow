@@ -586,7 +586,7 @@ namespace BP.Sys
             {
                 string s = this.GetValStrByKey(MapDataAttr.AttrsInTable);
                 if (string.IsNullOrEmpty(s))
-                    s = "@FK_Dept=发起人部门@FlowStarter=发起人@WFState=状态@Title=标题@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月";
+                    s = "@FK_Dept=发起人部门@FlowStarter=发起人@WFState=状态@Title=标题@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月@FlowEndNode=结束节点";
                 return s;
             }
             set

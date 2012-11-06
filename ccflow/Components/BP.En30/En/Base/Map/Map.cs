@@ -168,7 +168,7 @@ namespace BP.En
         /// <summary>
         /// 显示方式
         /// </summary>
-        private FormShowType _FormShowType = FormShowType.FixForm;
+        private FormShowType _FormShowType = FormShowType.NotSet;
         /// <summary>
         /// 存放位置OfEntity
         /// </summary>

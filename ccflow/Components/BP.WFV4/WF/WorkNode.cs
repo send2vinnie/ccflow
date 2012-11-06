@@ -1066,7 +1066,8 @@ namespace BP.WF
             if (Glo.IsEnableSysMessage)
             {
                 WF.Port.WFEmp wfemp = new Port.WFEmp(wn.HisWork.Rec);
-                BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.FK_Node + "_" + wfemp.No, wfemp.No,
+
+                BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.FK_Node + "_" + wfemp.No+DateTime.Now.ToString("HHmmss"), wfemp.No,
                     wfemp.HisAlertWay, wfemp.Tel,
                       this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
                       wn.HisNode.FlowName, wn.HisNode.Name, WebUser.Name),
@@ -2036,8 +2037,14 @@ namespace BP.WF
                             tkParent.EmpTo = WebUser.No;
                             tkParent.EmpToT = WebUser.Name;
                             tkParent.Msg = "<a href='Track.aspx?FK_Flow=" + this.HisNode.FK_Flow + "&WorkID=" + this.HisWork.OID + "' target=_b >调起子流程(" + this.HisNode.FlowName + ")</a>";
-                            tkParent.MyPK = tkParent.WorkID + "_" + tkParent.FID + "_" + (int)tkParent.HisActionType + "_" + tkParent.NDFrom + "_" + DateTime.Now.ToString("yyMMddhhmmss");
-                            tkParent.Insert();
+                            tkParent.MyPK = tkParent.WorkID + "_" + tkParent.FID + "_" + (int)tkParent.HisActionType + "_" + tkParent.NDFrom + "_" + DateTime.Now.ToString("yyMMddHHmmss");
+                            try
+                            {
+                                tkParent.Insert();
+                            }
+                            catch
+                            {
+                            }
                         }
                     }
                 }
@@ -2779,6 +2786,7 @@ namespace BP.WF
                     case BP.WF.GERptAttr.FlowEmps:
                     case BP.WF.GERptAttr.FlowEnder:
                     case BP.WF.GERptAttr.FlowEnderRDT:
+                    case BP.WF.GERptAttr.FlowEndNode:
                     case BP.WF.GERptAttr.FlowStarter:
                     case BP.WF.GERptAttr.Title:
                         continue;
@@ -2867,6 +2875,8 @@ namespace BP.WF
                     rptGe.SetValByKey(GERptAttr.WFState, 1); // 更新状态。
                     rptGe.SetValByKey(GERptAttr.FlowEnder, WebUser.No);
                     rptGe.SetValByKey(GERptAttr.FlowEnderRDT, DataType.CurrentDataTime);
+                    rptGe.SetValByKey(GERptAttr.FlowEndNode, this.HisNode.NodeID );
+
                     rptGe.SetValByKey(GERptAttr.FlowDaySpan, DataType.GetSpanDays(this.rptGe.GetValStringByKey(GERptAttr.FlowStartRDT), DataType.CurrentDataTime));
                 }
                 rptGe.DirectUpdate();
@@ -3270,7 +3280,7 @@ namespace BP.WF
 
             try
             {
-                t.MyPK = t.WorkID + "_" + t.FID + "_"  + t.NDFrom + "_" + t.NDTo +"_"+t.EmpFrom+"_"+t.EmpTo+"_"+ DateTime.Now.ToString("yyMMddhhmmss");
+                t.MyPK = t.WorkID + "_" + t.FID + "_"  + t.NDFrom + "_" + t.NDTo +"_"+t.EmpFrom+"_"+t.EmpTo+"_"+ DateTime.Now.ToString("yyMMddHHmmss");
                 t.Insert();
             }
             catch
