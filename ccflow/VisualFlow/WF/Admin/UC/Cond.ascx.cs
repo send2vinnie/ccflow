@@ -216,7 +216,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 case WorkAttr.Emps:
                 case WorkAttr.OID:
                 case StartWorkAttr.Rec:
-                case StartWorkAttr.WFState:
                 case StartWorkAttr.FID:
                     continue;
                 default:
