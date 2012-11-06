@@ -124,13 +124,13 @@ namespace BP.Web.WF
                     gwf.Retrieve();
                 }
 
-                if (gwf.WFState == 1)
+                if (gwf.WFState == WFState.Complete )
                 {
                     this.Alert("@流程已经完成,不能够对此操作.", false);
                     this.WinClose();
                     return;
                 }
-                else if (gwf.WFState == 2 || gwf.WFState == 3)
+                else if (gwf.WFState == WFState.Delete || gwf.WFState == WFState.Stop)
                 {
                     /* 如果是逻辑删除 */
                     this.Btn_ComeBackFlow.Enabled = true;
