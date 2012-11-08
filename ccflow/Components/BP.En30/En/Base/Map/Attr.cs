@@ -140,6 +140,87 @@ namespace BP.En
 	/// </summary>
 	public class Attr
 	{
+        public Sys.MapAttr ToMapAttr
+        {
+            get
+            {
+
+                Sys.MapAttr attr = new Sys.MapAttr();
+
+                attr.KeyOfEn = this.Key;
+                attr.Name = this.Desc;
+                attr.DefVal  = this.DefaultVal.ToString();
+                attr.KeyOfEn = this.Field;
+
+                attr.MaxLen = this.MaxLength;
+                attr.MinLen = this.MinLength;
+                attr.UIBindKey = this.UIBindKey;
+                attr.UIIsLine = this.UIIsLine;
+                attr.UIHeight = 0;
+
+                if (this.MaxLength > 3000)
+                    attr.UIHeight = 10;
+
+                attr.UIWidth = this.UIWidth;
+                attr.MyDataType = this.MyDataType;
+
+                attr.UIRefKey = this.UIRefKeyValue;
+
+                attr.UIRefKeyText = this.UIRefKeyText;
+                attr.UIVisible = this.UIVisible;
+                //if (this.IsPK)
+                //    attr.MyDataType =  = FieldType.PK;
+                //    attr.MyFieldType = FieldType.PK;
+
+
+
+                switch (this.MyFieldType)
+                {
+                    case FieldType.Enum:
+                    case FieldType.PKEnum:
+                        attr.UIContralType = this.UIContralType;
+                        attr.LGType = FieldTypeS.Enum;
+                        attr.UIIsEnable = this.UIIsReadonly;
+                        break;
+                    case FieldType.FK:
+                    case FieldType.PKFK:
+                        attr.UIContralType = this.UIContralType;
+                        attr.LGType = FieldTypeS.FK;
+                        //attr.MyDataType = (int)FieldType.FK;
+                        attr.UIRefKey = "No";
+                        attr.UIRefKeyText = "Name";
+                        attr.UIIsEnable = this.UIIsReadonly;
+                        break;
+                    default:
+                        attr.UIContralType = UIContralType.TB;
+                        attr.LGType = FieldTypeS.Normal;
+
+                        attr.UIIsEnable = !this.UIIsReadonly;
+                        switch (this.MyDataType)
+                        {
+                            case DataType.AppBoolean:
+                                attr.UIContralType = UIContralType.CheckBok;
+                                attr.UIIsEnable = this.UIIsReadonly;
+                                break;
+                            case DataType.AppDate:
+                                //if (this.Tag == "1")
+                                //    attr.DefaultVal = DataType.CurrentData;
+                                break;
+                            case DataType.AppDateTime:
+                                //if (this.Tag == "1")
+                                //    attr.DefaultVal = DataType.CurrentData;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                }
+
+                attr.HisAutoFull = this.AutoFullWay;
+                attr.AutoFullDoc = this.AutoFullDoc;
+                return attr;
+            }
+        }
         public BP.Web.Controls.TBType HisTBType
         {
             get

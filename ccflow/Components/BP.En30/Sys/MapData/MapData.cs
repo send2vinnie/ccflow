@@ -528,7 +528,10 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(MapDataAttr.EnPK);
+                string s= this.GetValStrByKey(MapDataAttr.EnPK);
+                if (string.IsNullOrEmpty(s))
+                    return "OID";
+                return s;
             }
             set
             {
@@ -1358,19 +1361,39 @@ namespace BP.Sys
 
             BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
 
-            if (attr.IsExit(MapAttrAttr.KeyOfEn, "OID", MapAttrAttr.FK_MapData, this.No) == false)
+            if (this.EnPK == "OID")
             {
-                attr.FK_MapData = this.No;
-                attr.KeyOfEn = "OID";
-                attr.Name = "OID";
-                attr.MyDataType = BP.DA.DataType.AppInt;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = false;
-                attr.UIIsEnable = false;
-                attr.DefVal = "0";
-                attr.HisEditType = BP.En.EditType.Readonly;
-                attr.Insert();
+                if (attr.IsExit(MapAttrAttr.KeyOfEn, "OID", MapAttrAttr.FK_MapData, this.No) == false)
+                {
+                    attr.FK_MapData = this.No;
+                    attr.KeyOfEn = "OID";
+                    attr.Name = "OID";
+                    attr.MyDataType = BP.DA.DataType.AppInt;
+                    attr.UIContralType = UIContralType.TB;
+                    attr.LGType = FieldTypeS.Normal;
+                    attr.UIVisible = false;
+                    attr.UIIsEnable = false;
+                    attr.DefVal = "0";
+                    attr.HisEditType = BP.En.EditType.Readonly;
+                    attr.Insert();
+                }
+            }
+            if (this.EnPK == "No" || this.EnPK == "MyPK")
+            {
+                if (attr.IsExit(MapAttrAttr.KeyOfEn, this.EnPK, MapAttrAttr.FK_MapData, this.No) == false)
+                {
+                    attr.FK_MapData = this.No;
+                    attr.KeyOfEn = this.EnPK;
+                    attr.Name = this.EnPK;
+                    attr.MyDataType = BP.DA.DataType.AppInt;
+                    attr.UIContralType = UIContralType.TB;
+                    attr.LGType = FieldTypeS.Normal;
+                    attr.UIVisible = false;
+                    attr.UIIsEnable = false;
+                    attr.DefVal = "0";
+                    attr.HisEditType = BP.En.EditType.Readonly;
+                    attr.Insert();
+                }
             }
 
             if (attr.IsExit(MapAttrAttr.KeyOfEn, "RDT", MapAttrAttr.FK_MapData, this.No) == false)

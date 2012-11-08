@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Data;
 using BP.DA;
+using BP.Sys;
 using BP.Web.Controls;
 
 namespace BP.En
@@ -165,6 +166,20 @@ namespace BP.En
         #endregion
 
         #region 关于缓存问题
+        public string  _FK_MapData = null;
+        public string FK_MapData
+        {
+            get
+            {
+                if (_FK_MapData == null)
+                    return this.PhysicsTable ;
+                return _FK_MapData;
+            }
+            set
+            {
+                _FK_MapData = value;
+            }
+        }
         /// <summary>
         /// 显示方式
         /// </summary>
@@ -1823,6 +1838,55 @@ namespace BP.En
         #endregion
 
         #region 公共的。
+        /// <summary>
+        /// 同步两个实体属性.
+        /// </summary>
+        public void AddAttrsFromMapData()
+        {
+            if (string.IsNullOrEmpty(this.FK_MapData))
+                throw new Exception("@您没有为map的 FK_MapData 赋值.");
+
+
+            Sys.MapData md = null;
+            md = new Sys.MapData();
+            md.No = this.FK_MapData;
+            if (md.RetrieveFromDBSources() == 0)
+            {
+                md.Name = this.FK_MapData;
+                md.PTable = this.PhysicsTable;
+                md.EnPK = this.PKs;
+                md.Insert();
+                md.RepairMap();
+            }
+            md.Retrieve();
+            Sys.MapAttrs attrs = new MapAttrs(this.FK_MapData);
+
+            /*把 手工编写的attr 放入 mapattrs里面去. */
+            foreach (Attr attr in this.Attrs)
+            {
+                if (attrs.Contains(MapAttrAttr.KeyOfEn, attr.Key))
+                    continue;
+
+                if (attr.IsRefAttr)
+                    continue;
+
+                //把文件实体类的属性放入关系实体类中去。
+                MapAttr mapattrN = attr.ToMapAttr;
+                mapattrN.FK_MapData = this.FK_MapData;
+                mapattrN.Insert();
+                attrs.AddEntity(mapattrN);
+            }
+
+
+            //把关系实体类的属性放入文件实体类中去。
+            foreach (MapAttr attr in attrs)
+            {
+                if (this.Attrs.Contains(attr.KeyOfEn) == true)
+                    continue;
+
+                this.AddAttr(attr.HisAttr);
+            }
+        }
         public void AddAttrs(Attrs attrs)
         {
             foreach (Attr attr in attrs)
@@ -1978,10 +2042,12 @@ namespace BP.En
         #region  PK
         public void AddTBStringPK(string key, string defaultVal, string desc, bool uiVisable, bool isReadonly, int minLength, int maxLength, int tbWith)
         {
+            this.PKs = key;
             AddTBString(key, key, defaultVal, FieldType.PK, TBType.TB, desc, uiVisable, isReadonly, minLength, maxLength, tbWith,false);
         }
         public void AddTBStringPK(string key, string field, object defaultVal, string desc, bool uiVisable, bool isReadonly, int minLength, int maxLength, int tbWith)
         {
+            this.PKs = key;
             AddTBString(key, field, defaultVal, FieldType.PK, TBType.TB, desc, uiVisable, isReadonly, minLength, maxLength, tbWith,false);
         }
         #endregion
@@ -2420,6 +2486,8 @@ namespace BP.En
         /// <param name="isReadonly">是不是只读</param>
         public void AddTBIntPK(string key, string _Field, int defaultVal, string desc, bool uiVisable, bool isReadonly)
         {
+            this.PKs = key;
+
             Attr attr = new Attr();
             attr.Key = key;
             attr.Field = _Field;
@@ -2499,6 +2567,7 @@ namespace BP.En
         /// </summary>
         public void AddMyPK()
         {
+            this.PKs = "MyPK";
             this.AddTBStringPK("MyPK", null, "MyPK", true, true, 1, 100, 10);
 
             //Attr attr = new Attr();
@@ -2593,13 +2662,7 @@ namespace BP.En
             this.AddTBDecimal(key, key, defaultVal, desc, uiVisable, isReadonly);
         }
         #endregion
-
-
-
-
-
         #endregion
-
 
         #endregion
     }
