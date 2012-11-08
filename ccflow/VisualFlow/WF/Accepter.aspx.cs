@@ -175,7 +175,7 @@ public partial class WF_Accepter : WebPage
         }
         #endregion 判断是否有岗位
 
-        this.BindIt();
+        this.BindByStation();
 
         Nodes mynds = this.HisNode.HisToNodes;
         this.Left.AddFieldSet("选择方向:不同的方向列出下一个岗位的不同人员列表");
@@ -192,6 +192,7 @@ public partial class WF_Accepter : WebPage
         this.Left.Add(str + "</p>");
         this.Left.AddFieldSetEnd();
     }
+    public Selector MySelector = null;
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "选择下一步骤接受的人员";
@@ -204,7 +205,19 @@ public partial class WF_Accepter : WebPage
                 return;
             }
 
-            this.BindIt();
+            MySelector = new Selector(this.MyToNode);
+            switch (MySelector.SelectorModel)
+            {
+                case SelectorModel.Station:
+                    this.BindByStation();
+                    break;
+                case SelectorModel.SQL:
+                    this.BindBySQL();
+                    break;
+                default:
+                    break;
+            }
+
         }
         catch(Exception ex)
         {
@@ -212,7 +225,113 @@ public partial class WF_Accepter : WebPage
             this.Pub1.AddMsgOfWarning("错误", ex.Message);
         }
     }
-    public void BindIt()
+    /// <summary>
+    /// 按sql方式
+    /// </summary>
+    public void BindBySQL()
+    {
+        string sqlGroup = MySelector.SelectorP1;
+        sqlGroup = sqlGroup.Replace("@WebUser.No", WebUser.No);
+        sqlGroup = sqlGroup.Replace("@WebUser.Name", WebUser.Name);
+        sqlGroup = sqlGroup.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+
+        string sqlDB = MySelector.SelectorP2;
+        sqlDB = sqlDB.Replace("@WebUser.No", WebUser.No);
+        sqlDB = sqlDB.Replace("@WebUser.Name", WebUser.Name);
+        sqlDB = sqlDB.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+
+        DataTable dtGroup = DBAccess.RunSQLReturnTable(sqlGroup);
+        DataTable dtDB = DBAccess.RunSQLReturnTable(sqlDB);
+
+        if (this.MySelector.SelectorDBShowWay == SelectorDBShowWay.Table)
+            this.BindBySQL_Table(dtGroup, dtDB);
+        else
+            this.BindBySQL_Tree(dtGroup, dtDB);
+    }
+    /// <summary>
+    /// 按table方式.
+    /// </summary>
+    public void BindBySQL_Table(DataTable dtGroup, DataTable dtObj)
+    {
+        int col = 4;
+        this.Pub1.AddTable("style='border:0px;width:100%'");
+        foreach (DataRow drGroup in dtGroup.Rows)
+        {
+            string ctlIDs = "";
+            string groupNo = drGroup[0].ToString();
+
+            //增加全部选择.
+            this.Pub1.AddTR();
+            CheckBox cbx = new CheckBox();
+            cbx.ID = "CBs_" + drGroup[0].ToString();
+            cbx.Text = drGroup[1].ToString();
+            this.Pub1.AddTDTitle("align=left", cbx);
+            this.Pub1.AddTREnd();
+
+            this.Pub1.AddTR();
+            this.Pub1.AddTDBegin("nowarp=false");
+
+            this.Pub1.AddTable("style='border:0px;width:100%'");
+            int colIdx = -1;
+            foreach (DataRow drObj in dtObj.Rows)
+            {
+                string no = drObj[0].ToString();
+                string name = drObj[1].ToString();
+                string group = drObj[2].ToString();
+                if (group.Trim() != groupNo.Trim())
+                    continue;
+
+                colIdx++;
+                if (colIdx == 0)
+                    this.Pub1.AddTR();
+
+                CheckBox cb = new CheckBox();
+                cb.ID = "CB_" + no;
+                ctlIDs += cb.ID + ",";
+                cb.Attributes["onclick"] = "isChange=true;";
+                cb.Text = name;
+                cb.Checked = false;
+                if (cb.Checked)
+                    cb.Text = "<font color=green>" + cb.Text + "</font>";
+                this.Pub1.AddTD(cb);
+                if (col - 1 == colIdx)
+                {
+                    this.Pub1.AddTREnd();
+                    colIdx = -1;
+                }
+            }
+            cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
+
+            if (colIdx != -1)
+            {
+                while (colIdx != col - 1)
+                {
+                    colIdx++;
+                    this.Pub1.AddTD();
+                }
+                this.Pub1.AddTREnd();
+            }
+            this.Pub1.AddTableEnd();
+            this.Pub1.AddTDEnd();
+            this.Pub1.AddTREnd();
+        }
+        this.Pub1.AddTableEnd();
+
+
+        Button btn = new Button();
+        btn.Text = " OK  ";
+        btn.ID = "Btn_Save";
+        btn.CssClass = "Btn";
+        //btn.Width = 80;
+        btn.Click += new EventHandler(btn_Save_Click);
+        this.Pub1.Add(btn);
+    }
+    public void BindBySQL_Tree(DataTable dtGroup, DataTable dtDB)
+    {
+
+    }
+
+    public void BindByStation()
     {
         DataTable dt = this.GetTable(); //获取人员列表。
         SelectAccpers accps = new SelectAccpers();
@@ -222,7 +341,6 @@ public partial class WF_Accepter : WebPage
         Dept dept = new Dept();
         string fk_dept = "";
         this.Pub1.AddTable("width=100%");
-
         string info = "";
         if (WebUser.FK_Dept.Length > 2)
         {
@@ -263,7 +381,6 @@ public partial class WF_Accepter : WebPage
         foreach (DataRow dr in dt.Rows)
         {
             idx++;
-
             if (fk_dept != dr["FK_Dept"].ToString())
             {
                 switch (idx)
@@ -317,7 +434,6 @@ public partial class WF_Accepter : WebPage
             cb.ID = "CB_" + no;
             if (accps.Contains("FK_Emp", no))
                 cb.Checked = true;
-            this.Pub1.AddTR();
             switch (idx)
             {
                 case 0:
@@ -349,7 +465,6 @@ public partial class WF_Accepter : WebPage
         //btn.Width = 80;
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
-
     }
     /// <summary>
     /// 保存
@@ -360,12 +475,15 @@ public partial class WF_Accepter : WebPage
     {
         DataTable dt = this.GetTable();
         string emps = "";
-        foreach (DataRow dr in dt.Rows)
+        foreach (Control ctl in this.Pub1.Controls)
         {
-            CheckBox cb = this.Pub1.GetCBByID("CB_" + dr["No"].ToString());
+            CheckBox cb = ctl as CheckBox;
+            if (cb == null || cb.ID == null || cb.ID.Contains("CBs_"))
+                continue;
+
             if (cb.Checked == false)
                 continue;
-            emps += dr["No"].ToString() + ",";
+            emps += cb.ID.Replace("CB_", "") + ",";
         }
 
         if (emps.Length < 2)
@@ -392,7 +510,6 @@ public partial class WF_Accepter : WebPage
         }
 
 #warning 刘文辉 保存收件人后调用发送按钮
-
         BtnLab nd = new BtnLab(this.FK_Node);
         if (nd.SelectAccepterEnable == 1)
         {
