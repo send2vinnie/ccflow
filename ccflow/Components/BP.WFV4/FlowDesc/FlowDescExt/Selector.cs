@@ -8,6 +8,43 @@ using BP.WF.Port;
 namespace BP.WF
 {
     /// <summary>
+    /// 显示方式
+    /// </summary>
+    public enum SelectorDBShowWay
+    {
+        /// <summary>
+        /// 表格
+        /// </summary>
+        Table,
+        /// <summary>
+        /// 树
+        /// </summary>
+        Tree
+    }
+    public enum SelectorModel
+    {
+        /// <summary>
+        /// 表格
+        /// </summary>
+        Station,
+        /// <summary>
+        /// 树
+        /// </summary>
+        Dept,
+        /// <summary>
+        /// 操作员
+        /// </summary>
+        Emp,
+        /// <summary>
+        /// SQL
+        /// </summary>
+        SQL,
+        /// <summary>
+        /// 自定义链接
+        /// </summary>
+        Url
+    }
+    /// <summary>
     /// Selector属性
     /// </summary>
     public class SelectorAttr : EntityNoNameAttr
@@ -19,11 +56,10 @@ namespace BP.WF
         /// <summary>
         /// 接受模式
         /// </summary>
-        public const string SelectorRole = "SelectorRole";
+        public const string SelectorModel = "SelectorModel";
 
         public const string SelectorP1 = "SelectorP1";
         public const string SelectorP2 = "SelectorP2";
-
         /// <summary>
         /// 数据显示方式(表格与树)
         /// </summary>
@@ -35,6 +71,69 @@ namespace BP.WF
     public class Selector : Entity
     {
         #region 基本属性
+        public override string PK
+        {
+            get
+            {
+                return "NodeID";
+            }
+        }
+        /// <summary>
+        /// 显示方式
+        /// </summary>
+        public SelectorDBShowWay SelectorDBShowWay
+        {
+            get
+            {
+                return (SelectorDBShowWay)this.GetValIntByKey(SelectorAttr.SelectorDBShowWay);
+            }
+            set
+            {
+                this.SetValByKey(SelectorAttr.SelectorDBShowWay, (int)value);
+            }
+        }
+        /// <summary>
+        /// 选择模式
+        /// </summary>
+        public SelectorModel SelectorModel
+        {
+            get
+            {
+                return (SelectorModel)this.GetValIntByKey(SelectorAttr.SelectorModel);
+            }
+            set
+            {
+                this.SetValByKey(SelectorAttr.SelectorModel, (int)value);
+            }
+        }
+
+        public string SelectorP1
+        {
+            get
+            {
+                string s= this.GetValStringByKey(SelectorAttr.SelectorP1);
+                s = s.Replace("~", "'");
+                return s;
+            }
+            set
+            {
+                this.SetValByKey(SelectorAttr.SelectorP1, value);
+            }
+        }
+        public string SelectorP2
+        {
+            get
+            {
+                string s = this.GetValStringByKey(SelectorAttr.SelectorP2);
+                s = s.Replace("~", "'");
+                return s;
+                //return this.GetValStringByKey(SelectorAttr.SelectorP2);
+            }
+            set
+            {
+                this.SetValByKey(SelectorAttr.SelectorP2, value);
+            }
+        }
         public int NodeID
         {
             get
@@ -97,14 +196,17 @@ namespace BP.WF
                 map.DepositaryOfMap = Depositary.Application;
 
                 map.AddTBIntPK(SelectorAttr.NodeID, 0, "NodeID", true, true);
-                map.AddDDLSysEnum(SelectorAttr.SelectorRole, 0, "窗口模式", true, true, SelectorAttr.SelectorRole,
+                map.AddDDLSysEnum(SelectorAttr.SelectorModel, 0, "窗口模式", true, true, SelectorAttr.SelectorModel,
                     "@0=按岗位@1=按部门@2=按人员@3=按SQL@4=自定义Url");
 
-                map.AddTBString(SelectorAttr.SelectorP1, null, "参数1", true, false, 0, 200, 10, true);
-                map.AddTBString(SelectorAttr.SelectorP2, null, "参数2", true, false, 0, 200, 10, true);
+                //map.AddTBString(SelectorAttr.SelectorP1, null, "参数1", true, false, 0, 500, 10, true);
+                //map.AddTBString(SelectorAttr.SelectorP2, null, "参数2", true, false, 0, 500, 10, true);
+
+                map.AddTBStringDoc(SelectorAttr.SelectorP1, null, "参数1", true, false, true);
+                map.AddTBStringDoc(SelectorAttr.SelectorP2, null, "参数2", true, false, true);
+
                 map.AddDDLSysEnum(SelectorAttr.SelectorDBShowWay, 0, "数据显示方式", true, true, 
                     SelectorAttr.SelectorDBShowWay, "@0=表格显示@1=树形显示");
-
 
                 // 相关功能。
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeStations(), new BP.WF.Port.Stations(),
