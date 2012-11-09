@@ -587,7 +587,7 @@ namespace BP.WF
             Node nd = new Node(gwf.FK_Node);
 
             /* 如果是一个主线程 */
-            BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
+         //   BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
 
             // 查询出来报表的数据（主表的数据），以供明细表复制。 
             BP.Sys.GEEntity geRpt = new GEEntity("ND" + int.Parse(this.HisFlow.No) + "Rpt");
@@ -703,7 +703,7 @@ namespace BP.WF
             }
             else
             {
-                BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
+              //  BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
             }
 
             string msg = "";
@@ -716,7 +716,7 @@ namespace BP.WF
                 /* 如果全部完成 */
                 if (this.HisFlow.HisStartNode.HisFNType == FNType.River)
                 {
-                    BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE FID=" + this.FID);
+                  //  BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE FID=" + this.FID);
                 }
 
                 /*整个流程都结束了*/
@@ -822,7 +822,7 @@ namespace BP.WF
                 string msg = "";
 
                 /* 更新开始节点的状态。*/
-                DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID);
+             //   DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID);
 
                 /*整个流程都结束了*/
                 DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FID=" + this.WorkID);

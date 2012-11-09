@@ -301,7 +301,7 @@ namespace BP.WF.Ext
                 gwf.Delete();
                 WorkerList wl = new WorkerList();
                 wl.Delete(WorkerListAttr.WorkID, workid);
-                string sqls = "UPDATE ND" + startNode + " SET WFState=1 WHERE OID=" + workid;
+                string sqls = "";
                 sqls += "@UPDATE ND" + int.Parse(this.No) + "Rpt SET WFState=1 WHERE OID=" + workid;
                 DBAccess.RunSQLs(sqls);
                 return "<font color=red>会滚期间出现错误</font><hr>" + ex.Message;

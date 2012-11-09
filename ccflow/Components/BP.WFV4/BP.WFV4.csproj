@@ -135,7 +135,7 @@
     <Compile Include="DemoData\CRM\Product.cs" />
     <Compile Include="DemoData\CRM\SalesBill.cs" />
     <Compile Include="DTS\GenerTitle.cs" />
-    <Compile Include="DynamicWebService.cs" />
+    <Compile Include="DTS\DynamicWebService.cs" />
     <Compile Include="FlowData.cs" />
     <Compile Include="FlowDesc\FlowDescExt\Selector.cs" />
     <Compile Include="FlowDesc\Hung.cs" />
@@ -327,7 +327,9 @@
       <Name>BP.En30</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
