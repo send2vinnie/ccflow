@@ -863,10 +863,8 @@ namespace BP.WF
             //try
             //{
             //    string msg = "";
-
             //    /* 更新开始节点的状态。*/
             //    DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID);
-
             //    /*整个流程都结束了*/
             //    DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FID=" + this.WorkID);
             //    DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE FID=" + this.WorkID);
