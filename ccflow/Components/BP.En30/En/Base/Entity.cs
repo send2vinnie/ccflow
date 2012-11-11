@@ -796,9 +796,23 @@ namespace BP.En
                 if (i == 0)
                 {
                     string msg = "";
-                    Hashtable ht = this.PKVals;
-                    foreach (string key in ht.Keys)
-                        msg += "[ 主键=" + key + " 值=" + ht[key] + " ]";
+                    switch (this.PK)
+                    {
+                        case "OID":
+                            msg += "[ 主键=OID 值=" + this.GetValStrByKey("OID") + " ]";
+                            break;
+                        case "No":
+                            msg += "[ 主键=No 值=" + this.GetValStrByKey("No") + " ]";
+                            break;
+                        case "MyPK":
+                            msg += "[ 主键=MyPK 值=" + this.GetValStrByKey("MyPK") + " ]";
+                            break;
+                        default:
+                            Hashtable ht = this.PKVals;
+                            foreach (string key in ht.Keys)
+                                msg += "[ 主键=" + key + " 值=" + ht[key] + " ]";
+                            break;
+                    }
 
                     Log.DefaultLogWriteLine(LogType.Error, "@没有[" + this.EnMap.EnDesc + "  " + this.EnMap.PhysicsTable + ", 类[" + this.ToString() + "], 物理表[" + this.EnMap.PhysicsTable + "] 实例。PK = " + this.GetValByKey(this.PK));
                     if (SystemConfig.IsDebug)
@@ -1500,6 +1514,7 @@ namespace BP.En
         {
             string str = "";
             Attrs attrs = this.EnMap.Attrs;
+            string s;
             foreach (Attr attr in attrs)
             {
                 if (attr.MyFieldType == FieldType.RefText)
@@ -1510,8 +1525,15 @@ namespace BP.En
                     if (attr.UIIsReadonly)
                         continue;
 
-                    string valstr = this.GetValStrByKey(attr.Key);
-                    if (valstr.Length < attr.MinLength || valstr.Length > attr.MaxLength)
+                    s = this.GetValStrByKey(attr.Key);
+                    // 处理特殊字符.
+                    s = s.Replace("'", "’");
+                    s = s.Replace("\"", "”");
+                    s = s.Replace(">", "》");
+                    s = s.Replace("<", "《");
+                    this.SetValByKey(attr.Key, s);
+
+                    if (s.Length < attr.MinLength || s.Length > attr.MaxLength)
                     {
                         if (attr.Key == "No" && attr.UIIsReadonly)
                         {
@@ -1521,7 +1543,7 @@ namespace BP.En
                         else
                         {
 
-                            if (valstr.Length == 0)
+                            if (s.Length == 0)
                                 str += "@[" + attr.Desc + "]不能为空。请输入 " + attr.MinLength + " ～ " + attr.MaxLength + " 个字符范围。";
                             else
                                 str += "@[" + attr.Desc + "]输入错误，请输入 " + attr.MinLength + " ～ " + attr.MaxLength + " 个字符范围。";
