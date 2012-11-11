@@ -34,6 +34,25 @@ namespace BP.Sys
 	/// </summary>
 	public class UserLog: EntityOID
 	{
+        /// <summary>
+        /// 增加日志
+        /// </summary>
+        /// <param name="logType"></param>
+        /// <param name="empNo"></param>
+        /// <param name="msg"></param>
+        /// <param name="ip"></param>
+        public static void AddLog(string logType, string empNo, string msg, string ip)
+        {
+            UserLog ul = new UserLog();
+            ul.OID = (int)DBAccess.GenerOID("UL");
+            ul.FK_Emp = empNo;
+            ul.LogFlag = logType;
+            ul.Docs = msg;
+            ul.IP = ip;
+            ul.RDT = DataType.CurrentDataTimeCNOfShort;
+            ul.InsertAsOID(ul.OID);
+        }
+
 		#region 用户日志信息键值列表
 		#endregion
 

@@ -777,10 +777,11 @@ namespace BP.Sys
             get
             {
                 string s= this.GetValStrByKey(MapAttrAttr.UIBindKey);
-                if (string.IsNullOrEmpty(s))
-                    return 0;
-                else
-                    return int.Parse(s);
+                return 0;
+                //if (string.IsNullOrEmpty(s))
+                //    return 0;
+                //else
+                //    return int.Parse(s);
             }
             set
             {

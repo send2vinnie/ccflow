@@ -183,7 +183,12 @@ namespace BP.Web
                 SystemConfig.IsBSsystem = true;
 
             if (BP.SystemConfig.IsBSsystem && System.Web.HttpContext.Current.Session != null)
+            {
+                //Log.DebugWriteInfo("µÇÂ¼ÈË:WebUser=" + em.No + " IP:"+System.Web.HttpContext.Current.Request.UserHostAddress);
                 System.Web.HttpContext.Current.Session.Clear();
+            }
+            BP.Sys.UserLog.AddLog("SignIn", em.No, "µÇÂ¼", System.Web.HttpContext.Current.Request.UserHostAddress);
+
 
             if (em.No == "admin")
             {
@@ -199,6 +204,8 @@ namespace BP.Web
             WebUser.AppUserType = "Gener";
             WebUser.HisDepts = null;
             WebUser.HisStations = null;
+
+
 
             if (SystemConfig.IsUnit)
             {

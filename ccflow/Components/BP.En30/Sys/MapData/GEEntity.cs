@@ -20,6 +20,13 @@ namespace BP.Sys
                 return "OID";
             }
         }
+        public override string PKField
+        {
+            get
+            {
+                return "OID";
+            }
+        }
         public override string ToString()
         {
             return this.FK_MapData;
