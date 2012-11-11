@@ -154,6 +154,9 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                     this.Pub1.Add("<li class='Barli' ><a href=\"" + en.Url + "\" target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }
         }
+#warning 测试session 乱掉的代码.
+        BP.DA.Log.DebugWriteInfo("@No="+BP.Web.WebUser.No);
+
         this.Pub1.Add("</UL> <div style='float:right;margin-right:30px;display:inline-block;line-height:35px;color:white' >您好:" + BP.Web.WebUser.No + "," + BP.Web.WebUser.Name + "</div>");
         this.Pub1.Add("</DIV>");
 
