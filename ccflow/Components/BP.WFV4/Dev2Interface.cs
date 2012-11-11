@@ -395,10 +395,13 @@ namespace BP.WF
         /// <returns></returns>
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
+            string sql;
             if (WebUser.IsAuthorize == false)
             {
+                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ";
+                //  ps.Add("FK_Emp", fk_emp);
                 /*如果不是授权状态*/
-                return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ");
+                // return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
 
             /*如果是授权状态, 获取当前委托人的信息. */
@@ -406,17 +409,19 @@ namespace BP.WF
             switch (emp.HisAuthorWay)
             {
                 case Port.AuthorWay.All:
-                    return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ");
+                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.SpecFlows:
-                    return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ");
+                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.None:
-                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
+                    throw new Exception("对方(" + fk_emp + ")已经取消了授权.");
                 default:
                     throw new Exception("no such way...");
             }
 
+            BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + " , 执行sql:" + sql);
+            return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
         /// <summary>
         /// For Lizheng: 2012-10-17
@@ -531,6 +536,7 @@ namespace BP.WF
                 case ReturnRole.ReturnSpecifiedNodes: //退回指定的节点。
                     if (wns.Count == 0)
                         wns.GenerByWorkID(wn.HisNode.HisFlow, workid);
+
                     NodeReturns rnds = new NodeReturns();
                     rnds.Retrieve(NodeReturnAttr.FK_Node, fk_node);
                     if (rnds.Count == 0)
@@ -553,6 +559,10 @@ namespace BP.WF
                 default:
                     throw new Exception("@没有判断的退回类型。");
             }
+
+            if (dt.Rows.Count == 0)
+                throw new Exception("@没有计算出来要退回的节点，请管理员确认节点退回规则是否合理？");
+
             return dt;
         }
         #endregion 获取当前可以退回的节点
