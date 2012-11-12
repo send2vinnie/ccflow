@@ -399,9 +399,8 @@ namespace BP.WF
             if (WebUser.IsAuthorize == false)
             {
                 sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ";
-                //  ps.Add("FK_Emp", fk_emp);
-                /*如果不是授权状态*/
-                // return BP.DA.DBAccess.RunSQLReturnTable(sql);
+                BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
+                return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
 
             /*如果是授权状态, 获取当前委托人的信息. */
@@ -420,7 +419,8 @@ namespace BP.WF
                     throw new Exception("no such way...");
             }
 
-            BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + " , 执行sql:" + sql);
+#warning 测试session 乱掉的代码.
+            BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
             return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
         /// <summary>
