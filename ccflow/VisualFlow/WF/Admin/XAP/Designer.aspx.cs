@@ -68,6 +68,9 @@ public partial class Designer : System.Web.UI.Page
 
             BP.WF.Flow.RepareV_FlowData_View();
 
+            UserLog ul = new UserLog();
+            ul.CheckPhysicsTable();
+
 
             #region 升级 09-24 增加临时的trackTemp 表.
             TrackTemp tmp = new TrackTemp();
