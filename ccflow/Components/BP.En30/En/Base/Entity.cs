@@ -1527,7 +1527,7 @@ namespace BP.En
 
                     s = this.GetValStrByKey(attr.Key);
                     // ´¦ÀíÌØÊâ×Ö·û.
-                    s = s.Replace("'", "¡¯");
+                    s = s.Replace("'", "~");
                     s = s.Replace("\"", "¡±");
                     s = s.Replace(">", "¡·");
                     s = s.Replace("<", "¡¶");
