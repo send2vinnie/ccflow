@@ -49,7 +49,7 @@ namespace BP.Sys
             ul.LogFlag = logType;
             ul.Docs = msg;
             ul.IP = ip;
-            ul.RDT = DataType.CurrentDataTimeCNOfShort;
+            ul.RDT = DataType.CurrentDataTime;
             ul.InsertAsOID(ul.OID);
         }
 
