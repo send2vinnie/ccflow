@@ -538,7 +538,7 @@ namespace BP.WF
                return WorkerListWayOfDept(town, dt);
            }
 
-           // 按照节点指定的人员处理。
+           // 按照上一个节点表单指定字段的人员处理。 
            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousNodeFormEmpsField)
            {
                // 检查接受人员规则,是否符合设计要求.
@@ -569,7 +569,6 @@ namespace BP.WF
                    dr[0] = s;
                    dt.Rows.Add(dr);
                }
-
                return WorkerListWayOfDept(town, dt);
            }
 
