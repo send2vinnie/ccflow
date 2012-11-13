@@ -50,7 +50,13 @@ namespace BP.Sys
             ul.Docs = msg;
             ul.IP = ip;
             ul.RDT = DataType.CurrentDataTime;
-            ul.InsertAsOID(ul.OID);
+            try
+            {
+                ul.InsertAsOID(ul.OID);
+            }
+            catch
+            {
+            }
         }
 
 		#region 用户日志信息键值列表
