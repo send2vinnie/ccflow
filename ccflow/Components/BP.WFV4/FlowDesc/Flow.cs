@@ -1026,8 +1026,8 @@ namespace BP.WF
                             }
                         }
                         break;
-                    case DeliveryWay.BySpcEmp:
-                        if (attrs.Contains(BP.Sys.MapAttrAttr.KeyOfEn, "FK_Emp") == false)
+                    case DeliveryWay.ByPreviousNodeFormEmpsField:
+                        if (attrs.Contains(BP.Sys.MapAttrAttr.KeyOfEn, nd.RecipientSQL) == false)
                         {
                             /*检查节点字段是否有FK_Emp字段*/
                             rpt += "<font color=red>您设置了该节点的访问规则是按指定节点表单人员，但是您没有在节点表单中增加FK_Emp字段，详细参考开发手册 。</font>";

@@ -64,7 +64,7 @@ namespace BP.WF
         /// <summary>
         /// 按本节点设置的指定人员
         /// </summary>
-        BySpcEmp = 3,
+        ByEmp = 3,
         /// <summary>
         /// 由上一步发送人选择
         /// </summary>
@@ -72,7 +72,7 @@ namespace BP.WF
         /// <summary>
         /// 按表单选择人员
         /// </summary>
-        ByEmp = 5,
+        ByPreviousNodeFormEmpsField = 5,
         /// <summary>
         /// 按上一步操作人员
         /// </summary>
@@ -1096,18 +1096,7 @@ namespace BP.WF
                     //    }
                     //}
                     break;
-                case DeliveryWay.BySpcEmp:
-                    //if (nd.IsStartNode)
-                    //{
-                    //    rpt += "<font color=red>开始节点不能设置指定的人员访问规则。</font>";
-                    //    break;
-                    //}
-                    //if (attrs.Contains(BP.Sys.MapAttrAttr.KeyOfEn, "FK_Emp") == false)
-                    //{
-                    //    /*检查节点字段是否有FK_Emp字段*/
-                    //    rpt += "<font color=red>您设置了该节点的访问规则是按指定节点表单人员，但是您没有在节点表单中增加FK_Emp字段，详细参考开发手册 。</font>";
-                    //}
-                    break;
+               
                 case DeliveryWay.BySelected: /* 由上一步发送人员选择 */
                     //if (nd.IsStartNode)
                     //{
