@@ -185,19 +185,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     }
     #endregion
 
-    #region 动态控件
-    /// <summary>
-    /// 节点名称
-    /// </summary>
-    public Label Lab_NodeName
-    {
-        get
-        {
-            return this.ToolBar1.GetLabelByID("Lab_NodeName");
-        }
-    }
-    #endregion
-
     #region Page load 事件
     public void DoDoType()
     {
@@ -228,7 +215,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         TextBox tb = new TextBox();
         tb.Text = "";
         tb.ID = "TB_Doc";
-       // tb.Attributes["width"] = "100%";
         tb.Columns = 50;
         tb.Rows = 10; 
         tb.TextMode = TextBoxMode.MultiLine;
@@ -355,7 +341,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// <param name="e"></param>
     protected void Page_Load(object sender, System.EventArgs e)
     {
-        // 校验用户是否被禁用。
+        #region 校验用户是否被禁用。
         if (Glo.IsEnableCheckUseSta == true)
         {
             if (Glo.CheckIsEnableWFEmp() == false)
@@ -373,18 +359,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             DoDoType();
             return;
         }
+        #endregion 校验用户是否被禁用
 
-       string appPath = this.Request.ApplicationPath;
-       this.currFlow = new Flow(this.FK_Flow);
-       this.currND = new BP.WF.Node(this.FK_Node);
+        #region 设置变量
+        string appPath = this.Request.ApplicationPath;
+        this.currFlow = new Flow(this.FK_Flow);
+        this.currND = new BP.WF.Node(this.FK_Node);
+        this.Page.Title ="第"+this.currND.Step+ "步:"+ this.currND.Name;
+        #endregion 设置变量
 
        #region 判断是否有 workid
        if (this.WorkID == 0)
        {
            currWK = this.currFlow.NewWork();
            this.WorkID = currWK.OID;
-           //   this.Response.Redirect("MyFlow" + this.PageSmall + ".aspx?WorkID=" + currWK.OID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + currWK.HisNode.NodeID, true);
-           // return;
        }
        else
        {
@@ -411,12 +399,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                        this.FlowMsg.AlertMsg_Info("流程退回提示", msgInfo);
                        if (currWK.HisNode.IsStartNode == false)
                        {
-                           currWK.Update("NodeState", (int)NodeState.Init);
+                           currWK.Update(WorkAttr.NodeState, (int)NodeState.Init);
                        }
                    }
                    break;
                case NodeState.Forward:
-                   /* 如果不是退回来的，就判断是否是移交过来的。 */
+                   /* 判断移交过来的。 */
                    ForwardWorks fws = new ForwardWorks();
                    BP.En.QueryObject qo = new QueryObject(fws);
                    qo.AddWhere(ForwardWorkAttr.WorkID, this.WorkID);
@@ -438,8 +426,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                        }
                        this.FlowMsg.AddFieldSetEnd();
                    }
-
-                   currWK.Update("NodeState", (int)NodeState.Init);
+                   currWK.Update(WorkAttr.NodeState, (int)NodeState.Init);
                    break;
                default:
                    break;
@@ -480,22 +467,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             string small = this.PageID;
             small = small.Replace("MyFlow", "");
-
             if (small != "")
-            {
                 this.ToolBar1.AddBR();
-            }
 
             #region 增加按钮
             BtnLab btnLab = new BtnLab(currND.NodeID);
             if (currND.IsEndNode)
             {
-                //this.ToolBar1.Add("<input type=button value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accepter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','选择收件人', 'height=500, width=400');this.disabled=true \" />");
+                /*如果当前节点是结束节点.*/
                 if (btnLab.SendEnable)
                 {
+                    /*如果启用了发送按钮.*/
                     this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                     this.Btn_Send.UseSubmitBehavior = false;
-                    this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                    this.Btn_Send.OnClientClick = "this.disabled=true;"; 
                     this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                 }
             }
@@ -503,9 +488,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 if (btnLab.SendEnable)
                 {
+                    /*如果启用了发送按钮.*/
                     if (btnLab.SelectAccepterEnable == 2)
                     {
-
+                        /*如果启用了选择人窗口的模式是【选择既发送】.*/
                         this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accepter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&type=1','选择收件人', 'height=500, width=400,scrollbars=yes'); \" />");
                         this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                         Btn_Send.Style.Add("display", "none");
@@ -525,7 +511,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                             this.Btn_Send.UseSubmitBehavior = false;
                             this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                         }
-
                         this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                     }
                 }

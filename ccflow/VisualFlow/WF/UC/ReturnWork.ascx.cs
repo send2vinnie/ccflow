@@ -188,11 +188,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         switch (nd.HisNodeWorkType)
         {
             case NodeWorkType.WorkHL:
-                if (this.FID != 0)
-                {
-                    this.BindItWorkHL(nd);
-                    return;
-                }
+            //    this.BindItWorkHL(nd);
                 break;
             case NodeWorkType.WorkFHL:
                 throw new Exception("系统没有判断的情况。");

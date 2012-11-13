@@ -1185,7 +1185,7 @@ namespace BP.Web.Comm.UC.WF
                     {
                         case MapExtXmlList.DDLFullCtrl: // 自动填充.
                             DDL ddlOper = this.GetDDLByID("DDL_" + me.AttrOfOper);
-                            if (ddlOper == null )
+                            if (ddlOper == null)
                                 continue;
                             ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
                             break;
@@ -1203,7 +1203,7 @@ namespace BP.Web.Comm.UC.WF
                             fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
                             fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                             fullSQL = fullSQL.Replace("@Key", val);
-                            
+
                             if (fullSQL.Contains("@"))
                             {
                                 foreach (MapAttr attr in mattrs)
@@ -1232,11 +1232,11 @@ namespace BP.Web.Comm.UC.WF
                             if (tbAuto == null)
                                 continue;
 
-                           // onpropertychange
-                           // tbAuto.Attributes["onpropertychange"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                           // tbAuto.Attributes["onkeydown"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                           // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                           // tbAuto.Attributes["ondblclick"] = "ReturnValTBFullCtrl(this,'" + me.MyPK + "','sd');";
+                            // onpropertychange
+                            // tbAuto.Attributes["onpropertychange"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                            // tbAuto.Attributes["onkeydown"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                            // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                            // tbAuto.Attributes["ondblclick"] = "ReturnValTBFullCtrl(this,'" + me.MyPK + "','sd');";
 
                             tbAuto.Attributes["ondblclick"] = "ReturnValTBFullCtrl(this,'" + me.MyPK + "');";
                             tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
@@ -1296,7 +1296,10 @@ namespace BP.Web.Comm.UC.WF
                             if (tb == null)
                                 continue;
 
-                            tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
+                            if (me.Tag == "0")
+                                tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
+                            else
+                                tb.Attributes["ondblclick"] = "ReturnValCCFormPopVal(this,'" + me.MyPK + "','"+en.PKVal+"');";
                             break;
                         default:
                             break;
@@ -3553,6 +3556,8 @@ namespace BP.Web.Comm.UC.WF
         {
             try
             {
+
+                string s = null;
                 foreach (Attr attr in en.EnMap.Attrs)
                 {
                     if (attr.MyFieldType == FieldType.RefText)
@@ -3571,14 +3576,18 @@ namespace BP.Web.Comm.UC.WF
                             {
                                 if (attr.UIHeight == 0)
                                 {
-                                    en.SetValByKey(attr.Key, this.GetTBByID("TB_" + attr.Key).Text);
+                                    // 处理特殊字符.
+                                    s=this.GetTBByID("TB_" + attr.Key).Text;
+                                    en.SetValByKey(attr.Key, s);
                                     continue;
                                 }
                                 else
                                 {
                                     if (this.IsExit("TB_" + attr.Key))
                                     {
-                                        en.SetValByKey(attr.Key, this.GetTBByID("TB_" + attr.Key).Text);
+                                        // 处理特殊字符.
+                                        s = this.GetTBByID("TB_" + attr.Key).Text;
+                                        en.SetValByKey(attr.Key, s);
                                         continue;
                                     }
 

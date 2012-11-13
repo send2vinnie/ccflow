@@ -168,6 +168,18 @@ function getoffset(e) {
     return rec
 }
 
+/* 内置的Pop自动返回值. */
+function ReturnValCCFormPopVal(ctrl, fk_mapExt, refEnPK) {
+    url = 'FrmPopVal.aspx?FK_MapExt=' + fk_mapExt + '&RefPK=' + refEnPK + '&CtrlVal=' + ctrl.value;
+    var v = window.showModalDialog(url, 'opp', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');
+    if (v == null || v == '' || v == 'NaN') {
+        return;
+    }
+    ctrl.value = v;
+    return;
+}
+
+
 /*  ReturnValTBFullCtrl */
 function ReturnValTBFullCtrl(ctrl, fk_mapExt) {
     var url = 'FrmReturnValTBFullCtrl.aspx?CtrlVal=' + ctrl.value + '&FK_MapExt=' + fk_mapExt;

@@ -1035,12 +1035,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         if (this.MyPK == null)
         {
             me = new MapExt();
-            this.Pub2.AddCaptionLeft("新建:" + this.Lab);
+            this.Pub2.AddCaptionLeft("新建:" + this.Lab + "-帮助请详见驰骋表单设计器说明书");
         }
         else
         {
             me = new MapExt(this.MyPK);
-            this.Pub2.AddCaptionLeft("编辑:" + this.Lab);
+            this.Pub2.AddCaptionLeft("编辑:" + this.Lab + "-帮助请详见驰骋表单设计器说明书");
         }
 
         me.FK_MapData = this.FK_MapData;
@@ -1073,19 +1073,103 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTD(ddl);
         this.Pub2.AddTD("处理pop窗体的字段.");
         this.Pub2.AddTREnd();
+        
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("设置类型");
+        this.Pub2.AddTDBegin();
+
+        string tag = me.Tag;
+        if (string.IsNullOrEmpty(tag))
+            tag = "0";
+        RadioButton rb = new RadioButton();
+        rb.Text = "自定义URL";
+        rb.ID = "RB_Tag_0";
+        rb.GroupName = "sd";
+        if (tag == "0")
+            rb.Checked = true;
+        else
+            rb.Checked = false;
+        this.Pub2.Add(rb); 
+        rb = new RadioButton();
+        rb.ID = "RB_Tag_1";
+        rb.Text = "ccform内置";
+        rb.GroupName = "sd";
+        if (tag == "1")
+            rb.Checked = true;
+        else
+            rb.Checked = false;
+        this.Pub2.Add(rb); 
+        this.Pub2.AddTDEnd();
+        this.Pub2.AddTD("如果是自定义URL,仅填写URL字段.");
+        this.Pub2.AddTREnd();
+
 
         this.Pub2.AddTR();
         this.Pub2.AddTD("URL");
         TextBox tb = new TextBox();
-        tb.ID = "TB_Doc";
+        tb.ID = "TB_" + MapExtAttr.Doc;
         tb.Text = me.Doc;
         tb.Columns = 50;
         this.Pub2.AddTD("colspan=2", tb);
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTD("colspan=3", "请输入一个弹出窗口的url,当操作员关闭后返回值就会被设置在当前控件中<br>Test URL:http://localhost/Flow/SDKFlowDemo/PopSelectVal.aspx.");
+        this.Pub2.AddTD("colspan=3", "URL填写说明:请输入一个弹出窗口的url,当操作员关闭后返回值就会被设置在当前控件中<br>Test URL:http://localhost/Flow/SDKFlowDemo/PopSelectVal.aspx.");
         this.Pub2.AddTREnd();
+
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("数据分组SQL");
+        tb = new TextBox();
+        tb.ID = "TB_"+MapExtAttr.Tag1;
+        tb.Text = me.Tag1;
+        tb.Columns = 50;
+        this.Pub2.AddTD("colspan=2", tb);
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("数据源SQL");
+        tb = new TextBox();
+        tb.ID = "TB_" + MapExtAttr.Tag2;
+        tb.Text = me.Tag2;
+        tb.Columns = 50;
+        this.Pub2.AddTD("colspan=2", tb);
+        this.Pub2.AddTREnd();
+        this.Pub2.AddTREnd();
+
+        #region 选择方式
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("选择方式");
+
+        this.Pub2.AddTDBegin();
+
+         tag = me.Tag3;
+        if (string.IsNullOrEmpty(tag))
+            tag = "0";
+        rb = new RadioButton();
+        rb.Text = "多项选择";
+        rb.ID = "RB_Tag3_0";
+        rb.GroupName = "dd";
+        if (tag == "0")
+            rb.Checked = true;
+        else
+            rb.Checked = false;
+        this.Pub2.Add(rb);
+
+        rb = new RadioButton();
+        rb.ID = "RB_Tag3_1";
+        rb.Text = "单项选择";
+        rb.GroupName = "dd";
+        if (tag == "1")
+            rb.Checked = true;
+        else
+            rb.Checked = false;
+        this.Pub2.Add(rb);
+        this.Pub2.AddTDEnd();
+        this.Pub2.AddTD("");
+        this.Pub2.AddTREnd();
+        #endregion 选择方式
+
 
         this.Pub2.AddTRSum();
         Button btn = new Button();
@@ -1688,8 +1772,17 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
         me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
 
-        //me.Tag = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItemStringVal;
-        //me.Tag1 = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItem.Text;
+        RadioButton rb = this.Pub2.GetRadioButtonByID("RB_Tag_0");
+        if (rb.Checked)
+            me.Tag = "0";
+        else
+            me.Tag = "1";
+
+        rb = this.Pub2.GetRadioButtonByID("RB_Tag3_0");
+        if (rb.Checked)
+            me.Tag3 = "0";
+        else
+            me.Tag3 = "1";
 
         me.FK_MapData = this.FK_MapData;
         me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;

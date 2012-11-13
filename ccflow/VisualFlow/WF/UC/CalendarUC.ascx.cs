@@ -109,7 +109,8 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
         string today = DataType.CurrentData;
         string selectedDay = dt.ToString("yyyy-MM-dd");
         string sql = "SELECT * FROM WF_Track_NYR WHERE FK_NY='" + dt.ToString("yyyy-MM") + "' AND FK_Emp='" + WebUser.No + "'";
-
+        //sql += " UNION ";
+        //sql += "SELECT * FROM WF_Track_NYR WHERE FK_NY='" + dt.ToString("yyyy-MM") + "' AND FK_Emp='" + WebUser.No + "'";
 
         DataTable dtLog = DBAccess.RunSQLReturnTable(sql);
 

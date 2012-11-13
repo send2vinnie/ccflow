@@ -234,6 +234,7 @@ public partial class WF_Rpt_Search : WebPage
                 }
             }
         }
+
         this.BindEns(ens, null);
 
         #region 生成js
