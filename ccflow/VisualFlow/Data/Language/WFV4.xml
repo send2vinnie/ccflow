@@ -36,9 +36,9 @@
 
   <!-- Node  -->
   <Item No="CallSubFlow" CH="可调用的子流程" EN="Invokable Sub-flows" JP="CallSubFlow" RU="CallSubFlow" />
-  <Item No="Accpter" CH="接收人" EN="Recipients" JP="Recipients" RU="Accpter" />
-  <Item No="AccptDept" CH="接受部门" EN="Recipient Departments" JP="Accpter" RU="Accpter" />
-  <Item No="NodeSta" CH="节点岗位" EN="Node Positions" JP="Accpter" RU="Accpter" />
+  <Item No="Accepter" CH="接收人" EN="Recipients" JP="Recipients" RU="Accepter" />
+  <Item No="AccptDept" CH="接受部门" EN="Recipient Departments" JP="Accepter" RU="Accepter" />
+  <Item No="NodeSta" CH="节点岗位" EN="Node Positions" JP="Accepter" RU="Accepter" />
 
 
   <Item No="IsFJ" CH="是否允许传递附件" EN="Allow attachment transmission" JP="附属書の送信を許可するかどうか" RU="Следует ли разрешить передачу Приложения" />
