@@ -1545,7 +1545,7 @@ namespace BP.WF
             Node nd = new Node(tackToNodeID);
             switch (nd.HisDeliveryWay)
             {
-                case DeliveryWay.ByEmp:
+                case DeliveryWay.ByPreviousNodeFormEmpsField:
                     break;
             }
 
