@@ -177,7 +177,7 @@ namespace BP.WF
             }
 
             // 按照节点指定的人员处理。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpcEmp)
+            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByEmp)
             {
                 ps = new Paras();
                 ps.Add("FK_Node",  town.HisNode.NodeID);
@@ -190,15 +190,37 @@ namespace BP.WF
             }
 
             // 按照表单字段人员处理。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByEmp)
+            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousNodeFormEmpsField)
             {
-                if (this.HisWork.EnMap.Attrs.Contains("FK_Emp") == false)
-                    throw new Exception("@您设置的当前节点按照指定节点表单字段人员，决定下一步的接受人员，但是你没有在节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + ")表单中设置该表单FK_Emp字段。");
+                // 检查接受人员规则,是否符合设计要求.
+                string specEmpFields = town.HisNode.RecipientSQL;
+                if (string.IsNullOrEmpty(specEmpFields))
+                    specEmpFields = "FK_Emp";
 
-                fk_emp = this.HisWork.GetValStringByKey("FK_Emp");
-                DataRow dr = dt.NewRow();
-                dr[0] = fk_emp;
-                dt.Rows.Add(dr);
+                if (this.HisWork.EnMap.Attrs.Contains(specEmpFields) == false)
+                    throw new Exception("@您设置的当前节点按照指定的人员，决定下一步的接受人员，但是你没有在节点表单中设置该表单" + specEmpFields + "字段。");
+
+                //获取接受人并格式化接受人, 
+                fk_emp = this.HisWork.GetValStringByKey(specEmpFields);
+                fk_emp = fk_emp.Replace(";", ",");
+                fk_emp = fk_emp.Replace("；", ",");
+                fk_emp = fk_emp.Replace("，", ",");
+                fk_emp = fk_emp.Replace("、", ",");
+                fk_emp = fk_emp.Replace(" ", "");
+                if (string.IsNullOrEmpty(fk_emp))
+                    throw new Exception("@没有在字段[" + this.HisWork.EnMap.Attrs.GetAttrByKey(specEmpFields).Desc + "]中指定接受人，工作无法向下发送。");
+
+                // 把它加入接受人员列表中.
+                string[] myemps = fk_emp.Split(',');
+                foreach (string s in myemps)
+                {
+                    if (string.IsNullOrEmpty(s))
+                        continue;
+                    DataRow dr = dt.NewRow();
+                    dr[0] = s;
+                    dt.Rows.Add(dr);
+                }
+
                 return WorkerListWayOfDept(town, dt);
             }
 
@@ -500,7 +522,7 @@ namespace BP.WF
            }
 
            // 按照节点指定的人员处理。
-           if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpcEmp)
+           if (town.HisNode.HisDeliveryWay == DeliveryWay.ByEmp)
            {
                ps = new Paras();
                ps.Add("FK_Node", town.HisNode.NodeID);
@@ -517,18 +539,39 @@ namespace BP.WF
            }
 
            // 按照节点指定的人员处理。
-           if (town.HisNode.HisDeliveryWay == DeliveryWay.ByEmp)
+           if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousNodeFormEmpsField)
            {
-               if (this.HisWork.EnMap.Attrs.Contains("FK_Emp") == false)
-                   throw new Exception("@您设置的当前节点按照指定的人员，决定下一步的接受人员，但是你没有在节点表单中设置该表单FK_Emp字段。");
+               // 检查接受人员规则,是否符合设计要求.
+               string specEmpFields = town.HisNode.RecipientSQL;
+               if (string.IsNullOrEmpty(specEmpFields))
+                   specEmpFields = "FK_Emp";
 
-               fk_emp = this.HisWork.GetValStringByKey("FK_Emp");
-               DataRow dr = dt.NewRow();
-               dr[0] = fk_emp;
-               dt.Rows.Add(dr);
+               if (this.HisWork.EnMap.Attrs.Contains(specEmpFields) == false)
+                   throw new Exception("@您设置的当前节点按照指定的人员，决定下一步的接受人员，但是你没有在节点表单中设置该表单" + specEmpFields + "字段。");
+
+               //获取接受人并格式化接受人, 
+               fk_emp = this.HisWork.GetValStringByKey(specEmpFields);
+               fk_emp = fk_emp.Replace(";", ",");
+               fk_emp = fk_emp.Replace("；", ",");
+               fk_emp = fk_emp.Replace("，", ",");
+               fk_emp = fk_emp.Replace("、", ",");
+               fk_emp = fk_emp.Replace(" ", "");
+               if (string.IsNullOrEmpty(fk_emp))
+                   throw new Exception("@没有在字段[" + this.HisWork.EnMap.Attrs.GetAttrByKey(specEmpFields).Desc + "]中指定接受人，工作无法向下发送。");
+
+               // 把它加入接受人员列表中.
+               string[] myemps = fk_emp.Split(',');
+               foreach (string s in myemps)
+               {
+                   if (string.IsNullOrEmpty(s))
+                       continue;
+                   DataRow dr = dt.NewRow();
+                   dr[0] = s;
+                   dt.Rows.Add(dr);
+               }
+
                return WorkerListWayOfDept(town, dt);
            }
-
 
 
            string prjNo = "";
