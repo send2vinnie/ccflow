@@ -53,15 +53,30 @@ namespace BP.Sys
         /// Tag
         /// </summary>
         public const string Tag = "Tag";
+        /// <summary>
+        /// Tag1
+        /// </summary>
         public const string Tag1 = "Tag1";
         /// <summary>
         /// Tag2
         /// </summary>
         public const string Tag2 = "Tag2";
         /// <summary>
+        /// Tag3
+        /// </summary>
+        public const string Tag3 = "Tag3";
+        /// <summary>
         /// 数据源
         /// </summary>
         public const string DBSrc = "DBSrc";
+        /// <summary>
+        /// Doc
+        /// </summary>
+        public const string Doc = "Doc";
+        /// <summary>
+        /// 参数
+        /// </summary>
+        public const string Paras = "Paras";
     }
     /// <summary>
     /// 扩展
@@ -123,6 +138,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapExtAttr.DBSrc, value);
+            }
+        }
+        public string Paras
+        {
+            get
+            {
+                return this.GetValStrByKey(MapExtAttr.Paras);
+            }
+            set
+            {
+                this.SetValByKey(MapExtAttr.Paras, value);
             }
         }
       
@@ -265,6 +291,17 @@ namespace BP.Sys
                 this.SetValByKey("Tag2", value);
             }
         }
+        public string Tag3
+        {
+            get
+            {
+                return this.GetValStrByKey("Tag3").Replace("~", "'");
+            }
+            set
+            {
+                this.SetValByKey("Tag3", value);
+            }
+        }
         public int H
         {
             get
@@ -329,6 +366,7 @@ namespace BP.Sys
                 map.EnType = EnType.Sys;
 
                 map.AddMyPK();
+
                 map.AddTBString(MapExtAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
                 map.AddTBString(MapExtAttr.ExtType, null, "类型", true, false, 0, 30, 20);
                 map.AddTBInt(MapExtAttr.DoWay, 0, "执行方式", true, false);
@@ -338,9 +376,12 @@ namespace BP.Sys
 
                 map.AddTBStringDoc();
 
-                map.AddTBString(MapExtAttr.Tag, null, "Tag", true, false, 0, 4000, 20);
-                map.AddTBString(MapExtAttr.Tag1, null, "Tag1", true, false, 0, 4000, 20);
-                map.AddTBString(MapExtAttr.Tag2, null, "Tag1", true, false, 0, 3000, 20);
+                map.AddTBString(MapExtAttr.Tag, null, "Tag", true, false, 0, 2000, 20);
+                map.AddTBString(MapExtAttr.Tag1, null, "Tag1", true, false, 0, 2000, 20);
+                map.AddTBString(MapExtAttr.Tag2, null, "Tag2", true, false, 0, 2000, 20);
+                map.AddTBString(MapExtAttr.Tag3, null, "Tag3", true, false, 0, 2000, 20);
+
+                map.AddTBString(MapExtAttr.Paras, null, "参数", true, false, 0, 2000, 20);
 
                 map.AddTBString(MapExtAttr.DBSrc, null, "数据源", true, false, 0, 20, 20);
 
