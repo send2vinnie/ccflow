@@ -203,6 +203,7 @@ namespace BP.WF.Ext
                 // map.AddTBInt(NodeAttr.PassRate, 100, "通过率(对于合流节点有效)", true, true);
                 map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率(对合流点有效)", true, false);
 
+
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, this.ToE("RunModel", "运行模式"),
                     true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流@4=子线程");
             

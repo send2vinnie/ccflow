@@ -1183,76 +1183,6 @@ namespace BP.WF
                     throw new Exception("eeeee");
                     break;
             }
-
-            #region  判断流程节点类型。
-            while (true)
-            {
-                if (this.IsFLHL)
-                {
-                    /*如果是分合流，那么它一定是干流。*/
-                    this.HisFNType = FNType.River;
-                    break;
-                }
-
-                if (fl.HisFlowType == FlowType.Panel)
-                {
-                    /*说明它没有分流程合流之说，只有平面节点。*/
-                    this.HisFNType = FNType.Plane;
-                    break;
-                }
-
-
-                if (this.HisNodeWorkType == NodeWorkType.StartWork)
-                {
-                    /* 如果是开始节点，判断其它节点中是否有分流合流节点，如果有说明它是一个 */
-                    this.HisFNType = FNType.Branch;
-                    break;
-                }
-
-                // 查看能够转向到他的节点。
-                Nodes fNDs = this.FromNodes;
-                if (fNDs.Count == 0)
-                {
-                    /*说明它是一个单个节点，就不处理它的情况。*/
-                    break;
-                }
-
-                bool isOk = false;
-                foreach (Node nd in fNDs)
-                {
-                    if (nd.IsFL)
-                    {
-                        /*它的上一个节点是分流*/
-                        this.HisFNType = FNType.Branch;
-                        isOk = true;
-                        break;
-                    }
-
-                    if (nd.HisNodeWorkType == NodeWorkType.WorkHL)
-                    {
-                        /*它的上一个节点是合流*/
-                        this.HisFNType = FNType.River;
-                        isOk = true;
-                        break;
-                    }
-
-                    if (nd.HisFNType == FNType.Plane)
-                        break;
-
-                    this.HisFNType = nd.HisFNType;
-                    isOk = false;
-                    break;
-                }
-
-                ////如果判断了，就放出它来。
-                //if (isOk)
-                //    break;
-                //else
-                //    throw new Exception("@没有判断到它是分流还是合流节点。");
-                break;
-            }
-            #endregion  判断流程节点类型。
-
             return base.beforeUpdate();
         }
         #endregion
@@ -1271,7 +1201,7 @@ namespace BP.WF
         /// <summary>
         /// 流程节点类型
         /// </summary>
-        public FNType HisFNType
+        public FNType HisFNType_del
         {
             get
             {
@@ -2397,7 +2327,7 @@ namespace BP.WF
 
                 map.AddTBString(NodeAttr.RecipientSQL, null, "访问规则设置", true, false, 0, 500, 10);
 
-                map.AddTBString(NodeAttr.Doc, null, BP.Sys.Language.GetValByUserLang("Desc", "描述"), true, false, 0, 100, 10);
+                map.AddTBString(NodeAttr.Doc, null, "描述", true, false, 0, 100, 10);
                 map.AddBoolean(NodeAttr.IsTask, true, "允许分配工作否?", true, true);
 
                 map.AddTBInt(NodeAttr.ReturnRole, 2, "退回规则", true, true);

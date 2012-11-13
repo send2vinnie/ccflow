@@ -355,17 +355,8 @@ namespace BP.WF
                 foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
                 {
                     wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
-                    //switch (k)
-                    //{
-                    //    case "FK_Flow":
-                    //    case "IsDeleteDraft":
-                    //    case "FK_":
-                    //        break;
-                    //    default:
-                    //        i++;
-                    //        break;
-                    //}
                 }
+
                 if (i > 3)
                     wk.DirectUpdate();
 
@@ -501,8 +492,6 @@ namespace BP.WF
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
-
-        
 
 
             //string msg = "";
@@ -2623,6 +2612,28 @@ namespace BP.WF
                 }
             }
 
+            if (attrs.Contains(md.No + "_" + GERptAttr.WFState) == false)
+            {
+                /* 流程状态 */
+                MapAttr attr = new BP.Sys.MapAttr();
+                attr.FK_MapData = md.No;
+                attr.HisEditType = EditType.UnDel;
+                attr.KeyOfEn = GERptAttr.WFState;
+                attr.Name = "流程状态"; //  
+                attr.MyDataType = DataType.AppInt;
+
+                attr.UIBindKey = "WFState";
+                attr.UIContralType = UIContralType.DDL;
+                attr.LGType = FieldTypeS.Enum;
+                attr.UIVisible = true;
+                attr.UIIsEnable = false;
+                attr.MinLen = 0;
+                attr.MaxLen = 1000;
+                attr.IDX = -1;
+                attr.Insert();
+            }
+
+
             if (attrs.Contains(md.No + "_" + GERptAttr.FlowEmps) == false)
             {
                 /* 参与人 */
@@ -2642,6 +2653,8 @@ namespace BP.WF
                 attr.IDX = -100;
                 attr.Insert();
             }
+
+           
 
             if (attrs.Contains(md.No + "_" + GERptAttr.FlowStarter) == false)
             {

@@ -399,7 +399,7 @@ namespace BP.WF
             if (WebUser.IsAuthorize == false)
             {
                 sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ";
-                BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
+                BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
 

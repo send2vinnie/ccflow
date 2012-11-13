@@ -697,14 +697,7 @@ namespace BP.WF
             string sql = "";
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET WFState=1 WHERE WorkID=" + this.WorkID);
 
-            if (this.HisFlow.HisStartNode.HisFNType == FNType.River)
-            {
-                /* 开始节点是干流 */
-            }
-            else
-            {
-              //  BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
-            }
+          
 
             string msg = "";
             // 判断流程中是否还没有没有完成的支流。
@@ -713,11 +706,7 @@ namespace BP.WF
             DataTable dt = DBAccess.RunSQLReturnTable("SELECT Rec FROM ND" + nd.NodeID + " WHERE FID=" + this.FID);
             if (DBAccess.RunSQLReturnValInt(sql) == 0)
             {
-                /* 如果全部完成 */
-                if (this.HisFlow.HisStartNode.HisFNType == FNType.River)
-                {
-                  //  BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE FID=" + this.FID);
-                }
+               
 
                 /*整个流程都结束了*/
                 DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE FID=" + this.FID);
@@ -748,10 +737,10 @@ namespace BP.WF
         /// 在分流上结束流程。
         /// </summary>
         /// <returns></returns>
-        public string DoFlowOverBranch_Bak(Node nd)
+        public string DoFlowOverBranch_Bak_del(Node nd)
         {
             string sql = "";
-            if (this.HisFlow.HisStartNode.HisFNType == FNType.River)
+            if (this.HisFlow.HisStartNode.HisFNType_del == FNType.River)
             {
                 /* 如果开始节点是干流，结束节点是支流。*/
                 BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET WFState=1 WHERE WorkID=" + this.WorkID);

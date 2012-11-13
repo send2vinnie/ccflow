@@ -3007,7 +3007,7 @@ namespace BP.WF
                         else
                         {
                             WorkNodes wns = new WorkNodes();
-                            if (this.HisNode.HisFNType == FNType.River)
+                            if (this.HisNode.HisRunModel!= RunModel.Ordinary )
                                 wns.GenerByFID(this.HisNode.HisFlow, this.WorkID);
                             else
                                 wns.GenerByWorkID(this.HisNode.HisFlow, this.WorkID);
@@ -5048,18 +5048,14 @@ namespace BP.WF
         public int GenerByFID(Flow flow, Int64 fid)
         {
             this.Clear();
-
             Nodes nds = flow.HisNodes;
             foreach (Node nd in nds)
             {
-                if (nd.HisFNType != FNType.River)
+                if (nd.HisRunModel != RunModel.Ordinary)
                     continue;
-
                 Work wk = nd.GetWork(fid);
                 if (wk == null)
                     continue;
-
-
                 this.Add(new WorkNode(wk, nd));
             }
             return this.Count;
