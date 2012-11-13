@@ -510,7 +510,6 @@ namespace BP.DA
             sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey='OID'";
             return DBAccess.RunSQLReturnValInt(sql);
         }
-       
         public static int GenerOIDV2()
         {
             return DBAccess.RunSPReturnInt("GenerOID");

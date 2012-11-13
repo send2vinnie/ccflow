@@ -8,10 +8,28 @@ using System.Reflection;
 namespace BP.En
 {
     /// <summary>
+    /// 相关功能类型
+    /// </summary>
+    public enum RefMethodType
+    {
+        /// <summary>
+        /// 功能
+        /// </summary>
+        Func,
+        /// <summary>
+        /// 链接
+        /// </summary>
+        Link
+    }
+    /// <summary>
     /// RefMethod 的摘要说明。
     /// </summary>
     public class RefMethod
     {
+        /// <summary>
+        /// 功能
+        /// </summary>
+        public RefMethodType RefMethodType = RefMethodType.Func;
         /// <summary>
         /// 是否显示在Ens中?
         /// </summary>
@@ -72,7 +90,6 @@ namespace BP.En
         public string Icon = null;
         public string GetIcon(string path)
         {
-
             if (this.Icon == null)
             {
                 return null;

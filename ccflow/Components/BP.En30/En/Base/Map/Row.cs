@@ -79,8 +79,6 @@ namespace BP.En
         public object GetValByKey(string key)
         {
             return this[key];
-
-
             /*
             if (SystemConfig.IsDebug)
             {

@@ -30,6 +30,13 @@ namespace BP.En
                 return "OID";
             }
         }
+        public override string PKField
+        {
+            get
+            {
+                return "OID";
+            }
+        }
         /// <summary>
         /// ππ‘Ï
         /// </summary>

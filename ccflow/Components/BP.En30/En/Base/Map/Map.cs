@@ -1846,7 +1846,6 @@ namespace BP.En
             if (string.IsNullOrEmpty(this.FK_MapData))
                 throw new Exception("@您没有为map的 FK_MapData 赋值.");
 
-
             Sys.MapData md = null;
             md = new Sys.MapData();
             md.No = this.FK_MapData;
@@ -1873,17 +1872,17 @@ namespace BP.En
                 //把文件实体类的属性放入关系实体类中去。
                 MapAttr mapattrN = attr.ToMapAttr;
                 mapattrN.FK_MapData = this.FK_MapData;
+                if (mapattrN.UIHeight == 0)
+                    mapattrN.UIHeight = 23;
                 mapattrN.Insert();
                 attrs.AddEntity(mapattrN);
             }
-
 
             //把关系实体类的属性放入文件实体类中去。
             foreach (MapAttr attr in attrs)
             {
                 if (this.Attrs.Contains(attr.KeyOfEn) == true)
                     continue;
-
                 this.AddAttr(attr.HisAttr);
             }
         }
