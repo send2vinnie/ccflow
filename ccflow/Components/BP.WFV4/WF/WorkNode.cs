@@ -78,7 +78,7 @@ namespace BP.WF
         //查询出每个节点表里的接收人集合（Emps）。
         public string GenerEmps(Node nd)
         {
-            string str = "";
+            string str = ""; 
             foreach (WorkerList wl in this.HisWorkerLists)
                 str = wl.FK_Emp + ",";
             return str;
@@ -138,7 +138,7 @@ namespace BP.WF
                     throw new Exception("@您设置的当前节点按照sql，决定下一步的接受人员，但是你没有设置sql.");
 
                 Attrs attrs = this.HisWork.EnMap.Attrs;
-                sql = this.HisNode.RecipientSQL;
+                sql = town.HisNode.RecipientSQL;
                 foreach (Attr attr in attrs)
                 {
                     if (attr.MyDataType == DataType.AppString)

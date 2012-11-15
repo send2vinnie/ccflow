@@ -38,7 +38,7 @@ namespace BP.WF
             /* 判断我是否可以处理当前点数据？ */
             switch (this.HisDeliveryWay)
             {
-                case DeliveryWay.ByEmp:
+                case DeliveryWay.ByPreviousNodeFormEmpsField:
                     NodeEmps ndemps = new NodeEmps(this.NodeID);
                     if (ndemps.Contains(NodeEmpAttr.FK_Emp, WebUser.No) == false)
                         return false;
