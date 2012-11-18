@@ -20,6 +20,8 @@
 </style>
 <base target=_self />
     <link href="Style/Table.css" rel="stylesheet" type="text/css" />
+
+    
 </head>
 <body onkeypress=Esc() >
     <form id="form1" runat="server">
