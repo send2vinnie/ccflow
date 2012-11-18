@@ -57,7 +57,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
 [assembly: AssemblyVersion("2007.06.15.1")]
-
-
 [assembly: AssemblyFileVersionAttribute("3.0.0.0")]
 [assembly: ComVisibleAttribute(false)]

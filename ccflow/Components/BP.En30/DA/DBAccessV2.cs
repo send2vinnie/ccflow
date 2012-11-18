@@ -1716,76 +1716,6 @@ namespace BP.DA
         /// <summary>
         /// 运行sql 返回Table
         /// </summary>
-        /// <param name="msSQL">msSQL</param>
-        /// <param name="sqlconn">连接</param>
-        /// <param name="sqlType">类型</param>
-        /// <param name="pars">参数</param>
-        /// <returns>执行SQL返回的DataTable</returns>
-        public static DataTable RunSQLReturnTable_bak111(string msSQL, SqlConnection sqlconn, CommandType sqlType, params object[] pars)
-        {
-            string msg = "step1";
-#if DEBUG
-            Debug.WriteLine(msSQL);
-#endif
-
-            while (lock_msSQL_ReturnTable)
-                ;
-
-            try
-            {
-
-                if (sqlconn == null)
-                    sqlconn = new SqlConnection(SystemConfig.AppCenterDSN);
-
-                if (sqlconn.State == ConnectionState.Closed)
-                    sqlconn.Open();
-
-                SqlDataAdapter msAda = new SqlDataAdapter(msSQL, sqlconn);
-
-                msg = "error 2";
-                msAda.SelectCommand.CommandType = sqlType;
-                foreach (object par in pars)
-                {
-                    msAda.SelectCommand.Parameters.AddWithValue("par", par);
-                }
-                DataTable mstb = new DataTable("mstb");
-                //如果是锁定状态，就等待
-                lock_msSQL_ReturnTable = true; //锁定
-
-                msg = "error 3";
-                try
-                {
-                    msg = "4";
-                    msAda.Fill(mstb);
-                }
-                catch (Exception ex)
-                {
-                    msg = "5";
-                    lock_msSQL_ReturnTable = false;
-                    throw ex;
-                }
-                msg = "10";
-                msAda.Dispose();
-                msg = "11";
-                if (SystemConfig.IsBSsystem_Test == false)
-                {
-                    msg = "13";
-                    sqlconn.Close();
-                }
-                msg = "14";
-                lock_msSQL_ReturnTable = false;// 返回前一定要开锁
-                return mstb;
-            }
-            catch (System.Exception ex)
-            {
-                lock_msSQL_ReturnTable = false;
-                throw new Exception("[RunSQLReturnTable on SqlConnection] step = " + msg + "<BR>" + ex.Message + " SQL=" + msSQL);
-            }
-            //return mstb;
-        }
-        /// <summary>
-        /// 运行sql 返回Table
-        /// </summary>
         /// <param name="msSQL">要运行的sql</param>
         /// <param name="sqlconn">SqlConnection</param>
         /// <returns>DataTable</returns>
@@ -2024,7 +1954,6 @@ namespace BP.DA
             catch (System.Exception ex)
             {
                 HisConnOfSQLs.PutPool(connofObj);
-
                 string msgErr = ex.Message;
                 //if (msgErr.Contains("DataReader"))
                 //{
@@ -2032,7 +1961,6 @@ namespace BP.DA
                 //    conn.Close();
                 //    return RunSQLReturnTable_200705_SQL(selectSQL);
                 //}
-
                 string msg = "@运行查询在(RunSQLReturnTable_200705_SQL)出错 sql=" + selectSQL + " @异常信息：" + msgErr;
                 Log.DebugWriteError(msg);
                 throw new Exception(msg);
@@ -2336,7 +2264,7 @@ namespace BP.DA
            // RunSQLReturnTableCount++;
             //Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "RunSQLReturnTable sql=" + sql);
 
-            if (sql == null || sql.Length == 0)
+            if (string.IsNullOrEmpty(sql) )
                 throw new Exception("要执行的 sql =null ");
 
             switch (AppCenterDBType)

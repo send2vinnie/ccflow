@@ -1268,10 +1268,13 @@ namespace BP.DA
         }
         public static string GenerSpace(int spaceNum)
         {
+            if (spaceNum <= 0)
+                return "";
+
             string strs = "";
             while (spaceNum != 0)
             {
-                strs += "&nbsp;";
+                strs += "&nbsp;&nbsp;";
                 spaceNum--;
             }
             return strs;

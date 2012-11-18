@@ -479,6 +479,37 @@ namespace BP.WF
                     }
                 }
                 #endregion 处理流程之间的数据传递。
+
+
+                #region 处理流程之间的数据传递。
+                if (System.Web.HttpContext.Current.Request.QueryString["JumpToNode"] != null)
+                {
+                    wk.Rec = WebUser.No;
+                    wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+                    wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+                    wk.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+                    //wk.WFState = 0;
+                    wk.NodeState = 0;
+                    wk.FK_Dept = WebUser.FK_Dept;
+                    wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
+                    wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+                    wk.FID = 0;
+                    wk.SetValByKey("RecText", WebUser.Name);
+
+                    int jumpNodeID = int.Parse(System.Web.HttpContext.Current.Request.QueryString["JumpToNode"]);
+                    Node jumpNode = new Node(jumpNodeID);
+
+                    string jumpToEmp = System.Web.HttpContext.Current.Request.QueryString["JumpToEmp"];
+                    if (string.IsNullOrEmpty(jumpToEmp))
+                        jumpToEmp = WebUser.No;
+
+                    WorkNode wn = new WorkNode(wk, nd);
+                    wn.AfterNodeSave(jumpNode, jumpToEmp);
+
+                    WorkFlow wf = new WorkFlow(this, wk.OID, wk.FID);
+                    return wf.GetCurrentWorkNode().HisWork;
+                }
+                #endregion 处理流程之间的数据传递。
             }
 
             wk.Rec = WebUser.No;
@@ -841,15 +872,6 @@ namespace BP.WF
                 return null;
 
             string sql = "";
-            try
-            {
-                sql = "DROP VIEW V_FlowData ";
-                DBAccess.RunSQL(sql);
-            }
-            catch
-            {
-            }
-
             sql = "CREATE VIEW V_FlowData (FK_FlowSort,FK_Flow,OID,FID,Title,WFState,CDT,FlowStarter,FlowStartRDT,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,FlowEndNode,MyNum) ";
             //     sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
@@ -880,16 +902,29 @@ namespace BP.WF
             if (sql.Contains("SELECT") == false)
                 return null;
             sql = sql.Substring(0, sql.Length - 6);
-            if (sql.Length > 50)
+            if (sql.Length > 20)
             {
                 try
                 {
                     DBAccess.RunSQL("DROP VIEW V_FlowData");
+                }
+                catch
+                {
+                    try
+                    {
+                        DBAccess.RunSQL("DROP table V_FlowData");
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                try
+                {
                     DBAccess.RunSQL(sql);
                 }
                 catch
                 {
-
                 }
             }
             return null;
@@ -2280,17 +2315,17 @@ namespace BP.WF
                         }
                         endWK = wk;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         err += ex.Message;
                     }
                 }
 
                 if (startWork == null || endWK == null)
-                    continue ;
+                    continue;
 
                 rpt.SetValByKey("OID", oid);
-                rpt.FK_NY = startWork.GetValStrByKey("RDT").Substring(0,7);
+                rpt.FK_NY = startWork.GetValStrByKey("RDT").Substring(0, 7);
                 rpt.FK_Dept = startWork.GetValStrByKey("FK_Dept");
                 if (string.IsNullOrEmpty(rpt.FK_Dept))
                 {
@@ -2301,7 +2336,8 @@ namespace BP.WF
                     startWork.Update();
                 }
                 rpt.Title = startWork.GetValStrByKey("Title");
-                rpt.WFState = startWork.GetValIntByKey("WFState");
+                string wfState = DBAccess.RunSQLReturnStringIsNull("SELECT WFState FROM WF_GenerWorkFlow WHERE WorkID=" + oid, "1");
+                rpt.WFState = int.Parse(wfState);
                 rpt.FlowStarter = startWork.Rec;
                 rpt.FlowStartRDT = startWork.RDT;
                 rpt.FID = startWork.GetValIntByKey("FID");

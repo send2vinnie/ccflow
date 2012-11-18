@@ -76,13 +76,60 @@ namespace BP.Sys
         /// <summary>
         /// 参数
         /// </summary>
-        public const string Paras = "Paras";
+        public const string AtPara = "AtPara";
     }
     /// <summary>
     /// 扩展
     /// </summary>
     public class MapExt : EntityMyPK
     {
+        #region 关于 at 参数
+        /// <summary>
+        /// Pop参数.
+        /// </summary>
+        public int PopValFormat
+        {
+            get
+            {
+                return this.GetParaInt("PopValFormat");
+            }
+            set
+            {
+                this.SetPara("PopValFormat", value);
+            }
+        }
+        /// <summary>
+        /// pop 选择方式
+        /// 0,多选,1=单选.
+        /// </summary>
+        public int PopValSelectModel
+        {
+            get
+            {
+                return this.GetParaInt("PopValSelectModel");
+            }
+            set
+            {
+                this.SetPara("PopValSelectModel", value);
+            }
+        }
+        /// <summary>
+        /// 工作模式
+        /// 0=url, 1=内置.
+        /// </summary>
+        public int PopValWorkModel
+        {
+            get
+            {
+                return this.GetParaInt("PopValWorkModel");
+            }
+            set
+            {
+                this.SetPara("PopValWorkModel", value);
+            }
+        }
+        #endregion
+
         #region 属性
         public string ExtDesc
         {
@@ -140,15 +187,15 @@ namespace BP.Sys
                 this.SetValByKey(MapExtAttr.DBSrc, value);
             }
         }
-        public string Paras
+        public string AtPara
         {
             get
             {
-                return this.GetValStrByKey(MapExtAttr.Paras);
+                return this.GetValStrByKey(MapExtAttr.AtPara);
             }
             set
             {
-                this.SetValByKey(MapExtAttr.Paras, value);
+                this.SetValByKey(MapExtAttr.AtPara, value);
             }
         }
       
@@ -373,17 +420,15 @@ namespace BP.Sys
 
                 map.AddTBString(MapExtAttr.AttrOfOper, null, "操作的Attr", true, false, 0, 30, 20);
                 map.AddTBString(MapExtAttr.AttrsOfActive, null, "激活的字段", true, false, 0, 900, 20);
-
                 map.AddTBStringDoc();
-
                 map.AddTBString(MapExtAttr.Tag, null, "Tag", true, false, 0, 2000, 20);
                 map.AddTBString(MapExtAttr.Tag1, null, "Tag1", true, false, 0, 2000, 20);
                 map.AddTBString(MapExtAttr.Tag2, null, "Tag2", true, false, 0, 2000, 20);
                 map.AddTBString(MapExtAttr.Tag3, null, "Tag3", true, false, 0, 2000, 20);
 
-                map.AddTBString(MapExtAttr.Paras, null, "参数", true, false, 0, 2000, 20);
-
+                map.AddTBString(MapExtAttr.AtPara, null, "参数", true, false, 0, 2000, 20);
                 map.AddTBString(MapExtAttr.DBSrc, null, "数据源", true, false, 0, 20, 20);
+
 
                 map.AddTBInt(MapExtAttr.H, 500, "高度", false, false);
                 map.AddTBInt(MapExtAttr.W, 400, "宽度", false, false);

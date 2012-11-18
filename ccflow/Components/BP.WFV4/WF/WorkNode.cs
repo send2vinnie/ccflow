@@ -201,7 +201,7 @@ namespace BP.WF
                     throw new Exception("@您设置的当前节点按照指定的人员，决定下一步的接受人员，但是你没有在节点表单中设置该表单" + specEmpFields + "字段。");
 
                 //获取接受人并格式化接受人, 
-                fk_emp = this.HisWork.GetValStringByKey(specEmpFields);
+                fk_emp = this.HisWork.GetValStrByKey(specEmpFields);
                 fk_emp = fk_emp.Replace(";", ",");
                 fk_emp = fk_emp.Replace("；", ",");
                 fk_emp = fk_emp.Replace("，", ",");

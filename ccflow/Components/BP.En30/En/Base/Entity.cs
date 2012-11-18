@@ -343,6 +343,9 @@ namespace BP.En
             if (attrGroupKey == null || attrGroupVal == null)
                 throw new Exception("@分组字段attrGroupKey attrGroupVal 不能为空");
 
+            //attrKey = this.EnMap.GetAttrByKey(attrKey).Field;
+            //attrGroupKey = this.EnMap.GetAttrByKey(attrGroupKey).Field;
+
             Paras ps = new Paras();
             ps.Add("groupKey", attrGroupKey);
             ps.Add("groupVal", attrGroupVal);
@@ -1234,17 +1237,19 @@ namespace BP.En
                         // 重新获取一次。
                         atParaStr = this.GetValStringByKey("AtPara");
                         if (string.IsNullOrEmpty(atParaStr))
-                            throw new Exception("@获取参数AtPara时出现异常，可能您没有初始化它Entity:" + this.ToString() + "");
+                            atParaStr = "@1=1@2=2";
+
+                        at = new AtPara(atParaStr);
+                        this.SetValByKey("_ATObj_", at);
                         return at;
                     }
-
                     at = new AtPara(atParaStr);
                     this.SetValByKey("_ATObj_", at);
                     return at;
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("@获取参数AtPara时出现异常" + ex.Message + "，可能是您没有加入约定的参数字段AtPara");
+                    throw new Exception("@获取参数AtPara时出现异常" + ex.Message + "，可能是您没有加入约定的参数字段AtPara. "+ex.Message);
                 }
             }
         }
@@ -2149,7 +2154,7 @@ namespace BP.En
                 bool isHave = false;
                 foreach (DataRow dr in dtAttr.Rows)
                 {
-                    if (dr["FName"].ToString().ToLower() == attr.Key.ToLower())
+                    if (dr["FName"].ToString().ToLower() == attr.Field.ToLower())
                     {
                         isHave = true;
                         FType = dr["FType"] as string;

@@ -236,7 +236,7 @@
     <Compile Include="En\Base\SimpleNoNameFix.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="En\Base\EntityGrade.cs" />
+    <Compile Include="En\Base\EntityTree.cs" />
     <Compile Include="En\DBSimpleNoName.cs">
       <SubType>Code</SubType>
     </Compile>

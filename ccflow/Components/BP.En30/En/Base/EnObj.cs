@@ -974,6 +974,18 @@ namespace BP.En
             }
         }
         /// <summary>
+        /// 是否是TreeEntity
+        /// </summary>
+        public bool IsTreeEntity
+        {
+            get
+            {
+                if (this.PK == "ID")
+                    return true;
+                return false;
+            }
+        }
+        /// <summary>
         /// 是不是IsMIDEntity
         /// </summary>
         public bool IsMIDEntity

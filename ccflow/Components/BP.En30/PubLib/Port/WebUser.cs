@@ -205,8 +205,6 @@ namespace BP.Web
             WebUser.HisDepts = null;
             WebUser.HisStations = null;
 
-
-
             if (SystemConfig.IsUnit)
             {
                 WebUser.FK_Unit = em.FK_Unit;
@@ -672,13 +670,12 @@ namespace BP.Web
         {
             get
             {
-                string no = GetSessionByKey("No", null);
+                //string no = GetSessionByKey("No", null);
+                string no = null; // GetSessionByKey("No", null);
                 if (no == null || no == "")
                 {
                     if (IsBSMode == false)
                         return "admin";
-
-                  //  System.Web.HttpContext.Current.
 
                     string key = "CCS";
                     HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies[key];
@@ -691,6 +688,8 @@ namespace BP.Web
                         WebUser.FK_Dept = hc["FK_Dept"];
                         WebUser.Auth = hc["Auth"];
                         WebUser.FK_DeptName = HttpUtility.UrlDecode(hc["FK_DeptName"]);
+                        WebUser.Name = HttpUtility.UrlDecode(hc["Name"]);
+
 
                         if (BP.SystemConfig.IsUnit)
                         {
@@ -698,11 +697,10 @@ namespace BP.Web
                             WebUser.FK_UnitName = HttpUtility.UrlDecode(hc["FK_UnitName"]);
                         }
 
-                        string name = BP.DA.DBAccess.RunSQLReturnStringIsNull("SELECT Name, FK_Dept FROM Port_Emp WHERE No='" + HttpUtility.UrlDecode(hc["No"] + "'"), "null");
-                        if (name == "null")
-                            return null;
-
-                        WebUser.SetSessionByKey("Name", name);
+                        //string name = BP.DA.DBAccess.RunSQLReturnStringIsNull("SELECT Name, FK_Dept FROM Port_Emp WHERE No='" + HttpUtility.UrlDecode(hc["No"] + "'"), "null");
+                        //if (name == "null")
+                        //    return null;
+                       // WebUser.SetSessionByKey("Name", name);
                         return hc.Values["No"];
                     }
                     throw new Exception("@err-001 µÇÂ½ÐÅÏ¢¶ªÊ§¡£");

@@ -182,6 +182,11 @@ namespace BP.En
                 return paras;
             }
 
+            if (pk == "ID")
+            {
+                paras.Add("ID", en.GetValStrByKey(EntityTreeAttr.ID));
+                return paras;
+            }
 
             foreach (Attr attr in en.EnMap.Attrs)
             {
@@ -213,6 +218,8 @@ namespace BP.En
             {
                 case "OID":
                     return en.EnMap.PhysicsTable + ".OID=" + en.HisDBVarStr + "OID";
+                case "ID":
+                    return en.EnMap.PhysicsTable + ".ID=" + en.HisDBVarStr + "ID";
                 case "No":
                     return en.EnMap.PhysicsTable + ".No=" + en.HisDBVarStr + "No";
                 case "MyPK":
@@ -253,6 +260,8 @@ namespace BP.En
                     return en.EnMap.PhysicsTable + ".No=?";
                 case "MyPK":
                     return en.EnMap.PhysicsTable + ".MyPK=?";
+                case "ID":
+                    return en.EnMap.PhysicsTable + ".ID=?";
                 default:
                     break;
             }
@@ -2202,6 +2211,7 @@ namespace BP.En
                     break;
                 case "No":
                 case "MyPK":
+                case "ID":
                     ps.Add(en.PK, en.GetValStrByKey(pk));
                     break;
                 default:
