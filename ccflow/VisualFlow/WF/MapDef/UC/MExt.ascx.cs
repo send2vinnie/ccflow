@@ -902,20 +902,20 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 continue;
             try
             {
-                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(tb.Text);
-                MapAttrs attrs = new MapAttrs(dtl.No);
-                string err = "";
-                foreach (DataColumn dc in dt.Columns)
-                {
-                    if (attrs.IsExits(MapAttrAttr.KeyOfEn, dc.ColumnName) == false)
-                    {
-                        err += "<br>列" + dc.ColumnName + "不能与明细表 属性匹配.";
-                    }
-                }
-                if (err != "")
-                {
-                    error += "在为("+dtl.Name+")检查sql设置时出现错误:"+err;
-                }
+                //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(tb.Text);
+                //MapAttrs attrs = new MapAttrs(dtl.No);
+                //string err = "";
+                //foreach (DataColumn dc in dt.Columns)
+                //{
+                //    if (attrs.IsExits(MapAttrAttr.KeyOfEn, dc.ColumnName) == false)
+                //    {
+                //        err += "<br>列" + dc.ColumnName + "不能与明细表 属性匹配.";
+                //    }
+                //}
+                //if (err != "")
+                //{
+                //    error += "在为("+dtl.Name+")检查sql设置时出现错误:"+err;
+                //}
             }
             catch (Exception ex)
             {
@@ -1077,15 +1077,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTR();
         this.Pub2.AddTD("设置类型");
         this.Pub2.AddTDBegin();
-
-        string tag = me.Tag;
-        if (string.IsNullOrEmpty(tag))
-            tag = "0";
+       
         RadioButton rb = new RadioButton();
         rb.Text = "自定义URL";
         rb.ID = "RB_Tag_0";
         rb.GroupName = "sd";
-        if (tag == "0")
+        if (me.PopValWorkModel == 0)
             rb.Checked = true;
         else
             rb.Checked = false;
@@ -1094,7 +1091,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         rb.ID = "RB_Tag_1";
         rb.Text = "ccform内置";
         rb.GroupName = "sd";
-        if (tag == "1")
+        if (me.PopValWorkModel == 1)
             rb.Checked = true;
         else
             rb.Checked = false;
@@ -1140,17 +1137,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         #region 选择方式
         this.Pub2.AddTR();
         this.Pub2.AddTD("选择方式");
-
         this.Pub2.AddTDBegin();
 
-         tag = me.Tag3;
-        if (string.IsNullOrEmpty(tag))
-            tag = "0";
         rb = new RadioButton();
         rb.Text = "多项选择";
         rb.ID = "RB_Tag3_0";
         rb.GroupName = "dd";
-        if (tag == "0")
+        if (me.PopValSelectModel == 0)
             rb.Checked = true;
         else
             rb.Checked = false;
@@ -1160,7 +1153,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         rb.ID = "RB_Tag3_1";
         rb.Text = "单项选择";
         rb.GroupName = "dd";
-        if (tag == "1")
+        if (me.PopValSelectModel == 1)
             rb.Checked = true;
         else
             rb.Checked = false;
@@ -1170,6 +1163,16 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
         #endregion 选择方式
 
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("返回值格式");
+        ddl = new BP.Web.Controls.DDL();
+        ddl.ID = "DDL_PopValFormat";
+        ddl.BindSysEnum("PopValFormat");
+
+        ddl.SetSelectItem(me.PopValFormat );
+        this.Pub2.AddTD("colspan=2", ddl);
+        this.Pub2.AddTREnd();
+        this.Pub2.AddTREnd();
 
         this.Pub2.AddTRSum();
         Button btn = new Button();
@@ -1771,18 +1774,19 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         me.ExtType = this.ExtType;
         me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
         me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
+        me.SetPara("PopValFormat", this.Pub2.GetDDLByID("DDL_PopValFormat").SelectedItemStringVal);
 
         RadioButton rb = this.Pub2.GetRadioButtonByID("RB_Tag_0");
         if (rb.Checked)
-            me.Tag = "0";
+            me.PopValWorkModel = 0;
         else
-            me.Tag = "1";
+            me.PopValWorkModel = 1;
 
         rb = this.Pub2.GetRadioButtonByID("RB_Tag3_0");
         if (rb.Checked)
-            me.Tag3 = "0";
+            me.PopValSelectModel = 0;
         else
-            me.Tag3 = "1";
+            me.PopValSelectModel = 1;
 
         me.FK_MapData = this.FK_MapData;
         me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;
@@ -1805,30 +1809,29 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         try
         {
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(me.Doc);
+            //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(me.Doc);
+            //if (string.IsNullOrEmpty(me.Tag) == false)
+            //{
+            //    dt = BP.DA.DBAccess.RunSQLReturnTable(me.Tag);
+            //    if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
+            //        throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
+            //}
 
-            if (string.IsNullOrEmpty(me.Tag) == false)
-            {
-                dt = BP.DA.DBAccess.RunSQLReturnTable(me.Tag);
-                if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
-                    throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
-            }
+            //if (this.ExtType == MapExtXmlList.TBFullCtrl)
+            //{
+            //    if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
+            //        throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
+            //}
 
-            if (this.ExtType == MapExtXmlList.TBFullCtrl)
-            {
-                if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
-                    throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
-            }
+            //MapAttrs attrs = new MapAttrs(this.FK_MapData);
+            //foreach (DataColumn dc in dt.Columns)
+            //{
+            //    if (dc.ColumnName.ToLower() == "no" || dc.ColumnName.ToLower() == "name")
+            //        continue;
 
-            MapAttrs attrs = new MapAttrs(this.FK_MapData);
-            foreach (DataColumn dc in dt.Columns)
-            {
-                if (dc.ColumnName.ToLower() == "no" || dc.ColumnName.ToLower() == "name")
-                    continue;
-
-                if (attrs.Contains(MapAttrAttr.KeyOfEn, dc.ColumnName) == false)
-                    throw new Exception("@系统没有找到您要匹配的列(" + dc.ColumnName + ")，注意:您要指定的列名区分大小写。");
-            }
+            //    if (attrs.Contains(MapAttrAttr.KeyOfEn, dc.ColumnName) == false)
+            //        throw new Exception("@系统没有找到您要匹配的列(" + dc.ColumnName + ")，注意:您要指定的列名区分大小写。");
+            //}
             me.Save();
         }
         catch (Exception ex)

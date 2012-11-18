@@ -1296,7 +1296,7 @@ namespace BP.Web.Comm.UC.WF
                             if (tb == null)
                                 continue;
 
-                            if (me.Tag == "0")
+                            if (me.PopValWorkModel ==  0 )
                                 tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
                             else
                                 tb.Attributes["ondblclick"] = "ReturnValCCFormPopVal(this,'" + me.MyPK + "','"+en.PKVal+"');";
@@ -2210,6 +2210,28 @@ namespace BP.Web.Comm.UC.WF
                 js += "\t\n function SaveM2M(dtl) { ";
                 js += "\t\n   document.getElementById('F' + dtl ).contentWindow.SaveM2M();";
                 js += "\t\n } ";
+
+                //js += "\t\n function GenerParaVals() { ";
+                //js += "\t\n  var strs='' ";
+                //foreach (MapAttr attr in mattrs)
+                //{
+                //    if (attr.UIIsEnable == false || attr.UIVisible == false)
+                //        continue;
+                //    switch (attr.UIContralType)
+                //    {
+                //        case UIContralType.TB:
+                //            js += "\t\n  strs+= '&" + attr.KeyOfEn + "=ReqTB('" + attr.KeyOfEn + "');";
+                //            break;
+                //        case UIContralType.DDL:
+                //            js += "\t\n  strs+= '&" + attr.KeyOfEn + "=ReqDDL('" + attr.KeyOfEn + "');";
+                //            break;
+                //        default:
+                //            break;
+                //    }
+                //}
+                //js += "\t\n   return strs";
+                //js += "\t\n } ";
+
                 js += "\t\n</script>";
                 this.Add(js);
             }

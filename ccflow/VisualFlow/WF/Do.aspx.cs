@@ -107,7 +107,7 @@ namespace BP.Web.WF
                             cc1.HisSta = CCSta.Read;
                             cc1.Update();
                         }
-                        this.Response.Redirect(this.Request.ApplicationPath + "/WF/WorkOpt/OneWork/Track.aspx?FK_Flow=" + fk_flow1 + "&FK_Node=" + fk_node1 + "&WorkID=" + workid1+"&FID="+fid1, false);
+                        this.Response.Redirect(this.Request.ApplicationPath + "/WF/WorkOpt/OneWork/Track.aspx?FK_Flow=" + fk_flow1 + "&FK_Node=" + fk_node1 + "&WorkID=" + workid1 + "&FID=" + fid1, false);
                         return;
                     case "DelCC": //删除抄送.
                         CCList cc = new CCList();
@@ -216,9 +216,7 @@ namespace BP.Web.WF
                             this.WinCloseWithMsg("授权失败");
                             return;
                         }
-
                         BP.Port.Emp emp1 = new BP.Port.Emp(this.FK_Emp);
-
                         BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No, true, false);
                         this.WinClose();
                         return;
@@ -228,7 +226,6 @@ namespace BP.Web.WF
                         myau.Author = "";
                         myau.AuthorWay = 0;
                         myau.Update();
-                        //myau.Update(BP.WF.Port.WFEmpAttr.Author, "",BP.WF.Port.WFEmpAttr.AuthorIsOK, 0);
                         this.WinClose();
                         return;
                     case "AutoTo": // 执行授权。
@@ -278,16 +275,13 @@ namespace BP.Web.WF
                     case "DeleteFlow":
                         string fk_flow = this.Request.QueryString["FK_Flow"];
                         Int64 workid = Int64.Parse(this.Request.QueryString["WorkID"]);
-
                         //调用DoDeleteWorkFlowByReal方法
                         WorkFlow wf = new WorkFlow(new Flow(fk_flow), workid);
                         wf.DoDeleteWorkFlowByReal();
-
                         this.ToMsgPage(this.ToE("FlowDelOK", "流程删除成功"));
                         break;
                     default:
                         throw new Exception("ActionType error" + this.ActionType);
-                        break;
                 }
             }
             catch (Exception ex)

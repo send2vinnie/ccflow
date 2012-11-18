@@ -37,6 +37,12 @@ public partial class WF_FrmPopVal : BP.Web.WebPage
     {
         MapExt me = new MapExt(this.FK_MapExt);
 
+        bool isCheckBox=false;
+        if (me.PopValSelectModel == 0)
+            isCheckBox = true;
+        else
+            isCheckBox = false;
+
         string sqlGroup = me.Tag1;
         sqlGroup = sqlGroup.Replace("@WebUser.No", BP.Web.WebUser.No);
         sqlGroup = sqlGroup.Replace("@WebUser.Name", BP.Web.WebUser.Name);
@@ -237,6 +243,9 @@ public partial class WF_FrmPopVal : BP.Web.WebPage
             return;
         }
 
+        MapExt me = new MapExt(this.FK_MapExt);
+
+        int popValFormat = me.PopValFormat;
         string val = "";
         foreach (Control ctl in this.Pub1.Controls)
         {
@@ -247,8 +256,22 @@ public partial class WF_FrmPopVal : BP.Web.WebPage
                 continue;
             if (cb.Checked == false)
                 continue;
-
-            val += "," + cb.ID.Replace("CB_", "");
+            string text = cb.Text.Replace("<font color=green>", "");
+            text = cb.Text.Replace("</font>", "");
+            switch (popValFormat)
+            {
+                case 0:  //仅仅编号
+                    val += "," + cb.ID.Replace("CB_", "");
+                    break;
+                case 1: // 仅名称
+                    val += "," + text;
+                    break;
+                case 2: // 编号与名称
+                    val += "," + cb.ID.Replace("CB_", "") + "," + text;
+                    break;
+                default:
+                    break;
+            }
         }
         if (val.Length > 2)
             val = val.Substring(1);

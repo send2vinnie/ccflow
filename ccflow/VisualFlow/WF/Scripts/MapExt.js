@@ -198,7 +198,6 @@ function GenerPageKVs() {
     var ddls = document.getElementsByTagName("select");
     kvs = "";
     for (var i = 0; i < ddls.length; i++) {
-
         var id = ddls[i].name;
         var myid = id.substring(id.indexOf('DDL_') + 4);
         kvs += '~' + myid + '=' + ddls[i].value;

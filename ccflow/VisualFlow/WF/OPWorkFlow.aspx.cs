@@ -13,7 +13,7 @@ using BP.Port;
 
 namespace BP.Web.WF
 {
-	/// <summary>
+	/// <summary> 
 	/// StopWorkFlow 的摘要说明。
 	/// </summary>
 	public partial class StopWorkFlow : PageBase

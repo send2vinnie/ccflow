@@ -66,17 +66,24 @@ public partial class Designer : System.Web.UI.Page
         {
             msg = "@在检查数据库连接出现错误。";
 
+            #region 2012-11-17  去了开始节点的WFState 字段.
+            sql = "DELETE SYS_MapAttr WHERE KeyOfEn='WFState' AND (FK_MapData LIKE 'ND%' AND FK_MapData LIKE '%01') ";
+            DBAccess.RunSQL(sql);
+            #endregion
+
+            #region 2012-11-10
             BP.WF.Flow.RepareV_FlowData_View();
 
+            // 增加了登录日志.
             UserLog ul = new UserLog();
             ul.CheckPhysicsTable();
+            #endregion
 
 
             #region 升级 09-24 增加临时的trackTemp 表.
             TrackTemp tmp = new TrackTemp();
             tmp.CheckPhysicsTable();
             #endregion 升级 09-24
-
 
             #region 升级 06-12
             WorkerList wl12 = new WorkerList();

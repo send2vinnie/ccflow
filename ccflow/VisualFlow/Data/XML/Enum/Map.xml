@@ -6,6 +6,12 @@
     JP=""
     RU=""    />
 
+  <Item Key="PopValFormat"
+    CH="@0=No(仅编号)@1=Name(仅名称)@2=No,Name(编号与名称)"
+    EN=""
+    JP=""
+    RU=""    />
+
  <Item Key="DTSearchWay"
  CH="@0=不启用@1=按日期@2=按日期时间"
  EN="@0=不启用@1=按日期@2=按日期时间"
