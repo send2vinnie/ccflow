@@ -11,7 +11,6 @@ using BP.WF;
 
 public partial class Designer : System.Web.UI.Page
 {
-
     public bool IsCheckUpdate
     {
         get
@@ -79,10 +78,10 @@ public partial class Designer : System.Web.UI.Page
             ul.CheckPhysicsTable();
             #endregion
 
-
             #region 升级 09-24 增加临时的trackTemp 表.
             TrackTemp tmp = new TrackTemp();
             tmp.CheckPhysicsTable();
+
             #endregion 升级 09-24
 
             #region 升级 06-12
@@ -244,10 +243,26 @@ public partial class Designer : System.Web.UI.Page
             #region 2012- 01-18 增加一个view. 
             try
             {
-                if (BP.SystemConfig.AppCenterDBType== DBType.Oracle9i)
-                    sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTR(RDT,0,8) AS FK_NY, SUBSTR(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTR(RDT,0,8) , SUBSTR(RDT,0,11) ";
+                try
+                {
+                    BP.DA.DBAccess.RunSQL("DROP VIEW WF_Track_NYR");
+                }
+                catch
+                {
+                }
+
+                if (BP.SystemConfig.AppCenterDBType == DBType.Oracle9i)
+                {
+                    sql = "  CREATE  VIEW WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTR(RDT,0,8) AS FK_NY, SUBSTR(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTR(RDT,0,8) , SUBSTR(RDT,0,11) ";
+                    sql += " UNION ";
+                    sql = "  SELECT EmpFrom as FK_Emp,SUBSTR(RDT,0,8) AS FK_NY, SUBSTR(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_TrackTemp GROUP BY EmpFrom ,SUBSTR(RDT,0,8) , SUBSTR(RDT,0,11) ";
+                }
                 else
-                    sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) ";
+                {
+                    sql = "  CREATE  VIEW WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) ";
+                    sql += "  UNION ";
+                    sql += "  SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_TrackTemp GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) ";
+                }
                 BP.DA.DBAccess.RunSQL(sql);
             }
             catch

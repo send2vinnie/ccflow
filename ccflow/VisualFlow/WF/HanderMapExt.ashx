@@ -67,7 +67,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
     public void ProcessRequest(HttpContext context)
     {
         string fk_mapExt = context.Request.QueryString["FK_MapExt"].ToString();
-        if (context.Request.QueryString["Key"] == null)
+        if ( string.IsNullOrEmpty( context.Request.QueryString["Key"]) )
             return;
         no=context.Request.QueryString["WebUserNo"];
         name = context.Request.QueryString["WebUserName"];
