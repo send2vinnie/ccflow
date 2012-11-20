@@ -195,16 +195,45 @@ function ReturnValTBFullCtrl(ctrl, fk_mapExt) {
 
 var kvs = null;
 function GenerPageKVs() {
-    var ddls = document.getElementsByTagName("select");
+    var ddls = null;
+    ddls = parent.document.getElementsByTagName("select");
     kvs = "";
     for (var i = 0; i < ddls.length; i++) {
         var id = ddls[i].name;
+
+        if (id.indexOf('DDL_') == -1) {
+            continue;
+        }
         var myid = id.substring(id.indexOf('DDL_') + 4);
         kvs += '~' + myid + '=' + ddls[i].value;
-        //  if (ddls[i].type == "text" || ddls[i].type == "checkbox") {
-        //}
     }
+
+    ddls = document.getElementsByTagName("select");
+    for (var i = 0; i < ddls.length; i++) {
+        var id = ddls[i].name;
+
+        if (id.indexOf('DDL_') == -1) {
+            continue;
+        }
+        var myid = id.substring(id.indexOf('DDL_') + 4);
+        kvs += '~' + myid + '=' + ddls[i].value;
+    }
+    return kvs;
 }
+
+
+//var kvs = null;
+//function GenerPageKVs() {
+//    var ddls = document.getElementsByTagName("select");
+//    kvs = "";
+//    for (var i = 0; i < ddls.length; i++) {
+//        var id = ddls[i].name;
+//        var myid = id.substring(id.indexOf('DDL_') + 4);
+//        kvs += '~' + myid + '=' + ddls[i].value;
+//        //  if (ddls[i].type == "text" || ddls[i].type == "checkbox") {
+//        //}
+//    }
+//}
 /* 自动填充 */
 function DDLFullCtrl(e, ddlChild, fk_mapExt) {
     GenerPageKVs();

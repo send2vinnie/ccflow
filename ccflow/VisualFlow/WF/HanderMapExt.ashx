@@ -238,6 +238,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
                         break;
                     default:
                         sql = this.DealSQL(me.DocOfSQLDeal, key);
+                        //sql = this.DealSQL(me.DocOfSQLDeal, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;

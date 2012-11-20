@@ -50,13 +50,20 @@ function DtlOpt(workId, fk_mapdtl) {
     </style>
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>
    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js"  defer="defer" ></script>
+   <script type="text/javascript">
+       function SetVal() {
+          // document.getElementById('KVs').value = this.GenerPageKVs();
+           kvs = this.GenerPageKVs();
+       }
+   </script>
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"> 
+<body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"  onblur="SetVal();" onload="SetVal();" > 
     <form id="form1" runat="server">
      <asp:Button ID="Button1" runat="server" Text=""  CssClass="HBtn" Visible=true
          onclick="Button1_Click" />
      <uc2:Pub ID="Pub1" runat="server" />
      <uc2:Pub ID="Pub2" runat="server" />
+      
     </form>
 </body>
 </html>

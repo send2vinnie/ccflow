@@ -1091,6 +1091,7 @@ namespace BP.Web.Comm.UC.WF
                 #region 处理iFrom SaveDtlData。
                 js = "\t\n<script type='text/javascript' >";
                 js += "\t\n function SaveDtl(dtl) { ";
+            //    js += "\t\n    GenerPageKVs(); //调用产生kvs ";
                 js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
                 js += "\t\n } ";
                 js += "\t\n</script>";
@@ -2204,6 +2205,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 js = "\t\n<script type='text/javascript' >";
                 js += "\t\n function SaveDtl(dtl) { ";
+                js += "\t\n    GenerPageKVs(); //调用产生kvs ";
                 js += "\t\n   document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
                 js += "\t\n } ";
 
