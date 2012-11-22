@@ -431,7 +431,7 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
                 return;
 
             var dataObj = eval("(" + data + ")"); //转换为json对象 
-            var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
+            var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('DDL_'));
             var endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
 
             for (var i in dataObj.Head) {
@@ -441,6 +441,7 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
                 for (var k in dataObj.Head[i]) {
                     var fullDDLID = dataObj.Head[i][k];
 
+                    //alert(fullDDLID);
                     FullCtrlDDLDB(key, fullDDLID, beforeID, endId, fk_mapExt);
                 }
             }
@@ -455,6 +456,8 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
 }
 function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
     GenerPageKVs();
+   // alert('FullCtrlDDLDBs:' + ddlID + ' ctrlIdBefore: ' + ctrlIdBefore);
+
     var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "DoType": "ReqDDLFullListDB", "MyDDL": ddlID, "KVs": kvs };
     $.ajax({
         type: "get",
@@ -465,6 +468,8 @@ function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
         },
         success: function (data, textStatus) {
 
+       //     alert(textStatus);
+
             endID = endID.replace('_', '');
             if (endID != parseInt(endID)) {
                 endID = "";
@@ -472,11 +477,22 @@ function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
                 endID = "_" + endID;
             }
             var id = ctrlIdBefore + "DDL_" + ddlID + "" + endID;
+           // alert('FullCtrlDDLDB:' + id);
+
             $("#" + id).empty();
             var dataObj = eval("(" + data + ")"); //转换为json对象 
-            // alert(data);
+            //alert(data);
+            //alert( $("#" + id) );
+//            $.each(dataObj.Head, function (idx, item) {
+//                $("#" + ddlChild).append("<option value='" + item.No + "'>" + item.Name + "</option");
+//            });
+
             $.each(dataObj.Head, function (idx, item) {
+//                alert(idx);
+//                alert(item.No);
+//                alert(item.Name);
                 $("#" + id).append("<option value='" + item.No + "'>" + item.Name + "</option");
+                //$("#" + id).append("<option value='" + item.No + "'>" + item.Name + "</option");
             });
         },
         complete: function (XMLHttpRequest, textStatus) {

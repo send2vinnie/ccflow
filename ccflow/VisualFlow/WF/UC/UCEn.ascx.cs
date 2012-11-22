@@ -1180,17 +1180,63 @@ namespace BP.Web.Comm.UC.WF
                 #endregion 首先处理自动填充，下拉框数据。
 
                 #region 在处理其它。
+                System.Data.DataTable dt = new DataTable();
                 foreach (MapExt me in mes)
                 {
                     switch (me.ExtType)
                     {
-                        case MapExtXmlList.DDLFullCtrl: // 自动填充.
+                        case MapExtXmlList.DDLFullCtrl: // 自动填充其他的控件..
                             DDL ddlOper = this.GetDDLByID("DDL_" + me.AttrOfOper);
                             if (ddlOper == null)
                                 continue;
                             ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
+
+                            if (me.Tag != "")
+                            {
+                                /* 处理下拉框的选择范围的问题 */
+                                string[] strs = me.Tag.Split('$');
+                                foreach (string str in strs)
+                                {
+                                    string[] myCtl = str.Split(':');
+                                    string ctlID = myCtl[0];
+                                    DDL ddlC1 = this.GetDDLByID("DDL_" + ctlID);
+                                    if (ddlC1 == null)
+                                    {
+                                        //me.Tag = "";
+                                        //me.Update();
+                                        continue;
+                                    }
+
+                                    string sql = myCtl[1].Replace("~", "'");
+                                    sql = sql.Replace("@WebUser.No", WebUser.No);
+                                    sql = sql.Replace("@WebUser.Name", WebUser.Name);
+                                    sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                    sql = sql.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+                                    sql = sql.Replace("@Key", ddlOper.SelectedItemStringVal.Trim());
+                                    if (sql.Contains("@"))
+                                    {
+                                        foreach (MapAttr attr in mattrs)
+                                        {
+                                            if (sql.Contains("@" + attr.KeyOfEn) == false)
+                                                continue;
+                                            sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+
+                                            if (sql.Contains("@") == false)
+                                                break;
+                                        }
+                                    }
+
+                                    dt = DBAccess.RunSQLReturnTable(sql);
+                                    string valC1 = ddlC1.SelectedItemStringVal;
+                                    ddlC1.Items.Clear();
+                                    foreach (DataRow dr in dt.Rows)
+                                        ddlC1.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                    ddlC1.SetSelectItem(valC1);
+                                }
+                            }
+
                             break;
-                        case MapExtXmlList.ActiveDDL:
+                        case MapExtXmlList.ActiveDDL: /*自动初始化ddl的下拉框数据.*/
                             DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
                             DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
                             if (ddlPerant == null || ddlChild == null)
@@ -1219,7 +1265,7 @@ namespace BP.Web.Comm.UC.WF
                                 }
                             }
 
-                            DataTable dt = DBAccess.RunSQLReturnTable(fullSQL);
+                             dt = DBAccess.RunSQLReturnTable(fullSQL);
                             // ddlChild.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
                                 ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));

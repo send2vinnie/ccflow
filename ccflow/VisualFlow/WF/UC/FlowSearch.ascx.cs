@@ -166,7 +166,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         {
             if (attr.UIVisible == false)
                 continue;
-
             this.Pub1.AddTDTitle(attr.Desc);
         }
         this.Pub1.AddTDTitle("操作");
@@ -694,7 +693,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         if (WebUser.IsWap)
             this.Pub1.AddCaption("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a> - <img src='./Img/Search.gif' > - " + this.ToE("FlowSearch", "流程查询"));
         else
-            this.Pub1.AddCaptionLeft("<img src='./Img/Search.gif' > <b>" + this.ToE("FlowSearch", "流程查询-分析") + "</b> <span style='float:right'><a href=\"javascript:WinOpen('./../Comm/PanelEns.aspx?EnsName=BP.WF.FlowDatas',900,900); \">综合查询</a> | <a href=\"javascript:WinOpen('./../Comm/GroupEnsMNum.aspx?EnsName=BP.WF.FlowDatas',900,900); \">综合分析</a> ");
+            this.Pub1.AddCaptionLeft("<img src='./Img/Search.gif' > <b>" + this.ToE("FlowSearch", "流程查询-分析") + "</b> <span style='float:right'><a href=\"javascript:WinOpen('KeySearch.aspx',900,900); \">关键字查询</a> | <a href=\"javascript:WinOpen('./../Comm/PanelEns.aspx?EnsName=BP.WF.FlowDatas',900,900); \">综合查询</a> | <a href=\"javascript:WinOpen('./../Comm/GroupEnsMNum.aspx?EnsName=BP.WF.FlowDatas',900,900); \">综合分析</a> ");
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("IDX", "序"));
