@@ -49,10 +49,16 @@ public partial class WF_UC_KeySearch : BP.Web.UC.UCBase3
                     this.Alert("您输入的不是一个WorkID" + text);
                     return;
                 }
-                sql = "SELECT A.*,B.Name as FlowName FROM V_FlowData a,WF_Flow b  WHERE A.FK_Flow=B.No AND A.OID=" + workid;
+                if (this.CheckBox1.Checked)
+                    sql = "SELECT A.*,B.Name as FlowName FROM V_FlowData a,WF_Flow b  WHERE A.FK_Flow=B.No AND A.OID=" + workid + " AND FlowEmps LIKE '@" + WebUser.No + ",'";
+                else
+                    sql = "SELECT A.*,B.Name as FlowName FROM V_FlowData a,WF_Flow b  WHERE A.FK_Flow=B.No AND A.OID=" + workid;
                 break;
             case "Btn_ByTitle":
-                sql = "SELECT A.*,B.Name as FlowName FROM V_FlowData a,WF_Flow b  WHERE A.FK_Flow=B.No AND a.Title LIKE '%" + text + "%'";
+                if (this.CheckBox1.Checked)
+                    sql = "SELECT A.*,B.Name as FlowName FROM V_FlowData a,WF_Flow b  WHERE A.FK_Flow=B.No AND a.Title LIKE '%" + text + "%' AND FlowEmps LIKE '@" + WebUser.No + ",'";
+                else
+                    sql = "SELECT A.*,B.Name as FlowName FROM V_FlowData a,WF_Flow b  WHERE A.FK_Flow=B.No AND a.Title LIKE '%" + text + "%'";
                 break;
             default:
                 break;

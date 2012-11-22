@@ -14,11 +14,18 @@
         return true;
     }
     function DoFunc(doType, workid, fk_flow, fk_node) {
-        if (doType == 'Del' || doType == 'Reset') {
+       // if (doType == 'Del' || doType == 'Reset') {
             if (confirm('您确定要执行吗？') == false)
                 return;
-        }
-        document.location.href = 'OP.aspx?DoType=' + doType + '&WorkID=' + workid + '&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node;
+        //}
+        var url = 'OP.aspx?DoType=' + doType + '&WorkID=' + workid + '&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node;
+        window.location.href = url;
+    }
+    function Takeback(workid, fk_flow, fk_node,toNode) {
+        if (confirm('您确定要执行吗？') == false)
+            return;
+        var url = '../../GetTaskSmall.aspx?DoType=Tackback&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node + '&ToNode=' + toNode + '&WorkID=' + workid;
+        window.location.href = url;
     }
 </script>
 </asp:Content>

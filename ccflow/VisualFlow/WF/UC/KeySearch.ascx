@@ -26,7 +26,6 @@
         Font-Size="Large" Width="259px"></asp:TextBox> 
 <asp:CheckBox ID="CheckBox1" runat="server" Font-Bold="True" 
     ForeColor="#0033CC" Text="仅查询我参与的流程" />
-说明:为了提高查询效率请正确的选择查询方式.
         <br />
     &nbsp;<asp:Button ID="Btn_ByWorkID" runat="server" Text="按工作ID查" Font-Bold="True" 
         Font-Size="Larger" onclick="Button1_Click" />
@@ -34,5 +33,6 @@
         Font-Size="Larger" onclick="Button1_Click" />
         <asp:Button ID="Btn_ByAll" runat="server" Text="全部字段关键字查" Visible=false Font-Bold="True" 
         Font-Size=Larger onclick="Button1_Click" />
+<%--说明:为了提高查询效率请正确的选择查询方式.--%>
         <hr />
     <uc1:Pub ID="Pub1" runat="server" />

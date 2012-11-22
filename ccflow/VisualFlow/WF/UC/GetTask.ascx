@@ -5,7 +5,6 @@
            if (window.confirm('您确定要执行取回操作吗？') == false)
                return;
            var url = 'GetTaskSmall.aspx?DoType=Tackback&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node + '&ToNode=' + toNode + '&WorkID=' + workid;
-
            window.location.href = url;
            //  var v = window.showModalDialog(url, 'sd', 'dialogHeight: 400px; dialogWidth: 500px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');
            // window.location.href = window.location.href;
