@@ -70,6 +70,7 @@ namespace BP.WF
                     break;
             }
         }
+
         #region attrs
 
         public DeliveryWay HisDeliveryWay

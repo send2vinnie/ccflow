@@ -383,39 +383,27 @@ namespace BP.WF
         /// <returns>当前操作员待办工作</returns>
         public static DataTable DB_GenerEmpWorksOfDataTable()
         {
-            if (WebUser.IsAuthorize == false)
-                return DB_GenerEmpWorksOfDataTable(WebUser.No); // 如果不是授权状态.
-            else
-                return DB_GenerEmpWorksOfDataTable(WebUser.Auth);
-        }
-        /// <summary>
-        /// 获取当前操作员的待办工作
-        /// </summary>
-        /// <param name="fk_emp"></param>
-        /// <returns></returns>
-        private static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
-        {
             string sql;
             if (WebUser.IsAuthorize == false)
             {
                 /*不是授权状态*/
-                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ";
+                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
                 BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
 
             /*如果是授权状态, 获取当前委托人的信息. */
-            WF.Port.WFEmp emp = new Port.WFEmp(fk_emp);
+            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
             switch (emp.HisAuthorWay)
             {
                 case Port.AuthorWay.All:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.SpecFlows:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.None:
-                    throw new Exception("对方(" + fk_emp + ")已经取消了授权.");
+                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
                 default:
                     throw new Exception("no such way...");
             }

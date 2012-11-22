@@ -68,7 +68,15 @@ namespace BP.WF
         /// <summary>
         /// 强制终止流程 For lijian:2012-10-24
         /// </summary>
-        FlowOverByCoercion
+        FlowOverByCoercion,
+        /// <summary>
+        /// 挂起
+        /// </summary>
+        Hung,
+        /// <summary>
+        /// 取消挂起
+        /// </summary>
+        UnHung
     }
     /// <summary>
     ///  属性

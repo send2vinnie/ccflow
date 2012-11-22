@@ -1156,6 +1156,27 @@ namespace BP.WF
                 _IntallPath = value;
             }
         }
+        private static string _ServerIP = null;
+        public static string ServerIP
+        {
+            get
+            {
+                if (_ServerIP == null)
+                {
+                    string ip = "127.0.0.1";
+                    System.Net.IPAddress[] addressList = System.Net.Dns.GetHostByName(System.Net.Dns.GetHostName()).AddressList;
+                    if (addressList.Length > 1)
+                        _ServerIP = addressList[1].ToString();
+                    else
+                        _ServerIP = addressList[0].ToString();
+                }
+                return _ServerIP;
+            }
+            set
+            {
+                _ServerIP = value;
+            }
+        }
         /// <summary>
         /// 是否启用检查用户的状态?
         /// 如果启用了:在MyFlow.aspx中每次都会检查当前的用户状态是否被禁

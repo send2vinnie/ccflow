@@ -445,7 +445,7 @@ namespace BP.Web
         {
             get
             {
-                return GetValFromCookie("Auth", null);
+                return GetValFromCookie("Auth", null,false);
                 //return GetSessionByKey("Auth", null);
             }
             set
@@ -460,7 +460,8 @@ namespace BP.Web
         {
             get
             {
-                return GetSessionByKey("FK_DeptName", null);
+                return GetValFromCookie("FK_DeptName", null, true);
+                //return GetSessionByKey("FK_DeptName", null);
             }
             set
             {
@@ -556,7 +557,7 @@ namespace BP.Web
         {
             get
             {
-                string s = GetValFromCookie("FK_Dept", null);
+                string s = GetValFromCookie("FK_Dept", null,false);
                 //string s = GetSessionByKey("FK_Dept", null);
                 if (string.IsNullOrEmpty(s))
                 {
@@ -664,7 +665,7 @@ namespace BP.Web
                 return SystemConfig.SysLanguage;
             }
         }
-        public static string GetValFromCookie(string valKey, string isNullAsVal)
+        public static string GetValFromCookie(string valKey, string isNullAsVal,bool isChinese)
         {
             if (IsBSMode == false)
                 return "admin";
@@ -675,7 +676,12 @@ namespace BP.Web
                 return null;
             try
             {
-                string val = hc.Values[valKey];
+                string val = null;
+                if (isChinese)
+                    val = HttpUtility.UrlDecode(hc[valKey]);
+                else
+                    val = hc.Values[valKey];
+
                 if (string.IsNullOrEmpty(val))
                     return isNullAsVal;
                 return val;
@@ -693,7 +699,7 @@ namespace BP.Web
         {
             get
             {
-                string val= GetValFromCookie("No", null);
+                string val= GetValFromCookie("No", null,false);
                 if (val== null)
                     throw new Exception("@err-001 µÇÂ½ÐÅÏ¢¶ªÊ§¡£");
 
@@ -744,8 +750,8 @@ namespace BP.Web
         {
             get
             {
-                return GetValFromCookie("Name",null);
-                //return GetSessionByKey("Name", BP.Web.WebUser.No);
+               return GetValFromCookie("Name",null,true);
+               //return GetSessionByKey("Name", BP.Web.WebUser.No);
 
             }
             set

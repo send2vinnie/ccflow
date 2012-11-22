@@ -163,7 +163,11 @@ namespace BP.WF
         /// <summary>
         /// 删除
         /// </summary>
-        Delete
+        Delete,
+        /// <summary>
+        /// 挂起
+        /// </summary>
+        Hung
     }
     /// <summary>
     /// 流程启动类型
