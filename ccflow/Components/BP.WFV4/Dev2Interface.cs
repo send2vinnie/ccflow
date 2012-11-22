@@ -393,18 +393,19 @@ namespace BP.WF
         /// </summary>
         /// <param name="fk_emp"></param>
         /// <returns></returns>
-        public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
+        private static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
             string sql;
             if (WebUser.IsAuthorize == false)
             {
+                /*不是授权状态*/
                 sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY FK_Flow,ADT DESC ";
                 BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
 
             /*如果是授权状态, 获取当前委托人的信息. */
-            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+            WF.Port.WFEmp emp = new Port.WFEmp(fk_emp);
             switch (emp.HisAuthorWay)
             {
                 case Port.AuthorWay.All:
@@ -420,7 +421,7 @@ namespace BP.WF
             }
 
 #warning 测试session 乱掉的代码.
-            BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
+            //BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
             return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
         /// <summary>
