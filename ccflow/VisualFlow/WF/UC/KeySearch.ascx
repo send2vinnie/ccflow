@@ -8,6 +8,17 @@
         newWindow.focus();
         return;
     }
+    function NoSubmit(ev) {
+        if (window.event.srcElement.tagName == "TEXTAREA")
+            return true;
+
+        if (ev.keyCode == 13) {
+            window.event.keyCode = 9;
+            ev.keyCode = 9;
+            return true;
+        }
+        return true;
+    }
 </script>
 <font size=Large><b>&nbsp;输入关键字:</b></font><asp:TextBox ID="TextBox1" runat="server" BorderStyle=Inset
  BorderColor=AliceBlue
@@ -21,7 +32,7 @@
         Font-Size="Larger" onclick="Button1_Click" />
         <asp:Button ID="Btn_ByTitle" runat="server" Text="按流程标题字段关键字查" Font-Bold="True" 
         Font-Size="Larger" onclick="Button1_Click" />
-        <asp:Button ID="Btn_ByAll" runat="server" Text="全部字段关键字查" Font-Bold="True" 
+        <asp:Button ID="Btn_ByAll" runat="server" Text="全部字段关键字查" Visible=false Font-Bold="True" 
         Font-Size=Larger onclick="Button1_Click" />
         <hr />
     <uc1:Pub ID="Pub1" runat="server" />

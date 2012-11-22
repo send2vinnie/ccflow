@@ -31,7 +31,6 @@ public partial class WF_WorkOpt_OneWork : BP.Web.MasterPage
             return this.Request.QueryString["FK_Flow"];
         }
     }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.RegisterClientScriptBlock("s",
@@ -41,7 +40,6 @@ public partial class WF_WorkOpt_OneWork : BP.Web.MasterPage
         xmls.RetrieveAll();
 
         string pageId = this.PageID;
-
         this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
         this.Pub1.Add("\t\n<ul>");
         foreach (BP.WF.XML.OneWorkXml item in xmls)

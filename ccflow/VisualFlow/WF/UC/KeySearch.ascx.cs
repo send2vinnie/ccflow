@@ -62,7 +62,7 @@ public partial class WF_UC_KeySearch : BP.Web.UC.UCBase3
         if (dt.Rows.Count == 0)
         {
             this.Pub1.Clear();
-            this.Pub1.AddH3("竟然没有查出任何东西，真不思议。");
+            this.Pub1.AddH3("&nbsp;&nbsp;竟然没有查出任何东西，真不思议。");
             return;
         }
 

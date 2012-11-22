@@ -54,7 +54,7 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
     {
         if (this.DoType != null)
         {
-            //BP.WF.Dev2Interface.Node_SendWork(
+             
             Node ndJump = new Node(this.GoNode);
             WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
             string msg = wn.AfterNodeSave(ndJump, null);

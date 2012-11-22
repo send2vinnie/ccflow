@@ -65,6 +65,12 @@ public partial class Designer : System.Web.UI.Page
         {
             msg = "@在检查数据库连接出现错误。";
 
+            #region 2012-11-22 增加挂起状态.
+            sql = " DELETE FROM Sys_Enum WHERE enumkey='WFState'";
+            DBAccess.RunSQL(sql);
+            #endregion
+
+
             #region 2012-11-17  去了开始节点的WFState 字段.
             sql = "DELETE SYS_MapAttr WHERE KeyOfEn='WFState' AND (FK_MapData LIKE 'ND%' AND FK_MapData LIKE '%01') ";
             DBAccess.RunSQL(sql);
