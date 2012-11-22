@@ -204,7 +204,6 @@ namespace BP.Web
             WebUser.AppUserType = "Gener";
             WebUser.HisDepts = null;
             WebUser.HisStations = null;
-
             if (SystemConfig.IsUnit)
             {
                 WebUser.FK_Unit = em.FK_Unit;
@@ -446,7 +445,8 @@ namespace BP.Web
         {
             get
             {
-                return GetSessionByKey("Auth", null);
+                return GetValFromCookie("Auth", null);
+                //return GetSessionByKey("Auth", null);
             }
             set
             {
@@ -556,7 +556,8 @@ namespace BP.Web
         {
             get
             {
-                string s = GetSessionByKey("FK_Dept", null);
+                string s = GetValFromCookie("FK_Dept", null);
+                //string s = GetSessionByKey("FK_Dept", null);
                 if (string.IsNullOrEmpty(s))
                 {
                     s =WebUser.GetValFromSessionOrCookies("FK_Dept");
@@ -663,6 +664,28 @@ namespace BP.Web
                 return SystemConfig.SysLanguage;
             }
         }
+        public static string GetValFromCookie(string valKey, string isNullAsVal)
+        {
+            if (IsBSMode == false)
+                return "admin";
+
+            string key = "CCS";
+            HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies[key];
+            if (hc == null)
+                return null;
+            try
+            {
+                string val = hc.Values[valKey];
+                if (string.IsNullOrEmpty(val))
+                    return isNullAsVal;
+                return val;
+            }
+            catch
+            {
+                return isNullAsVal;
+            }
+            throw new Exception("@err-001 µÇÂ½ÐÅÏ¢¶ªÊ§¡£");
+        }
         /// <summary>
         /// ±àºÅ
         /// </summary>
@@ -670,6 +693,14 @@ namespace BP.Web
         {
             get
             {
+                string val= GetValFromCookie("No", null);
+                if (val== null)
+                    throw new Exception("@err-001 µÇÂ½ÐÅÏ¢¶ªÊ§¡£");
+
+                return val;
+
+                //string no = GetSessionByKey("No", null);
+
                 //string no = GetSessionByKey("No", null);
                 string no = null; // GetSessionByKey("No", null);
                 if (no == null || no == "")
@@ -690,17 +721,11 @@ namespace BP.Web
                         WebUser.FK_DeptName = HttpUtility.UrlDecode(hc["FK_DeptName"]);
                         WebUser.Name = HttpUtility.UrlDecode(hc["Name"]);
 
-
                         if (BP.SystemConfig.IsUnit)
                         {
                             WebUser.FK_Unit = HttpUtility.UrlDecode(hc["FK_Unit"]);
                             WebUser.FK_UnitName = HttpUtility.UrlDecode(hc["FK_UnitName"]);
                         }
-
-                        //string name = BP.DA.DBAccess.RunSQLReturnStringIsNull("SELECT Name, FK_Dept FROM Port_Emp WHERE No='" + HttpUtility.UrlDecode(hc["No"] + "'"), "null");
-                        //if (name == "null")
-                        //    return null;
-                       // WebUser.SetSessionByKey("Name", name);
                         return hc.Values["No"];
                     }
                     throw new Exception("@err-001 µÇÂ½ÐÅÏ¢¶ªÊ§¡£");
@@ -719,22 +744,13 @@ namespace BP.Web
         {
             get
             {
-                return GetSessionByKey("Name", BP.Web.WebUser.No);
+                return GetValFromCookie("Name",null);
+                //return GetSessionByKey("Name", BP.Web.WebUser.No);
+
             }
             set
             {
                 SetSessionByKey("Name", value);
-            }
-        }
-        public static string Tag
-        {
-            get
-            {
-                return GetSessionByKey("Tag", "null");
-            }
-            set
-            {
-                SetSessionByKey("Tag", value);
             }
         }
         /// <summary>
@@ -744,6 +760,7 @@ namespace BP.Web
         {
             get
             {
+
                 return GetSessionByKey("token", "null");
             }
             set
