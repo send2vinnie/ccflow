@@ -368,6 +368,18 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         this.Page.Title ="第"+this.currND.Step+ "步:"+ this.currND.Name;
         #endregion 设置变量
 
+        if (this.currND.HisFormType == FormType.SLForm)
+        {
+            if (this.WorkID == 0)
+            {
+                currWK = this.currFlow.NewWork();
+                this.WorkID = currWK.OID;
+            }
+            this.Response.Redirect("MyFlowSL.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&UserNo=" + WebUser.No, true);
+            return;
+        }
+
+
        #region 判断是否有 workid
        if (this.WorkID == 0)
        {
