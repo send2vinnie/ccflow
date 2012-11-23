@@ -9,45 +9,7 @@ using BP.En;
 
 namespace BP.WF
 {
-    public class ButtonList
-    {
-        /// <summary>
-        /// 新建流程
-        /// </summary>
-        public const string Btn_NewFlow = "Btn_NewFlow";
-        /// <summary>
-        /// 发送流程
-        /// </summary>
-        public const string Btn_Send = "Btn_Send";
-        /// <summary>
-        /// 保存流程
-        /// </summary>
-        public const string Btn_Save = "Btn_Save";
-        /// <summary>
-        /// 退回
-        /// </summary>
-        public const string Btn_Return = "Btn_Return";
-        /// <summary>
-        /// 转发
-        /// </summary>
-        public const string Btn_Forward = "Btn_Forward";
-        /// <summary>
-        /// 撤销发送
-        /// </summary>
-        public const string Btn_UnSend = "Btn_UnSend";
-        /// <summary>
-        /// 删除流程
-        /// </summary>
-        public const string Btn_DelFlow = "Btn_DelFlow";
-        /// <summary>
-        /// 流程轨迹
-        /// </summary>
-        public const string Btn_Track = "Btn_Track";
-        /// <summary>
-        /// Btn_Search
-        /// </summary>
-        public const string Btn_Search = "Btn_Search";
-    }
+   
     /// <summary>
     /// 按钮状态
     /// </summary>
@@ -71,7 +33,6 @@ namespace BP.WF
             }
 
             #region 判断是否可以撤销发送.
-
             WorkNode wn = new WorkNode(this.WorkID, this.CurrNodeIDOfFlow);
             WorkNode wnPri = wn.GetPreviousWorkNode();
 
@@ -91,30 +52,6 @@ namespace BP.WF
                 this.Btn_Send = true;
                 this.Btn_Save = true;
             }
-            #endregion
-
-            #region 判断是否可以处理当前工作
-            //if (currNodeID == fk_node)
-            //{
-            //    // 获取是否可以处理当前的工作。
-            //    WorkerLists gwls = new WorkerLists(); //(workid, nodeId);
-            //    int i = gwls.Retrieve(WorkerListAttr.WorkID, workid,
-            //         WorkerListAttr.FK_Node, fk_node, WorkerListAttr.FK_Emp, Web.WebUser.No);
-            //    if (i >= 1)
-            //    {
-            //        if (currNodeID != fk_node)
-            //        {
-            //            this.Btn_Send = true;
-            //            this.Btn_Save = true;
-            //        }
-
-            //        if (nd.IsStartNode == false)
-            //        {
-            //            this.Btn_Forward = true;
-            //            this.Btn_Return = nd.IsCanReturn;
-            //        }
-            //    }
-            //}
             #endregion
         }
         public void InitNodeIsNotCurr()

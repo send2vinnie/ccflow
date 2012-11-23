@@ -10,20 +10,7 @@ using System.Text;
 
 namespace BP.WF
 {
-    /// <summary>
-    /// 工作类型
-    /// </summary>
-    public enum WorkType
-    {
-        /// <summary>
-        /// 普通的
-        /// </summary>
-        Ordinary,
-        /// <summary>
-        /// 自动的
-        /// </summary>
-        Auto
-    }
+   
     /// <summary>
     /// 工作属性
     /// </summary>

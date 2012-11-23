@@ -232,6 +232,10 @@
     <Compile Include="Port\Station.cs" />
     <Compile Include="Port\DeptFlowSearch.cs" />
     <Compile Include="Port\SMS.cs" />
+    <Compile Include="PubLib\ButtonList.cs" />
+    <Compile Include="PubLib\EnumLib.cs" />
+    <Compile Include="PubLib\FlowAttr.cs" />
+    <Compile Include="PubLib\NodeAttr.cs" />
     <Compile Include="WF.cs" />
     <Compile Include="WF\GERpt.cs" />
     <Compile Include="WF\DataApply.cs" />
@@ -247,6 +251,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\RepariDB.cs" />
+    <Compile Include="WF\Old\WorkFlow.cs" />
+    <Compile Include="WF\Old\WorkNode.cs" />
     <Compile Include="WF\Personalize\GetTask.cs" />
     <Compile Include="WF\ReturnWork.cs">
       <SubType>Code</SubType>
@@ -255,12 +261,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WF\WFPubClass.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WF\WorkFlow.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WF\WorkNode.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WF\ForwardWork.cs" />
@@ -328,7 +328,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <Folder Include="WF\New\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
