@@ -172,7 +172,7 @@ namespace BP.Web.WF
                         ep.DoUp();
 
                         BP.WF.Port.WFEmps emps111 = new BP.WF.Port.WFEmps();
-                        emps111.RemoveCash();
+                      //  emps111.RemoveCash();
                         emps111.RetrieveAll();
                         this.WinClose();
                         break;
@@ -181,7 +181,7 @@ namespace BP.Web.WF
                         ep1.DoDown();
 
                         BP.WF.Port.WFEmps emps11441 = new BP.WF.Port.WFEmps();
-                        emps11441.RemoveCash();
+                      //  emps11441.RemoveCash();
                         emps11441.RetrieveAll();
                         this.WinClose();
                         break;

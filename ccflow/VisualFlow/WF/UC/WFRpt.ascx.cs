@@ -425,7 +425,6 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
     {
         this.BindTrack();
         return;
-
         switch (this.DoType)
         {
             case "ViewWork":
