@@ -11,7 +11,6 @@
     function NoSubmit(ev) {
         if (window.event.srcElement.tagName == "TEXTAREA")
             return true;
-
         if (ev.keyCode == 13) {
             window.event.keyCode = 9;
             ev.keyCode = 9;

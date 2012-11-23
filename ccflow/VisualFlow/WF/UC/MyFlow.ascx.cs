@@ -583,8 +583,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 //this.ToolBar1.GetBtnByID("Btn_EndFlow").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-            if (btnLab.RptEnable)
-                this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
+            //if (btnLab.RptEnable)
+            //    this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
 
             if (btnLab.TrackEnable)
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node="+this.FK_Node+"','ds'); \" />");
