@@ -556,6 +556,10 @@ namespace BP.WF
         /// </summary>
         SDKForm = 3,
         /// <summary>
+        /// SL表单
+        /// </summary>
+        SLForm=4,
+        /// <summary>
         /// 禁用(对多表单流程有效)
         /// </summary>
         DisableIt = 9

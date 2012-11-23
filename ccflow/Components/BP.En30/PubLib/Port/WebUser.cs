@@ -388,6 +388,8 @@ namespace BP.Web
         }
         public static void SetSessionByKey(string key, object val)
         {
+            if (val == null)
+                return;
             if (IsBSMode)
                 System.Web.HttpContext.Current.Session[key] = val;
             else
