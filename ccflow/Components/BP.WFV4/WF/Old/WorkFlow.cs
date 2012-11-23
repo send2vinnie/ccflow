@@ -1478,6 +1478,51 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 执行挂起
+        /// </summary>
+        /// <returns></returns>
+        public string DoHung()
+        {
+            /* 执行挂起. */
+            int hungSta = (int)WFState.Hung;
+            string sqls = "UPDATE WF_GenerWorkFlow SET WFState=" + hungSta + " WHERE WorkID=" + this.WorkID;
+            sqls += "@UPDATE ND" + int.Parse(this.HisFlow.No) + "Rpt SET WFState=" + hungSta + " WHERE OID=" + this.WorkID;
+            DBAccess.RunSQLs(sqls);
+
+            /* 获取它的工作者，向他们发送消息。*/
+            WorkerLists wls = new WorkerLists(this.WorkID, this.HisFlow.No);
+            string url = Glo.ServerIP + "/" + this.VirPath + this.AppType + "/WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + this.HisGenerWorkFlow.FID + "&FK_Node=" + this.HisGenerWorkFlow.FK_Node;
+            string mailDoc = "详细信息:<A href='" + url + "'>打开流程轨迹</A>.";
+            foreach (WorkerList wl in wls)
+            {
+                BP.WF.Port.WFEmp emp = new Port.WFEmp(wl.FK_Emp);
+                BP.TA.SMS.AddMsg(hungSta + "_" + this.WorkID + DateTime.Now.ToString("MMddhhmmss"),
+                    wl.FK_Emp, emp.HisAlertWay, emp.Tel, "", emp.Email, "工作:" + this.HisGenerWorkFlow.Title + " 被" + WebUser.Name + "挂起",
+                    mailDoc);
+            }
+            // 记录日志..
+            WorkNode wn = new WorkNode(this.WorkID, this.HisGenerWorkFlow.FK_Node);
+            wn.AddToTrack(ActionType.Hung, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "执行挂起");
+            return null;
+        }
+        /// <summary>
+        /// 取消挂起
+        /// </summary>
+        /// <returns></returns>
+        public string DoUnHung()
+        {
+            /* 执行挂起. */
+            int Sta = (int)WFState.Runing;
+            string sqls = "UPDATE WF_GenerWorkFlow SET WFState=" + Sta + " WHERE WorkID=" + this.WorkID;
+            sqls += "@UPDATE ND" + int.Parse(this.HisFlow.No) + "Rpt SET WFState=" + Sta + " WHERE OID=" + this.WorkID;
+            DBAccess.RunSQLs(sqls);
+
+            // 记录日志..
+            WorkNode wn = new WorkNode(this.WorkID, this.HisGenerWorkFlow.FK_Node);
+            wn.AddToTrack(ActionType.UnHung, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "取消挂起");
+            return null;
+        }
+        /// <summary>
         /// 撤消移交
         /// </summary>
         /// <returns></returns>
