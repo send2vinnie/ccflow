@@ -405,20 +405,6 @@ namespace BP.WF
         {
         }
         /// <summary>
-        /// Btn
-        /// </summary>
-        /// <param name="NodeID"></param>
-        public BtnLabs(string NodeID)
-        {
-            this.Retrieve(BtnAttr.NodeID, NodeID);
-        }
-        public BtnLabs(int fk_node)
-        {
-            QueryObject qo = new QueryObject(this);
-            qo.AddWhereInSQL(BtnAttr.No, "SELECT FK_Btn FROM WF_BtnNode WHERE FK_Node=" + fk_node);
-            qo.DoQuery();
-        }
-        /// <summary>
         /// 得到它的 Entity 
         /// </summary>
         public override Entity GetNewEntity
