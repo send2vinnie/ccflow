@@ -80,6 +80,34 @@ namespace BP.En
                 _SQLCash = value;
             }
         }
+        public DataTable ToDataTableField(string tableName)
+        {
+            DataTable dt = this.GetNewEntities.ToEmptyTableField();
+            dt.TableName = tableName;
+
+            DataRow dr = dt.NewRow();
+            foreach (Attr attr in this.EnMap.Attrs)
+            {
+                if (attr.MyDataType == DataType.AppBoolean)
+                {
+                    if (this.GetValIntByKey(attr.Key) == 1)
+                        dr[attr.Key] = "1";
+                    else
+                        dr[attr.Key] = "0";
+                    continue;
+                }
+
+                /*如果是外键 就要去掉左右空格。
+                 *  */
+                if (attr.MyFieldType == FieldType.FK
+                    || attr.MyFieldType == FieldType.PKFK)
+                    dr[attr.Key] = this.GetValByKey(attr.Key).ToString().Trim();
+                else
+                    dr[attr.Key] = this.GetValByKey(attr.Key);
+            }
+            dt.Rows.Add(dr);
+            return dt;
+        }
         #endregion
 
         #region 关于database 操作

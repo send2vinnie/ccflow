@@ -486,6 +486,7 @@
     <Compile Include="Sys\EnCfg.cs" />
     <Compile Include="Sys\EnsAppCfg\EnsAppCfg.cs" />
     <Compile Include="Sys\UserLog.cs" />
+    <Compile Include="Word2Html.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Rpt\RptEn\RptEn\" />
