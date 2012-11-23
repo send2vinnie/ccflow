@@ -72,10 +72,10 @@
    />
 
   <Item Key="WFState"
-        CH="@0=运行@1=完成@2=强制终止@3=删除"
-        EN="@0=Runing@1=Complete@2=Stop@3=Delete"
-        JP="@0=Runing@1=Complete@2=Stop@3=Delete"
-        RU="@0=Runing@1=Complete@2=Stop@3=Delete"
+        CH="@0=运行@1=完成@2=强制终止@3=删除@4=挂起"
+        EN="@0=Runing@1=Complete@2=Stop@3=Delete@4=Hung"
+        JP="@0=Runing@1=Complete@2=Stop@3=Delete@4=Hung"
+        RU="@0=Runing@1=Complete@2=Stop@3=Delete@4=Hung"
         />
 
   <!-- 节点状态  -->

@@ -13,8 +13,10 @@
     <OneWork No="CH" CH="考核信息" />
     <OneWork No="NDRpt" CH="流程报表" />
     <OneWork No="Ath" CH="流程附件" />
+  <OneWork No="OP" CH="操作" />
 
-    <RptFlow1 No="Home_My" CH="主页" URL="Home.aspx?DoType=My"   ICON="./../../Images/Btn/Home.gif" />
+
+  <RptFlow1 No="Home_My" CH="主页" URL="Home.aspx?DoType=My"   ICON="./../../Images/Btn/Home.gif" />
     <RptFlow No="Search_My" CH="我参与的流程" URL="Search.aspx?DoType=My"   ICON="./../../Images/Table.gif" />
     <RptFlow No="Search_Dept" CH="部门流程"   URL="Search.aspx?DoType=Dept"   ICON="./../../Images/Table.gif"  />
 
