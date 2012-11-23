@@ -21,18 +21,18 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
             return this.Request.QueryString["FK_Flow"];
         }
     }
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
-    public int FID
+    public Int64 FID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["FID"]);
+            return Int64.Parse(this.Request.QueryString["FID"]);
         }
     }
     public int FK_Node
@@ -54,9 +54,8 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
     {
         if (this.DoType != null)
         {
-             
             Node ndJump = new Node(this.GoNode);
-            WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
+            BP.WF.WorkNode wn = new BP.WF.WorkNode(this.WorkID, this.FK_Node);
             string msg = wn.AfterNodeSave(ndJump, null);
             this.AddFieldSet("发送提示");
             this.Add(msg.Replace("@", "<br>@"));

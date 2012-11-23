@@ -110,7 +110,7 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
         string msg = "";
         foreach (DataRow dr in dt.Rows)
         {
-            int workid = int.Parse(dr["WorkID"].ToString());
+            Int64 workid = Int64.Parse(dr["WorkID"].ToString());
             CheckBox cb = this.GetCBByID("CB_" + workid);
             if (cb.Checked == false)
                 return;
