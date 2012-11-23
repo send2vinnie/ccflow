@@ -1147,27 +1147,27 @@ namespace BP.DA
         /// <returns></returns>
         public static int RunSQL(string sql)
         {
-            RunSQLReturnTableCount++;
-
             if (sql == null || sql.Trim() == "")
                 return 1;
-
-            switch (AppCenterDBType)
-            {
-                case DBType.SQL2000:
-                    return RunSQL_200705_SQL(sql);
-                case DBType.Oracle9i:
-                    Paras ps = new Paras();
-                    return RunSQL_200705_Ora(sql,ps);
-                case DBType.MySQL:
-                    return RunSQL_200705_MySQL(sql);
-                case DBType.Informix:
-                    return RunSQL_201205_Informix(sql);
-                case DBType.Access:
-                    return RunSQL_200705_OLE(sql);
-                default:
-                    throw new Exception("发现未知的数据库连接类型！");
-            }
+            Paras ps = new Paras();
+            ps.SQL = sql;
+            return RunSQL(ps);
+            //switch (AppCenterDBType)
+            //{
+            //    case DBType.SQL2000:
+            //        return RunSQL_200705_SQL(sql);
+            //    case DBType.Oracle9i:
+            //        Paras ps = new Paras();
+            //        return RunSQL_200705_Ora(sql,ps);
+            //    case DBType.MySQL:
+            //        return RunSQL_200705_MySQL(sql);
+            //    case DBType.Informix:
+            //        return RunSQL_201205_Informix(sql);
+            //    case DBType.Access:
+            //        return RunSQL_200705_OLE(sql);
+            //    default:
+            //        throw new Exception("发现未知的数据库连接类型！");
+            //}
         }
         public static int RunSQL(string sql, string paraKey, object val)
         {
@@ -1190,31 +1190,53 @@ namespace BP.DA
             ens.Add(k3, v3);
             return RunSQL(sql, ens);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        private static bool lockRunSQL = false;
+        /// <summary>
+        /// 执行sql
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="paras"></param>
+        /// <returns></returns>
         public static int RunSQL(string sql, Paras paras)
         {
-            RunSQLReturnTableCount++;
             if (sql == null || sql.Trim() == "")
                 return 1;
+            while (lockRunSQL == true)
+            {
+            };
+            lockRunSQL = true;
+            int result = 0;
             try
             {
                 switch (AppCenterDBType)
                 {
                     case DBType.SQL2000:
-                        return RunSQL_200705_SQL(sql, paras);
+                        result = RunSQL_200705_SQL(sql, paras);
+                        break;
                     case DBType.Oracle9i:
-                        return RunSQL_200705_Ora(sql.Replace("]","").Replace("[",""), paras);
+                        result = RunSQL_200705_Ora(sql.Replace("]", "").Replace("[", ""), paras);
+                        break;
                     case DBType.MySQL:
-                        return RunSQL_200705_MySQL(sql, paras);
+                        result = RunSQL_200705_MySQL(sql, paras);
+                        break;
                     case DBType.Informix:
-                        return RunSQL_201205_Informix(sql, paras);
+                        result = RunSQL_201205_Informix(sql, paras);
+                        break;
                     case DBType.Access:
-                        return RunSQL_200705_OLE(sql, paras);
+                        result = RunSQL_200705_OLE(sql, paras);
+                        break;
                     default:
                         throw new Exception("发现未知的数据库连接类型！");
                 }
+                lockRunSQL = false;
+                return result;
             }
             catch (Exception ex)
             {
+                lockRunSQL = false;
                 string msg = "";
                 string mysql = sql.Clone() as string;
                 foreach (Para p in paras)
@@ -1222,7 +1244,7 @@ namespace BP.DA
                     msg += "@" + p.ParaName + "=" + p.val + "," + p.DAType.ToString();
                     mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "',");
                 }
-                throw new Exception(ex.Message + " Paras("+paras.Count+")=" + msg + "<hr>" + mysql);
+                throw new Exception(ex.Message + " Paras(" + paras.Count + ")=" + msg + "<hr>" + mysql);
             }
         }
         /// <summary>
@@ -1275,7 +1297,6 @@ namespace BP.DA
         {
             ConnOfSQL connofora = (ConnOfSQL)DBAccess.GetAppCenterDBConn;
             connofora.AddSQL(sql); //增加
-
             SqlConnection conn = connofora.Conn;
             try
             {
@@ -1296,7 +1317,6 @@ namespace BP.DA
                     SqlParameter oraP = new SqlParameter(para.ParaName, para.val);
                     cmd.Parameters.Add(oraP);
                 }
-
 
                 int i = cmd.ExecuteNonQuery();
                 cmd.Dispose();
@@ -2261,27 +2281,8 @@ namespace BP.DA
         /// <returns>查询结果集合DataTable</returns>
         public static DataTable RunSQLReturnTable(string sql)
         {
-           // RunSQLReturnTableCount++;
-            //Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "RunSQLReturnTable sql=" + sql);
-
-            if (string.IsNullOrEmpty(sql) )
-                throw new Exception("要执行的 sql =null ");
-
-            switch (AppCenterDBType)
-            {
-                case DBType.SQL2000:
-                    return RunSQLReturnTable_200705_SQL(sql);
-                case DBType.Oracle9i:
-                    return RunSQLReturnTable_200705_Ora(sql,new Paras());
-                case DBType.Informix:
-                    return RunSQLReturnTable_201205_Informix(sql, new Paras());
-                case DBType.MySQL:
-                    return RunSQLReturnTable_200705_MySQL(sql);
-                case DBType.Access:
-                    return RunSQLReturnTable_200705_OLE(sql,new Paras());
-                default:
-                    throw new Exception("@发现未知的数据库连接类型！");
-            }
+            Paras ps = new Paras();
+            return RunSQLReturnTable(sql, ps);
         }
         public static DataTable RunSQLReturnTable(string sql, string key1, object v1,string key2,object v2)
         {
@@ -2296,31 +2297,48 @@ namespace BP.DA
             ens.Add(key, val);
             return RunSQLReturnTable(sql, ens);
         }
-        public static DataTable RunSQLReturnTable(string sql,Paras paras )
+        private static bool lockRunSQLReTable = false;
+        public static DataTable RunSQLReturnTable(string sql, Paras paras)
         {
-            RunSQLReturnTableCount++;
-          //  Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "RunSQLReturnTable sql=" + sql);
-
             if (sql == null || sql.Length == 0)
                 throw new Exception("要执行的 sql =null ");
 
-            switch (AppCenterDBType)
+            while (lockRunSQLReTable)
             {
-                case DBType.SQL2000:
-                    return RunSQLReturnTable_200705_SQL(sql, paras);
-                case DBType.Oracle9i:
-                    return RunSQLReturnTable_200705_Ora(sql,paras);
-                case DBType.Informix:
-                    return RunSQLReturnTable_201205_Informix(sql, paras);
-                case DBType.MySQL:
-                    return RunSQLReturnTable_200705_MySQL(sql, paras);
-                case DBType.Access:
-                    return RunSQLReturnTable_200705_OLE(sql,paras);
-                default:
-                    throw new Exception("@发现未知的数据库连接类型！");
             }
 
-            //return RunSQLReturnTable( sql ,sql ,sql);
+            try
+            {
+                lockRunSQLReTable = true;
+                DataTable dt = null;
+                switch (AppCenterDBType)
+                {
+                    case DBType.SQL2000:
+                        dt = RunSQLReturnTable_200705_SQL(sql, paras);
+                        break;
+                    case DBType.Oracle9i:
+                        dt = RunSQLReturnTable_200705_Ora(sql, paras);
+                        break;
+                    case DBType.Informix:
+                        dt = RunSQLReturnTable_201205_Informix(sql, paras);
+                        break;
+                    case DBType.MySQL:
+                        dt = RunSQLReturnTable_200705_MySQL(sql, paras);
+                        break;
+                    case DBType.Access:
+                        dt = RunSQLReturnTable_200705_OLE(sql, paras);
+                        break;
+                    default:
+                        throw new Exception("@发现未知的数据库连接类型！");
+                }
+                lockRunSQLReTable = false;
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                lockRunSQLReTable = false;
+                throw ex;
+            }
         }
         /// <summary>
         /// 传递一个select 语句返回一个查询DataSet集合
