@@ -267,9 +267,7 @@ namespace BP.WF.Ext
 
                 map.AddTBString(BtnAttr.EndFlowLab, "结束流程", "结束流程按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.EndFlowEnable, false, "是否启用", true, true);
-
-                map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
+               
 
                 map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);

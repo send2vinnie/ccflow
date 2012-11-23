@@ -15,10 +15,6 @@ namespace BP.WF
         /// </summary>
         public const string NodeID = "NodeID";
         /// <summary>
-        /// 发送是否启用
-        /// </summary>
-        public const string SendEnable = "SendEnable";
-        /// <summary>
         /// 发送标签
         /// </summary>
         public const string SendLab = "SendLab";
@@ -58,9 +54,6 @@ namespace BP.WF
         /// 移交标签
         /// </summary>
         public const string ShiftLab = "ShiftLab";
-
-        public const string RptLab = "RptLab";
-        public const string RptEnable = "RptEnable";
         /// <summary>
         /// 查询标签
         /// </summary>

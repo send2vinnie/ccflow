@@ -447,9 +447,6 @@ namespace BP.WF
                 this.SetValByKey(BtnAttr.ShiftEnable, 0);
                 //  this.SetValByKey(BtnAttr.CCRole, 0);
                 this.SetValByKey(BtnAttr.EndFlowEnable, 0);
-                this.SetValByKey(BtnAttr.RptEnable, 0);
-                this.SetValByKey(BtnAttr.EndFlowEnable, 0);
-                this.SetValByKey(BtnAttr.EndFlowEnable, 0);
             }
 
             #region 对访问规则进行检查
@@ -534,7 +531,6 @@ namespace BP.WF
             this.FlowName = fl.Name;
 
             DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + this.Name + "' WHERE No='ND" + this.NodeID + "'");
-
             switch (this.HisRunModel)
             {
                 case RunModel.Ordinary:
