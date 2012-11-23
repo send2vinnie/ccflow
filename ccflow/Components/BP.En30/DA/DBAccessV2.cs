@@ -2303,9 +2303,9 @@ namespace BP.DA
             if (sql == null || sql.Length == 0)
                 throw new Exception("ÒªÖ´ÐÐµÄ sql =null ");
 
-            while (lockRunSQLReTable)
-            {
-            }
+            //while (lockRunSQLReTable)
+            //{
+            //}
 
             try
             {
