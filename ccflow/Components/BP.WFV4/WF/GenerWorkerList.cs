@@ -400,9 +400,7 @@ namespace BP.WF
 
                 Map map = new Map("WF_GenerWorkerlist");
                 map.EnDesc = "工作者";
-
-                map.DepositaryOfEntity = Depositary.None;
-                map.DepositaryOfMap = Depositary.Application;
+                 
 
                 map.AddTBIntPK(WorkerListAttr.WorkID, 0, "工作ID", true, true);
                 map.AddTBStringPK(WorkerListAttr.FK_Emp, null, "人员", true, false, 0, 50, 100);

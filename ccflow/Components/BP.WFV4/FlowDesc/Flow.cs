@@ -206,7 +206,6 @@ namespace BP.WF
                 }
                 #endregion 处理流程之间的数据传递。
 
-
                 #region 处理流程之间的数据传递。
                 if (System.Web.HttpContext.Current.Request.QueryString["JumpToNode"] != null)
                 {
@@ -249,7 +248,6 @@ namespace BP.WF
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
-
 
             //string msg = "";
             //if (WebUser.SysLang == "CH")

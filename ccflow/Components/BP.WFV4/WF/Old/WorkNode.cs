@@ -2962,7 +2962,9 @@ namespace BP.WF
             if (Glo.IsEnableSysMessage)
             {
                 Listens lts = new Listens();
-                lts.RetrieveByLike(ListenAttr.Nodes, "%" + this.HisNode.NodeID + "%");
+                QueryObject qo = new QueryObject(lts);
+                qo.AddWhere(ListenAttr.Nodes, " LIKE ","%" + this.HisNode.NodeID + "%");
+                qo.DoQuery();
 
                 foreach (Listen lt in lts)
                 {
