@@ -77,14 +77,14 @@ namespace BP.DTS
                 if (where == Depositary.None)
                     continue;
 
-                try
-                {
-                    ens.FlodInCash();
-                }
-                catch (Exception ex)
-                {
-                    Log.DefaultLogWriteLine(LogType.Info, "@把数据放进 cash 中出现错误。@" + ex.Message);
-                }
+                //try
+                //{
+                //    ens.FlodInCash();
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log.DefaultLogWriteLine(LogType.Info, "@把数据放进 cash 中出现错误。@" + ex.Message);
+                //}
             }
             #endregion
 

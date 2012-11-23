@@ -42,7 +42,7 @@ namespace BP.En
                 return _GetNewEntities;
             }
         }
-        protected virtual string CashKey
+        protected virtual string CashKey_Del
         {
             get
             {
@@ -582,7 +582,6 @@ namespace BP.En
         }
         #endregion 排序操作
 
-        #region 基本操作
 
         #region 直接操作
         /// <summary>
@@ -749,73 +748,100 @@ namespace BP.En
             qo.AddWhere(key3, val3);
             return qo.DoQuery();
         }
-        public virtual int Retrieve()
-        {
-            return this.RetrieveIt();
-
-        }
-        public virtual int Retrieve_del()
-        {
-            try
-            {
-                return this.RetrieveIt();
-            }
-            catch (Exception ex)
-            {
-                if (SystemConfig.IsDebug)
-                    this.CheckPhysicsTable();
-
-                if (ex.Message.Contains("中没有找到") == true && SystemConfig.IsBSsystem == false && SystemConfig.AppCenterDBType == DBType.Access)
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        try
-                        {
-                            System.Threading.Thread.Sleep(1000);
-                            return this.RetrieveIt();
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-                throw ex;
-            }
-        }
         /// <summary>
         /// 按主键查询，返回查询出来的个数。
         /// 如果查询出来的是多个实体，那把第一个实体给值。	 
         /// </summary>
         /// <returns>查询出来的个数</returns>
-        private int RetrieveIt()
+        public virtual int Retrieve()
         {
-            // 判断缓存是否存在
-            if (this.CashKey != null)
+            if (this.EnMap.DepositaryOfEntity == Depositary.Application)
             {
-                object obj = CashEntity.Get(this.CashKey, this.PKVal.ToString());
-                if (obj != null)
+
+                //if (this.CashKey == null)
+                //    throw new Exception("@您放实体设置了放入缓存处理，但是您没有设置它的CashKey。");
+
+                #region 从缓存里获取.
+                Entities ens;
+                try
                 {
-                    Entity en = obj as Entity;
-                    this.Row = en.Row;
-                    //Log.DebugWriteInfo("@数据[" + this.ToString() + "][" + this.PKVal + "]来自缓存。");
+                    ens = Cash.GetEnsData(this.ToString());
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("@在内存查询期间出现错误@" + ex.Message);
+                }
+
+                // 为空就把它放入里面去。
+                if (ens == null)
+                {
+                    ens = this.GetNewEntities;
+                    ens.FlodInCash(); /*把整个entities 放入缓存里面去.*/
+                }
+
+                string pk = this.PK;
+                string pkval = this.GetValStrByKey(pk);
+                int count = ens.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    Entity en = ens[i];
+                    if (en.GetValStrByKey(pk) == pkval)
+                    {
+                        this.Row = en.Row; /* 如果有，就返回它。*/
+                        return 1;
+                    }
+                }
+
+                if (this.RetrieveFromDBSources() != 0)
+                {
+                    /* 从数据表中查询 */
+                    ens.FlodInCash();
                     return 1;
                 }
+
+                Attr attr = this.EnMap.GetAttrByKey(pk);
+                if (SystemConfig.IsDebug)
+                    throw new Exception("@在[" + this.EnDesc + this.EnMap.PhysicsTable + "]中没有找到[" + attr.Field + attr.Desc + "]=[" + this.PKVal + "]的记录。");
+                else
+                    throw new Exception("@在[" + this.EnDesc + "]中没有找到[" + attr.Desc + "]=[" + this.PKVal + "]的记录。");
+
             }
 
             if (this.EnMap.DepositaryOfEntity == Depositary.None)
             {
-                int i = 0;
+                /*如果是没有放入缓存的实体.*/
                 try
                 {
-                    i = EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
-                    if (i == 0)
+                    if (EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this)) <= 0)
                     {
-                        if (SystemConfig.IsBSsystem == false)
+                        string msg = "";
+                        switch (this.PK)
                         {
-                            this.RetrieveFromCash();
-                            i = EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
+                            case "OID":
+                                msg += "[ 主键=OID 值=" + this.GetValStrByKey("OID") + " ]";
+                                break;
+                            case "No":
+                                msg += "[ 主键=No 值=" + this.GetValStrByKey("No") + " ]";
+                                break;
+                            case "MyPK":
+                                msg += "[ 主键=MyPK 值=" + this.GetValStrByKey("MyPK") + " ]";
+                                break;
+                            case "ID":
+                                msg += "[ 主键=ID 值=" + this.GetValStrByKey("ID") + " ]";
+                                break;
+                            default:
+                                Hashtable ht = this.PKVals;
+                                foreach (string key in ht.Keys)
+                                    msg += "[ 主键=" + key + " 值=" + ht[key] + " ]";
+                                break;
                         }
+                        Log.DefaultLogWriteLine(LogType.Error, "@没有[" + this.EnMap.EnDesc + "  " + this.EnMap.PhysicsTable + ", 类[" + this.ToString() + "], 物理表[" + this.EnMap.PhysicsTable + "] 实例。PK = " + this.GetValByKey(this.PK));
+                        if (SystemConfig.IsDebug)
+                            throw new Exception("@没有[" + this.EnMap.EnDesc + "  " + this.EnMap.PhysicsTable + ", 类[" + this.ToString() + "], 物理表[" + this.EnMap.PhysicsTable + "] 实例。" + msg);
+                        else
+                            throw new Exception("@没有找到记录[" + this.EnMap.EnDesc + "  " + this.EnMap.PhysicsTable + ", " + msg + "记录不存在,请与管理员联系, 或者确认输入错误.");
                     }
+                    return 1;
                 }
                 catch (Exception ex)
                 {
@@ -823,108 +849,8 @@ namespace BP.En
                         this.CheckPhysicsTable();
                     throw ex;
                 }
-
-                if (i == 0)
-                {
-                    string msg = "";
-                    switch (this.PK)
-                    {
-                        case "OID":
-                            msg += "[ 主键=OID 值=" + this.GetValStrByKey("OID") + " ]";
-                            break;
-                        case "No":
-                            msg += "[ 主键=No 值=" + this.GetValStrByKey("No") + " ]";
-                            break;
-                        case "MyPK":
-                            msg += "[ 主键=MyPK 值=" + this.GetValStrByKey("MyPK") + " ]";
-                            break;
-                        default:
-                            Hashtable ht = this.PKVals;
-                            foreach (string key in ht.Keys)
-                                msg += "[ 主键=" + key + " 值=" + ht[key] + " ]";
-                            break;
-                    }
-
-                    Log.DefaultLogWriteLine(LogType.Error, "@没有[" + this.EnMap.EnDesc + "  " + this.EnMap.PhysicsTable + ", 类[" + this.ToString() + "], 物理表[" + this.EnMap.PhysicsTable + "] 实例。PK = " + this.GetValByKey(this.PK));
-                    if (SystemConfig.IsDebug)
-                        throw new Exception("@没有[" + this.EnMap.EnDesc + "  " + this.EnMap.PhysicsTable + ", 类[" + this.ToString() + "], 物理表[" + this.EnMap.PhysicsTable + "] 实例。" + msg);
-                    else
-                        throw new Exception("@没有找到记录[" + this.EnMap.EnDesc + "  " + this.EnMap.PhysicsTable + ", " + msg + "记录不存在,请与管理员联系, 或者确认输入错误.");
-                }
-
-                if (this.CashKey != null)
-                    CashEntity.Set(this.CashKey, this.PKVal.ToString(), this, 0);
-                return i;
             }
-
-            //从全部中取数据。
-            try
-            {
-                return this.RetrieveFromCash();
-            }
-            catch
-            {
-                Log.DefaultLogWriteLineError("@两次内存查询 EnName=" + this.ToString() + ",PKVal=" + this.PKVal);
-                return this.RetrieveFromCash();
-            }
-        }
-        private int RetrieveFromCash()
-        {
-            //string name=TheNameInCash;
-            /* 判断在实体集合是不存在与 application 内存 */
-            Entities ens;
-            try
-            {
-                ens = Cash.GetEnsData(this.ToString());
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("@在内存查询期间出现错误@" + ex.Message);
-            }
-
-            if (ens == null)
-            {
-                ens = this.GetNewEntities;
-                ens.FlodInCash();
-            }
-
-            string pk = this.PK;
-            string pkval = this.GetValStrByKey(pk);
-            int count = ens.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                Entity en = ens[i];
-                if (en.GetValStrByKey(pk) == pkval)
-                {
-                    //this.Row.Clear();
-                    this.Row = en.Row; /* 如果有，就返回它。*/
-                    return 1;
-                }
-            }
-
-            //foreach (Entity en in ens)
-            //{
-            //    #warning 为什么会返回的不一样的实体？但是编号一样。
-            //    if (en.GetValStrByKey(pk) == pkval)
-            //    {
-            //        this.Row = en.Row; /* 如果有，就返回它。*/
-            //        return 1;
-            //    }
-            //}
-
-            if (this.RetrieveFromDBSources() != 0)
-            {
-                /* 从数据表中查询 */
-                ens.FlodInCash();
-                return 1;
-            }
-
-            Attr attr = this.EnMap.GetAttrByKey(pk);
-            if (SystemConfig.IsDebug)
-                throw new Exception("@在[" + this.EnDesc + this.EnMap.PhysicsTable + "]中没有找到[" + attr.Field + attr.Desc + "]=[" + this.PKVal + "]的记录。");
-            else
-                throw new Exception("@在[" + this.EnDesc + "]中没有找到[" + attr.Desc + "]=[" + this.PKVal + "]的记录。");
+            throw new Exception("@没有判断的缓存设置类型.");
         }
         /// <summary>
         /// 判断是不是存在的方法.
@@ -1155,13 +1081,13 @@ namespace BP.En
             try
             {
                 i = EnDA.Delete(this);
-                if (this.CashKey != null)
-                    CashEntity.Remove(this.CashKey, this.PKVal.ToString());
+                
+                //if (this.CashKey != null)
+                //    CashEntity.Remove(this.CashKey, this.PKVal.ToString());
             }
             catch (Exception ex)
             {
                 Log.DebugWriteInfo(ex.Message);
-                //  this.CheckPhysicsTable();
                 throw ex;
             }
             this.afterDelete();
@@ -1411,8 +1337,8 @@ namespace BP.En
 
             this.DirectInsert();
 
-            if (this.CashKey != null)
-                CashEntity.Set(this.CashKey, this.PKVal.ToString(), this, 0);
+            if (this.CashKey_Del != null)
+                CashEntity.Set(this.CashKey_Del, this.PKVal.ToString(), this, 0);
 
             this.afterInsert();
             this.afterInsertUpdateAction();
@@ -1724,15 +1650,14 @@ namespace BP.En
                 int i = EnDA.Update(this, keys);
                 str = "@更新之后出现错误";
 
-                if (this.CashKey != null)
-                    CashEntity.Set(this.CashKey, this.PKVal.ToString(), this, 0);
+                if (this.CashKey_Del != null)
+                    CashEntity.Set(this.CashKey_Del, this.PKVal.ToString(), this, 0);
 
                 // 开始更新内存数据。
                 switch (this.EnMap.DepositaryOfEntity)
                 {
                     case Depositary.Application:
-                    case Depositary.Session:
-                        Cash.Remove(this.ToString());
+                        CashEntity.Remove( this.ToString(),  this.PKVal.ToString());
                         break;
                     case Depositary.None:
                         break;
@@ -1785,16 +1710,6 @@ namespace BP.En
                     throw ex;
             }
         }
-        private void UpdateMemory_del()
-        {
-            Depositary where = this.EnMap.DepositaryOfEntity;
-
-            if (where == Depositary.None)
-                return;
-
-            //string name=TheNameInCash;
-            //Cash.AddObj( name, where, this);
-        }
         protected virtual void afterUpdate()
         {
             return;
@@ -1818,6 +1733,7 @@ namespace BP.En
                     break;
                 case "MyPK":
                 case "No":
+                case "ID":
                     string pk = this.GetValStrByKey(this.PK);
                     if (pk == "" || pk == null)
                     {
@@ -1842,113 +1758,7 @@ namespace BP.En
                     break;
             }
         }
-        /// <summary>
-        /// 保存实体信息
-        /// </summary>
-        public virtual int SaveV1()
-        {
-            if (this.IsOIDEntity)
-            {
-                if (this.GetValIntByKey("OID") == 0)
-                {
-                    //this.SetValByKey("OID",EnDA.GenerOID());
-                    this.Insert();
-                    return 0;
-                }
-                else
-                {
-                    this.Update();
-                    return 1;
-                }
-            }
-            else if (this.PK == "No")
-            {
-                /*如果包含编号。 */
-                if (this.IsExits)
-                {
-                    return this.Update();
-                }
-                else
-                {
-                    this.Insert();
-                    return 0;
-                }
-            }
-            else if (this.PK == "MyPK")
-            {
-                if (this.Update() == 0)
-                    this.Insert();
-                return 1;
-            }
-
-
-            if (this.IsExits == false)
-            {
-                this.Insert();
-                return 0;
-            }
-            else
-            {
-                this.Update();
-                return 1;
-            }
-
-        }
-        public virtual int Save_Del()
-        {
-            if (this.IsOIDEntity)
-            {
-                if (this.GetValIntByKey("OID") == 0)
-                {
-                    //this.SetValByKey("OID",EnDA.GenerOID());
-                    this.Insert();
-                    return 0;
-                }
-                else
-                {
-                    this.Update();
-                    return 1;
-                }
-            }
-            else if (this.PK == "No")
-            {
-                /*如果包含编号。 */
-                if (this.IsExits)
-                {
-                    return this.Update();
-                }
-                else
-                {
-                    this.Insert();
-                    return 0;
-                }
-            }
-
-            if (this.Update() == 0)
-            {
-                this.Insert();
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
-
-            /*
-            if (this.IsExits==false)
-            {
-                this.Insert();
-                return 0 ;
-            }
-            else
-            {
-                this.Update();
-                return 1 ;
-            }			
-            */
-        }
         #endregion
-
         #endregion
 
         #region 关于数据库的处理
@@ -3585,6 +3395,26 @@ namespace BP.En
 
         #region 对集合的操作
         /// <summary>
+        /// 装载到内存
+        /// </summary>
+        /// <returns></returns>
+        public int FlodInCash()
+        {
+            //this.Clear();
+            QueryObject qo = new QueryObject(this);
+
+            // qo.Top = 2000;
+            int num = qo.DoQuery();
+
+            /* 把查询个数加入内存 */
+            Entity en = this.GetNewEntity;
+            Cash.EnsDataSet(en.ToString(), this);
+
+            BP.DA.Log.DefaultLogWriteLineInfo("成功[" + en.ToString() + "-" + num + "]放入缓存。");
+            return num;
+        }
+
+        /// <summary>
         /// 执行一次数据检查
         /// </summary>
         public string DoDBCheck(DBLevel level)
@@ -3987,55 +3817,8 @@ namespace BP.En
             //qo.addRightBracket();
             return qo.DoQuery();
         }
-        /// <summary>
-        /// 把全部的信息调入
-        /// </summary>
-        /// <returns>调入内存的个数</returns>
-        public int FlodInCash()
-        {
-            // BP.DA.Log.DebugWriteInfo("FlodInCash:" + this.ToString());
-            return this.FlodInCash(null);
-        }
-        private int FlodInCash(string orderby)
-        {
-            //this.Clear();
-            QueryObject qo = new QueryObject(this);
-            if (orderby != null)
-                qo.addOrderBy(orderby);
-
-            // qo.Top = 2000;
-            int num = qo.DoQuery();
-
-            /* 把查询个数加入内存 */
-            Entity en = this.GetNewEntity;
-            Cash.EnsDataSet(en.ToString(), this);
-
-            BP.DA.Log.DefaultLogWriteLineInfo("成功[" + en.ToString() + "-" + num + "]放入缓存。");
-            return num;
-        }
-        private int FlodInCash(string orderby,string orderBy2)
-        {
-            //this.Clear();
-            QueryObject qo = new QueryObject(this);
-            if (orderby != null)
-                qo.addOrderBy(orderby, orderBy2);
-
-            // qo.Top = 2000;
-            int num = qo.DoQuery();
-
-            /* 把查询个数加入内存 */
-            Entity en = this.GetNewEntity;
-            Cash.EnsDataSet(en.ToString(), this);
-
-            BP.DA.Log.DefaultLogWriteLineInfo("成功[" + en.ToString() + "-" + num + "]放入缓存。");
-            return num;
-        }
-        public int RetrieveByLike(string key, string val)
-        {
-            QueryObject qo = new QueryObject(this);
-            qo.AddWhere(key, " like ", val);
-            return qo.DoQuery();
-        }
+       
+         
         /// <summary>
         ///  查询出来，包涵pks 的字串。
         ///  比例："001,002,003"
@@ -4096,14 +3879,7 @@ namespace BP.En
             qo.addOrderBy(orderby);
             return qo.DoQuery();
         }
-        //public int Retrieve(string key, object val, string orderby, int top)
-        //{
-        //    QueryObject qo = new QueryObject(this);
-        //    qo.Top = top;
-        //    qo.AddWhere(key, val);
-        //    qo.addOrderBy(orderby);
-        //    return qo.DoQuery();
-        //}
+       
         public int Retrieve(string key, object val, string key2, object val2)
         {
             QueryObject qo = new QueryObject(this);
@@ -4160,21 +3936,6 @@ namespace BP.En
             qo.addOrderBy(orderBy);
             return qo.DoQuery();
         }
-
-        #region 执行查询全部
-        private int RetrieveAllFromApp_del()
-        {
-            this.Clear();
-            string clsName = this.GetNewEntity.ToString() + "_";
-            foreach (System.Collections.DictionaryEntry de in System.Web.HttpContext.Current.Cache)
-            {
-                if (de.Key.ToString().IndexOf(clsName) == 0)
-                    this.InnerList.Add(de.Value);
-            }
-            return this.Count;
-        }
-        #endregion
-
         /// <summary>
         /// 查询全部
         /// </summary>
@@ -4219,40 +3980,10 @@ namespace BP.En
         /// <returns></returns>
         public virtual int RetrieveAll(string orderBy)
         {
-            //  this.Clear();
-            Entity en = this.GetNewEntity;
-            if (en.EnMap.DepositaryOfEntity == Depositary.Application)
-            {
-                if (this.Count > 0)
-                    return this.Count;
-
-                if (SystemConfig.IsBSsystem_Test)
-                {
-                    Entities ens = Cash.GetEnsData(en.ToString());
-                    if (ens == null)
-                    {
-                        /*如果不存在于系统中。*/
-                        this.FlodInCash(orderBy);
-                    }
-                    else
-                    {
-                        if (ens.Count == 0)
-                            throw new Exception("@数据为0");
-                        this.AddEntities(ens);
-                        BP.DA.Log.DebugWriteInfo(en.ToString() + ":从内存中取出。");
-                    }
-                    return this.Count;
-                }
-            }
-
             QueryObject qo = new QueryObject(this);
             if (orderBy != null)
                 qo.addOrderBy(orderBy);
             return qo.DoQuery();
-        }
-        public virtual void RemoveCash()
-        {
-            Cash.Remove(this.ToString());
         }
         /// <summary>
         /// 查询全部。
@@ -4260,32 +3991,6 @@ namespace BP.En
         /// <returns></returns>
         public virtual int RetrieveAll(string orderBy1,string orderBy2)
         {
-            //  this.Clear();
-            Entity en = this.GetNewEntity;
-            if (en.EnMap.DepositaryOfEntity == Depositary.Application)
-            {
-                if (this.Count > 0)
-                    return this.Count;
-
-                if (SystemConfig.IsBSsystem_Test)
-                {
-                    Entities ens = Cash.GetEnsData(en.ToString());
-                    if (ens == null)
-                    {
-                        /*如果不存在于系统中。*/
-                        this.FlodInCash(orderBy1, orderBy2);
-                    }
-                    else
-                    {
-                        if (ens.Count == 0)
-                            throw new Exception("@数据为0");
-                        this.AddEntities(ens);
-                        BP.DA.Log.DebugWriteInfo(en.ToString() + ":从内存中取出。");
-                    }
-                    return this.Count;
-                }
-            }
-
             QueryObject qo = new QueryObject(this);
             if (orderBy1 != null)
                 qo.addOrderBy(orderBy1, orderBy2);
@@ -4362,107 +4067,7 @@ namespace BP.En
             }
             return dt;
         }
-        /// <summary>
-        /// 查询出来他的明细与明细的明细。
-        /// 并编辑他们之间的关系。
-        /// </summary>
-        /// <returns>编辑好的，实体明细，以及实体明细的明细。</returns>
-        public DataSet RetrieveAllDtlToDataSet()
-        {
-
-            DataSet ds = new DataSet(this.ToString());
-
-            /* 把主表加入ds */
-            Entity en = this.GetNewEntity;
-            QueryObject qo = new QueryObject(this);
-            DataTable dt = qo.DoQueryToTable();
-            dt.TableName = en.EnDesc; //设定主表的名称。
-            ds.Tables.Add(DealBoolTypeInDataTable(en, dt));
-
-
-            foreach (EnDtl ed in en.EnMap.DtlsAll)
-            {
-                /* 循环主表的明细，编辑好关系并把他们放入 DataSet 里面。*/
-                Entities edens = ed.Ens;
-                Entity eden = edens.GetNewEntity;
-                DataTable edtable = edens.RetrieveAllToTable();
-                edtable.TableName = eden.EnDesc;
-                ds.Tables.Add(DealBoolTypeInDataTable(eden, edtable));
-
-                DataRelation r1 = new DataRelation(ed.Desc,
-                    ds.Tables[dt.TableName].Columns[en.PK],
-                    ds.Tables[edtable.TableName].Columns[ed.RefKey]);
-                ds.Relations.Add(r1);
-
-
-                //	int i = 0 ;
-
-                foreach (EnDtl ed1 in eden.EnMap.DtlsAll)
-                {
-                    /* 主表的明细的明细。*/
-                    Entities edlens1 = ed1.Ens;
-                    Entity edlen1 = edlens1.GetNewEntity;
-
-                    DataTable edlensTable1 = edlens1.RetrieveAllToTable();
-                    edlensTable1.TableName = edlen1.EnDesc;
-                    //edlensTable1.TableName =ed1.Desc ;
-
-
-                    ds.Tables.Add(DealBoolTypeInDataTable(edlen1, edlensTable1));
-
-                    DataRelation r2 = new DataRelation(ed1.Desc,
-                        ds.Tables[edtable.TableName].Columns[eden.PK],
-                        ds.Tables[edlensTable1.TableName].Columns[ed1.RefKey]);
-                    ds.Relations.Add(r2);
-                }
-
-
-
-
-                //				foreach(AttrOfOneVSM oneVsM in eden.EnMap.AttrsOfOneVSM)
-                //				{
-                //					/* 当前的 Entity 点对点的关系  */
-                //					Entities ensOfoneVsM =oneVsM.EnsOfMM;
-                //					Entity enOfoneVsM =ensOfoneVsM.GetNewEntity;
-                //
-                //					DataTable ensOfoneVsMTable =ensOfoneVsM.RetrieveAllToTable();				 
-                //					ensOfoneVsMTable.TableName = enOfoneVsM.EnDesc ;
-                //
-                //					ds.Tables.Add( DealBoolTypeInDataTable( enOfoneVsM , ensOfoneVsMTable ) );
-                //					 
-                //					DataRelation r2 = new DataRelation( oneVsM.Desc ,
-                //						ds.Tables[edtable.TableName ].Columns[ en.PK ],
-                //						ds.Tables[ensOfoneVsMTable.TableName].Columns[ oneVsM.AttrOfOneInMM ]);
-                //					ds.Relations.Add(r2);
-                //				}
-
-            }
-            return ds;
-        }
-        /// <summary>
-        /// DataSet
-        /// </summary>
-        /// <param name="ds"></param>
-        /// <param name="en"></param>
-        /// <param name="dtl"></param>
-        /// <returns></returns>	 
-        private DataSet AddRefDtl(DataSet ds, Entity en, Entity enDtl, EnDtl dtl)
-        {
-            return null;
-            //			/* 主表的明细的明细。*/
-            //			Entities edlens1 =ed1.Ens ; 
-            //			Entity edlen1 =edlens1.GetNewEntity ; 
-            //
-            //			DataTable edlensTable1 =edlens1.RetrieveAllToTable();					 
-            //			edlensTable1.TableName = edlen1.EnDesc ;
-            //
-            //			ds.Tables.Add( DealBoolTypeInDataTable(edlen1 ,edlensTable1) );					 
-            //
-            //			DataRelation r2 = new DataRelation("编辑明细:"+edlen1.EnDesc,
-            //				ds.Tables[edtable.TableName ].Columns[ eden.PK ],
-            //				ds.Tables[edlensTable1.TableName].Columns[ ed1.RefKey ]);
-            //			ds.Relations.Add(r2);
-        }
+       
         /// <summary>
         /// 查询全部的结果放到RetrieveAllToDataSet。
         /// 包含它们的关联的信息。
@@ -4495,15 +4100,12 @@ namespace BP.En
                     DataRelation relCustOrder = new DataRelation(attr.Key, parentCol, childCol);
                     ds.Relations.Add(relCustOrder);
                     continue;
-
-
                 }
                 else if (attr.MyFieldType == FieldType.Enum || attr.MyFieldType == FieldType.PKEnum)
                 {
                     DataTable dt1 = DBAccess.RunSQLReturnTable("select * from sys_enum WHERE enumkey=" + en.HisDBVarStr + "k", "k", attr.UIBindKey);
                     dt1.TableName = attr.UIBindKey;
                     ds.Tables.Add(dt1);
-
 
                     /// 加入关系
                     DataColumn parentCol;
@@ -4826,29 +4428,12 @@ namespace BP.En
             }
             return dt;
         }
-     
         #endregion
 
 
-        #region 内存查询方法
-
-        #endregion
+      
 
         #region 分组方法
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="strs"></param>
-        /// <returns></returns>
-        public int Group(Attrs attrs)
-        {
-            QueryObject qo = new QueryObject(this);
-            //qo.gr
-            return 0;
-
-
-
-        }
         #endregion
 
         #region 查询from cash

@@ -1051,7 +1051,7 @@ namespace BP.En
                                 this.DepositaryOfEntity = Depositary.None;
                                 break;
                             case "Session":
-                                this.DepositaryOfEntity = Depositary.Session;
+                                this.DepositaryOfEntity = Depositary.Application;
                                 break;
                             default:
                                 throw new Exception("没有约定的标记:DepositaryOfEntity=[" + val + "] 应该选择为,Application, None, Session ");
@@ -1061,13 +1061,11 @@ namespace BP.En
                         switch (val)
                         {
                             case "Application":
+                            case "Session":
                                 this.DepositaryOfMap = Depositary.Application;
                                 break;
                             case "None":
                                 this.DepositaryOfMap = Depositary.None;
-                                break;
-                            case "Session":
-                                this.DepositaryOfMap = Depositary.Session;
                                 break;
                             default:
                                 throw new Exception("没有约定的标记:DepositaryOfMap=[" + val + "] 应该选择为,Application, None, Session ");

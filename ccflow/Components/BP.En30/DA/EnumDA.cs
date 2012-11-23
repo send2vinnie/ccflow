@@ -43,17 +43,13 @@ namespace BP.DA
     /// </summary>
     public enum Depositary
     {
+         /// <summary>
+        /// 不保管
+        /// </summary>
+        None,
         /// <summary>
         /// 全体
         /// </summary>
-        Application,
-        /// <summary>
-        /// 对话
-        /// </summary>
-        Session,
-        /// <summary>
-        /// 不保管
-        /// </summary>
-        None
+        Application        
     }
 }
