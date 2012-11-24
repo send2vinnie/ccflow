@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Data;
 using System.IO;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ public class CCFlowAPI : CCForm {
     /// <param name="userNo"></param>
     /// <param name="pass"></param>
     /// <returns></returns>
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void Port_Login(string userNo, string pass)
     {
         Emp emp = new Emp(userNo);
@@ -61,21 +62,17 @@ public class CCFlowAPI : CCForm {
     /// <param name="workID">工作ID</param>
     /// <param name="userNo">操作员编号</param>
     /// <returns></returns>
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public string GenerWorkNode(string fk_flow, int fk_node, Int64 workID, string userNo)
     {
         //if (Dev2Interface.Flow_CheckIsCanDoCurrentWork(workID, userNo) == false)
         //    throw new Exception("您没有处理当前工作的权限。");
 
-        try
-        {
-            Emp emp = new Emp(userNo);
-            BP.Web.WebUser.SignInOfGener(emp);
-        }
-        catch
-        {
-        }
-
+        Emp emp = new Emp(userNo);
+        BP.Web.WebUser.No = emp.No;
+        BP.Web.WebUser.Name = emp.Name;
+        BP.Web.WebUser.FK_Dept = emp.FK_Dept;
+        BP.Web.WebUser.FK_DeptName = emp.FK_DeptText;
 
         MapData md = new MapData();
         md.No = "ND" + fk_node;
@@ -89,18 +86,94 @@ public class CCFlowAPI : CCForm {
 
         //节点标签数据.
         BtnLab btnLab = new BtnLab(fk_node);
-        myds.Tables.Add(nd.ToDataTableField("WF_BtnLab"));
+        myds.Tables.Add(btnLab.ToDataTableField("WF_BtnLab"));
 
         // 流程数据.
         Flow fl = new Flow(fk_flow);
-        myds.Tables.Add(nd.ToDataTableField("WF_Flow"));
+        myds.Tables.Add(fl.ToDataTableField("WF_Flow"));
 
-        //// 工作数据放里面去.
+        //.工作数据放里面去.
         BP.WF.Work wk = nd.HisWork;
         wk.OID = workID;
         wk.RetrieveFromDBSources();
-        myds.Tables.Add(wk.ToDataTableField("NDData"));
+        myds.Tables.Add(wk.ToDataTableField("Main"));
+
+#warning 还有从表一对多，附件...
 
         return Connector.ToXml(myds);
+    }
+    /// <summary>
+    /// 获取一条待办工作
+    /// </summary>
+    /// <param name="fk_flow">工作编号</param>
+    /// <param name="fk_node">节点编号</param>
+    /// <param name="workID">工作ID</param>
+    /// <param name="userNo">操作员编号</param>
+    /// <returns></returns>
+    [WebMethod(EnableSession = true)]
+    public string Node_SaveWork(string fk_flow, int fk_node, Int64 workID, string userNo, string dsXml)
+    {
+        try
+        {
+            Emp emp = new Emp(userNo);
+            BP.Web.WebUser.No = emp.No;
+            BP.Web.WebUser.Name = emp.Name;
+            BP.Web.WebUser.FK_Dept = emp.FK_Dept;
+            BP.Web.WebUser.FK_DeptName = emp.FK_DeptText;
+
+            StringReader sr = new StringReader(dsXml);
+            DataSet ds = new DataSet();
+            ds.ReadXml(sr);
+
+            Hashtable htMain = new Hashtable();
+            DataTable dtMain = ds.Tables["Main"];
+            foreach (DataRow dr in dtMain.Rows)
+            {
+                htMain.Add(dr[0].ToString(), dr[1].ToString());
+            }
+            return BP.WF.Dev2Interface.Node_SaveWork(fk_flow, workID, htMain, ds);
+        }
+        catch(Exception ex)
+        {
+            return "@保存工作出现错误:" + ex.Message;
+        }
+    }
+    /// <summary>
+    /// 执行发送
+    /// </summary>
+    /// <param name="fk_flow"></param>
+    /// <param name="fk_node"></param>
+    /// <param name="workID"></param>
+    /// <param name="userNo"></param>
+    /// <param name="dsXml"></param>
+    /// <returns></returns>
+    [WebMethod(EnableSession = true)]
+    public string Node_SendWork(string fk_flow, int fk_node, Int64 workID, string userNo, string dsXml)
+    {
+        try
+        {
+            Emp emp = new Emp(userNo);
+            BP.Web.WebUser.No = emp.No;
+            BP.Web.WebUser.Name = emp.Name;
+            BP.Web.WebUser.FK_Dept = emp.FK_Dept;
+            BP.Web.WebUser.FK_DeptName = emp.FK_DeptText;
+
+            StringReader sr = new StringReader(dsXml);
+            DataSet ds = new DataSet();
+            ds.ReadXml(sr);
+
+            Hashtable htMain = new Hashtable();
+            DataTable dtMain = ds.Tables["Main"];
+            foreach (DataRow dr in dtMain.Rows)
+            {
+                htMain.Add(dr[0].ToString(), dr[1].ToString());
+            }
+            return BP.WF.Dev2Interface.Node_SendWork(fk_flow, workID, htMain, ds);
+            //return "保存成功";
+        }
+        catch (Exception ex)
+        {
+            return "@发送工作出现错误:" + ex.Message;
+        }
     }
 }
