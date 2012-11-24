@@ -44,19 +44,41 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="SaveWorkNode">
+      <s:element name="Node_SaveWork">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="fk_flow" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="fk_node" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="workID" type="s:long" />
             <s:element minOccurs="0" maxOccurs="1" name="userNo" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="ds" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsXml" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="SaveWorkNodeResponse">
-        <s:complexType />
+      <s:element name="Node_SaveWorkResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Node_SaveWorkResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Node_SendWork">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fk_flow" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fk_node" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="workID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="userNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Node_SendWorkResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Node_SendWorkResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="SaveImageAsFile">
         <s:complexType>
@@ -424,11 +446,17 @@
   <wsdl:message name="GenerWorkNodeSoapOut">
     <wsdl:part name="parameters" element="tns:GenerWorkNodeResponse" />
   </wsdl:message>
-  <wsdl:message name="SaveWorkNodeSoapIn">
-    <wsdl:part name="parameters" element="tns:SaveWorkNode" />
+  <wsdl:message name="Node_SaveWorkSoapIn">
+    <wsdl:part name="parameters" element="tns:Node_SaveWork" />
   </wsdl:message>
-  <wsdl:message name="SaveWorkNodeSoapOut">
-    <wsdl:part name="parameters" element="tns:SaveWorkNodeResponse" />
+  <wsdl:message name="Node_SaveWorkSoapOut">
+    <wsdl:part name="parameters" element="tns:Node_SaveWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="Node_SendWorkSoapIn">
+    <wsdl:part name="parameters" element="tns:Node_SendWork" />
+  </wsdl:message>
+  <wsdl:message name="Node_SendWorkSoapOut">
+    <wsdl:part name="parameters" element="tns:Node_SendWorkResponse" />
   </wsdl:message>
   <wsdl:message name="SaveImageAsFileSoapIn">
     <wsdl:part name="parameters" element="tns:SaveImageAsFile" />
@@ -582,14 +610,26 @@
   <wsdl:message name="GenerWorkNodeHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="SaveWorkNodeHttpGetIn">
+  <wsdl:message name="Node_SaveWorkHttpGetIn">
     <wsdl:part name="fk_flow" type="s:string" />
     <wsdl:part name="fk_node" type="s:string" />
     <wsdl:part name="workID" type="s:string" />
     <wsdl:part name="userNo" type="s:string" />
-    <wsdl:part name="ds" type="s:string" />
+    <wsdl:part name="dsXml" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="SaveWorkNodeHttpGetOut" />
+  <wsdl:message name="Node_SaveWorkHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="Node_SendWorkHttpGetIn">
+    <wsdl:part name="fk_flow" type="s:string" />
+    <wsdl:part name="fk_node" type="s:string" />
+    <wsdl:part name="workID" type="s:string" />
+    <wsdl:part name="userNo" type="s:string" />
+    <wsdl:part name="dsXml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="Node_SendWorkHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:message name="SaveImageAsFileHttpGetIn">
     <wsdl:part name="img" type="s1:StringArray" />
     <wsdl:part name="pkval" type="s:string" />
@@ -765,14 +805,26 @@
   <wsdl:message name="GenerWorkNodeHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="SaveWorkNodeHttpPostIn">
+  <wsdl:message name="Node_SaveWorkHttpPostIn">
     <wsdl:part name="fk_flow" type="s:string" />
     <wsdl:part name="fk_node" type="s:string" />
     <wsdl:part name="workID" type="s:string" />
     <wsdl:part name="userNo" type="s:string" />
-    <wsdl:part name="ds" type="s:string" />
+    <wsdl:part name="dsXml" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="SaveWorkNodeHttpPostOut" />
+  <wsdl:message name="Node_SaveWorkHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="Node_SendWorkHttpPostIn">
+    <wsdl:part name="fk_flow" type="s:string" />
+    <wsdl:part name="fk_node" type="s:string" />
+    <wsdl:part name="workID" type="s:string" />
+    <wsdl:part name="userNo" type="s:string" />
+    <wsdl:part name="dsXml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="Node_SendWorkHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:message name="SaveImageAsFileHttpPostIn">
     <wsdl:part name="img" type="s1:StringArray" />
     <wsdl:part name="pkval" type="s:string" />
@@ -941,9 +993,13 @@
       <wsdl:input message="tns:GenerWorkNodeSoapIn" />
       <wsdl:output message="tns:GenerWorkNodeSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="SaveWorkNode">
-      <wsdl:input message="tns:SaveWorkNodeSoapIn" />
-      <wsdl:output message="tns:SaveWorkNodeSoapOut" />
+    <wsdl:operation name="Node_SaveWork">
+      <wsdl:input message="tns:Node_SaveWorkSoapIn" />
+      <wsdl:output message="tns:Node_SaveWorkSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Node_SendWork">
+      <wsdl:input message="tns:Node_SendWorkSoapIn" />
+      <wsdl:output message="tns:Node_SendWorkSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="SaveImageAsFile">
       <wsdl:input message="tns:SaveImageAsFileSoapIn" />
@@ -1047,9 +1103,13 @@
       <wsdl:input message="tns:GenerWorkNodeHttpGetIn" />
       <wsdl:output message="tns:GenerWorkNodeHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="SaveWorkNode">
-      <wsdl:input message="tns:SaveWorkNodeHttpGetIn" />
-      <wsdl:output message="tns:SaveWorkNodeHttpGetOut" />
+    <wsdl:operation name="Node_SaveWork">
+      <wsdl:input message="tns:Node_SaveWorkHttpGetIn" />
+      <wsdl:output message="tns:Node_SaveWorkHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Node_SendWork">
+      <wsdl:input message="tns:Node_SendWorkHttpGetIn" />
+      <wsdl:output message="tns:Node_SendWorkHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="SaveImageAsFile">
       <wsdl:input message="tns:SaveImageAsFileHttpGetIn" />
@@ -1153,9 +1213,13 @@
       <wsdl:input message="tns:GenerWorkNodeHttpPostIn" />
       <wsdl:output message="tns:GenerWorkNodeHttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="SaveWorkNode">
-      <wsdl:input message="tns:SaveWorkNodeHttpPostIn" />
-      <wsdl:output message="tns:SaveWorkNodeHttpPostOut" />
+    <wsdl:operation name="Node_SaveWork">
+      <wsdl:input message="tns:Node_SaveWorkHttpPostIn" />
+      <wsdl:output message="tns:Node_SaveWorkHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Node_SendWork">
+      <wsdl:input message="tns:Node_SendWorkHttpPostIn" />
+      <wsdl:output message="tns:Node_SendWorkHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="SaveImageAsFile">
       <wsdl:input message="tns:SaveImageAsFileHttpPostIn" />
@@ -1275,8 +1339,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SaveWorkNode">
-      <soap:operation soapAction="http://tempuri.org/SaveWorkNode" style="document" />
+    <wsdl:operation name="Node_SaveWork">
+      <soap:operation soapAction="http://tempuri.org/Node_SaveWork" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Node_SendWork">
+      <soap:operation soapAction="http://tempuri.org/Node_SendWork" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1512,8 +1585,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SaveWorkNode">
-      <soap12:operation soapAction="http://tempuri.org/SaveWorkNode" style="document" />
+    <wsdl:operation name="Node_SaveWork">
+      <soap12:operation soapAction="http://tempuri.org/Node_SaveWork" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Node_SendWork">
+      <soap12:operation soapAction="http://tempuri.org/Node_SendWork" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1747,12 +1829,23 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SaveWorkNode">
-      <http:operation location="/SaveWorkNode" />
+    <wsdl:operation name="Node_SaveWork">
+      <http:operation location="/Node_SaveWork" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
-      <wsdl:output />
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Node_SendWork">
+      <http:operation location="/Node_SendWork" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SaveImageAsFile">
       <http:operation location="/SaveImageAsFile" />
@@ -1980,12 +2073,23 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SaveWorkNode">
-      <http:operation location="/SaveWorkNode" />
+    <wsdl:operation name="Node_SaveWork">
+      <http:operation location="/Node_SaveWork" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
-      <wsdl:output />
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Node_SendWork">
+      <http:operation location="/Node_SendWork" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SaveImageAsFile">
       <http:operation location="/SaveImageAsFile" />

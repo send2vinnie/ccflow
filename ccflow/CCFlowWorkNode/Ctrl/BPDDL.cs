@@ -49,31 +49,6 @@ namespace WorkNode
         }
         #endregion 处理选中.
 
-        //protected override void OnDropDownOpened(EventArgs e)
-        //{
-        //    Glo.currEle = this;
-        //  //  Glo.IsMouseDown = true;
-        //    base.OnDropDownOpened(e);
-        //}
-       
-        //protected override void OnGotFocus(RoutedEventArgs e)
-        //{
-        //    Glo.currEle = this;
-        //  //  Glo.IsMouseDown = true;
-        //    base.OnGotFocus(e);
-        //}
-        //protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        //{
-        //    Glo.currEle = this;
-        //    Glo.IsMouseDown = true;
-        //    base.OnMouseLeftButtonDown(e);
-        //}
-        //protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        //{
-        //    Glo.IsMouseDown = false;
-        //    base.OnMouseLeftButtonUp(e);
-        //}
-
         #region bind Enum
         public string UIBindKey = "";
         public string HisLGType = LGType.Enum;
@@ -169,125 +144,19 @@ namespace WorkNode
                 this.Items.Clear();
                 foreach (Silverlight.DataRow dr in ds.Tables[0].Rows)
                 {
-                    this.Items.Add(dr["No"] + ":" + dr["Name"]);
+                    ListBoxItem li = new ListBoxItem();
+                    li.Tag = dr["No"];
+                    li.Content = dr["Name"];
+                    this.Items.Add(li);
                 }
-
                 if (this.Items.Count != 0)
                     this.SelectedIndex = 0;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
         #endregion bing Enum
-
-        #region 移动事件
-        bool isCopy = false;
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            e.Handled = true;
-            // 获取 textBox 对象的相对于 Canvas 的 x坐标 和 y坐标
-            double x = (double)this.GetValue(Canvas.LeftProperty);
-            double y = (double)this.GetValue(Canvas.TopProperty);
-            
-
-            // KeyEventArgs.Key - 与事件相关的键盘的按键 [System.Windows.Input.Key枚举]
-            switch (e.Key)
-            {
-                // 按 Up 键后 textBox 对象向 上 移动 1 个像素
-                // Up 键所对应的 e.PlatformKeyCode == 38 
-                // 当获得的 e.Key == Key.Unknown 时，可以使用 e.PlatformKeyCode 来确定用户所按的键
-               
-                case Key.Up:
-                case Key.W:
-                    this.SetValue(Canvas.TopProperty, y - 1);
-                    break;
-                case Key.Down:
-                case Key.S:
-                    this.SetValue(Canvas.TopProperty, y + 1);
-                    break;
-
-                case Key.Left:
-                case Key.A:
-                    if (Keyboard.Modifiers == ModifierKeys.Shift)
-                    {
-                        if (this.Width > 10)
-                            this.Width = this.Width - 1;
-                    }
-                    else
-                    {
-                        this.SetValue(Canvas.LeftProperty, x - 1);
-                    }
-                    break;
-                case Key.Right:
-                case Key.D:
-                    if (Keyboard.Modifiers == ModifierKeys.Shift)
-                    {
-                            this.Width = this.Width + 1;
-                    }
-                    else
-                    {
-                        this.SetValue(Canvas.LeftProperty, x + 1);
-                    }
-                    break;
-                case Key.Delete:
-
-                    this.DeleteIt();
-
-                    break;
-                case Key.C:
-                    break;
-                case Key.V:
-                    if (Keyboard.Modifiers == ModifierKeys.Control)
-                    {
-                        BPDDL ctl = new BPDDL();
-                        ctl.Cursor = Cursors.Hand;
-                        ctl.SetValue(Canvas.LeftProperty, (double)this.GetValue(Canvas.LeftProperty) + 15);
-                        ctl.SetValue(Canvas.TopProperty, (double)this.GetValue(Canvas.TopProperty) + 15);
-                        ctl.Items.Add("ComboBox");
-                        ctl.SelectedIndex = 0;
-                        Canvas s1c = this.Parent as Canvas;
-                        try
-                        {
-                            s1c.Children.Add(ctl);
-                        }
-                        catch
-                        {
-                            s1c.Children.Remove(ctl);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-            base.OnKeyDown(e);
-        }
-        #endregion 移动事件
-
-        public bool IsDelete = false;
-        public void DeleteIt()
-        {
-            if (this.Name != null)
-            {
-                FF.CCFlowAPISoapClient da = Glo.GetCCFlowAPISoapClientServiceInstance();
-                string sqls = "DELETE FROM Sys_MapAttr WHERE FK_MapData='" + Glo.FK_MapData + "' AND KeyOfEn='" + this.Name + "'";
-                da.RunSQLsAsync(sqls);
-            }
-            Canvas c = this.Parent as Canvas;
-            c.Children.Remove(this);
-            IsDelete = true;
-        }
-
-        public void HidIt()
-        {
-            FF.CCFlowAPISoapClient hidDA = Glo.GetCCFlowAPISoapClientServiceInstance();
-            hidDA.RunSQLsAsync("UPDATE Sys_MapAttr SET UIVisible=0 WHERE KeyOfEn='" + this.Name + "' AND FK_MapData='" + Glo.FK_MapData + "'");
-            hidDA.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(hidDA_RunSQLsCompleted);
-        }
-        void hidDA_RunSQLsCompleted(object sender, FF.RunSQLsCompletedEventArgs e)
-        {
-            this.Visibility = System.Windows.Visibility.Collapsed;
-        }
     }
 }

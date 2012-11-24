@@ -41,10 +41,14 @@ namespace WorkNode
                 typeof(CCFlowAPISoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
             return (CCFlowAPISoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
         }
-        public static bool trackingMouseMove = false;
-        public static UIElement currEle = null;
-        public static bool IsMouseDown = false;
-        public static bool IsDtlFrm = false;
+        public static string FK_MapData
+        {
+            get
+            {
+                return "ND" + Glo.FK_Node;
+            }
+        }
+
         public static string BPMHost = null;
         public static string CompanyID = "CCFlow";
         public static string AppCenterDBType = "MSSQL";
@@ -93,19 +97,6 @@ namespace WorkNode
             if (cb.SelectedIndex == -1)
                 cb.SelectedIndex = 0;
         }
-        private static string[] _Colors = null;
-        public static string[] ColorsStrs
-        {
-            get
-            {
-                if (_Colors == null)
-                {
-                    string cls = "@Black=#FF000000@Red=#FFFF0000@Blue=#FF0000FF@Green=#FF008000";
-                    _Colors = cls.Split('@');
-                }
-                return _Colors;
-            }
-        }
         public static Color ToColor(string colorName)
         {
             try
@@ -126,19 +117,6 @@ namespace WorkNode
                 return Colors.Black;
             }
         }
-        public static string PreaseColorToName(string coloVal)
-        {
-            foreach (string c in Glo.ColorsStrs)
-            {
-                if (string.IsNullOrEmpty(c))
-                    continue;
-
-                string[] kvs = c.Split('=');
-                if (kvs[1] == coloVal)
-                    return kvs[0];
-            }
-            return coloVal;
-        }
         public static void WinOpen(string url)
         {
             HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:600px;dialogWidth:800px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
@@ -153,33 +131,13 @@ namespace WorkNode
             HtmlPage.Window.Eval(string.Format("window.open('{0}','{1}','{2};scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');", url,
                       "Title", p));
         }
-        public static void IE_ShowAddFGuide()
-        {
-            Glo.WinOpen(Glo.BPMHost + "/WF/MapDef/Do.aspx?DoType=AddF&MyPK=" + Glo.FK_MapData);
-        }
         public static string FK_Flow
         {
             get
             {
                 if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow") == false)
-                    return "004";
+                    throw new Exception("@丢失FK_Flow参数.");
                 return System.Windows.Browser.HtmlPage.Document.QueryString["FK_Flow"];
-            }
-        }
-        private static string _FK_MapData = null;
-        public static string FK_MapData
-        {
-            get
-            {
-                if (_FK_MapData != null)
-                    return _FK_MapData;
-                if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_MapData") == false)
-                    return "ND401";
-                return System.Windows.Browser.HtmlPage.Document.QueryString["FK_MapData"];
-            }
-            set
-            {
-                _FK_MapData = value;
             }
         }
         private static string _UserNo = null;
@@ -191,10 +149,8 @@ namespace WorkNode
                     return _UserNo;
 
                 if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("UserNo") == false)
-                    return "zhoupeng";
+                    throw new Exception("@丢失UserNo参数.");
                 _UserNo = System.Windows.Browser.HtmlPage.Document.QueryString["UserNo"];
-                if (string.IsNullOrEmpty(_UserNo) == false)
-                    _UserNo = "zhoupeng";
                 return _UserNo;
             }
             set
@@ -210,7 +166,7 @@ namespace WorkNode
                 if (_FK_Node == 0)
                 {
                     if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Node") == false)
-                        return 101;
+                        throw new Exception("@丢失FK_Node参数.");
                     _FK_Node = int.Parse(System.Windows.Browser.HtmlPage.Document.QueryString["FK_Node"]);
                 }
                 return _FK_Node;
@@ -229,7 +185,8 @@ namespace WorkNode
                 if (_WorkID == 0)
                 {
                     if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID") == false)
-                        return 1000;
+                        throw new Exception("@丢失WorkID参数.");
+
                     _WorkID = int.Parse(System.Windows.Browser.HtmlPage.Document.QueryString["WorkID"]);
                 }
                 return _WorkID;

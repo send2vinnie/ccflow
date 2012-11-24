@@ -36,11 +36,17 @@ namespace WorkNode.FF {
         
         string EndGenerWorkNode(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SaveWorkNode", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/Node_SaveWork", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginSaveWorkNode(string fk_flow, int fk_node, long workID, string userNo, string ds, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginNode_SaveWork(string fk_flow, int fk_node, long workID, string userNo, string dsXml, System.AsyncCallback callback, object asyncState);
         
-        void EndSaveWorkNode(System.IAsyncResult result);
+        string EndNode_SaveWork(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/Node_SendWork", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginNode_SendWork(string fk_flow, int fk_node, long workID, string userNo, string dsXml, System.AsyncCallback callback, object asyncState);
+        
+        string EndNode_SendWork(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SaveImageAsFile", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -330,6 +336,44 @@ namespace WorkNode.FF {
         private object[] results;
         
         public GenerWorkNodeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class Node_SaveWorkCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public Node_SaveWorkCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class Node_SendWorkCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public Node_SendWorkCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -782,11 +826,17 @@ namespace WorkNode.FF {
         
         private System.Threading.SendOrPostCallback onGenerWorkNodeCompletedDelegate;
         
-        private BeginOperationDelegate onBeginSaveWorkNodeDelegate;
+        private BeginOperationDelegate onBeginNode_SaveWorkDelegate;
         
-        private EndOperationDelegate onEndSaveWorkNodeDelegate;
+        private EndOperationDelegate onEndNode_SaveWorkDelegate;
         
-        private System.Threading.SendOrPostCallback onSaveWorkNodeCompletedDelegate;
+        private System.Threading.SendOrPostCallback onNode_SaveWorkCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginNode_SendWorkDelegate;
+        
+        private EndOperationDelegate onEndNode_SendWorkDelegate;
+        
+        private System.Threading.SendOrPostCallback onNode_SendWorkCompletedDelegate;
         
         private BeginOperationDelegate onBeginSaveImageAsFileDelegate;
         
@@ -978,7 +1028,9 @@ namespace WorkNode.FF {
         
         public event System.EventHandler<GenerWorkNodeCompletedEventArgs> GenerWorkNodeCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SaveWorkNodeCompleted;
+        public event System.EventHandler<Node_SaveWorkCompletedEventArgs> Node_SaveWorkCompleted;
+        
+        public event System.EventHandler<Node_SendWorkCompletedEventArgs> Node_SendWorkCompleted;
         
         public event System.EventHandler<SaveImageAsFileCompletedEventArgs> SaveImageAsFileCompleted;
         
@@ -1174,56 +1226,111 @@ namespace WorkNode.FF {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WorkNode.FF.CCFlowAPISoap.BeginSaveWorkNode(string fk_flow, int fk_node, long workID, string userNo, string ds, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSaveWorkNode(fk_flow, fk_node, workID, userNo, ds, callback, asyncState);
+        System.IAsyncResult WorkNode.FF.CCFlowAPISoap.BeginNode_SaveWork(string fk_flow, int fk_node, long workID, string userNo, string dsXml, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginNode_SaveWork(fk_flow, fk_node, workID, userNo, dsXml, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void WorkNode.FF.CCFlowAPISoap.EndSaveWorkNode(System.IAsyncResult result) {
-            base.Channel.EndSaveWorkNode(result);
+        string WorkNode.FF.CCFlowAPISoap.EndNode_SaveWork(System.IAsyncResult result) {
+            return base.Channel.EndNode_SaveWork(result);
         }
         
-        private System.IAsyncResult OnBeginSaveWorkNode(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginNode_SaveWork(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string fk_flow = ((string)(inValues[0]));
             int fk_node = ((int)(inValues[1]));
             long workID = ((long)(inValues[2]));
             string userNo = ((string)(inValues[3]));
-            string ds = ((string)(inValues[4]));
-            return ((WorkNode.FF.CCFlowAPISoap)(this)).BeginSaveWorkNode(fk_flow, fk_node, workID, userNo, ds, callback, asyncState);
+            string dsXml = ((string)(inValues[4]));
+            return ((WorkNode.FF.CCFlowAPISoap)(this)).BeginNode_SaveWork(fk_flow, fk_node, workID, userNo, dsXml, callback, asyncState);
         }
         
-        private object[] OnEndSaveWorkNode(System.IAsyncResult result) {
-            ((WorkNode.FF.CCFlowAPISoap)(this)).EndSaveWorkNode(result);
-            return null;
+        private object[] OnEndNode_SaveWork(System.IAsyncResult result) {
+            string retVal = ((WorkNode.FF.CCFlowAPISoap)(this)).EndNode_SaveWork(result);
+            return new object[] {
+                    retVal};
         }
         
-        private void OnSaveWorkNodeCompleted(object state) {
-            if ((this.SaveWorkNodeCompleted != null)) {
+        private void OnNode_SaveWorkCompleted(object state) {
+            if ((this.Node_SaveWorkCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.SaveWorkNodeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.Node_SaveWorkCompleted(this, new Node_SaveWorkCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void SaveWorkNodeAsync(string fk_flow, int fk_node, long workID, string userNo, string ds) {
-            this.SaveWorkNodeAsync(fk_flow, fk_node, workID, userNo, ds, null);
+        public void Node_SaveWorkAsync(string fk_flow, int fk_node, long workID, string userNo, string dsXml) {
+            this.Node_SaveWorkAsync(fk_flow, fk_node, workID, userNo, dsXml, null);
         }
         
-        public void SaveWorkNodeAsync(string fk_flow, int fk_node, long workID, string userNo, string ds, object userState) {
-            if ((this.onBeginSaveWorkNodeDelegate == null)) {
-                this.onBeginSaveWorkNodeDelegate = new BeginOperationDelegate(this.OnBeginSaveWorkNode);
+        public void Node_SaveWorkAsync(string fk_flow, int fk_node, long workID, string userNo, string dsXml, object userState) {
+            if ((this.onBeginNode_SaveWorkDelegate == null)) {
+                this.onBeginNode_SaveWorkDelegate = new BeginOperationDelegate(this.OnBeginNode_SaveWork);
             }
-            if ((this.onEndSaveWorkNodeDelegate == null)) {
-                this.onEndSaveWorkNodeDelegate = new EndOperationDelegate(this.OnEndSaveWorkNode);
+            if ((this.onEndNode_SaveWorkDelegate == null)) {
+                this.onEndNode_SaveWorkDelegate = new EndOperationDelegate(this.OnEndNode_SaveWork);
             }
-            if ((this.onSaveWorkNodeCompletedDelegate == null)) {
-                this.onSaveWorkNodeCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveWorkNodeCompleted);
+            if ((this.onNode_SaveWorkCompletedDelegate == null)) {
+                this.onNode_SaveWorkCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnNode_SaveWorkCompleted);
             }
-            base.InvokeAsync(this.onBeginSaveWorkNodeDelegate, new object[] {
+            base.InvokeAsync(this.onBeginNode_SaveWorkDelegate, new object[] {
                         fk_flow,
                         fk_node,
                         workID,
                         userNo,
-                        ds}, this.onEndSaveWorkNodeDelegate, this.onSaveWorkNodeCompletedDelegate, userState);
+                        dsXml}, this.onEndNode_SaveWorkDelegate, this.onNode_SaveWorkCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult WorkNode.FF.CCFlowAPISoap.BeginNode_SendWork(string fk_flow, int fk_node, long workID, string userNo, string dsXml, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginNode_SendWork(fk_flow, fk_node, workID, userNo, dsXml, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string WorkNode.FF.CCFlowAPISoap.EndNode_SendWork(System.IAsyncResult result) {
+            return base.Channel.EndNode_SendWork(result);
+        }
+        
+        private System.IAsyncResult OnBeginNode_SendWork(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string fk_flow = ((string)(inValues[0]));
+            int fk_node = ((int)(inValues[1]));
+            long workID = ((long)(inValues[2]));
+            string userNo = ((string)(inValues[3]));
+            string dsXml = ((string)(inValues[4]));
+            return ((WorkNode.FF.CCFlowAPISoap)(this)).BeginNode_SendWork(fk_flow, fk_node, workID, userNo, dsXml, callback, asyncState);
+        }
+        
+        private object[] OnEndNode_SendWork(System.IAsyncResult result) {
+            string retVal = ((WorkNode.FF.CCFlowAPISoap)(this)).EndNode_SendWork(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnNode_SendWorkCompleted(object state) {
+            if ((this.Node_SendWorkCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.Node_SendWorkCompleted(this, new Node_SendWorkCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void Node_SendWorkAsync(string fk_flow, int fk_node, long workID, string userNo, string dsXml) {
+            this.Node_SendWorkAsync(fk_flow, fk_node, workID, userNo, dsXml, null);
+        }
+        
+        public void Node_SendWorkAsync(string fk_flow, int fk_node, long workID, string userNo, string dsXml, object userState) {
+            if ((this.onBeginNode_SendWorkDelegate == null)) {
+                this.onBeginNode_SendWorkDelegate = new BeginOperationDelegate(this.OnBeginNode_SendWork);
+            }
+            if ((this.onEndNode_SendWorkDelegate == null)) {
+                this.onEndNode_SendWorkDelegate = new EndOperationDelegate(this.OnEndNode_SendWork);
+            }
+            if ((this.onNode_SendWorkCompletedDelegate == null)) {
+                this.onNode_SendWorkCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnNode_SendWorkCompleted);
+            }
+            base.InvokeAsync(this.onBeginNode_SendWorkDelegate, new object[] {
+                        fk_flow,
+                        fk_node,
+                        workID,
+                        userNo,
+                        dsXml}, this.onEndNode_SendWorkDelegate, this.onNode_SendWorkCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2446,20 +2553,38 @@ namespace WorkNode.FF {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSaveWorkNode(string fk_flow, int fk_node, long workID, string userNo, string ds, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginNode_SaveWork(string fk_flow, int fk_node, long workID, string userNo, string dsXml, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[5];
                 _args[0] = fk_flow;
                 _args[1] = fk_node;
                 _args[2] = workID;
                 _args[3] = userNo;
-                _args[4] = ds;
-                System.IAsyncResult _result = base.BeginInvoke("SaveWorkNode", _args, callback, asyncState);
+                _args[4] = dsXml;
+                System.IAsyncResult _result = base.BeginInvoke("Node_SaveWork", _args, callback, asyncState);
                 return _result;
             }
             
-            public void EndSaveWorkNode(System.IAsyncResult result) {
+            public string EndNode_SaveWork(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("SaveWorkNode", _args, result);
+                string _result = ((string)(base.EndInvoke("Node_SaveWork", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginNode_SendWork(string fk_flow, int fk_node, long workID, string userNo, string dsXml, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
+                _args[0] = fk_flow;
+                _args[1] = fk_node;
+                _args[2] = workID;
+                _args[3] = userNo;
+                _args[4] = dsXml;
+                System.IAsyncResult _result = base.BeginInvoke("Node_SendWork", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndNode_SendWork(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("Node_SendWork", _args, result)));
+                return _result;
             }
             
             public System.IAsyncResult BeginSaveImageAsFile(WorkNode.FF.SaveImageAsFileRequest request, System.AsyncCallback callback, object asyncState) {

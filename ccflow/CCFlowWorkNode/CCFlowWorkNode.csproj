@@ -61,15 +61,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ColorPicker">
-      <HintPath>..\..\..\ccflow\DLL\ColorPicker.dll</HintPath>
-    </Reference>
-    <Reference Include="Liquid.Menu">
-      <HintPath>..\..\..\ccflow\DLL\Liquid.Menu.dll</HintPath>
-    </Reference>
-    <Reference Include="Liquid.TreeView">
-      <HintPath>..\..\..\ccflow\DLL\Liquid.TreeView.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\DLL\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -99,14 +90,11 @@
     <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Accordion.xaml.cs">
-      <DependentUpon>Accordion.xaml</DependentUpon>
+    <Compile Include="AllotTask.xaml.cs">
+      <DependentUpon>AllotTask.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DockButton.xaml.cs">
-      <DependentUpon>DockButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DockPanel.xaml.cs">
-      <DependentUpon>DockPanel.xaml</DependentUpon>
+    <Compile Include="CC.xaml.cs">
+      <DependentUpon>CC.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -152,18 +140,36 @@
     <Compile Include="En30\enumApp.cs" />
     <Compile Include="Func.cs" />
     <Compile Include="Glo.cs" />
+    <Compile Include="HungWork.xaml.cs">
+      <DependentUpon>HungWork.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PrintDoc.xaml.cs">
+      <DependentUpon>PrintDoc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="En30\PubLib\ButtonList.cs" />
     <Compile Include="En30\PubLib\EnumLib.cs" />
     <Compile Include="En30\PubLib\FlowAttr.cs" />
     <Compile Include="En30\PubLib\NodeAttr.cs" />
+    <Compile Include="ReturnWork.xaml.cs">
+      <DependentUpon>ReturnWork.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectAccepter.xaml.cs">
+      <DependentUpon>SelectAccepter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service References\FF\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ShiftWork.xaml.cs">
+      <DependentUpon>ShiftWork.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Track.xaml.cs">
+      <DependentUpon>Track.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -171,17 +177,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Controls\Accordion.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="AllotTask.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DockButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="CC.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DockPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Ctrl\Dir.xaml">
       <SubType>Designer</SubType>
@@ -207,7 +209,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="HungWork.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PrintDoc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReturnWork.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectAccepter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShiftWork.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Track.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -325,6 +351,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\FF\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

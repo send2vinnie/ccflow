@@ -167,6 +167,7 @@ namespace WorkNode
             enAdd.Name = dt.Rows[0][BtnAttr.SendLab];
             ens.Add(enAdd);
 
+            int i=0;
             /*保存*/
             if (dt.Rows[0][BtnAttr.SaveEnable].ToString() != "0")
             {
@@ -177,7 +178,7 @@ namespace WorkNode
             }
 
             /*退回*/
-            if (dt.Rows[0][BtnAttr.ReturnRole].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.ReturnRole].ToString() != "0" || i==0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.ReturnLab;
@@ -186,7 +187,7 @@ namespace WorkNode
             }
 
             /*跳转*/
-            if (dt.Rows[0][NodeAttr.JumpWay].ToString() != "0")
+            if (dt.Rows[0][NodeAttr.JumpWay].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.JumpWayLab;
@@ -195,7 +196,7 @@ namespace WorkNode
             }
 
             /*抄送*/
-            if (dt.Rows[0][NodeAttr.CCRole].ToString() != "0")
+            if (dt.Rows[0][NodeAttr.CCRole].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.CCLab;
@@ -204,7 +205,7 @@ namespace WorkNode
             }
 
             /*移交*/
-            if (dt.Rows[0][BtnAttr.ShiftEnable].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.ShiftEnable].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.ShiftLab;
@@ -213,7 +214,7 @@ namespace WorkNode
             }
 
             /*删除*/
-            if (dt.Rows[0][BtnAttr.DelEnable].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.DelEnable].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.DelLab;
@@ -222,7 +223,7 @@ namespace WorkNode
             }
 
             /*结束*/
-            if (dt.Rows[0][BtnAttr.EndFlowEnable].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.EndFlowEnable].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.EndFlowLab;
@@ -232,7 +233,7 @@ namespace WorkNode
 
 
             /*打印单据*/
-            if (dt.Rows[0][BtnAttr.PrintDocEnable].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.PrintDocEnable].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.PrintDocLab;
@@ -241,7 +242,7 @@ namespace WorkNode
             }
 
             /*轨迹*/
-            if (dt.Rows[0][BtnAttr.TrackEnable].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.TrackEnable].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.TrackLab;
@@ -250,7 +251,7 @@ namespace WorkNode
             }
 
             /*接受人*/
-            if (dt.Rows[0][BtnAttr.SelectAccepterEnable].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.SelectAccepterEnable].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.SelectAccepterLab;
@@ -259,16 +260,16 @@ namespace WorkNode
             }
 
             /*选项*/
-            if (dt.Rows[0][BtnAttr.OptEnable].ToString() != "0")
-            {
-                enAdd = new Func();
-                enAdd.No = BtnAttr.OptLab;
-                enAdd.Name = dt.Rows[0][BtnAttr.OptLab];
-                ens.Add(enAdd);
-            }
+            //if (dt.Rows[0][BtnAttr.OptEnable].ToString() != "0" || i == 0)
+            //{
+            //    enAdd = new Func();
+            //    enAdd.No = BtnAttr.OptLab;
+            //    enAdd.Name = dt.Rows[0][BtnAttr.OptLab];
+            //    ens.Add(enAdd);
+            //}
 
             /*查询*/
-            if (dt.Rows[0][BtnAttr.SearchEnable].ToString() != "0")
+            if (dt.Rows[0][BtnAttr.SearchEnable].ToString() != "0" || i == 0)
             {
                 enAdd = new Func();
                 enAdd.No = BtnAttr.SearchLab;
@@ -292,7 +293,7 @@ namespace WorkNode
                 Image img = new Image();
                 BitmapImage png = new BitmapImage(new Uri("/WorkNode;component/Img/" + Func.Save + ".png", UriKind.Relative));
                 img.Source = png;
-                img.Width = 13;
+                img.Width = 13 ;
                 img.Height = 13;
                 mysp.Children.Add(img);
 
@@ -350,6 +351,10 @@ namespace WorkNode
                                 string UIContralType = dr["UIContralType"];
                                 string MyDataType = dr["MyDataType"];
                                 string lgType = dr["LGType"];
+                                bool isEnable=false;
+                                if (dr["UIIsEnable"].ToString()=="1")
+                                    isEnable = true;
+
                                 double X = double.Parse(dr["X"]);
                                 double Y = double.Parse(dr["Y"]);
                                 if (X == 0)
@@ -395,16 +400,12 @@ namespace WorkNode
                                         tb.X = X;
                                         tb.Y = Y;
                                         tb.Text = this.GetValByKey(keyOfEn); //给控件赋值.
-
-
                                         tb.Width = double.Parse(dr["UIWidth"]);
                                         tb.Height = double.Parse(dr["UIHeight"]);
-                                        if (this.canvasMain.FindName(tb.Name) != null)
-                                        {
-                                            MessageBox.Show("已经存在" + tb.Name);
-                                            continue;
-                                        }
-
+                                        if (isEnable)
+                                            tb.IsEnabled = true;
+                                        else
+                                            tb.IsEnabled = false;
                                         this.canvasMain.Children.Add(tb);
                                         break;
                                     case CtrlType.DDL:
@@ -512,7 +513,7 @@ namespace WorkNode
                                 Glo.HisMapData.FrmW = double.Parse(dt.Rows[0]["FrmW"]);
                                 Glo.HisMapData.No = (string)dt.Rows[0]["No"];
                                 Glo.HisMapData.Name = (string)dt.Rows[0]["Name"];
-                                Glo.IsDtlFrm = false;
+                                // Glo.IsDtlFrm = false;
                                 this.canvasMain.Width = Glo.HisMapData.FrmW;
                                 this.canvasMain.Height = Glo.HisMapData.FrmH;
                                 this.scrollViewer1.Width = Glo.HisMapData.FrmW;
@@ -737,9 +738,7 @@ namespace WorkNode
                                     athM.SaveTo = dr["SaveTo"];
                                     athM.Text = dr["Name"];
                                     athM.Label = dr["Name"];
-
                                     this.canvasMain.Children.Add(athM);
-
                                     continue;
                                 }
                             }
@@ -772,41 +771,80 @@ namespace WorkNode
             }
             #endregion 获取id
 
+            id = id.Replace("Btn_", "");
             switch (id)
             {
                 case BP.WF.BtnAttr.SendLab: // 发送.
-                    OpenFileDialog myOpenFileDialog = new OpenFileDialog();
-                    myOpenFileDialog.Filter = "驰骋工作流程表单模板(*.xml)|*.xml|All Files (*.*)|*.*";  //SL目前只支持jpg和png格式图像的显示
-                    myOpenFileDialog.Multiselect = false;//只允许选择一个图片
-                    if (myOpenFileDialog.ShowDialog() == false)
-                        return;
+                    Send();
                     break;
                 case BP.WF.BtnAttr.SaveLab: // 保存.
                     SaveFrm();
                     return;
                 case BP.WF.BtnAttr.ReturnLab: //退回.
-                    Glo.WinOpen(Glo.BPMHost + "/WF/Admin/XAP/DoPort.aspx?DoType=DownFormTemplete&FK_MapData=" + Glo.FK_MapData,
-                        100, 100);
+                    ReturnWork rw = new ReturnWork();
+                    rw.Show();
                     return;
-                case "Btn_Delete":
-                    break;
+                case BP.WF.BtnAttr.CCLab: //抄送.
+                    CC cc = new CC();
+                    cc.Show();
+                    return;
+                case BP.WF.BtnAttr.PrintDocLab: //打印单据.
+                    PrintDoc doc = new PrintDoc();
+                    doc.Show();
+                    return;
+                case BP.WF.BtnAttr.SelectAccepterLab: //选择接受人.
+                    SelectAccepter sa = new SelectAccepter();
+                    sa.Show();
+                    return;
+                case BP.WF.BtnAttr.ShiftLab: //移交.
+                    ShiftWork sw = new ShiftWork();
+                    sw.Show();
+                    return;
+                case BP.WF.BtnAttr.HungLab: //挂起.
+                    HungWork hw = new HungWork();
+                    hw.Show();
+                    return;
+                case BP.WF.BtnAttr.TrackLab: //轨迹.
+                    Track tc = new Track();
+                    tc.Show();
+                    return;
+                case BP.WF.BtnAttr.JumpWayLab: //跳转.
+                    Jump j = new Jump();
+                    j.Show();
+                    return;
+                case BP.WF.BtnAttr.SearchLab: //查询.
+                    Search s = new Search();
+                    s.Show();
+                    return;
+                case BP.WF.BtnAttr.EndFlowLab: //结束流程.
+                    if (MessageBox.Show("您确定要结束流程吗？", "确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        MessageBox.Show("结束功能未实现。");
+                    }
+                    return;
+                case BP.WF.BtnAttr.DelLab: //删除.
+                    if (MessageBox.Show("您确定要删除流程吗？", "确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        MessageBox.Show("删除功能未实现。");
+                    }
+                    return;
                 default:
                     MessageBox.Show(sender.ToString() + " ID=" + id + " 功能未实现.");
                     break;
             }
         }
-        private void SaveFrm()
+        /// <summary>
+        /// 获取页面的数据
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GenerFrmDataSet()
         {
-            this.loadingWindow.Title = "正在保存数据...";
-            this.loadingWindow.Show();
-
-            #region mapData
+            #region  创建数据表.
             DataTable dtMain = new DataTable();
             dtMain.TableName = "Main";
             dtMain.Columns.Add(new DataColumn("KeyOfEn", typeof(string)));
             dtMain.Columns.Add(new DataColumn("Val", typeof(string)));
-
-
+            #endregion 创建数据表.
 
             #region 获取主表的值.
             foreach (DataRow dr in dtMapAttrs.Rows)
@@ -857,58 +895,62 @@ namespace WorkNode
             DataSet dsNodeData = new DataSet();
             dsNodeData.Tables.Add(dtMain);
 
-            FF.CCFlowAPISoapClient saveWorkNode = Glo.GetCCFlowAPISoapClientServiceInstance();
-            saveWorkNode.SaveWorkNodeAsync(Glo.FK_Flow, Glo.FK_Node, Glo.WorkID, Glo.UserNo, dsNodeData.ToXml(true, false));
-            saveWorkNode.SaveWorkNodeCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(SaveWorkNode_SaveWorkNodeCompleted);
+#warning 这里仅仅处理了主表的保存，多从表，多m2m，附件，图片。都没有处理。
+            return dsNodeData;
         }
-        void SaveWorkNode_SaveWorkNodeCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        /// <summary>
+        /// 发送
+        /// </summary>
+        private void Send()
+        {
+            this.loadingWindow.Title = "正在保存并发送...";
+            this.loadingWindow.Show();
+
+            FF.CCFlowAPISoapClient sendWorkNode = Glo.GetCCFlowAPISoapClientServiceInstance();
+            sendWorkNode.Node_SendWorkAsync(Glo.FK_Flow, Glo.FK_Node, Glo.WorkID, Glo.UserNo, this.GenerFrmDataSet().ToXml(true, false));
+            sendWorkNode.Node_SendWorkCompleted += new EventHandler<FF.Node_SendWorkCompletedEventArgs>(sendWorkNode_Node_SendWorkCompleted);
+        }
+        void sendWorkNode_Node_SendWorkCompleted(object sender, FF.Node_SendWorkCompletedEventArgs e)
+        {
+            /*发送成功后
+            * 1, 提示发送信息
+            * 2，
+            */
+
+            this.loadingWindow.DialogResult = true;
+            MessageBox.Show(e.Result);
+            //string url1 = null;
+            //if (Glo.IsDtlFrm == false)
+            //    url1 = Glo.BPMHost + "/WF/Frm.aspx?FK_MapData=" + Glo.FK_MapData + "&IsTest=1&WorkID=0&FK_Node=" + Glo.FK_Node;
+            //else
+            //    url1 = Glo.BPMHost + "/WF/FrmCard.aspx?EnsName=" + Glo.FK_MapData + "&RefPKVal=0&OID=0";
+            //HtmlPage.Window.Eval("window.open('" + url1 + "','_blank','scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes,width=" + Glo.HisMapData.FrmW + ",height=" + Glo.HisMapData.FrmH + "')");
+        }
+        /// <summary>
+        /// 保存表单数据.
+        /// </summary>
+        private void SaveFrm()
+        {
+            this.loadingWindow.Title = "正在保存数据...";
+            this.loadingWindow.Show();
+
+            FF.CCFlowAPISoapClient saveWorkNode = Glo.GetCCFlowAPISoapClientServiceInstance();
+            saveWorkNode.Node_SaveWorkAsync(Glo.FK_Flow, Glo.FK_Node, Glo.WorkID, Glo.UserNo, this.GenerFrmDataSet().ToXml(true, false));
+            saveWorkNode.Node_SaveWorkCompleted += new EventHandler<FF.Node_SaveWorkCompletedEventArgs>(saveWorkNode_Node_SaveWorkCompleted);
+        }
+        /// <summary>
+        /// 处理保存返回的结果.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void saveWorkNode_Node_SaveWorkCompleted(object sender, FF.Node_SaveWorkCompletedEventArgs e)
         {
             /*保存成功后
-             * 1, 可能返回异常。
-             * 2，
-             */
+           * 1, 可能返回异常。
+           * 2，
+           */
+            this.loadingWindow.DialogResult = true;
+            MessageBox.Show(e.Result);
         }
-        void da_SaveFrmCompleted(object sender, FF.SaveFrmCompletedEventArgs e)
-        {
-            if (e != null && e.Result != null)
-            {
-                MessageBox.Show(e.Result, "保存错误", MessageBoxButton.OK);
-                return;
-            }
-
-            this.BindFrm();
-
-            if (Keyboard.Modifiers == ModifierKeys.Windows)
-            {
-                string url1 = null;
-                if (Glo.IsDtlFrm == false)
-                    url1 = Glo.BPMHost + "/WF/Frm.aspx?FK_MapData=" + Glo.FK_MapData + "&IsTest=1&WorkID=0&FK_Node=" + Glo.FK_Node;
-                else
-                    url1 = Glo.BPMHost + "/WF/FrmCard.aspx?EnsName=" + Glo.FK_MapData + "&RefPKVal=0&OID=0";
-                HtmlPage.Window.Eval("window.open('" + url1 + "','_blank','scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes,width=" + Glo.HisMapData.FrmW + ",height=" + Glo.HisMapData.FrmH + "')");
-            }
-            else
-            {
-                //  MessageBox.Show("WorkNode 保存成功.", "保存提示", MessageBoxButton.OK);
-            }
-        }
-        public void RunSQL(string sql)
-        {
-            FF.CCFlowAPISoapClient da = Glo.GetCCFlowAPISoapClientServiceInstance();
-            da.RunSQLsAsync(sql);
-            da.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(da_RunSQLsCompleted);
-        }
-        void da_RunSQLsCompleted(object sender, FF.RunSQLsCompletedEventArgs e)
-        {
-            //switch (this.DoTypeName)
-            //{
-            //    case "DeleteFrm":
-            //        MessageBox.Show("删除成功!!!");
-            //        break;
-            //    default:
-            //        break;
-            //}
-        }
-        #endregion 判断是否存在.
     }
 }

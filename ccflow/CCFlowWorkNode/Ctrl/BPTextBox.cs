@@ -116,9 +116,7 @@ namespace WorkNode
         public void InitType()
         {
             Style style = new Style();
-
-           this.IsReadOnly = true;
-                    this.Background = new SolidColorBrush(Colors.White);
+            this.Background = new SolidColorBrush(Colors.White);
              
             switch (this.HisTBType)
             {

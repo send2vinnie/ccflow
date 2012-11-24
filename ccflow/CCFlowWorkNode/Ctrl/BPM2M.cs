@@ -121,26 +121,6 @@ namespace WorkNode
             this.Content = dg;
             this.MyDG = dg;
         }
-        public void NewM2M(double x, double y)
-        {
-            FF.CCFlowAPISoapClient da = Glo.GetCCFlowAPISoapClientServiceInstance();
-            da.DoTypeAsync("NewM2M", Glo.FK_MapData, this.Name, x.ToString(), y.ToString(), null);
-            da.DoTypeCompleted += new EventHandler<FF.DoTypeCompletedEventArgs>(da_New_DoTypeCompleted);
-        }
-
-        void da_New_DoTypeCompleted(object sender, FF.DoTypeCompletedEventArgs e)
-        {
-            if (e.Result != null)
-            {
-                MessageBox.Show(e.Result, "新建错误", MessageBoxButton.OK);
-                return;
-            }
-
-            string url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapM2M=" + this.Name;
-            HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:450px;dialogWidth:500px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
-
-        }
-
         public DataGrid MyDG = null;
         public void UpdatePos()
         {

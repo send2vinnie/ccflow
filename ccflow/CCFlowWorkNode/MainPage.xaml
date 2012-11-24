@@ -14,7 +14,7 @@ xmlns:my="clr-namespace:Toolbar"
              xmlns:my2="clr-namespace:Liquid;assembly=Liquid.Menu">
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="225" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -29,10 +29,10 @@ xmlns:my="clr-namespace:Toolbar"
                       x:Name="toolbar1" 
                     VerticalAlignment="Top" >
         </my:Bar>
-        <my:Bar Margin="600,1,0,0"  HorizontalAlignment="Right"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+        <!--<my:Bar Margin="600,1,0,0"  HorizontalAlignment="Right"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                       x:Name="toolbar_eleFunc" 
                     VerticalAlignment="Top" >
-        </my:Bar>  
+        </my:Bar>-->  
 
         <ScrollViewer Height="800"  Grid.Column="1" Grid.Row="1" 
                        Width="790"
