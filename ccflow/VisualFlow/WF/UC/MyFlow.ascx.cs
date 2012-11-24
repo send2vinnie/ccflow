@@ -609,8 +609,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.ToolBar1.Add("<input type=button class=Btn value='" + this.ToE("Adjunct", "附件") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/FileManager.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FJOpen=" + (int)currND.HisFJOpen + "&FID=" + this.FID + "','dds'); \" />");
             }
 
-            if (btnLab.OptEnable)
-                this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','opt'); \"  />");
+            //if (btnLab.OptEnable)
+            //    this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','opt'); \"  />");
 
             switch (btnLab.SelectAccepterEnable)
             {
