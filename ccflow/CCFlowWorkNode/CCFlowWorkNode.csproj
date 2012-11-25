@@ -90,13 +90,13 @@
     <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllotTask.xaml.cs">
+    <Compile Include="WorkRefFunc\AllotTask.xaml.cs">
       <DependentUpon>AllotTask.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CC.xaml.cs">
+    <Compile Include="WorkRefFunc\CC.xaml.cs">
       <DependentUpon>CC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="WorkRefFunc\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ctrl\BPCheckBox.cs" />
@@ -140,13 +140,16 @@
     <Compile Include="En30\enumApp.cs" />
     <Compile Include="Func.cs" />
     <Compile Include="Glo.cs" />
-    <Compile Include="HungWork.xaml.cs">
-      <DependentUpon>HungWork.xaml</DependentUpon>
+    <Compile Include="WorkRefFunc\HungUp.xaml.cs">
+      <DependentUpon>HungUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkRefFunc\Jump.xaml.cs">
+      <DependentUpon>Jump.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PrintDoc.xaml.cs">
+    <Compile Include="WorkRefFunc\PrintDoc.xaml.cs">
       <DependentUpon>PrintDoc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -154,10 +157,13 @@
     <Compile Include="En30\PubLib\EnumLib.cs" />
     <Compile Include="En30\PubLib\FlowAttr.cs" />
     <Compile Include="En30\PubLib\NodeAttr.cs" />
-    <Compile Include="ReturnWork.xaml.cs">
+    <Compile Include="WorkRefFunc\ReturnWork.xaml.cs">
       <DependentUpon>ReturnWork.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SelectAccepter.xaml.cs">
+    <Compile Include="WorkRefFunc\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkRefFunc\SelectAccepter.xaml.cs">
       <DependentUpon>SelectAccepter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service References\FF\Reference.cs">
@@ -165,23 +171,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ShiftWork.xaml.cs">
+    <Compile Include="WorkRefFunc\ShiftWork.xaml.cs">
       <DependentUpon>ShiftWork.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Track.xaml.cs">
+    <Compile Include="WorkRefFunc\Track.xaml.cs">
       <DependentUpon>Track.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="WorkRefFunc\App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="AllotTask.xaml">
+    <Page Include="WorkRefFunc\AllotTask.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CC.xaml">
+    <Page Include="WorkRefFunc\CC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,7 +215,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HungWork.xaml">
+    <Page Include="WorkRefFunc\HungUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkRefFunc\Jump.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,23 +227,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PrintDoc.xaml">
+    <Page Include="WorkRefFunc\PrintDoc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ReturnWork.xaml">
+    <Page Include="WorkRefFunc\ReturnWork.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SelectAccepter.xaml">
+    <Page Include="WorkRefFunc\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShiftWork.xaml">
+    <Page Include="WorkRefFunc\SelectAccepter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Track.xaml">
+    <Page Include="WorkRefFunc\ShiftWork.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkRefFunc\Track.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -352,9 +366,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\FF\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

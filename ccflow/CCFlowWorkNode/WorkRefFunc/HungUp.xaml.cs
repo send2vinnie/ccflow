@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 
 namespace WorkNode
 {
-    public partial class HungWork : ChildWindow
+    public partial class HungUp : ChildWindow
     {
-        public HungWork()
+        public HungUp()
         {
             InitializeComponent();
         }

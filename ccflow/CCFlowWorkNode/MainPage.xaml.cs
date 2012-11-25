@@ -326,7 +326,6 @@ namespace WorkNode
             try
             {
 
-                DataTable dtND = this.FrmDS.Tables["NDData"];
                 this.dtMapAttrs = this.FrmDS.Tables["Sys_MapAttr"];
                 foreach (DataTable dt in this.FrmDS.Tables)
                 {
@@ -417,7 +416,16 @@ namespace WorkNode
                                         ddl.HisLGType = lgType;
                                         if (lgType == LGType.Enum)
                                         {
-                                            ddl.BindEnum(UIBindKey);
+                                            DataTable dtEnum = this.FrmDS.Tables["Sys_Enum"];
+                                            foreach (DataRow drEnum in dtEnum.Rows)
+                                            {
+                                                if (drEnum["EnumKey"].ToString() != UIBindKey)
+                                                    continue;
+                                                ListBoxItem li = new ListBoxItem();
+                                                li.Tag = drEnum["No"];
+                                                li.Content = drEnum["Name"];
+                                                ddl.Items.Add(li);
+                                            }
                                         }
                                         else
                                         {
@@ -801,7 +809,7 @@ namespace WorkNode
                     sw.Show();
                     return;
                 case BP.WF.BtnAttr.HungLab: //挂起.
-                    HungWork hw = new HungWork();
+                    HungUp hw = new HungUp();
                     hw.Show();
                     return;
                 case BP.WF.BtnAttr.TrackLab: //轨迹.
