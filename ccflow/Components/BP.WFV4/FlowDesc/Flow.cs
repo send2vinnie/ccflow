@@ -13,8 +13,6 @@ using Microsoft.Win32;
 
 namespace BP.WF
 {
-   
-   
     /// <summary>
     /// 流程
     /// 记录了流程的信息．
@@ -294,26 +292,36 @@ namespace BP.WF
                 }
                 else
                 {
+                    #warning 这里不应该出现的异常信息.
+                    Log.DefaultLogWriteLineError("@不应该的异常:, NodeID:" + nd.NodeID + " workid:" + workid+" , GERpt.Map.PTable="+rpt.EnMap.PhysicsTable );
+
+
                     string sql = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE OID=" + workid;
                     DataTable dt = DBAccess.RunSQLReturnTable(sql);
                     if (dt.Rows.Count == 1)
                     {
                         rpt.Copy(dt.Rows[0]);
+                        try
+                        {
+                            rpt.FlowStarter = dt.Rows[0][StartWorkAttr.Rec].ToString();
+                            rpt.FlowStartRDT = dt.Rows[0][StartWorkAttr.RDT].ToString();
+                            rpt.FK_Dept = dt.Rows[0][StartWorkAttr.FK_Dept].ToString();
+                        }
+                        catch
+                        {
+                        }
+                        rpt.OID = int.Parse(workid.ToString());
+                        rpt.InsertAsOID(rpt.OID);
                     }
-                    try
+                    else
                     {
-                        rpt.FlowStarter = dt.Rows[0][StartWorkAttr.Rec].ToString();
-                        rpt.FlowStartRDT = dt.Rows[0][StartWorkAttr.RDT].ToString();
-                        rpt.FK_Dept = dt.Rows[0][StartWorkAttr.FK_Dept].ToString();
+                        Log.DefaultLogWriteLineError("@没有找到开始节点的数据, NodeID:" + nd.NodeID + " workid:" + workid);
+                        throw new Exception("@没有找到开始节点的数据, NodeID:" + nd.NodeID+" workid:"+workid);
                     }
-                    catch
-                    {
-                    }
-                    rpt.OID = int.Parse(workid.ToString());
-                    rpt.Insert();
+                   
 
 #warning 不应该出现的工作丢失.
-                    Log.DefaultLogWriteLineError("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失, 没有从NDxxxRpt里找到记录,请联系管理员。");
+                    Log.DefaultLogWriteLineError("@工作[" + nd.NodeID + " : " + wk.EnDesc + "], 报表数据WorkID=" + workid + " 丢失, 没有从NDxxxRpt里找到记录,请联系管理员。");
 
                     wk.Copy(rpt);
                     wk.NodeState = NodeState.Init;
