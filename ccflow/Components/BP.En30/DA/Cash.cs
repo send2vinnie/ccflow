@@ -665,7 +665,7 @@ namespace BP.DA
             Hashtable ht = CashEntity.DCash[cashKey] as Hashtable;
             if (ht == null)
             {
-                Log.DefaultLogWriteLineWarning("不应该出现。");
+                Log.DefaultLogWriteLineWarning("不应该出现, cashKey=" + cashKey + " Remove:key=" + key);
                 return;
             }
             ht.Remove(key);
