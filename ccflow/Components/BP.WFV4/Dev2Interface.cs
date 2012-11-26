@@ -383,12 +383,12 @@ namespace BP.WF
         /// <returns>当前操作员待办工作</returns>
         public static DataTable DB_GenerEmpWorksOfDataTable()
         {
+            int wfState = (int)WFState.Runing;
             string sql;
             if (WebUser.IsAuthorize == false)
             {
                 /*不是授权状态*/
-                sql = "SELECT * FROM WF_EmpWorks WHERE WFState="+(int)WFState.Runing+" AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
-           //     BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
+                sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
 
@@ -397,10 +397,10 @@ namespace BP.WF
             switch (emp.HisAuthorWay)
             {
                 case Port.AuthorWay.All:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.Runing + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.SpecFlows:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.Runing + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.None:
                     throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
@@ -419,24 +419,25 @@ namespace BP.WF
         /// <returns>当前操作员待办工作</returns>
         public static DataTable DB_GenerEmpWorkshHungUpOfDataTable()
         {
+            int wfState = (int)WFState.HungUp;
+
             string sql;
             if (WebUser.IsAuthorize == false)
             {
                 /*不是授权状态*/
-                sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.HungUp + " AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
+                sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
                 //     BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
-
             /*如果是授权状态, 获取当前委托人的信息. */
             WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
             switch (emp.HisAuthorWay)
             {
                 case Port.AuthorWay.All:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.HungUp + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.SpecFlows:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.HungUp + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.None:
                     throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
@@ -444,7 +445,7 @@ namespace BP.WF
                     throw new Exception("no such way...");
             }
 
-#warning 测试session 乱掉的代码.
+            #warning 测试session 乱掉的代码.
             //BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
             return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
