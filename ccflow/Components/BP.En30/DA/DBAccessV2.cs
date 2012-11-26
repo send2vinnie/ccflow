@@ -2300,16 +2300,10 @@ namespace BP.DA
         private static bool lockRunSQLReTable = false;
         public static DataTable RunSQLReturnTable(string sql, Paras paras)
         {
-            if (sql == null || sql.Length == 0)
+            if (string.IsNullOrEmpty(sql))
                 throw new Exception("要执行的 sql =null ");
-
-            //while (lockRunSQLReTable)
-            //{
-            //}
-
             try
             {
-                lockRunSQLReTable = true;
                 DataTable dt = null;
                 switch (AppCenterDBType)
                 {
@@ -2331,12 +2325,11 @@ namespace BP.DA
                     default:
                         throw new Exception("@发现未知的数据库连接类型！");
                 }
-                lockRunSQLReTable = false;
                 return dt;
             }
             catch (Exception ex)
             {
-                lockRunSQLReTable = false;
+                Log.DefaultLogWriteLineError(ex.Message);
                 throw ex;
             }
         }

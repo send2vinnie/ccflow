@@ -3817,7 +3817,18 @@ namespace BP.En
             //qo.addRightBracket();
             return qo.DoQuery();
         }
-       
+        /// <summary>
+        /// 按LIKE 去查.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        public int RetrieveByLike(string key, string vals)
+        {
+            QueryObject qo = new QueryObject(this);
+            qo.AddWhere(key, " LIKE ", vals);
+            return qo.DoQuery();
+        }
          
         /// <summary>
         ///  查询出来，包涵pks 的字串。

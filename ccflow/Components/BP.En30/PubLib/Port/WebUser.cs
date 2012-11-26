@@ -39,7 +39,6 @@ namespace BP.Web
         {
             //PubClass.ResponseWriteScript("");
             HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies["CCS"];
-
             if (hc == null)
                 return;
             string usr = hc.Values["No"];
@@ -72,7 +71,6 @@ namespace BP.Web
                 }
             }
         }
-
         /// <summary>
         /// 密码解密
         /// </summary>
@@ -270,7 +268,6 @@ namespace BP.Web
         }
         public static void SignInOfGTSUser(Emp em)
         {
-            WebUser.FontSize = "12px";
             WebUser.No = em.No;
             WebUser.Name = em.Name;
             WebUser.AppUserType = "Tax";
@@ -342,20 +339,6 @@ namespace BP.Web
         }
         #endregion
 
-        /// <summary>
-        /// FontSize
-        /// </summary>
-        public static string FontSize
-        {
-            get
-            {
-                return GetSessionByKey("FontSize", "12px");
-            }
-            set
-            {
-                SetSessionByKey("FontSize", value);
-            }
-        }
         /// <summary>
         /// 是不是b/s 工作模式。
         /// </summary>
@@ -447,8 +430,10 @@ namespace BP.Web
         {
             get
             {
-                return GetValFromCookie("Auth", null,false);
-                //return GetSessionByKey("Auth", null);
+                string val = GetValFromCookie("Auth", null, false);
+                if (val == null)
+                    val = GetSessionByKey("Auth", null);
+                return val;
             }
             set
             {
@@ -462,7 +447,12 @@ namespace BP.Web
         {
             get
             {
-                return GetValFromCookie("FK_DeptName", null, true);
+                string val = GetValFromCookie("FK_DeptName", null, true);
+                if (val == null)
+                    throw new Exception("@err-001 FK_DeptName 登陆信息丢失。");
+                return val;
+
+               // return GetValFromCookie("FK_DeptName", null, true);
                 //return GetSessionByKey("FK_DeptName", null);
             }
             set
@@ -512,46 +502,6 @@ namespace BP.Web
                 SetSessionByKey("Lang", value);
             }
         }
-
-        public static string GetValFromSessionOrCookies(string sessionkey)
-        {
-            if (WebUser.No == null)
-                throw new Exception("@登陆时间太长。");
-
-            string s = GetSessionByKey(sessionkey, null);
-            if (string.IsNullOrEmpty(s) == false)
-                return s;
-
-            if (BP.SystemConfig.IsBSsystem==false)
-                return null;
-
-            string key = "CCS";
-            HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies[key];
-            if (hc == null)
-                throw new Exception("@您登陆信息已经超时，或者您的IE不支持记录cookies.");
-
-            if (hc.Values["No"] != null)
-            {
-                WebUser.No = hc["No"];
-                WebUser.FK_Dept = hc["FK_Dept"];
-                WebUser.Auth = hc["Auth"];
-                WebUser.FK_DeptName = HttpUtility.UrlDecode(hc["FK_DeptName"]);
-
-                if (BP.SystemConfig.IsUnit)
-                {
-                    WebUser.FK_Unit = HttpUtility.UrlDecode(hc["FK_Unit"]);
-                    WebUser.FK_UnitName = HttpUtility.UrlDecode(hc["FK_UnitName"]);
-                }
-
-                string name = BP.DA.DBAccess.RunSQLReturnStringIsNull("SELECT Name, FK_Dept FROM Port_Emp WHERE No='" + HttpUtility.UrlDecode(hc["No"] + "'"), "null");
-                if (name == "null")
-                    throw new Exception("@您需要重新登陆。");
-
-                WebUser.SetSessionByKey("Name", name);
-                return hc.Values[sessionkey];
-            }
-            throw new Exception("@登陆时间太长或者是您的浏览器不支持cookies.");
-        }
         /// <summary>
         /// FK_Dept
         /// </summary>
@@ -559,20 +509,12 @@ namespace BP.Web
         {
             get
             {
-                string s = GetValFromCookie("FK_Dept", null,false);
-                //string s = GetSessionByKey("FK_Dept", null);
-                if (string.IsNullOrEmpty(s))
-                {
-                    s =WebUser.GetValFromSessionOrCookies("FK_Dept");
-                    if (s == null)
-                    {
-                        s = DBAccess.RunSQLReturnStringIsNull("SELECT FK_Dept FROM Port_Emp WHERE No='"+WebUser.No+"'",null);
-                        if (string.IsNullOrEmpty(s))
-                            throw new Exception("@人员("+WebUser.No+")没有设置部门。");
-                        SetSessionByKey("FK_Dept", s);
-                    }
-                }
-                return s;
+                string val = GetValFromCookie("FK_Dept", null, false);
+                //if (val == null)
+                //    val = GetSessionByKey("FK_Dept", null);
+                if (val == null)
+                    throw new Exception("@err-001 FK_Dept 登陆信息丢失。");
+                return val;
             }
             set
             {
@@ -607,12 +549,7 @@ namespace BP.Web
         {
             get
             {
-                string s = GetSessionByKey("FK_Unit", null);
-                if (string.IsNullOrEmpty(s))
-                {
-                    s = WebUser.GetValFromSessionOrCookies("FK_Unit");
-                }
-                return s;
+                return GetValFromCookie("FK_Unit", null, false);
             }
             set
             {
@@ -701,13 +638,8 @@ namespace BP.Web
         {
             get
             {
-                string val= GetValFromCookie("No", null,false);
-                if (val== null)
-                    throw new Exception("@err-001 登陆信息丢失。");
+                return  GetValFromCookie("No", null,false);
 
-                return val;
-
-                //string no = GetSessionByKey("No", null);
 
                 //string no = GetSessionByKey("No", null);
                 string no = null; // GetSessionByKey("No", null);
@@ -752,9 +684,10 @@ namespace BP.Web
         {
             get
             {
-               return GetValFromCookie("Name",null,true);
-               //return GetSessionByKey("Name", BP.Web.WebUser.No);
-
+               string val = GetValFromCookie("Name", null, true);
+               if (val == null)
+                   throw new Exception("@err-001 Name 登陆信息丢失。");
+               return val;
             }
             set
             {
