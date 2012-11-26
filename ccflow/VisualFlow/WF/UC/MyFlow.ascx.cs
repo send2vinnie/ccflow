@@ -556,7 +556,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 string urlr = "ReturnWork" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.ReturnLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
             }
-
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField != "")
             {
                 /*如果有焦点字段*/
@@ -564,6 +563,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.Btn_ReturnWork.UseSubmitBehavior = false;
                 this.Btn_ReturnWork.OnClientClick = "this.disabled=true;";
                 this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
+
+          //  if (btnLab.HungEnable && this.currND.IsStartNode == false)
+            if (1 == 1)
+            {
+                /*挂起*/
+                string urlr = "HungUp.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.HungLab + "' enable=true onclick=\"WinOpen('" + urlr + "','fd'); \" />");
+                //this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
             }
 
             if (btnLab.ShiftEnable && this.currND.IsStartNode == false)

@@ -130,13 +130,6 @@ namespace BP.Web.WF
                     this.WinClose();
                     return;
                 }
-                else if (gwf.WFState == WFState.Delete || gwf.WFState == WFState.Stop)
-                {
-                    /* 如果是逻辑删除 */
-                    this.Btn_ComeBackFlow.Enabled = true;
-                    //this.Btn_ComeBackFlow.Enabled=true;
-                    this.Btn_DeleteWFByRealReal.Enabled = true;
-                }
                 else if (gwf.WFState == 0)
                 {
                     this.Btn_DeleteFlowByFlag.Enabled = true;
@@ -242,7 +235,7 @@ namespace BP.Web.WF
 				{
 					case "Btn_StopWorkFlow":
 						msg="@终止流程出现错误.:";
-						wf.DoStopWorkFlow(this.TB1.Text);
+					//	wf.DoStopWorkFlow(this.TB1.Text);
 						// 发送消息到相关人员。
 						title="强制终止["+gwf.Title+"]流程通知";
 						docs=this.TB1.Text;
@@ -252,7 +245,7 @@ namespace BP.Web.WF
 						break;
 					case "Btn_DeleteFlowByFlag":
 						msg="@逻辑删除流程出现错误.:";
-						wf.DoDeleteWorkFlowByFlag(this.TB1.Text);
+//						wf.DoDeleteWorkFlowByFlag(this.TB1.Text);
 						// 发送消息到相关人员。
 						title="逻辑删除["+gwf.Title+"]流程通知";
 						docs=this.TB1.Text;

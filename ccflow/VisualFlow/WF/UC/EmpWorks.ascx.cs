@@ -49,6 +49,17 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             this.ViewState["FK_Flow"] = value;
         }
     }
+    public bool IsHungUp
+    {
+        get
+        {
+            string s = this.Request.QueryString["IsHungUp"];
+            if (s == null)
+                return false;
+            else
+                return true;
+        }
+    }
     public string GroupBy
     {
         get
@@ -72,7 +83,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             return;
         }
 
-        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
+
         bool isPRI = Glo.IsEnablePRI;
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
@@ -86,25 +97,27 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         if (this.PageSmall != "")
             this.Pub1.AddBR();
         this.Pub1.AddTable("width='960px' align=center");
-        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<a href='"+PageID+".aspx' ><b>待办工作</b></a>&nbsp;&nbsp;&nbsp;<a href='"+PageID+".aspx?IsHungUp=1' >挂起工作</a>");
 
-       // this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
+        string extStr = "";
+        if (this.IsHungUp)
+            extStr = "&IsHungUp=1";
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
 
         if (this.GroupBy != "FlowName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName' >" + this.ToE("Flow", "流程") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName" + extStr + "' >" + this.ToE("Flow", "流程") + "</a>");
 
         if (this.GroupBy != "NodeName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "节点") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName" + extStr + "' >" + this.ToE("NodeName", "节点") + "</a>");
 
         if (this.GroupBy != "StarterName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName' >" + this.ToE("Starter", "发起人") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName" + extStr + "' >" + this.ToE("Starter", "发起人") + "</a>");
 
         if (isPRI)
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=PRI' >优先级</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=PRI" + extStr + "' >优先级</a>");
 
         this.Pub1.AddTDTitle("发起日期");
         this.Pub1.AddTDTitle("接受日期");
@@ -130,7 +143,6 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             else
                 this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
             this.Pub1.AddTREnd();
-
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -185,31 +197,32 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     }
     public void BindList_PRI()
     {
-        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
-        int colspan = 9;
+        int colspan = 10;
         if (this.PageSmall != "")
             this.Pub1.AddBR();
 
+        string extStr = "";
+        if (this.IsHungUp)
+            extStr = "&IsHungUp=1";
 
         this.Pub1.AddTable("width='960px' align=center");
-        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
+        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<a href='" + PageID + ".aspx' ><b>待办工作</b></a>&nbsp;&nbsp;&nbsp;<a href='" + PageID + ".aspx?IsHungUp=1' >挂起工作</a>");
+        //        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
 
         if (this.GroupBy != "FlowName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName' >" + this.ToE("Flow", "流程") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName" + extStr + "' >" + this.ToE("Flow", "流程") + "</a>");
 
         if (this.GroupBy != "NodeName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "节点") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName" + extStr + "' >" + this.ToE("NodeName", "节点") + "</a>");
 
         if (this.GroupBy != "StarterName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName' >" + this.ToE("Starter", "发起人") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName" + extStr + "' >" + this.ToE("Starter", "发起人") + "</a>");
 
         this.Pub1.AddTDTitle("优先级");
-
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
-
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
         this.Pub1.AddTDTitle(this.ToE("Sta", "状态"));
@@ -277,8 +290,13 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddTableEnd();
         return;
     }
+    public DataTable dt = null;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.IsHungUp)
+            dt = BP.WF.Dev2Interface.DB_GenerEmpWorkshHungUpOfDataTable();
+        else
+            dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
         this.BindList();
     }
 }

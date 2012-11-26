@@ -115,18 +115,18 @@ namespace BP.Web.WF.WF
 			//Node nd = new Node(t
 			switch(id)
 			{
-				case "Btn_StopWorkFlow":
-					wf.DoStopWorkFlow(this.TextBox1.Text);
-					break;
+                //case "Btn_StopWorkFlow":
+                //    wf.DoStopWorkFlow(this.TextBox1.Text);
+                //    break;
 				case "Btn_ComeBackFlow":
 					wf.DoComeBackWrokFlow(this.TextBox1.Text);
 					break;
-				case "Btn_DeleteFlowByFlag":
-					wf.DoDeleteWorkFlowByFlag(this.TextBox1.Text);
-					break;
-				case "Btn_DeleteWFByRealReal":
-					wf.DoDeleteWorkFlowByReal(); 
-					break;
+                //case "Btn_DeleteFlowByFlag":
+                //    wf.DoDeleteWorkFlowByFlag(this.TextBox1.Text);
+                //    break;
+                //case "Btn_DeleteWFByRealReal":
+                //    wf.DoDeleteWorkFlowByReal(); 
+                //    break;
 				default:
 					break;
 			}
