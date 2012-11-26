@@ -100,6 +100,7 @@ public class CCFlowAPI : CCForm {
 
 #warning 还有从表一对多，附件...
 
+        myds.WriteXml("c:\\sss.xml");
         return Connector.ToXml(myds);
     }
     /// <summary>
