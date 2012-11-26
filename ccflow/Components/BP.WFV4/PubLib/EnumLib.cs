@@ -6,6 +6,20 @@ using System.Text;
 namespace BP.WF
 {
     /// <summary>
+    /// 挂起方式
+    /// </summary>
+    public enum HungUpWay
+    {
+        /// <summary>
+        /// 永久挂起
+        /// </summary>
+        ForEver,
+        /// <summary>
+        /// 在指定的日期解除
+        /// </summary>
+        SpecDataRel
+    }
+    /// <summary>
     /// 流程应用类型
     /// </summary>
     public enum FlowAppType
@@ -148,18 +162,10 @@ namespace BP.WF
         /// 完成状态
         /// </summary>
         Complete,
-        /// <summary>
-        /// 强制终止
-        /// </summary>
-        Stop,
-        /// <summary>
-        /// 删除
-        /// </summary>
-        Delete,
-        /// <summary>
+         /// <summary>
         /// 挂起
         /// </summary>
-        Hung
+        HungUp 
     }
     /// <summary>
     /// 流程启动类型

@@ -294,7 +294,34 @@ namespace BP.WF
                 }
                 else
                 {
-                    throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
+                    string sql = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE OID=" + workid;
+                    DataTable dt = DBAccess.RunSQLReturnTable(sql);
+                    if (dt.Rows.Count == 1)
+                    {
+                        rpt.Copy(dt.Rows[0]);
+                    }
+                    try
+                    {
+                        rpt.FlowStarter = dt.Rows[0][StartWorkAttr.Rec].ToString();
+                        rpt.FlowStartRDT = dt.Rows[0][StartWorkAttr.RDT].ToString();
+                        rpt.FK_Dept = dt.Rows[0][StartWorkAttr.FK_Dept].ToString();
+                    }
+                    catch
+                    {
+                    }
+                    rpt.OID = int.Parse(workid.ToString());
+                    rpt.Insert();
+
+#warning 不应该出现的工作丢失.
+                    Log.DefaultLogWriteLineError("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失, 没有从NDxxxRpt里找到记录,请联系管理员。");
+
+                    wk.Copy(rpt);
+                    wk.NodeState = NodeState.Init;
+                    wk.Rec = WebUser.No;
+                    wk.ResetDefaultVal();
+                    wk.Insert();
+
+                    // throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
                 }
                 //  throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
             }
@@ -2381,8 +2408,7 @@ namespace BP.WF
                 attr.KeyOfEn = GERptAttr.WFState;
                 attr.Name = "流程状态"; //  
                 attr.MyDataType = DataType.AppInt;
-
-                attr.UIBindKey = "WFState";
+                attr.UIBindKey = GERptAttr.WFState;
                 attr.UIContralType = UIContralType.DDL;
                 attr.LGType = FieldTypeS.Enum;
                 attr.UIVisible = true;
@@ -2392,7 +2418,6 @@ namespace BP.WF
                 attr.IDX = -1;
                 attr.Insert();
             }
-
 
             if (attrs.Contains(md.No + "_" + GERptAttr.FlowEmps) == false)
             {
@@ -2413,8 +2438,6 @@ namespace BP.WF
                 attr.IDX = -100;
                 attr.Insert();
             }
-
-           
 
             if (attrs.Contains(md.No + "_" + GERptAttr.FlowStarter) == false)
             {

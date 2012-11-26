@@ -387,8 +387,8 @@ namespace BP.WF
             if (WebUser.IsAuthorize == false)
             {
                 /*不是授权状态*/
-                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
-                BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
+                sql = "SELECT * FROM WF_EmpWorks WHERE WFState="+(int)WFState.Runing+" AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
+           //     BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
 
@@ -397,10 +397,46 @@ namespace BP.WF
             switch (emp.HisAuthorWay)
             {
                 case Port.AuthorWay.All:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.Runing + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.SpecFlows:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.Runing + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
+                    break;
+                case Port.AuthorWay.None:
+                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
+                default:
+                    throw new Exception("no such way...");
+            }
+
+#warning 测试session 乱掉的代码.
+            //BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
+            return BP.DA.DBAccess.RunSQLReturnTable(sql);
+        }
+        /// <summary>
+        /// 获取当前操作员的待办工作
+        /// </summary>
+        /// <param name="fk_flow">根据流程编号，如果流程编号为空则返回全部</param>
+        /// <returns>当前操作员待办工作</returns>
+        public static DataTable DB_GenerEmpWorkshHungUpOfDataTable()
+        {
+            string sql;
+            if (WebUser.IsAuthorize == false)
+            {
+                /*不是授权状态*/
+                sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.HungUp + " AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
+                //     BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
+                return BP.DA.DBAccess.RunSQLReturnTable(sql);
+            }
+
+            /*如果是授权状态, 获取当前委托人的信息. */
+            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+            switch (emp.HisAuthorWay)
+            {
+                case Port.AuthorWay.All:
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.HungUp + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
+                    break;
+                case Port.AuthorWay.SpecFlows:
+                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + (int)WFState.HungUp + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
                     break;
                 case Port.AuthorWay.None:
                     throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
@@ -742,19 +778,8 @@ namespace BP.WF
             return wf.DoSelfTest();
         }
         /// <summary>
-        /// 暂停流程
-        /// </summary>
-        /// <param name="flowNo">流程编号</param>
-        /// <param name="workID">工作ID</param>
-        /// <param name="msg">原因</param>
-        /// <returns>执行信息</returns>
-        public static void Flow_DoStopWorkFlow(string flowNo, Int64 workID, string msg)
-        {
-            WorkFlow wf = new WorkFlow(flowNo, workID);
-            wf.DoStopWorkFlow(msg);
-        }
-        /// <summary>
-        /// 恢复流程
+        /// 恢复流程, 在一件工作完成后，要恢复上来这条
+        /// 流程并把待办工作放在最后一个的结束的节点上。
         /// </summary>
         /// <param name="flowNo">流程编号</param>
         /// <param name="workID">工作ID</param>
@@ -787,18 +812,6 @@ namespace BP.WF
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
             return wf.DoUnSend();
-        }
-        /// <summary>
-        /// 按照标记删除流程
-        /// </summary>
-        /// <param name="flowNo">流程编号</param>
-        /// <param name="workID">工作ID</param>
-        /// <param name="msg">原因</param>
-        /// <returns></returns>
-        public static void Flow_DoDeleteWorkFlowByFlag(string flowNo, Int64 workID, string msg)
-        {
-            WorkFlow wf = new WorkFlow(flowNo, workID);
-            wf.DoDeleteWorkFlowByFlag(msg);
         }
         /// <summary>
         /// 执行流程结束

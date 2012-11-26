@@ -279,8 +279,8 @@ namespace BP.WF.Ext
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
+                map.AddTBString(BtnAttr.HungLab, "挂起", "挂起按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.HungEnable, false, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.SelectAccepterLab, "接受人", "接受人按钮标签", true, false, 0, 50, 10);
                 map.AddDDLSysEnum(BtnAttr.SelectAccepterEnable, 0, "工作方式",

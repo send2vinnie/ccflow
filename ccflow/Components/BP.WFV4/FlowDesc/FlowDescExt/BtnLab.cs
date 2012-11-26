@@ -154,22 +154,20 @@ namespace BP.WF
                 return  this.GetValBooleanByKey(BtnAttr.ReturnRole);
             }
         }
-
-        public string AthLab
+        public string HungLab
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.AthLab);
+                return this.GetValStringByKey(BtnAttr.HungLab);
             }
         }
-        public bool AthEnable
+        public bool HungEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.FJOpen);
+                return this.GetValBooleanByKey(BtnAttr.HungEnable);
             }
         }
-
         public string PrintDocLab
         {
             get
@@ -217,20 +215,6 @@ namespace BP.WF
             get
             {
                 return this.GetValBooleanByKey(BtnAttr.TrackEnable);
-            }
-        }
-        public string OptLab
-        {
-            get
-            {
-                return this.GetValStringByKey(BtnAttr.OptLab);
-            }
-        }
-        public bool OptEnable
-        {
-            get
-            {
-                return this.GetValBooleanByKey(BtnAttr.OptEnable);
             }
         }
         public string CCLab
@@ -347,14 +331,14 @@ namespace BP.WF
                 map.AddTBString(BtnAttr.EndFlowLab, "结束流程", "结束流程按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.EndFlowEnable, false, "是否启用", true, true);
 
-                //map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
-                //map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
+                map.AddTBString(BtnAttr.HungLab, "挂起", "挂起按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.HungEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.FJOpen, true, "是否启用", true, true);
+                //map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
+                //map.AddBoolean(BtnAttr.FJOpen, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
@@ -365,8 +349,8 @@ namespace BP.WF
 
                // map.AddBoolean(BtnAttr.SelectAccepterEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
+                //map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
+                //map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.SearchLab, "查询", "查询按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SearchEnable, true, "是否启用", true, true);

@@ -8,12 +8,16 @@ namespace BP.WF
     /// <summary>
     /// Btn属性
     /// </summary>
-    public class BtnAttr
+    public class BtnAttr 
     {
         /// <summary>
         /// 流程
         /// </summary>
         public const string NodeID = "NodeID";
+        /// <summary>
+        /// 发送是否启用
+        /// </summary>
+        public const string SendEnable = "SendEnable";
         /// <summary>
         /// 发送标签
         /// </summary>
@@ -62,18 +66,30 @@ namespace BP.WF
         /// 查询是否可用
         /// </summary>
         public const string SearchEnable = "SearchEnable";
+        /// <summary>
+        /// 轨迹
+        /// </summary>
         public const string TrackLab = "TrackLab";
+        /// <summary>
+        /// 轨迹是否启用
+        /// </summary>
         public const string TrackEnable = "TrackEnable";
-
-        public const string OptLab = "OptLab";
-        public const string OptEnable = "OptEnable";
-
+        /// <summary>
+        /// 抄送
+        /// </summary>
         public const string CCLab = "CCLab";
+        /// <summary>
+        /// 抄送规则
+        /// </summary>
         public const string CCRole = "CCRole";
-
+        /// <summary>
+        /// 删除
+        /// </summary>
         public const string DelLab = "DelLab";
+        /// <summary>
+        /// 删除是否启用
+        /// </summary>
         public const string DelEnable = "DelEnable";
-
         /// <summary>
         /// 结束流程
         /// </summary>
@@ -82,14 +98,6 @@ namespace BP.WF
         /// 结束流程
         /// </summary>
         public const string EndFlowEnable = "EndFlowEnable";
-        /// <summary>
-        /// AthLab
-        /// </summary>
-        public const string AthLab = "AthLab";
-        /// <summary>
-        /// FJOpen
-        /// </summary>
-        public const string FJOpen = "FJOpen";
         /// <summary>
         /// 选择接受人
         /// </summary>
@@ -103,17 +111,13 @@ namespace BP.WF
         /// </summary>
         public const string SendJS = "SendJS";
         /// <summary>
-        /// 抄送标题
+        /// 挂起
         /// </summary>
-        public const string CCTitle = "CCTitle";
+        public const string HungLab = "HungLab";
         /// <summary>
-        /// 抄送内容
+        /// 是否启用挂起
         /// </summary>
-        public const string CCDoc = "CCDoc";
-        /// <summary>
-        /// 抄送对象
-        /// </summary>
-        public const string CCEmps = "CCEmps";
+        public const string HungEnable = "HungEnable";
     }
     /// <summary>
     /// 按钮列表

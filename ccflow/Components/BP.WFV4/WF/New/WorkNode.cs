@@ -2196,9 +2196,26 @@ namespace BP.WF
         {
             return null;
         }
-       
-
-        
+        /// <summary>
+        /// 子线程向合流点
+        /// </summary>
+        /// <returns></returns>
+        private string NodeSend_53(Node toNode)
+        {
+            return null;
+        }
+        /// <summary>
+        /// 子线程向分合流点
+        /// </summary>
+        /// <returns></returns>
+        private string NodeSend_54(Node toNode)
+        {
+            return null;
+        }
+        private string NodeSend_55(Node toNode)
+        {
+            return null;
+        }
         /// <summary>
         /// 工作流发送业务处理.
         /// 升级日期:2012-11-11.
@@ -2347,22 +2364,43 @@ namespace BP.WF
                         Node toND4 = this.GenerNextStepNode();
                         switch (toND4.HisRunModel)
                         {
-                            case RunModel.Ordinary: /*3.1 普通工作节点 */
+                            case RunModel.Ordinary: /*4.1 普通工作节点 */
                                 msg += this.NodeSend_11(toND4); /* 让它与普通点点普通点一样的逻辑. */
                                 break;
-                            case RunModel.FL: /*3.2 分流点 */
-                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND3.Name + ").");
-                            case RunModel.HL: /*3.3 合流点 */
+                            case RunModel.FL: /*4.2 分流点 */
+                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND4.Name + ").");
+                            case RunModel.HL: /*4.3 合流点 */
                             case RunModel.FHL:
-                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接合流节点(" + toND3.Name + ").");
-                            case RunModel.SubThread:/*3.4 子线程*/
-                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接子线程节点(" + toND3.Name + ").");
+                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接合流节点(" + toND4.Name + ").");
+                            case RunModel.SubThread:/*4.5 子线程*/
+                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接子线程节点(" + toND4.Name + ").");
                             default:
                                 throw new Exception("@没有判断的节点类型(" + toND4.Name + ")");
                         }
                         throw new Exception("@没有判断的类型:" + this.HisNode.HisNodeWorkTypeT);
                     case RunModel.SubThread:  /* 5: 子线程节点向下发送的 */
-                        msg += NodeSend_4x();
+                         Node toND5 = this.GenerNextStepNode();
+                         switch (toND5.HisRunModel)
+                        {
+                            case RunModel.Ordinary: /*5.1 普通工作节点 */
+                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 子线程点(" + this.HisNode.Name + ")下面不能连接普通节点(" + toND5.Name + ").");
+                                break;
+                            case RunModel.FL: /*5.2 分流点 */
+                                throw new Exception("@流程设计错误:请检查流程获取详细信息, 子线程点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND5.Name + ").");
+                            case RunModel.HL: /*5.3 合流点 */
+                                msg += this.NodeSend_53(toND5);
+                                break;
+                            case RunModel.FHL:
+                                msg += this.NodeSend_54(toND5);
+                                break;
+                            case RunModel.SubThread:/*5.5 子线程*/
+                                msg += this.NodeSend_55(toND5);
+                                break;
+                                //throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接子线程节点(" + toND4.Name + ").");
+                            default:
+                                throw new Exception("@没有判断的节点类型(" + toND5.Name + ")");
+                        }
+                        throw new Exception("@没有判断的类型:" + this.HisNode.HisNodeWorkTypeT);
                         break;
                     default:
                         throw new Exception("@没有判断的类型:" + this.HisNode.HisNodeWorkTypeT);

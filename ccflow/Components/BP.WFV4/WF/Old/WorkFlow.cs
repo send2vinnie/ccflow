@@ -282,68 +282,40 @@ namespace BP.WF
 
             return info;
         }
-        /// <summary>
-        /// 删除当前的工作流程用标记.
-        /// </summary>
-        public void DoDeleteWorkFlowByFlag(string msg)
-        {
-            try
-            {
-                //设置流程的状态为强制终止状态
-                WorkNode nd = GetCurrentWorkNode();
-                nd.HisWork.NodeState = NodeState.Stop;
-                nd.HisWork.DirectUpdate();
-             
-                //设置产生的工作流程为.
-                GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
-                gwf.WFState = WFState.Delete;
-                gwf.Update();
-                // 删除消息.
-                BP.WF.MsgsManager.DeleteByWorkID(this.WorkID);
-                //WorkerLists wls = new WorkerLists(this
-            }
-            catch (Exception ex)
-            {
-                Log.DefaultLogWriteLine(LogType.Error, "@逻辑删除出现错误:" + ex.Message);
-                throw new Exception("@逻辑删除出现错误:" + ex.Message);
-            }
-        }
-
-       
 
         #region 流程的强制终止\删除 或者恢复使用流程,
-        /// <summary>
-        /// 强制终止流程. 
-        ///  1, 设置流程的状态为强制终止状态.
-        ///  2, 设置当前的工作节点是强制终止状态. 
-        ///  3, 设置产生的工作流程为 强制终止状态 .
-        ///  4, 除去当前工作人员的消息.
-        /// </summary>
-        /// <param name="msg"></param>
-        public void DoStopWorkFlow(string msg)
-        {
-            try
-            {
-                //设置流程的状态为强制终止状态
-                //			//	WorkNode nd = GetCurrentWorkNode();
-                //				nd.HisWork.NodeState = 4;
-                //				nd.HisWork.Update();
+        ///// <summary>
+        ///// 强制终止流程. 
+        /////  1, 设置流程的状态为强制终止状态.
+        /////  2, 设置当前的工作节点是强制终止状态. 
+        /////  3, 设置产生的工作流程为 强制终止状态 .
+        /////  4, 除去当前工作人员的消息.
+        ///// </summary>
+        ///// <param name="msg"></param>
+        //public void DoStopWorkFlow(string msg)
+        //{
+        //    try
+        //    {
+        //        //设置流程的状态为强制终止状态
+        //        //			//	WorkNode nd = GetCurrentWorkNode();
+        //        //				nd.HisWork.NodeState = 4;
+        //        //				nd.HisWork.Update();
 
-                //设置产生的工作流程为
+        //        //设置产生的工作流程为
 
-                GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
-                gwf.WFState = WFState.Stop;
-                gwf.DirectUpdate();
-                // 删除消息.
-                BP.WF.MsgsManager.DeleteByWorkID(this.WorkID);
-                //WorkerLists wls = new WorkerLists(this
-            }
-            catch (Exception ex)
-            {
-                Log.DefaultLogWriteLine(LogType.Error, "@强制终止流程错误." + ex.Message);
-                throw new Exception("@强制终止流程错误." + ex.Message);
-            }
-        }
+        //        GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+        //        gwf.WFState = WFState.Stop;
+        //        gwf.DirectUpdate();
+        //        // 删除消息.
+        //        BP.WF.MsgsManager.DeleteByWorkID(this.WorkID);
+        //        //WorkerLists wls = new WorkerLists(this
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.DefaultLogWriteLine(LogType.Error, "@强制终止流程错误." + ex.Message);
+        //        throw new Exception("@强制终止流程错误." + ex.Message);
+        //    }
+        //}
         public string DoSelfTest()
         {
             string msg = "";
@@ -1480,11 +1452,27 @@ namespace BP.WF
         /// <summary>
         /// 执行挂起
         /// </summary>
+        /// <param name="way">挂起方式</param>
+        /// <param name="relData">释放日期</param>
+        /// <param name="hungNote">挂起原因</param>
         /// <returns></returns>
-        public string DoHung()
+        public string DoHungUp(HungUpWay way, string relData, string hungNote)
         {
+            if (way == HungUpWay.SpecDataRel)
+                if (relData.Length < 10)
+                    throw new Exception("@解除挂起的日期不正确("+relData+")");
+
+            HungUp hu = new HungUp();
+            hu.FK_Node = this.HisGenerWorkFlow.FK_Node;
+            hu.WorkID = this.WorkID;
+            hu.MyPK = hu.FK_Node + "_" + hu.WorkID;
+            hu.HungUpWay = (int)way;
+            hu.RDT = DataType.CurrentDataTime;
+            hu.Rec = BP.Web.WebUser.No;
+            hu.Save();
+
             /* 执行挂起. */
-            int hungSta = (int)WFState.Hung;
+            int hungSta = (int)WFState.HungUp;
             string sqls = "UPDATE WF_GenerWorkFlow SET WFState=" + hungSta + " WHERE WorkID=" + this.WorkID;
             sqls += "@UPDATE ND" + int.Parse(this.HisFlow.No) + "Rpt SET WFState=" + hungSta + " WHERE OID=" + this.WorkID;
             DBAccess.RunSQLs(sqls);
@@ -1493,9 +1481,11 @@ namespace BP.WF
             WorkerLists wls = new WorkerLists(this.WorkID, this.HisFlow.No);
             string url = Glo.ServerIP + "/" + this.VirPath + this.AppType + "/WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + this.HisGenerWorkFlow.FID + "&FK_Node=" + this.HisGenerWorkFlow.FK_Node;
             string mailDoc = "详细信息:<A href='" + url + "'>打开流程轨迹</A>.";
+            string emps = "";
             foreach (WorkerList wl in wls)
             {
                 BP.WF.Port.WFEmp emp = new Port.WFEmp(wl.FK_Emp);
+                emps += emp.No + "," + emp.Name+";";
                 BP.TA.SMS.AddMsg(hungSta + "_" + this.WorkID + DateTime.Now.ToString("MMddhhmmss"),
                     wl.FK_Emp, emp.HisAlertWay, emp.Tel, "", emp.Email, "工作:" + this.HisGenerWorkFlow.Title + " 被" + WebUser.Name + "挂起",
                     mailDoc);
@@ -1503,13 +1493,13 @@ namespace BP.WF
             // 记录日志..
             WorkNode wn = new WorkNode(this.WorkID, this.HisGenerWorkFlow.FK_Node);
             wn.AddToTrack(ActionType.Hung, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "执行挂起");
-            return null;
+            return "已经成功执行挂起,并且已经通知给:" + emps;
         }
         /// <summary>
         /// 取消挂起
         /// </summary>
         /// <returns></returns>
-        public string DoUnHung()
+        public string DoUnHungUp()
         {
             /* 执行挂起. */
             int Sta = (int)WFState.Runing;

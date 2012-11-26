@@ -318,12 +318,10 @@ namespace BP.WF
                 {
                     case WF.WFState.Complete:
                         return "已完成";
-                    case WF.WFState.Delete:
-                        return "已删除";
                     case WF.WFState.Runing:
                         return "在运行";
-                    case WF.WFState.Stop:
-                        return "已停止";
+                    case WF.WFState.HungUp:
+                        return "挂起";
                     default:
                         return "未判断";
                 }
