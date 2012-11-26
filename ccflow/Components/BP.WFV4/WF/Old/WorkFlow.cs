@@ -434,18 +434,17 @@ namespace BP.WF
             work.OID = this.WorkID;
             work.NodeID = nd.NodeID;
             work.SetValByKey("FK_Dept", Web.WebUser.FK_Dept);
-
             if (work.RetrieveFromDBSources() == 0)
             {
-                Log.DefaultLogWriteLineError("@" + this.ToE("WF3", "没有找到当前的工作节点的数据，流程出现未知的异常。")); // 没有找到当前的工作节点的数据，流程出现未知的异常。
+                Log.DefaultLogWriteLineError("@WorkID="+this.WorkID+",FK_Node="+gwf.FK_Node+".不应该出现查询不出来工作."); // 没有找到当前的工作节点的数据，流程出现未知的异常。
                 work.Rec = Web.WebUser.No;
                 try
                 {
                     work.Insert();
                 }
-                catch
+                catch(Exception ex)
                 {
-                    Log.DefaultLogWriteLineError("@" + this.ToE("WF3", "没有找到当前的工作节点的数据，流程出现未知的异常。") + "。"); // 没有找到当前的工作节点的数据
+                    Log.DefaultLogWriteLineError("@没有找到当前的工作节点的数据，流程出现未知的异常" + ex.Message + ",不应该出现"); // 没有找到当前的工作节点的数据
                 }
             }
             work.FID = gwf.FID;
