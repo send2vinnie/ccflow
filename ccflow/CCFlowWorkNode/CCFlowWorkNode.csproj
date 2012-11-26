@@ -136,8 +136,8 @@
     </Compile>
     <Compile Include="Ctrl\BPAttachmentM.cs" />
     <Compile Include="Ctrl\BPEle.cs" />
-    <Compile Include="En30\ColorConverter.cs" />
-    <Compile Include="En30\enumApp.cs" />
+    <Compile Include="PubLib\ColorConverter.cs" />
+    <Compile Include="PubLib\En30\EnumApp.cs" />
     <Compile Include="Func.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="WorkRefFunc\HungUp.xaml.cs">
@@ -153,10 +153,10 @@
       <DependentUpon>PrintDoc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="En30\PubLib\ButtonList.cs" />
-    <Compile Include="En30\PubLib\EnumLib.cs" />
-    <Compile Include="En30\PubLib\FlowAttr.cs" />
-    <Compile Include="En30\PubLib\NodeAttr.cs" />
+    <Compile Include="PubLib\WF\ButtonList.cs" />
+    <Compile Include="PubLib\WF\EnumLib.cs" />
+    <Compile Include="PubLib\WF\FlowAttr.cs" />
+    <Compile Include="PubLib\WF\NodeAttr.cs" />
     <Compile Include="WorkRefFunc\ReturnWork.xaml.cs">
       <DependentUpon>ReturnWork.xaml</DependentUpon>
     </Compile>

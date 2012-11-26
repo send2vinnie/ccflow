@@ -176,7 +176,6 @@ namespace WorkNode
                 _FK_Node = value;
             }
         }
-
         private static Int64 _WorkID = 0;
         public static Int64 WorkID
         {
