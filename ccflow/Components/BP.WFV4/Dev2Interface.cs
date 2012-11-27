@@ -420,7 +420,6 @@ namespace BP.WF
         public static DataTable DB_GenerEmpWorkshHungUpOfDataTable()
         {
             int wfState = (int)WFState.HungUp;
-
             string sql;
             if (WebUser.IsAuthorize == false)
             {

@@ -280,10 +280,12 @@ namespace BP.WF
                  * */
 #warning 2011-10-15 偶然发现一次工作丢失情况.
 
-                GERpt rpt = new GERpt("ND" + int.Parse(this.No) + "Rpt");
+                string rptName = "ND" + int.Parse(this.No) + "Rpt";
+                GERpt rpt = new GERpt(rptName);
                 rpt.OID = int.Parse(workid.ToString());
-                if (rpt.RetrieveFromDBSources() != 0)
+                if (rpt.RetrieveFromDBSources() >= 1)
                 {
+                    /*  查询到报表数据.  */
                     wk.Copy(rpt);
                     wk.NodeState = NodeState.Init;
                     wk.Rec = WebUser.No;
@@ -292,11 +294,33 @@ namespace BP.WF
                 }
                 else
                 {
-                    #warning 这里不应该出现的异常信息.
-                    Log.DefaultLogWriteLineError("@不应该的异常:, NodeID:" + nd.NodeID + " workid:" + workid+" , GERpt.Map.PTable="+rpt.EnMap.PhysicsTable );
+                    /*  没有查询到报表数据.  */
+#warning 这里不应该出现的异常信息.
+
+                    string msg = "@不应该出现的异常.";
+                    msg += "@在为节点NodeID=" + nd.NodeID + " workid:" + workid + " 获取数据时.";
+                    msg += "获取它的Rpt表数据时，不应该查询不到。";
+                    msg += "GERpt 信息: table:" + rpt.EnMap.PhysicsTable + " Rpt OID=" + rpt.OID;
+
+                    string sql = "SELECT count(*) FROM " + rptName + " where oid=" + workid;
+                    int num = DBAccess.RunSQLReturnValInt(sql);
+
+                    msg += " @SQL:" + sql;
+                    msg += " ReturnNum:" + num;
+                    if (num == 0)
+                    {
+                        msg += "已经用sql可以查询出来，但是不应该用类查询不出来.";
+                    }
+                    else
+                    {
+                        /*如果可以用sql 查询出来.*/
+                        num = rpt.RetrieveFromDBSources();
+                        msg += "@从rpt.RetrieveFromDBSources = " + num;
+                    }
+                    Log.DefaultLogWriteLineError(msg);
 
 
-                    string sql = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE OID=" + workid;
+                    sql = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE OID=" + workid;
                     DataTable dt = DBAccess.RunSQLReturnTable(sql);
                     if (dt.Rows.Count == 1)
                     {
@@ -311,14 +335,21 @@ namespace BP.WF
                         {
                         }
                         rpt.OID = int.Parse(workid.ToString());
-                        rpt.InsertAsOID(rpt.OID);
+                        try
+                        {
+                            rpt.InsertAsOID(rpt.OID);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.DefaultLogWriteLineError("@不应该出插入不进去 rpt:" + rpt.EnMap.PhysicsTable + " workid=" + workid);
+                            rpt.RetrieveFromDBSources();
+                        }
                     }
                     else
                     {
                         Log.DefaultLogWriteLineError("@没有找到开始节点的数据, NodeID:" + nd.NodeID + " workid:" + workid);
-                        throw new Exception("@没有找到开始节点的数据, NodeID:" + nd.NodeID+" workid:"+workid);
+                        throw new Exception("@没有找到开始节点的数据, NodeID:" + nd.NodeID + " workid:" + workid);
                     }
-                   
 
 #warning 不应该出现的工作丢失.
                     Log.DefaultLogWriteLineError("@工作[" + nd.NodeID + " : " + wk.EnDesc + "], 报表数据WorkID=" + workid + " 丢失, 没有从NDxxxRpt里找到记录,请联系管理员。");
@@ -328,7 +359,6 @@ namespace BP.WF
                     wk.Rec = WebUser.No;
                     wk.ResetDefaultVal();
                     wk.Insert();
-
                     // throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
                 }
                 //  throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
@@ -346,29 +376,6 @@ namespace BP.WF
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
-            if (nd.IsStartNode)
-            {
-                try
-                {
-                    if (wk.GetValByKey("Title").ToString().Length <= 0)
-                    {
-                        string msg = "";
-                        if (WebUser.SysLang == "CH")
-                            msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
-                        else
-                            msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
-                    }
-                }
-                catch
-                {
-                    if (wk.EnMap.Attrs.Contains("Title") == false)
-                    {
-                        nd.RepareMap();
-                        string msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
-                        wk.SetValByKey("Title", msg);
-                    }
-                }
-            }
             return wk;
         }
         #endregion 业务处理
@@ -396,7 +403,7 @@ namespace BP.WF
 
                     if (WebUser.No != "admin")
                     {
-                          emp = new BP.Port.Emp();
+                        emp = new BP.Port.Emp();
                         emp.No = "admin";
                         emp.Retrieve();
                         BP.Web.WebUser.SignInOfGener(emp);

@@ -134,6 +134,13 @@
     <Compile Include="DemoData\Emp.cs" />
     <Compile Include="DemoData\CRM\Product.cs" />
     <Compile Include="DemoData\CRM\SalesBill.cs" />
+    <Compile Include="DemoData\Info\Info.cs" />
+    <Compile Include="DemoData\Info\InfoCent.cs" />
+    <Compile Include="DemoData\Info\InfoCentMM.cs" />
+    <Compile Include="DemoData\Info\Set\Bar.cs" />
+    <Compile Include="DemoData\Info\Set\Cent.cs" />
+    <Compile Include="DemoData\Info\Set\InfoSort.cs" />
+    <Compile Include="DemoData\Info\Set\InfoSortDtl.cs" />
     <Compile Include="DTS\GenerTitle.cs" />
     <Compile Include="DTS\DynamicWebService.cs" />
     <Compile Include="FlowData.cs" />

@@ -201,7 +201,22 @@ namespace BP.WF
         #endregion attrs
 
         #region attrs - attrs 
-        public string RptName = null;
+        private string _RptName = null;
+        public string RptName
+        {
+            get
+            {
+                return _RptName;
+            }
+            set
+            {
+                this._enMap = null;
+                _RptName = value;
+            }
+        }
+        /// <summary>
+        /// Map
+        /// </summary>
         public override Map EnMap
         {
             get
@@ -212,11 +227,13 @@ namespace BP.WF
                     return emp.EnMap;
                 }
 
-                MapData md = new MapData( );
-                md.No = RptName;
-                md.Retrieve();
-
-                this._enMap = md.GenerHisMap();
+                if (this._enMap == null)
+                {
+                    MapData md = new MapData();
+                    md.No = this.RptName;
+                    md.Retrieve();
+                    this._enMap = MapData.GenerHisMap(md.No);
+                }
                 return this._enMap;
             }
         }
@@ -239,7 +256,6 @@ namespace BP.WF
         public GERpt(string rptName, int oid)
         {
             this.RptName = rptName;
-          
             this.Retrieve();
         }
         #endregion attrs

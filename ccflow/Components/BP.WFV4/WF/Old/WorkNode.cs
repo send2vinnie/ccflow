@@ -501,6 +501,8 @@ namespace BP.WF
                sql = sql.Replace("@WebUser.No", "'" + WebUser.No + "'");
                sql = sql.Replace("@WebUser.Name", "'" + WebUser.Name + "'");
                sql = sql.Replace("@WebUser.FK_Dept", "'" + WebUser.FK_Dept + "'");
+               if (sql.Contains("@"))
+                   throw new Exception("@接受人sql表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + sql);
 
                dt = DBAccess.RunSQLReturnTable(sql);
                if (dt.Rows.Count == 0)

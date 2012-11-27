@@ -11,6 +11,7 @@ using BP.Sys;
 using BP.DA;
 using BP.En;
 using BP;
+using BP.Web;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,6 +19,42 @@ namespace BP.WF
 {
     public class Glo
     {
+        /// <summary>
+        /// 处理表达式
+        /// </summary>
+        /// <param name="exp">表达式</param>
+        /// <param name="en">数据源</param>
+        /// <returns></returns>
+        public static string DealExp(string exp, Entity en)
+        {
+            exp = exp.Replace("~", "'");
+            exp = exp.Replace("@WebUser.No", "'" + WebUser.No + "'");
+            exp = exp.Replace("@WebUser.Name", "'" + WebUser.Name + "'");
+            exp = exp.Replace("@WebUser.FK_Dept", "'" + WebUser.FK_Dept + "'");
+            if (exp.Contains("@") == false)
+            {
+                exp = exp.Replace("''", "'");
+                return exp;
+            }
+
+
+            Attrs attrs = en.EnMap.Attrs;
+            foreach (Attr attr in attrs)
+            {
+                if (attr.MyDataType == DataType.AppString)
+                    exp = exp.Replace("@" + attr.Key, "'" + en.GetValStrByKey(attr.Key) + "'");
+                else
+                    exp = exp.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key));
+            }
+            exp = exp.Replace("''", "'");
+            if (exp.Contains("@"))
+            {
+                Log.DefaultLogWriteLineError(exp);
+                throw new Exception("@ccflow表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + exp);
+            }
+
+            return exp;
+        }
         /// <summary>
         /// 加密MD5
         /// </summary>
