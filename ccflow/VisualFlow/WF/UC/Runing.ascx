@@ -24,3 +24,10 @@
             }
         }
     </script>
+     <style>
+        .TTD
+        {
+          word-wrap: break-word; 
+      　　word-break: normal; 
+        }
+     </style>

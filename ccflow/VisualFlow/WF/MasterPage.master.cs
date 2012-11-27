@@ -155,15 +155,10 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             }
         }
 
-#warning 测试session 乱掉的代码.
-        BP.DA.Log.DefaultLogWriteLineInfo("@No="+BP.Web.WebUser.No);
-
         this.Pub1.Add("</UL> <div style='float:right;margin-right:30px;display:inline-block;line-height:35px;color:white' >您好:" + BP.Web.WebUser.No + "," + BP.Web.WebUser.Name + "</div>");
         this.Pub1.Add("</DIV>");
-
         if (BP.WF.Glo.IsShowTitle)
             this.Pub1.Add("</DIV>");
-
         #endregion 菜单输出区域
     }
 }

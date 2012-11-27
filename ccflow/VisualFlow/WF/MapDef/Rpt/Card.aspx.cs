@@ -16,14 +16,14 @@ using BP.Web;
 
 public partial class WF_MapDef_WFRpt : WebPage
 {
-    public new string FK_MapData
+    public   string FK_MapData
     {
         get
         {
             return this.Request.QueryString["FK_MapData"];
         }
     }
-    public new string FK_Flow
+    public   string FK_Flow
     {
         get
         {

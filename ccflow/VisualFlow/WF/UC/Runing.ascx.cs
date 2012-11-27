@@ -63,7 +63,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.Pub1.AddTable("border=1px align=center width='960px'");
 
         if (WebUser.IsWap)
-            this.Pub1.AddCaption("<img src='./Img/Home.gif' >&nbsp;<a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作") );
+            this.Pub1.AddCaption("<img src='./Img/Home.gif' >&nbsp;<a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作"));
         else
             this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "在途工作") + "</b>");
 
@@ -99,51 +99,51 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         string title = null;
         string workid = null;
         string fk_flow = null;
-         int gIdx = 0;
-         string[] gVals = groupVals.Split('@');
-         foreach (string g in gVals)
-         {
-             if (string.IsNullOrEmpty(g))
-                 continue;
+        int gIdx = 0;
+        string[] gVals = groupVals.Split('@');
+        foreach (string g in gVals)
+        {
+            if (string.IsNullOrEmpty(g))
+                continue;
 
-             gIdx++;
-             this.Pub1.AddTR();
-             this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g + "</b>");
-             this.Pub1.AddTREnd();
+            gIdx++;
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g + "</b>");
+            this.Pub1.AddTREnd();
 
-             foreach (DataRow dr in dt.Rows)
-             {
-                 if (dr[this.GroupBy].ToString() != g)
-                     continue;
-                 i++;
-                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
-                 this.Pub1.AddTDIdx(i);
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr[this.GroupBy].ToString() != g)
+                    continue;
+                i++;
+                this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
+                this.Pub1.AddTDIdx(i);
 
-                 title = dr["Title"].ToString();
-                 workid = dr["WorkID"].ToString();
-                 fk_flow = dr["FK_Flow"].ToString();
+                title = dr["Title"].ToString();
+                workid = dr["WorkID"].ToString();
+                fk_flow = dr["FK_Flow"].ToString();
 
-                 this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" >" + title + "</a>");
-              
-                 //  this.Pub1.AddTDDoc(title, 50, title);
+                this.Pub1.Add("<TD class=TTD><a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" >" + title + "</a></TD>");
 
-                 if (this.GroupBy != "FlowName")
-                     this.Pub1.AddTD(dr["FlowName"].ToString());
+                //  this.Pub1.AddTDDoc(title, 50, title);
 
-                 if (this.GroupBy != "NodeName")
-                     this.Pub1.AddTD(dr["NodeName"].ToString());
+                if (this.GroupBy != "FlowName")
+                    this.Pub1.AddTD(dr["FlowName"].ToString());
 
-                 if (this.GroupBy != "RecName")
-                     this.Pub1.AddTD(dr["RecName"].ToString());
+                if (this.GroupBy != "NodeName")
+                    this.Pub1.AddTD(dr["NodeName"].ToString());
 
-                 this.Pub1.AddTD(dr["RDT"].ToString());
-                 this.Pub1.AddTDBegin();
-                 this.Pub1.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + this.PageSmall + ".aspx?DoType=UnSend&FID=" + dr["FID"] + "&WorkID=" + workid + "&FK_Flow=" + fk_flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
-                 this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
-                 this.Pub1.AddTDEnd();
-                 this.Pub1.AddTREnd();
-             }
-         }
+                if (this.GroupBy != "RecName")
+                    this.Pub1.AddTD(dr["RecName"].ToString());
+
+                this.Pub1.AddTD(dr["RDT"].ToString());
+                this.Pub1.AddTDBegin();
+                this.Pub1.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + this.PageSmall + ".aspx?DoType=UnSend&FID=" + dr["FID"] + "&WorkID=" + workid + "&FK_Flow=" + fk_flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
+                this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+                this.Pub1.AddTDEnd();
+                this.Pub1.AddTREnd();
+            }
+        }
         this.Pub1.AddTRSum();
         this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
         this.Pub1.AddTREnd();

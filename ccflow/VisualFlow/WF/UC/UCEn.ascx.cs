@@ -1111,6 +1111,26 @@ namespace BP.Web.Comm.UC.WF
         private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs,Entity en)
         {
             #region 处理事件.
+            if (dtls.Count >= 1)
+            {
+                string scriptSaveDtl = "";
+                scriptSaveDtl = "\t\n<script type='text/javascript' >";
+                scriptSaveDtl += "\t\n function SaveDtlAll() { ";
+                foreach (MapDtl dtl in dtls)
+                    scriptSaveDtl += "\t\n SaveDtl('" + dtl.No + "'); ";
+                scriptSaveDtl += "\t\n</script>";
+                this.Add(scriptSaveDtl);
+            }
+            else
+            {
+                string scriptSaveDtl = "";
+                scriptSaveDtl = "\t\n<script type='text/javascript' >";
+                scriptSaveDtl += "\t\n function SaveDtlAll() { ";
+                scriptSaveDtl += "\t\n } ";
+                scriptSaveDtl += "\t\n</script>";
+                this.Add(scriptSaveDtl);
+            }
+
             fes = this.mapData.FrmEvents;
             try
             {

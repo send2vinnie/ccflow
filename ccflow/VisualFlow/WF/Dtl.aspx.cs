@@ -742,7 +742,8 @@ public partial class Comm_Dtl : WebPage
                                 if (ddlFull == null)
                                     continue;
 
-                                string valOld =  ddlFull.SelectedItemStringVal;
+                                string valOld = mydtl.GetValStrByKey(me.AttrOfOper);
+                                //string valOld =ddlFull.SelectedItemStringVal;
 
                                 string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                                 fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);

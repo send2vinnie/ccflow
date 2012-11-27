@@ -31,12 +31,12 @@ public partial class WF_WorkOpt_OneWork_OP : BP.Web.WebPage
                     break;
                 case "Hung":
                     WorkFlow wf1 = new WorkFlow(fk_Flow, workIDint);
-                    wf1.DoHung();
+                 //   wf1.DoHungUp(  );
                     this.WinCloseWithMsg("流程已经被挂起.");
                     break;
                 case "UnHung":
                     WorkFlow wf2 = new WorkFlow(fk_Flow, workIDint);
-                    wf2.DoUnHung();
+                  //  wf2.DoUnHungUp();
                     this.WinCloseWithMsg("流程已经被解除挂起.");
                     break;
                 case "ComeBack":
@@ -111,7 +111,7 @@ public partial class WF_WorkOpt_OneWork_OP : BP.Web.WebPage
                     this.Pub2.AddFieldSetEnd();
                 }
                 break;
-            case  WFState.Hung: // 挂起.
+            case  WFState.HungUp: // 挂起.
                 if (BP.WF.Dev2Interface.Flow_CheckIsCanDoCurrentWork(workIDint, WebUser.No) == true)
                 {
                     this.Pub2.AddFieldSet("取消挂起");
