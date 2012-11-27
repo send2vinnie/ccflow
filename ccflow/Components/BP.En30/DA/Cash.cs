@@ -660,7 +660,7 @@ namespace BP.DA
                 return null;
             return ht[key];
         }
-        public static void Remove(string cashKey, string key)
+        public static void Remove_de(string cashKey, string key)
         {
             Hashtable ht = CashEntity.DCash[cashKey] as Hashtable;
             if (ht == null)

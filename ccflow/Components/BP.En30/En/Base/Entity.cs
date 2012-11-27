@@ -757,10 +757,6 @@ namespace BP.En
         {
             if (this.EnMap.DepositaryOfEntity == Depositary.Application)
             {
-
-                //if (this.CashKey == null)
-                //    throw new Exception("@您放实体设置了放入缓存处理，但是您没有设置它的CashKey。");
-
                 #region 从缓存里获取.
                 Entities ens;
                 try
@@ -804,7 +800,6 @@ namespace BP.En
                     throw new Exception("@在[" + this.EnDesc + this.EnMap.PhysicsTable + "]中没有找到[" + attr.Field + attr.Desc + "]=[" + this.PKVal + "]的记录。");
                 else
                     throw new Exception("@在[" + this.EnDesc + "]中没有找到[" + attr.Desc + "]=[" + this.PKVal + "]的记录。");
-
             }
 
             if (this.EnMap.DepositaryOfEntity == Depositary.None)
@@ -1657,7 +1652,7 @@ namespace BP.En
                 switch (this.EnMap.DepositaryOfEntity)
                 {
                     case Depositary.Application:
-                        CashEntity.Remove( this.ToString(),  this.PKVal.ToString());
+                        CashEntity.Remove_de( this.ToString(),  this.PKVal.ToString());
                         break;
                     case Depositary.None:
                         break;

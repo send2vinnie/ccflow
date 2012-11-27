@@ -695,7 +695,6 @@ namespace BP.Sys
             map.DTSearchWay = this.HisDTSearchWay;
             map.DTSearchKey = this.DTSearchKey;
 
-
             Attrs attrs = new Attrs();
             foreach (MapAttr mapAttr in mapAttrs)
                 map.AddAttr(mapAttr.HisAttr);

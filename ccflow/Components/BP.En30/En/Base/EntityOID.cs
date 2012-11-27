@@ -4,6 +4,9 @@ using BP.DA;
 
 namespace BP.En
 {
+    /// <summary>
+    /// 属性列表
+    /// </summary>
     public class EntityOIDAttr
     {
         /// <summary>
@@ -11,7 +14,6 @@ namespace BP.En
         /// </summary>
         public static string OID = "OID";
     }
-
 	/// <summary>
 	/// 属性列表
 	/// </summary>
@@ -287,13 +289,12 @@ namespace BP.En
 	}
 	abstract public class EntitiesOID : Entities
 	{
+        /// <summary>
+        /// 构造
+        /// </summary>
 		public EntitiesOID()
 		{
-			//
-			// TODO: 在此处添加构造函数逻辑
-			//
 		}
-		 
 		 
 		#region 查询方法, 专用于与语言有关的实体
 		/// <summary>
@@ -312,7 +313,6 @@ namespace BP.En
 			qo.AddWhere( "LanguageNo", LanguageNo );
 			qo.DoQuery();
 		}
-		#endregion 
-		 
+		#endregion
 	}
 }
