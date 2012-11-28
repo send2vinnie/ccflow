@@ -35,6 +35,7 @@ namespace BP.WF
             if (exp.Contains("@") == false)
             {
                 exp = exp.Replace("''", "'");
+                exp = exp.Replace("~", "'");
                 return exp;
             }
 
@@ -48,6 +49,7 @@ namespace BP.WF
                     exp = exp.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key));
             }
             exp = exp.Replace("''", "'");
+            exp = exp.Replace("~", "'");
             if (exp.Contains("@"))
             {
                 Log.DefaultLogWriteLineError(exp);
