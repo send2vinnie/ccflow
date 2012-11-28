@@ -139,14 +139,21 @@ namespace BP.WF
 
                 Attrs attrs = this.HisWork.EnMap.Attrs;
                 sql = town.HisNode.RecipientSQL;
-                foreach (Attr attr in attrs)
-                {
-                    if (attr.MyDataType == DataType.AppString)
-                        sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
-                    else
-                        sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-                }
-                sql = sql.Replace("~", "'");
+                sql = Glo.DealExp(sql, this.HisWork,"按sql获取接受人员,所在节点:"+town.HisNode.NodeID);
+
+                //foreach (Attr attr in attrs)
+                //{
+                //    if (attr.MyDataType == DataType.AppString)
+                //        sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
+                //    else
+                //        sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
+                //}
+                //sql = sql.Replace("~", "'");
+                //if (sql.Contains("@"))
+                //{
+                //    Log.DefaultLogWriteLineError("@没有找到可接受的工作人员。@技术信息：执行的sql没有发现人员:" + sql);
+                //}
+
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
                     throw new Exception("@没有找到可接受的工作人员。@技术信息：执行的sql没有发现人员:" + sql);
@@ -489,20 +496,21 @@ namespace BP.WF
 
                Attrs attrs = this.HisWork.EnMap.Attrs;
                sql = town.HisNode.RecipientSQL;
-               foreach (Attr attr in attrs)
-               {
-                   if (attr.MyDataType == DataType.AppString)
-                       sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
-                   else
-                       sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-               }
+               sql = Glo.DealExp(sql, this.HisWork,"按SQL获取人员,所在节点"+town.HisNode.NodeID+".");
 
-               sql = sql.Replace("~", "'");
-               sql = sql.Replace("@WebUser.No", "'" + WebUser.No + "'");
-               sql = sql.Replace("@WebUser.Name", "'" + WebUser.Name + "'");
-               sql = sql.Replace("@WebUser.FK_Dept", "'" + WebUser.FK_Dept + "'");
-               if (sql.Contains("@"))
-                   throw new Exception("@接受人sql表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + sql);
+               //foreach (Attr attr in attrs)
+               //{
+               //    if (attr.MyDataType == DataType.AppString)
+               //        sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
+               //    else
+               //        sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
+               //}
+               //sql = sql.Replace("~", "'");
+               //sql = sql.Replace("@WebUser.No", "'" + WebUser.No + "'");
+               //sql = sql.Replace("@WebUser.Name", "'" + WebUser.Name + "'");
+               //sql = sql.Replace("@WebUser.FK_Dept", "'" + WebUser.FK_Dept + "'");
+               //if (sql.Contains("@"))
+               //    throw new Exception("@接受人sql表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + sql);
 
                dt = DBAccess.RunSQLReturnTable(sql);
                if (dt.Rows.Count == 0)

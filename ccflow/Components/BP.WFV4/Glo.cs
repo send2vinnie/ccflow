@@ -24,8 +24,9 @@ namespace BP.WF
         /// </summary>
         /// <param name="exp">表达式</param>
         /// <param name="en">数据源</param>
+        /// <param name="errInfo">错误</param>
         /// <returns></returns>
-        public static string DealExp(string exp, Entity en)
+        public static string DealExp(string exp, Entity en, string errInfo)
         {
             exp = exp.Replace("~", "'");
             exp = exp.Replace("@WebUser.No", "'" + WebUser.No + "'");
@@ -50,7 +51,7 @@ namespace BP.WF
             if (exp.Contains("@"))
             {
                 Log.DefaultLogWriteLineError(exp);
-                throw new Exception("@ccflow表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + exp);
+                throw new Exception("@ccflow的(" + errInfo + ")表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + exp);
             }
 
             return exp;
