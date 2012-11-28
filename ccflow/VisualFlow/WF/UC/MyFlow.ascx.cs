@@ -492,7 +492,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     /*如果启用了发送按钮.*/
                     this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                     this.Btn_Send.UseSubmitBehavior = false;
+                  //  this.Btn_Send.OnClientClick = "this.disabled=true;";
                     this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; 
+
                     this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                 }
             }
@@ -508,7 +510,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                         Btn_Send.Style.Add("display", "none");
                         this.Btn_Send.UseSubmitBehavior = false;
-                        this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+                       // this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+                        this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+
                         this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                     }
                     else
@@ -532,7 +536,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 this.ToolBar1.AddBtn(NamesOfBtn.Save, btnLab.SaveLab);
                 this.Btn_Save.UseSubmitBehavior = false;
-                this.Btn_Save.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+               // this.Btn_Save.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+                this.Btn_Save.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                 this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
