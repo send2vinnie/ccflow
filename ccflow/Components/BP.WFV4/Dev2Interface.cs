@@ -960,14 +960,24 @@ namespace BP.WF
                 foreach (string str in ht.Keys)
                     sw.SetValByKey(str, ht[str]);
             }
-            sw.Title = sw.Title + "(自动发起)";
+
+            int dbSrcNum = 0;
+            if (sw.OID != 0)
+                dbSrcNum = sw.RetrieveFromDBSources();
+
+            //  sw.Title = sw.Title + "(自动发起)";
             sw.SetValByKey("RDT", DataType.CurrentDataTime);
             sw.SetValByKey("CDT", DataType.CurrentDataTime);
             sw.SetValByKey("FK_NY", DataType.CurrentYearMonth);
             sw.SetValByKey("Rec", WebUser.No);
             sw.SetValByKey("Emps", WebUser.No);
             sw.SetValByKey("FK_Dept", WebUser.FK_Dept);
-            sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
+
+            if (sw.OID == 0)
+                sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
+            else
+                sw.SaveAsOID(sw.OID);
+
             WorkNode wn = new WorkNode(sw, nd);
             return wn.AfterNodeSave();
         }
@@ -1442,11 +1452,19 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="msg">信息</param>
         /// <param name="returnToNode">要退回的节点</param>
+        /// <param name="isBackToThisNode">是否要原路返回(默认为false)</param>
         /// <returns>返回执行信息</returns>
-        public static void Node_ReturnWork(string fk_flow, Int64 workID, string msg, int returnToNode)
+        public static string Node_ReturnWork(string fk_flow, Int64 workID, int returnToNode, string msg, bool isBackToThisNode)
         {
+            //生成工作节点.
             WorkNode wn = new WorkNode(workID, Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
-            wn.DoReturnWork(returnToNode, msg);
+
+            //执行退回.
+            WorkNode rWn = wn.DoReturnWork(returnToNode, msg, isBackToThisNode);
+           
+
+            //返回退回信息.
+            return "@任务被你成功退回到【{" + rWn.HisNode.Name + "}】，退回给【{" + rWn.HisWork.Rec + "}】。" ;
         }
         /// <summary>
         /// 执行工作退回(退回上一个点)
@@ -1455,7 +1473,7 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="msg">信息</param>
         /// <returns>返回执行信息</returns>
-        public static void Node_ReturnWork(string fk_flow, Int64 workID, string msg)
+        public static void Node_ReturnWork_Del(string fk_flow, Int64 workID, string msg)
         {
             WorkNode wn = new WorkNode(workID, Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
             wn.DoReturnWork(msg);

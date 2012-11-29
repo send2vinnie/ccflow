@@ -348,7 +348,7 @@ namespace BP.WF
                     else
                     {
                         Log.DefaultLogWriteLineError("@没有找到开始节点的数据, NodeID:" + nd.NodeID + " workid:" + workid);
-                        throw new Exception("@没有找到开始节点的数据, NodeID:" + nd.NodeID + " workid:" + workid);
+                        throw new Exception("@没有找到开始节点的数据, NodeID:" + nd.NodeID + " workid:" + workid+" sql:"+sql);
                     }
 
 #warning 不应该出现的工作丢失.

@@ -705,7 +705,6 @@ namespace BP.WF
         public void InsertAsOID(Int64 oid)
         {
             this.SetValByKey("OID", oid);
-            //EnDA.Insert(this);
             this.RunSQL(SqlBuilder.Insert(this));
         }
         /// <summary>

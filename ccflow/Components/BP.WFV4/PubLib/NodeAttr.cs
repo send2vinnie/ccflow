@@ -11,6 +11,10 @@ namespace BP.WF
     {
         #region 新属性
         /// <summary>
+        /// 子线程类型
+        /// </summary>
+        public const string SubThreadType = "SubThreadType";
+        /// <summary>
         /// 是否可以隐性退回
         /// </summary>
         public const string IsCanHidReturn = "IsCanHidReturn";

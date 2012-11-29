@@ -410,7 +410,6 @@ namespace BP.WF
         }
         #endregion
 
-
         /// <summary>
         /// 得到当前的进行中的工作。
         /// </summary>
@@ -453,39 +452,11 @@ namespace BP.WF
             return wn;
         }
         /// <summary>
-        /// 处理合流流程结束
-        /// </summary>
-        /// <param name="sw"></param>
-        public string DoDoFlowOverHeLiu_del()
-        {
-            GenerFH gh = new GenerFH();
-            gh.FID = this.WorkID;
-            if (gh.RetrieveFromDBSources() == 0)
-                throw new Exception("系统异常");
-            else
-                gh.Delete();
-
-            GenerWorkFlows ens = new GenerWorkFlows();
-            ens.Retrieve(GenerWorkFlowAttr.FID, this.WorkID);
-
-            string msg = "";
-            foreach (GenerWorkFlow en in ens)
-            {
-                if (en.WorkID == en.FID)
-                    continue;
-
-                /*结束每一个子流程*/
-                WorkFlow fl = new WorkFlow(en.FK_Flow, en.WorkID, en.FID);
-                // msg += fl.DoFlowOverOrdinary();
-            }
-            return msg;
-        }
-        /// <summary>
         /// 结束分流的节点
         /// </summary>
         /// <param name="fid"></param>
         /// <returns></returns>
-        public string DoDoFlowOverFeiLiu(GenerWorkFlow gwf)
+        public string DoFlowOverFeiLiu(GenerWorkFlow gwf)
         {
             // 查询出来有少没有完成的流程。
             int i = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM WF_GenerWorkFlow WHERE FID=" + gwf.FID + " AND WFState!=1");
@@ -807,7 +778,7 @@ namespace BP.WF
                 string msg = "";
 
                 /* 更新开始节点的状态。*/
-                DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID);
+                //DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID);
 
                 /*整个流程都结束了*/
                 DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FID=" + this.WorkID);

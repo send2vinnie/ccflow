@@ -148,8 +148,6 @@ namespace BP.WF.Ext
         }
         protected override bool beforeUpdate()
         {
-            
-
             Node nd = new Node(this.NodeID);
             nd.Update();
             return base.beforeUpdate();
@@ -200,6 +198,9 @@ namespace BP.WF.Ext
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, true);
                 map.AddBoolean(NodeAttr.IsBackTracking, false, "是否可以在退回后原路返回(只有启用退回功能才有效)", true, true, true);
 
+
+
+
                 // map.AddTBInt(NodeAttr.PassRate, 100, "通过率(对于合流节点有效)", true, true);
                 map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率(对合流点有效)", true, false);
 
@@ -234,7 +235,11 @@ namespace BP.WF.Ext
                 map.AddTBDateTime("DTTo", "生命周期到", true, true);
 
                 //保存方式.
+                map.AddDDLSysEnum(NodeAttr.SubThreadType, 0, "子线程类型(对子线程节点有效)", true, true,
+                    NodeAttr.SubThreadType, "@0=同表单@1=异表单");
                 map.AddDDLSysEnum(NodeAttr.SaveModel, 0, "保存方式", true, true);
+
+
 
                 #region  功能按钮状态
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);

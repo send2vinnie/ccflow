@@ -139,21 +139,7 @@ namespace BP.WF
 
                 Attrs attrs = this.HisWork.EnMap.Attrs;
                 sql = town.HisNode.RecipientSQL;
-                sql = Glo.DealExp(sql, this.HisWork,"按sql获取接受人员,所在节点:"+town.HisNode.NodeID);
-
-                //foreach (Attr attr in attrs)
-                //{
-                //    if (attr.MyDataType == DataType.AppString)
-                //        sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
-                //    else
-                //        sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-                //}
-                //sql = sql.Replace("~", "'");
-                //if (sql.Contains("@"))
-                //{
-                //    Log.DefaultLogWriteLineError("@没有找到可接受的工作人员。@技术信息：执行的sql没有发现人员:" + sql);
-                //}
-
+                sql = Glo.DealExp(sql, this.HisWork, "按sql获取接受人员,所在节点:" + town.HisNode.NodeID);
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
                     throw new Exception("@没有找到可接受的工作人员。@技术信息：执行的sql没有发现人员:" + sql);
@@ -1040,6 +1026,12 @@ namespace BP.WF
             Glo.GenerWord(tempFile, wk);
             PubClass.OpenWordDocV2(tempFile, this.HisNode.Name + ".doc");
         }
+        /// <summary>
+        /// 执行工作退回
+        /// </summary>
+        /// <param name="backtoNodeID"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
         public WorkNode DoReturnWork(int backtoNodeID, string msg)
         {
             return DoReturnWork(backtoNodeID, msg, false);
@@ -1139,20 +1131,26 @@ namespace BP.WF
         public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isBackTracking)
         {
             //退回前事件
-
             string atPara = "@ToNode=" + backtoNodeID;
             this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnBefore, this.HisWork, atPara);
-
             if (this.HisNode.FocusField != "")
             {
                 // 把数据更新它。
                 this.HisWork.Update(this.HisNode.FocusField, "");
             }
+            
+            //删除当前数据.
+            DBAccess.RunSQL("DELETE WF_GenerWorkerlist WHERE WorkID="+this.WorkID+" AND FK_Node="+this.HisNode.NodeID);
+
 
             Node backToNode = new Node(backtoNodeID);
             switch (this.HisNode.HisNodeWorkType)
             {
-                case NodeWorkType.WorkHL: /*如果当前是合流点 */
+                case NodeWorkType.WorkHL:
+                case NodeWorkType.WorkFHL: /*如果当前是合流点 */
+                    if (backToNode.HisRunModel == RunModel.SubThread)
+                        throw new Exception("@合流点或者分合流点不允许向子线程退回。");
+
                     /* 杀掉进程*/
                     WorkerLists wlsSubs = new WorkerLists();
                     wlsSubs.Retrieve(WorkerListAttr.FID, this.HisWork.OID);
@@ -1165,6 +1163,7 @@ namespace BP.WF
                         Node subNode = new Node(sub.FK_Node);
                         Work wk = subNode.GetWork(sub.WorkID);
                         wk.Delete();
+
                         sub.Delete();
                     }
                     GenerFH fh = new GenerFH();
@@ -2867,6 +2866,7 @@ namespace BP.WF
         /// <returns>执行后的内容</returns>
         private string AfterNodeSave_Do()
         {
+          
             #region 把数据放到报表表里面.
             if (this.HisNode.IsStartNode)
                 this.InitStartWorkData();
@@ -3691,7 +3691,6 @@ namespace BP.WF
             //查询出来上一个节点的附件信息来。
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                        this.WorkID.ToString());
-
             //查询出来上一个Ele信息来。
             FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
                        this.WorkID.ToString());
@@ -3795,6 +3794,7 @@ namespace BP.WF
             /*如果当前节点是分流，下一个节点是合流，就按普通节点启动它。*/
             if (this.HisNode.IsFL && nd.IsHL)
                 return StartNextWorkNodeOrdinary(nd);  /* 普通节点 */
+
             string msg = "";
             try
             {
@@ -4476,7 +4476,6 @@ namespace BP.WF
                     //判断是不是MD5流程？
                     if (this.HisFlow.IsMD5)
                         wk.SetValByKey("MD5", Glo.GenerMD5(wk));
-
                     wk.Insert();
                 }
                 catch (Exception ex)
@@ -4484,7 +4483,10 @@ namespace BP.WF
                     wk.CheckPhysicsTable();
                     try
                     {
-                        wk.Update();
+                        wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
+                        wk.NodeState = NodeState.Init; //节点状态。
+                        wk.Rec = BP.Web.WebUser.No;
+                        wk.SaveAsOID(wk.OID);
                     }
                     catch (Exception ex11)
                     {
@@ -4520,8 +4522,7 @@ namespace BP.WF
                 }
                 #endregion 复制附件。
 
-
-                #region 复制Ele。
+                #region 复制Ele
                 if (this.HisNode.MapData.FrmEles.Count > 0)
                 {
                     FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
@@ -4542,7 +4543,7 @@ namespace BP.WF
                         }
                     }
                 }
-                #endregion 复制Ele。
+                #endregion 复制Ele
 
                 #region 复制多选数据
                 if (this.HisNode.MapData.MapM2Ms.Count > 0)
@@ -4741,7 +4742,7 @@ namespace BP.WF
                 }
                 #endregion 复制明细数据
 
-                //  wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
+
                 #endregion
                 try
                 {
@@ -4765,19 +4766,19 @@ namespace BP.WF
                     }
                     catch (Exception ex)
                     {
-                        Log.DebugWriteInfo(this.ToE("SaveWorkErr", "保存工作错误") + "：" + ex.Message);
-                        throw new Exception(this.ToE("SaveWorkErr", "保存工作错误  ") + wk.EnDesc + ex.Message);
+                        Log.DefaultLogWriteLineInfo("@保存工作错误：" + ex.Message);
+                        throw new Exception("@保存工作错误：" + wk.EnDesc + ex.Message);
                     }
                     #endregion 解决字段修复问题
                 }
                 // 启动一个工作节点.
                 string msg = this.beforeStartNode(wk, nd);
-                return "@" + string.Format(this.ToE("NStep", "@第{0}步"), nd.Step.ToString()) + "<font color=blue>" + nd.Name + "</font>" + this.ToE("WorkStartOK", "工作成功启动") + "." + msg;
+                return "@" + string.Format("@第{0}步", nd.Step.ToString()) + "<font color=blue>" + nd.Name + "</font>工作成功启动" + "." + msg;
             }
             catch (Exception ex)
             {
                 nd.HisWorks.DoDBCheck(DBLevel.Middle);
-                throw new Exception(string.Format("StartGEWorkErr", nd.Name) + "@" + ex.Message + sql);
+                throw new Exception(string.Format("StartGEWorkErr", nd.Name) + "@" + ex.Message);
             }
         }
         #endregion
@@ -4952,6 +4953,7 @@ namespace BP.WF
                 switch (this.HisNode.HisNodeWorkType)
                 {
                     case NodeWorkType.WorkHL: /* 如果是合流 */
+                    case NodeWorkType.WorkFHL: /* 如果是分合流 */
                         if (this.IsSubFlowWorkNode == false)
                         {
                             /* 如果不是线程 */
@@ -4976,10 +4978,10 @@ namespace BP.WF
                 wk.OID = this.HisWork.OID;
                 if (wk.RetrieveFromDBSources() == 0)
                     continue;
-
                 WorkNode wn = new WorkNode(wk, nd);
                 wns.Add(wn);
             }
+
             switch (wns.Count)
             {
                 case 0:

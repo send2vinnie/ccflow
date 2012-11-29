@@ -8,12 +8,42 @@ using BP.Port;
 
 namespace BP.WF
 {
-  
+    /// <summary>
+    /// 子线程类型
+    /// </summary>
+    public enum SubThreadType
+    {
+        /// <summary>
+        /// 同表单
+        /// </summary>
+        SameSheet,
+        /// <summary>
+        /// 异表单
+        /// </summary>
+        UnSameSheet
+    }
     /// <summary>
     /// 这里存放每个节点的信息.	 
     /// </summary>
     public class Node : Entity
     {
+        #region 参数属性
+        /// <summary>
+        /// 子线程类型
+        /// </summary>
+        public SubThreadType HisSubThreadType
+        {
+            get
+            {
+                return (SubThreadType)this.GetValIntByKey(NodeAttr.SubThreadType);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.SubThreadType, (int)value);
+            }
+        }
+        #endregion
+
         #region 外键属性.
         public CC HisCC
         {
@@ -369,7 +399,6 @@ namespace BP.WF
                     strs += "@" + ndp.FK_Flow;
                 nd.HisSubFlows = strs;
 
-
                 // 节点
                 strs = "";
                 Directions dirs = new Directions(nd.NodeID);
@@ -515,7 +544,6 @@ namespace BP.WF
                     break;
             }
             #endregion
-
 
             #region 更新流程判断条件的标记。
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='" + this.FK_Flow + "'");
@@ -1559,7 +1587,9 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(NodeAttr.RecipientSQL);
+                string s= this.GetValStringByKey(NodeAttr.RecipientSQL);
+                s = s.Replace("~", "'");
+                return s;
             }
             set
             {
@@ -1682,6 +1712,7 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.Step, (int)NodeWorkType.Work, this.ToE("FlowStep", "流程步骤"), true, false);
 
                 map.AddTBInt(NodeAttr.NodeWorkType, 0, "节点类型", false, false);
+                map.AddTBInt(NodeAttr.SubThreadType, 0, "子线程ID", false, false);
 
                 map.AddTBString(NodeAttr.FK_Flow, null, "FK_Flow", false, false, 0, 3, 10);
 
@@ -1698,7 +1729,6 @@ namespace BP.WF
                 map.AddTBFloat(NodeAttr.DeductCent, 2, this.ToE(NodeAttr.DeductCent, "扣分(每延期1天扣)"), false, false); //"扣分(每延期1天扣)"
                 map.AddTBFloat(NodeAttr.MaxDeductCent, 10, this.ToE(NodeAttr.MaxDeductCent, "最高扣分"), false, false); //"最高扣分"
                 map.AddTBFloat(NodeAttr.SwinkCent, float.Parse("0.1"), this.ToE("SwinkCent", "工作得分"), false, false); //"工作得分"
-
 
                 //map.AddDDLSysEnum(NodeAttr.DoWhere, 0, "在那里处理", true, true);
                 //map.AddDDLSysEnum(NodeAttr.RunType, 0, "执行类型", true, true);

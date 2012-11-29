@@ -39,7 +39,6 @@ namespace BP.WF
                 return exp;
             }
 
-
             Attrs attrs = en.EnMap.Attrs;
             foreach (Attr attr in attrs)
             {
