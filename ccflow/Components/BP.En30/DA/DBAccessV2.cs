@@ -459,16 +459,13 @@ namespace BP.DA
                     {
                         CurrentSys_Serial.Add(str, id);
                         KeyLockState.Add(row[0].ToString().Trim(), false);
-
                     }
                     catch
                     {
-
                     }
                 }
                 readCount++;
             }
-
             if (CurrentSys_Serial.ContainsKey(type) == false)
             {
                 DBAccess.RunSQL("insert into Sys_Serial values('" + type + "',1 )");
@@ -507,6 +504,7 @@ namespace BP.DA
             string sql = "";
             if (DBAccess.RunSQL("UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey='OID'") == 0)
                 DBAccess.RunSQL("INSERT INTO Sys_Serial (CfgKey,IntVal) VALUES ('OID',100)");
+
             sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey='OID'";
             return DBAccess.RunSQLReturnValInt(sql);
         }
@@ -1208,6 +1206,7 @@ namespace BP.DA
             {
             };
             lockRunSQL = true;
+
             int result = 0;
             try
             {
@@ -1244,53 +1243,7 @@ namespace BP.DA
                     msg += "@" + p.ParaName + "=" + p.val + "," + p.DAType.ToString();
                     mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "',");
                 }
-                throw new Exception(ex.Message + " Paras(" + paras.Count + ")=" + msg + "<hr>" + mysql);
-            }
-        }
-        /// <summary>
-        /// 运行sql
-        /// </summary>
-        /// <param name="sql">sql</param>
-        /// <returns>执行结果</returns>
-        private static int RunSQL_200705_SQL(string sql)
-        {
-            ConnOfSQL connofora = (ConnOfSQL)DBAccess.GetAppCenterDBConn;
-            SqlConnection conn = connofora.Conn;
-            try
-            {
-                if (conn == null)
-                    conn = new SqlConnection(SystemConfig.AppCenterDSN);
-
-                if (conn.State != System.Data.ConnectionState.Open)
-                    conn.Open();
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.CommandType = CommandType.Text;
-                int i = cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                HisConnOfSQLs.PutPool(connofora);
-                return i;
-            }
-            catch (System.Exception ex)
-            {
-                HisConnOfSQLs.PutPool(connofora);
-                if (BP.SystemConfig.IsDebug)
-                {
-                    string msg = "RunSQL2   SQL=" + sql + ex.Message;
-                    Log.DebugWriteError(msg);
-                    throw new Exception(msg);
-                }
-                else
-                {
-                    throw new Exception (ex.Message + " RUN SQL="+sql);
-                }
-            }
-            finally
-            {
-                if (SystemConfig.IsBSsystem_Test == false)
-                    conn.Close();
-
-                HisConnOfSQLs.PutPool(connofora);
+                throw new Exception("执行sql错误:" + ex.Message + " Paras(" + paras.Count + ")=" + msg + "<hr>" + mysql);
             }
         }
         private static int RunSQL_200705_SQL(string sql, Paras paras)
@@ -1326,14 +1279,9 @@ namespace BP.DA
             catch (System.Exception ex)
             {
                 HisConnOfSQLs.PutPool(connofora);
-                if (BP.SystemConfig.IsDebug)
-                {
-                    string msg = "RunSQL2   SQL=" + sql + ex.Message;
-                    Log.DebugWriteError(msg);
-                    throw new Exception(msg);
-                }
-                else
-                    throw ex;
+                string msg = " RunSQL_200705_SQL (2012-11-29 add this log) SQL=" + sql +" Paras:"+paras.ToDesc()+",异常信息:"+ ex.Message;
+                Log.DefaultLogWriteLineInfo(msg);
+                throw new Exception(msg);
             }
             finally
             {

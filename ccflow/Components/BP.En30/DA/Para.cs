@@ -89,6 +89,15 @@ namespace BP.DA
         }
         #endregion
 
+        public string ToDesc()
+        {
+            string msg = "";
+            foreach (Para p in this)
+                msg += "@" + p.ParaName + " = " + p.val;
+
+            return msg;
+        }
+
         public string SQL = null;
         public string SQLNoPara
         {
