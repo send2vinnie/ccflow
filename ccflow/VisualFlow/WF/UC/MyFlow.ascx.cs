@@ -816,7 +816,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 {
                     // 让其直接update，来接受外部传递过来的信息。
                     if (nd.HisFormType != FormType.DisableIt)
-                         wk.DirectUpdate();
+                        wk.DirectUpdate();
 
                     /*涉及到多个表单的情况...*/
                     if (nd.HisFormType != FormType.DisableIt)
@@ -866,27 +866,43 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     else
                     {
                         #region 载入相关文件.
-                        this.Page.RegisterClientScriptBlock("sg","<link href='./Style/Frm/Tab.css' rel='stylesheet' type='text/css' />");
-                        this.Page.RegisterClientScriptBlock("s2g4","<script language='JavaScript' src='./Style/Frm/jquery.min.js' ></script>");
-                        this.Page.RegisterClientScriptBlock("sdf24j","<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
-                        this.Page.RegisterClientScriptBlock("sdsdf24j","<script language='JavaScript' src='./Style/Frm/TabClick.js' ></script>");
+                        this.Page.RegisterClientScriptBlock("sg", "<link href='./Style/Frm/Tab.css' rel='stylesheet' type='text/css' />");
+                        this.Page.RegisterClientScriptBlock("s2g4", "<script language='JavaScript' src='./Style/Frm/jquery.min.js' ></script>");
+                        this.Page.RegisterClientScriptBlock("sdf24j", "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
+                        this.Page.RegisterClientScriptBlock("sdsdf24j", "<script language='JavaScript' src='./Style/Frm/TabClick.js' ></script>");
                         #endregion 载入相关文件.
 
                         string urlExtFrm = this.RequestParas;
+
+                        //if (nd.HisRunModel == RunModel.SubThread)
+                        //{
+                        //    if (nd.HisSubThreadType == SubThreadType.SameSheet)
+                        //    {
+                        //        /*如果是同表单 */
+                        //        if (urlExtFrm.Contains("WorkID") == false)
+                        //            urlExtFrm += "&WorkID=" + wk.OID;
+                        //    }
+                        //    else
+                        //    {
+                        //        /*如果是异表单 */
+                        //        if (urlExtFrm.Contains("WorkID") == false)
+                        //            urlExtFrm += "&WorkID=" + wk.FID;
+                        //    }
+                        //}
+                        //else
+                        //{
                         if (urlExtFrm.Contains("WorkID") == false)
                             urlExtFrm += "&WorkID=" + this.WorkID;
+                        // }
 
                         if (urlExtFrm.Contains("NodeID") == false)
                             urlExtFrm += "&NodeID=" + nd.NodeID;
 
-                        if (urlExtFrm.Contains("FID") == false)
-                            urlExtFrm += "&FID=" + this.FID;
+                        //if (urlExtFrm.Contains("FID") == false)
+                        //    urlExtFrm += "&FID=" + this.FID;
 
                         if (urlExtFrm.Contains("FK_Node") == false)
                             urlExtFrm += "&FK_Node=" + nd.NodeID;
-
-                        if (urlExtFrm.Contains("FID") == false)
-                            urlExtFrm += "&FID=" + wk.FID;
 
                         if (urlExtFrm.Contains("UserNo") == false)
                             urlExtFrm += "&UserNo=" + WebUser.No;
@@ -895,7 +911,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                             urlExtFrm += "&SID=" + WebUser.SID;
 
                         if (urlExtFrm.Contains("IsLoadData") == false)
-                            urlExtFrm += "&IsLoadData=1" ;
+                            urlExtFrm += "&IsLoadData=1";
 
 
                         this.UCEn1.Clear();

@@ -185,24 +185,10 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
     {
         this.Page.Title = this.ToE("WorkBack", "工作退回");
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        switch (nd.HisNodeWorkType)
+        if (this.FID != 0)
         {
-            case NodeWorkType.WorkHL:
-            //    this.BindItWorkHL(nd);
-                break;
-            case NodeWorkType.WorkFHL:
-                throw new Exception("系统没有判断的情况。");
-            case NodeWorkType.WorkFL:
-                //throw new Exception("系统没有判断的情况。");
-                // this.BindItWorkFL(nd);
-                break;
-            default:
-                if (this.FID != 0)
-                {
-                    this.BindItWork_SubWork_Return(nd);
-                    return;
-                }
-                break;
+            this.BindItWork_SubWork_Return(nd);
+            return;
         }
 
         this.ToolBar1.Add(this.ToE("ReturnTo", "<b>退回到:</b>"));
@@ -266,7 +252,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         switch (btn.ID)
         {
             case "Btn_Cancel":
-                this.Response.Redirect("MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID+"&FK_Node="+this.FK_Node, true);
+                this.Response.Redirect("MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node, true);
                 return;
             default:
                 break;
@@ -277,21 +263,16 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
 
             WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
             Work wk = wn.HisWork;
-            WorkNode mywn = null;
-            if (wn.HisNode.IsBackTracking)
-            {
-                bool IsBackTracking = this.ToolBar1.GetCBByID("CB_IsBackTracking").Checked;
-                mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text, IsBackTracking);
-            }
-            else
-            {
-                mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text);
-            }
-            
-            // 退回事件。
-            string msg = mywn.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
+            string returnInfo = this.TB1.Text;
+            int reNode = this.DDL1.SelectedItemIntVal;
 
-            this.ToMsg(this.ToEP2("WReInfo", "@任务被你成功退回到【{0}】，退回给【{1}】。", mywn.HisNode.Name, mywn.HisWork.Rec) + msg, "info");
+            bool IsBackTracking = false;
+            if (wn.HisNode.IsBackTracking)
+                IsBackTracking = this.ToolBar1.GetCBByID("CB_IsBackTracking").Checked;
+
+            //执行退回api.
+            string rInfo = BP.WF.Dev2Interface.Node_ReturnWork(this.FK_Flow, this.WorkID, reNode, returnInfo, IsBackTracking);
+            this.ToMsg(rInfo, "info");
             return;
         }
         catch (Exception ex)

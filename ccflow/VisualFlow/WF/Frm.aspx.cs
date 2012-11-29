@@ -52,6 +52,20 @@ public partial class WF_Frm : WebPage
             }
         }
     }
+    public int OIDPKVal
+    {
+        get
+        {
+
+            if (ViewState["OIDPKVal"] == null)
+                return 0;
+            return int.Parse(ViewState["OIDPKVal"].ToString());
+        }
+        set
+        {
+            ViewState["OIDPKVal"] = value;
+        }
+    }
     public string FK_MapData
     {
         get
@@ -94,6 +108,7 @@ public partial class WF_Frm : WebPage
         md.No = this.FK_MapData;
         if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
         {
+            /* 没有找到此map. */
             MapDtl dtl = new MapDtl(this.FK_MapData);
             GEDtl dtlEn = dtl.HisGEDtl;
             dtlEn.SetValByKey("OID", this.FID);
@@ -116,24 +131,29 @@ public partial class WF_Frm : WebPage
                 dtlEn.SetValByKey(kvs[0], kvs[1]);
             }
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
-
-
             this.AddJSEvent(dtlEn);
         }
         else
         {
             GEEntity en = md.HisGEEn;
-            if (this.FID != 0)
-                en.SetValByKey("OID", this.FID);
-
-            if (this.OID != 0)
-                en.SetValByKey("OID", this.OID);
-
+            int pk = this.OID;
+            if (this.Request.QueryString["NodeID"] != null)
+            {
+                /*说明是流程调用它.*/
+                Node nd = new Node(int.Parse(this.Request.QueryString["NodeID"]));
+                if (nd.HisRunModel == RunModel.SubThread
+                    && nd.HisSubThreadType == SubThreadType.UnSameSheet
+                    && this.FK_MapData != "ND" + nd.NodeID)
+                {
+                    /*如果是子线程, 并且是异表单节点.*/
+                    pk = this.FID; // 是子线程，并且是异表单的子线程，并且不是节点表单。这样设置是为了到合流点上能够按FID进行表单数据汇总.
+                }
+            }
+            en.SetValByKey("OID", pk);
             if (en.EnMap.Attrs.Count < 2)
             {
                 md.RepairMap();
                 this.Response.Redirect(this.Request.RawUrl, true);
-                //   this.UCEn1.AddMsgOfWarning("提示", "<h2>主表单没有字段无法预览。FK_MapData=" + this.FK_MapData + "</h2>");
                 return;
             }
 
@@ -154,22 +174,11 @@ public partial class WF_Frm : WebPage
 
             if (en.ToString() == "0")
             {
-                en.SetValByKey("OID", this.OID);
+                en.SetValByKey("OID", pk);
             }
+            this.OIDPKVal = pk;
 
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
-            //FrmNode fm=new FrmNode(
-            //if (md.HisFrmType == FrmType.FreeFrm)
-            //{
-            //    this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
-            //}
-            //else
-            //{
-            //    this.UCEn1.IsReadonly = !this.IsEdit;
-            //    this.UCEn1.BindColumn4(en, this.FK_MapData);
-            //}
-
-           // this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);
         }
 
@@ -257,7 +266,7 @@ public partial class WF_Frm : WebPage
 
             MapData md = new MapData(this.FK_MapData);
             GEEntity en = md.HisGEEn;
-            en.SetValByKey("OID", this.OID);
+            en.SetValByKey("OID", this.OIDPKVal);
             int i = en.RetrieveFromDBSources();
             en = this.UCEn1.Copy(en) as GEEntity;
             FrmEvents fes = md.FrmEvents;
@@ -268,7 +277,7 @@ public partial class WF_Frm : WebPage
             else
                 en.Update();
             fes.DoEventNode(FrmEventList.SaveAfter, en);
-            this.Response.Redirect("Frm.aspx?OID=" + en.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
+            this.Response.Redirect("Frm.aspx?OID=" + en.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
         }
         catch (Exception ex)
         {

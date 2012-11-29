@@ -120,13 +120,14 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
                 this.Pub1.AddTDIdx(i);
 
                 title = dr["Title"].ToString();
+                if (string.IsNullOrEmpty(title))
+                    title = "无标题";
+
                 workid = dr["WorkID"].ToString();
                 fk_flow = dr["FK_Flow"].ToString();
 
                 this.Pub1.Add("<TD class=TTD><a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" >" + title + "</a></TD>");
-
                 //  this.Pub1.AddTDDoc(title, 50, title);
-
                 if (this.GroupBy != "FlowName")
                     this.Pub1.AddTD(dr["FlowName"].ToString());
 
@@ -139,7 +140,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
                 this.Pub1.AddTD(dr["RDT"].ToString());
                 this.Pub1.AddTDBegin();
                 this.Pub1.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + this.PageSmall + ".aspx?DoType=UnSend&FID=" + dr["FID"] + "&WorkID=" + workid + "&FK_Flow=" + fk_flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
-                this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+                //this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTREnd();
             }

@@ -101,7 +101,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             pageid = "";
         }
 
-        int colspan = 5;
+        int colspan = 4;
         this.AddTable("width='960px' align=center border=0");
         this.AddTR();
         this.AddCaptionLeft("<img src='./Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b>");
@@ -109,7 +109,6 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
 
         this.AddTR();
         this.AddTDTitle(this.ToE("IDX", "序"));
-        this.AddTDTitle(this.ToE("FlowSort", "流程类别"));
         this.AddTDTitle(this.ToE("Name", "名称"));
         this.AddTDTitle(this.ToE("FlowPict", "流程图"));
         this.AddTDTitle(this.ToE("Desc", "描述"));
@@ -129,7 +128,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             if (fl.FK_FlowSort != fk_sort)
             {
                 gIdx++;
-                this.AddTDB("colspan=5 class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
+                this.AddTDB("colspan="+colspan+" class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
                 this.AddTREnd();
                 fk_sort = fl.FK_FlowSort;
             }
@@ -138,7 +137,6 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             {
                 this.AddTR("ID='" + gIdx + "_" + idx + "'");
                 this.AddTDIdx(i++);
-                this.AddTD();
             }
             else
             {
