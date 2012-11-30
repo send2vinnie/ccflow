@@ -413,8 +413,7 @@ namespace BP.WF
                     }
 
                     BP.Web.WebUser.SignInOfGener(emp);
-                    string info_send= BP.WF.Dev2Interface.Node_StartWork(this.No, null);
-
+                    string info_send= BP.WF.Dev2Interface.Node_StartWork(this.No,null,null,0,null);
                     if (WebUser.No != "admin")
                     {
                         emp = new BP.Port.Emp();
