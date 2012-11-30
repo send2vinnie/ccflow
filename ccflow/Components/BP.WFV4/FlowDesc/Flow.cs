@@ -80,7 +80,6 @@ namespace BP.WF
                 {
                     wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
                 }
-
                 if (i > 3)
                     wk.DirectUpdate();
 
@@ -146,6 +145,10 @@ namespace BP.WF
 
                     wk.Copy(wkFrom);
                     wk.OID = newOID;
+
+                    // 在执行copy后，有可能这两个字段会被冲掉。
+                    wk.SetValByKey("FromWorkID", fromWorkID);
+                    wk.SetValByKey("FromNode", fromNode);
                     wk.Update();
 
                     //复制明细。
@@ -246,6 +249,17 @@ namespace BP.WF
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
+
+            //if (SystemConfig.IsBSsystem)
+            //{
+            //    int i = 0;
+            //    foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
+            //    {
+            //        wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
+            //    }
+            //    if (i > 3)
+            //        wk.DirectUpdate();
+            //}
 
             //string msg = "";
             //if (WebUser.SysLang == "CH")
