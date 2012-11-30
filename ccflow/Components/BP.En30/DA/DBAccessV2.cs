@@ -519,24 +519,30 @@ namespace BP.DA
             lock_OID = false;
             return oid;
         }
-        public static int GenerOIDV2()
-        {
-            return DBAccess.RunSPReturnInt("GenerOID");
-        }
+        private static bool lock_OID_CfgKey = false;
         public static Int64 GenerOID(string cfgKey)
         {
+            while (lock_OID_CfgKey == true)
+            {
+            }
+            lock_OID_CfgKey = true;
+
             Paras ps = new Paras();
             ps.Add("CfgKey", cfgKey);
             string sql = "UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
             int num = DBAccess.RunSQL(sql, ps);
             if (num == 0)
             {
-                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES ('" + cfgKey + "',100)";
+                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES ('" + cfgKey + "',300000)";
                 DBAccess.RunSQL(sql);
+                lock_OID_CfgKey = false;
                 return 100;
             }
             sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
-            return DBAccess.RunSQLReturnValInt(sql, ps);
+            num = DBAccess.RunSQLReturnValInt(sql, ps);
+            lock_OID_CfgKey = false;
+
+            return num;
         }
         /// <summary>
         /// 获取一个从OID, 更新到OID.

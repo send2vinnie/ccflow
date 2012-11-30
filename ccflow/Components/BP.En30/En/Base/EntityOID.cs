@@ -105,14 +105,13 @@ namespace BP.En
             this.OID =DBAccess.GenerOID();
 			base.DirectInsert ();
 		}
-
 		public void InsertAsNew()
 		{
 			this.OID=0;
 			this.Insert();
 		}
-		public override bool IsExits
-		{
+        public override bool IsExits
+        {
             get
             {
                 if (this.OID == 0)
@@ -127,7 +126,7 @@ namespace BP.En
                 switch (this.EnMap.EnDBUrl.DBUrlType)
                 {
                     case DBUrlType.AppCenterDSN:
-                        return DBAccess.IsExits(selectSQL,ens);
+                        return DBAccess.IsExits(selectSQL, ens);
                     case DBUrlType.DBAccessOfMSSQL2000:
                         return DBAccessOfMSSQL2000.IsExits(selectSQL);
                     case DBUrlType.DBAccessOfOLE:
@@ -172,8 +171,7 @@ namespace BP.En
 				}
                 */
             }
-		}
-
+        }
 		/// <summary>
 		/// 删除之前的操作。
 		/// </summary>
