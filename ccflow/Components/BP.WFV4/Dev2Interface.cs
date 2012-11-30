@@ -946,68 +946,65 @@ namespace BP.WF
 
         #region 工作有关接口
         /// <summary>
-        /// 发起一个工作
+        /// 发起新工作
         /// </summary>
         /// <param name="flowNo">流程编号</param>
-        /// <param name="ht">数据集合</param>
-        /// <returns>返回执行信息</returns>
-        public static string Node_StartWork(string flowNo, Hashtable ht)
-        {
-            Node nd = new Node(int.Parse(flowNo + "01"));
-            StartWork sw = nd.HisWork as StartWork;
-            if (ht != null)
-            {
-                foreach (string str in ht.Keys)
-                    sw.SetValByKey(str, ht[str]);
-            }
-
-            int dbSrcNum = 0;
-            if (sw.OID != 0)
-                dbSrcNum = sw.RetrieveFromDBSources();
-
-            //  sw.Title = sw.Title + "(自动发起)";
-            sw.SetValByKey("RDT", DataType.CurrentDataTime);
-            sw.SetValByKey("CDT", DataType.CurrentDataTime);
-            sw.SetValByKey("FK_NY", DataType.CurrentYearMonth);
-            sw.SetValByKey("Rec", WebUser.No);
-            sw.SetValByKey("Emps", WebUser.No);
-            sw.SetValByKey("FK_Dept", WebUser.FK_Dept);
-
-            if (sw.OID == 0)
-                sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
-            else
-                sw.SaveAsOID(sw.OID);
-
-            WorkNode wn = new WorkNode(sw, nd);
-            return wn.AfterNodeSave();
-        }
-        /// <summary>
-        /// 发起一个工作
-        /// </summary>
-        /// <param name="flowNo">流程编号</param>
-        /// <param name="ht">开始节点数据</param>
-        /// <param name="fk_nodeOfJumpTo">将要跳转的节点</param>
+        /// <param name="ht">节点表单:主表数据以Key Value 方式传递(可以为空)</param>
+        /// <param name="workDtls">节点表单:从表数据，从表名称与从表单的从表编号要对应(可以为空)</param>
+        /// <param name="fk_nodeOfJumpTo">发起后要跳转到的节点(可以为空)</param>
+        /// <param name="nextWorker">发起后要跳转到的节点并指定的工作人员(可以为空)</param>
         /// <returns>执行信息</returns>
-        public static string Node_StartWork(string flowNo, Hashtable ht, int fk_nodeOfJumpTo,string nextWorker)
+        public static string Node_StartWork(string flowNo, Hashtable ht, DataSet workDtls, int fk_nodeOfJumpTo, string nextWorker)
         {
-            Node nd = new Node(int.Parse(flowNo + "01"));
-            StartWork sw = nd.HisWork as StartWork;
+            Flow fl = new Flow(flowNo);
+            Work wk = fl.NewWork();
+            Int64 workID = wk.OID;
             if (ht != null)
             {
                 foreach (string str in ht.Keys)
-                    sw.SetValByKey(str, ht[str]);
+                    wk.SetValByKey(str, ht[str]);
             }
-            sw.Title = sw.Title + "(自动发起)";
-            sw.SetValByKey("RDT", DataType.CurrentDataTime);
-            sw.SetValByKey("CDT", DataType.CurrentDataTime);
-            sw.SetValByKey("FK_NY", DataType.CurrentYearMonth);
-            sw.SetValByKey("Rec", WebUser.No);
-            sw.SetValByKey("Emps", WebUser.No);
-            sw.SetValByKey("FK_Dept", WebUser.FK_Dept);
-            sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
 
-            WorkNode wn = new WorkNode(sw, nd);
-            return wn.AfterNodeSave(new Node(fk_nodeOfJumpTo),nextWorker);
+            wk.OID = workID;
+            if (workDtls != null)
+            {
+                //保存明细表
+                foreach (DataTable dt in workDtls.Tables)
+                {
+                    foreach (MapDtl dtl in wk.HisMapDtls)
+                    {
+                        if (dt.TableName != dtl.No)
+                            continue;
+                        //获取dtls
+                        GEDtls daDtls = new GEDtls(dtl.No);
+                        daDtls.Delete(GEDtlAttr.RefPK, wk.OID); // 清除现有的数据.
+
+                        GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
+                        daDtl.RefPK = wk.OID.ToString();
+
+                        // 为明细表复制数据.
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            daDtl.ResetDefaultVal();
+                            daDtl.RefPK = wk.OID.ToString();
+
+                            //明细列.
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                //设置属性.
+                                daDtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName]);
+                            }
+                            daDtl.InsertAsOID(DBAccess.GenerOID("Dtl")); //插入数据.
+                        }
+                    }
+                }
+            }
+
+            WorkNode wn = new WorkNode(wk, fl.HisStartNode);
+            if (nextWorker != null && fk_nodeOfJumpTo != 0)
+                return wn.AfterNodeSave(new Node(fk_nodeOfJumpTo), nextWorker);
+            else
+                return wn.AfterNodeSave();
         }
         /// <summary>
         /// 发送工作
@@ -1090,7 +1087,7 @@ namespace BP.WF
                                 //设置属性.
                                 daDtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName]);
                             }
-                            daDtl.InsertAsNew(); //插入数据.
+                            daDtl.InsertAsOID( DBAccess.GenerOID("Dtl") ); //插入数据.
                         }
                     }
                 }
@@ -1195,7 +1192,6 @@ namespace BP.WF
 
                 //增加其它的字段.
                 sw.SetValByKey(StartWorkAttr.FK_Dept,WebUser.FK_Dept);
-
                 sw.BeforeSave();
                 sw.Save();
 
@@ -1227,7 +1223,7 @@ namespace BP.WF
                                     //设置属性.
                                     daDtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName]);
                                 }
-                                daDtl.InsertAsNew(); //插入数据.
+                                daDtl.InsertAsOID(DBAccess.GenerOID("Dtl") ); //插入数据.
                             }
                         }
                     }
@@ -1306,10 +1302,8 @@ namespace BP.WF
             else
                 en.Update();
 
-
             if (workDtls != null)
             {
-
                 MapDtls dtls = new MapDtls(fk_mapdata);
                 //保存明细表
                 foreach (DataTable dt in workDtls.Tables)
@@ -1337,7 +1331,7 @@ namespace BP.WF
                                 //设置属性.
                                 daDtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName]);
                             }
-                            daDtl.InsertAsNew(); //插入数据.
+                            daDtl.InsertAsOID(DBAccess.GenerOID("Dtl") ); //插入数据.
                         }
                     }
                 }
