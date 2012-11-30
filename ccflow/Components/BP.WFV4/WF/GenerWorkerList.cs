@@ -94,6 +94,10 @@ namespace BP.WF
         /// 优先级
         /// </summary>
         public const string PRI = "PRI";
+        /// <summary>
+        /// 是否读取？
+        /// </summary>
+        public const string IsRead = "IsRead";
         #endregion
     }
     /// <summary>
@@ -421,6 +425,10 @@ namespace BP.WF
                 map.AddTBDateTime(WorkerListAttr.RDT, "RDT", false, false);
 
                 map.AddBoolean(WorkerListAttr.IsEnable, true, "是否可用", true, true);
+
+                //  add for lijian 2012-11-30
+                map.AddTBInt(WorkerListAttr.IsRead, 0, "是否读取", true, true);
+
 
                 //对会签节点有效
                 map.AddTBInt(WorkerListAttr.IsPass, 0, "是否通过(对合流节点有效)", false, false);
