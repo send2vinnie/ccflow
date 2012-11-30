@@ -58,6 +58,24 @@ namespace BP.Sys
             {
             }
         }
+        public static void AddLog(string logType, string empNo, string msg)
+        {
+            UserLog ul = new UserLog();
+            ul.OID = (int)DBAccess.GenerOID("UL");
+            ul.FK_Emp = empNo;
+            ul.LogFlag = logType;
+            ul.Docs = msg;
+            ul.RDT = DataType.CurrentDataTime;
+            try
+            {
+                if (BP.SystemConfig.IsBSsystem)
+                    ul.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
+                ul.InsertAsOID(ul.OID);
+            }
+            catch
+            {
+            }
+        }
 
 		#region 用户日志信息键值列表
 		#endregion
