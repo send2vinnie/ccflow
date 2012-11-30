@@ -185,6 +185,7 @@ namespace BP.Web
                 //Log.DebugWriteInfo("登录人:WebUser=" + em.No + " IP:"+System.Web.HttpContext.Current.Request.UserHostAddress);
                 System.Web.HttpContext.Current.Session.Clear();
             }
+
             BP.Sys.UserLog.AddLog("SignIn", em.No, "登录", System.Web.HttpContext.Current.Request.UserHostAddress);
 
 
@@ -281,9 +282,9 @@ namespace BP.Web
                 SystemConfig.IsBSsystem = false;
             else
                 SystemConfig.IsBSsystem = true;
-
-            //WebUser.HisBPUser = em;
         }
+        #region 静态方法
+
         /// <summary>
         /// 用户类型
         /// </summary>
@@ -299,7 +300,6 @@ namespace BP.Web
             }
         }
 
-        #region 静态方法
         /// <summary>
         /// 通过key,取出session.
         /// </summary>
@@ -639,7 +639,6 @@ namespace BP.Web
             get
             {
                 return  GetValFromCookie("No", null,false);
-
 
                 //string no = GetSessionByKey("No", null);
                 string no = null; // GetSessionByKey("No", null);
