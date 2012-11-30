@@ -68,6 +68,9 @@ public partial class Designer : System.Web.UI.Page
             #region 增加是否只读.
             BP.WF.WorkerList wl8 = new WorkerList();
             wl8.CheckPhysicsTable();
+
+            sql = " UPDATE WF_GenerWorkerList SET IsRead=0 WHERE IsRead IS NULL";
+            DBAccess.RunSQL(sql);
             #endregion 增加是否只读.
 
 
