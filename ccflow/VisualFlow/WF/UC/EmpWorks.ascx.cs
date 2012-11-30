@@ -83,7 +83,6 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             return;
         }
 
-
         bool isPRI = Glo.IsEnablePRI;
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
@@ -152,11 +151,20 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 string sdt = dr["SDT"] as string;
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
+
+                int isRead = int.Parse(dr["IsRead"].ToString());
                 this.Pub1.AddTDIdx(i);
                 if (Glo.IsWinOpenEmpWorks == true)
-                    this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  >" + dr["Title"].ToString());
+                {
+                    if (isRead == 0)
+                        this.Pub1.AddTD("Class=TTD onclick=\"SetImg('I"+gIdx+"_"+i+"')\"", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "&IsRead=0');\" ><img src='./Img/Mail_UnRead.png' id='I"+gIdx+"_"+i+"' border=0/>" + dr["Title"].ToString());
+                    else
+                        this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  ><img src='./Img/Mail_Read.png' id='" + gIdx + "_" + i + "' border=0/>" + dr["Title"].ToString());
+                }
                 else
+                {
                     this.Pub1.AddTD("Class=TTD", "<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+                }
 
                 if (this.GroupBy != "FlowName")
                     this.Pub1.AddTD(dr["FlowName"].ToString());

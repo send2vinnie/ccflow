@@ -1087,7 +1087,7 @@ public partial class Comm_Dtl : WebPage
                             continue;
                         }
                     }
-                    dtl.InsertAsNew();
+                    dtl.InsertAsOID(DBAccess.GenerOID("Dtl"));
                 }
                 else
                 {

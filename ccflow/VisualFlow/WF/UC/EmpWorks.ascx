@@ -49,8 +49,11 @@
                 }
             }
             return false;
-        } 
+        }
 
+        function SetImg(id) {
+            document.getElementById(id).src = './Img/Mail_Read.png';
+        }
 
         function GroupBarClick(rowIdx) {
             var alt = document.getElementById('Img' + rowIdx).alert;
@@ -90,6 +93,4 @@
             height:20px;
             border:0px;
         }
-         
-       
     </style>

@@ -150,7 +150,10 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
         emp.AuthorFlows = strs;
         emp.Update();
+
+        BP.Sys.UserLog.AddLog("Auth", WebUser.No, "授权:" + strs);
         this.WinCloseWithMsg("保存成功.");
+
     }
     public void MyWorks()
     {
@@ -1013,6 +1016,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             return;
         }
         emp.Update();
+        BP.Sys.UserLog.AddLog("Auth", WebUser.No, "全部授权");
         this.Response.Redirect(this.PageID + ".aspx", true);
     }
     public void BindPer()

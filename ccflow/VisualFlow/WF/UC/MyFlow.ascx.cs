@@ -361,6 +361,19 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 校验用户是否被禁用
 
+        #region 判断是否有IsRead
+        if (this.Request.QueryString["IsRead"] != null)
+        {
+            string dbstr = BP.SystemConfig.AppCenterDBVarStr;
+            Paras ps = new Paras();
+            ps.SQL = "UPDATE WF_GenerWorkerList SET IsRead=1 WHERE WorkID=" + dbstr + "WorkID AND FK_Node=" + dbstr + "FK_Node AND FK_Emp=" + dbstr + "FK_Emp";
+            ps.Add("WorkID", this.WorkID);
+            ps.Add("FK_Node", this.FK_Node);
+            ps.Add("FK_Emp", WebUser.No);
+            DBAccess.RunSQL(ps);
+        }
+        #endregion
+
         #region 设置变量
         string appPath = this.Request.ApplicationPath;
         this.currFlow = new Flow(this.FK_Flow);
@@ -378,6 +391,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Response.Redirect("MyFlowSL.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&UserNo=" + WebUser.No, true);
             return;
         }
+
 
 
        #region 判断是否有 workid
@@ -474,6 +488,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         this.LoadPop_del();
         #endregion 判断权限
+
 
         try
         {
