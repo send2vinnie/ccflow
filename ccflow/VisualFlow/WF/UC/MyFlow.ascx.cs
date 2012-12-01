@@ -587,7 +587,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
 
           //  if (btnLab.HungEnable && this.currND.IsStartNode == false)
-            if (1 == 1)
+            if (btnLab.HungEnable && this.currND.IsStartNode == false)
             {
                 /*挂起*/
                 string urlr = "HungUp.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
