@@ -247,7 +247,6 @@ namespace BP.WF
 
             if (town.HisNode.HisDeliveryWay == DeliveryWay.ByDeptAndStation)
             {
-              
                 /* 如果还设置了岗位的集合的话，就按两个的交集计算。 */
                 sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
                 sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
@@ -2500,7 +2499,8 @@ namespace BP.WF
                         GenerWorkFlow gwf = new GenerWorkFlow();
                         gwf.FID = this.WorkID;
                         gwf.WorkID = mywk.OID;
-                        gwf.Title = WorkNode.GenerTitle(this.HisWork);
+#warning 让子流程的title 与父流的一样.
+                        gwf.Title = this.HisGenerWorkFlow.Title ; //WorkNode.GenerTitle(this.HisWork);
 
                         gwf.WFState = 0;
                         gwf.RDT = DataType.CurrentDataTime;
@@ -3751,11 +3751,13 @@ namespace BP.WF
                     gwf.WorkID = wk.OID;
                     if (gwf.IsExits)
                         continue;
+
                     gwf.FID = this.WorkID;
 
 #warning 需要修改成标题生成规则。
 
-                    gwf.Title = WorkNode.GenerTitle(this.HisWork);
+#warning 让子流程的Titlte与父流程的一样.
+                    gwf.Title = this.HisGenerWorkFlow.Title; // WorkNode.GenerTitle(this.rptGe);
 
                     gwf.WFState = 0;
                     gwf.RDT = DataType.CurrentDataTime;
