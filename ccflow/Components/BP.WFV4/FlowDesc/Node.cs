@@ -1657,8 +1657,10 @@ namespace BP.WF
             }
             else
             {
-                if (this.Retrieve() <= 0)
-                    throw new Exception("Node Retrieve 错误没有ID=" + _oid);
+                // 去掉缓存.
+                this.RetrieveFromDBSources();
+                //if (this.Retrieve() <= 0)
+                //    throw new Exception("Node Retrieve 错误没有ID=" + _oid);
             }
         }
         public Node(string ndName)

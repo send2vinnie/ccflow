@@ -291,6 +291,10 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(BtnAttr.SelectAccepterEnable, 0, "工作方式",
           true, true, BtnAttr.SelectAccepterEnable);
 
+
+                map.AddTBString(BtnAttr.SearchLab, "查询", "查询按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.SearchEnable, false, "是否启用", true, true);
+
                 //map.AddBoolean(BtnAttr.SelectAccepterEnable, false, "是否启用", true, true);
                 #endregion  功能按钮状态
 

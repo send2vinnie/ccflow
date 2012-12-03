@@ -280,9 +280,8 @@ namespace BP.WF
         public BtnLab(int nodeid)
         {
             this.NodeID = nodeid;
-            this.Retrieve();
+            this.RetrieveFromDBSources();
         }
-
         /// <summary>
         /// 重写基类方法
         /// </summary>
@@ -332,7 +331,7 @@ namespace BP.WF
                 map.AddBoolean(BtnAttr.EndFlowEnable, false, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.HungLab, "挂起", "挂起按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.HungEnable, true, "是否启用", true, true);
+                map.AddBoolean(BtnAttr.HungEnable, false, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);
