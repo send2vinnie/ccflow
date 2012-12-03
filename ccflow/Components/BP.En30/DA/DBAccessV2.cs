@@ -1263,25 +1263,26 @@ namespace BP.DA
                 throw new Exception("执行sql错误:" + ex.Message + " Paras(" + paras.Count + ")=" + msg + "<hr>" + mysql);
             }
         }
+        /// <summary>
+        /// 运行sql返回结果
+        /// </summary>
+        /// <param name="sql">sql</param>
+        /// <param name="paras">参数</param>
+        /// <returns>执行的结果</returns>
         private static int RunSQL_200705_SQL(string sql, Paras paras)
         {
-            ConnOfSQL connofora = (ConnOfSQL)DBAccess.GetAppCenterDBConn;
-            connofora.AddSQL(sql); //增加
-            SqlConnection conn = connofora.Conn;
+            SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
+            if (conn.State != System.Data.ConnectionState.Open)
+            {
+                conn.ConnectionString = SystemConfig.AppCenterDSN;
+                conn.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.CommandType = CommandType.Text;
+
             try
             {
-                if (conn == null)
-                    conn = new SqlConnection(SystemConfig.AppCenterDSN);
-
-                if (conn.State != System.Data.ConnectionState.Open)
-                {
-                    conn.ConnectionString = SystemConfig.AppCenterDSN;
-                    conn.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.CommandType = CommandType.Text;
-
                 foreach (Para para in paras)
                 {
                     SqlParameter oraP = new SqlParameter(para.ParaName, para.val);
@@ -1290,21 +1291,21 @@ namespace BP.DA
 
                 int i = cmd.ExecuteNonQuery();
                 cmd.Dispose();
-                HisConnOfSQLs.PutPool(connofora);
+                conn.Close();
                 return i;
             }
             catch (System.Exception ex)
             {
-                HisConnOfSQLs.PutPool(connofora);
-                string msg = " RunSQL_200705_SQL (2012-11-29 add this log) SQL=" + sql +" Paras:"+paras.ToDesc()+",异常信息:"+ ex.Message;
+                cmd.Dispose();
+                conn.Close();
+                string msg = " RunSQL_200705_SQL (2012-11-29 add this log) SQL=" + sql + " Paras:" + paras.ToDesc() + ",异常信息:" + ex.Message;
                 Log.DefaultLogWriteLineInfo(msg);
                 throw new Exception(msg);
             }
             finally
             {
-                if (SystemConfig.IsBSsystem_Test == false)
-                    conn.Close();
-                HisConnOfSQLs.PutPool(connofora);
+                cmd.Dispose();
+                conn.Close();
             }
         }
         /// <summary>
@@ -1698,17 +1699,6 @@ namespace BP.DA
             }
             return mstb;
         }
-        /// <summary>
-        /// 运行sql 返回Table
-        /// </summary>
-        /// <param name="msSQL">要运行的sql</param>
-        /// <param name="sqlconn">SqlConnection</param>
-        /// <returns>DataTable</returns>
-        public static DataTable RunSQLReturnTable(string msSQL, SqlConnection conn, string connStr)
-        {
-            return RunSQLReturnTable(msSQL, conn, connStr, CommandType.Text);
-        }
-        
         #endregion
 
         #region OleDbConnection
