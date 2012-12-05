@@ -354,7 +354,7 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 明细表.
+        /// 从表.
         /// </summary>
         public MapDtls HisMapDtls
         {
@@ -364,7 +364,7 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 明细表.
+        /// 从表.
         /// </summary>
         public FrmAttachments HisFrmAttachments
         {

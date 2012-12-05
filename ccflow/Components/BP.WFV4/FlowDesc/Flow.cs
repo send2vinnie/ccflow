@@ -78,8 +78,10 @@ namespace BP.WF
                 int i = 0;
                 foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
                 {
+                    i++;
                     wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
                 }
+
                 if (i > 3)
                     wk.DirectUpdate();
 
@@ -770,7 +772,7 @@ namespace BP.WF
                     rpt += attr.KeyOfEn + " " + attr.Name + "、";
                 }
 
-                // 明细表检查。
+                // 从表检查。
                 Sys.MapDtls dtls = new BP.Sys.MapDtls("ND" + nd.NodeID);
                 foreach (Sys.MapDtl dtl in dtls)
                 {
@@ -1599,7 +1601,7 @@ namespace BP.WF
                         if (newTable.Rows.Count < groupIdx)
                             continue;
 
-                        #region 增加明细表
+                        #region 增加从表
                         foreach (MapDtl dtl in dtls)
                         {
                             if (dtl.IsUse)
@@ -1652,7 +1654,7 @@ namespace BP.WF
                             }
                             groupIdx++;
                         }
-                        #endregion 增加明细表
+                        #endregion 增加从表
 
 
                         if (attr.UIIsLine)
@@ -2160,7 +2162,7 @@ namespace BP.WF
                 if (nd.IsEndNode == false)
                     continue;
 
-                // 取出来明细表.
+                // 取出来从表.
                 MapDtls dtls = new MapDtls("ND" + nd.NodeID);
                 if (dtls.Count == 0)
                     continue;
@@ -3314,7 +3316,7 @@ namespace BP.WF
 
                     if (myDTDtl != null && myDTDtl.Columns.Contains("GroupID"))
                     {
-                        // 明细表。
+                        // 从表。
                         foreach (DataRow dr1 in myDTDtl.Rows)
                         {
                             if (dr1["GroupID"] == null)
