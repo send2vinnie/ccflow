@@ -48,7 +48,7 @@ namespace BP
             get { return new Point((double)this.GetValue(Canvas.LeftProperty), (double)this.GetValue(Canvas.TopProperty)); }
             set
             {
-                // 调整x,y 值 ，以防止菜单被遮盖住
+                // 调整x,y 值 ，以防止菜单被遮盖住.
                 var x = value.X;
                 var y = value.Y;
                 var menuHeight = 250;
@@ -74,7 +74,6 @@ namespace BP
         public void ShowMenu()
         {
             isMultiControlSelect = false;
-
 
             if (_container.CurrentSelectedControlCollection != null
                 && _container.CurrentSelectedControlCollection.Count > 0
@@ -108,14 +107,13 @@ namespace BP
                 {
                     MuContentMenu.SetEnabledStatus("menuDeleteNode", true);
                 }
-
-                setMenuItemStyleByType(RelatedFlowNode.Type);
+                setMenuItemStyleByType(RelatedFlowNode.HisRunModel);
             }
             catch
             {
+
             }
         }
-
         private void setMenuItemStyleByType(FlowNodeType type)
         {
             var menuType = (MuContentMenu.Items[6] as MenuItem).Content as Menu;
@@ -237,16 +235,16 @@ namespace BP
                     Glo.WinOpenByDoType("CH", "FlowP", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuNodeTypeFL":
-                    RelatedFlowNode.Type = FlowNodeType.FL;
+                    RelatedFlowNode.HisRunModel = FlowNodeType.FL;
                     break;
                 case "menuNodeTypePT":
-                    RelatedFlowNode.Type = FlowNodeType.Ordinary;
+                    RelatedFlowNode.HisRunModel = FlowNodeType.Ordinary;
                     break;
                 case "menuNodeTypeFHL":
-                    RelatedFlowNode.Type = FlowNodeType.FHL;
+                    RelatedFlowNode.HisRunModel = FlowNodeType.FHL;
                     break;
                 case "menuNodeTypeHL":
-                    RelatedFlowNode.Type = FlowNodeType.HL;
+                    RelatedFlowNode.HisRunModel = FlowNodeType.HL;
                     break;
             }
             MuContentMenu.Hide();

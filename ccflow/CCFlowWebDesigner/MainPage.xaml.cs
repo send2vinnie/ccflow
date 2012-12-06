@@ -289,7 +289,7 @@ namespace BP
             var c = new Container();
             c.Designer = this;
             c.FlowID = flowid;
-            c.getFlows();
+            c.DrawFlows();
 
             var ti = new TabItemEx();
             ti.Content = c;

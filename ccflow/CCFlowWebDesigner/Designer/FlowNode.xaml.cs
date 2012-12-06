@@ -136,7 +136,7 @@ namespace BP
         }
         public NodePosType HisPosType = NodePosType.Mid;
         FlowNodeType type = FlowNodeType.Ordinary;
-        public FlowNodeType Type
+        public FlowNodeType HisRunModel
         {
             get
             {
@@ -254,7 +254,7 @@ namespace BP
                         flowNodeData.FlowNodeID = this.FlowNodeID;
                         flowNodeData.FlowID = this.FlowID;
                         flowNodeData.FlowNodeName = sdPicture.NodeName;
-                        flowNodeData.FlowNodeType = Type.ToString();
+                        flowNodeData.FlowNodeType = HisRunModel.ToString();
                         flowNodeData.RepeatDirection = RepeatDirection.ToString();
                         flowNodeData.SubFlow = SubFlow;
 
@@ -427,18 +427,17 @@ namespace BP
 
             _container = container;
             editType = PageEditType.Add;
-            this.Type = at;
+            this.HisRunModel = at;
+
             System.Windows.Browser.HtmlPage.Document.AttachEvent("oncontextmenu", OnContextMenu);
             this.Name = FlowID;
-
 
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
             sbDisplay.Begin();
-
-
         }
+
         public FlowNode()
         {
             InitializeComponent();
@@ -754,7 +753,7 @@ namespace BP
             sdPicture.NodeName = FlowNodeData.FlowNodeName;
             FlowNodeType type = (FlowNodeType)Enum.Parse(typeof(FlowNodeType), FlowNodeData.FlowNodeType, true);
             MergePictureRepeatDirection repeatDirection = (MergePictureRepeatDirection)Enum.Parse(typeof(MergePictureRepeatDirection), FlowNodeData.RepeatDirection, true);
-            Type = type;
+            HisRunModel = type;
             RepeatDirection = repeatDirection;
             SubFlow = FlowNodeData.SubFlow;
         }
@@ -774,7 +773,7 @@ namespace BP
             ac.FlowNodeID = this.FlowNodeID;
             ac.FlowID = this.FlowID;
             ac.FlowNodeName = sdPicture.NodeName;
-            ac.FlowNodeType = Type.ToString();
+            ac.FlowNodeType = HisRunModel.ToString();
             ac.SubFlow = this.SubFlow;
             return ac;
         }
@@ -792,8 +791,8 @@ namespace BP
             xml.Append(@" FlowID=""" + FlowID + @"""");
             xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
             xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
-            xml.Append(@" Type=""" + Type.ToString() + @"""");
-            xml.Append(@" SubFlow=""" + (Type == FlowNodeType.Ordinary ? SubFlow : @"") + @"""");
+            xml.Append(@" Type=""" + HisRunModel.ToString() + @"""");
+            xml.Append(@" SubFlow=""" + (HisRunModel == FlowNodeType.Ordinary ? SubFlow : @"") + @"""");
             xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
             xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
             xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
@@ -916,7 +915,7 @@ namespace BP
 
         public FlowNode Clone()
         {
-            FlowNode clone = new FlowNode(this._container, this.Type);
+            FlowNode clone = new FlowNode(this._container, this.HisRunModel);
             clone.originFlowNode = this;
             clone.FlowNodeData = new FlowNodeComponent();
             clone.FlowNodeData.FlowNodeName = this.FlowNodeData.FlowNodeName;

@@ -39,7 +39,6 @@ namespace BP.Picture
             set
             {
                 picRect.Height = value - 4;
-                //eliBorder.Height = value - 2;
             }
             get { return picRect.Height + 4; }
         }
@@ -48,7 +47,6 @@ namespace BP.Picture
             set
             {
                 picRect.Fill = value;
-                //picCenter.Fill = value;
             }
             get { return picRect.Fill; }
         }
@@ -66,11 +64,9 @@ namespace BP.Picture
         public void ResetInitColor()
         {
             SolidColorBrush brush = new SolidColorBrush();
-            brush.Color = Colors.Red;
-            picRect.Fill = brush;
             brush = new SolidColorBrush();
-            brush.Color = Color.FromArgb(255, 0, 0, 0);
-            // picCenter.Fill = brush;
+            brush.Color = Colors.Green;
+            picRect.Fill = brush;
         }
 
         public void SetWarningColor()
@@ -78,6 +74,7 @@ namespace BP.Picture
             picRect.Fill = SystemConst.ColorConst.WarningColor;
             //  picCenter.Fill = SystemConst.ColorConst.WarningColor;  
         }
+
         public void SetSelectedColor()
         {
             picRect.Fill = SystemConst.ColorConst.SelectedColor;

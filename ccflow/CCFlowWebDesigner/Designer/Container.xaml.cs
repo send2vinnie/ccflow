@@ -514,77 +514,10 @@ namespace BP
         {
             return cnsDesignerContainer.Children.Contains(uie);
         }
-
         public CheckResult CheckSave()
         {
-
             var cr = new CheckResult();
             cr.IsPass = true;
-            CheckResult temCR = null;
-            IElement iel;
-            bool hasInitial = false;
-            bool hasCompledion = false;
-            string msg = "";
-            return cr;
-
-
-            // 如果只有两个子元素，且第一个元素是Canvas,则直接返回，因为相当于待检查的流程只有一个“开始节点”
-            if (cnsDesignerContainer.Children.Count == 2 && cnsDesignerContainer.Children[0] is Canvas)
-            {
-                return cr;
-            }
-
-            foreach (UIElement uic in cnsDesignerContainer.Children)
-            {
-                iel = uic as IElement;
-                if (iel != null)
-                {
-                    temCR = iel.CheckSave();
-                    if (!temCR.IsPass)
-                    {
-                        cr.IsPass = false;
-                        cr.Message += temCR.Message;
-
-
-                    }
-                    if (iel.ElementType == WorkFlowElementType.FlowNode)
-                    {
-                        if (((FlowNode)uic).HisPosType== NodePosType.Start)
-                        {
-                            hasInitial = true;
-
-                        }
-                        else if (((FlowNode)uic).HisPosType == NodePosType.End)
-                        {
-                            hasCompledion = true;
-
-                        }
-                    }
-                }
-            }
-
-            if (!hasInitial)
-            {
-                cr.IsPass = false;
-               // msg += Text.Message_MustHaveOnlyOneBeginFlowNode + "\r\n";
-            }
-            if (!hasCompledion)
-            {
-                cr.IsPass = false;
-               // msg += Text.Message_MustHaveAtLeastOneEndFlowNode + "\r\n";
-            }
-            //if (string.IsNullOrEmpty(txtWorkFlowName.Text))
-            //{
-            //    try
-            //    {
-            //        cr.IsPass = false;
-            //        msg += "必须输入流程名称\r\n";
-            //    }
-            //    catch { }
-            //}
-
-            if (cr.IsPass == false)
-                msg += "请按提示修改.";// Text.Message_ModifyWorkFlowByTip;
             return cr;
         }
         public void NewFlow(string flowsort)
@@ -593,7 +526,6 @@ namespace BP
             {
                 if (HtmlPage.Window.Confirm("确定要保存吗？"))
                 {
-
                 }
                 else
                 {
@@ -613,16 +545,110 @@ namespace BP
             _Service.DoCompleted += _service_DoCompleted;
         }
 
-        public void getFlows(string flowID)
+        public void DrawFlows(string flowID)
         {
             SetGridLines();
             this.FlowID = flowID;
-            _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs, RunModel from WF_Node WHERE FK_Flow='" + flowID + "'", true);
-            _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
+
+            WSDesignerSoapClient da = Glo.GetDesignerServiceInstance();
+            string sqls = "";
+            sqls += "SELECT NodeID,Name,X,Y,NodePosType,HisToNDs, RunModel FROM WF_Node WHERE FK_Flow='" + flowID + "'";
+            sqls += "@SELECT Node ,ToNode FROM WF_Direction WHERE Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + flowID + "')";
+            sqls += "@SELECT * FROM WF_LabNote WHERE FK_Flow='" + flowID + "'";
+            da.RunSQLReturnTableSAsync(sqls);
+            da.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(da_RunSQLReturnTableSCompleted); 
         }
-        public void getFlows()
+        void da_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
         {
-            getFlows(this.FlowID);
+            DataSet ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            #region 画节点.
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                FlowNodeType fnt = (FlowNodeType)int.Parse(dr["RunModel"].ToString());
+
+                FlowNode node = new FlowNode((IContainer)this, fnt);
+                SolidColorBrush sc = new SolidColorBrush();
+                sc.Color = Colors.White;
+
+                NodePosType postype = (NodePosType)int.Parse(dr["NodePosType"].ToString());
+                switch (postype)
+                {
+                    case NodePosType.Start:
+                        sc.Color = Colors.Green;
+                        break;
+                    case NodePosType.End:
+                        sc.Color = Colors.Red;
+                        break;
+                    default:
+                        sc.Color = Colors.White;
+                        break;
+                }
+
+                node.sdPicture.txtFlowNodeName.Foreground = sc;
+
+                node.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
+                node.FlowID = FlowID;
+                node.FlowNodeID = dr["NodeID"].ToString();
+                node.FlowNodeName = dr["Name"].ToString();
+                double x = double.Parse(dr["X"]);
+                double y = double.Parse(dr["Y"]);
+                if (x < 50)
+                    x = 50;
+
+                if (y < 30)
+                    y = 30;
+
+                if (x > 1190)
+                    x = 1190;
+
+                if (y > 770)
+                    y = 770;
+
+                node.CenterPoint = new Point(x, y);
+
+                AddFlowNode(node);
+            }
+            #endregion 画节点.
+
+            #region 画线
+            foreach (FlowNode bfn in FlowNodeCollections)
+            {
+                foreach (DataRow dr in ds.Tables[1].Rows)
+                {
+                    if (bfn.FlowNodeID == dr["Node"].ToString())
+                    {
+                        foreach (FlowNode efn in FlowNodeCollections)
+                        {
+                            if (efn.FlowNodeID == dr["ToNode"].ToString())
+                            {
+                                Direction d = new Direction((IContainer)this);
+                                d.FlowID = FlowID;
+                                d.BeginFlowNode = bfn;
+                                d.EndFlowNode = efn;
+                                AddDirection(d);
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion 画线
+
+            #region 画标签
+            foreach (DataRow dr in ds.Tables[2].Rows)
+            {
+                NodeLabel r = new NodeLabel((IContainer)this);
+                r.LabelName = dr["Name"].ToString();
+                r.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
+                r.LableID = dr["MyPK"].ToString();
+                AddLabel(r);
+            }
+            #endregion 画标签
+        }
+        public void DrawFlows()
+        {
+            DrawFlows(this.FlowID);
         }
 
         /// <summary>
@@ -1088,7 +1114,7 @@ namespace BP
                             //if (f.BeginDirectionCollections.Count == 0
                             //    && cnsDesignerContainer.Children.Count != 2)
                             //    f.Type = FlowNodeType.COMPLETION;
-                            nodes += "~@Name=" + f.FlowNodeName + "@X=" + (int)f.CenterPoint.X + "@Y=" + (int)f.CenterPoint.Y + "@NodeID=" + int.Parse(f.FlowNodeID) ;
+                            nodes += "~@Name=" + f.FlowNodeName + "@X=" + (int)f.CenterPoint.X + "@Y=" + (int)f.CenterPoint.Y + "@NodeID=" + int.Parse(f.FlowNodeID);
                         }
                         else if (ele.ElementType == WorkFlowElementType.Direction)
                         {
@@ -1560,7 +1586,6 @@ namespace BP
                         a.CenterPoint = new Point(a.CenterPoint.X + 20, a.CenterPoint.Y + 20);
                         a.Move(a, null);
 
-
                     }
 
                 }
@@ -1571,17 +1596,12 @@ namespace BP
                         l = c as NodeLabel;
                         AddLabel(l);
                         l.Position = new Point(l.Position.X + 20, l.Position.Y + 20);
-
-
-
                     }
                 }
-
 
                 for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
                 {
                     ((IElement)CurrentSelectedControlCollection[i]).IsSelectd = false;
-
                 }
                 CurrentSelectedControlCollection.Clear();
 
@@ -1731,130 +1751,23 @@ namespace BP
 
         #region 事件
 
-        void _service_GetLablesCompleted(object sender, GetLablesCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                NodeLabel r = new NodeLabel((IContainer)this);
-                r.LabelName = dr["Name"].ToString();
-                r.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
-                r.LableID = dr["MyPK"].ToString();
-
-                AddLabel(r);
-
-            }
-            _Service.GetLablesCompleted -= _service_GetLablesCompleted;
-
-        }
+        
 
         void _service_DoCompleted(object sender, DoCompletedEventArgs e)
         {
             FlowID = e.Result;
             _Service.DoCompleted -= new EventHandler<DoCompletedEventArgs>(_service_DoCompleted);
-            getFlows(FlowID);
+            this.DrawFlows(FlowID);
         }
 
-        void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                FlowNodeType fnt = (FlowNodeType)int.Parse(dr["RunModel"].ToString());
+        
 
-                FlowNode a = new FlowNode((IContainer)this, fnt);
-
-                SolidColorBrush sc = new SolidColorBrush();
-                sc.Color = Colors.White;
-
-                NodePosType postype = (NodePosType)int.Parse(dr["NodePosType"].ToString());
-
-                switch (postype)
-                {
-                    case NodePosType.Start:
-                        sc.Color = Colors.Green;
-                        break;
-                    case NodePosType.End:
-                        sc.Color = Colors.Red;
-                        break;
-                    default:
-                        break;
-                }
-                a.sdPicture.txtFlowNodeName.Foreground = sc;
-
-
-                a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-                a.FlowID = FlowID;
-                a.FlowNodeID = dr["NodeID"].ToString();
-                a.FlowNodeName = dr["Name"].ToString();
-                double x = double.Parse(dr["X"]);
-                double y = double.Parse(dr["Y"]);
-                if (x < 50)
-                    x = 50;
-
-                if (y < 30)
-                    y = 30;
-
-                if (x > 1190)
-                    x = 1190;
-
-                if (y > 770)
-                    y = 770;
-
-                a.CenterPoint = new Point(x, y);
-                AddFlowNode(a);
-            }
-
-            _Service.GetLablesAsync(FlowID);
-            _Service.GetLablesCompleted += new EventHandler<GetLablesCompletedEventArgs>(_service_GetLablesCompleted);
-
-            _Service.GetDirectionAsync(FlowID);
-            _Service.GetDirectionCompleted += new EventHandler<GetDirectionCompletedEventArgs>(_service_GetDirectionCompleted);
-            
-            SaveChange(HistoryType.New);
-            _Service.RunSQLReturnTableCompleted -= new EventHandler<RunSQLReturnTableCompletedEventArgs>(_service_RunSQLReturnTableCompleted);
-        }
-
-        void _service_GetDirectionCompleted(object sender, GetDirectionCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (FlowNode bfn in FlowNodeCollections)
-            {
-
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    if (bfn.FlowNodeID == dr["Node"].ToString())
-                    {
-                        foreach (FlowNode efn in FlowNodeCollections)
-                        {
-                            if (efn.FlowNodeID == dr["ToNode"].ToString())
-                            {
-                                Direction d = new Direction((IContainer)this);
-                                d.FlowID = FlowID;
-                                d.BeginFlowNode = bfn;
-                                d.EndFlowNode = efn;
-                                AddDirection(d);
-                            }
-                        }
-                    }
-
-
-                }
-            }
-            _Service.GetDirectionCompleted -= _service_GetDirectionCompleted;
-
-        }
+         
 
         void DoubleClick_Timer(object sender, EventArgs e)
         {
             _doubleClickTimer.Stop();
         }
-
-
 
         private void Container_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -1905,15 +1818,10 @@ namespace BP
                     menuContainer.CenterPoint = new Point(left, top);
                 }
             }
-
-
-
         }
 
         public void ShowFlowNodeContentMenu(FlowNode a, object sender, MouseButtonEventArgs e)
         {
-
-
             menuFlowNode.RelatedFlowNode = a;
             menuContainer.Visibility = Visibility.Collapsed;
             menuDirection.Visibility = Visibility.Collapsed;
@@ -1921,7 +1829,6 @@ namespace BP
             double top = (double)(e.GetPosition(svContainer).Y);
             double left = (double)(e.GetPosition(svContainer).X);
             menuFlowNode.CenterPoint = new Point(left, top);
-
             menuFlowNode.ShowMenu();
             e.Handled = true;
         }
@@ -1957,13 +1864,11 @@ namespace BP
             CloseContainerCover();
         }
 
-
         void _Service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
         {
             var a = new FlowNode((IContainer)this, FlowNodeType.Ordinary);
-
             a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-            a.FlowNodeName = "New Node" + NextNewFlowNodeIndex.ToString();
+            a.FlowNodeName = "新建节点" + NextNewFlowNodeIndex.ToString();
             a.FlowNodeID = e.Result.ToString();
             a.FlowID = FlowID;
             a.CenterPoint = new Point(50, 30);
@@ -2156,13 +2061,11 @@ namespace BP
                 cnsDesignerContainer.Children.Remove(temproaryEllipse);
                 temproaryEllipse = null;
             }
-
         }
 
         void tbLabelName_LostFocus(object sender, RoutedEventArgs e)
         {
             _Service.DoNewLabelAsync(FlowID, (int)l.Position.X, (int)l.Position.Y, l.LabelName, l.LableID);
-
         }
 
         private void UserControl_KeyUp(object sender, KeyEventArgs e)
@@ -2196,7 +2099,8 @@ namespace BP
                 case Key.Right:
                     MoveRight();
                     break;
-
+                default:
+                    break;
             }
         }
 
@@ -2295,8 +2199,6 @@ namespace BP
         {
             this.FlowID = flowid;
         }
-
         #endregion
-
     }
 }

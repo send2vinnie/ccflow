@@ -33,7 +33,7 @@
         <StackPanel Grid.RowSpan="2" Background="white"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Name="stackPanelLeft"   Orientation="Vertical">
             <Image x:Name="imageLogo" Width="210" Height="70" Margin="5,2,5,2" Source="./Images/Logo/CCFlow/LogoW.jpg"   />
             <sdk:TabControl  Name="TbcFDS" Width="220" Height="auto"    MouseLeave="TbcFDS_MouseLeave" >
-                <sdk:TabItem Header="sdsdsdsd" Name="TbItemFlow" Background="white" BorderThickness="0">
+                <sdk:TabItem Header="流程树" Name="TbItemFlow" Background="white" BorderThickness="0">
                     <Canvas Background="white" MouseLeftButtonDown="CvsFlowTree_MouseLeftButtonDown" Name="CvsFlowTree" Width="Auto" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
                         <liquidTreeView:Tree x:Name="TvwFlow"  BorderThickness="0" Width="210"  
                                              HorizontalScrollBarVisibility="Auto"
