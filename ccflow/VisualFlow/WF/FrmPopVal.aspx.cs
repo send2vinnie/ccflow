@@ -37,7 +37,7 @@ public partial class WF_FrmPopVal : BP.Web.WebPage
     {
         MapExt me = new MapExt(this.FK_MapExt);
 
-        bool isCheckBox=false;
+        bool isCheckBox = false;
         if (me.PopValSelectModel == 0)
             isCheckBox = true;
         else
@@ -158,7 +158,6 @@ public partial class WF_FrmPopVal : BP.Web.WebPage
                 continue;
         }
 
-
         if (isHaveUnGroup == true)
         {
             this.Pub1.AddTR();
@@ -230,8 +229,9 @@ public partial class WF_FrmPopVal : BP.Web.WebPage
 
         btn = new Button();
         btn.ID = "Cancel";
-        btn.Text = " 取消 ";
+        btn.Text = " Cancel ";
         btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
     }
 
     void btn_Click(object sender, EventArgs e)
@@ -273,6 +273,9 @@ public partial class WF_FrmPopVal : BP.Web.WebPage
                     break;
             }
         }
+        val = val.Replace("<font color=green>", "");
+        val = val.Replace("</font>", "");
+
         if (val.Length > 2)
             val = val.Substring(1);
         this.WinClose(val);

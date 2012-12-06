@@ -63,7 +63,7 @@ public partial class WF_DtlFrm : WebPage
 "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
         #endregion 载入相关文件.
 
-        #region 查询出来明细表.
+        #region 查询出来从表.
         MapDtl mdtl = new MapDtl(this.EnsName);
         GEDtls dtls = new GEDtls(this.EnsName);
         QueryObject qo = null;
@@ -102,7 +102,7 @@ public partial class WF_DtlFrm : WebPage
             //}
             //#endregion
         }
-        #endregion 查询出来明细表.
+        #endregion 查询出来从表.
 
         #region 初始化空白行
         if (this.IsReadonly == false)

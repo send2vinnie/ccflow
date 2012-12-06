@@ -148,7 +148,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
                         context.Response.Write(JSONTODT(dtM2M));
                         break;
                     case "ReqDtlFullList":
-                        /* 获取填充的明细表集合. */
+                        /* 获取填充的从表集合. */
                         DataTable dtDtl = new DataTable("Head");
                         dtDtl.Columns.Add("Dtl", typeof(string));
                         string[] strsDtl = me.Tag1.Split('$');

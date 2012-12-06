@@ -360,7 +360,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         }
         this.Pub1.AddTableEnd();
 
-        #region 处理设计时自动填充明细表.
+        #region 处理设计时自动填充从表.
         if (this.Key != null)
         {
             MapExt me = new MapExt(this.FK_MapExt);
@@ -405,7 +405,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                 }
             }
         }
-        #endregion 处理设计时自动填充明细表.
+        #endregion 处理设计时自动填充从表.
 
         #region 处理拓展属性.
         for (int i = 1; i <= dtl.RowsOfList; i++)

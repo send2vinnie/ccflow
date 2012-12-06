@@ -27,7 +27,7 @@ public partial class WF_DtlSearch : BP.Web.WebPage
         MapDtls dtls = new MapDtls("ND" + int.Parse(this.FK_Flow) + "Rpt");
         if (dtls.Count == 0)
         {
-            this.WinCloseWithMsg("该流程下没有明细表。");
+            this.WinCloseWithMsg("该流程下没有从表。");
             return;
         }
 
@@ -37,7 +37,7 @@ public partial class WF_DtlSearch : BP.Web.WebPage
             return;
         }
 
-        this.Pub1.AddFieldSet("请选择您要查看的明细表。");
+        this.Pub1.AddFieldSet("请选择您要查看的从表。");
 
         this.Pub1.AddUL();
         foreach (MapDtl dtl in dtls)

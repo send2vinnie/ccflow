@@ -87,7 +87,7 @@ public partial class WF_HungUp : BP.Web.WebPage
         btn.ID = "Btn_OK";
 
         GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
-        if (gwf.WFState != WFState.HungUp)
+        if (gwf.WFState == WFState.HungUp)
             btn.Text = " 取消挂起 ";
         else
             btn.Text = " 挂起 ";
@@ -117,7 +117,7 @@ public partial class WF_HungUp : BP.Web.WebPage
             if (wf.HisGenerWorkFlow.WFState == WFState.HungUp)
             {
                 string msg=wf.DoUnHungUp();
-                this.Alert(msg);
+                this.WinClose(msg);
                 return;
             }
 
@@ -129,7 +129,9 @@ public partial class WF_HungUp : BP.Web.WebPage
             string reldata= this.Pub1.GetTBByID("TB_RelData").Text;
             string note = this.Pub1.GetTBByID("TB_Note").Text;
             string msg1 = wf.DoHungUp(way, reldata, note);
-            this.Alert(msg1);
+
+            BP.WF.Dev2Interface.Node_HungUp_Or_UnHungUp(this.FK_Flow, this.WorkID, (int)way, reldata, msg1);
+            this.WinClose(msg1);
         }
         catch (Exception ex)
         {

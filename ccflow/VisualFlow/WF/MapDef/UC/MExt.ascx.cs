@@ -102,12 +102,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapExt myme = new MapExt(this.MyPK);
         MapM2Ms m2ms = new MapM2Ms(myme.FK_MapData);
 
-        this.Pub2.AddH2("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+        this.Pub2.AddH2("设置自动填充从表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
         if (m2ms.Count == 0)
         {
             this.Pub2.Clear();
-            this.Pub2.AddFieldSet("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
-            this.Pub2.Add("该表单下没有从表，所以您不能为明细表设置自动填充。");
+            this.Pub2.AddFieldSet("设置自动填充从表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+            this.Pub2.Add("该表单下没有从表，所以您不能为从表设置自动填充。");
             this.Pub2.AddFieldSetEnd();
             return;
         }
@@ -190,12 +190,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapExt myme = new MapExt(this.MyPK);
         MapDtls dtls = new MapDtls(myme.FK_MapData);
 
-        this.Pub2.AddH2("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+        this.Pub2.AddH2("设置自动填充从表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
         if (dtls.Count == 0)
         {
             this.Pub2.Clear();
-            this.Pub2.AddFieldSet("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
-            this.Pub2.Add("该表单下没有从表，所以您不能为明细表设置自动填充。");
+            this.Pub2.AddFieldSet("设置自动填充从表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+            this.Pub2.Add("该表单下没有从表，所以您不能为从表设置自动填充。");
             this.Pub2.AddFieldSetEnd();
             return;
         }
@@ -253,7 +253,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddFieldSet("帮助:");
         this.Pub2.Add("在这里您需要设置一个查询语句");
         this.Pub2.AddBR("例如：SELECT XLMC AS suozaixianlu, bustype as V_BusType FROM [V_XLVsBusType] WHERE jbxx_htid='@Key'");
-        this.Pub2.AddBR("这个查询语句要与明细表的列对应上就可以在文本框的值发生改变时而自动填充。");
+        this.Pub2.AddBR("这个查询语句要与从表的列对应上就可以在文本框的值发生改变时而自动填充。");
         this.Pub2.AddBR("注意:");
         this.Pub2.AddBR("1，@Key 是主表字段传递过来的变量。");
         this.Pub2.AddBR("2，从表列字段字名，与填充sql列字段大小写匹配。");
@@ -264,7 +264,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     /// </summary>
     public void EditAutoFullDtl_DDL()
     {
-        this.Pub2.AddFieldSet("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a> -设置自动填充明细表");
+        this.Pub2.AddFieldSet("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a> -设置自动填充从表");
         MapExt myme = new MapExt(this.MyPK);
         MapDtls dtls = new MapDtls(myme.FK_MapData);
         string[] strs = myme.Tag1.Split('$');
@@ -290,7 +290,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             }
 
             this.Pub2.AddTDBegin();
-            this.Pub2.AddB("&nbsp;&nbsp;" + dtl.Name + "-明细表");
+            this.Pub2.AddB("&nbsp;&nbsp;" + dtl.Name + "-从表");
             this.Pub2.AddBR();
             this.Pub2.Add(tb);
             this.Pub2.AddTDEnd();
@@ -677,13 +677,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         if (dtls.Count != 0)
         {
             this.Pub2.AddTR();
-            this.Pub2.AddTDTitle("明细表的自动填充.");
+            this.Pub2.AddTDTitle("从表的自动填充.");
             this.Pub2.AddTREnd();
             string[] sqls = me.Tag1.Split('*');
             foreach (MapDtl dtl in dtls)
             {
                 this.Pub2.AddTR();
-                this.Pub2.AddTD("明细表:(" + dtl.No + ")" + dtl.Name);
+                this.Pub2.AddTD("从表:(" + dtl.No + ")" + dtl.Name);
                 this.Pub2.AddTREnd();
                 tb = new TextBox();
                 tb.ID = "TB_" + dtl.No;
@@ -707,7 +707,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             }
 
             this.Pub2.AddTR();
-            this.Pub2.AddTD("说明:结果集合填充明细表");
+            this.Pub2.AddTD("说明:结果集合填充从表");
             this.Pub2.AddTREnd();
         }
 
@@ -909,7 +909,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 //{
                 //    if (attrs.IsExits(MapAttrAttr.KeyOfEn, dc.ColumnName) == false)
                 //    {
-                //        err += "<br>列" + dc.ColumnName + "不能与明细表 属性匹配.";
+                //        err += "<br>列" + dc.ColumnName + "不能与从表 属性匹配.";
                 //    }
                 //}
                 //if (err != "")
@@ -1399,7 +1399,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         else
         {
             this.Pub2.Add("<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "&ExtType=" + this.ExtType + "&DoType=EditAutoJL\" >级连下拉框</a>");
-            this.Pub2.Add("-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充明细表</a>");
+            this.Pub2.Add("-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充从表</a>");
             this.Pub2.Add("-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullM2M\" >填充一对多</a>");
 
         }
@@ -1496,7 +1496,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         if (this.MyPK == null)
             this.Pub2.AddTD();
         else
-            this.Pub2.AddTD("<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "&ExtType=" + this.ExtType + "&DoType=EditAutoJL\" >级连下拉框</a>-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充明细表</a>");
+            this.Pub2.AddTD("<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "&ExtType=" + this.ExtType + "&DoType=EditAutoJL\" >级连下拉框</a>-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充从表</a>");
         this.Pub2.AddTREnd();
 
         #region 输出事例

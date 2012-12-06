@@ -22,12 +22,10 @@ public partial class Designer : System.Web.UI.Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-      
         try
         {
             //如果没有Port_Dept 表就可能没有安装ccflow.
             DBAccess.RunSQL("SELECT * FROM Port_Dept where 1=2");
-
         }
         catch
         {
@@ -58,12 +56,19 @@ public partial class Designer : System.Web.UI.Page
             return;
         }
 
-
         string sql = "";
         string msg = "";
         try
         {
             msg = "@在检查数据库连接出现错误。";
+
+            #region 2012-12-06 升级投递规则 for 亿阳信通.
+            sql = " DELETE FROM Sys_Enum WHERE enumkey='DeliveryWay'";
+            DBAccess.RunSQL(sql);
+
+            sql = " DELETE FROM Sys_Enum WHERE enumkey='ReturnRole'";
+            DBAccess.RunSQL(sql);
+            #endregion 升级投递规则.
 
             #region 增加是否只读.
             BP.WF.WorkerList wl8 = new WorkerList();
@@ -72,7 +77,6 @@ public partial class Designer : System.Web.UI.Page
             sql = " UPDATE WF_GenerWorkerList SET IsRead=0 WHERE IsRead IS NULL";
             DBAccess.RunSQL(sql);
             #endregion 增加是否只读.
-
 
             #region 2012-11-22 增加挂起状态.
             sql = " DELETE FROM Sys_Enum WHERE enumkey='WFState'";

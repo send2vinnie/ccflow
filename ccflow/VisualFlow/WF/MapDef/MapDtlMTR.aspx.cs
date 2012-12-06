@@ -14,7 +14,7 @@ public partial class WF_MapDef_MapDtlMTR : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         MapDtl dtl = new MapDtl(this.MyPK);
-        this.Title = "明细表头";
+        this.Title = "从表头";
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft("请书写html标记,以《TR》开头，以《/TR》结尾。");
         this.Pub1.AddTR();

@@ -72,7 +72,7 @@ public partial class WF_DtlOpt : WebPage
             string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
             if (System.IO.File.Exists(file) == false)
             {
-                this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的明细表模版放入"+file);
+                this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的从表模版放入"+file);
                 return;
             }
             BP.PubClass.OpenExcel(file, dtl.Name + ".xls");
@@ -84,7 +84,7 @@ public partial class WF_DtlOpt : WebPage
             string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
             if (System.IO.File.Exists(file) == false)
             {
-                this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的明细表模版放入" + file);
+                this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的从表模版放入" + file);
                 return;
             }
             BP.PubClass.OpenExcel(file, dtl.Name + ".xls");
@@ -104,7 +104,7 @@ public partial class WF_DtlOpt : WebPage
         if (dtl.IsExp)
         {
             this.Pub1.AddFieldSet("数据导出");
-            this.Pub1.AddP("点下面的连接进行本明细表的导出，您可以根据列的需要增减列。");
+            this.Pub1.AddP("点下面的连接进行本从表的导出，您可以根据列的需要增减列。");
             string urlExp = "DtlOpt.aspx?DoType=" + this.DoType + "&WorkID=" + this.WorkID + "&FK_MapDtl=" + this.FK_MapDtl + "&Flag=ExpData";
             this.Pub1.Add("<p align=center><a href='" + urlExp + "' target=_blank ><img src='../Images/FileType/xls.gif' border=0 /><b>导出数据</b></a></p>");
             this.Pub1.AddFieldSetEnd();

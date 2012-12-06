@@ -294,16 +294,16 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
         this.Pub1.Add("<TD>");
         rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = this.ToE("Way4", "方式4：对一个明细表的列求值。");
+        rb.Text = this.ToE("Way4", "方式4：对一个从表的列求值。");
         rb.ID = "RB_Way_4";
         if (mattr.HisAutoFull == AutoFullWay.Way4_Dtl)
             rb.Checked = true;
 
         this.Pub1.AddFieldSet(rb);
-        this.Pub1.Add(this.ToE("Way4D", "比如:对明细表中的列求值。"));
+        this.Pub1.Add(this.ToE("Way4D", "比如:对从表中的列求值。"));
         this.Pub1.AddBR();
 
-        // 让它对一个明细表求和、求平均、求最大、求最小值。
+        // 让它对一个从表求和、求平均、求最大、求最小值。
         MapDtls dtls = new MapDtls(mattr.FK_MapData);
         if (dtls.Count > 0)
         {
@@ -313,7 +313,7 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             rb.Enabled = false;
             if (rb.Checked)
                 rb.Checked = false;
-            // this.Pub1.Add("@没有明细表。");
+            // this.Pub1.Add("@没有从表。");
         }
         foreach (MapDtl dtl in dtls)
         {
@@ -497,7 +497,7 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             mattr.AutoFullDoc = doc;
         }
 
-        // 本表单中明细表列。
+        // 本表单中从表列。
         if (this.Pub1.GetRadioButtonByID("RB_Way_4").Checked)
         {
             MapDtls dtls = new MapDtls(mattr.FK_MapData);

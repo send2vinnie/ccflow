@@ -56,8 +56,8 @@ public partial class WF_Opt_ExpImp : WebPage
         Node nd = new Node(this.FK_Node);
         if (dtls.Count == 0)
         {
-            this.Pub2.AddFieldSet("导入明细表");
-            this.Pub2.Add("无明细表可导入");
+            this.Pub2.AddFieldSet("导入从表");
+            this.Pub2.Add("无从表可导入");
             this.Pub2.AddFieldSetEnd();
             return;
         }

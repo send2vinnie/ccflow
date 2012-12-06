@@ -39,9 +39,9 @@ public partial class WF_Admin_Action : WebPage
         }
 
         MapDtl dtl = new MapDtl(this.FK_MapData);
-        this.Pub3.AddCaptionLeft("明细表:"+dtl.Name);
+        this.Pub3.AddCaptionLeft("从表:"+dtl.Name);
 
-        this.Title = "设置:明细表事件";
+        this.Title = "设置:从表事件";
         FrmEvents ndevs = new FrmEvents();
         ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
         EventListDtls xmls = new EventListDtls();

@@ -44,7 +44,7 @@ public partial class WF_WorkOpt_OneWork_Ath : BP.Web.WebPage
         string sql = "SELECT * FROM Sys_FrmAttachmentDB WHERE FK_FrmAttachment IN (SELECT MyPK FROM Sys_FrmAttachment WHERE FK_MapData LIKE 'ND" + flowID + "%' AND IsUpload=1) AND RefPKVal='" + this.OID + "' ORDER BY RDT";
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count > 0)
-        {
+        { 
             this.Pub1.AddTable();
         //    this.Pub1.AddCaptionLeft("流程附件");
             this.Pub1.AddTR();

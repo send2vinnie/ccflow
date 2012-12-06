@@ -253,7 +253,7 @@ public partial class WF_MapDef_MapFrame : WebPage
     public void BindEdit(MapData md, MapFrame dtl)
     {
         this.Pub1.AddTable();
-        //  this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> -  " + this.ToE("DtlTable", "明细表") + ":（" + dtl.Name + "）");
+        //  this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> -  " + this.ToE("DtlTable", "从表") + ":（" + dtl.Name + "）");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));

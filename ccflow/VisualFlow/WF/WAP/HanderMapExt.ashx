@@ -49,7 +49,7 @@ public class Handler : IHttpHandler
                         context.Response.Write(JSONTODT(dt));
                         break;
                     case "ReqDtlFullList":
-                        /* 获取填充的明细表集合. */
+                        /* 获取填充的从表集合. */
                         DataTable dtDtl = new DataTable("Head");
                         dtDtl.Columns.Add("Dtl", typeof(string));
 

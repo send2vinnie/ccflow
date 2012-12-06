@@ -588,7 +588,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         tb.CssClass = "TBNum";
         tb.Text = mapAttr.UIWidth.ToString();
         this.Pub1.AddTD(tb);
-        this.Pub1.AddTDB(this.ToE("ForDtl", "对明细表有效"));
+        this.Pub1.AddTDB(this.ToE("ForDtl", "对从表有效"));
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();

@@ -66,13 +66,13 @@ public partial class WF_MapDef_WFRptDtl : WebPage
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
         {
-            this.WinCloseWithMsg("此流程中没有明细表所以您不能插入。");
+            this.WinCloseWithMsg("此流程中没有从表所以您不能插入。");
             return;
         }
 
         Nodes nds = new Nodes(BP.WF.Glo.GenerFlowNo(this.MyPK));
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeft("请选择要插入的明细表");
+        this.Pub1.AddCaptionLeft("请选择要插入的从表");
         foreach (BP.WF.Node nd in nds)
         {
             if (nd.IsEndNode == false)
@@ -150,7 +150,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
                     continue;
 
                 i++;
-                // 生成明细表让其可以在单个数据里显示他们。
+                // 生成从表让其可以在单个数据里显示他们。
                 MapDtl dtlNew = new MapDtl();
                 dtlNew.Copy(dtl);
                 dtlNew.No = this.MyPK + i;

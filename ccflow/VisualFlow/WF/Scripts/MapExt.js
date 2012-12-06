@@ -113,7 +113,7 @@ function FullIt(oldValue, tbid, fk_mapExt) {
     //执行个性化填充下拉框.
     FullCtrlDDL(oldValue, tbid, fk_mapExt);
 
-    //执行填充明细表.
+    //执行填充从表.
     FullDtl(oldValue, fk_mapExt);
 
     //执行m2m 关系填充.
@@ -395,7 +395,7 @@ function FullDtl(key, fk_mapExt) {
 
                 for (var k in dataObj.Head[i]) {
                     var fullDtl = dataObj.Head[i][k];
-                    //  alert('您确定要填充明细表吗?，里面的数据将要被删除。' + key + ' ID= ' + fullDtl);
+                    //  alert('您确定要填充从表吗?，里面的数据将要被删除。' + key + ' ID= ' + fullDtl);
                     var frm = document.getElementById('F' + fullDtl);
                     var src = frm.src;
                     var idx = src.indexOf("&Key");

@@ -66,7 +66,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
             case "New":
                 int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapDtl WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
                 MapDtl dtl1 = new MapDtl();
-                dtl1.Name = this.ToE("DtlTable", "明细表") + num;
+                dtl1.Name = this.ToE("DtlTable", "从表") + num;
                 dtl1.No = this.FK_MapData + "Dtl" + num;
                 dtl1.PTable = this.FK_MapData + "Dtl" + num;
                 BindEdit(md, dtl1);
@@ -172,7 +172,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         {
             ath.FK_MapData = this.FK_MapDtl;
             ath.NoOfObj = "AthM";
-            ath.Name = "我的明细表附件";
+            ath.Name = "我的从表附件";
             ath.UploadType = AttachmentUploadType.Multi;
             ath.Insert();
         }
@@ -197,7 +197,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
     public void BindEdit(MapData md, MapDtl dtl)
     {
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeft("明细表属性");
+        this.Pub1.AddCaptionLeft("从表属性");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
@@ -227,7 +227,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         tb.ID = "TB_Name";
         tb.Text = dtl.Name;
         this.Pub1.AddTD(tb);
-        this.Pub1.AddTD("XX " + this.ToE("Dtl", "明细表"));
+        this.Pub1.AddTD("XX " + this.ToE("Dtl", "从表"));
         this.Pub1.AddTREnd();
 
 
@@ -253,7 +253,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         ddl.ID = "DDL_DtlOpenType";
         this.Pub1.AddTD(ddl);
         this.Pub1.AddTD();
-        // this.Pub1.AddTD("用于明细表的权限控制");
+        // this.Pub1.AddTD("用于从表的权限控制");
         this.Pub1.AddTREnd();
 
 

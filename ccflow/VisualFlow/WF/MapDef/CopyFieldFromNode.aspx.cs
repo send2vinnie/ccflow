@@ -100,7 +100,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 this.Pub2.AddTR();
                 cb = new CheckBox();
                 cb.ID = "CB" + dtl.No + "_" + dtl.GroupID;
-                cb.Text = this.ToE("Dtl", "明细表") + ":" + dtl.Name;
+                cb.Text = this.ToE("Dtl", "从表") + ":" + dtl.Name;
                 this.Pub2.AddTD(cb);
                 this.Pub2.AddTREnd();
             }
@@ -268,7 +268,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 myen.Insert();
             }
 
-            // 复制明细表.
+            // 复制从表.
             foreach (MapDtl dtl in dtls)
             {
                 cb = this.Pub2.GetCBByID("CB_" + dtl.No + gf.OID);
@@ -293,7 +293,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
                 dtlNew.Insert();
 
-                // 复制明细表里面的明细。
+                // 复制从表里面的明细。
                 int idx = 0;
                 MapAttrs mattrs = new MapAttrs(dtl.No);
                 foreach (MapAttr attr in mattrs)
