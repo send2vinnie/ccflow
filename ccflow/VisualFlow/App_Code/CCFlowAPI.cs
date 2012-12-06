@@ -25,10 +25,24 @@ using System.Configuration;
 // [System.Web.Script.Services.ScriptService]
 public class CCFlowAPI : CCForm {
 
+
     public CCFlowAPI()
     {
         //如果使用设计的组件，请取消注释以下行 
         //InitializeComponent(); 
+    }
+     
+    /// <summary>
+    /// 获取当前操作员可以发起的流程集合
+    /// </summary>
+    /// <param name="userNo">人员编号</param>
+    /// <returns>可以发起的xml</returns>
+    [WebMethod(EnableSession = true)]
+    public string DB_GenerCanStartFlowsOfDataTable(string userNo)
+    {
+        System.Data.DataSet ds = new System.Data.DataSet();
+        ds.Tables.Add(BP.WF.Dev2Interface.DB_GenerCanStartFlowsOfDataTable(userNo));
+        return Connector.ToXml(ds);
     }
     /// <summary>
     /// 待办提示
@@ -42,17 +56,29 @@ public class CCFlowAPI : CCForm {
     }
     /// <summary>
     /// 用户登录
+    /// 0,密码用户名错误
+    /// 1,成功.
+    /// 2,服务器错误.
     /// </summary>
     /// <param name="userNo"></param>
     /// <param name="pass"></param>
     /// <returns></returns>
     [WebMethod(EnableSession = true)]
-    public void Port_Login(string userNo, string pass)
+    public int Port_Login(string userNo, string pass)
     {
-        Emp emp = new Emp(userNo);
-        if (emp.Equals(pass) == false)
-            throw new Exception("@用户名或者密码错误");
-        BP.WF.Dev2Interface.Port_Login(userNo, "");
+        try
+        {
+            Emp emp = new Emp(userNo);
+            if (emp.Equals(pass) == false)
+                return 0;
+
+            BP.WF.Dev2Interface.Port_Login(userNo, "");
+            return 1;
+        }
+        catch
+        {
+            return 2;
+        }
     }
     /// <summary>
     /// 获取一条待办工作

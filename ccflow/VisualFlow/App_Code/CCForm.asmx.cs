@@ -326,7 +326,7 @@ namespace BP.Web
                         MapDtl dtlN = new MapDtl();
                         dtlN.No = v1;
                         if (dtlN.RetrieveFromDBSources() != 0)
-                            return "明细表已存在";
+                            return "从表已存在";
                         dtlN.Name = v1;
                         dtlN.FK_MapData = v2;
                         dtlN.PTable = v1;
@@ -748,11 +748,13 @@ namespace BP.Web
             if (ensName.Contains("."))
             {
                 Entities ens = BP.DA.ClassFactory.GetEns(ensName);
-                if (ens==null)
+                if (ens == null)
                     ens = BP.DA.ClassFactory.GetEns(ensName);
 
-                if (ens==null)
+                if (ens == null)
                     ens = BP.DA.ClassFactory.GetEns(ensName);
+                if (ens == null)
+                    throw new Exception("类名错误:" + ensName + ",不能转化成ens.");
 
                 ens.RetrieveAllFromDBSource();
                 dt = ens.ToDataTableField();

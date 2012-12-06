@@ -83,7 +83,7 @@ public class WSDesigner : WSBase
                             return null;
                         return "error password.";
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         return ex.Message;
                     }
