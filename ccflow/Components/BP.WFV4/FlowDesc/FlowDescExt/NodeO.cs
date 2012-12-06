@@ -240,7 +240,6 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.SaveModel, 0, "保存方式", true, true);
 
 
-
                 #region  功能按钮状态
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
              //   map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, false);

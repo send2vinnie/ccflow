@@ -2246,7 +2246,7 @@ namespace BP.WF
         /// </summary>
         /// <param name="toND">要到达的下一个节点</param>
         /// <returns>执行消息</returns>
-        private string NodeSend_11(Node toND)
+        private void NodeSend_11(Node toND)
         {
             string sql = "";
             try
@@ -2572,7 +2572,7 @@ namespace BP.WF
                  * 1, 
                  * 
                  */
-                
+
                 // town.
                 WorkNode town = new WorkNode(wk, toND);
 
@@ -2584,7 +2584,7 @@ namespace BP.WF
 
                 string msg = "";
                 msg += this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this.nextStationName,
-                    this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt); 
+                    this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt);
 
                 if (this._RememberMe.NumOfEmps >= 2)
                 {
@@ -2615,13 +2615,16 @@ namespace BP.WF
                 ps.Add("WorkID", this.HisWork.OID);
                 DBAccess.RunSQL(ps);
 
-                if (this.HisNode.HisFormType == FormType.SDKForm)
-                    return msg;
+                if (this.HisNode.HisFormType == FormType.SDKForm || this.HisNode.HisFormType == FormType.SelfForm )
+                {
+                }
                 else
-                    return msg + "@" + str + " <img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + wk.OID + "&FID=" + wk.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >" + this.ToE("WorkRpt", "工作报告") + "</a>。";
+                {
+                    msg += "@" + str + " <img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + wk.OID + "&FID=" + wk.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >" + this.ToE("WorkRpt", "工作报告") + "</a>。";
+                }
                 #endregion
 
-                return "@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + "." + msg;
+                msg += "@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + "." + msg;
             }
             catch (Exception ex)
             {
@@ -2629,7 +2632,6 @@ namespace BP.WF
                 throw new Exception(string.Format("StartGEWorkErr", toND.Name) + "@" + ex.Message);
             }
         }
-        
         private void NodeSend_2X_GenerFH()
         {
             #region GenerFH
@@ -2996,12 +2998,12 @@ namespace BP.WF
         /// 2, 按普通节点向普通节点发送.
         /// </summary>
         /// <returns></returns>
-        private string NodeSend_31(Node nd)
+        private void NodeSend_31(Node nd)
         {
             //检查完成率.
 
             // 与1-1一样的逻辑处理.
-            return this.NodeSend_11(nd);
+            this.NodeSend_11(nd);
         }
         /// <summary>
         /// 子线程向下发送
@@ -3047,10 +3049,10 @@ namespace BP.WF
                     switch (toND.HisRunModel)
                     {
                         case RunModel.Ordinary:   /*1-1 普通节to普通节点 */
-                            msg += this.NodeSend_11(toND);
+                            this.NodeSend_11(toND);
                             break;
                         case RunModel.FL:  /* 1-2 普通节to分流点   */
-                            msg += this.NodeSend_11(toND);
+                            this.NodeSend_11(toND);
                             break;
                         case RunModel.HL:  /*1-3 普通节to合流点   */
                             throw new Exception("@流程设计错误:请检查流程获取详细信息, 普通节点下面不能连接合流节点(" + toND.Name + ").");
@@ -3072,7 +3074,7 @@ namespace BP.WF
                         switch (toND2.HisRunModel)
                         {
                             case RunModel.Ordinary:    /*2.1 分流点to普通节点 */
-                                msg += this.NodeSend_11(toND2); /* 按普通节点到普通节点处理. */
+                                this.NodeSend_11(toND2); /* 按普通节点到普通节点处理. */
                                 break;
                             case RunModel.FL:  /*2.2 分流点to分流点  */
                                 throw new Exception("@流程设计错误:请检查流程获取详细信息, 分流点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND2.Name + ").");
@@ -3100,7 +3102,7 @@ namespace BP.WF
                             switch (nd.HisRunModel)
                             {
                                 case RunModel.Ordinary:
-                                    msg+= NodeSend_11(nd); /*按普通节点到普通节点处理.*/
+                                    NodeSend_11(nd); /*按普通节点到普通节点处理.*/
                                     break;
                                 case RunModel.FL:
                                     throw new Exception("@流程设计错误:请检查流程获取详细信息, 分流点(" + this.HisNode.Name + ")下面不能连接分流节点(" + nd.Name + ").");
@@ -3125,7 +3127,7 @@ namespace BP.WF
                             throw new Exception("@不支持流程模式: 分流节点同时启动了多个同表单的子线程.");
 
                         //启动多个异表单子线程节点.
-                        msg += this.NodeSend_24_UnSameSheet(toNDs);
+                        this.NodeSend_24_UnSameSheet(toNDs);
                     }
                     break;
                 case RunModel.HL:  /* 3: 合流节点向下发送 */
@@ -3133,7 +3135,7 @@ namespace BP.WF
                     switch (toND3.HisRunModel)
                     {
                         case RunModel.Ordinary: /*3.1 普通工作节点 */
-                            msg += this.NodeSend_31(toND3); /* 让它与普通点点普通点一样的逻辑. */
+                            this.NodeSend_31(toND3); /* 让它与普通点点普通点一样的逻辑. */
                             break;
                         case RunModel.FL: /*3.2 分流点 */
                             throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND3.Name + ").");
@@ -3151,7 +3153,7 @@ namespace BP.WF
                     switch (toND4.HisRunModel)
                     {
                         case RunModel.Ordinary: /*4.1 普通工作节点 */
-                            msg += this.NodeSend_11(toND4); /* 让它与普通点点普通点一样的逻辑. */
+                            this.NodeSend_11(toND4); /* 让它与普通点点普通点一样的逻辑. */
                             break;
                         case RunModel.FL: /*4.2 分流点 */
                             throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND4.Name + ").");
@@ -3175,16 +3177,16 @@ namespace BP.WF
                             throw new Exception("@流程设计错误:请检查流程获取详细信息, 子线程点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND5.Name + ").");
                         case RunModel.HL: /*5.3 合流点 */
                             if (toND5.HisSubThreadType == SubThreadType.SameSheet)
-                                msg += this.NodeSend_53_SameSheet(toND5);
+                                this.NodeSend_53_SameSheet(toND5);
                             else
-                                msg += this.NodeSend_53_UnSameSheet(toND5);
+                                this.NodeSend_53_UnSameSheet(toND5);
                             break;
                         case RunModel.FHL:
-                            msg += this.NodeSend_54(toND5);
+                            this.NodeSend_54(toND5);
                             break;
                         case RunModel.SubThread: /*5.5 子线程*/
                             if (toND5.HisSubThreadType == this.HisNode.HisSubThreadType)
-                                msg += this.NodeSend_11(toND5); /*与普通节点一样.*/
+                                this.NodeSend_11(toND5); /*与普通节点一样.*/
                             else
                                 throw new Exception("@流程设计模式错误：连续两个子线程的子线程模式不一样，从节点(" + this.HisNode.Name + ")到节点(" + toND5.Name + ")");
                             break;
@@ -3223,12 +3225,12 @@ namespace BP.WF
 
             #region 第一步: 检查当前操作员是否可以发送: 共分如下 3 个步骤.
             // 第1.1: 检查是否可以处理当前的工作.
-            if (this.HisNode.IsStartNode==false 
+            if (this.HisNode.IsStartNode == false
                 && BP.WF.Dev2Interface.Flow_CheckIsCanDoCurrentWork(this.WorkID, WebUser.No) == false)
                 throw new Exception("@当前工作您已经处理完成，或者您没有处理当前工作的权限。");
 
             // 第1.2: 调用发起前的事件接口,处理用户定义的业务逻辑.
-            msg = this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
+            msg += this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
 
             // 第3: 如果是是合流点，有子线程未完成的情况.
             if (this.HisNode.IsHL)
@@ -3239,7 +3241,7 @@ namespace BP.WF
                 DataTable dtWL = DBAccess.RunSQLReturnTable(sql);
                 if (dtWL.Rows.Count != 0)
                 {
-                    msg = "@您不能向下发送，有如下子线程没有完成。";
+                    msg += "@您不能向下发送，有如下子线程没有完成。";
                     foreach (DataRow dr in dtWL.Rows)
                     {
                         msg += "@操作员编号:" + dr["FK_Emp"] + "," + dr["FK_EmpText"] + ",停留节点:" + dr["FK_NodeText"];
@@ -3259,19 +3261,17 @@ namespace BP.WF
                 if (this.HisNode.IsStartNode)
                     InitStartWorkDataV2(); //初始化开始节点数据, 如果当前节点是开始节点.
 
-
-               this.CheckCompleteCondition();
+                this.CheckCompleteCondition();
                 if (this.IsStopFlow == true)
                 {
                     /*在检查完后，反馈来的标志流程已经停止了。*/
-                     this.Func_DoSetThisWorkOver();
+                    this.Func_DoSetThisWorkOver();
                 }
                 else
                 {
                     #region 第二步: 进入核心的流程运转计算区域. 5*5 的方式处理不同的发送情况.
                     // 执行节点向下发送的25种情况的判断.
                     this.NodeSend_Send_5_5();
-
 
                     // 处理当前工作结束.
                     ps = new Paras();
@@ -3281,7 +3281,6 @@ namespace BP.WF
                     DBAccess.RunSQL(ps);
                     #endregion 第二步: 5*5 的方式处理不同的发送情况.
                 }
-               
 
                 #region 第三步: 处理发送之后的业务逻辑.
                 //把当前节点表单数据copy的流程数据表里.

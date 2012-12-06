@@ -82,8 +82,11 @@ namespace BP.WF
                     wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
                 }
 
-                if (i > 3)
+                if (i >= 3)
+                {
+                    wk.OID = newOID;
                     wk.DirectUpdate();
+                }
 
                 #region 处理删除草稿的需求。
                 if (System.Web.HttpContext.Current.Request.QueryString["IsDeleteDraft"] == "1" && num == 1)

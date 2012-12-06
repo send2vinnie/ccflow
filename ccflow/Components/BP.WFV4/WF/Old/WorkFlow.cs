@@ -531,7 +531,7 @@ namespace BP.WF
             /* 如果是一个主线程 */
          //   BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
 
-            // 查询出来报表的数据（主表的数据），以供明细表复制。 
+            // 查询出来报表的数据（主表的数据），以供从表复制。 
             BP.Sys.GEEntity geRpt = new GEEntity("ND" + int.Parse(this.HisFlow.No) + "Rpt");
             geRpt.SetValByKey("OID", this.WorkID);
             geRpt.RetrieveFromDBSources();
@@ -574,13 +574,13 @@ namespace BP.WF
             geRpt.Save();
 
             //geRpt.Update("Emps", emps);
-            //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有明细表。
+            //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有从表。
             MapDtls dtls = nd.MapData.MapDtls; // new MapDtls("ND" + nd.NodeID);
             int i = 0;
             foreach (MapDtl dtl in dtls)
             {
                 i++;
-                // 查询出该明细表中的数据。
+                // 查询出该从表中的数据。
                 GEDtls dtlDatas = new GEDtls(dtl.No);
                 dtlDatas.Retrieve(GEDtlAttr.RefPK, this.WorkID);
 
@@ -849,7 +849,7 @@ namespace BP.WF
             //sw.Update("WFState", (int)sw.WFState);
             sw.Update("WFState", (int)WFState.Complete);
 
-            //查询出来报表的数据（主表的数据），以供明细表复制。
+            //查询出来报表的数据（主表的数据），以供从表复制。
             BP.Sys.GEEntity geRpt = new GEEntity("ND" + int.Parse(this.HisFlow.No) + "Rpt");
             geRpt.SetValByKey("OID", this.WorkID);
             geRpt.Retrieve();
@@ -868,14 +868,14 @@ namespace BP.WF
             geRpt.Update();
 
             //geRpt.Update("Emps", emps);
-            //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有明细表。
+            //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有从表。
 
             MapDtls dtls = new MapDtls("ND" + nd.NodeID);
             int i = 0;
             foreach (MapDtl dtl in dtls)
             {
                 i++;
-                // 查询出该明细表中的数据。
+                // 查询出该从表中的数据。
                 GEDtls dtlDatas = new GEDtls(dtl.No);
                 dtlDatas.Retrieve(GEDtlAttr.RefPK, this.WorkID);
 

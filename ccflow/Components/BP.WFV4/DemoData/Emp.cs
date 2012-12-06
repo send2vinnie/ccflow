@@ -167,7 +167,6 @@ namespace BP.WF.Demo
                 rm.HisAttrs.AddTBString("Note", null, "调用原因", true, false, 0, 1000, 100);
                 rm.ClassMethodName = this.ToString() + ".DoMove";
                 map.AddRefMethod(rm);
-
                 this._enMap = map;
                 return this._enMap;
             }

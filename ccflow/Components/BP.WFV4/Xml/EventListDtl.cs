@@ -20,7 +20,7 @@ namespace BP.WF.XML
     }
 
     /// <summary>
-    /// 明细表事件
+    /// 从表事件
     /// </summary>
     public class EventListDtl : XmlEn
     {
@@ -50,7 +50,7 @@ namespace BP.WF.XML
 
         #region 构造
         /// <summary>
-        /// 明细表事件
+        /// 从表事件
         /// </summary>
         public EventListDtl()
         {
@@ -68,13 +68,13 @@ namespace BP.WF.XML
         #endregion
     }
     /// <summary>
-    /// 明细表事件s
+    /// 从表事件s
     /// </summary>
     public class EventListDtls : XmlEns
     {
         #region 构造
         /// <summary>
-        /// 明细表事件s
+        /// 从表事件s
         /// </summary>
         public EventListDtls() { }
         #endregion

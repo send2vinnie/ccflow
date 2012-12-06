@@ -878,7 +878,7 @@ namespace BP.WF
                         if (newTable.Rows.Count < groupIdx)
                             continue;
 
-                        #region 增加明细表
+                        #region 增加从表
                         foreach (MapDtl dtl in dtls)
                         {
                             if (dtl.IsUse)
@@ -964,7 +964,7 @@ namespace BP.WF
                             groupIdx++;
                             isLeft = true;
                         }
-                        #endregion 增加明细表
+                        #endregion 增加从表
 
                         if (attr.UIIsLine)
                         {

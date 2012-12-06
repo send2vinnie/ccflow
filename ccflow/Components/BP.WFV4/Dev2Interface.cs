@@ -899,7 +899,14 @@ namespace BP.WF
 
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(ps);
             if (dt.Rows.Count == 0)
+            {
+                //ps = new Paras();
+                //ps.SQL = "SELECT  FROM  ND"+int.Parse("")+"01" + SystemConfig.AppCenterDBVarStr + "FK_Emp AND b.IsEnable=1 AND a.workid=" + SystemConfig.AppCenterDBVarStr + "WorkID";
+                //ps.Add("FK_Emp", userNo);
+                //ps.Add("WorkID", workID);
+                //dt = BP.DA.DBAccess.RunSQLReturnTable(ps);
                 return false;
+            }
 
             int i = int.Parse(dt.Rows[0][0].ToString());
             RunModel rm = (RunModel)i;
@@ -968,7 +975,7 @@ namespace BP.WF
             wk.OID = workID;
             if (workDtls != null)
             {
-                //保存明细表
+                //保存从表
                 foreach (DataTable dt in workDtls.Tables)
                 {
                     foreach (MapDtl dtl in wk.HisMapDtls)
@@ -982,7 +989,7 @@ namespace BP.WF
                         GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
                         daDtl.RefPK = wk.OID.ToString();
 
-                        // 为明细表复制数据.
+                        // 为从表复制数据.
                         foreach (DataRow dr in dt.Rows)
                         {
                             daDtl.ResetDefaultVal();
@@ -1061,7 +1068,7 @@ namespace BP.WF
 
             if (workDtls != null)
             {
-                //保存明细表
+                //保存从表
                 foreach (DataTable dt in workDtls.Tables)
                 {
                     foreach (MapDtl dtl in sw.HisMapDtls)
@@ -1075,7 +1082,7 @@ namespace BP.WF
                         GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
                         daDtl.RefPK = workID.ToString();
 
-                        // 为明细表复制数据.
+                        // 为从表复制数据.
                         foreach (DataRow dr in dt.Rows)
                         {
                             daDtl.ResetDefaultVal();
@@ -1197,7 +1204,7 @@ namespace BP.WF
 
                 if (dsDtls != null)
                 {
-                    //保存明细表
+                    //保存从表
                     foreach (DataTable dt in dsDtls.Tables)
                     {
                         foreach (MapDtl dtl in sw.HisMapDtls)
@@ -1211,7 +1218,7 @@ namespace BP.WF
                             GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
                             daDtl.RefPK = workID.ToString();
 
-                            // 为明细表复制数据.
+                            // 为从表复制数据.
                             foreach (DataRow dr in dt.Rows)
                             {
                                 daDtl.ResetDefaultVal();
@@ -1281,7 +1288,7 @@ namespace BP.WF
         /// <param name="fk_mapdata">流程表单ID</param>
         /// <param name="workID">工作ID</param>
         /// <param name="htData">流程表单数据Key Value 格式存放.</param>
-        /// <param name="workDtls">明细表数据</param>
+        /// <param name="workDtls">从表数据</param>
         /// <returns>返回执行信息</returns>
         public static void Node_SaveFlowSheet(string fk_mapdata, Int64 workID, Hashtable htData, DataSet workDtls)
         {
@@ -1305,7 +1312,7 @@ namespace BP.WF
             if (workDtls != null)
             {
                 MapDtls dtls = new MapDtls(fk_mapdata);
-                //保存明细表
+                //保存从表
                 foreach (DataTable dt in workDtls.Tables)
                 {
                     foreach (MapDtl dtl in dtls)
@@ -1319,7 +1326,7 @@ namespace BP.WF
                         GEDtl daDtl = daDtls.GetNewEntity as GEDtl;
                         daDtl.RefPK = workID.ToString();
 
-                        // 为明细表复制数据.
+                        // 为从表复制数据.
                         foreach (DataRow dr in dt.Rows)
                         {
                             daDtl.ResetDefaultVal();
@@ -1364,6 +1371,24 @@ namespace BP.WF
                 sa.WorkID = workID;
                 sa.Insert();
             }
+        }
+        /// <summary>
+        /// 节点工作挂起(或者取消挂起)
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="workid">工作ID</param>
+        /// <param name="way">挂起方式</param>
+        /// <param name="reldata">解除挂起日期(可以为空)</param>
+        /// <param name="msg">挂起原因</param>
+        /// <returns>返回执行信息</returns>
+        public static string Node_HungUp_Or_UnHungUp(string fk_flow, Int64 workid, int wayInt, string reldata, string msg)
+        {
+            HungUpWay way = (HungUpWay)wayInt;
+            BP.WF.WorkFlow wf = new WorkFlow(fk_flow, workid);
+            if (wf.HisGenerWorkFlow.WFState == WFState.HungUp)
+                return wf.DoUnHungUp();
+            else
+                return wf.DoHungUp(way, reldata, msg);
         }
         /// <summary>
         /// 工作移交

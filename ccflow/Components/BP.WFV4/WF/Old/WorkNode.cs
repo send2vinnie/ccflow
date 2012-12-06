@@ -1383,7 +1383,7 @@ namespace BP.WF
                 }
 
                 #region 删除当前节点数据，删除附件信息。
-                // 删除明细表信息。
+                // 删除从表信息。
                 MapDtls dtls = new MapDtls("ND" + nd.NodeID);
                 foreach (MapDtl dtl in dtls)
                 {
@@ -2395,7 +2395,7 @@ namespace BP.WF
                         }
                         #endregion  复制附件信息
 
-                        #region  复制明细表信息.
+                        #region  复制从表信息.
                         if (dtlsFrom.Count > 0)
                         {
                             int i = -1;
@@ -2446,7 +2446,7 @@ namespace BP.WF
                                     //dtCopy.InsertAsOID(gedtl.OID);
                                     //dtCopy.InsertAsOID(gedtl.OID);
 
-                                    #region  复制明细表单条 - 附件信息 - M2M- M2MM
+                                    #region  复制从表单条 - 附件信息 - M2M- M2MM
                                     if (toDtl.IsEnableAthM)
                                     {
                                         /*如果启用了多附件,就复制这条明细数据的附件信息。*/
@@ -2488,7 +2488,7 @@ namespace BP.WF
                                             }
                                         }
                                     }
-                                    #endregion  复制明细表单条 - 附件信息
+                                    #endregion  复制从表单条 - 附件信息
 
                                 }
                             }
@@ -3652,7 +3652,7 @@ namespace BP.WF
                 wk.OID = this.HisWork.OID;
                 if (wk.Delete() != 0)
                 {
-                    /* 删除其它附件信息，明细表信息。 */
+                    /* 删除其它附件信息，从表信息。 */
                     #warning 没处理。
                 }
             }
@@ -3948,7 +3948,7 @@ namespace BP.WF
                 this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete,
                     WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
 
-                // 产生合流汇总明细表数据.
+                // 产生合流汇总从表数据.
                 this.GenerHieLiuHuiZhongDtlData(nd);
 
                 #region 处理完成率
@@ -4103,7 +4103,7 @@ namespace BP.WF
             }
             #endregion 复制EleDB。
 
-            // 产生合流汇总明细表数据.
+            // 产生合流汇总从表数据.
             this.GenerHieLiuHuiZhongDtlData(nd);
 
             #endregion 处理合流节点表单数据
@@ -4302,7 +4302,7 @@ namespace BP.WF
                 #endregion 处理完成率
 
 
-                // 产生合流汇总明细表数据.
+                // 产生合流汇总从表数据.
                 this.GenerHieLiuHuiZhongDtlData(nd);
 
                 string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
@@ -4368,7 +4368,7 @@ namespace BP.WF
             mainWK.OID = this.HisWork.FID;
             mainWK.Insert();
 
-            // 产生合流汇总明细表数据.
+            // 产生合流汇总从表数据.
             this.GenerHieLiuHuiZhongDtlData(nd);
 
             /*处理表单数据的复制。*/
@@ -4601,7 +4601,7 @@ namespace BP.WF
                             Sys.MapDtl toDtl = (Sys.MapDtl)toDtls[i];
                             if (dtl.IsEnablePass == true)
                             {
-                                /*如果启用了是否明细表的审核通过机制,就允许copy节点数据。*/
+                                /*如果启用了是否从表的审核通过机制,就允许copy节点数据。*/
                                 toDtl.IsCopyNDData = true;
                             }
 
@@ -4637,7 +4637,7 @@ namespace BP.WF
 
                             if (isEnablePass == true)
                             {
-                                /*判断当前节点该明细表上是否有，isPass 审核字段，如果没有抛出异常信息。*/
+                                /*判断当前节点该从表上是否有，isPass 审核字段，如果没有抛出异常信息。*/
                                 if (gedtls.Count != 0)
                                 {
                                     GEDtl dtl1 = gedtls[0] as GEDtl;
@@ -4664,7 +4664,7 @@ namespace BP.WF
                                 dtCopy.RefPK = this.WorkID.ToString();
                                 dtCopy.InsertAsOID(dtCopy.OID);
 
-                                #region  复制明细表单条 - 附件信息
+                                #region  复制从表单条 - 附件信息
                                 if (toDtl.IsEnableAthM)
                                 {
                                     /*如果启用了多附件,就复制这条明细数据的附件信息。*/
@@ -4706,14 +4706,14 @@ namespace BP.WF
                                         }
                                     }
                                 }
-                                #endregion  复制明细表单条 - 附件信息
+                                #endregion  复制从表单条 - 附件信息
 
                             }
                             if (isEnablePass)
                             {
                                 /* 如果启用了审核通过机制，就把未审核的数据copy到第一个节点上去 
                                  * 1, 找到对应的明细点.
-                                 * 2, 把未审核通过的数据复制到开始明细表里.
+                                 * 2, 把未审核通过的数据复制到开始从表里.
                                  */
 
                                 string startTable = "ND" + int.Parse(nd.FK_Flow) + "01";

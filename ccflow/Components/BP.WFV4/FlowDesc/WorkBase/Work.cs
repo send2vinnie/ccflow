@@ -10,7 +10,24 @@ using System.Text;
 
 namespace BP.WF
 {
-   
+    /// <summary>
+    /// 
+    /// </summary>
+    public class WorkSysFieldAttr
+    {
+        /// <summary>
+        /// 发送人员字段
+        /// </summary>
+        public const string SysSendEmps = "SysSendEmps";
+        /// <summary>
+        /// 抄送人员字段
+        /// </summary>
+        public const string SysCCEmps = "SysCCEmps";
+        /// <summary>
+        /// 应完成日期
+        /// </summary>
+        public const string SysSDT = "SysSDT";
+    }
     /// <summary>
     /// 工作属性
     /// </summary>
