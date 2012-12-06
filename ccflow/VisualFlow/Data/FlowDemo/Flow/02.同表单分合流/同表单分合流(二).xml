@@ -10283,7 +10283,7 @@
   <Sys_FrmLab>
     <MyPK>Lab120315035827</MyPK>
     <FK_MapData>ND603</FK_MapData>
-    <Text>以下测试字段将会代入到合流点的明细表里,必须保证此表单的字段名称与明细表的字段名称一致，大小写区分。</Text>
+    <Text>以下测试字段将会代入到合流点的从表里,必须保证此表单的字段名称与从表的字段名称一致，大小写区分。</Text>
     <X>128.09</X>
     <Y>63.8</Y>
     <FontSize>11</FontSize>
@@ -10348,7 +10348,7 @@
   <Sys_FrmLab>
     <MyPK>Lab120315053453</MyPK>
     <FK_MapData>ND604</FK_MapData>
-    <Text>明细表的数据是从上一个节点的子线程copy过来的。每条明细数据就是一个子线程。</Text>
+    <Text>从表的数据是从上一个节点的子线程copy过来的。每条明细数据就是一个子线程。</Text>
     <X>93.81</X>
     <Y>91.57</Y>
     <FontSize>11</FontSize>

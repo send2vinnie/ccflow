@@ -32,9 +32,9 @@
 	<Item No="FlowDelBefore" CH="流程删除前" EN="When the node after sending cancellation" EventType="Flow"  />
 	<Item No="FlowDelAfter" CH="流程删除后" EN="When the node after sending cancellation" EventType="Flow"  />
 
-    <!-- 明细表事件 -->
-    <ItemDtl No="DtlSaveBefore" CH="明细表保存前" EN="" EventType="Dtl" />
-    <ItemDtl No="DtlSaveEnd" CH="明细表保存后" EN=""  EventType="Dtl" />
+    <!-- 从表事件 -->
+    <ItemDtl No="DtlSaveBefore" CH="从表保存前" EN="" EventType="Dtl" />
+    <ItemDtl No="DtlSaveEnd" CH="从表保存后" EN=""  EventType="Dtl" />
     <ItemDtl No="DtlItemSaveBefore" CH="单条数据保存前" EN="" EventType="Dtl"  />
     <ItemDtl No="DtlItemSaveAfter" CH="单条数据保存后" EN="" EventType="Dtl"  />
     <ItemDtl No="DtlItemDelBefore" CH="单条删除前" EN="" EventType="Dtl"  />

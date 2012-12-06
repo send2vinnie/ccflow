@@ -39,7 +39,7 @@
   <Item No="MinLen" CH="最小长度" RU="Минимальная длина" EN="Minimum length" JP="最小長" />
   <Item No="MaxLen" CH="最大长度" RU="Максимальная длина" EN="Maximum length" JP="最大の長さ" />
   <Item No="TBWidth" CH="文本框宽度" RU="Текстовое поле шириной" EN="Text box width" JP="テキストボックスの幅" />
-  <Item No="ForDtl" CH="对明细表有效" RU="Эффективное по графику" EN="Effective on details" JP="スケジュールに効果的" />
+  <Item No="ForDtl" CH="对从表有效" RU="Эффективное по графику" EN="Effective on details" JP="スケジュールに効果的" />
   <Item No="IsReadonly" CH="是否只读" RU="Ли только для чтения" EN="Read-only" JP="を読むかどうかのみ" />
   <Item No="FK" CH="外键" RU="Внешний ключ" EN="Foreign key" JP="外部キー" />
   <Item No="IsCanEdit" CH="是否可编辑" RU="Можно изменить" EN="Editable" JP="編集できます" />

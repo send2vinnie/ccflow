@@ -2,7 +2,7 @@
 <NewDataSet>
   <Sys_MapDtl>
     <No>Demo_Inc10Dtl1</No>
-    <Name>10.机械设备明细表</Name>
+    <Name>10.机械设备从表</Name>
     <FK_MapData>Demo_Inc10</FK_MapData>
     <PTable>EQU_LIST</PTable>
     <RowIdx>99</RowIdx>
@@ -669,7 +669,7 @@
     <MyPK>Demo_Inc10Dtl1_AthM</MyPK>
     <FK_MapData>Demo_Inc10Dtl1</FK_MapData>
     <NoOfObj>AthM</NoOfObj>
-    <Name>10.机械设备明细表</Name>
+    <Name>10.机械设备从表</Name>
     <Exts />
     <SaveTo />
     <Sort />

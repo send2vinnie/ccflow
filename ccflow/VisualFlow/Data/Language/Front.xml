@@ -12,8 +12,8 @@
   <Item No="DesignDtl" CH="设计明细" RU="Дизайн Подробности" EN="Design Details" JP="設計の詳細" />
   <Item No="FlowImg" CH="流程图" RU="Схема" EN="Flow chart" JP="フローチャート" />
   <Item No="PTable" CH="物理表" RU="Физическая форма" EN="Physical Table" JP="物理的なフォーム" />
-  <Item No="DtlTable" CH="明细表" RU="Расписание" EN="Details Table" JP="スケジュール" />
-  <Item No="Dtl" CH="明细表" RU="Расписание" EN="Details" JP="スケジュール" />
+  <Item No="DtlTable" CH="从表" RU="Расписание" EN="Details Table" JP="スケジュール" />
+  <Item No="Dtl" CH="从表" RU="Расписание" EN="Details" JP="スケジュール" />
   <Item No="AutoGener" CH="系统自动生成" RU="Система автоматически генерирует" EN="Auto-generate" JP="システムが自動的に生成" />
   <Item No="PTableD" CH="如果没有特殊情况可以与编号相同" RU="Если Есть никаких особых обстоятельств, с тем же числом" EN="Same as ID if no special circumstances" JP="がある場合は、同じ番号には特別な事情があります" />
   <!-- WF  -->

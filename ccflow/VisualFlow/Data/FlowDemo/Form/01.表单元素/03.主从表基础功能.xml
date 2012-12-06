@@ -493,7 +493,7 @@
   <Sys_FrmLab>
     <MyPK>Lab120615085615</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
-    <Text>利用下拉框来填充主表与明细表</Text>
+    <Text>利用下拉框来填充主表与从表</Text>
     <X>51.9</X>
     <Y>1208.95</Y>
     <FontSize>16</FontSize>
@@ -3051,7 +3051,7 @@
   </Sys_GroupField>
   <Sys_GroupField>
     <OID>332</OID>
-    <Lab>填充明细表</Lab>
+    <Lab>填充从表</Lab>
     <EnName>Demo_03</EnName>
     <Idx>1</Idx>
   </Sys_GroupField>

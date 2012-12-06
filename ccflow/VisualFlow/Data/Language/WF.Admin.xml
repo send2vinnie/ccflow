@@ -90,8 +90,8 @@
   <Item No="EditFieldGroup" CH="字段分组" EN="Field Group" JP="FieldGroup" RU="FieldGroup" />
   <Item No="FieldGroupGuide" CH="字段分组向导" EN="Field Group Guide" JP="FieldGroupGuide" RU="FieldGroupGuide" />
 
-  <!-- 复制明细表 -->
-  <Item No="CopyDtl" CH="复制明细表" EN="Copy Details" JP="Copy Dtl" RU="FieldGroupGuide" />
+  <!-- 复制从表 -->
+  <Item No="CopyDtl" CH="复制从表" EN="Copy Details" JP="Copy Dtl" RU="FieldGroupGuide" />
   <Item No="Group" CH="分组" EN="Group" JP="Group" RU="FieldGroupGuide" />
 
   <Item No="SelectNode" CH="选择节点" EN="Select Node" JP="SelectNode" RU="SelectNode" />
@@ -106,7 +106,7 @@
   <Item No="Way1" CH="方式1：本表单中数据计算。" EN="Mode 1: Calculated with field data on this form." JP="Mode1:This form of data calculations." RU="FieldGroup" />
   <Item No="Way2" CH="方式2：利用SQL自动填充。" EN="Mode 2: Populate with SQL statements." JP="FieldGroup" RU="FieldGroup" />
   <Item No="Way3" CH="方式3：本表单中外键列。" EN="Mode 3: The foreign key column of this form." JP="FieldGroup" RU="FieldGroup" />
-  <Item No="Way4" CH="方式4：对一个明细表的列求值。" EN="Mode 4: Calculated with a field in the detail table." JP="FieldGroup" RU="FieldGroup" />
+  <Item No="Way4" CH="方式4：对一个从表的列求值。" EN="Mode 4: Calculated with a field in the detail table." JP="FieldGroup" RU="FieldGroup" />
 
   <Item No="Way0D" CH="不做任何设置。" EN="Do nothing." JP="Mode0:Do nothing." RU="FieldGroup" />
   <Item No="Way1D" CH="比如:@单价*@数量" EN="E.g. @price*@quantity" JP="Mode1:This form of data calculations." RU="FieldGroup" />
@@ -117,7 +117,7 @@
         EN="E.g. Populate the address and supplier phone number fields based on the product ID column (foreign key) value." 
         JP="FieldGroup" RU="FieldGroup" />
   
-  <Item No="Way4D" CH="比如:对明细表中的列求值。" 
+  <Item No="Way4D" CH="比如:对从表中的列求值。" 
         EN="E.g. calculate the subtotal of a field in the details table." 
         JP="FieldGroup" RU="FieldGroup" />
 
