@@ -4,10 +4,24 @@
              >
     <Grid x:Name="LayoutRoot" >
         <!--<Rectangle Name="eliBorder"    Width="102" Height="62"    Stroke="Black"  StrokeThickness="2"   ></Rectangle>-->
-        <Rectangle Name="picRect"   RadiusX="10" RadiusY="10"  Width="100" Height="40"  Fill="Red"
+        <!--<Rectangle Name="picRect"   RadiusX="10" RadiusY="10"  Width="100" Height="40"  Fill="White"
                    Stretch="Fill" Stroke="White"   StrokeThickness="2">
+        </Rectangle>-->
+
+
+        <Rectangle  Name="picRect"  Width="100" Height="40"  Fill="White"
+                   Stretch="Fill" Stroke="White"   StrokeThickness="2">
+
+            <Rectangle.RenderTransform>
+                <MatrixTransform>
+                    <MatrixTransform.Matrix >
+                        <!-- This matrix transforms the x,y position of
+               the rectangle and skews it. -->
+                        <Matrix OffsetX="10" OffsetY="10"    M11="1.0" M12="0.0" M21="0.4" M22="1" />
+                    </MatrixTransform.Matrix>
+                </MatrixTransform>
+            </Rectangle.RenderTransform>
         </Rectangle>
-        
         <!--<TextBlock  Name="textBlock1" Foreground="Black" Text="结束结点"  FontSize="12"    
                      VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"  MaxWidth="90" />-->
 

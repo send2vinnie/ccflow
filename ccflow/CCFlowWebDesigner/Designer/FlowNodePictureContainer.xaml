@@ -10,7 +10,7 @@
         <pic:FenHeLiuNode    x:Name="picFenHeLiuNode"></pic:FenHeLiuNode>
         <pic:SubThreadNode  x:Name="picSubThreadNode"></pic:SubThreadNode>
              
-        <TextBlock   x:Name="txtFlowNodeName" Foreground="Black" Text="新建节点"  FontSize="12"    
+        <TextBlock   x:Name="txtNodeName" Foreground="Black" Text="新建节点"  FontSize="12"    
                      VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"  MaxWidth="90"  >
 
          </TextBlock>

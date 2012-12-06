@@ -231,18 +231,18 @@
     <Compile Include="NodePicture\FenHeLiuNode.xaml.cs">
       <DependentUpon>FenHeLiuNode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NodePicture\HeLiuNode.xaml.cs">
-      <DependentUpon>HeLiuNode.xaml</DependentUpon>
+    <Compile Include="NodePicture\SubThreadNode.xaml.cs">
+      <DependentUpon>SubThreadNode.xaml</DependentUpon>
     </Compile>
     <Compile Include="NodePicture\FenLiuNode.xaml.cs">
       <DependentUpon>FenLiuNode.xaml</DependentUpon>
     </Compile>
     <Compile Include="NodePicture\IFlowNodePicture.cs" />
-    <Compile Include="NodePicture\SubThreadNode.xaml.cs">
-      <DependentUpon>SubThreadNode.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NodePicture\OrdinaryNode.xaml.cs">
       <DependentUpon>OrdinaryNode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NodePicture\HeLiuNode.xaml.cs">
+      <DependentUpon>HeLiuNode.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\WSFtp\Reference.cs">
@@ -442,7 +442,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NodePicture\HeLiuNode.xaml">
+    <Page Include="NodePicture\SubThreadNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -450,11 +450,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NodePicture\SubThreadNode.xaml">
+    <Page Include="NodePicture\OrdinaryNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NodePicture\OrdinaryNode.xaml">
+    <Page Include="NodePicture\HeLiuNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

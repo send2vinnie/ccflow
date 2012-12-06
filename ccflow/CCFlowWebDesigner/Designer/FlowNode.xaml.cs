@@ -108,7 +108,7 @@ namespace BP
                 {
                     _stationTipControl = new FlowNode(_container, FlowNodeType.Ordinary);
                     _stationTipControl.Container = this.Container;
-                    _stationTipControl.sdPicture.txtFlowNodeName.Text = "";
+                  // _stationTipControl.sdPicture.txtNodeName.Text = "";
                     // container.Children.Add(_stationTipControl);
                     _container.AddFlowNode(_stationTipControl);
 
@@ -158,40 +158,37 @@ namespace BP
                 }
             }
         }
-        string flowID;
-        public string FlowID
+        string fk_Flow;
+        public string FK_Flow
         {
             get
             {
-                if (string.IsNullOrEmpty(flowID))
+                if (string.IsNullOrEmpty(fk_Flow))
                 {
-                    flowID = Guid.NewGuid().ToString();
+                    fk_Flow = Guid.NewGuid().ToString();
                 }
-                return flowID;
+                return fk_Flow;
             }
             set
             {
-                flowID = value;
+                fk_Flow = value;
             }
-
         }
 
-        string flowNodeID;
-        public string FlowNodeID
+        string nodeID;
+        public string NodeID
         {
             get
             {
 
-                return flowNodeID;
+                return nodeID;
             }
             set
             {
-                flowNodeID = value;
+                nodeID = value;
             }
-
         }
-
-        public string FlowNodeName
+        public string NodeName
         {
             get
             {
@@ -199,13 +196,10 @@ namespace BP
             }
             set
             {
-
                 sdPicture.NodeName = value;
                 sdPicture.PropertyChanged += sdPicture_PropertyChanged;
             }
-
         }
-
         public int ZIndex
         {
             get
@@ -217,7 +211,6 @@ namespace BP
             {
                 this.SetValue(Canvas.ZIndexProperty, value);
             }
-
         }
 
         string _subFlow;
@@ -232,7 +225,6 @@ namespace BP
                 _subFlow = value;
             }
         }
-
         public bool IsDeleted
         {
             get
@@ -240,7 +232,6 @@ namespace BP
                 return isDeleted;
             }
         }
-
         FlowNodeComponent flowNodeData;
         public FlowNodeComponent FlowNodeData
         {
@@ -251,9 +242,9 @@ namespace BP
                     if (EditType == PageEditType.Add)
                     {
                         flowNodeData = new FlowNodeComponent();
-                        flowNodeData.FlowNodeID = this.FlowNodeID;
-                        flowNodeData.FlowID = this.FlowID;
-                        flowNodeData.FlowNodeName = sdPicture.NodeName;
+                        flowNodeData.NodeID = this.NodeID;
+                        flowNodeData.FK_Flow = this.FK_Flow;
+                        flowNodeData.NodeName = sdPicture.NodeName;
                         flowNodeData.FlowNodeType = HisRunModel.ToString();
                         flowNodeData.RepeatDirection = RepeatDirection.ToString();
                         flowNodeData.SubFlow = SubFlow;
@@ -262,7 +253,7 @@ namespace BP
                     }
                     else if (EditType == PageEditType.Modify)
                     {
-                        FlowNodeData = getFlowNodeComponentFromServer(this.FlowNodeID);
+                        FlowNodeData = getFlowNodeComponentFromServer(this.NodeID);
 
                     }
                 }
@@ -427,10 +418,11 @@ namespace BP
 
             _container = container;
             editType = PageEditType.Add;
+
             this.HisRunModel = at;
 
             System.Windows.Browser.HtmlPage.Document.AttachEvent("oncontextmenu", OnContextMenu);
-            this.Name = FlowID;
+            this.Name = FK_Flow;
 
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
@@ -673,13 +665,13 @@ namespace BP
             //    && BeginDirectionCollections.Count > 0)
             //{
             //    cr.IsPass = false;//不能有后继节点
-            //    cr.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, FlowNodeName);
+            //    cr.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, NodeName);
             //}
             //if (EndDirectionCollections == null
             //    || EndDirectionCollections.Count == 0)
             //{
             //    cr.IsPass = false;//必须至少有一个前驱节点
-            //    cr.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
+            //    cr.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, NodeName);
             //}
 
             isPassCheck = cr.IsPass;
@@ -730,7 +722,7 @@ namespace BP
         {
             bool isChanged = false;
 
-            if (FlowNodeData.FlowNodeName != FlowNodeData.FlowNodeName
+            if (FlowNodeData.NodeName != FlowNodeData.NodeName
                 || FlowNodeData.FlowNodeType != FlowNodeData.FlowNodeType
                 || FlowNodeData.RepeatDirection != FlowNodeData.RepeatDirection)
             {
@@ -750,7 +742,7 @@ namespace BP
 
         void setUIValueByFlowNodeData(FlowNodeComponent FlowNodeData)
         {
-            sdPicture.NodeName = FlowNodeData.FlowNodeName;
+            sdPicture.NodeName = FlowNodeData.NodeName;
             FlowNodeType type = (FlowNodeType)Enum.Parse(typeof(FlowNodeType), FlowNodeData.FlowNodeType, true);
             MergePictureRepeatDirection repeatDirection = (MergePictureRepeatDirection)Enum.Parse(typeof(MergePictureRepeatDirection), FlowNodeData.RepeatDirection, true);
             HisRunModel = type;
@@ -766,13 +758,13 @@ namespace BP
             }
         }
 
-        FlowNodeComponent getFlowNodeComponentFromServer(string FlowNodeID)
+        FlowNodeComponent getFlowNodeComponentFromServer(string NodeID)
         {
             FlowNodeComponent ac = new FlowNodeComponent();
             ac = new FlowNodeComponent();
-            ac.FlowNodeID = this.FlowNodeID;
-            ac.FlowID = this.FlowID;
-            ac.FlowNodeName = sdPicture.NodeName;
+            ac.NodeID = this.NodeID;
+            ac.FK_Flow = this.FK_Flow;
+            ac.NodeName = sdPicture.NodeName;
             ac.FlowNodeType = HisRunModel.ToString();
             ac.SubFlow = this.SubFlow;
             return ac;
@@ -788,9 +780,9 @@ namespace BP
             var xml = new System.Text.StringBuilder();
 
             xml.Append(@"       <FlowNode ");
-            xml.Append(@" FlowID=""" + FlowID + @"""");
-            xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
-            xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
+            xml.Append(@" FK_Flow=""" + FK_Flow + @"""");
+            xml.Append(@" NodeID=""" + NodeID + @"""");
+            xml.Append(@" NodeName=""" + NodeName + @"""");
             xml.Append(@" Type=""" + HisRunModel.ToString() + @"""");
             xml.Append(@" SubFlow=""" + (HisRunModel == FlowNodeType.Ordinary ? SubFlow : @"") + @"""");
             xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
@@ -879,7 +871,7 @@ namespace BP
                         d.Delete();
                     }
                 }
-                _container._Service.DoAsync("DelNode", this.FlowNodeID, true);
+                _container._Service.DoAsync("DelNode", this.NodeID, true);
             }
 
         }
@@ -918,7 +910,7 @@ namespace BP
             FlowNode clone = new FlowNode(this._container, this.HisRunModel);
             clone.originFlowNode = this;
             clone.FlowNodeData = new FlowNodeComponent();
-            clone.FlowNodeData.FlowNodeName = this.FlowNodeData.FlowNodeName;
+            clone.FlowNodeData.NodeName = this.FlowNodeData.NodeName;
             clone.FlowNodeData.FlowNodeType = this.FlowNodeData.FlowNodeType;
             clone.setUIValueByFlowNodeData(clone.FlowNodeData);
             // clone.CenterPoint = this.CenterPoint;
@@ -1123,7 +1115,7 @@ namespace BP
             canShowMenu = true;
 
             //ToolTip tt = new ToolTip();
-            //ttFlowNodeTip.Content = FlowNodeData.FlowNodeName + "\r\n" + FlowNodeData.FlowNodeType;
+            //ttFlowNodeTip.Content = FlowNodeData.NodeName + "\r\n" + FlowNodeData.FlowNodeType;
             return;
 
         }
@@ -1270,13 +1262,13 @@ namespace BP
             //        && EndDirectionCollections.Count > 0)
             //    {
             //        us.IsPass = false;
-            //        us.Message += string.Format(Text.Message_CanNotHavePreFlowNode, FlowNodeName);
+            //        us.Message += string.Format(Text.Message_CanNotHavePreFlowNode, NodeName);
             //    }
             //    if (BeginDirectionCollections == null
             //        || BeginDirectionCollections.Count == 0)
             //    {
             //        us.IsPass = false;//必须至少有一个后继节点
-            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
+            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, NodeName);
             //    }
             //}
             //else if (Type == FlowNodeType.COMPLETION)
@@ -1285,13 +1277,13 @@ namespace BP
             //        && BeginDirectionCollections.Count > 0)
             //    {
             //        us.IsPass = false;//不能有后继节点
-            //        us.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, FlowNodeName);
+            //        us.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, NodeName);
             //    }
             //    if (EndDirectionCollections == null
             //        || EndDirectionCollections.Count == 0)
             //    {
             //        us.IsPass = false;//必须至少有一个前驱节点
-            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
+            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, NodeName);
             //    }
             //}
             //else
@@ -1302,7 +1294,7 @@ namespace BP
             //    || EndDirectionCollections.Count == 0))
             //    {
             //        us.IsPass = false;//必须设置前驱和后继节点
-            //        us.Message += string.Format(Text.Message_RequireTheInstallationOfPreAndFollowupFlowNode, FlowNodeName);
+            //        us.Message += string.Format(Text.Message_RequireTheInstallationOfPreAndFollowupFlowNode, NodeName);
             //    }
             //    else
             //    {
@@ -1312,14 +1304,14 @@ namespace BP
             //        //{
             //        //    this.Type = FlowNodeType.COMPLETION;
             //        //    //cr.IsPass = false;//必须至少有一个后继节点
-            //        //    //cr.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
+            //        //    //cr.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, NodeName);
             //        //}
 
             //        //if (EndDirectionCollections == null
             //        //|| EndDirectionCollections.Count == 0)
             //        //{
             //        //    us.IsPass = false;//必须至少有一个前驱节点
-            //        //    us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
+            //        //    us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, NodeName);
             //        //}
 
             //        //if (Type == FlowNodeType.AND_BRANCH
@@ -1329,7 +1321,7 @@ namespace BP
             //        //        && EndDirectionCollections.Count > 1)
             //        //    {
             //        //        //cr.IsPass = false;//有且只能有一个前驱节点
-            //        //        //cr.Message += string.Format(Text.Message_MustHaveOnlyOnePreFlowNode, FlowNodeName);
+            //        //        //cr.Message += string.Format(Text.Message_MustHaveOnlyOnePreFlowNode, NodeName);
             //        //    }
             //        //}
 
@@ -1341,7 +1333,7 @@ namespace BP
             //        //        && BeginDirectionCollections.Count > 1)
             //        //    {
             //        //        //cr.IsPass = false;
-            //        //        // cr.Message += string.Format(Text.Message_MustHaveOnlyOneFollowUpFlowNode, FlowNodeName);
+            //        //        // cr.Message += string.Format(Text.Message_MustHaveOnlyOneFollowUpFlowNode, NodeName);
             //        //    }
             //        //}
             //    }
@@ -1374,7 +1366,7 @@ namespace BP
             int rowIndex = 0;
             foreach (DataRow dr in dataSet.Tables[1].Rows)
             {
-                if (this.FlowNodeID == dr["FK_Node"].ToString())
+                if (this.NodeID == dr["NodeID"].ToString())
                 {
                     ishave = true;
                     empName += dr["EmpName"].ToString() + ";";
@@ -1395,7 +1387,7 @@ namespace BP
                 BeginFlowNode = this,
                 EndFlowNode = stationTipControl,
                 IsTemporaryDirection = true,
-                FlowID = this.FlowID,
+               // FK_Flow = this.FK_Flow,
                 Container = _container
             };
 

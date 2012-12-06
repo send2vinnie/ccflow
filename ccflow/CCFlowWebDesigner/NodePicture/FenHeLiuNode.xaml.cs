@@ -17,34 +17,31 @@ namespace BP.Picture
         public FenHeLiuNode()
         {
             InitializeComponent();
-          
         }
-
         public new double Opacity
         {
-            set { picAUTOMATION.Opacity = value; }
-            get { return picAUTOMATION.Opacity; }
+            set { picRect.Opacity = value; }
+            get { return picRect.Opacity; }
         }
         public  double PictureWidth
         {
-            set { picAUTOMATION.Width = value; }
-            get { return picAUTOMATION.Width; }
+            set { picRect.Width = value; }
+            get { return picRect.Width; }
         }
         public  double PictureHeight
         {
-            set { picAUTOMATION.Height = value; }
-            get { return picAUTOMATION.Height; }
+            set { picRect.Height = value; }
+            get { return picRect.Height; }
         }
         public new Brush Background
         {
-            set { picAUTOMATION.Fill = value; }
-            get { return picAUTOMATION.Fill; }
+            set { picRect.Fill = value; }
+            get { return picRect.Fill; }
         }
         public Visibility PictureVisibility
         {
             set
             {
-
                  this.Visibility = value;
             }
              get
@@ -57,20 +54,19 @@ namespace BP.Picture
         {
             SolidColorBrush brush = new SolidColorBrush();
             brush.Color = Colors.White;
-            picAUTOMATION.Fill = brush;
+            picRect.Fill = brush;
         }
         public void SetWarningColor()
         { 
-            picAUTOMATION.Fill = SystemConst.ColorConst.WarningColor;
+            picRect.Fill = SystemConst.ColorConst.WarningColor;
         }
         public void SetSelectedColor()
         {
-            picAUTOMATION.Fill = SystemConst.ColorConst.SelectedColor;
+            picRect.Fill = SystemConst.ColorConst.SelectedColor;
         }
         public PointCollection ThisPointCollection
         {
             get { return null; }
         }
-
     }
 }

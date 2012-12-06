@@ -171,10 +171,10 @@ namespace BP
                         if (ele.ElementType == WorkFlowElementType.FlowNode)
                         {
                             var n = ele as FlowNode;
-                            if (n != null && !string.IsNullOrEmpty(n.FlowNodeName))
+                            if (n != null && !string.IsNullOrEmpty(n.NodeName))
                             {
                                 int index = 0;
-                                int.TryParse(n.FlowNodeName.Substring(n.FlowNodeName.Length - 1, 1), out index);
+                                int.TryParse(n.NodeName.Substring(n.NodeName.Length - 1, 1), out index);
                                 if (index > max)
                                 {
                                     max = index;
@@ -353,7 +353,7 @@ namespace BP
         /// <summary>
         /// 新建结点名字
         /// </summary>
-        public string NewFlowNodeName
+        public string NewNodeName
         {
             get;
             set;
@@ -582,16 +582,16 @@ namespace BP
                         sc.Color = Colors.Red;
                         break;
                     default:
-                        sc.Color = Colors.White;
+                        sc.Color = Colors.Black;
                         break;
                 }
 
-                node.sdPicture.txtFlowNodeName.Foreground = sc;
+                node.sdPicture.txtNodeName.Foreground = sc;
 
                 node.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-                node.FlowID = FlowID;
-                node.FlowNodeID = dr["NodeID"].ToString();
-                node.FlowNodeName = dr["Name"].ToString();
+                node.FK_Flow = FlowID;
+                node.NodeID = dr["NodeID"].ToString();
+                node.NodeName = dr["Name"].ToString();
                 double x = double.Parse(dr["X"]);
                 double y = double.Parse(dr["Y"]);
                 if (x < 50)
@@ -617,11 +617,11 @@ namespace BP
             {
                 foreach (DataRow dr in ds.Tables[1].Rows)
                 {
-                    if (bfn.FlowNodeID == dr["Node"].ToString())
+                    if (bfn.NodeID == dr["Node"].ToString())
                     {
                         foreach (FlowNode efn in FlowNodeCollections)
                         {
-                            if (efn.FlowNodeID == dr["ToNode"].ToString())
+                            if (efn.NodeID == dr["ToNode"].ToString())
                             {
                                 Direction d = new Direction((IContainer)this);
                                 d.FlowID = FlowID;
@@ -683,14 +683,14 @@ namespace BP
             this.f = fn;
             fn.sdPicture.tbNodeName.Visibility = Visibility.Visible;
             fn.sdPicture.tbNodeName.Focus();
-            fn.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;
+            fn.sdPicture.txtNodeName.Visibility = Visibility.Collapsed;
             //fn.sdPicture.tbNodeName.LostFocus += new RoutedEventHandler(tbNodeName_LostFocus);
             IsSomeChildEditing = true;
         }
         public void ShowDirectionSetting(Direction r)
         {
             this.WinTitle = "方向设置";
-            Glo.WinOpenByDoType("CH", BP.UrlFlag.Dir, FlowID, r.BeginFlowNode.FlowNodeID, r.EndFlowNode.FlowNodeID);
+            Glo.WinOpenByDoType("CH", BP.UrlFlag.Dir, FlowID, r.BeginFlowNode.NodeID, r.EndFlowNode.NodeID);
         }
         public void LoadFromXmlString(string xml)
         {
@@ -701,8 +701,8 @@ namespace BP
             MergePictureRepeatDirection repeatDirection = MergePictureRepeatDirection.None;
             string FlowID = "";
             int zIndex = 0;
-            string FlowNodeID = "";
-            string FlowNodeName = "";
+            string NodeID = "";
+            string NodeName = "";
             Point FlowNodePosition = new Point();
             double temd = 0;
             Byte[] b = System.Text.UTF8Encoding.UTF8.GetBytes(xml);
@@ -718,8 +718,8 @@ namespace BP
                 FlowNodeType = (FlowNodeType)Enum.Parse(typeof(FlowNodeType), node.Attribute(XName.Get("Type")).Value, true);
                 repeatDirection = (MergePictureRepeatDirection)Enum.Parse(typeof(MergePictureRepeatDirection), node.Attribute(XName.Get("RepeatDirection")).Value, true);
                 FlowID = node.Attribute(XName.Get("FlowID")).Value;
-                FlowNodeID = node.Attribute(XName.Get("FlowNodeID")).Value;
-                FlowNodeName = node.Attribute(XName.Get("FlowNodeName")).Value;
+                NodeID = node.Attribute(XName.Get("NodeID")).Value;
+                NodeName = node.Attribute(XName.Get("NodeName")).Value;
 
                 double.TryParse(node.Attribute(XName.Get("PositionX")).Value, out temd);
                 FlowNodePosition.X = temd;
@@ -732,17 +732,17 @@ namespace BP
                 a.SubFlow = node.Attribute(XName.Get("SubFlow")).Value;
                 a.RepeatDirection = repeatDirection;
                 a.CenterPoint = FlowNodePosition;
-                a.FlowNodeID = FlowNodeID;
-                a.FlowNodeName = FlowNodeName;
+                a.NodeID = NodeID;
+                a.NodeName = NodeName;
                 a.ZIndex = zIndex;
                 a.EditType = this.EditType;
-                a.FlowID = FlowID;
+                a.FK_Flow = FlowID;
 
                 AddFlowNode(a);
             }
 
-            string beginFlowNodeID = "";
-            string endFlowNodeID = "";
+            string beginNodeID = "";
+            string endNodeID = "";
             double beginPointX = 0;
             double beginPointY = 0;
             double endPointX = 0;
@@ -779,8 +779,8 @@ namespace BP
                 beginFlowNodeFlowID = node.Attribute(XName.Get("BeginFlowNodeFlowID")).Value;
                 endFlowNodeFlowID = node.Attribute(XName.Get("EndFlowNodeFlowID")).Value;
 
-                beginFlowNodeID = node.Attribute(XName.Get("BeginFlowNodeID")).Value;
-                endFlowNodeID = node.Attribute(XName.Get("EndFlowNodeID")).Value;
+                beginNodeID = node.Attribute(XName.Get("BeginNodeID")).Value;
+                endNodeID = node.Attribute(XName.Get("EndNodeID")).Value;
 
 
                 double.TryParse(node.Attribute(XName.Get("TurnPoint1X")).Value, out turnPoint1X);
@@ -994,7 +994,7 @@ namespace BP
                 cnsDesignerContainer.Children.Add(a);
                 a.Container = this;
                 a.FlowNodeChanged += OnFlowNodeChanged;
-                a.FlowID = FlowID;
+                a.FK_Flow = FlowID;
             }
             if (!FlowNodeCollections.Contains(a))
             {
@@ -1009,7 +1009,7 @@ namespace BP
             if (FlowNodeCollections.Contains(a))
             {
                 FlowNodeCollections.Remove(a);
-                _Service.DoAsync("DelNode", a.FlowNodeID, true);
+                _Service.DoAsync("DelNode", a.NodeID, true);
             }
         }
 
@@ -1114,14 +1114,14 @@ namespace BP
                             //if (f.BeginDirectionCollections.Count == 0
                             //    && cnsDesignerContainer.Children.Count != 2)
                             //    f.Type = FlowNodeType.COMPLETION;
-                            nodes += "~@Name=" + f.FlowNodeName + "@X=" + (int)f.CenterPoint.X + "@Y=" + (int)f.CenterPoint.Y + "@NodeID=" + int.Parse(f.FlowNodeID);
+                            nodes += "~@Name=" + f.NodeName + "@X=" + (int)f.CenterPoint.X + "@Y=" + (int)f.CenterPoint.Y + "@NodeID=" + int.Parse(f.NodeID);
                         }
                         else if (ele.ElementType == WorkFlowElementType.Direction)
                         {
                             Direction d = ele as Direction;
                             if (d.EndFlowNode != null)
                             {
-                                dirs += "~@Node=" + int.Parse(d.BeginFlowNode.FlowNodeID) + "@ToNode=" + int.Parse(d.EndFlowNode.FlowNodeID);
+                                dirs += "~@Node=" + int.Parse(d.BeginFlowNode.NodeID) + "@ToNode=" + int.Parse(d.EndFlowNode.NodeID);
                             }
                         }
                         else if (ele.ElementType == WorkFlowElementType.Label)
@@ -1161,7 +1161,7 @@ namespace BP
         {
             for (int i = 0; i < FlowNodeCollections.Count; i++)
             {
-                if (FlowNodeCollections[i].FlowID == FlowNodeFlowID)
+                if (FlowNodeCollections[i].FK_Flow == FlowNodeFlowID)
                 {
                     return FlowNodeCollections[i];
                 }
@@ -1205,9 +1205,9 @@ namespace BP
 
         public void AddFlowNode()
         {
-            NewFlowNodeName = "New Node " + NextNewFlowNodeIndex.ToString();
+            NewNodeName = "New Node " + NextNewFlowNodeIndex.ToString();
             nextNewFlowNodeIndex--;
-            _Service.DoNewNodeAsync(FlowID, 10, 10, NewFlowNodeName, true);
+            _Service.DoNewNodeAsync(FlowID, 10, 10, NewNodeName, true);
             _Service.DoNewNodeCompleted += _Service_DoNewNodeCompleted;
         }
 
@@ -1740,7 +1740,7 @@ namespace BP
         {
             FlowNode f = (FlowNode)currentControl;
             f.sdPicture.tbNodeName.Visibility = Visibility.Visible;
-            f.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;
+            f.sdPicture.txtNodeName.Visibility = Visibility.Collapsed;
         }
 
         public void NewFlow()
@@ -1868,9 +1868,9 @@ namespace BP
         {
             var a = new FlowNode((IContainer)this, FlowNodeType.Ordinary);
             a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-            a.FlowNodeName = "新建节点" + NextNewFlowNodeIndex.ToString();
-            a.FlowNodeID = e.Result.ToString();
-            a.FlowID = FlowID;
+            a.NodeName = "新建节点" + NextNewFlowNodeIndex.ToString();
+            a.NodeID = e.Result.ToString();
+            a.FK_Flow = FlowID;
             a.CenterPoint = new Point(50, 30);
             AddFlowNode(a);
             SaveChange(HistoryType.New);

@@ -1293,10 +1293,10 @@ namespace BP
 
                         foreach (var flowNode in ct.FlowNodeCollections)
                         {
-                            if (paras[0] == flowNode.FlowNodeID && paras[0] != flowNode.FlowNodeName)
+                            if (paras[0] == flowNode.NodeID && paras[0] != flowNode.NodeName)
                             {
                                 ct.IsNeedSave = true;
-                                flowNode.FlowNodeName = paras[1];
+                                flowNode.NodeName = paras[1];
                                 break;
                             }
                         }

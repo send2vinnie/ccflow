@@ -319,48 +319,7 @@ namespace BP
         }
         public string ToXmlString()
         {
-            System.Text.StringBuilder xml = new System.Text.StringBuilder();
-            xml.Append(@"       <Direction ");
-            xml.Append(@" FlowID=""" + FlowID + @"""");
-            xml.Append(@" DirectionID=""" + DirectionID + @"""");
-            xml.Append(@" DirectionName=""" + DirectionName + @"""");
-            xml.Append(@" LineType=""" + LineType + @"""");
-            xml.Append(@" DirectionCondition=""" + DirectionData.DirectionCondition + @"""");
-            xml.Append(@" BeginFlowNodeFlowID=""" + (BeginFlowNode == null ? "" : BeginFlowNode.FlowID) + @"""");
-            xml.Append(@" EndFlowNodeFlowID=""" + (EndFlowNode == null ? "" : EndFlowNode.FlowID) + @"""");
-
-            xml.Append(@" BeginFlowNodeID=""" + (BeginFlowNode == null ? "" : BeginFlowNode.FlowNodeID) + @"""");
-            xml.Append(@" EndFlowNodeID=""" + (EndFlowNode == null ? "" : EndFlowNode.FlowNodeID) + @"""");
-            if (EndFlowNode != null) 
-            {
-
-            }
-          
-            xml.Append(@" BeginPointX=""" + ((double)begin.GetValue(Canvas.LeftProperty)).ToString() + @"""");
-            xml.Append(@" BeginPointY=""" + ((double)begin.GetValue(Canvas.TopProperty)).ToString() + @"""");
-            xml.Append(@" EndPointX=""" + ((double)end.GetValue(Canvas.LeftProperty)).ToString() + @"""");
-            xml.Append(@" EndPointY=""" + ((double)end.GetValue(Canvas.TopProperty)).ToString() + @"""");
-
-           
-            if (LineType == DirectionLineType.Line)
-            {
-                xml.Append(@" TurnPoint1X=""0""");
-                xml.Append(@" TurnPoint1Y=""0""");
-                xml.Append(@" TurnPoint2X=""0""");
-                xml.Append(@" TurnPoint2Y=""0""");
-            }
-            else
-            {
-                xml.Append(@" TurnPoint1X=""" + DirectionTurnPoint1.CenterPosition.X.ToString() + @"""");
-                xml.Append(@" TurnPoint1Y=""" + DirectionTurnPoint1.CenterPosition.Y.ToString() + @"""");
-                xml.Append(@" TurnPoint2X=""" + DirectionTurnPoint2.CenterPosition.X.ToString() + @"""");
-                xml.Append(@" TurnPoint2Y=""" + DirectionTurnPoint2.CenterPosition.Y.ToString() + @"""");
-            }
-            xml.Append(@" ZIndex=""" + ZIndex + @""">");
-            xml.Append(Environment.NewLine);
-            xml.Append("        </Direction>");
-
-            return xml.ToString();
+            return "";
         }
         public void LoadFromXmlString(string xmlString)
         {
@@ -411,7 +370,7 @@ namespace BP
 
             try
             {
-                _container._Service.DoDropLineAsync(int.Parse(this.BeginFlowNode.FlowNodeID), int.Parse(this.EndFlowNode.FlowNodeID));
+                _container._Service.DoDropLineAsync(int.Parse(this.BeginFlowNode.NodeID), int.Parse(this.EndFlowNode.NodeID));
             }
             catch { }
         }
@@ -1759,7 +1718,7 @@ namespace BP
                 string begin = dr["NDFrom"].ToString();
                 string to = dr["NDTo"].ToString();
 
-                if (this.BeginFlowNode.FlowNodeID == begin && this.EndFlowNode.FlowNodeID == to)
+                if (this.BeginFlowNode.NodeID == begin && this.EndFlowNode.NodeID == to)
                 {
                     brush = new SolidColorBrush();
                     brush.Color = Colors.Red;

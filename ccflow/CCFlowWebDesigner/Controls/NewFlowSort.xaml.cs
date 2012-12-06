@@ -63,19 +63,19 @@ namespace BP.Controls
         public void InitControl(string no, string name)
         {
             this.No = no;
-            txtFlowNodeName.Text = name;
+            txtNodeName.Text = name;
         }
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             if(DisplayTypeEnum.Add == DisplayType)
             {
-                Container._Service.DoAsync("NewFlowSort", txtFlowNodeName.Text, true);
+                Container._Service.DoAsync("NewFlowSort", txtNodeName.Text, true);
                 Container._Service.DoCompleted += new EventHandler<DoCompletedEventArgs>(_service_DoCompleted);
             }
 
             if(DisplayTypeEnum.Edit == DisplayType)
             {
-                Container._Service.DoAsync("EditFlowSort", this.No + "," + txtFlowNodeName.Text, true);
+                Container._Service.DoAsync("EditFlowSort", this.No + "," + txtNodeName.Text, true);
                 Container._Service.DoCompleted += new EventHandler<DoCompletedEventArgs>(_service_DoCompleted);
             }
             this.DialogResult = true;

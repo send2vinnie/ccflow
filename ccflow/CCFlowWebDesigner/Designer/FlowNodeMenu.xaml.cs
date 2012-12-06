@@ -214,25 +214,25 @@ namespace BP
                     deleteFlowNode();
                     break;
                 case "menuDesignNodeFixModel":
-                    Glo.WinOpenByDoType("CH", "MapDefFixModel", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "MapDefFixModel", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
                 case "menuDesignNodeFreeModel":
-                    Glo.WinOpenByDoType("CH", "MapDefFreeModel", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "MapDefFreeModel", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
                 case "menuDesignFlowFrm": // 表单库
-                    Glo.WinOpenByDoType("CH", "FrmLib", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "FrmLib", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
                 case "menuDesignBindFlowFrm": //流程表单
-                    Glo.WinOpenByDoType("CH", "FlowFrms", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "FlowFrms", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
                 case "menuJobStation": // 节点工作岗位。
-                    Glo.WinOpenByDoType("CH", "StaDef", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "StaDef", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
                 case "menuNodeProperty":
-                    Glo.WinOpenByDoType("CH", "NodeP", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "NodeP", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
                 case "menuFlowProperty":
-                    Glo.WinOpenByDoType("CH", "FlowP", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "FlowP", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
                 case "menuNodeTypeFL":
                     RelatedFlowNode.HisRunModel = FlowNodeType.FL;

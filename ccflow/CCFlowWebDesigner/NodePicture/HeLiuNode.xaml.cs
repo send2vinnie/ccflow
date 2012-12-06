@@ -9,109 +9,70 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using BP;
 
 namespace BP.Picture
 {
     public partial class HeLiuNode : UserControl, IFlowNodePicture
     {
+        MergePictureRepeatDirection _repeatDirection = MergePictureRepeatDirection.None;
+        public MergePictureRepeatDirection RepeatDirection
+        {
+            get
+            {
+                if (_repeatDirection == MergePictureRepeatDirection.None)
+                {
+                    if (picRect.Width > picRect.Height)
+                        _repeatDirection = MergePictureRepeatDirection.Horizontal;
+                    else
+                        _repeatDirection = MergePictureRepeatDirection.Vertical;
+                }
+
+                return _repeatDirection;
+            }
+            set
+            {
+                _repeatDirection = value;
+                if (_repeatDirection == MergePictureRepeatDirection.Vertical)
+                {
+                    picRect.Height = 60.0;
+                    picRect.Width = 20.0;
+                }
+                else
+                {
+                    picRect.Height = 20.0;
+                    picRect.Width = 60.0;
+                }
+            }
+        }
         public HeLiuNode()
         {
             InitializeComponent();
         }
         public new double Opacity
         {
-            set { picBRANCH.Opacity = value; }
-            get { return picBRANCH.Opacity; }
+            set { picRect.Opacity = value; }
+            get { return picRect.Opacity; }
         }
-        double? _pictureWidth;
-        public  double  PictureWidth
-        { 
-            get {
-                if (_pictureWidth == null)
-                {
-
-
-                    _pictureWidth = Math.Abs(ThisPointCollection[1].X - ThisPointCollection[3].X);
-
-                }
-                return _pictureWidth.Value;
-            }
-            set
-            {
-
-                double width = value/2;
-                double containerWidth = 100;
-                double containerHeight = 80;
-                PathGeometry pg = new PathGeometry();
-                PathFigure pf = new PathFigure();
-                pg.Figures.Add(pf);
-
-                LineSegment ps = new LineSegment();
-                ps.Point = new Point(containerWidth, containerHeight-width);
-                pf.Segments.Add(ps);
-                pf.StartPoint = ps.Point;
-
-
-                ps = new LineSegment();
-                ps.Point = new Point(containerWidth + width, containerHeight);
-                pf.Segments.Add(ps);
-
-                ps = new LineSegment();
-                ps.Point = new Point(containerWidth , containerHeight+width);
-                pf.Segments.Add(ps);
-
-                ps = new LineSegment();
-                ps.Point = new Point(containerWidth - width, containerHeight );
-                pf.Segments.Add(ps);
-
-
-                ps = new LineSegment();
-                ps.Point = new Point(containerWidth, containerHeight - width);
-                pf.Segments.Add(ps);
-               
-                picBRANCH.SetValue(Path.DataProperty, pg);
-            }
-        } 
-        public  double PictureHeight
-        { 
-            get {
-
-                return PictureWidth;
-            }
-            set
-            {
-                PictureWidth = value;
-            }
-        }
-
-        PointCollection _thisPointCollection;
-        public PointCollection ThisPointCollection
+        public double PictureWidth
         {
-            get
-            {
-                if (true)//(_thisPointCollection == null)
-                {
-                    _thisPointCollection = new PointCollection();
-
-
-                    PathGeometry pg = (PathGeometry)picBRANCH.GetValue(Path.DataProperty); 
-
-                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[0]).Point);
-                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[1]).Point);
-                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[2]).Point);
-                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[3]).Point);
-                }
-
-                return _thisPointCollection;
-            }
+            set { picRect.Width = value; }
+            get { return picRect.Width; }
+        }
+        public double PictureHeight
+        {
+            set { picRect.Height = value; }
+            get { return picRect.Height; }
         }
         public new Brush Background
         {
-            set { picBRANCH.Fill = value; 
+            set
+            {
+                picRect.Fill = value;
             }
-            get { return picBRANCH.Fill; }
+            get { return picRect.Fill; }
         }
-        public  Visibility PictureVisibility
+        public Visibility PictureVisibility
         {
             set
             {
@@ -128,20 +89,25 @@ namespace BP.Picture
         {
             SolidColorBrush brush = new SolidColorBrush();
             brush.Color = Colors.White;
-            picBRANCH.Fill = brush;
+            picRect.Fill = brush;
             brush = new SolidColorBrush();
             brush.Color = Colors.Green;
-            picBRANCH.Stroke = brush;
+            picRect.Stroke = brush;
         }
-
         public void SetWarningColor()
-        { 
+        {
+            picRect.Fill = SystemConst.ColorConst.WarningColor;
 
-            picBRANCH.Fill = SystemConst.ColorConst.WarningColor;   
         }
         public void SetSelectedColor()
         {
-            picBRANCH.Fill = SystemConst.ColorConst.SelectedColor;   
+            picRect.Fill = SystemConst.ColorConst.SelectedColor;
+
+        }
+
+        public PointCollection ThisPointCollection
+        {
+            get { return null; }
         }
     }
 }

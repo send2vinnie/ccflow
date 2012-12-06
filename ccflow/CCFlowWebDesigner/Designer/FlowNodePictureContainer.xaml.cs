@@ -124,11 +124,11 @@ namespace BP
 
         public string NodeName
         {
-            get { return txtFlowNodeName.Text; }
+            get { return txtNodeName.Text; }
             set
             {
                 RaisePropertyChanging(new PropertyChangedEventArgs("NodeName"));
-                txtFlowNodeName.Text = value;
+                txtNodeName.Text = value;
                 tbNodeName.Text = value;
             }
         }
@@ -185,14 +185,14 @@ namespace BP
 
         private void tbNodeName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            txtFlowNodeName.Text = tbNodeName.Text;
+            txtNodeName.Text = tbNodeName.Text;
             CurrentContainer.IsNeedSave = true;
         }
 
         private void tbNodeName_LostFocus(object sender, RoutedEventArgs e)
         {
             tbNodeName.Visibility = Visibility.Collapsed;
-            txtFlowNodeName.Visibility = Visibility.Visible;
+            txtNodeName.Visibility = Visibility.Visible;
 
         }
 

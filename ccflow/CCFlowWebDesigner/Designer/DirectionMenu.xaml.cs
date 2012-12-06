@@ -162,7 +162,7 @@ namespace BP
                     deleteDirection();
                     break;
                 case "menuSetDirectionCondition":
-                  //  _Service.GetRelativeUrlAsync("", "Dir", FlowID, r.BeginFlowNode.FlowNodeID, r.EndFlowNode.FlowNodeID, true);
+                  //  _Service.GetRelativeUrlAsync("", "Dir", FlowID, r.BeginFlowNode.NodeID, r.EndFlowNode.NodeID, true);
                     showDirectionSetting();
                     break;
             }

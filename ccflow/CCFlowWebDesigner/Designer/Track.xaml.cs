@@ -300,9 +300,9 @@ namespace BP
                 //    flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
 
                 flowNode.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-                flowNode.FlowID = FlowID;
-                flowNode.FlowNodeID = dr["NodeID"].ToString();
-                flowNode.FlowNodeName = dr["Name"].ToString();
+                flowNode.FK_Flow = FlowID;
+                flowNode.NodeID = dr["NodeID"].ToString();
+                flowNode.NodeName = dr["Name"].ToString();
                 double x = double.Parse(dr["X"]);
                 double y = double.Parse(dr["Y"]);
                 if (x < 50)
@@ -346,11 +346,11 @@ namespace BP
             {
                 foreach (DataRow dr in dtDir.Rows)
                 {
-                    if (bfn.FlowNodeID == dr["Node"].ToString())
+                    if (bfn.NodeID == dr["Node"].ToString())
                     {
                         foreach (FlowNode efn in FlowNodeCollections)
                         {
-                            if (efn.FlowNodeID == dr["ToNode"].ToString())
+                            if (efn.NodeID == dr["ToNode"].ToString())
                             {
                                 var d = new Direction((IContainer)this);
                                 d.FlowID = FlowID;
@@ -406,7 +406,7 @@ namespace BP
             {
                 cnsDesignerContainer.Children.Add(a);
                 a.Container = this;
-                a.FlowID = FlowID;
+                a.FK_Flow = FlowID;
                 //if (a.Type != FlowNodeType.STATIONODE)
                 //{
                     a.Worklist(workListDataSet);
@@ -633,7 +633,7 @@ namespace BP
                 if (!string.IsNullOrEmpty(FlowID))
                 {
                     //FlowNode a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
-                    //a.FlowNodeName = Text.NewFlowNode + NextNewFlowNodeIndex.ToString();
+                    //a.NodeName = Text.NewFlowNode + NextNewFlowNodeIndex.ToString();
                     //Point p = e.GetPosition(this);
                     //a.CenterPoint = new Point(p.X - this.Left, p.Y - this.Top);
                     //a.IsSelectd = true;

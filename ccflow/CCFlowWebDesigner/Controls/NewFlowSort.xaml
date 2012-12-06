@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
             <sdk:Label Height="28" Name="label1"  Margin="30,10,10,10" Content="名称:" />
-            <TextBox Name="txtFlowNodeName" Height="28"  FontSize="14" Margin="0" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Center" ></TextBox>
+            <TextBox Name="txtNodeName" Height="28"  FontSize="14" Margin="0" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Center" ></TextBox>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">

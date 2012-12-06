@@ -43,60 +43,58 @@ namespace Ccflow.Web.Component.Workflow
             }
         }
 
-        string flowID;
-        public string FlowID
+        string fk_Flow;
+        public string FK_Flow
         {
             get
             {
-                if (string.IsNullOrEmpty(flowID))
+                if (string.IsNullOrEmpty(fk_Flow))
                 {
-                    flowID = Guid.NewGuid().ToString();
+                    fk_Flow = Guid.NewGuid().ToString();
                 }
-                return flowID;
+                return fk_Flow;
             }
             set
             {
-               flowID = value;
+                fk_Flow = value;
             }
 
         }
-         string flowNodeID;
-
-        public string FlowNodeID
+        string nodeID;
+        public string NodeID
         {
             get
             {
-                return flowNodeID;
+                return nodeID;
             }
             set
             {
-                flowNodeID = value;
+                nodeID = value;
             }
-        } 
+        }
 
-         string flowNodeName;
-
-        public string FlowNodeName
+        string _nodeName;
+        public string NodeName
         {
             get
             {
-                return flowNodeName;
+                return _nodeName;
             }
             set
             {
-                flowNodeName = value;
+                _nodeName = value;
             }
-        } 
-         string flowNodeType; 
+        }
+        string flowNodePosType;
         public string FlowNodeType
         {
             get
             {
-                return flowNodeType;
+                return flowNodePosType;
             }
             set
             {
-                flowNodeType = value;
+                flowNodePosType = value;
             }
         }
     }

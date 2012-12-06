@@ -3,7 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
     <Grid x:Name="LayoutRoot"  >
 
-        <Rectangle Name="picAUTOMATION"    Stroke="Green"  RadiusX="10" RadiusY="10"  Width="100" Height="40"  Fill="White"   StrokeThickness="2"></Rectangle>
+        <Rectangle Name="picRect"    Stroke="Green" 
+                   RadiusX="10" RadiusY="10"  Width="100" Height="40"  Fill="White"   
+                   StrokeThickness="2"></Rectangle>
 
     </Grid>
 </UserControl>

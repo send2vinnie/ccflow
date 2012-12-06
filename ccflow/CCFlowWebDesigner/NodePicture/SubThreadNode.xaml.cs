@@ -9,71 +9,105 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using BP;
 
 namespace BP.Picture
 {
-
     public partial class SubThreadNode : UserControl, IFlowNodePicture
     {
-        MergePictureRepeatDirection _repeatDirection = MergePictureRepeatDirection.None;
-        public MergePictureRepeatDirection RepeatDirection
-        {
-            get
-            {
-                if (_repeatDirection == MergePictureRepeatDirection.None)
-                {
-                    if (picMERGE.Width > picMERGE.Height)
-                        _repeatDirection = MergePictureRepeatDirection.Horizontal;
-                    else
-                        _repeatDirection = MergePictureRepeatDirection.Vertical;
-                }
-
-                return _repeatDirection;
-            }
-            set
-            {
-                _repeatDirection = value;
-                if (_repeatDirection == MergePictureRepeatDirection.Vertical)
-                {
-                    picMERGE.Height = 60.0;
-                    picMERGE.Width = 20.0;
-                }
-                else
-                {
-                    picMERGE.Height = 20.0;
-                    picMERGE.Width = 60.0;
-                }
-            }
-        }
         public SubThreadNode()
         {
             InitializeComponent();
         }
         public new double Opacity
         {
-            set { picMERGE.Opacity = value; }
-            get { return picMERGE.Opacity; }
+            set { picRect.Opacity = value; }
+            get { return picRect.Opacity; }
         }
-        public double PictureWidth
-        {
-            set { picMERGE.Width = value; }
-            get { return picMERGE.Width; }
+        double? _pictureWidth;
+        public  double  PictureWidth
+        { 
+            get {
+                if (_pictureWidth == null)
+                {
+                    _pictureWidth = Math.Abs(ThisPointCollection[1].X - ThisPointCollection[3].X);
+                }
+                return _pictureWidth.Value;
+            }
+            set
+            {
+
+                double width = value/2;
+                double containerWidth = 100;
+                double containerHeight = 80;
+                PathGeometry pg = new PathGeometry();
+                PathFigure pf = new PathFigure();
+                pg.Figures.Add(pf);
+
+                LineSegment ps = new LineSegment();
+                ps.Point = new Point(containerWidth, containerHeight-width);
+                pf.Segments.Add(ps);
+                pf.StartPoint = ps.Point;
+
+
+                ps = new LineSegment();
+                ps.Point = new Point(containerWidth + width, containerHeight);
+                pf.Segments.Add(ps);
+
+                ps = new LineSegment();
+                ps.Point = new Point(containerWidth , containerHeight+width);
+                pf.Segments.Add(ps);
+
+                ps = new LineSegment();
+                ps.Point = new Point(containerWidth - width, containerHeight );
+                pf.Segments.Add(ps);
+
+                ps = new LineSegment();
+                ps.Point = new Point(containerWidth, containerHeight - width);
+                pf.Segments.Add(ps);
+               
+                picRect.SetValue(Path.DataProperty, pg);
+            }
+        } 
+        public  double PictureHeight
+        { 
+            get {
+
+                return PictureWidth;
+            }
+            set
+            {
+                PictureWidth = value;
+            }
         }
-        public double PictureHeight
+
+        PointCollection _thisPointCollection;
+        public PointCollection ThisPointCollection
         {
-            set { picMERGE.Height = value; }
-            get { return picMERGE.Height; }
+            get
+            {
+                if (true)//(_thisPointCollection == null)
+                {
+                    _thisPointCollection = new PointCollection();
+
+
+                    PathGeometry pg = (PathGeometry)picRect.GetValue(Path.DataProperty); 
+
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[0]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[1]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[2]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[3]).Point);
+                }
+
+                return _thisPointCollection;
+            }
         }
         public new Brush Background
         {
-            set
-            {
-                picMERGE.Fill = value;
+            set { picRect.Fill = value; 
             }
-            get { return picMERGE.Fill; }
+            get { return picRect.Fill; }
         }
-        public Visibility PictureVisibility
+        public  Visibility PictureVisibility
         {
             set
             {
@@ -90,25 +124,20 @@ namespace BP.Picture
         {
             SolidColorBrush brush = new SolidColorBrush();
             brush.Color = Colors.White;
-            picMERGE.Fill = brush;
+            picRect.Fill = brush;
             brush = new SolidColorBrush();
             brush.Color = Colors.Green;
-            picMERGE.Stroke = brush;
+            picRect.Stroke = brush;
         }
-        public void SetWarningColor()
-        {
-            picMERGE.Fill = SystemConst.ColorConst.WarningColor;
 
+        public void SetWarningColor()
+        { 
+
+            picRect.Fill = SystemConst.ColorConst.WarningColor;   
         }
         public void SetSelectedColor()
         {
-            picMERGE.Fill = SystemConst.ColorConst.SelectedColor;
-
-        }
-
-        public PointCollection ThisPointCollection
-        {
-            get { return null; }
+            picRect.Fill = SystemConst.ColorConst.SelectedColor;   
         }
     }
 }

@@ -95,17 +95,17 @@ namespace BP
         {
             flowNode = new FlowNode(_container, type);
             flowNode.SetValue(Canvas.ZIndexProperty, _container.NextMaxIndex);
-            flowNode.FlowNodeName = "新建节点" + _container.NextNewFlowNodeIndex.ToString();
+            flowNode.NodeName = "新建节点" + _container.NextNewFlowNodeIndex.ToString();
             flowNode.CenterPoint = this.CenterPoint;
 
-            _container._Service.DoNewNodeAsync(_container.FlowID, 10, 10, flowNode.FlowNodeName, true);
+            _container._Service.DoNewNodeAsync(_container.FlowID, 10, 10, flowNode.NodeName, true);
             _container._Service.DoNewNodeCompleted += _Service_DoNewNodeCompleted;
 
         }
 
         void _Service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
         {
-            flowNode.FlowNodeID = e.Result.ToString();
+            flowNode.NodeID = e.Result.ToString();
             _container.AddFlowNode(flowNode);
             _container.SaveChange(HistoryType.New);
             _container.IsNeedSave = true;
