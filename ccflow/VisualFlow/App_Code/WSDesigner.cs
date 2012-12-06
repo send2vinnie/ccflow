@@ -564,35 +564,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             return ex.Message;
         }
     }
-    /// <summary>
-    /// 根据工作流取连线
-    /// </summary>
-    /// <param name="flowid"></param>
-    /// <returns></returns>
-    [WebMethod(EnableSession = true)]
-    public string GetDirection(string flowid)
-    {
-       
-        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(@"SELECT Node ,ToNode FROM WF_Direction WHERE Node IN
-(SELECT NodeID FROM WF_Node WHERE FK_Flow='" + flowid + "') ");
-        DataSet ds = new DataSet();
-        ds.Tables.Add(dt);
-        return Connector.ToXml(ds);
-    }
+    
 
-    /// <summary>
-    /// 根据工作流取标签
-    /// </summary>
-    /// <param name="flowid"></param>
-    /// <returns></returns>
-    [WebMethod(EnableSession = true)]
-    public string GetLables(string flowid)
-    {
-        LabNotes lns = new LabNotes();
-        lns.Retrieve("FK_Flow", flowid);
-        DataSet ds = lns.ToDataSet();
-        return Connector.ToXml(ds);
-    }
+    
     /// <summary>
     /// 保存流程
     /// </summary>
