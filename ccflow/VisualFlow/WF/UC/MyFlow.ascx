@@ -27,6 +27,30 @@
         }
         return v;
     }
+    /// 获取DDL Obj
+    function ReqDDLObj(ddlID) {
+        var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_DDL_' + ddlID);
+        if (v == null) {
+            alert('没有找到ID=' + ddlID + '的下拉框控件.');
+        }
+        return v;
+    }
+    // 获取TB Obj
+     function ReqTBObj(tbID) {
+        var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_TB_' + tbID);
+        if (v == null) {
+            alert('没有找到ID=' + tbID + '的文本框控件.');
+        }
+        return v;
+    }
+    // 获取CheckBox Obj值
+    function ReqCBObj(cbID) {
+        var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_CB_' + cbID);
+        if (v == null) {
+            alert('没有找到ID=' + cbID + '的单选控件.');
+        }
+        return v;
+    }
     // 设置值.
     function SetCtrlVal(ctrlID, val) {
         document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_TB_' + ctrlID).value = val;

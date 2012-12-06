@@ -378,7 +378,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         string appPath = this.Request.ApplicationPath;
         this.currFlow = new Flow(this.FK_Flow);
         this.currND = new BP.WF.Node(this.FK_Node);
-        this.Page.Title ="第"+this.currND.Step+ "步:"+ this.currND.Name;
+        this.Page.Title = "第" + this.currND.Step + "步:" + this.currND.Name;
         #endregion 设置变量
 
         if (this.currND.HisFormType == FormType.SLForm)
@@ -393,74 +393,73 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
 
 
+        #region 判断是否有 workid
+        if (this.WorkID == 0)
+        {
+            currWK = this.currFlow.NewWork();
+            this.WorkID = currWK.OID;
+        }
+        else
+        {
+            currWK = this.currFlow.GenerWork(this.WorkID, this.currND);
+            string msg = "";
+            switch (currWK.NodeState)
+            {
+                case NodeState.Back:
+                    /* 如果工作节点退回了*/
+                    ReturnWorks rws = new ReturnWorks();
+                    rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node,
+                        ReturnWorkAttr.WorkID, this.WorkID,
+                        ReturnWorkAttr.RDT);
+                    if (rws.Count != 0)
+                    {
+                        string msgInfo = "";
+                        foreach (ReturnWork rw in rws)
+                        {
+                            msgInfo += "<fieldset width='100%' ><legend>&nbsp; 来自节点:" + rw.ReturnNodeName + " 退回人:" + rw.ReturnerName + "  " + rw.RDT + "&nbsp;<a href='./../DataUser/ReturnLog/" + this.FK_Flow + "/" + rw.MyPK + ".htm' target=_blank>工作日志</a></legend>";
+                            msgInfo += rw.NoteHtml;
+                            //  msgInfo += "<br>";
+                            msgInfo += "</fieldset>";
+                        }
+                        this.FlowMsg.AlertMsg_Info("流程退回提示", msgInfo);
+                        if (currWK.HisNode.IsStartNode == false)
+                        {
+                            currWK.Update(WorkAttr.NodeState, (int)NodeState.Init);
+                        }
+                    }
+                    break;
+                case NodeState.Forward:
+                    /* 判断移交过来的。 */
+                    ForwardWorks fws = new ForwardWorks();
+                    BP.En.QueryObject qo = new QueryObject(fws);
+                    qo.AddWhere(ForwardWorkAttr.WorkID, this.WorkID);
+                    qo.addAnd();
+                    qo.AddWhere(ForwardWorkAttr.FK_Node, this.FK_Node);
+                    qo.addOrderBy(ForwardWorkAttr.RDT);
+                    qo.DoQuery();
+                    if (fws.Count >= 1)
+                    {
+                        this.FlowMsg.AddFieldSet("移交历史信息");
+                        foreach (ForwardWork fw in fws)
+                        {
+                            msg = "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "," + fw.FK_EmpName + "]。@接受人：" + fw.ToEmp + "," + fw.ToEmpName + "。<br>移交原因@" + fw.NoteHtml;
+                            if (fw.FK_Emp == WebUser.No)
+                                msg = "<b>" + msg + "</b>";
 
-       #region 判断是否有 workid
-       if (this.WorkID == 0)
-       {
-           currWK = this.currFlow.NewWork();
-           this.WorkID = currWK.OID;
-       }
-       else
-       {
-           currWK = this.currFlow.GenerWork(this.WorkID, this.currND);
-           string msg = "";
-           switch (currWK.NodeState)
-           {
-               case NodeState.Back:
-                   /* 如果工作节点退回了*/
-                   ReturnWorks rws = new ReturnWorks();
-                   rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node,
-                       ReturnWorkAttr.WorkID, this.WorkID,
-                       ReturnWorkAttr.RDT);
-                   if (rws.Count != 0)
-                   {
-                       string msgInfo = "";
-                       foreach (ReturnWork rw in rws)
-                       {
-                           msgInfo += "<fieldset width='100%' ><legend>&nbsp; 来自节点:" + rw.ReturnNodeName + " 退回人:" + rw.ReturnerName + "  " + rw.RDT + "&nbsp;<a href='./../DataUser/ReturnLog/" + this.FK_Flow + "/" + rw.MyPK + ".htm' target=_blank>工作日志</a></legend>";
-                           msgInfo += rw.NoteHtml;
-                           //  msgInfo += "<br>";
-                           msgInfo += "</fieldset>";
-                       }
-                       this.FlowMsg.AlertMsg_Info("流程退回提示", msgInfo);
-                       if (currWK.HisNode.IsStartNode == false)
-                       {
-                           currWK.Update(WorkAttr.NodeState, (int)NodeState.Init);
-                       }
-                   }
-                   break;
-               case NodeState.Forward:
-                   /* 判断移交过来的。 */
-                   ForwardWorks fws = new ForwardWorks();
-                   BP.En.QueryObject qo = new QueryObject(fws);
-                   qo.AddWhere(ForwardWorkAttr.WorkID, this.WorkID);
-                   qo.addAnd();
-                   qo.AddWhere(ForwardWorkAttr.FK_Node, this.FK_Node);
-                   qo.addOrderBy(ForwardWorkAttr.RDT);
-                   qo.DoQuery();
-                   if (fws.Count >= 1)
-                   {
-                       this.FlowMsg.AddFieldSet("移交历史信息");
-                       foreach (ForwardWork fw in fws)
-                       {
-                           msg = "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "," + fw.FK_EmpName + "]。@接受人：" + fw.ToEmp + "," + fw.ToEmpName + "。<br>移交原因@" + fw.NoteHtml;
-                           if (fw.FK_Emp == WebUser.No)
-                               msg = "<b>" + msg + "</b>";
-
-                           msg = msg.Replace("@", "<br>@");
-                           this.FlowMsg.Add(msg + "<hr>");
-                       }
-                       this.FlowMsg.AddFieldSetEnd();
-                   }
-                   currWK.Update(WorkAttr.NodeState, (int)NodeState.Init);
-                   break;
-               default:
-                   break;
-           }
-       }
+                            msg = msg.Replace("@", "<br>@");
+                            this.FlowMsg.Add(msg + "<hr>");
+                        }
+                        this.FlowMsg.AddFieldSetEnd();
+                    }
+                    currWK.Update(WorkAttr.NodeState, (int)NodeState.Init);
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion 判断是否有workid
 
-       #region 判断权限
+        #region 判断权限
         if (this.IsPostBack == false)
         {
             if (currND.IsStartNode == false && Dev2Interface.Flow_CheckIsCanDoCurrentWork(this.WorkID, WebUser.No) == false)
@@ -489,7 +488,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         this.LoadPop_del();
         #endregion 判断权限
 
-
         try
         {
             string small = this.PageID;
@@ -507,8 +505,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     /*如果启用了发送按钮.*/
                     this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                     this.Btn_Send.UseSubmitBehavior = false;
-                   this.Btn_Send.OnClientClick = "this.disabled=true;";
-                 //   this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; 
+                 //   this.Btn_Send.OnClientClick = "this.disabled=true;";
+                    this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; 
 
                     this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                 }
@@ -525,8 +523,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                         Btn_Send.Style.Add("display", "none");
                         this.Btn_Send.UseSubmitBehavior = false;
-                        // this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
-                        this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                        this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+                     //   this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                         this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                     }
                     else
@@ -539,8 +537,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         else
                         {
                             this.Btn_Send.UseSubmitBehavior = false;
-                        //    this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
-                              this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                             this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+                         //   this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
 
                         }
                         this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
@@ -552,8 +550,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 this.ToolBar1.AddBtn(NamesOfBtn.Save, btnLab.SaveLab);
                 this.Btn_Save.UseSubmitBehavior = false;
-               // this.Btn_Save.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
-                this.Btn_Save.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                this.Btn_Save.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+              //  this.Btn_Save.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                 this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
@@ -586,8 +584,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-          //  if (btnLab.HungEnable && this.currND.IsStartNode == false)
-            if (btnLab.HungEnable && this.currND.IsStartNode == false)
+            //  if (btnLab.HungEnable && this.currND.IsStartNode == false)
+            if (btnLab.HungEnable)
             {
                 /*挂起*/
                 string urlr = "HungUp.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
@@ -605,11 +603,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (btnLab.CCRole == CCRole.HandCC || btnLab.CCRole == CCRole.HandAndAuto)
             {
                 /* 抄送 */
-               // this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+                // this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/CC.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
             }
 
-            if (btnLab.DeleteEnable && this.currND.IsStartNode == false )
+            if (btnLab.DeleteEnable && this.currND.IsStartNode == false)
             {
                 this.ToolBar1.AddBtn("Btn_Delete", btnLab.DeleteLab);
                 this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "将要执行删除流程，您确认吗？") + "')";
@@ -628,7 +626,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             //    this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
 
             if (btnLab.TrackEnable)
-                this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node="+this.FK_Node+"','ds'); \" />");
+                this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
 
             if (currND.HisFJOpen != FJOpen.None)
             {
@@ -655,7 +653,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.SearchEnable)
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt&FK_Flow=" + this.FK_Flow + "','dsd0'); \" />");
-            
+
             #endregion
 
             this.BindWork(currND, currWK);

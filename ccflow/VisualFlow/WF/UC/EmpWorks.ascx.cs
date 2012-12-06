@@ -229,7 +229,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         if (this.GroupBy != "StarterName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=StarterName" + extStr + "' >" + this.ToE("Starter", "发起人") + "</a>");
 
-        this.Pub1.AddTDTitle("优先级");
+      //  this.Pub1.AddTDTitle("优先级");
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));

@@ -352,7 +352,7 @@ namespace BP.Web.Comm.UC.WF
 
         public void InsertObjects2Col(bool isJudgeRowIdx, string pk, string fid)
         {
-            #region 明细表
+            #region 从表
             foreach (MapDtl dtl in dtls)
             {
                 if (dtl.IsView == false)
@@ -398,7 +398,7 @@ namespace BP.Web.Comm.UC.WF
                 //this.AddTDEnd();
                 this.AddTREnd();
             }
-            #endregion 明细表
+            #endregion 从表
 
             #region 框架表
             foreach (MapFrame fram in frames)
@@ -438,7 +438,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("<TD colspan=2 class=FDesc ID='TD" + fram.NoOfObj + "'><a href='" + src + "'>" + fram.Name + "</a></TD>");
                 this.AddTREnd();
             }
-            #endregion 明细表
+            #endregion 从表
 
             #region 附件
             foreach (FrmAttachment ath in aths)
@@ -615,7 +615,7 @@ namespace BP.Web.Comm.UC.WF
                 || item.Tag1.Length <15 )
                 return;
 
-            // 填充明细表.
+            // 填充从表.
             foreach (MapDtl dtl in dtls)
             {
                 string[] sqls = item.Tag1.Split('*');
@@ -1116,9 +1116,16 @@ namespace BP.Web.Comm.UC.WF
                 string scriptSaveDtl = "";
                 scriptSaveDtl = "\t\n<script type='text/javascript' >";
                 scriptSaveDtl += "\t\n function SaveDtlAll() { ";
+
                 foreach (MapDtl dtl in dtls)
+                {
+                    if (dtl.IsUpdate==true || dtl.IsInsert==true)
                     scriptSaveDtl += "\t\n SaveDtl('" + dtl.No + "'); ";
+                }
+
+                scriptSaveDtl += "\t\n return true; } ";
                 scriptSaveDtl += "\t\n</script>";
+
                 this.Add(scriptSaveDtl);
             }
             else
@@ -1126,7 +1133,7 @@ namespace BP.Web.Comm.UC.WF
                 string scriptSaveDtl = "";
                 scriptSaveDtl = "\t\n<script type='text/javascript' >";
                 scriptSaveDtl += "\t\n function SaveDtlAll() { ";
-                scriptSaveDtl += "\t\n } ";
+                scriptSaveDtl += "\t\n return true; } ";
                 scriptSaveDtl += "\t\n</script>";
                 this.Add(scriptSaveDtl);
             }
@@ -1354,9 +1361,16 @@ namespace BP.Web.Comm.UC.WF
                             break;
                         case MapExtXmlList.InputCheck:
                             TextBox tbJS = this.GetTextBoxByID("TB_" + me.AttrOfOper);
-                            if (tbJS == null)
-                                continue;
-                            tbJS.Attributes[me.Tag2] = me.Tag1 + "(this);";
+                            if (tbJS != null)
+                            {
+                                tbJS.Attributes[me.Tag2] = me.Tag1 + "(this);";
+                            }
+                            else
+                            {
+                                DDL ddl = this.GetDDLByID("DDL_" + me.AttrOfOper);
+                                if (ddl != null)
+                                    ddl.Attributes[me.Tag2] = me.Tag1 + "(this);";
+                            }
                             break;
                         case MapExtXmlList.PopVal: // 弹出窗.
                             TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
@@ -1439,7 +1453,7 @@ namespace BP.Web.Comm.UC.WF
         }
         public void InsertObjects(bool isJudgeRowIdx)
         {
-            #region 明细表
+            #region 从表
             foreach (MapDtl dtl in dtls)
             {
                 if (dtl.IsView == false || this.ctrlUseSta.Contains(dtl.No) )
@@ -1495,7 +1509,7 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTDEnd();
                 this.AddTREnd();
             }
-            #endregion 明细表
+            #endregion 从表
 
             #region 多对多的关系
             foreach (MapM2M m2m in m2ms)
