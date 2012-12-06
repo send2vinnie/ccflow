@@ -137,7 +137,7 @@ namespace BP.DA
         public static void DoTransactionBegin()
         {
             return;
-            DBAccess.RunSQL("begin transaction");
+            DBAccess.RunSQL("BEGIN TRANSACTION");
         }
         /// <summary>
         /// 回滚事务
@@ -145,13 +145,7 @@ namespace BP.DA
         public static void DoTransactionRollback()
         {
             return;
-            try
-            {
-                DBAccess.RunSQL("rollback transaction");
-            }
-            catch
-            {
-            }
+            DBAccess.RunSQL("rollback transaction");
         }
         /// <summary>
         /// 提交事务
@@ -159,13 +153,7 @@ namespace BP.DA
         public static void DoTransactionCommit()
         {
             return;
-            try
-            {
-                DBAccess.RunSQL("commit transaction");
-            }
-            catch
-            {
-            }
+            DBAccess.RunSQL("commit transaction");
         }
         #endregion 事务处理
 
@@ -178,7 +166,7 @@ namespace BP.DA
                 if (sql.Contains(":" + p.ParaName) == false)
                     continue;
                 myps.Add(p);
-            }
+            } 
             return myps;
         }
 
@@ -448,7 +436,7 @@ namespace BP.DA
         /// <returns></returns>
         public static int GenerSequenceNumber(string type)
         {
-            if (readCount == -1)//系统第一次运行时
+            if (readCount == -1)  //系统第一次运行时
             {
                 DataTable tb = DBAccess.RunSQLReturnTable("SELECT CfgKey, IntVal FROM Sys_Serial ");
                 foreach (DataRow row in tb.Rows)

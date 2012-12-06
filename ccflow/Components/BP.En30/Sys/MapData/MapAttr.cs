@@ -1011,7 +1011,7 @@ namespace BP.Sys
 
                 map.AddTBString(MapAttrAttr.AutoFullDoc, null, "自动填写内容", false, false, 0, 500, 20);
                // map.AddDDLSysEnum(MapAttrAttr.AutoFullWay, 0, "自动填写方式", true, false, MapAttrAttr.AutoFullWay,
-                 //   "@0=不设置@1=本表单中数据计算@2=利用SQL自动填充@3=本表单中外键列@4=对明细表的列求值");
+                 //   "@0=不设置@1=本表单中数据计算@2=利用SQL自动填充@3=本表单中外键列@4=对从表的列求值");
 
                 map.AddTBInt(MapAttrAttr.AutoFullWay, 0, "自动填写方式", true, false);
 

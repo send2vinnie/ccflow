@@ -217,7 +217,7 @@ namespace BP.Sys
             }
         }
         /// <summary>
-        /// 明细表
+        /// 从表
         /// </summary>
         public MapDtls MapDtls
         {
@@ -508,7 +508,7 @@ namespace BP.Sys
             }
         }
         /// <summary>
-        /// 明细表集合.
+        /// 从表集合.
         /// </summary>
         public string Dtls
         {
@@ -716,7 +716,7 @@ namespace BP.Sys
                 }
             }
 
-            // 产生明细表。
+            // 产生从表。
             MapDtls dtls = this.MapDtls; // new MapDtls(this.No);
             foreach (MapDtl dtl in dtls)
             {
@@ -797,7 +797,7 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.EnPK, null, "实体主键", true, false, 0, 10, 20);
                 map.AddTBString(MapDataAttr.SearchKeys, null, "查询键", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.PTable, null, "物理表", true, false, 0, 500, 20);
-                map.AddTBString(MapDataAttr.Dtls, null, "明细表", true, false, 0, 500, 20);
+                map.AddTBString(MapDataAttr.Dtls, null, "从表", true, false, 0, 500, 20);
 
                 map.AddTBInt(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBInt(MapDataAttr.FrmH, 1200, "FrmH", true, true);

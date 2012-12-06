@@ -264,7 +264,7 @@ namespace BP.Rpt.Doc
 
 				this.RepairLine( ref str );
 
-				#region 明细表
+				#region 从表
 				IDictionaryEnumerator dic= this.ListDT.GetEnumerator();
 				while(dic.MoveNext())
 				{
@@ -305,7 +305,7 @@ namespace BP.Rpt.Doc
 						}
 					}
 				}
-				#endregion 明细表
+				#endregion 从表
 
 				#region 主表
 				foreach( DocParam par in this.DocParamTable )

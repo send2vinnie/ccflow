@@ -241,6 +241,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\XMLBase\XmlMenu.cs" />
+    <Compile Include="PubLib\Port\Current.cs" />
     <Compile Include="PubLib\Port\Unit.cs" />
     <Compile Include="DA\Right.cs">
     </Compile>
@@ -290,9 +291,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\XMLBase\XmlEn.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PubLib\Port\Current.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PubLib\Port\Emp.cs" />

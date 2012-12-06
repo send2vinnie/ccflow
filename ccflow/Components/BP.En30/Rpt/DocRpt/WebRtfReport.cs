@@ -121,7 +121,7 @@ namespace BP.Rpt.Doc
 		}
 
 		/// <summary>
-		/// 绑定明细表
+		/// 绑定从表
 		/// </summary>
 		public void BindEns(Entities ens )
 		{
@@ -138,7 +138,7 @@ namespace BP.Rpt.Doc
 		#endregion 公共
 
 
-		#region 明细表
+		#region 从表
 		/// <summary>
 		/// BindDtl
 		/// </summary>
@@ -169,7 +169,7 @@ namespace BP.Rpt.Doc
 			this.BindEns( ens );
 		}
 		/// <summary>
-		/// 绑定明细表数组enslist
+		/// 绑定从表数组enslist
 		/// </summary>
 		public void BindDtlsInList( ArrayList enslist )
 		{
@@ -186,7 +186,7 @@ namespace BP.Rpt.Doc
 			}
 		}
 		/// <summary>
-		/// 绑定en的所有明细表
+		/// 绑定en的所有从表
 		/// </summary>
 		public void BindDtlsOfEn( Entity en )
 		{
@@ -194,7 +194,7 @@ namespace BP.Rpt.Doc
 			this.BindDtlsInList( enslist );
 		}
 
-		#endregion 明细表
+		#endregion 从表
 
 	}
 }

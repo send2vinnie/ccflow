@@ -5,7 +5,7 @@ using BP.En;
 namespace BP.Sys
 {
     /// <summary>
-    /// 明细表显示方式
+    /// 从表显示方式
     /// </summary>
     public enum DtlShowModel
     {
@@ -224,7 +224,7 @@ namespace BP.Sys
             }
         }
         /// <summary>
-        /// 明细表
+        /// 从表
         /// </summary>
         public MapDtls MapDtls
         {
@@ -1108,7 +1108,7 @@ namespace BP.Sys
                 /*判断是否有IsPass 字段。*/
                 MapAttrs attrs = new MapAttrs(this.No);
                 if (attrs.Contains(MapAttrAttr.KeyOfEn, "IsPass") == false)
-                    throw new Exception("您启用了明细表单(" + this.Name + ")条数据审核选项，但是该明细表里没IsPass字段，请参考帮助文档。");
+                    throw new Exception("您启用了从表单(" + this.Name + ")条数据审核选项，但是该从表里没IsPass字段，请参考帮助文档。");
             }
             return base.beforeUpdateInsertAction();
         }

@@ -8,7 +8,7 @@ using BP.WF;
 namespace BP.Sys
 {
 	/// <summary>
-	/// 通用明细表
+	/// 通用从表
 	/// </summary>
     public class GEDtlAttr : EntityOIDAttr
     {
@@ -18,7 +18,7 @@ namespace BP.Sys
         public const string RDT = "RDT";
     }
     /// <summary>
-    /// 通用明细表
+    /// 通用从表
     /// </summary>
     public class GEDtl : EntityOID
     {
@@ -100,13 +100,13 @@ namespace BP.Sys
         /// </summary>
         public string FK_MapDtl = null;
         /// <summary>
-        /// 通用明细表
+        /// 通用从表
         /// </summary>
         public GEDtl()
         {
         }
         /// <summary>
-        /// 通用明细表
+        /// 通用从表
         /// </summary>
         /// <param name="nodeid">节点ID</param>
         public GEDtl(string fk_mapdtl)
@@ -114,7 +114,7 @@ namespace BP.Sys
             this.FK_MapDtl = fk_mapdtl;
         }
         /// <summary>
-        /// 通用明细表
+        /// 通用从表
         /// </summary>
         /// <param name="nodeid">节点ID</param>
         /// <param name="_oid">OID</param>
@@ -231,7 +231,7 @@ namespace BP.Sys
         #endregion
     }
     /// <summary>
-    /// 通用明细表s
+    /// 通用从表s
     /// </summary>
     public class GEDtls : EntitiesOID
     {
@@ -256,13 +256,13 @@ namespace BP.Sys
             }
         }
         /// <summary>
-        /// 通用明细表ID
+        /// 通用从表ID
         /// </summary>
         public GEDtls()
         {
         }
         /// <summary>
-        /// 通用明细表ID
+        /// 通用从表ID
         /// </summary>
         /// <param name="fk_mapdtl"></param>
         public GEDtls(string fk_mapdtl)

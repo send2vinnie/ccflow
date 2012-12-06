@@ -218,7 +218,7 @@ namespace BP.Report
 
 				str= this.RepairLine(   str ); // 修复线。
 
-				#region 明细表
+				#region 从表
 				IDictionaryEnumerator dic= this.ListDT.GetEnumerator();
 				 
 
@@ -260,7 +260,7 @@ namespace BP.Report
 						}
 					}
 				}
-				#endregion 明细表
+				#endregion 从表
 
 				#region 主表
 				foreach( DocParam par in this.DocParamTable )

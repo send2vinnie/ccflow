@@ -738,7 +738,7 @@ namespace BP.Rpt.RTF
                 }
                 #endregion
 
-                #region 明细表
+                #region 从表
                 string shortName = "";
                 ArrayList al = this.EnsDataDtls;
                 foreach (Entities dtls in al)
@@ -808,7 +808,7 @@ namespace BP.Rpt.RTF
                         }
                     }
                 }
-                #endregion 明细表
+                #endregion 从表
 
                 #region 明细 合计信息。
                 al = this.EnsDataDtls;
@@ -850,7 +850,7 @@ namespace BP.Rpt.RTF
                         }
                     }
                 }
-                #endregion 明细表合计
+                #endregion 从表合计
 
                 #region 要替换的字段
                 if (replaceVals != null && replaceVals.Contains("@"))
@@ -956,7 +956,7 @@ namespace BP.Rpt.RTF
                 }
                 #endregion
 
-                #region 明细表
+                #region 从表
                 string shortName = "";
                 ArrayList al = this.EnsDataDtls;
                 foreach (Entities dtls in al)
@@ -1009,7 +1009,7 @@ namespace BP.Rpt.RTF
                         }
                     }
                 }
-                #endregion 明细表
+                #endregion 从表
 
                 #region 明细 合计信息。
                 al = this.EnsDataDtls;
@@ -1049,7 +1049,7 @@ namespace BP.Rpt.RTF
                         }
                     }
                 }
-                #endregion 明细表合计
+                #endregion 从表合计
 
                 StreamWriter wr = new StreamWriter(this.TempFilePath, false, Encoding.ASCII);
                 wr.Write(str);

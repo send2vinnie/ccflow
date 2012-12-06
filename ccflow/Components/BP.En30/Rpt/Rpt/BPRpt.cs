@@ -148,7 +148,7 @@ namespace BP.Rpt
 				}
 				#endregion
 
-				#region 明细表
+				#region 从表
 				/*
 				IDictionaryEnumerator dic= this.ListDT.GetEnumerator();
 				while(dic.MoveNext())
@@ -191,7 +191,7 @@ namespace BP.Rpt
 					}
 				}
 				*/
-				#endregion 明细表
+				#endregion 从表
 
 
 				wr.Write( str );
