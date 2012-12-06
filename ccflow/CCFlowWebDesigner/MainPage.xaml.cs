@@ -14,17 +14,17 @@ using System.Windows.Browser;
 using WF;
 using WF.WS;
 using Silverlight;
-using WF.Controls;
+using BP.Controls;
 using Liquid;
-using WF.Resources;
 using WF.Designer;
 using System.IO;
 using BP;
 using BP.CY;
 using BP.CY.ExportAsPNG;
 using WF.WSFtp;
+using BP.Frm;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     /// <summary>
     /// 设计器主页面
@@ -45,7 +45,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private List<ToolbarButton> ToolBarButtonList = new List<ToolbarButton>();
         private const string ToolBarEnableIsFlowSensitived = "EnableIsFlowSensitived";
 
-        private FrmShareFlow frmShareFlow;
+       // private FrmShareFlow frmShareFlow;
         CYFtpSoapClient ftpClient = null;
 
         #endregion
@@ -363,7 +363,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="flowsortid">工作流类别ID</param>
         public void DeleteFlowSort(string flowsortid)
         {
-            if (HtmlPage.Window.Confirm(Text.DeleteFlowSort))
+            if (HtmlPage.Window.Confirm("您确认要删除吗？"))
             {
                 _Service.DoAsync("DelFlowSort", flowsortid, true);
                 _Service.DoCompleted += Server_DoCompletedToRefreshSortTree;
@@ -613,7 +613,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             switch (e.Tag.ToString())
             {
                 case "menuExp":
-                    FrmExp exp = new FrmExp();
+                    BP.Frm.FrmExp exp = new BP.Frm.FrmExp();
                     exp.Show();
                     break;
                 case "Help":
@@ -718,40 +718,40 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         private void GetFlowShareRoot_Completed(object sender, GetFlowShareRootCompletedEventArgs e)
         {
-            ftpClient.GetFlowShareRootCompleted -= GetFlowShareRoot_Completed;
-            if (string.IsNullOrEmpty(flowShareRoot) && e != null)
-            {
-                flowShareRoot = e.Result;
-            }
+            //ftpClient.GetFlowShareRootCompleted -= GetFlowShareRoot_Completed;
+            //if (string.IsNullOrEmpty(flowShareRoot) && e != null)
+            //{
+            //    flowShareRoot = e.Result;
+            //}
 
-            if (SessionManager.Session.ContainsKey("user"))
-            {
-                FrmTemNote temNote = new FrmTemNote();
-                temNote.Closed += (sender2, e2) =>
-                {
-                    temDes = temNote.TemDescription;
-                    ShareFlow_Start(flowShareRoot);
-                };
-                temNote.Show();
-            }
-            else
-            {
-                FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
-                loginTemLib.Closed += (sender1, e1) =>
-                {
-                    if (loginTemLib.LoginSuccess)
-                    {
-                        FrmTemNote temNote = new FrmTemNote();
-                        temNote.Closed += (sender2, e2) =>
-                        {
-                            temDes = temNote.TemDescription;
-                            ShareFlow_Start(flowShareRoot);
-                        };
-                        temNote.Show();
-                    }
-                };
-                loginTemLib.Show();
-            }
+            //if (SessionManager.Session.ContainsKey("user"))
+            //{
+            //    FrmTemNote temNote = new FrmTemNote();
+            //    temNote.Closed += (sender2, e2) =>
+            //    {
+            //        temDes = temNote.TemDescription;
+            //        ShareFlow_Start(flowShareRoot);
+            //    };
+            //    temNote.Show();
+            //}
+            //else
+            //{
+            //    FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
+            //    loginTemLib.Closed += (sender1, e1) =>
+            //    {
+            //        if (loginTemLib.LoginSuccess)
+            //        {
+            //            FrmTemNote temNote = new FrmTemNote();
+            //            temNote.Closed += (sender2, e2) =>
+            //            {
+            //                temDes = temNote.TemDescription;
+            //                ShareFlow_Start(flowShareRoot);
+            //            };
+            //            temNote.Show();
+            //        }
+            //    };
+            //    loginTemLib.Show();
+            //}
         }
 
         /// <summary>
@@ -838,13 +838,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             switch (e.Tag.ToString())
             {
                 case "Frm_EditForm": //表单属性
-                    WF.Frm.Frm frm = new WF.Frm.Frm();
+                    BP.Frm.Frm frm = new BP.Frm.Frm();
                     frm.BindFrm(selectedNode.Name);
                     frm.HisMainPage = this;
                     frm.Show();
                     break;
                 case "Frm_NewForm": //新建表单
-                    WF.Frm.Frm frm1 = new WF.Frm.Frm();
+                    BP.Frm.Frm frm1 = new BP.Frm.Frm();
                     frm1.BindNew();
                     frm1.HisMainPage = this;
                     frm1.Show();
@@ -859,14 +859,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
                     break;
                 case "Frm_NewFormSort": //新建表单类别
-                    WF.Frm.FrmSortEdit frmSortEdit = new WF.Frm.FrmSortEdit();
+                    BP.Frm.FrmSortEdit frmSortEdit = new BP.Frm.FrmSortEdit();
                     frmSortEdit.No = "";
                     frmSortEdit.TB_Name.Text = "New Form Sort";
                     frmSortEdit.HisMainPage = this;
                     frmSortEdit.Show();
                     break;
                 case "Frm_EditSort": //编辑
-                    WF.Frm.FrmSortEdit frmSortEdit1 = new WF.Frm.FrmSortEdit();
+                    BP.Frm.FrmSortEdit frmSortEdit1 = new BP.Frm.FrmSortEdit();
                     frmSortEdit1.No = selectedNode.ID;
                     frmSortEdit1.TB_Name.Text = selectedNode.Title;
                     frmSortEdit1.HisMainPage = this;
@@ -901,7 +901,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     this.BindFormTree();
                     break;
                 case "Frm_Imp":  //Imp
-                    WF.Frm.FrmImp imp = new WF.Frm.FrmImp();
+                    BP.Frm.FrmImp imp = new BP.Frm.FrmImp();
                     imp.Show();
                     break;
                 default:
@@ -930,7 +930,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 case "Frm_EditForm":
                 case "Frm_NewForm":
-                    var frm = (WF.Frm.Frm)sender;
+                    var frm = (BP.Frm.Frm)sender;
                     if (frm.DialogResult == true)
                     {
                         this.BindFormTree();
@@ -938,7 +938,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
                 case "Frm_NewFormSort":
                 case "Frm_EditFormSort":
-                    var add = (WF.Frm.FrmSortEdit)sender;
+                    var add = (BP.Frm.FrmSortEdit)sender;
                     if (add.DialogResult == true)
                     {
                         this.BindFormTree();
@@ -1100,7 +1100,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 Glo.WinOpenByDoType("CH", UrlFlag.FormFreeModel, tn.Name, null, null);
 
-                //WF.Frm.Frm frm = new WF.Frm.Frm();
+                //BP.Frm.Frm frm = new BP.Frm.Frm();
                 //frm.BindFrm(tn.Name);
                 //frm.HisMainPage = this;
                 //frm.Show();
@@ -1232,7 +1232,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 if (SelectedContainer.IsNeedSave)
                 {
-                    if (HtmlPage.Window.Confirm(Text.IsSave))
+                    if (HtmlPage.Window.Confirm("确定要保存吗？"))
                     {
                         if (SelectedContainer.Save(null))
                         {
@@ -1445,7 +1445,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     //string  url = "/WF/Admin/XAP/DoPort.aspx?DoType=FrmLib&FK_Node=0&Lang=CH";
                     //Glo.WinOpen(Glo.BPMHost + url, "执行", 800, 760);
                     return;
-                //WF.Frm.FrmLib lib = new WF.Frm.FrmLib();
+                //BP.Frm.FrmLib lib = new BP.Frm.FrmLib();
                 //lib.Show();
                 case "Btn_ToolBarLogin":
                     Glo.WinOpen("/WF/Login.aspx", "登陆", 800, 900);
@@ -1512,15 +1512,15 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         }
                         else
                         {
-                            FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
-                            loginTemLib.Closed += (sender1, e1) =>
-                            {
-                                if (loginTemLib.LoginSuccess)
-                                {
-                                    ShowTemplateLib();
-                                }
-                            };
-                            loginTemLib.Show();
+                            //FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
+                            //loginTemLib.Closed += (sender1, e1) =>
+                            //{
+                            //    if (loginTemLib.LoginSuccess)
+                            //    {
+                            //        ShowTemplateLib();
+                            //    }
+                            //};
+                            //loginTemLib.Show();
                         }
                         break;
                     }
@@ -1539,29 +1539,29 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// </summary>
         private void ShowTemplateLib()
         {
-            frmShareFlow = new FrmShareFlow();
-            frmShareFlow.FlowID = SelectedContainer.FlowID;
-            frmShareFlow.fileView.FlowTempleteLoadCompeleted += (sender1, eArgs) =>
-            {
-                try
-                {
-                    var result = eArgs.Result.Split(',');
-                    // 返回值的格式为FlowSortID,FlowId,FlowName  
-                    if (3 != result.Length)
-                    {
-                        MessageBox.Show(eArgs.Result, "错误", MessageBoxButton.OK);
-                        return;
-                    }
+            //frmShareFlow = new FrmShareFlow();
+            //frmShareFlow.FlowID = SelectedContainer.FlowID;
+            //frmShareFlow.fileView.FlowTempleteLoadCompeleted += (sender1, eArgs) =>
+            //{
+            //    try
+            //    {
+            //        var result = eArgs.Result.Split(',');
+            //        // 返回值的格式为FlowSortID,FlowId,FlowName  
+            //        if (3 != result.Length)
+            //        {
+            //            MessageBox.Show(eArgs.Result, "错误", MessageBoxButton.OK);
+            //            return;
+            //        }
 
-                    this.BindFlowAndFlowSort();
-                    OpenFlow(result[0], result[1], result[2]);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "错误", MessageBoxButton.OK);
-                }
-            };
-            frmShareFlow.Show();
+            //        this.BindFlowAndFlowSort();
+            //        OpenFlow(result[0], result[1], result[2]);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, "错误", MessageBoxButton.OK);
+            //    }
+            //};
+            //frmShareFlow.Show();
         }
 
         private void setToolBarButtonEnableStatus(bool isEnable)

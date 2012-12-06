@@ -17,7 +17,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
 using System.IO;
 using Silverlight;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 using WF.Designer;
 
 namespace BP
@@ -47,7 +47,7 @@ namespace BP
 
             Glo.BPMHost = this.GetHostUrl();
 
-            //WF.Frm.FrmLib lab = new WF.Frm.FrmLib();
+            //BP.Frm.FrmLib lab = new BP.Frm.FrmLib();
             //this.RootVisual = lab;
             //return;
 

@@ -10,12 +10,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ServiceModel;
 using WF.WS;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 using BP;
 using BP.DA;
 using Silverlight;
 
-namespace WF.Frm
+namespace BP.Frm
 {
     public partial class Frm : ChildWindow
     {

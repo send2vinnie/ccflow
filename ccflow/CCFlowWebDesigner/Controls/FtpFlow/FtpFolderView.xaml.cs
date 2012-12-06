@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using WF.WSFtp;
 using BP;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public class GetDefaultRootEventArgs : EventArgs
     {

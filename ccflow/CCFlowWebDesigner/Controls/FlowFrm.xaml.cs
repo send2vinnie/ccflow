@@ -12,7 +12,7 @@ using Silverlight;
 using BP.DA;
 using BP;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public partial class FlowFrm : ChildWindow
     {
@@ -54,18 +54,19 @@ namespace WF.Controls
                 }
             }
 
-            string strs = "@EnName=BP.WF.Frm@PKVal=" + pk + "@Name=" + this.TB_Name.Text;
+            string strs = "@EnName=BP.BP.Frm@PKVal=" + pk + "@Name=" + this.TB_Name.Text;
             strs += "@PTable=" + this.TB_PTable.Text + "@FrmType=" + frmType;
             strs += "@FK_Flow=" + string.Empty;
             strs += "@URL=" + this.TB_URL.Text;
             strs += "@DBURL=" + this.DDL_DBUrl.SelectedIndex;
             var client =   Glo.GetDesignerServiceInstance();
             client.DoAsync("SaveFlowFrm", strs, true);
-            client.DoCompleted += client_DoTypeCompleted ;
+            client.DoCompleted += new EventHandler<global::WF.WS.DoCompletedEventArgs>(client_DoCompleted);
         }
 
-        void client_DoTypeCompleted(object sender, WS.DoCompletedEventArgs e)
+        void client_DoCompleted(object sender, global::WF.WS.DoCompletedEventArgs e)
         {
+           
             if (e.Result.Contains("Error:"))
             {
                 MessageBox.Show(e.Result, "Save Error", MessageBoxButton.OK);
@@ -130,18 +131,18 @@ namespace WF.Controls
             {
                 var sql = "select * from Sys_MapData";
                 var client = Glo.GetDesignerServiceInstance();
-                client.RunSQLReturnTableCompleted += new EventHandler<WS.RunSQLReturnTableCompletedEventArgs>(client_RunSQLReturnTableCompleted );
+                client.RunSQLReturnTableCompleted += new EventHandler<global::WF.WS.RunSQLReturnTableCompletedEventArgs>(client_RunSQLReturnTableCompleted);
                 client.RunSQLReturnTableAsync(sql, true);
             }
         }
-
         /// <summary>
         /// 查询结束后，初始化页面控件的值　
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void client_RunSQLReturnTableCompleted(object sender, WS.RunSQLReturnTableCompletedEventArgs e)
+        void client_RunSQLReturnTableCompleted(object sender, global::WF.WS.RunSQLReturnTableCompletedEventArgs e)
         {
+             
             try
             {
                 var ds = new DataSet();

@@ -9,25 +9,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Ccflow.Web.UI.Control.Workflow.Designer.Picture;
+using BP.Picture;
 using Ccflow.Web.Component.Workflow;
-using WF.Resources;
 using System.ComponentModel;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public delegate void ColseAnimationCompletedDelegate(object sender, EventArgs e);
 
     public partial class FlowNodePictureContainer : UserControl, INotifyPropertyChanged
     {
         public IContainer CurrentContainer { get; set; }
-        
+
         public double ContainerWidth
         {
             set
             {
-
                 gridContainer.Width = value;
             }
             get
@@ -48,31 +46,31 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-       public  double PictureWidth
+        public double PictureWidth
         {
             get
             {
-                return (( IFlowNodePicture) currentPic).PictureWidth;
+                return ((IFlowNodePicture)currentPic).PictureWidth;
             }
             set
             {
                 ((IFlowNodePicture)currentPic).PictureWidth = value;
             }
         }
-       public double PictureHeight
-       {
-           get
-           {
-               return ((IFlowNodePicture)currentPic).PictureHeight;
-           }
-           set
-           {
-               ((IFlowNodePicture)currentPic).PictureHeight = value;
-           }
-       }
+        public double PictureHeight
+        {
+            get
+            {
+                return ((IFlowNodePicture)currentPic).PictureHeight;
+            }
+            set
+            {
+                ((IFlowNodePicture)currentPic).PictureHeight = value;
+            }
+        }
 
-   public    UserControl currentPic;
-       public FlowNodePictureContainer()
+        public UserControl currentPic;
+        public FlowNodePictureContainer()
         {
             InitializeComponent();
         }
@@ -80,8 +78,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             set
             {
-                ((IFlowNodePicture)currentPic).Background = value;  
-                 
+                ((IFlowNodePicture)currentPic).Background = value;
             }
         }
         FlowNodeType type;
@@ -94,71 +91,46 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             set
             {
                 type = value;
-                 
-                picAUTOMATION.PictureVisibility = Visibility.Collapsed;
-                picBegin.PictureVisibility = Visibility.Collapsed;
-                picBRANCH.PictureVisibility = Visibility.Collapsed;
-                picEnd.PictureVisibility = Visibility.Collapsed;
-                picINTERACTION.PictureVisibility = Visibility.Collapsed;
-                picMERGE.PictureVisibility = Visibility.Collapsed;
-                picSTATION.PictureVisibility = Visibility.Collapsed;
 
-                if (type == FlowNodeType.INTERACTION)
-                {
-                    currentPic = picINTERACTION;
+               this.picOrdinaryNode.PictureVisibility = Visibility.Collapsed;
+               this.picFenLiuNode.PictureVisibility = Visibility.Collapsed;
+               this.picHeLiuNode.PictureVisibility = Visibility.Collapsed;
+               this.picFenHeLiuNode.PictureVisibility = Visibility.Collapsed;
+               this.picSubThreadNode.PictureVisibility = Visibility.Collapsed;
 
-                }
-                else if (type == FlowNodeType.COMPLETION)
-                {
-                    currentPic = picEnd;
-
-
-                }
-                else if (type == FlowNodeType.INITIAL)
-                {
-                    currentPic = picBegin;
-
-
-                }
-                else if (type == FlowNodeType.AUTOMATION
-                     || type == FlowNodeType.DUMMY
-                    || type== FlowNodeType.SUBPROCESS)
-                {
-                    currentPic = picAUTOMATION ;
-
-
-                }
-                else if (type == FlowNodeType.AND_BRANCH
-                    || type == FlowNodeType.OR_BRANCH)
-                {
-                    currentPic = picBRANCH;
-
-
-                }
-                else if (type == FlowNodeType.AND_MERGE
-                    || type == FlowNodeType.OR_MERGE
-                    || type == FlowNodeType.VOTE_MERGE)
-                {
-                    currentPic = picMERGE ;
-
-
-                }
-                else if (type == FlowNodeType.STATIONODE)
-                {
-                    currentPic = picSTATION;
-                }
+               switch (this.type)
+               {
+                   case FlowNodeType.Ordinary:
+                       currentPic = picOrdinaryNode;
+                       break;
+                   case FlowNodeType.FL:
+                       currentPic = picFenLiuNode;
+                       break;
+                   case FlowNodeType.HL:
+                       currentPic = picHeLiuNode;
+                       break;
+                   case FlowNodeType.FHL:
+                       currentPic = picFenHeLiuNode;
+                       break;
+                   case FlowNodeType.SubThread:
+                       currentPic = picSubThreadNode;
+                       break;
+                   default:
+                       throw new Exception("errrrss");
+               }
                 ((IFlowNodePicture)currentPic).PictureVisibility = Visibility.Visible;
-                 
             }
         }
 
-     public string NodeName
+        public string NodeName
         {
             get { return txtFlowNodeName.Text; }
-            set {
+            set
+            {
                 RaisePropertyChanging(new PropertyChangedEventArgs("NodeName"));
                 txtFlowNodeName.Text = value;
-                tbNodeName.Text = value; }
+                tbNodeName.Text = value;
+            }
         }
         public void SetSelectedColor()
         {
@@ -176,8 +148,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
         public Point GetPointOfIntersection(Point beginPoint, Point endPoint, DirectionMoveType type)
         {
-
-            return new Point(0,0);
+            return new Point(0, 0);
         }
         public PointCollection ThisPointCollection
         {
@@ -191,25 +162,24 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             get
             {
-                if (Type == FlowNodeType.OR_MERGE
-                    || Type == FlowNodeType.AND_MERGE
-                    || Type == FlowNodeType.VOTE_MERGE)
-                {
-
-                    _repeatDirection=((MergeFlowNode)currentPic).RepeatDirection;
-                }
+                //if (Type == FlowNodeType.OR_MERGE
+                //    || Type == FlowNodeType.AND_MERGE
+                //    || Type == FlowNodeType.VOTE_MERGE)
+                //{
+                //    _repeatDirection=((SubThreadNode)currentPic).RepeatDirection;
+                //}
                 return _repeatDirection;
             }
             set
-            { 
+            {
                 _repeatDirection = value;
-                if (Type == FlowNodeType.OR_MERGE
-                    ||  Type == FlowNodeType.AND_MERGE
-                    ||  Type == FlowNodeType.VOTE_MERGE)
-                {
+                //if (Type == FlowNodeType.OR_MERGE
+                //    ||  Type == FlowNodeType.AND_MERGE
+                //    ||  Type == FlowNodeType.VOTE_MERGE)
+                //{
 
-                    ((MergeFlowNode)currentPic).RepeatDirection = _repeatDirection;
-                }
+                //    ((SubThreadNode)currentPic).RepeatDirection = _repeatDirection;
+                //}
             }
         }
 
@@ -223,7 +193,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             tbNodeName.Visibility = Visibility.Collapsed;
             txtFlowNodeName.Visibility = Visibility.Visible;
-            
+
         }
 
         #region INotifyPropertyChanged 成员

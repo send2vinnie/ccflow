@@ -10,15 +10,14 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Ccflow.Web.Component.Workflow;
-using WF.Resources;
 using WF.WS;
 using Silverlight;
 using WF.Designer;
-using Ccflow.Web.UI.Control.Workflow.Designer.Picture;
+using BP.Picture;
 using System.ComponentModel;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public delegate void MoveDelegate(FlowNode a, MouseEventArgs e);
 
@@ -107,7 +106,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 if (_stationTipControl == null)
                 {
-                    _stationTipControl = new FlowNode(_container, FlowNodeType.STATIONODE);
+                    _stationTipControl = new FlowNode(_container, FlowNodeType.Ordinary);
                     _stationTipControl.Container = this.Container;
                     _stationTipControl.sdPicture.txtFlowNodeName.Text = "";
                     // container.Children.Add(_stationTipControl);
@@ -135,7 +134,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 sdPicture.CurrentContainer = value;
             }
         }
-        FlowNodeType type = FlowNodeType.INTERACTION;
+        public NodePosType HisPosType = NodePosType.Mid;
+        FlowNodeType type = FlowNodeType.Ordinary;
         public FlowNodeType Type
         {
             get
@@ -451,219 +451,215 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             double endPointRadius = 4;
             double beginPointRadius = 4;
             Point p = new Point();
-            if (Type == FlowNodeType.INTERACTION
-                 || Type == FlowNodeType.AND_MERGE
-                || Type == FlowNodeType.OR_MERGE
-                || Type == FlowNodeType.VOTE_MERGE
-                )
+            //if (Type == FlowNodeType.INTERACTION
+            //     || Type == FlowNodeType.AND_MERGE
+            //    || Type == FlowNodeType.OR_MERGE
+            //    || Type == FlowNodeType.VOTE_MERGE
+            //    )
+            //{
+
+            #region
+
+
+            if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
+                && Math.Abs(endPoint.Y - beginPoint.Y) <= PictureHeight / 2)
             {
-
-                #region
-
-
-                if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
-                    && Math.Abs(endPoint.Y - beginPoint.Y) <= PictureHeight / 2)
-                {
-                    p = endPoint;
-                }
-                else
-                {
-                    //起始点坐标和终点坐标之间的夹角（相对于Y轴坐标系）
-                    double angle = Math.Abs(Math.Atan((endPoint.X - beginPoint.X) / (endPoint.Y - beginPoint.Y)) * 180.0 / Math.PI);
-                    //节点的长和宽之间的夹角（相对于Y轴坐标系）
-                    double angel2 = Math.Abs(Math.Atan(PictureWidth / PictureHeight) * 180.0 / Math.PI);
-                    //半径
-                    double radio = PictureHeight < PictureWidth ? PictureHeight / 2 : PictureWidth / 2;
-
-                    if (angle <= angel2)//起始点坐标在终点坐标的上方,或者下方
-                    {
-                        if (endPoint.Y < beginPoint.Y)//在上方
-                        {
-                            if (endPoint.X < beginPoint.X)
-                                p.X = endPoint.X + Math.Tan(Math.PI * angle / 180.0) * radio;
-                            else
-                                p.X = endPoint.X - Math.Tan(Math.PI * angle / 180.0) * radio;
-
-                            p.Y = endPoint.Y + PictureHeight / 2;
-                        }
-                        else//在下方
-                        {
-                            if (endPoint.X < beginPoint.X)
-                                p.X = endPoint.X + Math.Tan(Math.PI * angle / 180.0) * radio;
-                            else
-                                p.X = endPoint.X - Math.Tan(Math.PI * angle / 180.0) * radio;
-
-                            p.Y = endPoint.Y - PictureHeight / 2;
-                        }
-
-                    }
-
-                    else//左方或者右方
-                    {
-                        if (endPoint.X < beginPoint.X)//在右方
-                        {
-                            p.X = endPoint.X + PictureWidth / 2;
-                            if (endPoint.Y < beginPoint.Y)
-                                p.Y = endPoint.Y + Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
-                            else
-                                p.Y = endPoint.Y - Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
-                        }
-                        else//在左方
-                        {
-                            p.X = endPoint.X - PictureWidth / 2;
-                            if (endPoint.Y < beginPoint.Y)
-                                p.Y = endPoint.Y + Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
-                            else
-                                p.Y = endPoint.Y - Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
-
-                        }
-                    }
-                }
-
-                if (type == DirectionMoveType.End)
-                {
-                    p.X -= endPointRadius;
-                    p.Y -= endPointRadius;
-                }
-                if (type == DirectionMoveType.Begin)
-                {
-                    p.X -= beginPointRadius;
-                    p.Y -= beginPointRadius;
-                }
-
-                #endregion
-
+                p = endPoint;
             }
-            else if (Type == FlowNodeType.INITIAL
-              || Type == FlowNodeType.COMPLETION
-              || Type == FlowNodeType.AUTOMATION
-               || Type == FlowNodeType.DUMMY
-                || Type == FlowNodeType.SUBPROCESS || Type == FlowNodeType.STATIONODE)
+            else
             {
-                #region
-                if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
-                    && Math.Abs(endPoint.Y - beginPoint.Y) <= PictureHeight / 2)
+                //起始点坐标和终点坐标之间的夹角（相对于Y轴坐标系）
+                double angle = Math.Abs(Math.Atan((endPoint.X - beginPoint.X) / (endPoint.Y - beginPoint.Y)) * 180.0 / Math.PI);
+                //节点的长和宽之间的夹角（相对于Y轴坐标系）
+                double angel2 = Math.Abs(Math.Atan(PictureWidth / PictureHeight) * 180.0 / Math.PI);
+                //半径
+                double radio = PictureHeight < PictureWidth ? PictureHeight / 2 : PictureWidth / 2;
+
+                if (angle <= angel2)//起始点坐标在终点坐标的上方,或者下方
                 {
-                    p = endPoint;
+                    if (endPoint.Y < beginPoint.Y)//在上方
+                    {
+                        if (endPoint.X < beginPoint.X)
+                            p.X = endPoint.X + Math.Tan(Math.PI * angle / 180.0) * radio;
+                        else
+                            p.X = endPoint.X - Math.Tan(Math.PI * angle / 180.0) * radio;
+
+                        p.Y = endPoint.Y + PictureHeight / 2;
+                    }
+                    else//在下方
+                    {
+                        if (endPoint.X < beginPoint.X)
+                            p.X = endPoint.X + Math.Tan(Math.PI * angle / 180.0) * radio;
+                        else
+                            p.X = endPoint.X - Math.Tan(Math.PI * angle / 180.0) * radio;
+
+                        p.Y = endPoint.Y - PictureHeight / 2;
+                    }
+
                 }
-                else
+
+                else//左方或者右方
                 {
-                    double radial = (PictureWidth < PictureHeight ? PictureWidth : PictureHeight) / 2;
-                    double bc = Math.Sqrt((endPoint.X - beginPoint.X) * (endPoint.X - beginPoint.X) + (endPoint.Y - beginPoint.Y) * (endPoint.Y - beginPoint.Y));
-                    p.X = endPoint.X - (endPoint.X - beginPoint.X) * radial / bc;
-                    p.Y = endPoint.Y - (endPoint.Y - beginPoint.Y) * radial / bc;
-
-
-                }
-                if (type == DirectionMoveType.End)
-                {
-                    p.X -= endPointRadius;
-                    p.Y -= endPointRadius;
-                }
-                if (type == DirectionMoveType.Begin)
-                {
-                    p.X -= beginPointRadius;
-                    p.Y -= beginPointRadius;
-                }
-
-
-                #endregion
-
-            }
-
-            else if (Type == FlowNodeType.AND_BRANCH
-                 || Type == FlowNodeType.OR_BRANCH
-               )
-            {
-                if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
-                    && Math.Abs(endPoint.Y - beginPoint.Y) <= PictureHeight / 2)
-                {
-                    p = endPoint;
-
-                    if (type == DirectionMoveType.End)
+                    if (endPoint.X < beginPoint.X)//在右方
                     {
-                        p.X -= endPointRadius;
-                        p.Y -= endPointRadius;
+                        p.X = endPoint.X + PictureWidth / 2;
+                        if (endPoint.Y < beginPoint.Y)
+                            p.Y = endPoint.Y + Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
+                        else
+                            p.Y = endPoint.Y - Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
                     }
-                    if (type == DirectionMoveType.Begin)
+                    else//在左方
                     {
-                        p.X -= beginPointRadius;
-                        p.Y -= beginPointRadius;
-                    }
-                }
-                else
-                {
+                        p.X = endPoint.X - PictureWidth / 2;
+                        if (endPoint.Y < beginPoint.Y)
+                            p.Y = endPoint.Y + Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
+                        else
+                            p.Y = endPoint.Y - Math.Tan(Math.PI * (90 - angle) / 180.0) * radio;
 
-                    //double angle = Math.Abs(Math.Atan((endPoint.X - beginPoint.X) / (endPoint.Y - beginPoint.Y)) * 180.0 / Math.PI);
-                    //if (angle < 45)
-                    //{
-                    //    if (endPoint.Y < beginPoint.Y)
-                    //    {
-                    //        p = ThisPointCollection[2];
-                    //    }
-                    //    else
-                    //    {
-                    //        p = ThisPointCollection[0];
-
-                    //    }
-
-                    //}
-
-                    //else
-                    //{
-                    //    if (endPoint.X < beginPoint.X)
-                    //    {
-                    //        p = ThisPointCollection[1];
-
-                    //    }
-                    //    else
-                    //    {
-                    //        p = ThisPointCollection[3];
-
-                    //    }
-                    //}
-
-
-                    double x = 0, y = 0;
-                    double tan = Math.Abs((endPoint.Y - beginPoint.Y) / (beginPoint.X - endPoint.X));
-
-                    if (endPoint.X <= beginPoint.X && endPoint.Y >= beginPoint.Y)//右上
-                    {
-                        y = (endPoint.Y + (ThisPointCollection[0].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
-
-                        x = (endPoint.Y - y) / tan + endPoint.X;
-                    }
-                    else if (this.CenterPoint.X <= beginPoint.X && this.CenterPoint.Y <= beginPoint.Y)//右下
-                    {
-                        y = (endPoint.Y + (ThisPointCollection[2].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
-                        x = (y - endPoint.Y) / tan + endPoint.X;
-                    }
-                    else if (this.CenterPoint.X >= beginPoint.X && this.CenterPoint.Y >= beginPoint.Y)//左上
-                    {
-                        y = (endPoint.Y + (ThisPointCollection[0].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
-                        x = (y - endPoint.Y) / tan + endPoint.X;
-
-                    }
-                    else if (this.CenterPoint.X >= beginPoint.X && this.CenterPoint.Y <= beginPoint.Y)//左下
-                    {
-                        y = (endPoint.Y + (ThisPointCollection[2].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
-                        x = (endPoint.Y - y) / tan + endPoint.X;
-                    }
-                    p.Y = y;
-                    p.X = x;
-                    if (type == DirectionMoveType.End)
-                    {
-                        p.X += -endPointRadius;
-                        p.Y += -endPointRadius;
-                    }
-                    if (type == DirectionMoveType.Begin)
-                    {
-                        p.X += -beginPointRadius;
-                        p.Y += -beginPointRadius;
                     }
                 }
             }
 
+            if (type == DirectionMoveType.End)
+            {
+                p.X -= endPointRadius;
+                p.Y -= endPointRadius;
+            }
+            if (type == DirectionMoveType.Begin)
+            {
+                p.X -= beginPointRadius;
+                p.Y -= beginPointRadius;
+            }
+
+            #endregion
+            //  }
+
+            //else if (Type == FlowNodeType.INITIAL
+            //  || Type == FlowNodeType.COMPLETION
+            //  || Type == FlowNodeType.AUTOMATION
+            //   || Type == FlowNodeType.DUMMY
+            //    || Type == FlowNodeType.SUBPROCESS || Type == FlowNodeType.STATIONODE)
+            //{
+            //    #region
+            //    if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
+            //        && Math.Abs(endPoint.Y - beginPoint.Y) <= PictureHeight / 2)
+            //    {
+            //        p = endPoint;
+            //    }
+            //    else
+            //    {
+            //        double radial = (PictureWidth < PictureHeight ? PictureWidth : PictureHeight) / 2;
+            //        double bc = Math.Sqrt((endPoint.X - beginPoint.X) * (endPoint.X - beginPoint.X) + (endPoint.Y - beginPoint.Y) * (endPoint.Y - beginPoint.Y));
+            //        p.X = endPoint.X - (endPoint.X - beginPoint.X) * radial / bc;
+            //        p.Y = endPoint.Y - (endPoint.Y - beginPoint.Y) * radial / bc;
+
+
+            //    }
+            //    if (type == DirectionMoveType.End)
+            //    {
+            //        p.X -= endPointRadius;
+            //        p.Y -= endPointRadius;
+            //    }
+            //    if (type == DirectionMoveType.Begin)
+            //    {
+            //        p.X -= beginPointRadius;
+            //        p.Y -= beginPointRadius;
+            //    }
+            //    #endregion
+            //}
+
+            //else if (Type == FlowNodeType.AND_BRANCH
+            //     || Type == FlowNodeType.OR_BRANCH
+            //   )
+            //{
+            //    if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
+            //        && Math.Abs(endPoint.Y - beginPoint.Y) <= PictureHeight / 2)
+            //    {
+            //        p = endPoint;
+
+            //        if (type == DirectionMoveType.End)
+            //        {
+            //            p.X -= endPointRadius;
+            //            p.Y -= endPointRadius;
+            //        }
+            //        if (type == DirectionMoveType.Begin)
+            //        {
+            //            p.X -= beginPointRadius;
+            //            p.Y -= beginPointRadius;
+            //        }
+            //    }
+            //    else
+            //    {
+
+            //        //double angle = Math.Abs(Math.Atan((endPoint.X - beginPoint.X) / (endPoint.Y - beginPoint.Y)) * 180.0 / Math.PI);
+            //        //if (angle < 45)
+            //        //{
+            //        //    if (endPoint.Y < beginPoint.Y)
+            //        //    {
+            //        //        p = ThisPointCollection[2];
+            //        //    }
+            //        //    else
+            //        //    {
+            //        //        p = ThisPointCollection[0];
+
+            //        //    }
+
+            //        //}
+
+            //        //else
+            //        //{
+            //        //    if (endPoint.X < beginPoint.X)
+            //        //    {
+            //        //        p = ThisPointCollection[1];
+
+            //        //    }
+            //        //    else
+            //        //    {
+            //        //        p = ThisPointCollection[3];
+
+            //        //    }
+            //        //}
+
+
+            //        double x = 0, y = 0;
+            //        double tan = Math.Abs((endPoint.Y - beginPoint.Y) / (beginPoint.X - endPoint.X));
+
+            //        if (endPoint.X <= beginPoint.X && endPoint.Y >= beginPoint.Y)//右上
+            //        {
+            //            y = (endPoint.Y + (ThisPointCollection[0].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
+
+            //            x = (endPoint.Y - y) / tan + endPoint.X;
+            //        }
+            //        else if (this.CenterPoint.X <= beginPoint.X && this.CenterPoint.Y <= beginPoint.Y)//右下
+            //        {
+            //            y = (endPoint.Y + (ThisPointCollection[2].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
+            //            x = (y - endPoint.Y) / tan + endPoint.X;
+            //        }
+            //        else if (this.CenterPoint.X >= beginPoint.X && this.CenterPoint.Y >= beginPoint.Y)//左上
+            //        {
+            //            y = (endPoint.Y + (ThisPointCollection[0].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
+            //            x = (y - endPoint.Y) / tan + endPoint.X;
+
+            //        }
+            //        else if (this.CenterPoint.X >= beginPoint.X && this.CenterPoint.Y <= beginPoint.Y)//左下
+            //        {
+            //            y = (endPoint.Y + (ThisPointCollection[2].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
+            //            x = (endPoint.Y - y) / tan + endPoint.X;
+            //        }
+            //        p.Y = y;
+            //        p.X = x;
+            //        if (type == DirectionMoveType.End)
+            //        {
+            //            p.X += -endPointRadius;
+            //            p.Y += -endPointRadius;
+            //        }
+            //        if (type == DirectionMoveType.Begin)
+            //        {
+            //            p.X += -beginPointRadius;
+            //            p.Y += -beginPointRadius;
+            //        }
+            //    }
+            //}
 
             return p;
         }
@@ -674,86 +670,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             cr.IsPass = true;
 
 
-            if (Type == FlowNodeType.INITIAL)
-            {
-                if (EndDirectionCollections != null
-                    && EndDirectionCollections.Count > 0)
-                {
-                    cr.IsPass = false;
-                    cr.Message += string.Format(Text.Message_CanNotHavePreFlowNode, FlowNodeName);
-                }
-                if (BeginDirectionCollections == null
-                    || BeginDirectionCollections.Count == 0)
-                {
-                    cr.IsPass = false;//必须至少有一个后继节点
-                    cr.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
-                }
-            }
-            else if (Type == FlowNodeType.COMPLETION)
-            {
-                if (BeginDirectionCollections != null
-                    && BeginDirectionCollections.Count > 0)
-                {
-                    cr.IsPass = false;//不能有后继节点
-                    cr.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, FlowNodeName);
-                }
-                if (EndDirectionCollections == null
-                    || EndDirectionCollections.Count == 0)
-                {
-                    cr.IsPass = false;//必须至少有一个前驱节点
-                    cr.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
-                }
-            }
-            else
-            {
-                if ((BeginDirectionCollections == null
-                || BeginDirectionCollections.Count == 0)
-                    && (EndDirectionCollections == null
-                || EndDirectionCollections.Count == 0))
-                {
-                    cr.IsPass = false;//必须设置前驱和后继节点
-                    cr.Message += string.Format(Text.Message_RequireTheInstallationOfPreAndFollowupFlowNode, FlowNodeName);
-                }
-                else
-                {
+            //if (BeginDirectionCollections != null
+            //    && BeginDirectionCollections.Count > 0)
+            //{
+            //    cr.IsPass = false;//不能有后继节点
+            //    cr.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, FlowNodeName);
+            //}
+            //if (EndDirectionCollections == null
+            //    || EndDirectionCollections.Count == 0)
+            //{
+            //    cr.IsPass = false;//必须至少有一个前驱节点
+            //    cr.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
+            //}
 
-                    if (BeginDirectionCollections == null
-                    || BeginDirectionCollections.Count == 0)
-                    {
-                        this.Type = FlowNodeType.COMPLETION;
-                        //cr.IsPass = false;//必须至少有一个后继节点
-                        //cr.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
-                    }
-                    if (EndDirectionCollections == null
-                    || EndDirectionCollections.Count == 0)
-                    {
-                        cr.IsPass = false;//必须至少有一个前驱节点
-                        cr.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
-                    }
-                    if (Type == FlowNodeType.AND_BRANCH
-                        || Type == FlowNodeType.OR_BRANCH)
-                    {
-                        if (EndDirectionCollections != null
-                            && EndDirectionCollections.Count > 1)
-                        {
-                            //cr.IsPass = false;//有且只能有一个前驱节点
-                            //cr.Message += string.Format(Text.Message_MustHaveOnlyOnePreFlowNode, FlowNodeName);
-                        }
-                    }
-
-                    if (Type == FlowNodeType.AND_MERGE
-                        || Type == FlowNodeType.OR_MERGE
-                        || Type == FlowNodeType.VOTE_MERGE)
-                    {
-                        if (BeginDirectionCollections != null
-                            && BeginDirectionCollections.Count > 1)
-                        {
-                            //cr.IsPass = false;
-                            // cr.Message += string.Format(Text.Message_MustHaveOnlyOneFollowUpFlowNode, FlowNodeName);
-                        }
-                    }
-                }
-            }
             isPassCheck = cr.IsPass;
             if (!cr.IsPass)
             {
@@ -770,8 +699,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
             return cr;
-
-
         }
 
         public MergePictureRepeatDirection RepeatDirection
@@ -866,7 +793,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
             xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
             xml.Append(@" Type=""" + Type.ToString() + @"""");
-            xml.Append(@" SubFlow=""" + (Type == FlowNodeType.SUBPROCESS ? SubFlow : @"") + @"""");
+            xml.Append(@" SubFlow=""" + (Type == FlowNodeType.Ordinary ? SubFlow : @"") + @"""");
             xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
             xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
             xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
@@ -891,10 +818,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 Move(this, null);
 
                 // 添加节点后，将结束节点变为交互节点
-                if (FlowNodeType.COMPLETION == this.Type)
-                {
-                    this.Type = FlowNodeType.INTERACTION;
-                }
+                //if (FlowNodeType.COMPLETION == this.Type)
+                //{
+                //    this.Type = FlowNodeType.INTERACTION;
+                //}
             }
 
         }
@@ -907,9 +834,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 r.RemoveBeginFlowNode(this);
 
                 //移除连线后，如果如果节点不是开始节点，并且没有开始节点，则变为结束节点
-                if (0 == BeginDirectionCollections.Count && FlowNodeType.INITIAL != this.Type)
+                if (0 == BeginDirectionCollections.Count && this.HisPosType != NodePosType.End)
                 {
-                    this.Type = FlowNodeType.COMPLETION;
+                  //  this.HisPosType = NodePosType.End;
+                    //this.Type = FlowNodeType.COMPLETION;
                 }
             }
         }
@@ -1079,12 +1007,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 FlowNodePictureContainer fn = sender as FlowNodePictureContainer;
                 try
                 {
-                    StationNode sn = fn.currentPic as StationNode;
+                    OrdinaryNode sn = fn.currentPic as OrdinaryNode;
 
-                    if (sn != null && sn.picSTATION.Cursor == Cursors.SizeNWSE)
+                    if (sn != null && sn.picRect.Cursor == Cursors.SizeNWSE)
                     {
-                        sn.picSTATION.Width += 1;
-                        sn.picSTATION.Height += 1;
+                        sn.picRect.Width += 1;
+                        sn.picRect.Height += 1;
                     }
                     else
                     {
@@ -1142,14 +1070,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                     FrameworkElement element = sender as FrameworkElement;
                     FlowNodePictureContainer fn = sender as FlowNodePictureContainer;
-                    StationNode sn = fn.currentPic as StationNode;
+                    OrdinaryNode sn = fn.currentPic as OrdinaryNode;
                     mousePosition = e.GetPosition(null);
                     trackingMouseMove = true;
                     if (null != element)
                     {
                         element.CaptureMouse();
 
-                        if (sn != null && sn.picSTATION.Cursor == Cursors.SizeNWSE)
+                        if (sn != null && sn.picRect.Cursor == Cursors.SizeNWSE)
                         {
 
                         }
@@ -1337,101 +1265,103 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             UserStation us = new UserStation();
             us.IsPass = true;
 
-            if (Type == FlowNodeType.INITIAL)
-            {
-                if (EndDirectionCollections != null
-                    && EndDirectionCollections.Count > 0)
-                {
-                    us.IsPass = false;
-                    us.Message += string.Format(Text.Message_CanNotHavePreFlowNode, FlowNodeName);
-                }
-                if (BeginDirectionCollections == null
-                    || BeginDirectionCollections.Count == 0)
-                {
-                    us.IsPass = false;//必须至少有一个后继节点
-                    us.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
-                }
-            }
-            else if (Type == FlowNodeType.COMPLETION)
-            {
-                if (BeginDirectionCollections != null
-                    && BeginDirectionCollections.Count > 0)
-                {
-                    us.IsPass = false;//不能有后继节点
-                    us.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, FlowNodeName);
-                }
-                if (EndDirectionCollections == null
-                    || EndDirectionCollections.Count == 0)
-                {
-                    us.IsPass = false;//必须至少有一个前驱节点
-                    us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
-                }
-            }
-            else
-            {
-                if ((BeginDirectionCollections == null
-                || BeginDirectionCollections.Count == 0)
-                    && (EndDirectionCollections == null
-                || EndDirectionCollections.Count == 0))
-                {
-                    us.IsPass = false;//必须设置前驱和后继节点
-                    us.Message += string.Format(Text.Message_RequireTheInstallationOfPreAndFollowupFlowNode, FlowNodeName);
-                }
-                else
-                {
+            //if (Type == FlowNodeType.INITIAL)
+            //{
+            //    if (EndDirectionCollections != null
+            //        && EndDirectionCollections.Count > 0)
+            //    {
+            //        us.IsPass = false;
+            //        us.Message += string.Format(Text.Message_CanNotHavePreFlowNode, FlowNodeName);
+            //    }
+            //    if (BeginDirectionCollections == null
+            //        || BeginDirectionCollections.Count == 0)
+            //    {
+            //        us.IsPass = false;//必须至少有一个后继节点
+            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
+            //    }
+            //}
+            //else if (Type == FlowNodeType.COMPLETION)
+            //{
+            //    if (BeginDirectionCollections != null
+            //        && BeginDirectionCollections.Count > 0)
+            //    {
+            //        us.IsPass = false;//不能有后继节点
+            //        us.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, FlowNodeName);
+            //    }
+            //    if (EndDirectionCollections == null
+            //        || EndDirectionCollections.Count == 0)
+            //    {
+            //        us.IsPass = false;//必须至少有一个前驱节点
+            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
+            //    }
+            //}
+            //else
+            //{
+            //    if ((BeginDirectionCollections == null
+            //    || BeginDirectionCollections.Count == 0)
+            //        && (EndDirectionCollections == null
+            //    || EndDirectionCollections.Count == 0))
+            //    {
+            //        us.IsPass = false;//必须设置前驱和后继节点
+            //        us.Message += string.Format(Text.Message_RequireTheInstallationOfPreAndFollowupFlowNode, FlowNodeName);
+            //    }
+            //    else
+            //    {
 
-                    if (BeginDirectionCollections == null
-                    || BeginDirectionCollections.Count == 0)
-                    {
-                        this.Type = FlowNodeType.COMPLETION;
-                        //cr.IsPass = false;//必须至少有一个后继节点
-                        //cr.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
-                    }
-                    if (EndDirectionCollections == null
-                    || EndDirectionCollections.Count == 0)
-                    {
-                        us.IsPass = false;//必须至少有一个前驱节点
-                        us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
-                    }
-                    if (Type == FlowNodeType.AND_BRANCH
-                        || Type == FlowNodeType.OR_BRANCH)
-                    {
-                        if (EndDirectionCollections != null
-                            && EndDirectionCollections.Count > 1)
-                        {
-                            //cr.IsPass = false;//有且只能有一个前驱节点
-                            //cr.Message += string.Format(Text.Message_MustHaveOnlyOnePreFlowNode, FlowNodeName);
-                        }
-                    }
+            //        //if (BeginDirectionCollections == null
+            //        //|| BeginDirectionCollections.Count == 0)
+            //        //{
+            //        //    this.Type = FlowNodeType.COMPLETION;
+            //        //    //cr.IsPass = false;//必须至少有一个后继节点
+            //        //    //cr.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, FlowNodeName);
+            //        //}
 
-                    if (Type == FlowNodeType.AND_MERGE
-                        || Type == FlowNodeType.OR_MERGE
-                        || Type == FlowNodeType.VOTE_MERGE)
-                    {
-                        if (BeginDirectionCollections != null
-                            && BeginDirectionCollections.Count > 1)
-                        {
-                            //cr.IsPass = false;
-                            // cr.Message += string.Format(Text.Message_MustHaveOnlyOneFollowUpFlowNode, FlowNodeName);
-                        }
-                    }
-                }
-            }
-            isPassCheck = us.IsPass;
-            if (!us.IsPass)
-            {
-                stationTipControl.Visibility = Visibility.Visible;
-                stationTipControl.StationMessage = us.Message.TrimEnd("\r\n".ToCharArray());
-            }
-            else
-            {
-                if (stationTipControl != null)
-                {
-                    stationTipControl.Visibility = Visibility.Collapsed;
-                    container.Children.Remove(stationTipControl);
-                    _stationTipControl = null;
-                }
-            }
+            //        //if (EndDirectionCollections == null
+            //        //|| EndDirectionCollections.Count == 0)
+            //        //{
+            //        //    us.IsPass = false;//必须至少有一个前驱节点
+            //        //    us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, FlowNodeName);
+            //        //}
+
+            //        //if (Type == FlowNodeType.AND_BRANCH
+            //        //    || Type == FlowNodeType.OR_BRANCH)
+            //        //{
+            //        //    if (EndDirectionCollections != null
+            //        //        && EndDirectionCollections.Count > 1)
+            //        //    {
+            //        //        //cr.IsPass = false;//有且只能有一个前驱节点
+            //        //        //cr.Message += string.Format(Text.Message_MustHaveOnlyOnePreFlowNode, FlowNodeName);
+            //        //    }
+            //        //}
+
+            //        //if (Type == FlowNodeType.AND_MERGE
+            //        //    || Type == FlowNodeType.OR_MERGE
+            //        //    || Type == FlowNodeType.VOTE_MERGE)
+            //        //{
+            //        //    if (BeginDirectionCollections != null
+            //        //        && BeginDirectionCollections.Count > 1)
+            //        //    {
+            //        //        //cr.IsPass = false;
+            //        //        // cr.Message += string.Format(Text.Message_MustHaveOnlyOneFollowUpFlowNode, FlowNodeName);
+            //        //    }
+            //        //}
+            //    }
+            //}
+            //isPassCheck = us.IsPass;
+            //if (!us.IsPass)
+            //{
+            //    stationTipControl.Visibility = Visibility.Visible;
+            //    stationTipControl.StationMessage = us.Message.TrimEnd("\r\n".ToCharArray());
+            //}
+            //else
+            //{
+            //    if (stationTipControl != null)
+            //    {
+            //        stationTipControl.Visibility = Visibility.Collapsed;
+            //        container.Children.Remove(stationTipControl);
+            //        _stationTipControl = null;
+            //    }
+            //}
             return us;
         }
         public void Worklist(DataSet dataSet)
@@ -1483,7 +1413,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             set
             {
-                sdPicture.picSTATION.tbMessage.Text = value;
+
+           //     sdPicture.picSubThreadNode.tbMessage.Text = value;
             }
         }
 

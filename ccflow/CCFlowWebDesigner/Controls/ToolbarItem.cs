@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public class ToolbarItem
     {

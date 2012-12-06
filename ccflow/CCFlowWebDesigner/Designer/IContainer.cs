@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using WF.WS;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public interface IContainer
     {

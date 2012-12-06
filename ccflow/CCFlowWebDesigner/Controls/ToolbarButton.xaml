@@ -1,4 +1,4 @@
-﻿<Button x:Class="WF.Controls.ToolbarButton"
+﻿<Button x:Class="BP.Controls.ToolbarButton"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 	Width="auto" Height="30" Opacity="0.75" Margin="1,0,0,1">

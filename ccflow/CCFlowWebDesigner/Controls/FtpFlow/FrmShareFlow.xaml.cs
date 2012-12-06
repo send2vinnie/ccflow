@@ -10,9 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public partial class FrmShareFlow : ChildWindow
     {

@@ -15,7 +15,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
 using System.IO;
 using Silverlight;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 using WF.WS;
 using WF.WSFtp;
 

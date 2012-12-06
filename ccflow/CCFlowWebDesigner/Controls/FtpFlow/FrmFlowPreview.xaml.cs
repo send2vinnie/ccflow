@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 using BP.CY;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public partial class FrmFlowPreview : ChildWindow
     {

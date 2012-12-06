@@ -12,13 +12,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 using WF.WSFtp;
 using WF.WS;
 using BP;
 using BP.CY;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     #region 双击定义
 

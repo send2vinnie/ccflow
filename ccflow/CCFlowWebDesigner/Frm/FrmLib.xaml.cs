@@ -10,11 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Silverlight;
-using WF.Controls;
+using BP.Controls;
 using BP;
 using WF;
 using WF.WS;
-namespace WF.Frm
+namespace BP.Frm
 {
     public class FlowForm
     {

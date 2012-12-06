@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Liquid;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public class TreeNode : Node
     {

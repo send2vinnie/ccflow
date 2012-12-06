@@ -10,10 +10,19 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Silverlight;
 using WF.WS;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 
 namespace BP
 {
+    /// <summary>
+    /// 节点位置
+    /// </summary>
+    public enum NodePosType
+    {
+        Start,
+        Mid,
+        End
+    }
     public enum MergePictureRepeatDirection
     {
         Vertical = 0,
@@ -23,20 +32,56 @@ namespace BP
     /// <summary>
     /// 节点类型
     /// </summary>
-    public enum FlowNodeType
+    public enum FlowNodeType_del
     {
         INITIAL,
         INTERACTION,
         COMPLETION,
-        AND_MERGE,
-        AND_BRANCH,
+        //AND_MERGE, ccflow 没有这些类型。
+        //AND_BRANCH,
         STATIONODE,
         AUTOMATION,
         DUMMY,
-        OR_BRANCH,
-        OR_MERGE,
+        //OR_BRANCH,
+        //OR_MERGE,
         SUBPROCESS,
         VOTE_MERGE,
+    }
+    public enum FlowNodeType
+    {
+        /// <summary>
+        /// 普通
+        /// </summary>
+        Ordinary = 0,
+        /// <summary>
+        /// 合流
+        /// </summary>
+        HL = 1,
+        /// <summary>
+        /// 分流
+        /// </summary>
+        FL = 2,
+        /// <summary>
+        /// 分合流
+        /// </summary>
+        FHL,
+        /// <summary>
+        /// 子线程.
+        /// </summary>
+        SubThread
+
+        //INITIAL,
+        //INTERACTION,
+        //COMPLETION,
+        ////AND_MERGE, ccflow 没有这些类型。
+        ////AND_BRANCH,
+        //STATIONODE,
+        //AUTOMATION,
+        //DUMMY,
+        ////OR_BRANCH,
+        ////OR_MERGE,
+        //SUBPROCESS,
+        //VOTE_MERGE,
     }
     /// <summary>
     /// 运行模式
@@ -58,7 +103,11 @@ namespace BP
         /// <summary>
         /// 分合流
         /// </summary>
-        FHL
+        FHL,
+        /// <summary>
+        /// 子线程.
+        /// </summary>
+        SubThread
     }
     /// <summary>
     /// 节点位置类型

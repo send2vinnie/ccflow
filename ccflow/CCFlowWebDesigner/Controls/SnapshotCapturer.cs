@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 using FluxJpeg.Core;
 using FluxJpeg.Core.Encoder;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public class SnapshotCapturer
     {

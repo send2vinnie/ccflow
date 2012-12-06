@@ -1,7 +1,7 @@
-﻿<UserControl x:Class="Ccflow.Web.UI.Control.Workflow.Designer.FlowNode"
+﻿<UserControl x:Class="BP.FlowNode"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-              xmlns:sharedesigner="clr-namespace:Ccflow.Web.UI.Control.Workflow.Designer"
+              xmlns:sharedesigner="clr-namespace:BP"
               MouseEnter="UserControl_MouseEnter"
              MouseLeave="UserControl_MouseLeave"             
              Width="200" Height="160" >

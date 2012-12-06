@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace WF.Frm
+namespace BP.Frm
 {
     public partial class ChildWindow1 : ChildWindow
     {

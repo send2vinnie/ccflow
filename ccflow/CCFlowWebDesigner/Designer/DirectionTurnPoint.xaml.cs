@@ -10,9 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Ccflow.Web.Component.Workflow;
-using WF.Resources;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 { 
 
     public partial class DirectionTurnPoint : UserControl

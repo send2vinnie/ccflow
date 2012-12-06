@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public partial class DirNavBar : UserControl
     {

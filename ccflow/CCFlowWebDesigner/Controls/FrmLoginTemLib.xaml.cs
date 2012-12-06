@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using BP;
 using WF.WSFtp;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public partial class FrmLoginTemLib : ChildWindow
     {

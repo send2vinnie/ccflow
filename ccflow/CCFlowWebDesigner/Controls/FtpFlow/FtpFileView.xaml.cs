@@ -13,9 +13,9 @@ using System.Windows.Shapes;
 using WF.WSFtp;
 using WF.WS;
 using BP;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public delegate void DirChangedHandler(string dir);
 

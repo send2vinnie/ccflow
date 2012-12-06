@@ -10,9 +10,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ServiceModel;
 using WF.WS;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 
-namespace WF.Frm
+namespace BP.Frm
 {
     public partial class FrmSortEdit : ChildWindow
     {
@@ -43,9 +43,11 @@ namespace WF.Frm
                 strs += "@Name=" + this.TB_Name.Text;
                 var da = BP.Glo.GetDesignerServiceInstance();
                 da.SaveEnAsync(strs);
-                da.SaveEnCompleted += new EventHandler<WS.SaveEnCompletedEventArgs>(da_SaveEnCompleted);
+                da.SaveEnCompleted += new EventHandler<SaveEnCompletedEventArgs>(da_SaveEnCompleted);
             }
         }
+
+       
         void doit_DoCompleted(object sender, DoCompletedEventArgs e)
         {
             if (e.Result != null)
@@ -55,7 +57,7 @@ namespace WF.Frm
             }
             this.DialogResult = true;
         }
-        void da_SaveEnCompleted(object sender, WS.SaveEnCompletedEventArgs e)
+        void da_SaveEnCompleted(object sender, SaveEnCompletedEventArgs e)
         {
             if (e.Result != null)
             {

@@ -9,14 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 using WF.WS;
 using Silverlight;
 using System.Collections;
 using BP;
-using WF.Controls;
+using BP.Controls;
 
-namespace WF.Frm
+namespace BP.Frm
 {
     public partial class FrmImp : ChildWindow
     {

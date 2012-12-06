@@ -10,42 +10,44 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
+namespace BP.Picture
 {
-    public partial class InteractoinAcitivity : UserControl, IFlowNodePicture
+    public partial class FenHeLiuNode : UserControl,IFlowNodePicture
     {
-        public InteractoinAcitivity()
+        public FenHeLiuNode()
         {
             InitializeComponent();
+          
         }
+
         public new double Opacity
         {
-            set { picINTERACTION.Opacity = value; }
-            get { return picINTERACTION.Opacity; }
+            set { picAUTOMATION.Opacity = value; }
+            get { return picAUTOMATION.Opacity; }
         }
         public  double PictureWidth
         {
-            set { picINTERACTION.Width = value; }
-            get { return picINTERACTION.Width; }
+            set { picAUTOMATION.Width = value; }
+            get { return picAUTOMATION.Width; }
         }
         public  double PictureHeight
         {
-            set { picINTERACTION.Height = value; }
-            get { return picINTERACTION.Height; }
+            set { picAUTOMATION.Height = value; }
+            get { return picAUTOMATION.Height; }
         }
         public new Brush Background
         {
-            set { picINTERACTION.Fill = value; }
-            get { return picINTERACTION.Fill; }
+            set { picAUTOMATION.Fill = value; }
+            get { return picAUTOMATION.Fill; }
         }
-        public  Visibility PictureVisibility
+        public Visibility PictureVisibility
         {
             set
             {
 
-                this.Visibility = value;
+                 this.Visibility = value;
             }
-            get
+             get
             {
 
                 return this.Visibility;
@@ -55,23 +57,20 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
         {
             SolidColorBrush brush = new SolidColorBrush();
             brush.Color = Colors.White;
-            picINTERACTION.Fill = brush; 
-             
+            picAUTOMATION.Fill = brush;
         }
         public void SetWarningColor()
-        {
-            picINTERACTION.Fill = SystemConst.ColorConst.WarningColor; 
+        { 
+            picAUTOMATION.Fill = SystemConst.ColorConst.WarningColor;
         }
         public void SetSelectedColor()
         {
-            picINTERACTION.Fill = SystemConst.ColorConst.SelectedColor;
-
-
-
+            picAUTOMATION.Fill = SystemConst.ColorConst.SelectedColor;
         }
         public PointCollection ThisPointCollection
         {
             get { return null; }
         }
+
     }
 }

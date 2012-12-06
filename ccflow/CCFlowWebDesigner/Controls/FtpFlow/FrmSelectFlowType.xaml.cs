@@ -15,7 +15,7 @@ using Silverlight;
 using WF.WS;
 using BP;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     public partial class FrmSelectFlowType : ChildWindow
     {

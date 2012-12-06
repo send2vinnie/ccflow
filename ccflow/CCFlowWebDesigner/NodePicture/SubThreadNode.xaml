@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Ccflow.Web.UI.Control.Workflow.Designer.Picture.MergeFlowNode"
+﻿<UserControl x:Class="BP.Picture.SubThreadNode"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
      >

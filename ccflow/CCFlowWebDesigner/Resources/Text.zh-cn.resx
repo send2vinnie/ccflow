@@ -267,7 +267,7 @@
   <data name="Message_BeginAndEndFlowNodeCanNotBeTheSame" xml:space="preserve">
     <value>起始和结束节点不能是同一个节点。</value>
   </data>
-  <data name="Message_BranchFlowNodeOnlyHaveOnePreFlowNode" xml:space="preserve">
+  <data name="Message_HeLiuNodeOnlyHaveOnePreFlowNode" xml:space="preserve">
     <value>分支节点有且只能有一个前驱节点。</value>
   </data>
   <data name="Message_CanNotHavePreFlowNode" xml:space="preserve">
@@ -276,7 +276,7 @@
   <data name="Message_EndFlowNodeCanNotHaveFollowUpActivitiy" xml:space="preserve">
     <value>结束节点不能有后继节点。</value>
   </data>
-  <data name="Message_MergeFlowNodeOnlyHaveAFollowUpFlowNode" xml:space="preserve">
+  <data name="Message_SubThreadNodeOnlyHaveAFollowUpFlowNode" xml:space="preserve">
     <value>汇聚节点有且只能有一个后继节点。</value>
   </data>
   <data name="Message_ModifyWorkFlowByTip" xml:space="preserve">

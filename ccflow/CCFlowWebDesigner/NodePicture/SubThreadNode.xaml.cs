@@ -11,10 +11,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
+namespace BP.Picture
 {
 
-    public partial class MergeFlowNode : UserControl, IFlowNodePicture
+    public partial class SubThreadNode : UserControl, IFlowNodePicture
     {
         MergePictureRepeatDirection _repeatDirection = MergePictureRepeatDirection.None;
         public MergePictureRepeatDirection RepeatDirection
@@ -46,7 +46,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
                 }
             }
         }
-        public MergeFlowNode()
+        public SubThreadNode()
         {
             InitializeComponent();
         }

@@ -10,12 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Liquid;
-using WF.Resources;
 using System.Windows.Browser;
 using MenuItem = Liquid.MenuItem;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public partial class FlowNodeMenu : UserControl
     {
@@ -101,7 +100,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             try
             {
-                if (FlowNodeType.INITIAL == RelatedFlowNode.Type)
+                if (NodePosType.Start == RelatedFlowNode.HisPosType)
                 {
                     MuContentMenu.SetEnabledStatus("menuDeleteNode", false);
                 }
@@ -135,17 +134,17 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             switch (type)
             {
-                case FlowNodeType.INTERACTION:
+                case FlowNodeType.Ordinary:
                     var item = (menuType.Items[0] as MenuItem);
                     item.FontWeight = FontWeights.ExtraBold;
                     break;
-                case FlowNodeType.AND_BRANCH:
+                case FlowNodeType.FHL:
                     (menuType.Items[1] as MenuItem).FontWeight = FontWeights.ExtraBold;
                     break;
-                case FlowNodeType.AND_MERGE:
+                case FlowNodeType.HL:
                     (menuType.Items[2] as MenuItem).FontWeight = FontWeights.ExtraBold;
                     break;
-                case FlowNodeType.AUTOMATION:
+                case FlowNodeType.SubThread:
                     (menuType.Items[3] as MenuItem).FontWeight = FontWeights.ExtraBold;
                     break;
             }
@@ -154,7 +153,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             if (relatedFlowNode != null)
             {
-                if (HtmlPage.Window.Confirm(Text.Comfirm_Delete))
+                if (HtmlPage.Window.Confirm("您确认要删除吗？"))
                 {
                     this.Visibility = Visibility.Collapsed;
                     IElement iel;
@@ -200,11 +199,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         _container.SetGridLines();
                     break;
                 case "menuExp": // 导出/共享:流程模板
-                    WF.Designer.FrmExp exp = new WF.Designer.FrmExp();
+                    BP.Frm.FrmExp exp = new BP.Frm.FrmExp();
                     exp.Show();
                     break;
                 case "menuImp": //  导入/查找:流程模板
-                    WF.Designer.FrmImp imp = new WF.Designer.FrmImp();
+                    BP.Frm.FrmImp imp = new BP.Frm.FrmImp();
                     imp.Show();
                     break;
                 case "Help":
@@ -238,16 +237,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     Glo.WinOpenByDoType("CH", "FlowP", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuNodeTypeFL":
-                    RelatedFlowNode.Type = FlowNodeType.AND_BRANCH;
+                    RelatedFlowNode.Type = FlowNodeType.FL;
                     break;
                 case "menuNodeTypePT":
-                    RelatedFlowNode.Type = FlowNodeType.INTERACTION;
+                    RelatedFlowNode.Type = FlowNodeType.Ordinary;
                     break;
                 case "menuNodeTypeFHL":
-                    RelatedFlowNode.Type = FlowNodeType.STATIONODE;
+                    RelatedFlowNode.Type = FlowNodeType.FHL;
                     break;
                 case "menuNodeTypeHL":
-                    RelatedFlowNode.Type = FlowNodeType.AND_MERGE;
+                    RelatedFlowNode.Type = FlowNodeType.HL;
                     break;
             }
             MuContentMenu.Hide();

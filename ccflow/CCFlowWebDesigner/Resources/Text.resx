@@ -267,7 +267,7 @@
   <data name="Message_BeginAndEndFlowNodeCanNotBeTheSame" xml:space="preserve">
     <value>begin and end FlowNode  can not be the same.</value>
   </data>
-  <data name="Message_BranchFlowNodeOnlyHaveOnePreFlowNode" xml:space="preserve">
+  <data name="Message_HeLiuNodeOnlyHaveOnePreFlowNode" xml:space="preserve">
     <value>branch-FlowNode only have one pre-FlowNode.</value>
   </data>
   <data name="Message_CanNotHavePreFlowNode" xml:space="preserve">
@@ -276,7 +276,7 @@
   <data name="Message_EndFlowNodeCanNotHaveFollowUpActivitiy" xml:space="preserve">
     <value>end-activitity can not have follow-up activitiy.</value>
   </data>
-  <data name="Message_MergeFlowNodeOnlyHaveAFollowUpFlowNode" xml:space="preserve">
+  <data name="Message_SubThreadNodeOnlyHaveAFollowUpFlowNode" xml:space="preserve">
     <value>merge-activitity  only have one follow-up activitiy.</value>
   </data>
   <data name="Message_ModifyWorkFlowByTip" xml:space="preserve">

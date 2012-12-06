@@ -10,11 +10,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Ccflow.Web.Component.Workflow;
-using WF.Resources;
 using Silverlight;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public enum DirectionMoveType { Begin = 0, Line, End }
     public delegate void DirectionChangeDelegate(Direction r);
@@ -99,19 +98,21 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             if (BeginFlowNode == null && EndFlowNode == null)
             {
-                cr.Message += Text.Message_MustBeLinkToBeginAndEndFlowNode;
+                cr.Message += "eee";
+                //Text.Message_MustBeLinkToBeginAndEndFlowNode;
                 cr.IsPass = false;
             }
             else
             {
                 if (BeginFlowNode == null)
                 {
-                    cr.Message += Text.Message_MustBeLinkToBeginFlowNode;
+                    cr.Message += "eddee";
+                    //  cr.Message += Text.Message_MustBeLinkToBeginFlowNode;
                     cr.IsPass = false;
                 }
                 if (EndFlowNode == null)
                 {
-                    cr.Message += Text.Message_MustBeLinkToEndFlowNode;
+                    //cr.Message += Text.Message_MustBeLinkToEndFlowNode;
                     cr.IsPass = false;
                 }
             }
@@ -222,7 +223,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 || DirectionData.LineType != ruleData.LineType)
             {
                 isChanged = true;
-
             }
 
             DirectionData = ruleData;
@@ -236,8 +236,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         void setUIValueByDirectionData(DirectionComponent ruleData)
         {
-
-
             LineType = (DirectionLineType)Enum.Parse(typeof(DirectionLineType), ruleData.LineType, true);
             tbDirectionName.Text = ruleData.DirectionName;
         }
@@ -877,34 +875,35 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     if (movetype == DirectionMoveType.Begin)
                     {
                         #region 检查
-                        if (act.Type == FlowNodeType.COMPLETION)
-                        {
-                            act.Type = FlowNodeType.INTERACTION;
-                            //ShowMessage(Text.Message_EndFlowNodeCanNotHaveFollowUpActivitiy);
-                            //isLinked = false;
-                            //break;
-                        }
-                        else if ((act.Type == FlowNodeType.AND_MERGE
-                            || act.Type == FlowNodeType.OR_MERGE
-                            || act.Type == FlowNodeType.VOTE_MERGE)
-                            && act.BeginDirectionCollections != null)
-                        {
+                        //if (act.Type == FlowNodeType.COMPLETION)
+                        //{
+                        //    act.Type = FlowNodeType.INTERACTION;
+                        //    //ShowMessage(Text.Message_EndFlowNodeCanNotHaveFollowUpActivitiy);
+                        //    //isLinked = false;
+                        //    //break;
+                        //}
+                        //else if ((act.Type == FlowNodeType.AND_MERGE
+                        //    || act.Type == FlowNodeType.OR_MERGE
+                        //    || act.Type == FlowNodeType.VOTE_MERGE)
+                        //    && act.BeginDirectionCollections != null)
+                        //{
 
-                            int count = act.BeginDirectionCollections.Count;
-                            if (act.BeginDirectionCollections.Contains(this))
-                                count--;
-                            if (count > 0)
-                            {
-                                //ShowMessage(Text.Message_MergeFlowNodeOnlyHaveAFollowUpFlowNode);
-                                //isLinked = false;
-                                //break;
-                            }
-                        }
+                        //    int count = act.BeginDirectionCollections.Count;
+                        //    if (act.BeginDirectionCollections.Contains(this))
+                        //        count--;
+                        //    if (count > 0)
+                        //    {
+                        //        //ShowMessage(Text.Message_SubThreadNodeOnlyHaveAFollowUpFlowNode);
+                        //        //isLinked = false;
+                        //        //break;
+                        //    }
+                        //}
                         #endregion
                         if (this.EndFlowNode == act)
                         {
-                            if (!IsTemporaryDirection)
-                                ShowMessage(Text.Message_BeginAndEndFlowNodeCanNotBeTheSame);
+                            //if (!IsTemporaryDirection)
+//                                ShowMessage(Text.Message_BeginAndEndFlowNodeCanNotBeTheSame);
+                            //ShowMessage("错误");
                         }
                         else
                         {
@@ -912,7 +911,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                             {
                                 act.AddBeginDirection(this);
                                 if (this.IsTemporaryDirection)
-                                    this.DirectionName = Text.NewDirection + _container.NextNewDirectionIndex.ToString();
+                                    this.DirectionName = "NewDirection" + _container.NextNewDirectionIndex.ToString();
                                 isLinked = true;
                             }
                             else
@@ -933,13 +932,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                 }
                                 if (isExists)
                                 {
-                                    ShowMessage(Text.Message_TheSameDirectionThatAlreadyExist);
+                                    ShowMessage("方向已存在");
                                 }
                                 else
                                 {
                                     act.AddBeginDirection(this);
                                     if (this.IsTemporaryDirection)
-                                        this.DirectionName = Text.NewDirection + _container.NextNewDirectionIndex.ToString();
+                                        this.DirectionName = "New Direction" + _container.NextNewDirectionIndex.ToString();
 
                                     isLinked = true;
                                 }
@@ -959,64 +958,64 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                             }
                         }
 
-                        if (act.Type == FlowNodeType.INITIAL)
+                        if (act.HisPosType == NodePosType.Start )
                         {
                             //开始节点不能有前驱节点
-                            ShowMessage(Text.Message_BeginActivitiesCanNotHavePreFlowNode);
+                          //  ShowMessage(Text.Message_BeginActivitiesCanNotHavePreFlowNode);
                             isLinked = false;
                             break;
                         }
-                        else if ((act.Type == FlowNodeType.AND_BRANCH
-                           || act.Type == FlowNodeType.OR_BRANCH)
-                           )
-                        {
-                            if (act.EndDirectionCollections != null
-                            && act.EndDirectionCollections.Count > 0)
-                            {
-                                int count = act.EndDirectionCollections.Count;
-                                if (act.EndDirectionCollections.Contains(this))
-                                    count--;
-                                if (count > 0)
-                                {
-                                    act.AddEndDirection(this);
-                                    if (this.IsTemporaryDirection)
-                                        this.DirectionName = Text.NewDirection + _container.NextNewDirectionIndex.ToString();
+                        //else if ((act.Type == FlowNodeType.AND_BRANCH
+                        //   || act.Type == FlowNodeType.OR_BRANCH)
+                        //   )
+                        //{
+                        //    if (act.EndDirectionCollections != null
+                        //    && act.EndDirectionCollections.Count > 0)
+                        //    {
+                        //        int count = act.EndDirectionCollections.Count;
+                        //        if (act.EndDirectionCollections.Contains(this))
+                        //            count--;
+                        //        if (count > 0)
+                        //        {
+                        //            act.AddEndDirection(this);
+                        //            if (this.IsTemporaryDirection)
+                        //                this.DirectionName = Text.NewDirection + _container.NextNewDirectionIndex.ToString();
 
-                                    isLinked = true;
-                                    //分支节点有且只能有一个前驱节点
-                                    //ShowMessage(Text.Message_BranchFlowNodeOnlyHaveOnePreFlowNode);
-                                    //isLinked = false;
-                                    break;
-                                }
-                            }
-                        }
+                        //            isLinked = true;
+                        //            //分支节点有且只能有一个前驱节点
+                        //            //ShowMessage(Text.Message_HeLiuNodeOnlyHaveOnePreFlowNode);
+                        //            //isLinked = false;
+                        //            break;
+                        //        }
+                        //    }
+                        //}
                         if (this.IsTemporaryDirection)
                         {
                             if (this.BeginFlowNode != null)
                             {
-                                if (this.BeginFlowNode.Type == FlowNodeType.COMPLETION)
-                                {
-                                    this.beginFlowNode.Type = FlowNodeType.INTERACTION;
-                                    //ShowMessage(Text.Message_EndFlowNodeCanNotHaveFollowUpActivitiy);
-                                    //isLinked = false;
-                                    //break;
-                                }
-                                if ((this.BeginFlowNode.Type == FlowNodeType.AND_MERGE
-                                    || this.BeginFlowNode.Type == FlowNodeType.OR_MERGE
-                                    || this.BeginFlowNode.Type == FlowNodeType.VOTE_MERGE)
-                                && this.BeginFlowNode.BeginDirectionCollections != null)
-                                {
-                                    int count = BeginFlowNode.BeginDirectionCollections.Count;
-                                    if (this.BeginFlowNode.BeginDirectionCollections.Contains(this))
-                                        count--;
-                                    if (count > 0)
-                                    {
-                                        ////汇聚节点只能有一个后继节点
-                                        //ShowMessage(Text.Message_MergeFlowNodeOnlyHaveAFollowUpFlowNode);
-                                        //isLinked = false;
-                                        //break;
-                                    }
-                                }
+                                //if (this.BeginFlowNode.Type == FlowNodeType.COMPLETION)
+                                //{
+                                //    this.beginFlowNode.Type = FlowNodeType.INTERACTION;
+                                //    //ShowMessage(Text.Message_EndFlowNodeCanNotHaveFollowUpActivitiy);
+                                //    //isLinked = false;
+                                //    //break;
+                                //}
+                                //if ((this.BeginFlowNode.Type == FlowNodeType.AND_MERGE
+                                //    || this.BeginFlowNode.Type == FlowNodeType.OR_MERGE
+                                //    || this.BeginFlowNode.Type == FlowNodeType.VOTE_MERGE)
+                                //&& this.BeginFlowNode.BeginDirectionCollections != null)
+                                //{
+                                //    int count = BeginFlowNode.BeginDirectionCollections.Count;
+                                //    if (this.BeginFlowNode.BeginDirectionCollections.Contains(this))
+                                //        count--;
+                                //    if (count > 0)
+                                //    {
+                                //        ////汇聚节点只能有一个后继节点
+                                //        //ShowMessage(Text.Message_SubThreadNodeOnlyHaveAFollowUpFlowNode);
+                                //        //isLinked = false;
+                                //        //break;
+                                //    }
+                                //}
                             }
 
                         }
@@ -1025,8 +1024,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         #endregion
                         if (this.BeginFlowNode == act)
                         {
-                            if (!IsTemporaryDirection)
-                                ShowMessage(Text.Message_BeginAndEndFlowNodeCanNotBeTheSame);
+                            //if (!IsTemporaryDirection)
+                            //    ShowMessage(Text.Message_BeginAndEndFlowNodeCanNotBeTheSame);
                         }
                         else
                         {
@@ -1034,7 +1033,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                             {
                                 act.AddEndDirection(this);
                                 if (this.IsTemporaryDirection)
-                                    this.DirectionName = Text.NewDirection + _container.NextNewDirectionIndex.ToString();
+                                    this.DirectionName = "NewDirection" + _container.NextNewDirectionIndex.ToString();
 
                                 isLinked = true;
                             }
@@ -1057,8 +1056,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                 }
                                 if (isExists)
                                 {
-                                    ShowMessage(Text.Message_TheSameDirectionThatAlreadyExist);
-
+                                   // ShowMessage(Text.Message_TheSameDirectionThatAlreadyExist);
                                 }
                                 else
                                 {
@@ -1751,14 +1749,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void Worklist(DataSet dataSet)
         {
             var brush = new SolidColorBrush();
-            //brush.Color = Colors.Red;
-            //this.begin.Fill = brush;
-            //this.endArrow.Stroke = brush;
-            //this.line.Stroke = brush;
+            brush.Color = Colors.Red;
             if (dataSet == null || dataSet.Tables.Count == 0)
                 return;
 
-            foreach (DataRow dr in dataSet.Tables[0].Rows)
+            DataTable dt = dataSet.Tables["WF_Track"];
+            foreach (DataRow dr in dt.Rows)
             {
                 string begin = dr["NDFrom"].ToString();
                 string to = dr["NDTo"].ToString();
@@ -1770,7 +1766,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     this.begin.Fill = brush;
                     this.endArrow.Stroke = brush;
                     this.line.Stroke = brush;
-                 //   this.line.Width = 3;
                 }
             }
         }

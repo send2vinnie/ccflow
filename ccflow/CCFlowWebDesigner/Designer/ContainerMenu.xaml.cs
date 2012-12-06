@@ -10,12 +10,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Liquid;
-using WF.Controls;
+using BP.Controls;
 using WF.WS;
-using WF.Resources;
 using BP;
+using BP.Frm;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public partial class ContainerMenu : UserControl
     {
@@ -79,7 +79,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             Direction r = new Direction(_container);
             r.SetValue(Canvas.ZIndexProperty, _container.NextMaxIndex);
-            r.DirectionName = Text.NewDirection + _container.NextNewDirectionIndex.ToString();
+            r.DirectionName = "Line" + _container.NextNewDirectionIndex.ToString();
             _container.AddDirection(r);
             r.SetDirectionPosition(new Point(CenterPoint.X - 20, CenterPoint.Y - 20), new Point(CenterPoint.X + 30, CenterPoint.Y + 30),null,null);
             _container.SaveChange(HistoryType.New);
@@ -95,7 +95,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             flowNode = new FlowNode(_container, type);
             flowNode.SetValue(Canvas.ZIndexProperty, _container.NextMaxIndex);
-            flowNode.FlowNodeName = Text.NewFlowNode + _container.NextNewFlowNodeIndex.ToString();
+            flowNode.FlowNodeName = "新建节点" + _container.NextNewFlowNodeIndex.ToString();
             flowNode.CenterPoint = this.CenterPoint;
 
             _container._Service.DoNewNodeAsync(_container.FlowID, 10, 10, flowNode.FlowNodeName, true);
@@ -152,18 +152,18 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     BP.Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
                     break;
                 case "menuExp":
-                    WF.Designer.FrmExp exp = new WF.Designer.FrmExp();
+                    BP.Frm.FrmExp exp = new BP.Frm.FrmExp();
                     exp.Show();
                     break;
                 case "menuImp":
-                    WF.Designer.FrmImp imp = new WF.Designer.FrmImp();
+                    BP.Frm.FrmImp imp = new BP.Frm.FrmImp();
                     imp.Show();
                     break;
                 case "menuFullScreen":
                     Application.Current.Host.Content.IsFullScreen = !Application.Current.Host.Content.IsFullScreen;
                     break;
                 case "menuAddNode":
-                    addAcitivty(FlowNodeType.INTERACTION);
+                    addAcitivty(FlowNodeType.Ordinary);
                     break;
                 case "menuAddLine":
                     AddLine_Click();
@@ -193,7 +193,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     BP.Glo.WinOpenByDoType("CH", BP.UrlFlag.WFRpt, _container.FlowID, null, null);
                     break;
                 case "menuDelete": // 删除流程。
-                    if (System.Windows.Browser.HtmlPage.Window.Confirm(Text.Comfirm_Delete))
+                    if (System.Windows.Browser.HtmlPage.Window.Confirm("您确定要删除吗？"))
                     {
                         _container.DeleteSeletedControl();
                         _container.SaveChange(HistoryType.New);

@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using Silverlight;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public partial class NodeLabel : UserControl, IElement
     {

@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 
-namespace WF.Controls
+namespace BP.Controls
 {
     [TemplatePart(Name = "btnShowList", Type = typeof(Button))]
 

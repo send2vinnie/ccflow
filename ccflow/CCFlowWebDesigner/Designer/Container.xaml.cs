@@ -12,20 +12,19 @@ using System.Windows.Shapes;
 using System.IO.IsolatedStorage;
 using System.Xml.Linq;
 using System.IO;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 using Ccflow.Web.Component.Workflow;
 using WF;
-using WF.Resources;
 using WF.WS;
 using Liquid;
 using System.ServiceModel;
 using Silverlight;
-using WF.Controls;
+using BP.Controls;
 using System.Windows.Browser;
 using WF.Designer;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public partial class Container : UserControl, IContainer
     {
@@ -503,15 +502,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 line.X2 = x + width;
                 line.Y2 = y;
 
-
                 line.Stroke = brush;
                 line.Stretch = Stretch.Fill;
                 line.StrokeThickness = thickness;
                 GridLinesContainer.Children.Add(line);
                 y += stepLength;
             }
-
-
         }
 
         public bool Contains(UIElement uie)
@@ -521,6 +517,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public CheckResult CheckSave()
         {
+
             var cr = new CheckResult();
             cr.IsPass = true;
             CheckResult temCR = null;
@@ -528,6 +525,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             bool hasInitial = false;
             bool hasCompledion = false;
             string msg = "";
+            return cr;
+
 
             // 如果只有两个子元素，且第一个元素是Canvas,则直接返回，因为相当于待检查的流程只有一个“开始节点”
             if (cnsDesignerContainer.Children.Count == 2 && cnsDesignerContainer.Children[0] is Canvas)
@@ -550,12 +549,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                     if (iel.ElementType == WorkFlowElementType.FlowNode)
                     {
-                        if (((FlowNode)uic).Type == FlowNodeType.INITIAL)
+                        if (((FlowNode)uic).HisPosType== NodePosType.Start)
                         {
                             hasInitial = true;
 
                         }
-                        else if (((FlowNode)uic).Type == FlowNodeType.COMPLETION)
+                        else if (((FlowNode)uic).HisPosType == NodePosType.End)
                         {
                             hasCompledion = true;
 
@@ -567,12 +566,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (!hasInitial)
             {
                 cr.IsPass = false;
-                msg += Text.Message_MustHaveOnlyOneBeginFlowNode + "\r\n";
+               // msg += Text.Message_MustHaveOnlyOneBeginFlowNode + "\r\n";
             }
             if (!hasCompledion)
             {
                 cr.IsPass = false;
-                msg += Text.Message_MustHaveAtLeastOneEndFlowNode + "\r\n";
+               // msg += Text.Message_MustHaveAtLeastOneEndFlowNode + "\r\n";
             }
             //if (string.IsNullOrEmpty(txtWorkFlowName.Text))
             //{
@@ -585,14 +584,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             //}
 
             if (cr.IsPass == false)
-                msg += Text.Message_ModifyWorkFlowByTip;
+                msg += "请按提示修改.";// Text.Message_ModifyWorkFlowByTip;
             return cr;
         }
         public void NewFlow(string flowsort)
         {
             if (cnsDesignerContainer.Children.Count > 0)
             {
-                if (HtmlPage.Window.Confirm(Text.IsSave))
+                if (HtmlPage.Window.Confirm("确定要保存吗？"))
                 {
 
                 }
@@ -606,25 +605,21 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (flowsort != null)
             {
                 _Service.DoAsync("NewFlow", flowsort, true);
-
-
             }
             else
             {
                 _Service.DoAsync("NewFlow", null, true);
             }
             _Service.DoCompleted += _service_DoCompleted;
-            //_Service.GetFlowSortAsync();
         }
 
         public void getFlows(string flowID)
         {
             SetGridLines();
             this.FlowID = flowID;
-            _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs,nodeworktype from WF_Node WHERE FK_Flow='" + flowID + "'", true);
+            _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs, RunModel from WF_Node WHERE FK_Flow='" + flowID + "'", true);
             _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
         }
-
         public void getFlows()
         {
             getFlows(this.FlowID);
@@ -1030,7 +1025,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             var r = new Direction((IContainer)this);
             r.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-            r.DirectionName = Text.NewDirection + NextNewDirectionIndex.ToString();
+            r.DirectionName = "New Direction" + NextNewDirectionIndex.ToString();
             AddDirection(r);
             SaveChange(HistoryType.New);
         }
@@ -1038,13 +1033,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void AddLabel(int x, int y)
         {
             this.pos = new Point(x, y);
-            _Service.DoNewLabelAsync(FlowID, x, y, Text.NewLable + NextNewLabelIndex.ToString(), null);
+            _Service.DoNewLabelAsync(FlowID, x, y, "New Label" + NextNewLabelIndex.ToString(), null);
             _Service.DoNewLabelCompleted += _Service_DoNewLabelCompleted;
         }
         void _Service_DoNewLabelCompleted(object sender, DoNewLabelCompletedEventArgs e)
         {
             NodeLabel r = new NodeLabel((IContainer)this);
-            r.LabelName = Text.NewLable + NextNewLabelIndex.ToString();
+            r.LabelName = "NewLable" + NextNewLabelIndex.ToString();
             r.LableID = e.Result;
             r.SetValue(Canvas.LeftProperty, this.pos.X);
             r.SetValue(Canvas.TopProperty, this.pos.Y);
@@ -1090,10 +1085,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         {
                             FlowNode f = ele as FlowNode;
                             // 如果节点没有进线，并且不是惟一的开始节点，则设节点为结束节点。
-                            if (f.BeginDirectionCollections.Count == 0
-                                && cnsDesignerContainer.Children.Count != 2)
-                                f.Type = FlowNodeType.COMPLETION;
-                            nodes += "~@Name=" + f.FlowNodeName + "@X=" + (int)f.CenterPoint.X + "@Y=" + (int)f.CenterPoint.Y + "@NodeID=" + int.Parse(f.FlowNodeID) + "@NodeType=" + (int)f.Type;
+                            //if (f.BeginDirectionCollections.Count == 0
+                            //    && cnsDesignerContainer.Children.Count != 2)
+                            //    f.Type = FlowNodeType.COMPLETION;
+                            nodes += "~@Name=" + f.FlowNodeName + "@X=" + (int)f.CenterPoint.X + "@Y=" + (int)f.CenterPoint.Y + "@NodeID=" + int.Parse(f.FlowNodeID) ;
                         }
                         else if (ele.ElementType == WorkFlowElementType.Direction)
                         {
@@ -1184,7 +1179,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public void AddFlowNode()
         {
-            NewFlowNodeName = Text.NewFlowNode + NextNewFlowNodeIndex.ToString();
+            NewFlowNodeName = "New Node " + NextNewFlowNodeIndex.ToString();
             nextNewFlowNodeIndex--;
             _Service.DoNewNodeAsync(FlowID, 10, 10, NewFlowNodeName, true);
             _Service.DoNewNodeCompleted += _Service_DoNewNodeCompleted;
@@ -1767,43 +1762,32 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             ds.FromXml(e.Result);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                FlowNode a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
+                FlowNodeType fnt = (FlowNodeType)int.Parse(dr["RunModel"].ToString());
+
+                FlowNode a = new FlowNode((IContainer)this, fnt);
+
                 SolidColorBrush sc = new SolidColorBrush();
                 sc.Color = Colors.White;
 
-                if (dr["nodepostype"].ToString() == "0")
+                NodePosType postype = (NodePosType)int.Parse(dr["NodePosType"].ToString());
+
+                switch (postype)
                 {
-                    a = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
-                    a.sdPicture.txtFlowNodeName.Foreground = sc;
+                    case NodePosType.Start:
+                        sc.Color = Colors.Green;
+                        break;
+                    case NodePosType.End:
+                        sc.Color = Colors.Red;
+                        break;
+                    default:
+                        break;
                 }
+                a.sdPicture.txtFlowNodeName.Foreground = sc;
 
-                if (dr["nodepostype"].ToString() == "2")
-                    a = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
 
-                if (dr["nodepostype"].ToString() == "1")
-                {
-                    if (dr["nodeworktype"] == "3")
-                    {
-                        a = new FlowNode((IContainer)this, FlowNodeType.AND_MERGE);
-                    }
-
-                    else if (dr["nodeworktype"] == "4")
-                    {
-                        a = new FlowNode((IContainer)this, FlowNodeType.AND_BRANCH);
-                    }
-                    else if (dr["nodeworktype"] == "5")
-                    {
-                        a = new FlowNode((IContainer)this, FlowNodeType.STATIONODE);
-                    }
-                    else
-                    {
-                        a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
-                    }
-
-                }
                 a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
                 a.FlowID = FlowID;
-                a.FlowNodeID = dr["nodeid"].ToString();
+                a.FlowNodeID = dr["NodeID"].ToString();
                 a.FlowNodeName = dr["Name"].ToString();
                 double x = double.Parse(dr["X"]);
                 double y = double.Parse(dr["Y"]);
@@ -1823,15 +1807,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 AddFlowNode(a);
             }
 
-
-
-
             _Service.GetLablesAsync(FlowID);
             _Service.GetLablesCompleted += new EventHandler<GetLablesCompletedEventArgs>(_service_GetLablesCompleted);
 
             _Service.GetDirectionAsync(FlowID);
             _Service.GetDirectionCompleted += new EventHandler<GetDirectionCompletedEventArgs>(_service_GetDirectionCompleted);
-
+            
             SaveChange(HistoryType.New);
             _Service.RunSQLReturnTableCompleted -= new EventHandler<RunSQLReturnTableCompletedEventArgs>(_service_RunSQLReturnTableCompleted);
         }
@@ -1979,10 +1960,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         void _Service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
         {
-            var a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
+            var a = new FlowNode((IContainer)this, FlowNodeType.Ordinary);
 
             a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-            a.FlowNodeName = Text.NewFlowNode + NextNewFlowNodeIndex.ToString();
+            a.FlowNodeName = "New Node" + NextNewFlowNodeIndex.ToString();
             a.FlowNodeID = e.Result.ToString();
             a.FlowID = FlowID;
             a.CenterPoint = new Point(50, 30);
@@ -1998,7 +1979,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         void wfClient_UpdateWorkFlowXMLCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            MessageBox.Show(Text.Message_Saved);
+            MessageBox.Show("保存成功.");
         }
 
         private void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -2196,7 +2177,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                     if (CurrentSelectedControlCollection != null && CurrentSelectedControlCollection.Count > 0)
                     {
-                        if (System.Windows.Browser.HtmlPage.Window.Confirm(Text.Comfirm_Delete))
+                        if (System.Windows.Browser.HtmlPage.Window.Confirm("确定要删除吗？"))
                         {
                             DeleteSeletedControl();
                             SaveChange(HistoryType.New);

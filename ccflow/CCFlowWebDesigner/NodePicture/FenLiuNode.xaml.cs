@@ -10,53 +10,48 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
+namespace BP.Picture
 {
-    public partial class CompletionFlowNode : UserControl, IFlowNodePicture
+    public partial class FenLiuNode : UserControl, IFlowNodePicture
     {
-        public CompletionFlowNode()
+        public FenLiuNode()
         {
             InitializeComponent();
         }
         public new double Opacity
         {
-            set { picEnd.Opacity = value; }
-            get { return picEnd.Opacity; }
+            set { picRect.Opacity = value; }
+            get { return picRect.Opacity; }
         }
         public  double PictureWidth
         {
-            set { picEnd.Width = value-4;
-            //eliBorder.Width = value - 2;
-            
+            set { picRect.Width = value-4;
             }
-            get { return picEnd.Width+4; 
-                    
+            get { return picRect.Width+4; 
             }
         }
         public  double PictureHeight
         {
-            set { picEnd.Height = value-4;
+            set { picRect.Height = value-4;
             //eliBorder.Height = value - 2;
             }
-            get { return picEnd.Height+4; }
+            get { return picRect.Height+4; }
         }
         public new   Brush Background
         {
-            set { picEnd.Fill = value;
+            set { picRect.Fill = value;
             //picCenter.Fill = value;
             }
-            get { return picEnd.Fill; }
+            get { return picRect.Fill; }
         }
         public  Visibility PictureVisibility
         {
             set
             {
-
                 this.Visibility = value;
             }
             get
             {
-
                 return this.Visibility;
             }
         }
@@ -64,7 +59,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
         {
             SolidColorBrush brush = new SolidColorBrush();
             brush.Color = Colors.Red;
-            picEnd.Fill = brush;
+            picRect.Fill = brush;
             brush = new SolidColorBrush();
             brush.Color = Color.FromArgb(255, 0, 0, 0); 
            // picCenter.Fill = brush;
@@ -72,13 +67,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
 
         public void SetWarningColor()
         { 
-            picEnd.Fill = SystemConst.ColorConst.WarningColor; 
+            picRect.Fill = SystemConst.ColorConst.WarningColor; 
           //  picCenter.Fill = SystemConst.ColorConst.WarningColor;  
         }
         public void SetSelectedColor()
         {
-
-            picEnd.Fill = SystemConst.ColorConst.SelectedColor;
+            picRect.Fill = SystemConst.ColorConst.SelectedColor;
           //  picCenter.Fill = SystemConst.ColorConst.SelectedColor;  
 
         }

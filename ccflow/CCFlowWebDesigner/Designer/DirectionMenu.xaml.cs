@@ -10,11 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Liquid;
-using WF.Resources;
-using Ccflow.Web.UI.Control.Workflow.Designer;
 using BP;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public partial class DirectionMenu : UserControl
     {

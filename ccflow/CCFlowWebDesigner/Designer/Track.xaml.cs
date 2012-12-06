@@ -8,9 +8,8 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.IO;
-using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 using FluxJpeg.Core;
-using WF.Resources;
 using WF.WS;
 using Silverlight;
 using System.Windows.Browser;
@@ -45,8 +44,8 @@ namespace BP
             this.WorkID = workid;
 
             if (string.IsNullOrEmpty(workid) == false)
-            //如果传递过来workid 说明要显示轨图.
             {
+                //如果传递过来workid 说明要显示轨图.
                 WSDesignerSoapClient ws = BP.Glo.GetDesignerServiceInstance();
                 ws.GetDTOfWorkListAsync(this.FK_Flow,  workid);
                 ws.GetDTOfWorkListCompleted += new EventHandler<GetDTOfWorkListCompletedEventArgs>(ws_GetDTOfWorkListCompleted);
@@ -59,7 +58,6 @@ namespace BP
 
         void ws_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
         {
-             
             workListDataSet = new DataSet();
             workListDataSet.FromXml(e.Result);
             this.GenerFlowChart(FK_Flow);
@@ -286,14 +284,20 @@ namespace BP
             DataTable dtNode = ds.Tables[0];
             foreach (DataRow dr in dtNode.Rows)
             {
-                FlowNode flowNode = null;
+
+                NodePosType postype = (NodePosType)int.Parse(dr["NodePosType"].ToString());
+                FlowNodeType runModel = (FlowNodeType)int.Parse(dr["RunModel"].ToString());
+
+                FlowNode flowNode = new FlowNode((IContainer)this, runModel);
+                flowNode.HisPosType = postype;
+
                  
-                if (dr["NodePosType"].ToString() == "0")
-                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
-                else if (dr["NodePosType"].ToString() == "2")
-                    flowNode = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
-                else
-                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
+                //if (dr["NodePosType"].ToString() == "0")
+                //    flowNode = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
+                //else if (dr["NodePosType"].ToString() == "2")
+                //    flowNode = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
+                //else
+                //    flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
 
                 flowNode.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
                 flowNode.FlowID = FlowID;
@@ -403,10 +407,10 @@ namespace BP
                 cnsDesignerContainer.Children.Add(a);
                 a.Container = this;
                 a.FlowID = FlowID;
-                if (a.Type != FlowNodeType.STATIONODE)
-                {
+                //if (a.Type != FlowNodeType.STATIONODE)
+                //{
                     a.Worklist(workListDataSet);
-                }
+                //}
             }
 
             if (FlowNodeCollections.Contains(a) == false)
@@ -619,18 +623,6 @@ namespace BP
                     r.SetPositionByDisplacement(x, y);
                 }
             }
-
-            //for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            //{
-
-            //    if (CurrentSelectedControlCollection[i] is Direction)
-            //    {
-            //        r = CurrentSelectedControlCollection[i] as Direction;
-            //        if (r == selectedDirection)
-            //            continue;
-            //        r.SetPositionByDisplacement(x, y); 
-            //    }
-            //}
         }
 
         private void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -643,7 +635,6 @@ namespace BP
                     //FlowNode a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
                     //a.FlowNodeName = Text.NewFlowNode + NextNewFlowNodeIndex.ToString();
                     //Point p = e.GetPosition(this);
-
                     //a.CenterPoint = new Point(p.X - this.Left, p.Y - this.Top);
                     //a.IsSelectd = true;
                     //this.AddFlowNode(a);

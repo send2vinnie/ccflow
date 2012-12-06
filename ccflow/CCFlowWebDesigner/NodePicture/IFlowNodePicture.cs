@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
+namespace BP.Picture
 {
     public interface IFlowNodePicture
     {
@@ -42,6 +42,5 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer.Picture
         void SetWarningColor();
         void SetSelectedColor();
         PointCollection ThisPointCollection { get; }
-
     }
 }
