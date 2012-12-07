@@ -3824,8 +3824,9 @@ namespace BP.WF
                         msg += "@<a href='" + this.VirPath + this.AppType+"/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&FID=" + this.HisWork.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
                         return msg;
                     case NodeWorkType.StartWork:
+                        return StartNextWorkNodeOrdinary(nd);  /* 普通节点 */
                     case NodeWorkType.StartWorkFL:
-                        throw new Exception("System Error ");
+                        throw new Exception("System Error 不能向开始节点发送.");
                         break;
                     case NodeWorkType.SubThreadWork: // 如果是下一个节点是子线程.
                     default:
@@ -4495,7 +4496,8 @@ namespace BP.WF
                     }
                     catch (Exception ex11)
                     {
-                        throw new Exception(ex.Message + " == " + ex11.Message);
+                        if (wk.Update() == 0)
+                            throw new Exception(ex.Message + " == " + ex11.Message);
                     }
                 }
 

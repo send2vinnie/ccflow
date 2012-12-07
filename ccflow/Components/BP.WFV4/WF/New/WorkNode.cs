@@ -2282,7 +2282,9 @@ namespace BP.WF
                     }
                     catch (Exception ex11)
                     {
-                        throw new Exception(ex.Message + " == " + ex11.Message);
+                        if (wk.Update() == 0)
+                            throw new Exception(ex.Message + " == " + ex11.Message);
+                      //  throw new Exception(ex.Message + " == " + ex11.Message);
                     }
                 }
                 #endregion 主表数据copy.
@@ -6885,7 +6887,8 @@ namespace BP.WF
                     wk.CheckPhysicsTable();
                     try
                     {
-                        wk.Update();
+                        if (wk.Update() == 0)
+                            throw new Exception("@error 不应该不能更新.");
                     }
                     catch (Exception ex11)
                     {
