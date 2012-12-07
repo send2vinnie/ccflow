@@ -2117,6 +2117,8 @@ namespace BP.WF
                 }
                 #endregion 处理发送成功后事件.
 
+
+
                 #region 处理发送成功后的消息提示
                 if (this.HisNode.HisTurnToDeal == TurnToDeal.SpecMsg)
                 {
@@ -3176,7 +3178,8 @@ namespace BP.WF
             DBAccess.RunSQL(ps);
 
             #region 执行抄送.
-            if (this.HisNode.HisCCRole == CCRole.AutoCC || this.HisNode.HisCCRole == CCRole.HandAndAuto)
+            if (this.HisNode.HisCCRole == CCRole.AutoCC
+                || this.HisNode.HisCCRole == CCRole.HandAndAuto)
             {
                 try
                 {

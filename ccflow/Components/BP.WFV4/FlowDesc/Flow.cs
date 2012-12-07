@@ -149,6 +149,16 @@ namespace BP.WF
                     wkFrom.RetrieveFromDBSources();
 
                     wk.Copy(wkFrom);
+
+                    i = 0;
+                    foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
+                    {
+                        i++;
+                        wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
+                    }
+                
+
+
                     wk.OID = newOID;
 
                     // 在执行copy后，有可能这两个字段会被冲掉。

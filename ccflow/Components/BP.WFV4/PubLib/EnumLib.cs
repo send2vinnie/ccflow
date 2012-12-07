@@ -511,7 +511,11 @@ namespace BP.WF
         /// <summary>
         /// 手工与自动并存
         /// </summary>
-        HandAndAuto
+        HandAndAuto,
+        /// <summary>
+        /// 按字段
+        /// </summary>
+        BySysCCEmps
     }
     /// <summary>
     /// 谁执行它
