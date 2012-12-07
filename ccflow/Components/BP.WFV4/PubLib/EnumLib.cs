@@ -13,7 +13,7 @@ namespace BP.WF
         /// <summary>
         /// 永久挂起
         /// </summary>
-        ForEver,
+        Forever,
         /// <summary>
         /// 在指定的日期解除
         /// </summary>
@@ -155,17 +155,21 @@ namespace BP.WF
     public enum WFState
     {
         /// <summary>
-        /// 运行状态
+        /// 运行中
         /// </summary>
         Runing,
         /// <summary>
-        /// 完成状态
+        /// 正常完成
         /// </summary>
         Complete,
-         /// <summary>
+        /// <summary>
         /// 挂起
         /// </summary>
-        HungUp 
+        HungUp,
+        /// <summary>
+        /// 强制完成
+        /// </summary>
+        OverByCoercion
     }
     /// <summary>
     /// 流程启动类型

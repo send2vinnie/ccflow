@@ -30,9 +30,9 @@ namespace BP.WF
         /// </summary>
         UnShift,
         /// <summary>
-        /// 撤消
+        /// 撤消发送
         /// </summary>
-        Undo,
+        UnSend,
         /// <summary>
         /// 分流前进
         /// </summary>
@@ -42,7 +42,7 @@ namespace BP.WF
         /// </summary>
         ForwardHL,
         /// <summary>
-        /// 流程结束
+        /// 流程正常结束
         /// </summary>
         FlowOver,
         /// <summary>
@@ -66,17 +66,17 @@ namespace BP.WF
         /// </summary>
         RebackOverFlow,
         /// <summary>
-        /// 强制终止流程 For lijian:2012-10-24
+        /// 强制终止流程 For lijian:2012-10-24.
         /// </summary>
         FlowOverByCoercion,
         /// <summary>
         /// 挂起
         /// </summary>
-        Hung,
+        HungUp,
         /// <summary>
         /// 取消挂起
         /// </summary>
-        UnHung
+        UnHungUp
     }
     /// <summary>
     ///  属性
@@ -177,6 +177,7 @@ namespace BP.WF
         {
             get
             {
+                 
                 return this.GetValIntByKey(TrackTempAttr.NDFrom);
             }
             set
@@ -328,6 +329,10 @@ namespace BP.WF
                     return "恢复已完成的流程";
                 case ActionType.FlowOverByCoercion:
                     return "强制结束流程";
+                case ActionType.HungUp:
+                    return "挂起";
+                case ActionType.UnHungUp:
+                    return "取消挂起";
                 default:
                     return "未知";
             }

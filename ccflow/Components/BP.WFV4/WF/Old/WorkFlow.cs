@@ -1462,7 +1462,7 @@ namespace BP.WF
             }
             // 记录日志..
             WorkNode wn = new WorkNode(this.WorkID, this.HisGenerWorkFlow.FK_Node);
-            wn.AddToTrack(ActionType.Hung, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "执行挂起");
+            wn.AddToTrack(ActionType.HungUp, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "执行挂起");
             return "已经成功执行挂起,并且已经通知给:" + emps;
         }
         /// <summary>
@@ -1479,7 +1479,7 @@ namespace BP.WF
 
             // 记录日志..
             WorkNode wn = new WorkNode(this.WorkID, this.HisGenerWorkFlow.FK_Node);
-            wn.AddToTrack(ActionType.UnHung, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "取消挂起");
+            wn.AddToTrack(ActionType.UnHungUp, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "取消挂起");
             return null;
         }
         /// <summary>
