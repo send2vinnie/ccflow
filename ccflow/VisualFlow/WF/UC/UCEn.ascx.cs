@@ -1115,15 +1115,21 @@ namespace BP.Web.Comm.UC.WF
             {
                 string scriptSaveDtl = "";
                 scriptSaveDtl = "\t\n<script type='text/javascript' >";
-                scriptSaveDtl += "\t\n function SaveDtlAll() { ";
+                scriptSaveDtl += "\t\n function SaveDtlAll(){ ";
 
                 foreach (MapDtl dtl in dtls)
                 {
-                    if (dtl.IsUpdate==true || dtl.IsInsert==true)
-                    scriptSaveDtl += "\t\n SaveDtl('" + dtl.No + "'); ";
+                    if (dtl.IsUpdate == true || dtl.IsInsert == true)
+                    {
+                        scriptSaveDtl += "\t\n try{  ";
+                        scriptSaveDtl += "\t\n  SaveDtl('" + dtl.No + "'); ";
+                        scriptSaveDtl += "\t\n } catch(e) { ";
+                        scriptSaveDtl += "\t\n  alert(e.name  + e.message);  return false;";
+                        scriptSaveDtl += "\t\n } ";
+                    }
                 }
 
-                scriptSaveDtl += "\t\n return true; } ";
+                scriptSaveDtl += "\t\n  return true; } ";
                 scriptSaveDtl += "\t\n</script>";
 
                 this.Add(scriptSaveDtl);
@@ -2285,7 +2291,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 js = "\t\n<script type='text/javascript' >";
                 js += "\t\n function SaveDtl(dtl) { ";
-                js += "\t\n    GenerPageKVs(); //调用产生kvs ";
+                js += "\t\n   GenerPageKVs(); //调用产生kvs ";
                 js += "\t\n   document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
                 js += "\t\n } ";
 

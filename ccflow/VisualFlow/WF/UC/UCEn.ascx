@@ -2,6 +2,34 @@
 <%@ Control Language="c#" Inherits="BP.Web.Comm.UC.WF.UCEn" CodeFile="UCEn.ascx.cs"
     CodeFileBaseClass="BP.Web.UC.UCBase3" %>
 <script language="javascript" type="text/javascript">
+    var kvs = null;
+    function GenerPageKVs() {
+        var ddls = null;
+        ddls = parent.document.getElementsByTagName("select");
+        kvs = "";
+        for (var i = 0; i < ddls.length; i++) {
+            var id = ddls[i].name;
+
+            if (id.indexOf('DDL_') == -1) {
+                continue;
+            }
+            var myid = id.substring(id.indexOf('DDL_') + 4);
+            kvs += '~' + myid + '=' + ddls[i].value;
+        }
+
+        ddls = document.getElementsByTagName("select");
+        for (var i = 0; i < ddls.length; i++) {
+            var id = ddls[i].name;
+
+            if (id.indexOf('DDL_') == -1) {
+                continue;
+            }
+            var myid = id.substring(id.indexOf('DDL_') + 4);
+            kvs += '~' + myid + '=' + ddls[i].value;
+        }
+        return kvs;
+    }
+
     function HidShowSta() {
         if (document.getElementById('RptTable').style.display == "none") {
             document.getElementById('RptTable').style.display = "block";
