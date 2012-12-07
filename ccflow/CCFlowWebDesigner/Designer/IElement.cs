@@ -127,22 +127,6 @@ namespace BP
         /// </summary>
         End
     }
-    //public enum FlowNodeType
-    //{
-    //    INITIAL,
-    //    INTERACTION,
-    //    COMPLETION,
-    //    AND_MERGE,
-    //    AND_BRANCH ,
-    //    STATIONODE,
-    //    AUTOMATION,
-    //    DUMMY,
-    //    OR_BRANCH,
-    //    OR_MERGE,
-    //    SUBPROCESS,
-    //    VOTE_MERGE,
-    //}
-    
     public enum WorkFlowElementType
     {
         FlowNode = 0,
@@ -224,16 +208,13 @@ namespace BP
         void LoadFromXmlString(string xmlString);
         void ShowMessage(string message);
         WorkFlowElementType ElementType { get; }
-
         PageEditType EditType { get; set; }
-
         bool IsSelectd { get; set; }
         IContainer Container { get; set; }
         void Delete();
         void UpperZIndex();
         bool IsDeleted { get; }
         void Zoom(double zoomDeep);
-        void Worklist(DataSet dataSet);
         void Edit();
         
     }

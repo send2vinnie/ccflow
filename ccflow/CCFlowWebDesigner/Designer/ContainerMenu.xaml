@@ -54,7 +54,6 @@
                     <HyperlinkButton  Name="INITIAL"       Click="AddFlowNodeSubMenu_Click"   Margin="10 5 15 0"  FontSize="12"   Foreground="#000000"       ClickMode="Release" Content="初始节点"     ></HyperlinkButton>
                     <HyperlinkButton  Name="SUBPROCESS"       Click="AddFlowNodeSubMenu_Click"   Margin="10 5 15 5"  FontSize="12"   Foreground="#000000"       ClickMode="Release" Content="子流程"     ></HyperlinkButton>
                     <HyperlinkButton  Name="DUMMY"  Visibility="Collapsed"      Click="AddFlowNodeSubMenu_Click"   Margin="10 5 15 5"  FontSize="12"   Foreground="#000000"       ClickMode="Release" Content="子流程"     ></HyperlinkButton>
-
                 </StackPanel>
             </StackPanel>
         </Border>

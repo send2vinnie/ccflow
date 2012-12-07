@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -873,7 +872,6 @@ namespace BP
                 }
                 _container._Service.DoAsync("DelNode", this.NodeID, true);
             }
-
         }
 
         public void Move(FlowNode a, MouseEventArgs e)
@@ -1255,107 +1253,9 @@ namespace BP
         {
             UserStation us = new UserStation();
             us.IsPass = true;
-
-            //if (Type == FlowNodeType.INITIAL)
-            //{
-            //    if (EndDirectionCollections != null
-            //        && EndDirectionCollections.Count > 0)
-            //    {
-            //        us.IsPass = false;
-            //        us.Message += string.Format(Text.Message_CanNotHavePreFlowNode, NodeName);
-            //    }
-            //    if (BeginDirectionCollections == null
-            //        || BeginDirectionCollections.Count == 0)
-            //    {
-            //        us.IsPass = false;//必须至少有一个后继节点
-            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, NodeName);
-            //    }
-            //}
-            //else if (Type == FlowNodeType.COMPLETION)
-            //{
-            //    if (BeginDirectionCollections != null
-            //        && BeginDirectionCollections.Count > 0)
-            //    {
-            //        us.IsPass = false;//不能有后继节点
-            //        us.Message += string.Format(Text.Message_NotHaveFollowUpFlowNode, NodeName);
-            //    }
-            //    if (EndDirectionCollections == null
-            //        || EndDirectionCollections.Count == 0)
-            //    {
-            //        us.IsPass = false;//必须至少有一个前驱节点
-            //        us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, NodeName);
-            //    }
-            //}
-            //else
-            //{
-            //    if ((BeginDirectionCollections == null
-            //    || BeginDirectionCollections.Count == 0)
-            //        && (EndDirectionCollections == null
-            //    || EndDirectionCollections.Count == 0))
-            //    {
-            //        us.IsPass = false;//必须设置前驱和后继节点
-            //        us.Message += string.Format(Text.Message_RequireTheInstallationOfPreAndFollowupFlowNode, NodeName);
-            //    }
-            //    else
-            //    {
-
-            //        //if (BeginDirectionCollections == null
-            //        //|| BeginDirectionCollections.Count == 0)
-            //        //{
-            //        //    this.Type = FlowNodeType.COMPLETION;
-            //        //    //cr.IsPass = false;//必须至少有一个后继节点
-            //        //    //cr.Message += string.Format(Text.Message_MustHaveAtLeastOneFollowUpFlowNode, NodeName);
-            //        //}
-
-            //        //if (EndDirectionCollections == null
-            //        //|| EndDirectionCollections.Count == 0)
-            //        //{
-            //        //    us.IsPass = false;//必须至少有一个前驱节点
-            //        //    us.Message += string.Format(Text.Message_MustHaveAtLeastOnePreFlowNode, NodeName);
-            //        //}
-
-            //        //if (Type == FlowNodeType.AND_BRANCH
-            //        //    || Type == FlowNodeType.OR_BRANCH)
-            //        //{
-            //        //    if (EndDirectionCollections != null
-            //        //        && EndDirectionCollections.Count > 1)
-            //        //    {
-            //        //        //cr.IsPass = false;//有且只能有一个前驱节点
-            //        //        //cr.Message += string.Format(Text.Message_MustHaveOnlyOnePreFlowNode, NodeName);
-            //        //    }
-            //        //}
-
-            //        //if (Type == FlowNodeType.AND_MERGE
-            //        //    || Type == FlowNodeType.OR_MERGE
-            //        //    || Type == FlowNodeType.VOTE_MERGE)
-            //        //{
-            //        //    if (BeginDirectionCollections != null
-            //        //        && BeginDirectionCollections.Count > 1)
-            //        //    {
-            //        //        //cr.IsPass = false;
-            //        //        // cr.Message += string.Format(Text.Message_MustHaveOnlyOneFollowUpFlowNode, NodeName);
-            //        //    }
-            //        //}
-            //    }
-            //}
-            //isPassCheck = us.IsPass;
-            //if (!us.IsPass)
-            //{
-            //    stationTipControl.Visibility = Visibility.Visible;
-            //    stationTipControl.StationMessage = us.Message.TrimEnd("\r\n".ToCharArray());
-            //}
-            //else
-            //{
-            //    if (stationTipControl != null)
-            //    {
-            //        stationTipControl.Visibility = Visibility.Collapsed;
-            //        container.Children.Remove(stationTipControl);
-            //        _stationTipControl = null;
-            //    }
-            //}
             return us;
         }
-        public void Worklist(DataSet dataSet)
+        public void Worklist_del(DataSet dataSet)
         {
             if (dataSet == null || dataSet.Tables.Count == 0)
                 return;

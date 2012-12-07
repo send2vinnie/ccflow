@@ -42,7 +42,6 @@ namespace BP
         {
             this.FK_Flow = fk_flow;
             this.WorkID = workid;
-
             if (string.IsNullOrEmpty(workid) == false)
             {
                 //如果传递过来workid 说明要显示轨图.
@@ -55,11 +54,15 @@ namespace BP
                 this.GenerFlowChart(FK_Flow);
             }
         }
-
+        /// <summary>
+        /// 获取轨迹数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ws_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
         {
-            workListDataSet = new DataSet();
-            workListDataSet.FromXml(e.Result);
+            trackDataSet = new DataSet();
+            trackDataSet.FromXml(e.Result);
             this.GenerFlowChart(FK_Flow);
         }
         #endregion
@@ -166,14 +169,14 @@ namespace BP
         public string FlowID { get; set; }
         public Double ContainerWidth
         {
-            get { return cnsDesignerContainer.Width; }
-            set { cnsDesignerContainer.Width = value; }
+            get { return paint.Width; }
+            set { paint.Width = value; }
         }
 
         public Double ContainerHeight
         {
-            get { return cnsDesignerContainer.Height; }
-            set { cnsDesignerContainer.Height = value; }
+            get { return paint.Height; }
+            set { paint.Height = value; }
         }
         public int NextNewFlowNodeIndex
         {
@@ -206,7 +209,7 @@ namespace BP
                 {
                     Canvas temCan = new Canvas();
                     temCan.Name = "canGridLinesContainer";
-                    cnsDesignerContainer.Children.Add(temCan);
+                    paint.Children.Add(temCan);
                     _gridLinesContainer = temCan;
                 }
                 return _gridLinesContainer;
@@ -258,7 +261,7 @@ namespace BP
         private System.Windows.Threading.DispatcherTimer _doubleClickTimer;
         private Canvas _gridLinesContainer;
         private Rectangle temproaryEllipse;
-        private DataSet workListDataSet;
+        private DataSet trackDataSet;
         private double DesignerHeight = 50;
         private double DesignerWdith = 50;
         #endregion
@@ -269,7 +272,7 @@ namespace BP
             this.FlowID = flowID;
             string sqls = "";
             sqls += "SELECT NodeID,Name,X,Y,NodePosType,RunModel,HisToNDs FROM WF_Node WHERE FK_Flow='" + flowID + "'";
-            sqls += "@SELECT MyPK,Name,FK_Flow,X,Y FROM WF_LabNote WHERE FK_Flow='" + flowID + "'";
+            sqls += "@SELECT MyPK,Name,X,Y FROM WF_LabNote WHERE FK_Flow='" + flowID + "'";
             sqls += "@SELECT Node,ToNode FROM WF_Direction ";
             WSDesignerSoapClient ws = BP.Glo.GetDesignerServiceInstance();
             ws.RunSQLReturnTableSAsync(sqls);
@@ -284,21 +287,11 @@ namespace BP
             DataTable dtNode = ds.Tables[0];
             foreach (DataRow dr in dtNode.Rows)
             {
-
                 NodePosType postype = (NodePosType)int.Parse(dr["NodePosType"].ToString());
                 FlowNodeType runModel = (FlowNodeType)int.Parse(dr["RunModel"].ToString());
 
                 FlowNode flowNode = new FlowNode((IContainer)this, runModel);
                 flowNode.HisPosType = postype;
-
-                 
-                //if (dr["NodePosType"].ToString() == "0")
-                //    flowNode = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
-                //else if (dr["NodePosType"].ToString() == "2")
-                //    flowNode = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
-                //else
-                //    flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
-
                 flowNode.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
                 flowNode.FK_Flow = FlowID;
                 flowNode.NodeID = dr["NodeID"].ToString();
@@ -354,15 +347,41 @@ namespace BP
                             {
                                 var d = new Direction((IContainer)this);
                                 d.FlowID = FlowID;
-                                d.BeginFlowNode = bfn;
-                                d.EndFlowNode = efn;
-                                AddDirection(d);
+
+                                d.BeginFlowNode = bfn; //开始节点.
+                                d.EndFlowNode = efn; //结束节点.
+
+                                //增加方向.
+                                this.AddDirection(d);
                             }
                         }
                     }
                 }
             }
             #endregion 生成方向.
+
+            //#region 标记颜色.
+            //if (trackDataSet != null && trackDataSet.Tables.Count == 0)
+            //{
+            //    DataTable dt = trackDataSet.Tables["WF_Track"];
+            //    foreach (DataRow dr in dt.Rows)
+            //    {
+            //        string begin = dr["NDFrom"].ToString();
+            //        string to = dr["NDTo"].ToString();
+
+            //        if (this.BeginFlowNode.NodeID == begin && this.EndFlowNode.NodeID == to)
+            //        {
+            //            brush = new SolidColorBrush();
+            //            brush.Color = Colors.Red;
+            //            this.begin.Fill = brush;
+            //            this.endArrow.Stroke = brush;
+            //            this.line.Stroke = brush;
+
+
+            //        }
+            //    }
+            //}
+            //#endregion 标记颜色.
 
             SaveChange(HistoryType.New);
             Content_Resized(null, null);
@@ -371,18 +390,18 @@ namespace BP
         /// 增加方向
         /// </summary>
         /// <param name="r"></param>
-        public void AddDirection(Direction r)
+        public void AddDirection(Direction dir)
         {
-            r.Worklist(workListDataSet);
-
-            if (cnsDesignerContainer.Children.Contains(r)==false)
+            if (paint.Children.Contains(dir) == false)
             {
-                cnsDesignerContainer.Children.Add(r);
-                r.Container = this;
+                paint.Children.Add(dir);
+                dir.Container = this;
             }
 
-            if ( DirectionCollections.Contains(r)==false)
-                DirectionCollections.Add(r);
+            if (DirectionCollections.Contains(dir) == false)
+                DirectionCollections.Add(dir);
+
+          
         }
         /// <summary>
         /// 增加标签
@@ -390,10 +409,10 @@ namespace BP
         /// <param name="l"></param>
         public void AddLabel(NodeLabel l)
         {
-            if (!cnsDesignerContainer.Children.Contains(l))
-                cnsDesignerContainer.Children.Add(l);
+            if (paint.Children.Contains(l) == false)
+                paint.Children.Add(l);
 
-            if (!LableCollections.Contains(l))
+            if (LableCollections.Contains(l) == false)
                 LableCollections.Add(l);
         }
         /// <summary>
@@ -402,21 +421,15 @@ namespace BP
         /// <param name="a"></param>
         public void AddFlowNode(FlowNode a)
         {
-            if (cnsDesignerContainer.Children.Contains(a)==false)
+            if (paint.Children.Contains(a) == false)
             {
-                cnsDesignerContainer.Children.Add(a);
+                paint.Children.Add(a);
                 a.Container = this;
                 a.FK_Flow = FlowID;
-                //if (a.Type != FlowNodeType.STATIONODE)
-                //{
-                    a.Worklist(workListDataSet);
-                //}
             }
 
             if (FlowNodeCollections.Contains(a) == false)
-            {
                 FlowNodeCollections.Add(a);
-            }
         }
         #endregion
 
@@ -425,12 +438,10 @@ namespace BP
         {
             e.Handled = true;
         }
-
         public void ShowLabelContentMenu(NodeLabel l, object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
-
         public void ShowDirectionContentMenu(Direction r, object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
@@ -456,10 +467,10 @@ namespace BP
         {
             var contentHeight = Application.Current.Host.Content.ActualHeight - 20;
             var contentWidth = Application.Current.Host.Content.ActualWidth - 20;
-            cnsDesignerContainer.Width = DesignerWdith > contentWidth
+            paint.Width = DesignerWdith > contentWidth
                                              ? DesignerWdith
                                              : contentWidth;
-            cnsDesignerContainer.Height = DesignerHeight > contentHeight
+            paint.Height = DesignerHeight > contentHeight
                                               ? DesignerHeight
                                               : contentHeight;
             SetGridLines();
@@ -474,8 +485,8 @@ namespace BP
             double top = 0;
             double left = 0;
 
-            double width = cnsDesignerContainer.Width;
-            double height = cnsDesignerContainer.Height;
+            double width = paint.Width;
+            double height = paint.Height;
 
             double stepLength = 40;
 
@@ -518,7 +529,7 @@ namespace BP
 
         public bool Contains(UIElement uie)
         {
-            return cnsDesignerContainer.Children.Contains(uie);
+            return paint.Children.Contains(uie);
         }
         public CheckResult CheckSave()
         {
@@ -529,7 +540,6 @@ namespace BP
         public void ShowMessage(string message)
         {
         }
-
         public void SaveChange(HistoryType action)
         {
         }
@@ -676,7 +686,7 @@ namespace BP
                     temproaryEllipse.Stroke = brush;
                     temproaryEllipse.StrokeMiterLimit = 2.0;
 
-                    cnsDesignerContainer.Children.Add(temproaryEllipse);
+                    paint.Children.Add(temproaryEllipse);
                 }
 
                 if (endPoint.X >= beginPoint.X)
@@ -775,7 +785,7 @@ namespace BP
                     FlowNode a = null;
                     Direction r = null;
                     NodeLabel l = null;
-                    foreach (UIElement uie in cnsDesignerContainer.Children)
+                    foreach (UIElement uie in paint.Children)
                     {
                         if (uie is FlowNode)
                         {
@@ -817,22 +827,19 @@ namespace BP
                         }
                     }
                 }
-                cnsDesignerContainer.Children.Remove(temproaryEllipse);
+                paint.Children.Remove(temproaryEllipse);
                 temproaryEllipse = null;
             }
         }
-
         private void Container_MouseEnter(object sender, MouseEventArgs e)
         {
             mouseIsInContainer = true;
         }
-
         private void Container_MouseLeave(object sender, MouseEventArgs e)
         {
             mouseIsInContainer = false;
         }
-
-        private void cnsDesignerContainer_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void paint_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (mouseIsInContainer)
             {

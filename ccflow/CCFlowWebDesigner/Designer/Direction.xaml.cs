@@ -1705,14 +1705,19 @@ namespace BP
         {
             return null;
         }
-        public void Worklist(DataSet dataSet)
+       
+        /// <summary>
+        /// 轨迹数据
+        /// </summary>
+        /// <param name="trackDataSet"></param>
+        public bool MarkRed(DataSet trackDataSet)
         {
             var brush = new SolidColorBrush();
             brush.Color = Colors.Red;
-            if (dataSet == null || dataSet.Tables.Count == 0)
-                return;
+            if (trackDataSet == null || trackDataSet.Tables.Count == 0)
+                return false;
 
-            DataTable dt = dataSet.Tables["WF_Track"];
+            DataTable dt = trackDataSet.Tables["WF_Track"];
             foreach (DataRow dr in dt.Rows)
             {
                 string begin = dr["NDFrom"].ToString();
@@ -1725,8 +1730,13 @@ namespace BP
                     this.begin.Fill = brush;
                     this.endArrow.Stroke = brush;
                     this.line.Stroke = brush;
+
+                    this.BeginFlowNode.BorderBrush = brush;
+                    this.EndFlowNode.BorderBrush = brush;
+                    return true;
                 }
             }
+            return false;
         }
         #endregion
     }

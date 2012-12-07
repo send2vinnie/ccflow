@@ -6,7 +6,6 @@ namespace WF
     public class SessionManager
     {
         private static Dictionary<string, string> session = new Dictionary<string, string>();
-
         public static Dictionary<string, string> Session
         {
             get

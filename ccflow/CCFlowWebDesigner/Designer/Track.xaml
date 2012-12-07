@@ -15,7 +15,7 @@
                 Grid.Row="0" Grid.Column="0"  
                 HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
             <ScrollViewer.Content>
-                 <Canvas Name="cnsDesignerContainer" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                <Canvas Name="paint" VerticalAlignment="Top" HorizontalAlignment="Left" 
                         Width="Auto" Height="Auto"  
                         Background="#dcdcdc"
                         MouseLeftButtonDown="Container_MouseLeftButtonDown"
@@ -23,7 +23,7 @@
                         MouseLeftButtonUp="Container_MouseLeftButtonUp"  
                         MouseEnter="Container_MouseEnter"
                         MouseLeave="Container_MouseLeave"
-                        MouseRightButtonDown="cnsDesignerContainer_MouseRightButtonDown" >
+                        MouseRightButtonDown="paint_MouseRightButtonDown" >
                 </Canvas>
             </ScrollViewer.Content>
         </ScrollViewer>

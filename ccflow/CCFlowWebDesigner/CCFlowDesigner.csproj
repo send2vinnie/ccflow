@@ -126,11 +126,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Component\const.cs" />
-    <Compile Include="Component\DBAccess.cs" />
-    <Compile Include="Component\DirectionComponent.cs" />
-    <Compile Include="Component\FlowNodeComponent.cs" />
-    <Compile Include="Component\Utility.cs" />
+    <Compile Include="En30\const.cs" />
+    <Compile Include="En30\DBAccess.cs" />
+    <Compile Include="En30\DirectionComponent.cs" />
+    <Compile Include="En30\FlowNodeComponent.cs" />
+    <Compile Include="En30\Utility.cs" />
     <Compile Include="Controls\FlowFrm.xaml.cs">
       <DependentUpon>FlowFrm.xaml</DependentUpon>
     </Compile>
@@ -196,9 +196,6 @@
     </Compile>
     <Compile Include="Designer\ErrorTip.xaml.cs">
       <DependentUpon>ErrorTip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Frm\ChildWindow1.xaml.cs">
-      <DependentUpon>ChildWindow1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designer\FlowNode.xaml.cs">
       <DependentUpon>FlowNode.xaml</DependentUpon>
@@ -401,10 +398,6 @@
     <Page Include="Designer\ErrorTip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Frm\ChildWindow1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Designer\FlowNode.xaml">
       <Generator>MSBuild:Compile</Generator>
