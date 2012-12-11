@@ -376,6 +376,8 @@ namespace BP
                 {
                     string begin = dr["NDFrom"].ToString();
                     string to = dr["NDTo"].ToString();
+                    string rdt = dr["RDT"].ToString();
+                    string msg = dr["Msg"].ToString();
 
                     // 事件类型.
                     ActionType at = (ActionType)int.Parse(dr["ActionType"].ToString());
@@ -385,7 +387,6 @@ namespace BP
                         case ActionType.ForwardFL: /*分流点发送*/
                         case ActionType.ForwardHL: /*合流点发送*/
                         case ActionType.SubFlowForward: /*子线程点发送*/
-
                             #region 画红色的轨迹线表示已经走过的节点.
                             foreach (Direction dir in DirectionCollections)
                             {
