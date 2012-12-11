@@ -5,6 +5,7 @@ using System.Text;
 
 namespace BP.WF
 {
+   
     /// <summary>
     /// 挂起方式
     /// </summary>
@@ -155,21 +156,25 @@ namespace BP.WF
     public enum WFState
     {
         /// <summary>
+        /// 草稿
+        /// </summary>
+        Draft = 4,
+        /// <summary>
         /// 运行中
         /// </summary>
-        Runing,
+        Runing = 0,
         /// <summary>
         /// 正常完成
         /// </summary>
-        Complete,
+        Complete = 1,
         /// <summary>
         /// 挂起
         /// </summary>
-        HungUp,
+        HungUp = 2,
         /// <summary>
         /// 强制完成
         /// </summary>
-        OverByCoercion
+        Cancel = 3
     }
     /// <summary>
     /// 流程启动类型
