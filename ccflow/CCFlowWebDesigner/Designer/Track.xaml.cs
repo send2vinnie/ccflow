@@ -61,16 +61,11 @@ namespace BP
         /// <param name="e"></param>
         void ws_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
         {
-<<<<<<< .mine
             // 给track dataset 赋值.
             trackDataSet = new DataSet();
             trackDataSet.FromXml(e.Result);
 
             //产生轨迹图.
-=======
-            trackDataSet = new DataSet();
-            trackDataSet.FromXml(e.Result);
->>>>>>> .r3571
             this.GenerFlowChart(FK_Flow);
         }
         #endregion
@@ -368,7 +363,6 @@ namespace BP
             }
             #endregion 生成方向.
 
-<<<<<<< .mine
             #region 标记颜色, 显示轨迹。
             if (trackDataSet != null )
             {
@@ -377,6 +371,7 @@ namespace BP
                 {
                     string begin = dr["NDFrom"].ToString();
                     string to = dr["NDTo"].ToString();
+ 
                     foreach (Direction dir in DirectionCollections)
                     {
                         if (dir.BeginFlowNode.NodeID == begin && dir.EndFlowNode.NodeID == to)
@@ -389,38 +384,13 @@ namespace BP
 
 #warning 从这里把路过的节点的边框设置成红色。
 
-                            dir.BeginFlowNode.Background = brush;
+                           //dir.BeginFlowNode.Background = brush;
                         }
                     }
                 }
             }
             #endregion 标记颜色.
 
-=======
-            //#region 标记颜色.
-            //if (trackDataSet != null && trackDataSet.Tables.Count == 0)
-            //{
-            //    DataTable dt = trackDataSet.Tables["WF_Track"];
-            //    foreach (DataRow dr in dt.Rows)
-            //    {
-            //        string begin = dr["NDFrom"].ToString();
-            //        string to = dr["NDTo"].ToString();
-
-            //        if (this.BeginFlowNode.NodeID == begin && this.EndFlowNode.NodeID == to)
-            //        {
-            //            brush = new SolidColorBrush();
-            //            brush.Color = Colors.Red;
-            //            this.begin.Fill = brush;
-            //            this.endArrow.Stroke = brush;
-            //            this.line.Stroke = brush;
-
-
-            //        }
-            //    }
-            //}
-            //#endregion 标记颜色.
-
->>>>>>> .r3571
             SaveChange(HistoryType.New);
             Content_Resized(null, null);
         }
