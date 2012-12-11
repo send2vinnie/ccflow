@@ -24,6 +24,8 @@ body
     border: 1px solid #808080;
 	margin: 2px;
 	padding: 5px;
+    height: 225px;
+    width: 419px;
 }
 
 .Caption
@@ -172,15 +174,14 @@ body
 
 .BigDoc
 {
-	border-style: none;
-	padding-right: 5px;
-	padding-left: 5px;
-	font-size: 14px;
-	padding-bottom: 5px;
-	margin: 5px;
-	padding-top: 5px;
-	line-height: 15pt;
-	letter-spacing: 0pc;
+    	border: lightgrey 1px solid;
+    border-width: 1px;
+    border-color: #999999 #C0C0C0 #C0C0C0 #C0C0C0;
+    padding: 1px;
+    margin: 1px;
+    text-align: left;
+    
+
 }
 
 /* 内部标签风格 */
@@ -256,22 +257,17 @@ legend
 	vertical-align: middle;
 	padding: 1px;
 }
-
-ul
-{
-	border-right-style: 0;
-	border-left-style: 0;
-	left: 2px;
-	clip: rect(auto, auto, auto, 2px);
-}
-
-li
-{
-       padding: 2px;
-    margin: 2px;
-}
+ 
 
 Img
 {
     border:0px;
 }
+
+.Icon
+{
+    border:0px;
+    width:16px;
+    height:16px;
+}
+    

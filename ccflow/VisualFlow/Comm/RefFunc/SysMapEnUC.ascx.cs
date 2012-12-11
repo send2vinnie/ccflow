@@ -681,7 +681,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
                                     this.AddTDDesc(attr.Name);
                                     if (attr.IsSigan )
                                     {
-                                        this.AddTD("colspan=" + colspanOfCtl, "<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
+                                        this.AddTD("colspan=" + colspanOfCtl, "<img src='"+this.Request.ApplicationPath+"/DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
                                     }
                                     else
                                     {
