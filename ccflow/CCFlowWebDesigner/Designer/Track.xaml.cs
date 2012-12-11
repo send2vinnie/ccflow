@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.IO;
 using BP;
+using BP.WF;
 using FluxJpeg.Core;
 using WF.WS;
 using Silverlight;
@@ -366,27 +367,53 @@ namespace BP
             #region 标记颜色, 显示轨迹。
             if (trackDataSet != null )
             {
+                /*说明已经取道了轨迹数据.
+                 * 1,流程在运行过程中WF_Track 忠实的记录了每个操作动作.这个表的数据只增加不会减少更不修改它.
+                 * 2,每个事件都一个事件类型ActionType, 它是一个枚举类型的.
+                 */
                 DataTable dt = trackDataSet.Tables["WF_Track"];
                 foreach (DataRow dr in dt.Rows)
                 {
                     string begin = dr["NDFrom"].ToString();
                     string to = dr["NDTo"].ToString();
- 
-                    foreach (Direction dir in DirectionCollections)
+
+                    // 事件类型.
+                    ActionType at = (ActionType)int.Parse(dr["ActionType"].ToString());
+                    switch (at)
                     {
-                        if (dir.BeginFlowNode.NodeID == begin && dir.EndFlowNode.NodeID == to)
-                        {
-                            SolidColorBrush brush = new SolidColorBrush();
-                            brush.Color = Colors.Red;
-                            dir.begin.Fill = brush;
-                            dir.endArrow.Stroke = brush;
-                            dir.line.Stroke = brush;
+                        case ActionType.Forward: /*普通节点发送*/
+                        case ActionType.ForwardFL: /*分流点发送*/
+                        case ActionType.ForwardHL: /*合流点发送*/
+                        case ActionType.SubFlowForward: /*子线程点发送*/
 
-#warning 从这里把路过的节点的边框设置成红色。
+                            #region 画红色的轨迹线表示已经走过的节点.
+                            foreach (Direction dir in DirectionCollections)
+                            {
+                                if (dir.BeginFlowNode.NodeID == begin && dir.EndFlowNode.NodeID == to)
+                                {
+                                    SolidColorBrush brush = new SolidColorBrush();
+                                    brush.Color = Colors.Red;
+                                    dir.begin.Fill = brush;
+                                    dir.endArrow.Stroke = brush;
+                                    dir.line.Stroke = brush;
 
-                           //dir.BeginFlowNode.Background = brush;
-                        }
+                                    #warning 从这里把路过的节点的边框设置成红色。
+                                    //dir.BeginFlowNode.Background = brush;
+                                }
+                            }
+                            #endregion
+
+                            break;
+                        case ActionType.Return: /*退回*/
+#warning 如何标示退回请与马工商量.
+                            break;
+                        case ActionType.HungUp: /*挂起*/
+#warning 如何标示退回请与马工商量.
+                            break;
+                        default:
+                            break;
                     }
+                  
                 }
             }
             #endregion 标记颜色.

@@ -130,6 +130,10 @@
     <Compile Include="En30\DBAccess.cs" />
     <Compile Include="En30\DirectionComponent.cs" />
     <Compile Include="En30\FlowNodeComponent.cs" />
+    <Compile Include="En30\PubLib\ButtonList.cs" />
+    <Compile Include="En30\PubLib\EnumLib.cs" />
+    <Compile Include="En30\PubLib\FlowAttr.cs" />
+    <Compile Include="En30\PubLib\NodeAttr.cs" />
     <Compile Include="En30\Utility.cs" />
     <Compile Include="Controls\FlowFrm.xaml.cs">
       <DependentUpon>FlowFrm.xaml</DependentUpon>
