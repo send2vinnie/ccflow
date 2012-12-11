@@ -51,6 +51,10 @@ namespace BP
             //this.RootVisual = lab;
             //return;
 
+            //BP.Track track = new BP.Track("005", "1001");
+            //this.RootVisual = track;
+            //return;
+
             if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID")
              || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
             {
