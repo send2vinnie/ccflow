@@ -69,14 +69,15 @@ public class CCFlowAPI : CCForm {
         try
         {
             Emp emp = new Emp(userNo);
-            if (emp.Equals(pass) == false)
+            if (emp.Pass.Equals(pass) == false)
                 return 0;
 
             BP.WF.Dev2Interface.Port_Login(userNo, "");
             return 1;
         }
-        catch
+        catch(Exception ex)
         {
+            Log.DefaultLogWriteLineError(ex.Message);
             return 2;
         }
     }
