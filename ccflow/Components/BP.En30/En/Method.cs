@@ -206,7 +206,8 @@ namespace BP.En
             }
             else
             {
-                return "<img src='" + path + Icon + "'  border=0 />";
+                return Icon;
+                //return "<img src='" + path + Icon + "'  border=0 />";
             }
         }
         /// <summary>
