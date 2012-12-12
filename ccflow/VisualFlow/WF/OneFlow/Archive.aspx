@@ -3,20 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Right" Runat="Server">
     <%
     /*获取数据.*/
-    string fk_flow = this.Request.QueryString["FK_Flow"];
-    string rptTable= "ND"+int.Parse(fk_flow)+"Rpt";
-    string dbStr = BP.SystemConfig.AppCenterDBVarStr;
-    string sql = "SELECT OID,Title,RDT,FID FROM " + rptTable + " WHERE WFState=1 AND Rec=" + dbStr + "Rec";
-    BP.DA.Paras ps =new BP.DA.Paras();
-    ps.SQL=sql;
-    ps.Add("Rec",BP.Web.WebUser.No);
-    System.Data.DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(ps);
+        /*获取数据.*/
+        string fk_flow = this.Request.QueryString["FK_Flow"];
+        System.Data.DataTable dt = BP.WF.Dev2Interface.DB_NDxxRpt(fk_flow, BP.WF.WFState.Cancel);
     %>
 <table  style="width:100%">
 <Caption class='Caption' align=left style="background:url('../../Comm/Style/BG_Title.png') repeat-x ; height:30px ; line-height:30px" >
 归档</caption>
 <tr>
-<th class="Title">IDX </th>
+<th class="Title" width="1%">IDX </th>
 <th class="Title">流水号</th>
 <th class="Title">流程标题</th>
 <th class="Title">时间</th>
