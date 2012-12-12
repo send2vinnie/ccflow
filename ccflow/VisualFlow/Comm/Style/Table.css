@@ -174,14 +174,12 @@ body
 
 .BigDoc
 {
-    	border: lightgrey 1px solid;
+    border: lightgrey 1px solid;
     border-width: 1px;
     border-color: #999999 #C0C0C0 #C0C0C0 #C0C0C0;
     padding: 1px;
     margin: 1px;
     text-align: left;
-    
-
 }
 
 /* 内部标签风格 */
