@@ -3445,6 +3445,7 @@ namespace BP.WF
             if (msg != null)
                 return msg;
 
+
             #region 判断节点完成条件
             try
             {
@@ -3500,7 +3501,6 @@ namespace BP.WF
                     /* 如果流程完成 */
                     string overMsg = this.HisWorkFlow.DoFlowOver(ActionType.FlowOver, "符合流程完成条件:"+stopMsg);
                     this.IsStopFlow = true;
-                     
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
                     return msg + "@符合工作流程完成条件" + stopMsg + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }

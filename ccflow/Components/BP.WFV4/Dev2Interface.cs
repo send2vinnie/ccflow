@@ -395,7 +395,7 @@ namespace BP.WF
             string dbStr = BP.SystemConfig.AppCenterDBVarStr;
             BP.DA.Paras ps = new BP.DA.Paras();
             ps.Add("Rec", BP.Web.WebUser.No);
-            ps.SQL = "SELECT OID,Title,RDT FROM " + nodeTable + " WHERE NodeState=0 AND Rec=" + dbStr + "Rec";
+            ps.SQL = "SELECT OID,Title,RDT,'"+fk_flow+"' as FK_Flow,FID, "+int.Parse(fk_flow)+"01 as FK_Node FROM " + nodeTable + " WHERE NodeState=0 AND Rec=" + dbStr + "Rec";
             return BP.DA.DBAccess.RunSQLReturnTable(ps);
         }
         #endregion 流程草稿
@@ -1306,7 +1306,11 @@ namespace BP.WF
                 sw.OID = workID;
                 sw.Retrieve();
                 sw.ResetDefaultVal();
+
+                //加上标题， 设置节点状态.
                 sw.SetValByKey("Title", WorkNode.GenerTitle(sw));
+                sw.SetValByKey("NodeState", 0);
+
                 if (htWork != null)
                 {
                     foreach (string str in htWork.Keys)
@@ -1710,6 +1714,26 @@ namespace BP.WF
             return msg;
         }
         #endregion 工作有关接口
+
+        #region 流程属性与节点属性变更接口.
+        public static string ChangeAttr_Node()
+        {
+            return null;
+        }
+        /// <summary>
+        /// 更改流程属性.
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="isEnableFlow">启用与禁用 true启用  false禁用</param>
+        /// <returns>执行结果</returns>
+        public static string ChangeAttr_Flow(string fk_flow, bool isEnableFlow)
+        {
+            Flow fl = new Flow(fk_flow);
+            fl.IsOK = isEnableFlow;
+            fl.Update();
+            return "修改成功";
+        }
+        #endregion 流程属性与节点属性变更接口.
 
     }
 }

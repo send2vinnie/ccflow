@@ -639,8 +639,6 @@ namespace BP.WF
             string sql = "";
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET WFState=1 WHERE WorkID=" + this.WorkID);
 
-
-
             string msg = "";
             // 判断流程中是否还没有没有完成的支流。
             sql = "SELECT COUNT(WORKID) FROM WF_GenerWorkFlow WHERE WFState!=1 AND FID=" + this.FID;
