@@ -64,7 +64,10 @@ namespace BP.Picture
         public void SetSelectedColor()
         {
             picRect.Fill = SystemConst.ColorConst.SelectedColor;
-
+        }
+        public void SetBorderColor(Brush brush)
+        {
+            picRect.Stroke = brush;
         }
         public PointCollection ThisPointCollection
         {

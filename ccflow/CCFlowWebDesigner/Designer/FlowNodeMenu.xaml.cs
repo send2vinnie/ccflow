@@ -116,7 +116,7 @@ namespace BP
         }
         private void setMenuItemStyleByType(FlowNodeType type)
         {
-            var menuType = (MuContentMenu.Items[6] as MenuItem).Content as Menu;
+            var menuType = (MuContentMenu.Items[8] as MenuItem).Content as Menu;
 
             if (null == menuType)
             {
@@ -128,25 +128,37 @@ namespace BP
                 if (null != subMenu)
                 {
                     subMenu.FontWeight = FontWeights.Normal;
+                    subMenu.CheckBoxVisibility = System.Windows.Visibility.Collapsed;
+                    subMenu.IsChecked = false;
                 }
             }
+
+            MenuItem mItem = null;
+
             switch (type)
             {
                 case FlowNodeType.Ordinary:
-                    var item = (menuType.Items[0] as MenuItem);
-                    item.FontWeight = FontWeights.ExtraBold;
+                    mItem = (menuType.Items[0] as MenuItem);
                     break;
-                case FlowNodeType.FHL:
-                    (menuType.Items[1] as MenuItem).FontWeight = FontWeights.ExtraBold;
+                case FlowNodeType.FL:
+                    mItem = (menuType.Items[1] as MenuItem);
                     break;
                 case FlowNodeType.HL:
-                    (menuType.Items[2] as MenuItem).FontWeight = FontWeights.ExtraBold;
+                    mItem = (menuType.Items[2] as MenuItem);
+                    break;
+                case FlowNodeType.FHL:
+                    mItem = (menuType.Items[3] as MenuItem);
                     break;
                 case FlowNodeType.SubThread:
-                    (menuType.Items[3] as MenuItem).FontWeight = FontWeights.ExtraBold;
+                    mItem = (menuType.Items[4] as MenuItem);
                     break;
             }
+
+            mItem.FontWeight = FontWeights.ExtraBold;
+            mItem.CheckBoxVisibility = System.Windows.Visibility.Visible;
+            mItem.IsChecked = true;
         }
+
         private void deleteFlowNode()
         {
             if (relatedFlowNode != null)
@@ -234,17 +246,20 @@ namespace BP
                 case "menuFlowProperty":
                     Glo.WinOpenByDoType("CH", "FlowP", _container.FlowID, RelatedFlowNode.NodeID, null);
                     break;
+                case "menuNodeTypePT":
+                    RelatedFlowNode.HisRunModel = FlowNodeType.Ordinary;
+                    break;
                 case "menuNodeTypeFL":
                     RelatedFlowNode.HisRunModel = FlowNodeType.FL;
                     break;
-                case "menuNodeTypePT":
-                    RelatedFlowNode.HisRunModel = FlowNodeType.Ordinary;
+                case "menuNodeTypeHL":
+                    RelatedFlowNode.HisRunModel = FlowNodeType.HL;
                     break;
                 case "menuNodeTypeFHL":
                     RelatedFlowNode.HisRunModel = FlowNodeType.FHL;
                     break;
-                case "menuNodeTypeHL":
-                    RelatedFlowNode.HisRunModel = FlowNodeType.HL;
+                case "menuNodeTypeZLC":
+                    RelatedFlowNode.HisRunModel = FlowNodeType.SubThread;
                     break;
             }
             MuContentMenu.Hide();

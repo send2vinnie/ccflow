@@ -398,8 +398,11 @@ namespace BP
                                     dir.endArrow.Stroke = brush;
                                     dir.line.Stroke = brush;
 
-                                    #warning 从这里把路过的节点的边框设置成红色。
-                                    //dir.BeginFlowNode.Background = brush;
+#warning 从这里把路过的节点的边框设置成红色。
+                                    dir.BeginFlowNode.sdPicture.SetBorderColor(brush);
+                                    dir.EndFlowNode.sdPicture.SetBorderColor(brush);
+                                    //(dir.EndFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
+                                    //(dir.BeginFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
                                 }
                             }
                             #endregion

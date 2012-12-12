@@ -135,12 +135,14 @@ namespace BP
         public void SetSelectedColor()
         {
             ((IFlowNodePicture)currentPic).SetSelectedColor();
-
         }
         public void SetWarningColor()
         {
             ((IFlowNodePicture)currentPic).SetWarningColor();
-
+        }
+        public void SetBorderColor(Brush brush)
+        {
+            ((IFlowNodePicture)currentPic).SetBorderColor(brush);
         }
         public void ResetInitColor()
         {

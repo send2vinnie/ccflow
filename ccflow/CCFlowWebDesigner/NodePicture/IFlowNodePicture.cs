@@ -41,6 +41,7 @@ namespace BP.Picture
         void ResetInitColor();
         void SetWarningColor();
         void SetSelectedColor();
+        void SetBorderColor(Brush brush);
         PointCollection ThisPointCollection { get; }
     }
 }

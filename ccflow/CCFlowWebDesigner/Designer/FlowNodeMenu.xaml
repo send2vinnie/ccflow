@@ -19,12 +19,13 @@
                     <!--<liquidMenu:MenuItem ID="menuFlowProperty" Text="流程属性" Icon="../Images/MenuItem/Property.png" />-->
                     <liquidMenu:MenuItem ID="menuModifyName" Text="修改节点名称" Icon="../Images/MenuItem/Edit.png" />
                     <liquidMenu:MenuItem ID="menuDeleteNode" Text="删除节点" Icon="../Images/MenuItem/Delete.png" />
-                    <liquidMenu:MenuItem ID="menuFlowType" Text="节点类型" Visibility="Collapsed"   >
+                    <liquidMenu:MenuItem ID="menuFlowType" Text="节点类型" Visibility="Visible"   >
                         <liquidMenu:Menu>                        
-                            <liquidMenu:MenuItem ID="menuNodeTypePT" Text="普通节点" />
-                            <liquidMenu:MenuItem ID="menuNodeTypeFL" Text="分流节点" />
-                            <liquidMenu:MenuItem ID="menuNodeTypeHL" Text="合流节点" />
-                            <liquidMenu:MenuItem ID="menuNodeTypeFHL" Text="分合流结束" />
+                            <liquidMenu:MenuItem ID="menuNodeTypePT" Text="普通节点" CheckBoxVisibility="Visible"/>
+                            <liquidMenu:MenuItem ID="menuNodeTypeFL" Text="分流节点" CheckBoxVisibility="Visible"/>
+                            <liquidMenu:MenuItem ID="menuNodeTypeHL" Text="合流节点" CheckBoxVisibility="Visible"/>
+                            <liquidMenu:MenuItem ID="menuNodeTypeFHL" Text="分合流节点" CheckBoxVisibility="Visible"/>
+                            <liquidMenu:MenuItem ID="menuNodeTypeZLC" Text="子流程节点" CheckBoxVisibility="Visible"/>
                         </liquidMenu:Menu>
                     </liquidMenu:MenuItem>
                     <!--<liquidMenu:MenuDivider />
