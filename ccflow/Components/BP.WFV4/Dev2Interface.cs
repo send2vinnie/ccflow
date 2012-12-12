@@ -174,6 +174,7 @@ namespace BP.WF
         }
         #endregion 获取流程事例的轨迹图
 
+
         #region 获取操送列表
         /// <summary>
         /// 获取抄送列表
@@ -222,6 +223,11 @@ namespace BP.WF
         {
             return DB_GenerCanStartFlowsOfEntities(WebUser.No);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userNo"></param>
+        /// <returns></returns>
         public static Flows DB_GenerCanStartFlowsOfEntities(string userNo)
         {
             // 按岗位计算.
@@ -331,22 +337,22 @@ namespace BP.WF
             wk.OID = workid;
             wk.Retrieve();
 
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             QueryObject qo = new QueryObject(wls);
-            qo.AddWhere(WorkerListAttr.FID, wk.OID);
+            qo.AddWhere(GenerWorkerListAttr.FID, wk.OID);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.IsEnable, 1);
+            qo.AddWhere(GenerWorkerListAttr.IsEnable, 1);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Node,
+            qo.AddWhere(GenerWorkerListAttr.FK_Node,
                 nd.FromNodes[0].GetValByKey(NodeAttr.NodeID));
 
             DataTable dt = qo.DoQueryToTable();
             if (dt.Rows.Count == 1)
             {
                 qo.clear();
-                qo.AddWhere(WorkerListAttr.FID, wk.OID);
+                qo.AddWhere(GenerWorkerListAttr.FID, wk.OID);
                 qo.addAnd();
-                qo.AddWhere(WorkerListAttr.IsEnable, 1);
+                qo.AddWhere(GenerWorkerListAttr.IsEnable, 1);
                 return qo.DoQueryToTable();
             }
             return dt;
@@ -364,16 +370,36 @@ namespace BP.WF
             wk.OID = workid;
             wk.Retrieve();
 
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             QueryObject qo = new QueryObject(wls);
-            qo.AddWhere(WorkerListAttr.FID, wk.OID);
+            qo.AddWhere(GenerWorkerListAttr.FID, wk.OID);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.IsEnable, 1);
+            qo.AddWhere(GenerWorkerListAttr.IsEnable, 1);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.IsPass, 0);
+            qo.AddWhere(GenerWorkerListAttr.IsPass, 0);
             return qo.DoQueryToTable();
         }
         #endregion 获取当前操作员可以发起的流程集合
+
+
+        #region 流程草稿
+        /// <summary>
+        /// 产生数据
+        /// </summary>
+        /// <param name="fk_flow"></param>
+        /// <returns></returns>
+        public static DataTable DB_GenerDraftDataTable(string fk_flow)
+        {
+            /*获取数据.*/
+            string nodeTable = "ND" + int.Parse(fk_flow) + "01";
+            string dbStr = BP.SystemConfig.AppCenterDBVarStr;
+            BP.DA.Paras ps = new BP.DA.Paras();
+            ps.Add("Rec", BP.Web.WebUser.No);
+            ps.SQL = "SELECT OID,Title,RDT FROM " + nodeTable + " WHERE NodeState=0 AND Rec=" + dbStr + "Rec";
+            return BP.DA.DBAccess.RunSQLReturnTable(ps);
+        }
+        #endregion 流程草稿
+
 
         #region 获取当前操作员的待办工作
         /// <summary>
@@ -381,72 +407,95 @@ namespace BP.WF
         /// </summary>
         /// <param name="fk_flow">根据流程编号，如果流程编号为空则返回全部</param>
         /// <returns>当前操作员待办工作</returns>
+        public static DataTable DB_GenerEmpWorksOfDataTable(int wfState, string fk_flow)
+        {
+            Paras ps = new Paras();
+            string dbstr = BP.SystemConfig.AppCenterDBVarStr;
+         //   int wfState = (int)WFState.Runing;
+            string sql;
+            if (WebUser.IsAuthorize == false)
+            {
+                /*不是授权状态*/
+                if (string.IsNullOrEmpty(fk_flow))
+                {
+                    ps.SQL = "SELECT * FROM WF_EmpWorks WHERE WFState=" + dbstr + "WFState AND FK_Emp=" + dbstr + "FK_Emp  ORDER BY FK_Flow,ADT DESC ";
+                    ps.Add("WFState", wfState);
+                    ps.Add("FK_Emp", BP.Web.WebUser.No);
+                }
+                else
+                {
+                    ps.SQL = "SELECT * FROM WF_EmpWorks WHERE WFState=" + dbstr + "WFState AND FK_Emp=" + dbstr + "FK_Emp AND FK_Flow="+dbstr+"FK_Flow ORDER BY  ADT DESC ";
+                    ps.Add("WFState", wfState);
+                    ps.Add("FK_Flow", fk_flow);
+                    ps.Add("FK_Emp", BP.Web.WebUser.No);
+                }
+                return BP.DA.DBAccess.RunSQLReturnTable(ps);
+            }
+
+            /*如果是授权状态, 获取当前委托人的信息. */
+            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+            switch (emp.HisAuthorWay)
+            {
+                case Port.AuthorWay.All:
+                    if (string.IsNullOrEmpty(fk_flow))
+                    {
+                        ps.SQL = "SELECT * FROM WF_EmpWorks WHERE WFState=" + dbstr + "WFState AND FK_Emp=" + dbstr + "FK_Emp  ORDER BY FK_Flow,ADT DESC ";
+                        ps.Add("WFState", wfState);
+                        ps.Add("FK_Emp", BP.Web.WebUser.No);
+                    }
+                    else
+                    {
+                        ps.SQL = "SELECT * FROM WF_EmpWorks WHERE WFState=" + dbstr + "WFState AND FK_Emp=" + dbstr + "FK_Emp AND FK_Flow" + dbstr + "FK_Flow ORDER BY FK_Flow,ADT DESC ";
+                        ps.Add("WFState", wfState);
+                        ps.Add("FK_Emp", BP.Web.WebUser.No);
+                        ps.Add("FK_Flow", fk_flow);
+                    }
+                    break;
+                case Port.AuthorWay.SpecFlows:
+                    if (string.IsNullOrEmpty(fk_flow))
+                    {
+                        sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + dbstr + "WFState AND FK_Emp=" + dbstr + "FK_Emp AND  FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
+                        ps.Add("WFState", wfState);
+                        ps.Add("FK_Emp", BP.Web.WebUser.No);
+                    }
+                    else
+                    {
+                        sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + dbstr + "WFState AND FK_Emp=" + dbstr + "FK_Emp  AND FK_Flow" + dbstr + "FK_Flow AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
+                        ps.Add("WFState", wfState);
+                        ps.Add("FK_Emp", BP.Web.WebUser.No);
+                        ps.Add("FK_Flow", fk_flow);
+                    }
+                    break;
+                case Port.AuthorWay.None:
+                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
+                default:
+                    throw new Exception("no such way...");
+            }
+            return BP.DA.DBAccess.RunSQLReturnTable(ps);
+        }
         public static DataTable DB_GenerEmpWorksOfDataTable()
         {
-            int wfState = (int)WFState.Runing;
-            string sql;
-            if (WebUser.IsAuthorize == false)
-            {
-                /*不是授权状态*/
-                sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
-                return BP.DA.DBAccess.RunSQLReturnTable(sql);
-            }
-
-            /*如果是授权状态, 获取当前委托人的信息. */
-            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
-            switch (emp.HisAuthorWay)
-            {
-                case Port.AuthorWay.All:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
-                    break;
-                case Port.AuthorWay.SpecFlows:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
-                    break;
-                case Port.AuthorWay.None:
-                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
-                default:
-                    throw new Exception("no such way...");
-            }
-
-#warning 测试session 乱掉的代码.
-            //BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
-            return BP.DA.DBAccess.RunSQLReturnTable(sql);
+            return DB_GenerEmpWorksOfDataTable((int)WFState.Runing, null);
         }
         /// <summary>
-        /// 获取当前操作员的待办工作
+        /// 挂起工作列表
         /// </summary>
-        /// <param name="fk_flow">根据流程编号，如果流程编号为空则返回全部</param>
-        /// <returns>当前操作员待办工作</returns>
+        /// <returns></returns>
         public static DataTable DB_GenerEmpWorkshHungUpOfDataTable()
         {
-            int wfState = (int)WFState.HungUp;
-            string sql;
-            if (WebUser.IsAuthorize == false)
-            {
-                /*不是授权状态*/
-                sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "'  ORDER BY FK_Flow,ADT DESC ";
-                //     BP.DA.Log.DefaultLogWriteLineInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
-                return BP.DA.DBAccess.RunSQLReturnTable(sql);
-            }
-            /*如果是授权状态, 获取当前委托人的信息. */
-            WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
-            switch (emp.HisAuthorWay)
-            {
-                case Port.AuthorWay.All:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' ORDER BY FK_Flow,ADT DESC ";
-                    break;
-                case Port.AuthorWay.SpecFlows:
-                    sql = "SELECT * FROM WF_EmpWorks WHERE WFState=" + wfState + " AND FK_Emp='" + WebUser.No + "' AND FK_Flow IN " + emp.AuthorFlows + "  ORDER BY FK_Flow,ADT DESC ";
-                    break;
-                case Port.AuthorWay.None:
-                    throw new Exception("对方(" + WebUser.No + ")已经取消了授权.");
-                default:
-                    throw new Exception("no such way...");
-            }
-
-            #warning 测试session 乱掉的代码.
-            //BP.DA.Log.DebugWriteInfo("@获取待办:" + WebUser.No + ",执行sql:" + sql);
-            return BP.DA.DBAccess.RunSQLReturnTable(sql);
+            return DB_GenerEmpWorksOfDataTable((int)WFState.HungUp,null);
+        }
+        public static DataTable DB_GenerEmpWorkshHungUpOfDataTable(string fk_flow)
+        {
+            return DB_GenerEmpWorksOfDataTable((int)WFState.HungUp, fk_flow);
+        }
+        /// <summary>
+        /// 撤销(强制结束)
+        /// </summary>
+        /// <returns></returns>
+        public static DataTable DB_GenerEmpWorkshOverByCoercionOfDataTable()
+        {
+            return DB_GenerEmpWorksOfDataTable((int)WFState.Cancel,null);
         }
         /// <summary>
         /// For Lizheng: 2012-10-17
@@ -714,9 +763,8 @@ namespace BP.WF
         /// <param name="msgDoc">内容</param>
         public static void Port_SendMail(string userNo, string msgTitle, string msgDoc)
         {
-            WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(userNo);
-            BP.TA.SMS.AddMsg(DateTime.Now.ToString(), userNo, BP.WF.Port.AlertWay.Email, emp.Tel, msgTitle,
-                emp.Email, msgTitle, msgDoc);
+            //WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(userNo);
+            BP.TA.SMS.AddMsg(DateTime.Now.ToString() + WebUser.No, userNo, msgTitle + msgDoc, msgTitle, msgDoc);
         }
         /// <summary>
         /// 发送SMS
@@ -724,11 +772,9 @@ namespace BP.WF
         /// <param name="userNo">信息接收人</param>
         /// <param name="msgTitle">标题</param>
         /// <param name="msgDoc">内容</param>
-        public static void Port_SendSMS(string userNo, string msgTitle, string msgDoc)
+        public static void Port_SendSMS(string sendToEmp, string msgTitle, string msgDoc)
         {
-            WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(userNo);
-            BP.TA.SMS.AddMsg(DateTime.Now.ToString(), userNo, BP.WF.Port.AlertWay.Email, emp.Tel, msgTitle,
-                emp.Email, msgTitle, msgDoc);
+            BP.TA.SMS.AddMsg(DateTime.Now.ToString() + WebUser.No, sendToEmp, msgTitle + msgDoc, msgTitle, msgDoc);
         }
         #endregion 登陆接口
 
@@ -948,6 +994,54 @@ namespace BP.WF
             if (DBAccess.RunSQLReturnValInt(ps) == 0)
                 return false;
             return true;
+        }
+        /// <summary>
+        /// 执行工作催办
+        /// </summary>
+        /// <param name="workID">工作ID</param>
+        /// <param name="msg">催办消息</param>
+        /// <returns></returns>
+        public static string Flow_DoPress(Int64 workID, string msg)
+        {
+            GenerWorkFlow gwf = new GenerWorkFlow(workID);
+
+            /*找到当前待办的工作人员*/
+            GenerWorkerLists wls = new GenerWorkerLists(workID, gwf.FK_Node);
+
+            string toEmp = "", toEmpName = "";
+
+            string mailTitle = "催办:" + gwf.Title + ". 发送人:" + WebUser.Name;
+            if (wls.Count == 1)
+            {
+                GenerWorkerList gwl = (GenerWorkerList)wls[0];
+                toEmp = gwl.FK_Emp;
+                toEmpName = gwl.FK_EmpText;
+                TA.SMS.AddMsg(workID + DataType.CurrentDataTime, toEmp, mailTitle + msg, mailTitle, msg);
+                gwl.PressTimes = gwl.PressTimes++;
+                gwl.Update();
+                //gwl.PRI = 1;
+            }
+            else
+            {
+                foreach (GenerWorkerList wl in wls)
+                {
+                    if (wl.IsEnable == false)
+                        continue;
+
+                    toEmp += wl.FK_Emp + ",";
+                    toEmpName += wl.FK_EmpText + ",";
+
+                    TA.SMS.AddMsg(workID + DataType.CurrentDataTime, wl.FK_Emp, mailTitle + msg, mailTitle, msg);
+                    //   wl.PressTimes = wl.PressTimes++;
+                    wl.Update(GenerWorkerListAttr.PressTimes, wl.PressTimes++);
+                }
+            }
+
+            //写入日志.
+            WorkNode wn = new WorkNode(workID, gwf.FK_Node);
+            wn.AddToTrack(ActionType.Press, toEmp, toEmpName, gwf.FK_Node, gwf.NodeName, msg);
+
+            return "系统已经把您的信息通知给:" + toEmpName;
         }
         #endregion 与流程有关的接口
 
@@ -1410,13 +1504,13 @@ namespace BP.WF
             DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + workid + " AND FK_Node=" + nodeId);
             int i = DBAccess.RunSQL("UPDATE WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + workid + " AND FK_Node=" + nodeId + " AND FK_Emp='" + toEmp + "'");
             Emp emp = new Emp(toEmp);
-            WorkerLists wls = null;
-            WorkerList wl = null;
+            GenerWorkerLists wls = null;
+            GenerWorkerList wl = null;
             if (i == 0)
             {
                 /*说明: 用其它的岗位上的人来处理的，就给他增加待办工作。*/
-                wls = new WorkerLists(workid, nodeId);
-                wl = wls[0] as WorkerList;
+                wls = new GenerWorkerLists(workid, nodeId);
+                wl = wls[0] as GenerWorkerList;
                 wl.FK_Emp = toEmp.ToString();
                 wl.FK_EmpText = emp.Name;
                 wl.IsEnable = true;
@@ -1455,7 +1549,7 @@ namespace BP.WF
             }
 
             if (wls == null)
-                wls = new WorkerLists(workid, nodeId, WebUser.No);
+                wls = new GenerWorkerLists(workid, nodeId, WebUser.No);
 
             // 写入消息。
             wn.AddIntoWacthDog(wls);
@@ -1594,5 +1688,6 @@ namespace BP.WF
             return msg;
         }
         #endregion 工作有关接口
+
     }
 }

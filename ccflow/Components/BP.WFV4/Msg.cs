@@ -35,7 +35,7 @@ namespace BP.WF
 		/// <param name="flowName">流程名称</param>
 		/// <param name="nodeName">节点名称</param>
 		/// <param name="title">标题</param>
-		public static void AddMsgs(WorkerLists wls, string flowName, string nodeName, string title)
+        public static void AddMsgs(GenerWorkerLists wls, string flowName, string nodeName, string title)
 		{
 			return;
 
@@ -48,7 +48,7 @@ namespace BP.WF
 			}
 			// 清除全部的工作ID=workid 的消息。
 			msgs.ClearByWorkID(wls[0].GetValIntByKey("WorkID"));
-			foreach(WorkerList wl in wls)
+            foreach (GenerWorkerList wl in wls)
 			{
 				if (wl.FK_Emp==WebUser.No)
 					continue;

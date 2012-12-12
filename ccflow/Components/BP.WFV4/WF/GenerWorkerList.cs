@@ -1,20 +1,17 @@
-
 using System;
 using System.Data;
 using BP.DA;
 using BP.En;
 using BP.WF;
 using BP.Port;
-using BP.Port;
 using BP.En;
-
 
 namespace BP.WF
 {
     /// <summary>
     /// 工作人员集合
     /// </summary>
-    public class WorkerListAttr
+    public class GenerWorkerListAttr
     {
         #region 基本属性
         /// <summary>
@@ -51,7 +48,7 @@ namespace BP.WF
         public const string DTOfWarning = "DTOfWarning";
         public const string RDT = "RDT";
         /// <summary>
-        /// 
+        /// 是否可用
         /// </summary>
         public const string IsEnable = "IsEnable";
         /// <summary>
@@ -98,12 +95,20 @@ namespace BP.WF
         /// 是否读取？
         /// </summary>
         public const string IsRead = "IsRead";
+        /// <summary>
+        /// 催办次数
+        /// </summary>
+        public const string PressTimes = "PressTimes";
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public const string Tag = "Tag";
         #endregion
     }
     /// <summary>
     /// 工作者列表
     /// </summary>
-    public class WorkerList : Entity
+    public class GenerWorkerList : Entity
     {
         #region 基本属性
         /// <summary>
@@ -113,11 +118,22 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValIntByKey(WorkerListAttr.WhoExeIt);
+                return this.GetValIntByKey(GenerWorkerListAttr.WhoExeIt);
             }
             set
             {
-                SetValByKey(WorkerListAttr.WhoExeIt, value);
+                SetValByKey(GenerWorkerListAttr.WhoExeIt, value);
+            }
+        }
+        public int PressTimes
+        {
+            get
+            {
+                return this.GetValIntByKey(GenerWorkerListAttr.PressTimes);
+            }
+            set
+            {
+                SetValByKey(GenerWorkerListAttr.PressTimes, value);
             }
         }
         /// <summary>
@@ -151,11 +167,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValBooleanByKey(WorkerListAttr.IsEnable);
+                return this.GetValBooleanByKey(GenerWorkerListAttr.IsEnable);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.IsEnable, value);
+                this.SetValByKey(GenerWorkerListAttr.IsEnable, value);
             }
         }
         /// <summary>
@@ -165,11 +181,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValBooleanByKey(WorkerListAttr.IsPass);
+                return this.GetValBooleanByKey(GenerWorkerListAttr.IsPass);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.IsPass, value);
+                this.SetValByKey(GenerWorkerListAttr.IsPass, value);
             }
         }
         /// <summary>
@@ -179,11 +195,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValInt64ByKey(WorkerListAttr.WorkID);
+                return this.GetValInt64ByKey(GenerWorkerListAttr.WorkID);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.WorkID, value);
+                this.SetValByKey(GenerWorkerListAttr.WorkID, value);
             }
         }
         /// <summary>
@@ -193,11 +209,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValIntByKey(WorkerListAttr.FK_Node);
+                return this.GetValIntByKey(GenerWorkerListAttr.FK_Node);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.FK_Node, value);
+                this.SetValByKey(GenerWorkerListAttr.FK_Node, value);
             }
            
         }
@@ -208,11 +224,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStrByKey(WorkerListAttr.Sender);
+                return this.GetValStrByKey(GenerWorkerListAttr.Sender);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.Sender, value);
+                this.SetValByKey(GenerWorkerListAttr.Sender, value);
             }
         }
         /// <summary>
@@ -222,11 +238,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStrByKey(WorkerListAttr.FK_NodeText);
+                return this.GetValStrByKey(GenerWorkerListAttr.FK_NodeText);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.FK_NodeText, value);
+                this.SetValByKey(GenerWorkerListAttr.FK_NodeText, value);
             }
         }
         
@@ -237,11 +253,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValInt64ByKey(WorkerListAttr.FID);
+                return this.GetValInt64ByKey(GenerWorkerListAttr.FID);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.FID, value);
+                this.SetValByKey(GenerWorkerListAttr.FID, value);
             }
         }
         /// <summary>
@@ -251,11 +267,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValFloatByKey(WorkerListAttr.WarningDays);
+                return this.GetValFloatByKey(GenerWorkerListAttr.WarningDays);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.WarningDays, value);
+                this.SetValByKey(GenerWorkerListAttr.WarningDays, value);
             }
         }
         /// <summary>
@@ -275,11 +291,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(WorkerListAttr.RDT);
+                return this.GetValStringByKey(GenerWorkerListAttr.RDT);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.RDT, value);
+                this.SetValByKey(GenerWorkerListAttr.RDT, value);
             }
         }
         /// <summary>
@@ -289,22 +305,25 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(WorkerListAttr.SDT);
+                return this.GetValStringByKey(GenerWorkerListAttr.SDT);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.SDT, value);
+                this.SetValByKey(GenerWorkerListAttr.SDT, value);
             }
         }
+        /// <summary>
+        /// 警告日期
+        /// </summary>
         public string DTOfWarning
         {
             get
             {
-                return this.GetValStringByKey(WorkerListAttr.DTOfWarning);
+                return this.GetValStringByKey(GenerWorkerListAttr.DTOfWarning);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.DTOfWarning, value);
+                this.SetValByKey(GenerWorkerListAttr.DTOfWarning, value);
             }
         }
         /// <summary>
@@ -314,11 +333,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(WorkerListAttr.FK_Emp);
+                return this.GetValStringByKey(GenerWorkerListAttr.FK_Emp);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.FK_Emp, value);
+                this.SetValByKey(GenerWorkerListAttr.FK_Emp, value);
             }
         }
         /// <summary>
@@ -328,11 +347,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStrByKey(WorkerListAttr.FK_EmpText);
+                return this.GetValStrByKey(GenerWorkerListAttr.FK_EmpText);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.FK_EmpText, value);
+                this.SetValByKey(GenerWorkerListAttr.FK_EmpText, value);
             }
         }
         /// <summary>
@@ -342,11 +361,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(WorkerListAttr.FK_Dept);
+                return this.GetValStringByKey(GenerWorkerListAttr.FK_Dept);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.FK_Dept, value);
+                this.SetValByKey(GenerWorkerListAttr.FK_Dept, value);
             }
         }
         public string FK_DeptT
@@ -355,7 +374,7 @@ namespace BP.WF
             {
                 BP.Port.Dept d = new BP.Port.Dept(this.FK_Dept);
                 return d.Name;
-                //return this.GetValStringByKey(WorkerListAttr.FK_Dept);
+                //return this.GetValStringByKey(GenerWorkerListAttr.FK_Dept);
             }
         }
         /// <summary>
@@ -365,11 +384,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(WorkerListAttr.FK_Flow);
+                return this.GetValStringByKey(GenerWorkerListAttr.FK_Flow);
             }
             set
             {
-                this.SetValByKey(WorkerListAttr.FK_Flow, value);
+                this.SetValByKey(GenerWorkerListAttr.FK_Flow, value);
             }
         }
         #endregion
@@ -379,10 +398,10 @@ namespace BP.WF
         /// <summary>
         /// 工作者
         /// </summary>
-        public WorkerList()
+        public GenerWorkerList()
         {
         }
-        public WorkerList(Int64 workid, int FK_Node, string fk_emp)
+        public GenerWorkerList(Int64 workid, int FK_Node, string fk_emp)
         {
             if (this.WorkID == 0)
                 return;
@@ -406,41 +425,44 @@ namespace BP.WF
                 map.EnDesc = "工作者";
                  
 
-                map.AddTBIntPK(WorkerListAttr.WorkID, 0, "工作ID", true, true);
-                map.AddTBStringPK(WorkerListAttr.FK_Emp, null, "人员", true, false, 0, 50, 100);
-                map.AddTBIntPK(WorkerListAttr.FK_Node, 0, "节点ID", true, false);
+                map.AddTBIntPK(GenerWorkerListAttr.WorkID, 0, "工作ID", true, true);
+                map.AddTBStringPK(GenerWorkerListAttr.FK_Emp, null, "人员", true, false, 0, 50, 100);
+                map.AddTBIntPK(GenerWorkerListAttr.FK_Node, 0, "节点ID", true, false);
 
-                map.AddTBString(WorkerListAttr.FK_EmpText, null, "人员名称", true, false, 0, 100, 100);
+                map.AddTBString(GenerWorkerListAttr.FK_EmpText, null, "人员名称", true, false, 0, 100, 100);
 
-                map.AddTBString(WorkerListAttr.FK_NodeText, null, "节点名称", true, false, 0, 100, 100);
+                map.AddTBString(GenerWorkerListAttr.FK_NodeText, null, "节点名称", true, false, 0, 100, 100);
+                map.AddTBInt(GenerWorkerListAttr.FID, 0, "流程ID", true, false);
+                map.AddTBString(GenerWorkerListAttr.FK_Flow, null, "流程", true, false, 0, 100, 100);
+                map.AddTBString(GenerWorkerListAttr.FK_Dept, null, "使用部门", true, false, 0, 100, 100);
 
-                map.AddTBInt(WorkerListAttr.FID, 0, "流程ID", true, false);
-                map.AddTBString(WorkerListAttr.FK_Flow, null, "流程", true, false, 0, 100, 100);
-                map.AddTBString(WorkerListAttr.FK_Dept, null, "使用部门", true, false, 0, 100, 100);
-
-                map.AddTBDateTime(WorkerListAttr.SDT, "应完成日期", false, false);
-                map.AddTBDateTime(WorkerListAttr.DTOfWarning, "警告日期", false, false);
-
-                map.AddTBFloat(WorkerListAttr.WarningDays, 0, "预警天", true, false);
-                map.AddTBDateTime(WorkerListAttr.RDT, "RDT", false, false);
-
-                map.AddBoolean(WorkerListAttr.IsEnable, true, "是否可用", true, true);
+                //如果是流程属性来控制的就按流程属性来计算。
+                map.AddTBDateTime(GenerWorkerListAttr.SDT, "应完成日期", false, false);
+                map.AddTBDateTime(GenerWorkerListAttr.DTOfWarning, "警告日期", false, false);
+                map.AddTBFloat(GenerWorkerListAttr.WarningDays, 0, "预警天", true, false);
+                map.AddTBDateTime(GenerWorkerListAttr.RDT, "RDT", false, false);
+                map.AddBoolean(GenerWorkerListAttr.IsEnable, true, "是否可用", true, true);
 
                 //  add for lijian 2012-11-30
-                map.AddTBInt(WorkerListAttr.IsRead, 0, "是否读取", true, true);
-
+                map.AddTBInt(GenerWorkerListAttr.IsRead, 0, "是否读取", true, true);
 
                 //对会签节点有效
-                map.AddTBInt(WorkerListAttr.IsPass, 0, "是否通过(对合流节点有效)", false, false);
+                map.AddTBInt(GenerWorkerListAttr.IsPass, 0, "是否通过(对合流节点有效)", false, false);
 
                 // 谁执行它？
-                map.AddTBInt(WorkerListAttr.WhoExeIt, 0, "谁执行它", false, false);
+                map.AddTBInt(GenerWorkerListAttr.WhoExeIt, 0, "谁执行它", false, false);
 
                 //发送人. 2011-11-12 为天津用户增加。
-                map.AddTBString(WorkerListAttr.Sender, null, "发送人", true, false, 0, 100, 100);
+                map.AddTBString(GenerWorkerListAttr.Sender, null, "发送人", true, false, 0, 100, 100);
 
                 //优先级，2012-06-15 为青岛用户增加。
                 map.AddTBInt(GenerWorkFlowAttr.PRI, 1, "优先级", true, true);
+
+                //催办次数. 为亿阳信通加.
+                map.AddTBInt(GenerWorkerListAttr.PressTimes, 0, "催办次数", true, false);
+
+                //标签.
+                map.AddTBString(GenerWorkerListAttr.Tag, null, "Tag", true, false, 0, 3000, 100);
 
                 this._enMap = map;
                 return this._enMap;
@@ -461,7 +483,7 @@ namespace BP.WF
     /// <summary>
     /// 工作人员集合
     /// </summary>
-    public class WorkerLists : Entities
+    public class GenerWorkerLists : Entities
     {
         #region 方法
         /// <summary>
@@ -471,30 +493,30 @@ namespace BP.WF
         {
             get
             {
-                return new WorkerList();
+                return new GenerWorkerList();
             }
         }
         /// <summary>
-        /// WorkerList
+        /// GenerWorkerList
         /// </summary>
-        public WorkerLists() { }
-        public WorkerLists(Int64 workId, int nodeId)
+        public GenerWorkerLists() { }
+        public GenerWorkerLists(Int64 workId, int nodeId)
         {
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(WorkerListAttr.WorkID, workId);
+            qo.AddWhere(GenerWorkerListAttr.WorkID, workId);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Node, nodeId);
+            qo.AddWhere(GenerWorkerListAttr.FK_Node, nodeId);
             qo.DoQuery();
             return;
         }
-        public WorkerLists(Int64 workId, int nodeId,string fk_emp)
+        public GenerWorkerLists(Int64 workId, int nodeId,string fk_emp)
         {
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(WorkerListAttr.WorkID, workId);
+            qo.AddWhere(GenerWorkerListAttr.WorkID, workId);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Node, nodeId);
+            qo.AddWhere(GenerWorkerListAttr.FK_Node, nodeId);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Emp, fk_emp);
+            qo.AddWhere(GenerWorkerListAttr.FK_Emp, fk_emp);
             qo.DoQuery();
             return;
         }
@@ -504,16 +526,16 @@ namespace BP.WF
         /// <param name="workId"></param>
         /// <param name="nodeId"></param>
         /// <param name="isWithEmpExts">是否要包含记忆中的人员</param>
-        public WorkerLists(Int64 workId, int nodeId, bool isWithEmpExts)
+        public GenerWorkerLists(Int64 workId, int nodeId, bool isWithEmpExts)
         {
             QueryObject qo = new QueryObject(this);
             qo.addLeftBracket();
-            qo.AddWhere(WorkerListAttr.WorkID, workId);
+            qo.AddWhere(GenerWorkerListAttr.WorkID, workId);
             qo.addOr();
-            qo.AddWhere(WorkerListAttr.FID, workId);
+            qo.AddWhere(GenerWorkerListAttr.FID, workId);
             qo.addRightBracket();
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Node, nodeId);
+            qo.AddWhere(GenerWorkerListAttr.FK_Node, nodeId);
             int i = qo.DoQuery();
 
             if (isWithEmpExts == false)
@@ -528,17 +550,17 @@ namespace BP.WF
             if (rm.RetrieveFromDBSources() == 0)
                 return;
 
-            WorkerList wl = (WorkerList)this[0];
+            GenerWorkerList wl = (GenerWorkerList)this[0];
             string[] emps = rm.Emps.Split('@');
             foreach (string emp in emps)
             {
                 if (emp==null || emp=="")
                     continue;
 
-                if (this.GetCountByKey(WorkerListAttr.FK_Emp, emp) >= 1)
+                if (this.GetCountByKey(GenerWorkerListAttr.FK_Emp, emp) >= 1)
                     continue;
 
-                WorkerList mywl = new WorkerList();
+                GenerWorkerList mywl = new GenerWorkerList();
                 mywl.Copy(wl);
                 mywl.IsEnable = false;
                 mywl.FK_Emp = emp;
@@ -562,16 +584,16 @@ namespace BP.WF
         /// </summary>
         /// <param name="workId">工作者ID</param>
         /// <param name="flowNo">流程编号</param>
-        public WorkerLists(Int64 workId, string flowNo)
+        public GenerWorkerLists(Int64 workId, string flowNo)
         {
             if (workId == 0)
                 return;
 
             Flow fl = new Flow(flowNo);
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(WorkerListAttr.WorkID, workId);
+            qo.AddWhere(GenerWorkerListAttr.WorkID, workId);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Flow, flowNo);
+            qo.AddWhere(GenerWorkerListAttr.FK_Flow, flowNo);
             qo.DoQuery();
         }
         #endregion

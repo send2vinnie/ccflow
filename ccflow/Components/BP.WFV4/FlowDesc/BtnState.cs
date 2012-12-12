@@ -37,10 +37,10 @@ namespace BP.WF
             WorkNode wnPri = wn.GetPreviousWorkNode();
 
             // 判断它是否可以处理上一步工作.
-            WorkerList wl = new WorkerList();
-            int num = wl.Retrieve(WorkerListAttr.FK_Emp, Web.WebUser.No,
-                WorkerListAttr.FK_Node, wnPri.HisNode.NodeID,
-                WorkerListAttr.WorkID, this.WorkID);
+            GenerWorkerList wl = new GenerWorkerList();
+            int num = wl.Retrieve(GenerWorkerListAttr.FK_Emp, Web.WebUser.No,
+                GenerWorkerListAttr.FK_Node, wnPri.HisNode.NodeID,
+                GenerWorkerListAttr.WorkID, this.WorkID);
             if (num >= 1)
             {
                 /*如果能够处理上一步工作*/

@@ -24,9 +24,13 @@ namespace BP.WF
         /// </summary>
         public const string SysCCEmps = "SysCCEmps";
         /// <summary>
-        /// 应完成日期
+        /// 流程应完成日期
         /// </summary>
-        public const string SysSDT = "SysSDT";
+        public const string SysSDTOfFlow = "SysSDTOfFlow";
+        /// <summary>
+        /// 节点应完成时间
+        /// </summary>
+        public const string SysSDTOfNode = "SysSDTOfNode";
     }
     /// <summary>
     /// 工作属性

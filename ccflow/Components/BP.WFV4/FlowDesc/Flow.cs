@@ -21,6 +21,13 @@ namespace BP.WF
     public class Flow : EntityNoName
     {
         #region 业务处理
+        public TimelineRole HisTimelineRole
+        {
+            get
+            {
+                return (TimelineRole)this.GetValIntByKey(FlowAttr.TimelineRole);
+            }
+        }
         /// <summary>
         /// 轨迹字段
         /// </summary>
@@ -46,28 +53,61 @@ namespace BP.WF
             //从草稿里看看是否有新工作？
             StartWork wk = (StartWork)nd.HisWork;
             int num = 0;
-            try
+            if (Glo.IsEnableDraft)
             {
-                num = wk.Retrieve(StartWorkAttr.NodeState, 0,
-                   StartWorkAttr.Rec, WebUser.No);
-            }
-            catch
-            {
-                wk.CheckPhysicsTable();
-                num = wk.Retrieve(StartWorkAttr.NodeState, 0,
-                   StartWorkAttr.Rec, WebUser.No);
-            }
+                /*如果要启用草稿,就创建一个新的WorkID.*/
+                try
+                {
+                    num = wk.Retrieve(StartWorkAttr.NodeState, 9,
+                       StartWorkAttr.Rec, WebUser.No);
+                }
+                catch
+                {
+                    wk.CheckPhysicsTable();
+                    num = wk.Retrieve(StartWorkAttr.NodeState, 9,
+                       StartWorkAttr.Rec, WebUser.No);
+                }
 
-            if (num == 0)
-            {
-                wk.ResetDefaultVal();
-                wk.Rec = WebUser.No;
-                wk.SetValByKey("RecText", WebUser.Name);
-                wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
-                wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+                if (num == 0)
+                {
+                    wk.ResetDefaultVal();
+                    wk.Rec = WebUser.No;
+                    wk.SetValByKey("RecText", WebUser.Name);
+                    wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+                    wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+                    wk.SetValByKey("NodeState",9);
+                    // wk.NodeState = 9;
+                    wk.OID = DBAccess.GenerOID();
+                    wk.DirectInsert();
+                }
                 wk.NodeState = 0;
-                wk.OID = DBAccess.GenerOID();
-                wk.DirectInsert();
+                num = 0;
+            }
+            else
+            {
+                try
+                {
+                    num = wk.Retrieve(StartWorkAttr.NodeState, 0,
+                       StartWorkAttr.Rec, WebUser.No);
+                }
+                catch
+                {
+                    wk.CheckPhysicsTable();
+                    num = wk.Retrieve(StartWorkAttr.NodeState, 0,
+                       StartWorkAttr.Rec, WebUser.No);
+                }
+
+                if (num == 0)
+                {
+                    wk.ResetDefaultVal();
+                    wk.Rec = WebUser.No;
+                    wk.SetValByKey("RecText", WebUser.Name);
+                    wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+                    wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+                    wk.NodeState = 0;
+                    wk.OID = DBAccess.GenerOID();
+                    wk.DirectInsert();
+                }
             }
 
             if (SystemConfig.IsBSsystem)
@@ -147,18 +187,13 @@ namespace BP.WF
                     Work wkFrom = fromNd.HisWork;
                     wkFrom.OID = fromWorkID;
                     wkFrom.RetrieveFromDBSources();
-
                     wk.Copy(wkFrom);
-
                     i = 0;
                     foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
                     {
                         i++;
                         wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
                     }
-                
-
-
                     wk.OID = newOID;
 
                     // 在执行copy后，有可能这两个字段会被冲掉。
@@ -264,29 +299,6 @@ namespace BP.WF
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
-
-            //if (SystemConfig.IsBSsystem)
-            //{
-            //    int i = 0;
-            //    foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
-            //    {
-            //        wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
-            //    }
-            //    if (i > 3)
-            //        wk.DirectUpdate();
-            //}
-
-            //string msg = "";
-            //if (WebUser.SysLang == "CH")
-            //    msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
-            //else
-            //    msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
-            //string title = wk.GetValStringByKey("Title");
-            //if (string.IsNullOrEmpty(title))
-            //    wk.Title = msg;
-            //else if (title.Contains("在") == true)
-            //    wk.Title = msg;
-
             return wk;
         }
         /// <summary>
@@ -298,8 +310,7 @@ namespace BP.WF
         public Work GenerWork(Int64 workid, Node nd)
         {
             Work wk = nd.HisWork;
-            wk.ResetDefaultVal();
-
+           // wk.ResetDefaultVal();
             wk.OID = workid;
             if (wk.RetrieveFromDBSources() == 0)
             {
@@ -318,8 +329,7 @@ namespace BP.WF
                     wk.Copy(rpt);
                     wk.NodeState = NodeState.Init;
                     wk.Rec = WebUser.No;
-                    wk.ResetDefaultVal();
-                    wk.Insert();
+                    wk.InsertAsOID(workid);
                 }
                 else
                 {
@@ -331,7 +341,7 @@ namespace BP.WF
                     msg += "获取它的Rpt表数据时，不应该查询不到。";
                     msg += "GERpt 信息: table:" + rpt.EnMap.PhysicsTable + " Rpt OID=" + rpt.OID;
 
-                    string sql = "SELECT count(*) FROM " + rptName + " where oid=" + workid;
+                    string sql = "SELECT count(*) FROM " + rptName + " WHERE OID=" + workid;
                     int num = DBAccess.RunSQLReturnValInt(sql);
 
                     msg += " @SQL:" + sql;
@@ -3076,6 +3086,11 @@ namespace BP.WF
                 map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
                 map.AddTBInt(FlowAttr.IsMD5, 0, "IsMD5", false, false);
                 map.AddTBInt(FlowAttr.Idx, 0, "显示顺序号(在发起列表中)",true, false);
+
+                map.AddTBInt(FlowAttr.TimelineRole, 0, "时效性规则", true, false);
+
+                //map.AddDDLSysEnum(FlowAttr.TimelineRole, (int)TimelineRole.ByNodeSet, "时效性规则",
+                // true, true, FlowAttr.TimelineRole, "@0=按节点(由节点属性来定义)@1=按发起人(开始节点SysFlowOfSDT字段计算)");
 
 
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);

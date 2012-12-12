@@ -1281,13 +1281,23 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 是否启动工作时打开新窗口
+        /// 是否启用草稿
         /// </summary>
-        public static bool IsWinOpenStartWork
+        public static bool IsEnableDraft
         {
             get
             {
-                return BP.SystemConfig.GetValByKeyBoolen("IsWinOpenStartWork", true);
+                return BP.SystemConfig.GetValByKeyBoolen("IsEnableDraft", false);
+            }
+        }
+        /// <summary>
+        /// 是否启动工作时打开新窗口
+        /// </summary>
+        public static int IsWinOpenStartWork
+        {
+            get
+            {
+                return BP.SystemConfig.GetValByKeyInt("IsWinOpenStartWork", 1);
             }
         }
         /// <summary>

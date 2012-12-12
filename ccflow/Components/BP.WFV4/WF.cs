@@ -19,6 +19,7 @@ namespace BP.WF
     {
         public const string DoNode = "DoNode";
         public const string Start = "Start";
+        public const string Start5 = "Start5";
         ///// <summary>
         ///// 调起我的流程
         ///// </summary>

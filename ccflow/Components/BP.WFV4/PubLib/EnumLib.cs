@@ -5,7 +5,85 @@ using System.Text;
 
 namespace BP.WF
 {
-   
+    public enum ActionType
+    {
+        /// <summary>
+        /// 发起
+        /// </summary>
+        Start,
+        /// <summary>
+        /// 前进
+        /// </summary>
+        Forward,
+        /// <summary>
+        /// 退回
+        /// </summary>
+        Return,
+        /// <summary>
+        /// 移交
+        /// </summary>
+        Shift,
+        /// <summary>
+        /// 撤消移交
+        /// </summary>
+        UnShift,
+        /// <summary>
+        /// 撤消发送
+        /// </summary>
+        UnSend,
+        /// <summary>
+        /// 分流前进
+        /// </summary>
+        ForwardFL,
+        /// <summary>
+        /// 合流前进
+        /// </summary>
+        ForwardHL,
+        /// <summary>
+        /// 流程正常结束
+        /// </summary>
+        FlowOver,
+        /// <summary>
+        /// 调用起子流程
+        /// </summary>
+        CallSubFlow,
+        /// <summary>
+        /// 启动子流程
+        /// </summary>
+        StartSubFlow,
+        /// <summary>
+        /// 子线程前进
+        /// </summary>
+        SubFlowForward,
+        /// <summary>
+        /// 取回
+        /// </summary>
+        Tackback,
+        /// <summary>
+        /// 恢复已完成的流程
+        /// </summary>
+        RebackOverFlow,
+        /// <summary>
+        /// 强制终止流程 For lijian:2012-10-24.
+        /// </summary>
+        FlowOverByCoercion,
+        /// <summary>
+        /// 挂起
+        /// </summary>
+        HungUp,
+        /// <summary>
+        /// 取消挂起
+        /// </summary>
+        UnHungUp,
+        /// <summary>
+        /// 强制移交
+        /// </summary>
+        ShiftByCoercion,
+        /// <summary>
+        /// 催办
+        /// </summary>
+        Press
+    }
     /// <summary>
     /// 挂起方式
     /// </summary>

@@ -86,6 +86,8 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(FlowAttr.AppType, (int)FlowAppType.Normal,"流程应用类型",
                   true, true, "FlowAppType", "@0=正常的@1=工程类(具有项目组概念)");
 
+                map.AddDDLSysEnum(FlowAttr.TimelineRole, (int)TimelineRole.ByNodeSet, "时效性规则",
+                 true, true, FlowAttr.TimelineRole, "@0=按节点(由节点属性来定义)@1=按发起人(开始节点SysFlowOfSDT字段计算)");
 
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
 
@@ -240,7 +242,7 @@ namespace BP.WF.Ext
                         gwf.DeptName = dept.Name;
 
                         gwf.Rec = dr["Rec"].ToString();
-                        gwf.WFState = 0;
+                        gwf.WFState =  WFState.Runing;
                         gwf.Title = DBAccess.RunSQLReturnString("select Title from nd" + startNode + " where oid=" + workid);
                         gwf.RDT = dr["RDT"].ToString();
                         gwf.FK_FlowSort = fl.FK_FlowSort;
@@ -253,10 +255,10 @@ namespace BP.WF.Ext
                     }
                 }
 
-                WorkerList currWl = new WorkerList();
+                GenerWorkerList currWl = new GenerWorkerList();
                 foreach (DataRow dr in dt.Rows)
                 {
-                    WorkerList wl = new WorkerList();
+                    GenerWorkerList wl = new GenerWorkerList();
                     wl.FID = 0;
                     wl.WorkID = workid;
                     wl.FK_Emp = dr["Rec"].ToString();
@@ -299,8 +301,8 @@ namespace BP.WF.Ext
             catch (Exception ex)
             {
                 gwf.Delete();
-                WorkerList wl = new WorkerList();
-                wl.Delete(WorkerListAttr.WorkID, workid);
+                GenerWorkerList wl = new GenerWorkerList();
+                wl.Delete(GenerWorkerListAttr.WorkID, workid);
                 string sqls = "";
                 sqls += "@UPDATE ND" + int.Parse(this.No) + "Rpt SET WFState=1 WHERE OID=" + workid;
                 DBAccess.RunSQLs(sqls);

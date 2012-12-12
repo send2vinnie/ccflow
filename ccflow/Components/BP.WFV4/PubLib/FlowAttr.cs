@@ -77,6 +77,9 @@ namespace BP.WF
         /// 平均用天
         /// </summary>
         public const string AvgDay = "AvgDay";
+        /// <summary>
+        /// 流程表单类型
+        /// </summary>
         public const string FlowSheetType = "FlowSheetType";
         /// <summary>
         /// 文档类型
@@ -111,8 +114,26 @@ namespace BP.WF
         /// </summary>
         public const string AppType = "AppType";
         /// <summary>
+        /// 时效性规则
+        /// </summary>
+        public const string TimelineRole = "TimelineRole";
+        /// <summary>
         /// 顺序号
         /// </summary>
         public const string Idx = "Idx";
+    }
+    /// <summary>
+    /// 流程考核类型
+    /// </summary>
+    public enum TimelineRole
+    {
+        /// <summary>
+        /// 按节点
+        /// </summary>
+        ByNodeSet,
+        /// <summary>
+        /// 
+        /// </summary>
+        ByFlow
     }
 }

@@ -86,10 +86,58 @@ namespace BP.TA
         }
 
         #region 通用方法
-        public static void AddMsg(string pk, string fk_emp, AlertWay at, string tel, string telDoc,
+        /// <summary>
+        /// 插入消息
+        /// </summary>
+        /// <param name="pk">消息主键</param>
+        /// <param name="sendToEmp">要通知的人员</param>
+        /// <param name="telDoc">短信消息</param>
+        /// <param name="mailTitle">邮件标题</param>
+        /// <param name="emailDoc">邮件内容</param>
+        public static void AddMsg(string pk, string sendToEmp,string telDoc,string mailTitle, string emailDoc)
+        {
+           // if (at == AlertWay.None)
+             AlertWay   at = AlertWay.None;
+
+            if (mailTitle == null)
+                mailTitle = telDoc;
+
+            if (at == AlertWay.AppSystemMsg)
+            {
+                Paras pss = new Paras();
+                pss.Add("Sender", BP.Web.WebUser.No);
+                pss.Add("Receivers", sendToEmp);
+                pss.Add("Title", mailTitle);
+                pss.Add("Context", emailDoc);
+                BP.DA.DBAccess.RunSP("CCstaff", pss);
+                return;
+            }
+
+            //// 人员.
+            //WFEmp emp = new WFEmp(fk_emp);
+
+            SMS sms = new SMS();
+            sms.MyPK = pk;
+            sms.FK_Emp = sendToEmp;
+          //  sms.Tel = emp.Tel;
+            sms.TelDoc = telDoc;
+            sms.Sender = BP.Web.WebUser.No;
+           // sms.Email = emp.Email;
+            sms.EmailTitle = mailTitle;
+            sms.EmailDoc = emailDoc;
+            sms.RDT = BP.DA.DataType.CurrentDataTime;
+            try
+            {
+                sms.Insert();
+            }
+            catch
+            {
+                sms.Update();
+            }
+        }
+        public static void AddMsg_Del(string pk, string fk_emp, AlertWay at, string tel, string telDoc,
             string email, string mailTitle, string emailDoc)
         {
-
             if (at == AlertWay.None)
                 at = AlertWay.Email;
 
@@ -109,9 +157,6 @@ namespace BP.TA
 
             SMS sms = new SMS();
             sms.MyPK = pk;
-            if (sms.IsExits)
-                return;
-
             sms.FK_Emp = fk_emp;
             sms.Tel = tel;
             sms.TelDoc = telDoc;
@@ -120,7 +165,14 @@ namespace BP.TA
             sms.EmailTitle = mailTitle;
             sms.EmailDoc = emailDoc;
             sms.RDT = BP.DA.DataType.CurrentDataTime;
-            sms.Insert();
+            try
+            {
+                sms.Insert();
+            }
+            catch
+            {
+                sms.Update();
+            }
         }
         #endregion
 

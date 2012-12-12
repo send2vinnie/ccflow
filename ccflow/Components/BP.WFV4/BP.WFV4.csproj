@@ -62,8 +62,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\BP.WFV4.XML</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -193,7 +192,7 @@
     <Compile Include="FlowDesc\NodeFlow.cs" />
     <Compile Include="FlowDesc\FlowDescExt\FlowDoc.cs" />
     <Compile Include="FlowDesc\FlowDescExt\FlowSheet.cs" />
-    <Compile Include="FlowDesc\FlowDescExt\NodeO.cs" />
+    <Compile Include="FlowDesc\FlowDescExt\NodeSheet.cs" />
     <Compile Include="FlowDesc\LabNote.cs" />
     <Compile Include="FlowDesc\NodeEmp.cs" />
     <Compile Include="FlowDesc\NodeReturn.cs" />
@@ -237,6 +236,7 @@
     <Compile Include="PubLib\FlowAttr.cs" />
     <Compile Include="PubLib\NodeAttr.cs" />
     <Compile Include="WF.cs" />
+    <Compile Include="WF\FlowOpList.cs" />
     <Compile Include="WF\GERpt.cs" />
     <Compile Include="WF\DataApply.cs" />
     <Compile Include="WF\GenerFH.cs" />
@@ -251,8 +251,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\RepariDB.cs" />
-    <Compile Include="WF\Old\WorkFlow.cs" />
-    <Compile Include="WF\Old\WorkNode.cs" />
+    <Compile Include="WF\New\WorkFlow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WF\New\WorkNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WF\Personalize\GetTask.cs" />
     <Compile Include="WF\ReturnWork.cs">
       <SubType>Code</SubType>
@@ -328,7 +332,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="WF\New\" />
+    <Folder Include="WF\Old\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

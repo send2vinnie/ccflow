@@ -55,7 +55,7 @@ namespace BP.WF
                 else
                 {
                     /* 如果是初始化阶段,判断他的初始化节点 */
-                    WorkerList wl = new WorkerList();
+                    GenerWorkerList wl = new GenerWorkerList();
                     wl.WorkID = this.HisWork.OID;
                     wl.FK_Emp = empId;
 
@@ -78,8 +78,8 @@ namespace BP.WF
         //查询出每个节点表里的接收人集合（Emps）。
         public string GenerEmps(Node nd)
         {
-            string str = ""; 
-            foreach (WorkerList wl in this.HisWorkerLists)
+            string str = "";
+            foreach (GenerWorkerList wl in this.HisWorkerLists)
                 str = wl.FK_Emp + ",";
             return str;
         }
@@ -116,7 +116,7 @@ namespace BP.WF
         }
         private string nextStationName = "";
         private WorkNode town = null;
-       public WorkerLists GenerWorkerLists_WidthFID(WorkNode town)
+        public GenerWorkerLists GenerWorkerLists_WidthFID(WorkNode town)
        {
             this.town = town;
             DataTable dt = new DataTable();
@@ -166,7 +166,7 @@ namespace BP.WF
                 ps.Add("WorkID", this.WorkID);
                 ps.SQL = "SELECT FK_Emp FROM WF_SelectAccper WHERE FK_Node=" +  dbStr + "FK_Node AND WorkID=" +dbStr+"WorkID";
                 dt = DBAccess.RunSQLReturnTable(ps);
-                return WorkerListWayOfDept(town, dt);
+                return  WorkerListWayOfDept(town, dt);
             }
 
             // 按照节点指定的人员处理。
@@ -439,7 +439,7 @@ namespace BP.WF
             }
             #endregion  按照岗位来执行。
         }
-       public WorkerLists GenerWorkerLists(WorkNode town)
+        public GenerWorkerLists GenerWorkerLists(WorkNode town)
        {
            this.town = town;
 
@@ -482,20 +482,6 @@ namespace BP.WF
                Attrs attrs = this.HisWork.EnMap.Attrs;
                sql = town.HisNode.RecipientSQL;
                sql = Glo.DealExp(sql, this.HisWork,"按SQL获取人员,所在节点"+town.HisNode.NodeID+".");
-
-               //foreach (Attr attr in attrs)
-               //{
-               //    if (attr.MyDataType == DataType.AppString)
-               //        sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
-               //    else
-               //        sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-               //}
-               //sql = sql.Replace("~", "'");
-               //sql = sql.Replace("@WebUser.No", "'" + WebUser.No + "'");
-               //sql = sql.Replace("@WebUser.Name", "'" + WebUser.Name + "'");
-               //sql = sql.Replace("@WebUser.FK_Dept", "'" + WebUser.FK_Dept + "'");
-               //if (sql.Contains("@"))
-               //    throw new Exception("@接受人sql表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + sql);
 
                dt = DBAccess.RunSQLReturnTable(sql);
                if (dt.Rows.Count == 0)
@@ -1058,7 +1044,7 @@ namespace BP.WF
 
             string fk_emp = dt.Rows[0][0].ToString();
             // 获取当前工作的信息.
-            WorkerList wl = new WorkerList(this.HisWork.FID, this.HisNode.NodeID, fk_emp);
+            GenerWorkerList wl = new GenerWorkerList(this.HisWork.FID, this.HisNode.NodeID, fk_emp);
             Emp emp = new Emp(fk_emp);
 
             // 改变部分属性让它适应新的数据,并显示一条新的待办工作让用户看到。
@@ -1151,9 +1137,9 @@ namespace BP.WF
                         throw new Exception("@合流点或者分合流点不允许向子线程退回。");
 
                     /* 杀掉进程*/
-                    WorkerLists wlsSubs = new WorkerLists();
+                    GenerWorkerLists wlsSubs = new GenerWorkerLists();
                     wlsSubs.Retrieve(WorkerListAttr.FID, this.HisWork.OID);
-                    foreach (WorkerList sub in wlsSubs)
+                    foreach (GenerWorkerList sub in wlsSubs)
                     {
                         GenerWorkFlow gw1f = new GenerWorkFlow();
                         gw1f.WorkID = sub.WorkID;
@@ -1297,7 +1283,7 @@ namespace BP.WF
                 if (nd.IsFL)
                 {
                     /* 如果是分流 */
-                    WorkerLists wls = new WorkerLists();
+                    GenerWorkerLists wls = new GenerWorkerLists();
                     QueryObject qo = new QueryObject(wls);
                     qo.AddWhere(WorkerListAttr.FID, this.WorkID);
                     qo.addAnd();
@@ -1317,7 +1303,7 @@ namespace BP.WF
                         qo.AddWhereIn(WorkerListAttr.FK_Node, "(" + inStr + ")");
 
                     qo.DoQuery();
-                    foreach (WorkerList wl in wls)
+                    foreach (GenerWorkerList wl in wls)
                     {
                         Node subNd = new Node(wl.FK_Node);
                         Work subWK = subNd.GetWork(wl.WorkID);
@@ -1408,7 +1394,7 @@ namespace BP.WF
                 if (nd.IsFL)
                 {
                     /* 如果是分流 */
-                    WorkerLists wls = new WorkerLists();
+                    GenerWorkerLists wls = new GenerWorkerLists();
                     QueryObject qo = new QueryObject(wls);
                     qo.AddWhere(WorkerListAttr.FID, this.WorkID);
                     qo.addAnd();
@@ -1428,7 +1414,7 @@ namespace BP.WF
                         qo.AddWhereIn(WorkerListAttr.FK_Node, "(" + inStr + ")");
 
                     qo.DoQuery();
-                    foreach (WorkerList wl in wls)
+                    foreach (GenerWorkerList wl in wls)
                     {
                         Node subNd = new Node(wl.FK_Node);
                         Work subWK = subNd.GetWork(wl.WorkID);
@@ -1467,7 +1453,7 @@ namespace BP.WF
             wn.HisWork.DirectUpdate();
 
             // 删除工作者.
-            WorkerLists wkls = new WorkerLists(this.HisWork.OID, this.HisNode.NodeID);
+            GenerWorkerLists wkls = new GenerWorkerLists(this.HisWork.OID, this.HisNode.NodeID);
             wkls.Delete();
 
             // 写入日志.
@@ -1485,7 +1471,7 @@ namespace BP.WF
             //WorkFlow wf = this.HisWorkFlow;
             //wf.WritLog(msg);
             // 消息通知上一步工作人员处理．
-            WorkerLists wls = new WorkerLists(wn.HisWork.OID, wn.HisNode.NodeID);
+            GenerWorkerLists wls = new GenerWorkerLists(wn.HisWork.OID, wn.HisNode.NodeID);
             BP.WF.MsgsManager.AddMsgs(wls, "退回的工作", wn.HisNode.Name, "退回的工作");
 
             // 删除退回时当前节点的工作信息。
@@ -1513,7 +1499,7 @@ namespace BP.WF
             wn.HisWork.DirectUpdate();
 
             // 删除工作者.
-            WorkerLists wkls = new WorkerLists(workid, this.HisNode.NodeID);
+            GenerWorkerLists wkls = new GenerWorkerLists(workid, this.HisNode.NodeID);
             wkls.Delete();
 
             // 写入日志.
@@ -1533,7 +1519,7 @@ namespace BP.WF
             //WorkFlow wf = this.HisWorkFlow;
             //wf.WritLog(msg);
             // 消息通知上一步工作人员处理．
-            WorkerLists wls = new WorkerLists(workid, wn.HisNode.NodeID);
+            GenerWorkerLists wls = new GenerWorkerLists(workid, wn.HisNode.NodeID);
             BP.WF.MsgsManager.AddMsgs(wls, "退回的工作", wn.HisNode.Name, "退回的工作");
 
             // 删除退回时当前节点的工作信息。
@@ -1575,11 +1561,11 @@ namespace BP.WF
         
 
         #region 根据工作岗位生成工作者
-        private WorkerLists WorkerListWayOfDept(WorkNode town, DataTable dt)
+        private GenerWorkerLists WorkerListWayOfDept(WorkNode town, DataTable dt)
         {
             return WorkerListWayOfDept(town,dt,0);
         }
-        private WorkerLists WorkerListWayOfDept(WorkNode town, DataTable dt, Int64 fid)
+        private GenerWorkerLists WorkerListWayOfDept(WorkNode town, DataTable dt, Int64 fid)
         {
             if (dt.Rows.Count == 0)
             {
@@ -1592,7 +1578,7 @@ namespace BP.WF
                 workID = this.HisWork.OID;
 
             int toNodeId = town.HisNode.NodeID;
-            this.HisWorkerLists = new WorkerLists();
+            this.HisWorkerLists = new GenerWorkerLists();
             this.HisWorkerLists.Clear();
 
 #warning 限期时间  town.HisNode.DeductDays-1
@@ -1605,14 +1591,25 @@ namespace BP.WF
             // edit at 2008-01-22 , 处理预警日期的问题。
 
             DateTime dtOfShould;
-            int day = 0;
-            int hh = 0;
-            if (town.HisNode.DeductDays < 1)
-                day = 0;
-            else
-                day =int.Parse( town.HisNode.DeductDays.ToString());
+            if (this.HisFlow.HisTimelineRole == TimelineRole.ByFlow)
+            {
+                /*如果整体流程是按流程设置计算。*/
+                dtOfShould = DataType.ParseSysDateTime2DateTime( this.HisGenerWorkFlow.SDTOfFlow);
 
-             dtOfShould = DataType.AddDays(DateTime.Now, day);
+            }
+            else
+            {
+                int day = 0;
+                int hh = 0;
+                if (town.HisNode.DeductDays < 1)
+                    day = 0;
+                else
+                    day = int.Parse(town.HisNode.DeductDays.ToString());
+
+                dtOfShould = DataType.AddDays(DateTime.Now, day);
+            }
+
+
             DateTime dtOfWarning = DateTime.Now;
             if (town.HisNode.WarningDays > 0)
                 dtOfWarning = DataType.AddDays(dtOfShould, - int.Parse(town.HisNode.WarningDays.ToString())); // dtOfShould.AddDays(-town.HisNode.WarningDays);
@@ -1627,14 +1624,14 @@ namespace BP.WF
                 default:
                     this.HisGenerWorkFlow.Update(GenerWorkFlowAttr.FK_Node,
                         town.HisNode.NodeID,
-               GenerWorkFlowAttr.SDT, dtOfShould.ToString("yyyy-MM-dd"));
+               GenerWorkFlowAttr.SDTOfNode, dtOfShould.ToString(DataType.SysDataTimeFormat));
                     break;
             }
 
             if (dt.Rows.Count == 1)
             {
                 /* 如果只有一个人员 */
-                WorkerList wl = new WorkerList();
+                GenerWorkerList wl = new GenerWorkerList();
                 wl.WorkID = workID;
                 wl.FK_Node = toNodeId;
                 wl.FK_NodeText = town.HisNode.Name;
@@ -1710,7 +1707,7 @@ namespace BP.WF
 
                         myemps += "@" + dr[0].ToString();
 
-                        WorkerList wl = new WorkerList();
+                        GenerWorkerList wl = new GenerWorkerList();
                         wl.IsEnable = true;
                         wl.WorkID = workID;
                         wl.FK_Node = toNodeId;
@@ -1762,7 +1759,7 @@ namespace BP.WF
 
                         myemps += "@" + s;
 
-                        WorkerList wl = new WorkerList();
+                        GenerWorkerList wl = new GenerWorkerList();
                         wl.IsEnable = true;
                         wl.WorkID = workID;
                         wl.FK_Node = toNodeId;
@@ -1803,7 +1800,7 @@ namespace BP.WF
                     }
                 }
                 string objsmy = "@";
-                foreach (WorkerList wl in this.HisWorkerLists)
+                foreach (GenerWorkerList wl in this.HisWorkerLists)
                 {
                     objsmy += wl.FK_Emp + "@";
                 }
@@ -1815,7 +1812,7 @@ namespace BP.WF
                     rm.Objs = objsmy;
 
                     string objExts = "";
-                    foreach (WorkerList wl in this.HisWorkerLists)
+                    foreach (GenerWorkerList wl in this.HisWorkerLists)
                     {
                         if (Glo.IsShowUserNoOnly)
                             objExts += wl.FK_Emp + "、";
@@ -1877,13 +1874,13 @@ namespace BP.WF
             }
             if (this.HisWorkerLists.Count == 1)
             {
-                WorkerList wl = this.HisWorkerLists[0] as WorkerList;
+                GenerWorkerList wl = this.HisWorkerLists[0] as GenerWorkerList;
                 this.AddToTrack(at, wl.FK_Emp, wl.FK_EmpText, wl.FK_Node, wl.FK_NodeText, null);
             }
             else
             {
                 string info = "共(" + this.HisWorkerLists.Count+ ")人接收\t\n";
-                foreach (WorkerList wl in this.HisWorkerLists)
+                foreach (GenerWorkerList wl in this.HisWorkerLists)
                 {
                     info += wl.FK_Emp + "," + wl.FK_EmpText + "\t\n";
                 }
@@ -2222,7 +2219,7 @@ namespace BP.WF
         }
 
         #region 用户到的变量
-        public WorkerLists HisWorkerLists = null;
+        public GenerWorkerLists HisWorkerLists = null;
         public GenerWorkFlow _HisGenerWorkFlow;
         public GenerWorkFlow HisGenerWorkFlow
         {
@@ -2262,7 +2259,7 @@ namespace BP.WF
             WorkNode town = new WorkNode(wk, toNode);
 
             // 产生下一步骤要执行的人员.
-            WorkerLists gwls = this.GenerWorkerLists(town);
+            GenerWorkerLists gwls = this.GenerWorkerLists(town);
             this.AddIntoWacthDog(gwls);  //@加入消息集合里。
 
             //清除以前的数据，比如两次发送。
@@ -2301,7 +2298,7 @@ namespace BP.WF
                 case FLRole.ByStation:
                 case FLRole.ByDept:
                 case FLRole.ByEmp:
-                    foreach (WorkerList wl in gwls)
+                    foreach (GenerWorkerList wl in gwls)
                     {
                         Work mywk = toNode.HisWork;
                         mywk.Copy(this.rptGe);
@@ -2736,6 +2733,37 @@ namespace BP.WF
             gwf.WorkID = this.HisWork.OID;
             gwf.Title = WorkNode.GenerTitle(this.HisWork);
             this.HisWork.SetValByKey("Title", gwf.Title);
+            if (this.HisFlow.HisTimelineRole == TimelineRole.ByFlow)
+            {
+                try
+                {
+                    gwf.SDTOfFlow = this.HisWork.GetValStrByKey(BP.WF.WorkSysFieldAttr.SysSDTOfFlow);
+                }
+                catch (Exception ex)
+                {
+                    Log.DefaultLogWriteLineError("可能是流程设计错误,获取开始节点{" + gwf.Title + "}的整体流程应完成时间有错误,是否包含SysSDTOfFlow字段? 异常信息:" + ex.Message);
+                    /*获取开始节点的整体流程应完成时间有错误,是否包含SysSDTOfFlow字段? .*/
+                    if (this.HisWork.EnMap.Attrs.Contains(WorkSysFieldAttr.SysSDTOfFlow))
+                        throw new Exception("流程设计错误，您设置的流程时效属性是｛按开始节点表单SysSDTOfFlow字段计算｝，但是开始节点表单不包含字段 SysSDTOfFlow , 系统错误信息:" + ex.Message);
+                    throw new Exception("初始化开始节点数据错误:" + ex.Message);
+                }
+
+                /*判断时间与日期是否合法.*/
+                try
+                {
+                    string rdt = gwf.SDTOfFlow;
+                    DateTime dt = DataType.ParseSysDateTime2DateTime(rdt);
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception("@输入的整体流程完成时间错误,{"+gwf.SDTOfFlow+"}是一个非法的日期.");
+                }
+            }
+            else
+            {
+
+            }
+
             gwf.WFState = 0;
             gwf.RDT = this.HisWork.RDT;
             gwf.Rec = Web.WebUser.No;
@@ -2801,7 +2829,7 @@ namespace BP.WF
             #endregion HisCHOfFlow
 
             #region  产生开始工作者,能够执行他们的人员.
-            WorkerList wl = new WorkerList();
+            GenerWorkerList wl = new GenerWorkerList();
             wl.WorkID = this.HisWork.OID;
             wl.FK_Node = this.HisNode.NodeID;
             wl.FK_NodeText = this.HisNode.Name;
@@ -3309,7 +3337,7 @@ namespace BP.WF
                 {
                     case ActionType.Forward:
                     case ActionType.Start:
-                    case ActionType.Undo:
+                    case ActionType.UnSend:
                     case ActionType.ForwardFL:
                     case ActionType.ForwardHL:
                         //判断是否有焦点字段，如果有就把它记录到日志里。
@@ -3349,7 +3377,7 @@ namespace BP.WF
         /// 加入工作记录
         /// </summary>
         /// <param name="gwls"></param>
-        public void AddIntoWacthDog(WorkerLists gwls)
+        public void AddIntoWacthDog(GenerWorkerLists gwls)
         {
             if (BP.SystemConfig.IsBSsystem == false)
                 return;
@@ -3361,7 +3389,7 @@ namespace BP.WF
             basePath += "/" + System.Web.HttpContext.Current.Request.ApplicationPath;
             string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\" + WebUser.SysLang + ".txt");
 
-            foreach (WorkerList wl in gwls)
+            foreach (GenerWorkerList wl in gwls)
             {
                 if (wl.IsEnable == false)
                     continue;
@@ -3386,7 +3414,7 @@ namespace BP.WF
             /*
             string workers="";
             // 工作者
-            foreach(WorkerList wl in gwls)
+            foreach(GenerWorkerList wl in gwls)
             {
                 workers+=","+wl.FK_Emp;
             }
@@ -3505,13 +3533,13 @@ namespace BP.WF
                     if (this.HisNode.IsForceKill)
                     {
                         // 检查是否还有没有完成的进程。
-                        WorkerLists wls = new WorkerLists();
+                        GenerWorkerLists wls = new GenerWorkerLists();
                         wls.Retrieve(WorkerListAttr.FID, this.HisWork.OID,
                             WorkerListAttr.IsPass, 0);
                         if (wls.Count > 0)
                         {
                             msg += "@开始进行对没有完成分流工作的同事强制删除。";
-                            foreach (WorkerList wl in wls)
+                            foreach (GenerWorkerList wl in wls)
                             {
                                 WorkFlow wf = new WorkFlow(wl.FK_Flow, wl.WorkID, wl.FID);
                                 wf.DoDeleteWorkFlowByReal();
@@ -3744,8 +3772,8 @@ namespace BP.WF
 
                 //获得它的工作者。
                 WorkNode town = new WorkNode(wk, nd);
-                WorkerLists gwls = this.GenerWorkerLists(town);
-                foreach (WorkerList wl in gwls)
+                GenerWorkerLists gwls = this.GenerWorkerLists(town);
+                foreach (GenerWorkerList wl in gwls)
                 {
                     msg += wl.FK_Emp + "，" + wl.FK_EmpText + "、";
 
@@ -3851,7 +3879,7 @@ namespace BP.WF
             WorkNode town = new WorkNode(wk, nd);
 
             // 初试化他们的工作人员．
-            WorkerLists gwls = this.GenerWorkerLists(town);
+            GenerWorkerLists gwls = this.GenerWorkerLists(town);
 
             //@加入消息集合里。
             this.AddIntoWacthDog(gwls);
@@ -4010,11 +4038,11 @@ namespace BP.WF
             WorkNode town = new WorkNode(nd.HisWork, nd);
 
             // 初试化他们的工作人员．
-            WorkerLists gwls = this.GenerWorkerLists_WidthFID(town);
+            GenerWorkerLists gwls = this.GenerWorkerLists_WidthFID(town);
             string fk_emp = "";
             string toEmpsStr = "";
             string emps = "";
-            foreach (WorkerList wl in gwls)
+            foreach (GenerWorkerList wl in gwls)
             {
                 fk_emp = wl.FK_Emp;
                 if (Glo.IsShowUserNoOnly)
@@ -4328,11 +4356,11 @@ namespace BP.WF
             WorkNode town = new WorkNode(nd.HisWork, nd);
 
             // 初试化他们的工作人员．
-            WorkerLists gwls = this.GenerWorkerLists_WidthFID(town);
+            GenerWorkerLists gwls = this.GenerWorkerLists_WidthFID(town);
             string fk_emp = "";
             string toEmpsStr = "";
             string emps = "";
-            foreach (WorkerList wl in gwls)
+            foreach (GenerWorkerList wl in gwls)
             {
                 fk_emp = wl.FK_Emp;
                 if (Glo.IsShowUserNoOnly)
@@ -5052,7 +5080,7 @@ namespace BP.WF
                  * */
                 // 判断是不是用下一步的工作人员列表.
                 Node nd = (Node)nds[0];
-                WorkerLists wls = new WorkerLists(this.HisWork.OID, nd.NodeID);
+                GenerWorkerLists wls = new GenerWorkerLists(this.HisWork.OID, nd.NodeID);
                 if (wls.Count == 0)
                 {
                     /*说名没有产生工作者列表.*/

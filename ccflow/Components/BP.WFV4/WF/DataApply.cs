@@ -301,9 +301,9 @@ namespace BP.WF
             this.ApplyNote2 = note2;
 
             // 调整当前预警与
-            WorkerLists wls = new WorkerLists(this.WorkID, this.NodeId);
-            wls.Retrieve(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, this.NodeId);
-            foreach (WorkerList wl in wls)
+            GenerWorkerLists wls = new GenerWorkerLists(this.WorkID, this.NodeId);
+            wls.Retrieve(GenerWorkerListAttr.WorkID, this.WorkID, GenerWorkerListAttr.FK_Node, this.NodeId);
+            foreach (GenerWorkerList wl in wls)
             {
                // wl.DTOfWarning = DataType.AddDays(wl.DTOfWarning, days);
                // wl.SDT = DataType.AddDays(wl.SDT, days);

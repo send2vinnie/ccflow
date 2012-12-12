@@ -78,7 +78,7 @@ namespace BP.WF
             }
 
             // 判断他的工作生成的工作者.
-            WorkerLists gwls = new WorkerLists(this.WorkID, wn.HisNode.NodeID);
+            GenerWorkerLists gwls = new GenerWorkerLists(this.WorkID, wn.HisNode.NodeID);
             if (gwls.Count == 0)
             {
                 //return true;
@@ -86,7 +86,7 @@ namespace BP.WF
                 throw new Exception("@" + this.ToE("WF0", "工作流程定义错误,没有找到能够执行此项工作的人员.相关信息:") + " WorkID=" + this.WorkID + ",NodeID=" + wn.HisNode.NodeID);
             }
 
-            foreach (WorkerList en in gwls)
+            foreach (GenerWorkerList en in gwls)
             {
                 if (en.FK_Emp == empId)
                     return true;
@@ -106,7 +106,7 @@ namespace BP.WF
         /// <returns></returns>
         public string DoReject(Int64 fid, int fk_node, string msg)
         {
-            WorkerList wl = new WorkerList();
+            GenerWorkerList wl = new GenerWorkerList();
             int i = wl.Retrieve(WorkerListAttr.FID, fid,
                 WorkerListAttr.WorkID, this.WorkID,
                 WorkerListAttr.FK_Node, fk_node);
@@ -117,7 +117,7 @@ namespace BP.WF
             //if (i == 0)
             //    throw new Exception("系统错误，没有删除应该删除的数据。");
 
-            wl = new WorkerList();
+            wl = new GenerWorkerList();
             i = wl.Retrieve(WorkerListAttr.FID, fid,
                 WorkerListAttr.WorkID, this.WorkID,
                 WorkerListAttr.IsPass, 3);
@@ -308,7 +308,7 @@ namespace BP.WF
         //        gwf.DirectUpdate();
         //        // 删除消息.
         //        BP.WF.MsgsManager.DeleteByWorkID(this.WorkID);
-        //        //WorkerLists wls = new WorkerLists(this
+        //        //GenerWorkerLists wls = new GenerWorkerLists(this
         //    }
         //    catch (Exception ex)
         //    {
@@ -397,7 +397,7 @@ namespace BP.WF
 
                 // 增加消息 
                 WorkNode wn = this.GetCurrentWorkNode();
-                WorkerLists wls = new WorkerLists(wn.HisWork.OID, wn.HisNode.NodeID);
+                GenerWorkerLists wls = new GenerWorkerLists(wn.HisWork.OID, wn.HisNode.NodeID);
                 if (wls.Count == 0)
                     throw new Exception("@恢复流程出现错误,产生的工作者列表");
                 BP.WF.MsgsManager.AddMsgs(wls, "恢复的流程", wn.HisNode.Name, "回复的流程");
@@ -539,7 +539,7 @@ namespace BP.WF
 
             string emps = "";
 
-            WorkerLists wlss = new WorkerLists();
+            GenerWorkerLists wlss = new GenerWorkerLists();
             QueryObject qo = new QueryObject(wlss);
 
             qo.AddWhere(WorkerListAttr.FID, this.WorkID);
@@ -549,7 +549,7 @@ namespace BP.WF
             qo.addOrderBy(WorkerListAttr.RDT);
             qo.DoQuery();
 
-            foreach (WorkerList wl in wlss)
+            foreach (GenerWorkerList wl in wlss)
             {
                 if (wl.IsEnable == false)
                     continue;
@@ -857,8 +857,8 @@ namespace BP.WF
 
 
             string emps = ",";
-            WorkerLists wls = new WorkerLists(this.WorkID, this.HisFlow.No);
-            foreach (WorkerList wl in wls)
+            GenerWorkerLists wls = new GenerWorkerLists(this.WorkID, this.HisFlow.No);
+            foreach (GenerWorkerList wl in wls)
             {
                 if (wl.IsEnable == false)
                     continue;
@@ -1311,7 +1311,7 @@ namespace BP.WF
             WorkNode wn = this.GetCurrentWorkNode();
             WorkNode wnPri = wn.GetPreviousWorkNode();
 
-            WorkerList wl = new WorkerList();
+            GenerWorkerList wl = new GenerWorkerList();
             int num = wl.Retrieve(WorkerListAttr.FK_Emp, Web.WebUser.No,
                 WorkerListAttr.FK_Node, wnPri.HisNode.NodeID);
             if (num == 0)
@@ -1321,7 +1321,7 @@ namespace BP.WF
             string msg = wn.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
 
             // 删除工作者。
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
             wn.HisWork.Delete();
 
@@ -1354,7 +1354,7 @@ namespace BP.WF
             msg += wn.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
 
             // 记录日志..
-            wn.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "无");
+            wn.AddToTrack(ActionType.UnSend, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "无");
 
             if (wnPri.HisNode.IsStartNode)
             {
@@ -1448,11 +1448,11 @@ namespace BP.WF
             DBAccess.RunSQLs(sqls);
 
             /* 获取它的工作者，向他们发送消息。*/
-            WorkerLists wls = new WorkerLists(this.WorkID, this.HisFlow.No);
+            GenerWorkerLists wls = new GenerWorkerLists(this.WorkID, this.HisFlow.No);
             string url = Glo.ServerIP + "/" + this.VirPath + this.AppType + "/WorkOpt/OneWork/Track.aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + this.HisGenerWorkFlow.FID + "&FK_Node=" + this.HisGenerWorkFlow.FK_Node;
             string mailDoc = "详细信息:<A href='" + url + "'>打开流程轨迹</A>.";
             string emps = "";
-            foreach (WorkerList wl in wls)
+            foreach (GenerWorkerList wl in wls)
             {
                 BP.WF.Port.WFEmp emp = new Port.WFEmp(wl.FK_Emp);
                 emps += emp.No + "," + emp.Name+";";
@@ -1489,7 +1489,7 @@ namespace BP.WF
         public string DoUnShift()
         {
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             wls.Retrieve(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node);
             if (wls.Count == 0)
                 return "移交失败没有当前的工作。";  
@@ -1505,7 +1505,7 @@ namespace BP.WF
 
             if (wls.Count == 1)
             {
-                WorkerList wl = (WorkerList)wls[0];
+                GenerWorkerList wl = (GenerWorkerList)wls[0];
                 wl.FK_Emp = WebUser.No;
                 wl.FK_EmpText = WebUser.Name;
                 wl.IsEnable = true;
@@ -1515,7 +1515,7 @@ namespace BP.WF
             }
 
             bool isHaveMe = false;
-            foreach (WorkerList wl in wls)
+            foreach (GenerWorkerList wl in wls)
             {
                 if (wl.FK_Emp == WebUser.No)
                 {
@@ -1528,8 +1528,8 @@ namespace BP.WF
                 }
             }
 
-            WorkerList wk = (WorkerList)wls[0];
-            WorkerList wkNew = new WorkerList();
+            GenerWorkerList wk = (GenerWorkerList)wls[0];
+            GenerWorkerList wkNew = new GenerWorkerList();
             wkNew.Copy(wk);
             wkNew.FK_Emp = WebUser.No;
             wkNew.FK_EmpText = WebUser.Name;
@@ -1586,7 +1586,7 @@ namespace BP.WF
 
             WorkNode wn = this.GetCurrentWorkNode();
             WorkNode wnPri = wn.GetPreviousWorkNode();
-            WorkerList wl = new WorkerList();
+            GenerWorkerList wl = new GenerWorkerList();
             int num = wl.Retrieve(WorkerListAttr.FK_Emp, Web.WebUser.No,
                 WorkerListAttr.FK_Node, wnPri.HisNode.NodeID);
 
@@ -1598,7 +1598,7 @@ namespace BP.WF
 
             #region 删除当前节点数据。
             // 删除产生的工作列表。
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
 
             // 删除工作信息。
@@ -1615,7 +1615,7 @@ namespace BP.WF
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
 
             // 记录日志..
-            wnPri.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID, wnPri.HisNode.Name, "无");
+            wnPri.AddToTrack(ActionType.UnSend, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID, wnPri.HisNode.Name, "无");
 
             // 删除数据.
             if (wn.HisNode.IsStartNode)
@@ -1630,7 +1630,7 @@ namespace BP.WF
             if (wnPri.HisNode.IsStartNode == false)
             {
                 WorkNode ppPri = wnPri.GetPreviousWorkNode();
-                wl = new WorkerList();
+                wl = new GenerWorkerList();
                 wl.Retrieve(WorkerListAttr.FK_Node, wnPri.HisNode.NodeID, WorkerListAttr.WorkID, this.WorkID);
                 // BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
                 RememberMe rm = new RememberMe();
@@ -1644,7 +1644,7 @@ namespace BP.WF
 
                     if (s == wl.FK_Emp)
                         continue;
-                    WorkerList wlN = new WorkerList();
+                    GenerWorkerList wlN = new GenerWorkerList();
                     wlN.Copy(wl);
                     wlN.FK_Emp = s;
 
@@ -1724,7 +1724,7 @@ namespace BP.WF
 
             // 记录日志..
             WorkNode wn = new WorkNode(wk, nd);
-            wn.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, gwf.FK_Node, gwf.NodeName, "");
+            wn.AddToTrack(ActionType.UnSend, WebUser.No, WebUser.Name, gwf.FK_Node, gwf.NodeName, "");
 
 
             // 删除分合流记录。
@@ -1804,7 +1804,7 @@ namespace BP.WF
         {
             Node currNode = new Node(gwf.FK_Node);
             Node priFLNode = currNode.HisPriFLNode;
-            WorkerList wl = new WorkerList();
+            GenerWorkerList wl = new GenerWorkerList();
             int i = wl.Retrieve(WorkerListAttr.FK_Node, priFLNode.NodeID, WorkerListAttr.FK_Emp, Web.WebUser.No);
             if (i == 0)
                 return "@不是您把工作发送到当前节点上，所以您不能撤消。";
@@ -1813,9 +1813,9 @@ namespace BP.WF
             WorkNode wnPri = new WorkNode(this.WorkID, priFLNode.NodeID);
 
             // 记录日志..
-            wnPri.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID, wnPri.HisNode.Name, "无");
+            wnPri.AddToTrack(ActionType.UnSend, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID, wnPri.HisNode.Name, "无");
 
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
 
             wn.HisWork.Delete();
@@ -1838,7 +1838,7 @@ namespace BP.WF
             if (wnPri.HisNode.IsStartNode == false)
             {
                 WorkNode ppPri = wnPri.GetPreviousWorkNode();
-                wl = new WorkerList();
+                wl = new GenerWorkerList();
                 wl.Retrieve(WorkerListAttr.FK_Node, wnPri.HisNode.NodeID, WorkerListAttr.WorkID, this.WorkID);
                 // BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
                 RememberMe rm = new RememberMe();
@@ -1852,7 +1852,7 @@ namespace BP.WF
 
                     if (s == wl.FK_Emp)
                         continue;
-                    WorkerList wlN = new WorkerList();
+                    GenerWorkerList wlN = new GenerWorkerList();
                     wlN.Copy(wl);
                     wlN.FK_Emp = s;
 

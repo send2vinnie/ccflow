@@ -1,12 +1,9 @@
-
 using System;
 using System.Data;
 using BP.DA;
-using BP.En;
 using BP.WF;
 using BP.Port ; 
 using BP.En;
-
 
 namespace BP.WF
 {
@@ -40,10 +37,6 @@ namespace BP.WF
         /// 产生时间
         /// </summary>
         public const string RDT = "RDT";
-        /// <summary>
-        /// 流程应完成日期
-        /// </summary>
-        public const string SDT = "SDT";
         /// <summary>
         /// 完成时间
         /// </summary>
@@ -100,6 +93,14 @@ namespace BP.WF
         /// 优先级
         /// </summary>
         public const string PRI = "PRI";
+        /// <summary>
+        /// 流程应完成时间
+        /// </summary>
+        public const string SDTOfFlow = "SDTOfFlow";
+        /// <summary>
+        /// 节点应完成时间
+        /// </summary>
+        public const string SDTOfNode = "SDTOfNode";
         #endregion
     }
 	/// <summary>
@@ -210,7 +211,34 @@ namespace BP.WF
 				SetValByKey(GenerWorkFlowAttr.RDT,value);
 			}
 		}
-         
+        /// <summary>
+        /// 节点应完成时间
+        /// </summary>
+        public string SDTOfNode
+        {
+            get
+            {
+                return this.GetValStrByKey(GenerWorkFlowAttr.SDTOfNode);
+            }
+            set
+            {
+                SetValByKey(GenerWorkFlowAttr.SDTOfNode, value);
+            }
+        }
+        /// <summary>
+        /// 流程应完成时间
+        /// </summary>
+        public string SDTOfFlow
+        {
+            get
+            {
+                return this.GetValStrByKey(GenerWorkFlowAttr.SDTOfFlow);
+            }
+            set
+            {
+                SetValByKey(GenerWorkFlowAttr.SDTOfFlow, value);
+            }
+        }
 		/// <summary>
 		/// 流程ID
 		/// </summary>
@@ -396,7 +424,9 @@ namespace BP.WF
                 map.AddTBString(GenerWorkFlowAttr.FK_Dept, null, "部门", true, false, 0, 500, 10);
                 map.AddTBString(GenerWorkFlowAttr.DeptName, null, "部门名称", true, false, 0, 500, 10);
                 map.AddTBInt(GenerWorkFlowAttr.PRI, 1, "优先级", true, true);
-                map.AddTBDateTime(GenerWorkFlowAttr.SDT, "应完成日期", true, true);
+
+                map.AddTBDateTime(GenerWorkFlowAttr.SDTOfNode, "节点应完成时间", true, true);
+                map.AddTBDateTime(GenerWorkFlowAttr.SDTOfFlow, "流程应完成时间", true, true);
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("WorkRpt", "工作报告");  // "工作报告";
@@ -478,9 +508,9 @@ namespace BP.WF
             this.Update();
 
             string str = "";
-            WorkerLists wls = new WorkerLists();
-            wls.Retrieve(WorkerListAttr.FK_Node, FK_Node, WorkerListAttr.WorkID, this.WorkID);
-            foreach (WorkerList wl in wls)
+            GenerWorkerLists wls = new GenerWorkerLists();
+            wls.Retrieve(GenerWorkerListAttr.FK_Node, FK_Node, GenerWorkerListAttr.WorkID, this.WorkID);
+            foreach (GenerWorkerList wl in wls)
             {
                 str += wl.FK_Emp + wl.FK_EmpText + ",";
             }
@@ -489,7 +519,7 @@ namespace BP.WF
         }
 		public string DoSelfTestInfo()
 		{
-			WorkerLists wls = new WorkerLists(this.WorkID,this.FK_Flow );
+            GenerWorkerLists wls = new GenerWorkerLists(this.WorkID, this.FK_Flow);
 
 			#region  查看一下当前的节点是否开始工作节点。
 			Node nd = new Node(this.FK_Node);
@@ -510,7 +540,7 @@ namespace BP.WF
 
 			#region  查看一下是否有当前的工作节点信息。
 			bool isHave=false;
-			foreach(WorkerList wl in wls)
+            foreach (GenerWorkerList wl in wls)
 			{
 				if (wl.FK_Node==this.FK_Node)
 					isHave=true;
