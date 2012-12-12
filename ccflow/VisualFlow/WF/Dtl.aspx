@@ -36,7 +36,7 @@ function Del(id, ens, refPk, pageIdx) {
 function DtlOpt(workId, fk_mapdtl) {
     var url = 'DtlOpt.aspx?WorkID=' + workId + '&FK_MapDtl=' + fk_mapdtl;
     var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
-   window.location.href = 'Dtl.aspx?EnsName=' + fk_mapdtl + '&RefPKVal=' + workId;
+    window.location.href = 'Dtl.aspx?EnsName=' + fk_mapdtl + '&RefPKVal=' + workId;
 }
     </script>
     <style type="text/css">
@@ -52,18 +52,18 @@ function DtlOpt(workId, fk_mapdtl) {
    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js"  defer="defer" ></script>
    <script type="text/javascript">
        function SetVal() {
-          // document.getElementById('KVs').value = this.GenerPageKVs();
-           kvs = this.GenerPageKVs();
+           // document.getElementById('KVs').value = this.GenerPageKVs();
+           //  kvs = this.GenerPageKVs();
+            
        }
    </script>
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"  onblur="SetVal();" onload="SetVal();" > 
+<body onkeypress="Esc()" style="font-size:smaller"  onblur="SetVal();" onload="SetVal();" > 
     <form id="form1" runat="server">
-     <asp:Button ID="Button1" runat="server" Text=""  CssClass="HBtn" Visible=true
+     <asp:Button ID="Button1" runat="server" Text=""  CssClass="HBtn" Visible="true"
          onclick="Button1_Click" />
      <uc2:Pub ID="Pub1" runat="server" />
      <uc2:Pub ID="Pub2" runat="server" />
-      
     </form>
 </body>
 </html>

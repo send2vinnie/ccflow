@@ -56,6 +56,9 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
             return;
         }
 
+        string appPath = this.Request.ApplicationPath;
+        string fk_flow = this.Request.QueryString["FK_Flow"];
+
         int colspan = 6;
         if (this.PageSmall != "")
             this.Pub1.AddBR();
@@ -63,26 +66,25 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.Pub1.AddTable("border=1px align=center width='960px'");
 
         if (WebUser.IsWap)
-            this.Pub1.AddCaption("<img src='./Img/Home.gif' >&nbsp;<a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作"));
+            this.Pub1.AddCaption("<img src='"+appPath+"/WF/Img/Home.gif' >&nbsp;<a href='Home.aspx' >Home</a>-<img src='" + appPath + "/WF/Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作"));
         else
-            this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "在途工作") + "</b>");
+            this.Pub1.AddCaptionLeft("<img src='"+appPath+"/WF/Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "在途工作") + "</b>");
 
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("nowarp=true", this.ToE("IDX", "序"));
-        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Title", "标题"));
-
+        this.Pub1.AddTDTitle("nowarp=true", "序");
+        this.Pub1.AddTDTitle("nowarp=true", "标题");
 
         if (this.GroupBy != "FlowName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName' >" + this.ToE("Flow", "流程") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName&FK_Flow=" + fk_flow + "' >流程</a>");
 
         if (this.GroupBy != "NodeName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "当前节点") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName&FK_Flow=" + fk_flow + "' >当前节点</a>");
 
         if (this.GroupBy != "RecName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=RecName' >" + this.ToE("RecName", "发起人") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=RecName&FK_Flow=" + fk_flow + "' >发起人</a>");
 
-        this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
-        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Oper", "操作"));
+        this.Pub1.AddTDTitle("nowarp=true", "发起日期");
+        this.Pub1.AddTDTitle("nowarp=true", "操作");
         this.Pub1.AddTREnd();
 
         string groupVals = "";
@@ -98,7 +100,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         bool is1 = false;
         string title = null;
         string workid = null;
-        string fk_flow = null;
+          fk_flow = null;
         int gIdx = 0;
         string[] gVals = groupVals.Split('@');
         foreach (string g in gVals)
@@ -108,7 +110,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
 
             gIdx++;
             this.Pub1.AddTR();
-            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g + "</b>");
+            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('"+appPath+"','" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='"+appPath+"/WF/Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g + "</b>");
             this.Pub1.AddTREnd();
 
             foreach (DataRow dr in dt.Rows)
@@ -119,14 +121,16 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 this.Pub1.AddTDIdx(i);
 
-                title = dr["Title"].ToString();
-                if (string.IsNullOrEmpty(title))
-                    title = "无标题";
+                //if (string.IsNullOrEmpty(title))
+                //    title = "无标题";
+
+                BP.WF.WFState wfstate = (WFState)int.Parse(dr["WFState"].ToString());
+                title = "<img src='"+appPath+"/WF/Img/WFState/" + wfstate + ".png' class='Icon' />" + dr["Title"].ToString();
 
                 workid = dr["WorkID"].ToString();
                 fk_flow = dr["FK_Flow"].ToString();
 
-                this.Pub1.Add("<TD class=TTD><a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" >" + title + "</a></TD>");
+                this.Pub1.Add("<TD class=TTD><a href=\"javascript:WinOpen('"+appPath+"/WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" >" + title + "</a></TD>");
                 //  this.Pub1.AddTDDoc(title, 50, title);
                 if (this.GroupBy != "FlowName")
                     this.Pub1.AddTD(dr["FlowName"].ToString());
@@ -139,8 +143,9 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
 
                 this.Pub1.AddTD(dr["RDT"].ToString());
                 this.Pub1.AddTDBegin();
-                this.Pub1.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + this.PageSmall + ".aspx?DoType=UnSend&FID=" + dr["FID"] + "&WorkID=" + workid + "&FK_Flow=" + fk_flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
-                //this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+                this.Pub1.Add("<a href=\"javascript:UnSend('"+appPath+"','" + this.PageSmall + "','" + dr["FID"] + "','" + workid + "','" + fk_flow + "');\" ><img src='"+appPath+"/WF/Img/Action/UnSend.png' border=0 class=Icon />撤消发送</a>");
+                this.Pub1.Add("<a href=\"javascript:Press('"+appPath+"','" + dr["FID"] + "','" + workid + "','" + fk_flow + "');\" ><img src='"+appPath+"/WF/Img/Action/Press.png' border=0 class=Icon />催办</a>");
+
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTREnd();
             }

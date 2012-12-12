@@ -6,14 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <script language=javascript>
-		function Do(warning, url)
-		{
-		  if (window.confirm(warning)==false)
-		    return;
-		 
-		 window.location.href=url;
-		 // WinOpen(url);
-		}
+		
 		</script>
     <uc1:Runing ID="Runing1" runat="server" />
 </asp:Content>

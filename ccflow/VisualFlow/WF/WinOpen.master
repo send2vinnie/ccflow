@@ -47,6 +47,11 @@
 	font-family: 宋体;
 	font-size: 12px;
 }
+.Icon
+{
+    width:16px;
+    height:16px;
+}
         </style>
     </asp:ContentPlaceHolder>
 <base target=_self /> 

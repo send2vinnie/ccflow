@@ -61,8 +61,19 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             msg = "@在检查数据库连接出现错误。";
+            
 
-            #region 2012-12-06 升级投递规则 for 亿阳信通.
+            #region 2012-12-06 升级投递规则 与退回规则. for 亿阳信通.
+
+            GenerWorkerList wl = new GenerWorkerList();
+            wl.CheckPhysicsTable();
+
+            Flow fl = new Flow();
+            fl.CheckPhysicsTable();
+
+            sql = " UPDATE WF_GenerWorkerList SET PressTimes=0 WHERE PressTimes IS NULL";
+            DBAccess.RunSQL(sql);
+
             sql = " DELETE FROM Sys_Enum WHERE enumkey='DeliveryWay'";
             DBAccess.RunSQL(sql);
 
@@ -70,8 +81,38 @@ public partial class Designer : System.Web.UI.Page
             DBAccess.RunSQL(sql);
             #endregion 升级投递规则.
 
+            #region 更新 WF_EmpWorks. 2012-12-08  2011-11-09 , 2011-11-30
+            msg = "@更新视图出现错误。";
+            try
+            {
+                sql = "DROP VIEW WF_EmpWorks";
+                BP.DA.DBAccess.RunSQLs(sql);
+            }
+            catch
+            {
+            }
+            sql = "CREATE VIEW  WF_EmpWorks AS SELECT A.PRI, A.WorkID, B.IsRead, A.Rec AS Starter, A.RecName as StarterName, A.WFState, A.FK_Dept,A.DeptName, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, a.SDTOfFlow, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FK_EmpText, B.FID ,A.FK_FlowSort,B.PressTimes FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
+            BP.DA.DBAccess.RunSQLs(sql);
+
+            // 更新老版本的字段长度。
+            switch (DBAccess.AppCenterDBType)
+            {
+                case DBType.Oracle9i:
+                case DBType.Informix:
+                case DBType.MySQL:
+                    sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
+                    break;
+                case DBType.SQL2000:
+                default:
+                    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
+                    break;
+            }
+            BP.DA.DBAccess.RunSQLs(sql);
+            #endregion 更新 WF_EmpWorks. 2011-11-09
+
+
             #region 增加是否只读.
-            BP.WF.WorkerList wl8 = new WorkerList();
+            BP.WF.GenerWorkerList wl8 = new GenerWorkerList();
             wl8.CheckPhysicsTable();
 
             sql = " UPDATE WF_GenerWorkerList SET IsRead=0 WHERE IsRead IS NULL";
@@ -101,11 +142,6 @@ public partial class Designer : System.Web.UI.Page
             tmp.CheckPhysicsTable();
 
             #endregion 升级 09-24
-
-            #region 升级 06-12
-            WorkerList wl12 = new WorkerList();
-            wl12.CheckPhysicsTable();
-            #endregion 升级 06-12
 
             #region 升级 07-01
             GenerWorkFlow gwfss = new GenerWorkFlow();
@@ -224,8 +260,6 @@ public partial class Designer : System.Web.UI.Page
 
                 BP.WF.Ext.NodeO nd = new BP.WF.Ext.NodeO();
                 nd.CheckPhysicsTable();
-                BP.WF.WorkerList wl = new BP.WF.WorkerList();
-                wl.CheckPhysicsTable();
                 DBAccess.RunSQL("UPDATE WF_Node SET WhoExeIt=0 WHERE WhoExeIt IS NULL");
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET WhoExeIt=0 WHERE WhoExeIt IS NULL");
             }
@@ -247,7 +281,7 @@ public partial class Designer : System.Web.UI.Page
             #region 2012- 01-29 增加字段。
             try
             {
-                DBAccess.RunSQLReturnTable("SELECT TAG FROM sys_mapdata where 1=2 ");
+                DBAccess.RunSQLReturnTable("SELECT TAG FROM Sys_mapdata where 1=2 ");
             }
             catch
             {
@@ -395,38 +429,7 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 升级基础信息。
 
-            #region 更新 WF_EmpWorks. 2011-11-09 , 2011-11-30
-            msg = "@更新视图出现错误。";
-            try
-            {
-                sql = "DROP VIEW WF_EmpWorks";
-                BP.DA.DBAccess.RunSQLs(sql);
-            }
-            catch
-            {
-            }
-            sql = "CREATE VIEW  WF_EmpWorks AS SELECT A.PRI, A.WorkID, B.IsRead, A.Rec AS Starter, A.RecName as StarterName, A.WFState, A.FK_Dept,A.DeptName, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FK_EmpText, B.FID ,A.FK_FlowSort FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
-            BP.DA.DBAccess.RunSQLs(sql);
-
-            // 更新老版本的字段长度。
-            switch (DBAccess.AppCenterDBType)
-            {
-                case DBType.Oracle9i:
-                case DBType.Informix:
-                case DBType.MySQL:
-                    sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
-                    break;
-                case DBType.SQL2000:
-                default:
-                    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
-                    break;
-            }
-
-            //if (DBAccess.AppCenterDBType == DBType.Oracle9i)
-            //else
-            //    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
-            BP.DA.DBAccess.RunSQLs(sql);
-            #endregion 更新 WF_EmpWorks. 2011-11-09
+            
 
             msg = "@登陆时间错误。。";
 

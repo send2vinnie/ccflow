@@ -269,7 +269,7 @@ public partial class WF_MapDef_WFRpt : WebPage
                                 else
                                 {
                                     if (attr.IsSigan)
-                                        this.Pub1.AddTD("colspan=" + colspanOfCtl, "<img src='../../../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../../../DataUser/Siganture/UnName.jpg'\"/>");
+                                        this.Pub1.AddTD("colspan=" + colspanOfCtl, "<img src='" + this.Request.ApplicationPath + "/DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../../../DataUser/Siganture/UnName.jpg'\"/>");
                                     else
                                         this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
                                 }

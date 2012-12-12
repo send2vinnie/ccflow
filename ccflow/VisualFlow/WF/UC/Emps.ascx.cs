@@ -162,7 +162,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
                 break;
             }
 
-            this.AddTD("<img src='../DataUser/Siganture/" + fk_emp + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+            this.AddTD("<img src='" + this.Request.ApplicationPath + "DataUser/Siganture/" + fk_emp + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
             if (WebUser.No == "admin")
             {
                 this.AddTD("<a href=\"javascript:DoUp('" + emp.No + "','" + keys + "')\" ><img src='./../Images/Btn/Up.gif' border=0 /></a>-<a href=\"javascript:DoDown('" + emp.No + "','" + keys + "')\" ><img src='./../Images/Btn/Down.gif' border=0 /></a>");

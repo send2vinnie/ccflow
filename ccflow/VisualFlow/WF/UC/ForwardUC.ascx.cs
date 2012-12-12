@@ -176,12 +176,12 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
         this.Top.AddTableEnd();
 
         // 已经非配或者自动分配的任务。
-        WorkerLists wls = new WorkerLists();
-        wls.Retrieve(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.IsEnable, 1,
-            WorkerListAttr.IsPass, 0);
+        GenerWorkerLists wls = new GenerWorkerLists();
+        wls.Retrieve(GenerWorkerListAttr.WorkID, this.WorkID, GenerWorkerListAttr.IsEnable, 1,
+            GenerWorkerListAttr.IsPass, 0);
 
         int nodeID = 0;
-        foreach (WorkerList wl in wls)
+        foreach (GenerWorkerList wl in wls)
         {
             RadioButton cb = this.Top.GetRadioButtonByID("RB_" + wl.FK_Emp);
             if (cb != null)

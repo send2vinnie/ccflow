@@ -71,13 +71,13 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         if (BP.Web.WebUser.IsAuthorize)
         {
             BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(BP.Web.WebUser.No);
-            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp=" + SystemConfig.AppCenterDBVarStr + "FK_Emp  AND FK_Flow IN " + emp.AuthorFlows;
+            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE WFState="+(int)BP.WF.WFState.Runing+" AND FK_Emp=" + SystemConfig.AppCenterDBVarStr + "FK_Emp  AND FK_Flow IN " + emp.AuthorFlows;
             ps.AddFK_Emp();
         }
         else
         {
             ps.AddFK_Emp();
-            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp=" + SystemConfig.AppCenterDBVarStr + "FK_Emp";
+            ps.SQL = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE WFState=" + (int)BP.WF.WFState.Runing + " and FK_Emp=" + SystemConfig.AppCenterDBVarStr + "FK_Emp";
         }
         int num = BP.DA.DBAccess.RunSQLReturnValInt(ps);
 

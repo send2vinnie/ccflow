@@ -459,6 +459,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 判断是否有workid
 
+
         #region 判断权限
         if (this.IsPostBack == false)
         {
@@ -557,7 +558,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.PrintDocEnable)
             {
-                string urlr = "./WorkOpt/PrintDoc.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                string urlr = appPath+"/WF/WorkOpt/PrintDoc.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
             }
 
@@ -565,14 +566,14 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (btnLab.JumpWayEnable)
             {
                 /*如果没有焦点字段*/
-                string urlr = "JumpWay" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                string urlr = appPath+"/WF/JumpWay" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.JumpWayLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
             }
 
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField == "")
             {
                 /*如果没有焦点字段*/
-                string urlr = "ReturnWork" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                string urlr = appPath+"/WF/ReturnWork" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.ReturnLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
             }
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField != "")
@@ -588,7 +589,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (btnLab.HungEnable)
             {
                 /*挂起*/
-                string urlr = "HungUp.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                string urlr = appPath + "/WF/WorkOpt/HungUpOp.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.HungLab + "' enable=true onclick=\"WinOpen('" + urlr + "','fd'); \" />");
                 //this.ToolBar1.Add("<input type=button class=Btn value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
             }
@@ -1371,7 +1372,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 currWK.SetValByKey("MD5", Glo.GenerMD5(currWK));
             }
 
-            currWK.Update(); 
+
+            if (currND.IsStartNode && isSave)
+                currWK.SetValByKey(StartWorkAttr.Title, WorkNode.GenerTitle(currWK));
+
+            currWK.Update();
             /*如果是保存*/
         }
         catch (Exception ex)
@@ -1436,6 +1441,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
                 return;
+           
             currWK.RetrieveFromDBSources();
             this.UCEn1.ResetEnVal(currWK);
             return;

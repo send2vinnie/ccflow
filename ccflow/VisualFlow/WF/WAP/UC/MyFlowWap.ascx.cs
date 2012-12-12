@@ -666,26 +666,26 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
         #region 判断是否合流节点。。
         if (nd.HisNodeWorkType == NodeWorkType.WorkHL || nd.HisNodeWorkType == NodeWorkType.WorkFHL)
         {
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             QueryObject qo = new QueryObject(wls);
-            qo.AddWhere(WorkerListAttr.FID, wk.OID);
+            qo.AddWhere(GenerWorkerListAttr.FID, wk.OID);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.IsEnable, 1);
+            qo.AddWhere(GenerWorkerListAttr.IsEnable, 1);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.IsPass, 1);
+            qo.AddWhere(GenerWorkerListAttr.IsPass, 1);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Node,
+            qo.AddWhere(GenerWorkerListAttr.FK_Node,
                 nd.FromNodes[0].GetValByKey(NodeAttr.NodeID));
 
             int i = qo.DoQuery();
             if (i == 1)
             {
                 qo.clear();
-                qo.AddWhere(WorkerListAttr.FID, wk.OID);
+                qo.AddWhere(GenerWorkerListAttr.FID, wk.OID);
                 qo.addAnd();
-                qo.AddWhere(WorkerListAttr.IsEnable, 1);
+                qo.AddWhere(GenerWorkerListAttr.IsEnable, 1);
                 qo.addAnd();
-                qo.AddWhere(WorkerListAttr.IsPass, 1);
+                qo.AddWhere(GenerWorkerListAttr.IsPass, 1);
                 qo.DoQuery();
             }
 
@@ -707,7 +707,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
 
                 bool isHaveRuing = false;
                 bool is1 = false;
-                foreach (WorkerList wl in wls)
+                foreach (GenerWorkerList wl in wls)
                 {
                     is1 = this.Pub2.AddTR(is1);
                     this.Pub2.AddTD(wl.FK_NodeText);

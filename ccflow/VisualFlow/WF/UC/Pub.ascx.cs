@@ -192,10 +192,10 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
             workid = wn.HisWork.OID;
             if (wn.HisWork.NodeState == 0)
             {
-                WorkerLists wls = new WorkerLists(workid, wn.HisNode.NodeID);
+                GenerWorkerLists wls = new GenerWorkerLists(workid, wn.HisNode.NodeID);
                 this.Add("<p align='left' style='line-height: 100%' >&nbsp;&nbsp;&nbsp;&nbsp;<a name='ND" + wn.HisNode.NodeID + "' >" + this.ToEP1("NStep", "@第{0}步", idx.ToString()) + "</a>" + wn.HisNode.Name + "，" + this.ToE("NodeState", "节点状态") + "：" + wn.HisWork.NodeStateText + "。");
                 string msg = this.ToE("WFRpt0", "当前操作人员:");
-                foreach (WorkerList wl in wls)
+                foreach (GenerWorkerList wl in wls)
                 {
                     if (wl.IsEnable)
                         msg += wl.FK_Emp + wl.FK_EmpText + "、";

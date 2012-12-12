@@ -1996,9 +1996,9 @@ namespace BP.Web.Comm.UC.WF
                 {
                     string v = en.GetValStrByKey(attr.KeyOfEn);
                     if (v.Length == 0)
-                        this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                        this.Add("<img src='" + this.Request.ApplicationPath + "/DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                     else
-                        this.Add("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                        this.Add("<img src='" + this.Request.ApplicationPath + "/DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                     this.Add("</span>");
                     this.Add("</DIV>");
                     continue;

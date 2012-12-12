@@ -5,6 +5,9 @@
 <head runat="server">
     <title></title>
     <link href="../../../Comm/Style/Tabs.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+
     <asp:ContentPlaceHolder id="head" runat="server">
      <script type="text/javascript">
          function RSize() {

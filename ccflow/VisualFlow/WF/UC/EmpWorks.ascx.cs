@@ -83,6 +83,8 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             return;
         }
 
+        string appPath = this.Request.ApplicationPath;
+
         bool isPRI = Glo.IsEnablePRI;
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
@@ -96,7 +98,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         if (this.PageSmall != "")
             this.Pub1.AddBR();
         this.Pub1.AddTable("width='960px' align=center");
-        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<a href='"+PageID+".aspx' ><b>待办工作</b></a>&nbsp;&nbsp;&nbsp;<a href='"+PageID+".aspx?IsHungUp=1' >挂起工作</a>");
+        this.Pub1.AddCaptionLeft("<img src='" + appPath + "/WF/Img/Runing.gif' class=Icon >&nbsp;<a href='" + PageID + ".aspx' ><b>待办工作</b></a>");
 
         string extStr = "";
         if (this.IsHungUp)
@@ -104,7 +106,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
-        this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
+        this.Pub1.AddTDTitle("width=38%",this.ToE("Title", "标题"));
 
         if (this.GroupBy != "FlowName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName" + extStr + "' >" + this.ToE("Flow", "流程") + "</a>");
@@ -138,9 +140,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
             this.Pub1.AddTR();
             if (this.GroupBy == "Rec")
-                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
+                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('"+appPath+"','" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='"+appPath+"/WF/Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
             else
-                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
+                this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + appPath + "','" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='" + appPath + "/WF/Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
             this.Pub1.AddTREnd();
 
             foreach (DataRow dr in dt.Rows)
@@ -157,9 +159,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (Glo.IsWinOpenEmpWorks == true)
                 {
                     if (isRead == 0)
-                        this.Pub1.AddTD("Class=TTD onclick=\"SetImg('I"+gIdx+"_"+i+"')\"", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "&IsRead=0');\" ><img src='./Img/Mail_UnRead.png' id='I"+gIdx+"_"+i+"' border=0/>" + dr["Title"].ToString());
+                        this.Pub1.AddTD("Class=TTD onclick=\"SetImg('" + appPath + "','I" + gIdx + "_" + i + "')\"", "<a href=\"javascript:WinOpenIt('" + appPath + "/WF/MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "&IsRead=0');\" ><img class=Icon src='" + appPath + "/WF/Img/Mail_UnRead.png' id='I" + gIdx + "_" + i + "' />" + dr["Title"].ToString());
                     else
-                        this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  ><img src='./Img/Mail_Read.png' id='" + gIdx + "_" + i + "' border=0/>" + dr["Title"].ToString());
+                        this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('"+appPath+"/WF/MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  ><img src='"+appPath+"/WF/Img/Mail_Read.png' id='I" + gIdx + "_" + i + "' class=Icon />" + dr["Title"].ToString());
                 }
                 else
                 {
@@ -176,11 +178,11 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                     this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
 
                 if (isPRI)
-                    this.Pub1.AddTD("<img src='./Img/PRI/" + dr["PRI"].ToString() + ".png' class=ImgPRI />");
+                    this.Pub1.AddTD("<img class=Icon src='" + appPath + "/WF/Img/PRI/" + dr["PRI"].ToString() + ".png' class=Icon />");
 
-                this.Pub1.AddTD(dr["RDT"].ToString());
-                this.Pub1.AddTD(dr["ADT"].ToString());
-                this.Pub1.AddTD(dr["SDT"].ToString());
+                this.Pub1.AddTD(dr["RDT"].ToString().Substring(5));
+                this.Pub1.AddTD(dr["ADT"].ToString().Substring(5));
+                this.Pub1.AddTD(dr["SDT"].ToString().Substring(5));
 
                 DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
                 if (cdt >= mysdt)
@@ -205,6 +207,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     }
     public void BindList_PRI()
     {
+        string appPath = this.Request.ApplicationPath;
         int colspan = 10;
         if (this.PageSmall != "")
             this.Pub1.AddBR();
@@ -214,11 +217,11 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             extStr = "&IsHungUp=1";
 
         this.Pub1.AddTable("width='960px' align=center");
-        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<a href='" + PageID + ".aspx' ><b>待办工作</b></a>&nbsp;&nbsp;&nbsp;<a href='" + PageID + ".aspx?IsHungUp=1' >挂起工作</a>");
+        this.Pub1.AddCaptionLeft("<img src='" + appPath + "/WF/Img/Runing.gif' class=Icon >&nbsp;<a href='" + PageID + ".aspx' ><b>待办工作</b></a>");
         //        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name='string1' type='text' size=20 onChange='n = 0;' > <input type='button' onclick=\"javascript:alert('ss');findInPage('s');\" value='搜索' /> ");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
-        this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
+        this.Pub1.AddTDTitle("width='38%'", this.ToE("Title", "标题"));
 
         if (this.GroupBy != "FlowName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName" + extStr + "' >" + this.ToE("Flow", "流程") + "</a>");
@@ -246,7 +249,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
             gIdx++;
             this.Pub1.AddTR();
-            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<img src='./Img/PRI/" + se.IntKey + ".png' class=ImgPRI />");
+            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + appPath + "','" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='" + appPath + "/WF/Style/Min.gif' alert='Min' id='Img" + gIdx + "' />&nbsp;<img src='"+appPath+"/WF/Img/PRI/" + se.IntKey + ".png'  class=Icon />");
             this.Pub1.AddTREnd();
 
             string pri = se.IntKey.ToString();
@@ -260,9 +263,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 i++;
                 this.Pub1.AddTDIdx(i);
                 if (Glo.IsWinOpenEmpWorks == true)
-                    this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  >" + dr["Title"].ToString());
+                    this.Pub1.AddTD("Class=TTD width='38%'", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  >" + dr["Title"].ToString());
                 else
-                    this.Pub1.AddTD("Class=TTD", "<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+                    this.Pub1.AddTD("Class=TTD width='38%'", "<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
 
                 if (this.GroupBy != "FlowName")
                     this.Pub1.AddTD(dr["FlowName"].ToString());
@@ -273,9 +276,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (this.GroupBy != "StarterName")
                     this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
 
-                this.Pub1.AddTD(dr["RDT"].ToString());
-                this.Pub1.AddTD(dr["ADT"].ToString());
-                this.Pub1.AddTD(dr["SDT"].ToString());
+                this.Pub1.AddTD(dr["RDT"].ToString().Substring(5));
+                this.Pub1.AddTD(dr["ADT"].ToString().Substring(5));
+                this.Pub1.AddTD(dr["SDT"].ToString().Substring(5));
 
                 DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
                 if (cdt >= mysdt)
@@ -301,6 +304,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     public DataTable dt = null;
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.FK_Flow = this.Request.QueryString["FK_Flow"];
         if (this.IsHungUp)
             dt = BP.WF.Dev2Interface.DB_GenerEmpWorkshHungUpOfDataTable();
         else

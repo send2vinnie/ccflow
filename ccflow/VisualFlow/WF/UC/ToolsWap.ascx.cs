@@ -399,7 +399,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         // this.AddFieldSet(this.ToE("To4", "电子签名设置"));
 
-        this.Add("<p align=center><img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> </p>");
+        this.Add("<p align=center><img src='" + this.Request.ApplicationPath + "/DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> </p>");
 
         this.Add(this.ToE("Upload", "上传"));
 
@@ -1049,7 +1049,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.Add("<br>"+this.ToE("UserName", "用户名") + ":&nbsp;&nbsp;<font color=green>" + WebUser.Name + "</font>&nbsp;&nbsp;");
         this.AddHR();
 
-        this.AddB(this.ToE("ESign", "电子签字") + ":<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> ，<a href='"+this.PageID+".aspx?RefNo=Siganture' >" + this.ToE("Edit", "设置/修改") + "</a>。");
+        this.AddB(this.ToE("ESign", "电子签字") + ":<img src='" + this.Request.ApplicationPath + "/DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> ，<a href='" + this.PageID + ".aspx?RefNo=Siganture' >" + this.ToE("Edit", "设置/修改") + "</a>。");
 
         this.AddBR();
         this.AddBR();

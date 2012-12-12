@@ -40,7 +40,6 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         //this.AddTR();
         //this.Add("<TD class=TitleMsg colspan=2 align=left><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/Start.gif' >" + this.ToE("Start", "发起") + "</TD>");
         //this.AddTREnd();
-
         //this.AddTR();
         //this.AddTDTitle("IDX");
         //this.AddTDTitle(this.ToE("Name", "名称"));
@@ -86,6 +85,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             BindWap(fls);
             return;
         }
+        string appPath = this.Request.ApplicationPath;
 
         string pageid = this.Request.RawUrl.ToLower();
         if (pageid.Contains("small"))
@@ -104,7 +104,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         int colspan = 4;
         this.AddTable("width='960px' align=center border=0");
         this.AddTR();
-        this.AddCaptionLeft("<img src='./Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b>");
+        this.AddCaptionLeft("<img src='" + appPath + "/WF/Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b>");
         this.AddTREnd();
 
         this.AddTR();
@@ -128,7 +128,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             if (fl.FK_FlowSort != fk_sort)
             {
                 gIdx++;
-                this.AddTDB("colspan="+colspan+" class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
+                this.AddTDB("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('"+appPath+"','" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='" + appPath + "/WF/Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + fl.FK_FlowSortText + "</b>");
                 this.AddTREnd();
                 fk_sort = fl.FK_FlowSort;
             }
@@ -150,15 +150,17 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             fk_sort = fl.FK_FlowSort;
             if (fl.StartListUrl == "")
             {
-                if (Glo.IsWinOpenStartWork == true)
+                if (Glo.IsWinOpenStartWork == 1)
                     this.AddTD("<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + fl.No + "&FK_Node=" + int.Parse(fl.No) + "01');\" >" + fl.Name + "</a>");
+                else if (Glo.IsWinOpenStartWork == 2)
+                    this.AddTD("<a href=\"javascript:WinOpenIt('"+appPath+"/WF/OneFlow/MyFlow.aspx?FK_Flow=" + fl.No + "&FK_Node=" + int.Parse(fl.No) + "01');\" >" + fl.Name + "</a>");
                 else
                     this.AddTD("<a href='MyFlow" + pageid + ".aspx?FK_Flow=" + fl.No + "&FK_Node=" + int.Parse(fl.No) + "01' >" + fl.Name + "</a>");
             }
             else
-                this.AddTD("<a href=\"javascript:StartListUrl('" + fl.StartListUrl + "?FK_Flow=" + fl.No + "&FK_Node=" + int.Parse(fl.No) + "01','" + fl.No + "','" + pageid + "')\" >" + fl.Name + "</a>");
+                this.AddTD("<a href=\"javascript:StartListUrl('"+appPath+"','" + fl.StartListUrl + "?FK_Flow=" + fl.No + "&FK_Node=" + int.Parse(fl.No) + "01','" + fl.No + "','" + pageid + "')\" >" + fl.Name + "</a>");
 
-            this.AddTD("<a href=\"javascript:WinOpen('Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart','sd');\"  >打开</a>");
+            this.AddTD("<a href=\"javascript:WinOpen('" + appPath + "/WF/Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart','sd');\"  >打开</a>");
             this.AddTD(fl.Note);
             this.AddTREnd();
         }

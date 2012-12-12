@@ -41,22 +41,22 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
         wk.Retrieve();
         if (nd.HisNodeWorkType == NodeWorkType.WorkHL || nd.HisNodeWorkType == NodeWorkType.WorkFHL)
         {
-            WorkerLists wls = new WorkerLists();
+            GenerWorkerLists wls = new GenerWorkerLists();
             QueryObject qo = new QueryObject(wls);
-            qo.AddWhere(WorkerListAttr.FID, wk.OID);
+            qo.AddWhere(GenerWorkerListAttr.FID, wk.OID);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.IsEnable, 1);
+            qo.AddWhere(GenerWorkerListAttr.IsEnable, 1);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Node,
+            qo.AddWhere(GenerWorkerListAttr.FK_Node,
                 nd.FromNodes[0].GetValByKey(NodeAttr.NodeID));
 
             int i = qo.DoQuery();
             if (i == 1)
             {
                 qo.clear();
-                qo.AddWhere(WorkerListAttr.FID, wk.OID);
+                qo.AddWhere(GenerWorkerListAttr.FID, wk.OID);
                 qo.addAnd();
-                qo.AddWhere(WorkerListAttr.IsEnable, 1);
+                qo.AddWhere(GenerWorkerListAttr.IsEnable, 1);
                 qo.DoQuery();
             }
 
@@ -77,7 +77,7 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
 
             bool isHaveRuing = false;
             bool is1 = false;
-            foreach (WorkerList wl in wls)
+            foreach (GenerWorkerList wl in wls)
             {
                 is1 = this.Pub1.AddTR(is1);
                 this.Pub1.AddTD(wl.FK_NodeText);

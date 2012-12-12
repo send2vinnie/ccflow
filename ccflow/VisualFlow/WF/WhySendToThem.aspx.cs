@@ -74,9 +74,9 @@ public partial class Face_WhySendToThem : System.Web.UI.Page
         this.Pub1.AddB("<br>接受的人员信息：");
         this.Pub1.AddB("<br>人员部门集合：<hr>");
 
-        WorkerLists wls = new WorkerLists();
-        wls.Retrieve(WorkerListAttr.FK_Node, this.ToNodeID, WorkerListAttr.WorkID, this.WorkID);
-        foreach (WorkerList wl in wls)
+        GenerWorkerLists wls = new GenerWorkerLists();
+        wls.Retrieve(GenerWorkerListAttr.FK_Node, this.ToNodeID, GenerWorkerListAttr.WorkID, this.WorkID);
+        foreach (GenerWorkerList wl in wls)
         {
             this.Pub1.AddLi(wl.FK_Emp + " " + wl.FK_EmpText + "个人信息如下:");
             EmpStations myess = new EmpStations();

@@ -22,22 +22,20 @@
 
         var url = '';
         if (doType == 'HungUp' || doType == 'UnHungUp') {
-            url = './../../HungUp.aspx?WorkID=' + workid + '&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node;
+            url = './../HungUpOp.aspx?WorkID=' + workid + '&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node;
             var str = window.showModalDialog(url, '', 'dialogHeight: 350px; dialogWidth:500px;center: no; help: no');
             if (str == undefined)
                 return;
             if (str == null)
                 return;
-
             //this.close();
             window.location.href = window.location.href;
             return;
         }
-
         url = 'OP.aspx?DoType=' + doType + '&WorkID=' + workid + '&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node;
         window.location.href = url;
     }
-    function Takeback(workid, fk_flow, fk_node,toNode) {
+    function Takeback(workid, fk_flow, fk_node, toNode) {
         if (confirm('您确定要执行吗？') == false)
             return;
         var url = '../../GetTaskSmall.aspx?DoType=Tackback&FK_Flow=' + fk_flow + '&FK_Node=' + fk_node + '&ToNode=' + toNode + '&WorkID=' + workid;

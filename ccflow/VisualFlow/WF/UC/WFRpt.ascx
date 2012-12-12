@@ -25,3 +25,10 @@ function ReinitIframe(frmID, tdID) {
     return;
 }
 </script>
+<style type="text/css">
+.ActionType
+{
+    width:16px;
+    height:16px;
+}
+</style>

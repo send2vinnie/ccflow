@@ -173,6 +173,7 @@ public partial class WF_Admin_TestFlow : WebPage
         this.Ucsys1.AddCaptionLeft("流程编号:" + fl.No + " 名称:" + fl.Name + "  - <a href='../Login.aspx'>博客模式直接登陆</a> - <a href='../../AppDemo/Login.aspx' >应用程序模式直接登陆</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("Users");
+        this.Ucsys1.AddTDTitle("ccflow5版");
         this.Ucsys1.AddTDTitle("独立模式");
         this.Ucsys1.AddTDTitle("小窗口模式");
         this.Ucsys1.AddTDTitle("特小窗口模式");
@@ -185,6 +186,7 @@ public partial class WF_Admin_TestFlow : WebPage
         {
             is1 = this.Ucsys1.AddTR(is1);
             this.Ucsys1.AddTD(emp.No + "," + emp.Name);
+            this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start5&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
             this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
             this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmall&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
             this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmallSingle&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");

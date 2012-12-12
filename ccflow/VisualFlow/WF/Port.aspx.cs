@@ -114,6 +114,7 @@ namespace BP.Web.Port
                     case DoWhatList.MyFlow:
                     case DoWhatList.MyWork:
                     case DoWhatList.Start:
+                    case DoWhatList.Start5:
                     case DoWhatList.StartSmall:
                     case DoWhatList.FlowFX:
                     case DoWhatList.DealWork:
@@ -151,6 +152,12 @@ namespace BP.Web.Port
                     //case DoWhatList.CallMyFlowSmall: // 调起指定的工作
                     //    this.Response.Redirect("MyFlowSmall.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + paras + "&FK_Node=" + this.FK_Node, true);
                     //    break;
+                    case DoWhatList.Start5: // 发起工作
+                        if (this.FK_Flow == null)
+                            this.Response.Redirect("Start.aspx", true);
+                        else
+                            this.Response.Redirect("./OneFlow/MyFlow.aspx?FK_Flow=" + this.FK_Flow + paras + "&FK_Node=" + nodeID, true);
+                        break;
                     case DoWhatList.Start: // 发起工作
                         if (this.FK_Flow == null)
                             this.Response.Redirect("Start.aspx", true);

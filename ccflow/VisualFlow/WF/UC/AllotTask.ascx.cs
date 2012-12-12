@@ -86,7 +86,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         // 当前用的员工权限。 
         this.Clear();
 
-        WorkerLists wls = new WorkerLists(this.WorkID, this.NodeID, true);
+        GenerWorkerLists wls = new GenerWorkerLists(this.WorkID, this.NodeID, true);
         string sql = "SELECT * FROM WF_RememberMe WHERE FK_Emp='" + WebUser.No + "' AND FK_Node=" + this.NodeID;
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
@@ -118,7 +118,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             else
                 cb.Text = emp.No + "  , " + emp.Name;
 
-            WorkerList wl = wls.GetEntityByKey(WorkerListAttr.FK_Emp, fk_emp) as WorkerList;
+            GenerWorkerList wl = wls.GetEntityByKey(GenerWorkerListAttr.FK_Emp, fk_emp) as GenerWorkerList;
             if (wl == null)
                 cb.Checked = false;
             else
@@ -172,7 +172,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
     }
     public void Confirm()
     {
-        WorkerLists wls = new WorkerLists(this.WorkID, this.NodeID,true);
+        GenerWorkerLists wls = new GenerWorkerLists(this.WorkID, this.NodeID,true);
         string sql = "SELECT * FROM WF_RememberMe WHERE FK_Emp='"+WebUser.No+"' AND FK_Node="+this.NodeID;
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
@@ -185,7 +185,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             string[] empStrs = dt.Rows[0]["Emps"].ToString().Split('@');
 
             ArrayList al = new ArrayList();
-            WorkerLists wlSeles = new WorkerLists();
+            GenerWorkerLists wlSeles = new GenerWorkerLists();
 
             foreach (string fk_emp in empStrs)
             {
@@ -202,7 +202,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
                 if (cb.Checked == false)
                     continue;
 
-                WorkerList wl = wls.GetEntityByKey(WorkerListAttr.FK_Emp, fk_emp) as WorkerList;
+                GenerWorkerList wl = wls.GetEntityByKey(GenerWorkerListAttr.FK_Emp, fk_emp) as GenerWorkerList;
                 al.Add(cb.ID.Substring(3));
                 wlSeles.AddEntity(wl);
             }
@@ -230,7 +230,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             rm.Objs = "@";
             rm.ObjsExt = "";
 
-            foreach (WorkerList mywl in wlSeles)
+            foreach (GenerWorkerList mywl in wlSeles)
             {
                 rm.Objs += mywl.FK_Emp + "@";
                 rm.ObjsExt += mywl.FK_EmpText + "&nbsp;&nbsp;";
@@ -239,7 +239,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             rm.Emps = "@";
             rm.EmpsExt = "";
 
-            foreach (WorkerList wl in wls)
+            foreach (GenerWorkerList wl in wls)
             {
                 rm.Emps += wl.FK_Emp + "@";
 
@@ -277,10 +277,10 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             this.Alert("任务分配出错：" + ex.Message);
         }
     }
-    public void DealWithFHLFlow(ArrayList al, WorkerLists wlSeles)
+    public void DealWithFHLFlow(ArrayList al, GenerWorkerLists wlSeles)
     {
-        WorkerLists wls = new WorkerLists();
-        wls.Retrieve(WorkerListAttr.FID, this.FID);
+        GenerWorkerLists wls = new GenerWorkerLists();
+        wls.Retrieve(GenerWorkerListAttr.FID, this.FID);
 
         DBAccess.RunSQL("UPDATE  WF_GenerWorkerlist SET IsEnable=0  WHERE FID=" + this.FID);
 
@@ -301,14 +301,14 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         //wk.Update();
     }
 
-    public void DealWithPanelFlow(ArrayList al, WorkerLists wlSeles)
+    public void DealWithPanelFlow(ArrayList al, GenerWorkerLists wlSeles)
     {
         // 删除当前非配的工作。
         // 已经非配或者自动分配的任务。
         GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
         int NodeID = gwf.FK_Node;
         Int64 workId = this.WorkID;
-        //WorkerLists wls = new WorkerLists(this.WorkID,NodeID);
+        //GenerWorkerLists wls = new GenerWorkerLists(this.WorkID,NodeID);
         DBAccess.RunSQL("UPDATE  WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID);
         //  string vals = "";
         string emps = "";

@@ -188,10 +188,10 @@ namespace BP.Web.WF
                     case "OF":
                         string sid = this.Request.QueryString["SID"];
                         string[] strs = sid.Split('_');
-                        WorkerList wl = new WorkerList();
-                        int i = wl.Retrieve(WorkerListAttr.FK_Emp, strs[0],
-                            WorkerListAttr.WorkID, strs[1],
-                            WorkerListAttr.FK_Node, strs[2]);
+                        GenerWorkerList wl = new GenerWorkerList();
+                        int i = wl.Retrieve(GenerWorkerListAttr.FK_Emp, strs[0],
+                            GenerWorkerListAttr.WorkID, strs[1],
+                            GenerWorkerListAttr.FK_Node, strs[2]);
                         if (i == 0)
                         {
                             this.Response.Write("<h2>提示</h2>此工作已经被别人处理或者此流程已删除。");
@@ -253,7 +253,6 @@ namespace BP.Web.WF
                             this.Session["info"] = "@执行撤消失败。@失败信息" + ex.Message;
                             this.Response.Redirect("MyFlowInfo" + Glo.FromPageType + ".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&FK_Type=warning", true);
                             return;
-                            //  this.ToMsgPage("@执行撤消失败。@失败信息"+ex.Message);
                         }
                     // this.Response.Redirect("MyFlow.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, true);
                     case "SetBillState":

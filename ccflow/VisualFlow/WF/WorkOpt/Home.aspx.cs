@@ -29,7 +29,7 @@ public partial class WF_WorkOpt_Home : System.Web.UI.Page
 
         Node nd12 = new Node(this.FK_Node);
 
-        WorkerLists wls = new WorkerLists(this.WorkID, nd12.FK_Flow);
+        GenerWorkerLists wls = new GenerWorkerLists(this.WorkID, nd12.FK_Flow);
         Flow fl = new Flow(nd12.FK_Flow);
 
         this.Pub2.Add("<Table border=0 wdith=100% align=left>");
@@ -43,14 +43,13 @@ public partial class WF_WorkOpt_Home : System.Web.UI.Page
         foreach (BP.WF.Node nd in nds)
         {
             bool isHave = false;
-            foreach (WorkerList wl in wls)
+            foreach (GenerWorkerList wl in wls)
             {
                 if (wl.FK_Node == nd.NodeID)
                 {
                     this.Pub2.Add("<font color=green>Step:" + nd.Step + nd.Name);
                     //this.Pub2.Add("<BR>执行人:" + wl.FK_EmpText);
-                    this.Pub2.Add("<BR>: <img src='./../../DataUser/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='./../../DataUser/Siganture/UnName.jpg'\"/>");
-
+                    this.Pub2.Add("<BR>: <img src='" + this.Request.ApplicationPath + "/DataUser/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='./../../DataUser/Siganture/UnName.jpg'\"/>");
                     this.Pub2.Add("<br>" + wl.RDT + "</font><hr>");
                     //this.Pub2.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");
                     isHave = true;

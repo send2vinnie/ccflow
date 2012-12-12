@@ -78,6 +78,9 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
     {
         switch (this.Sta)
         {
+            case "-1":
+                this.Bind(BP.WF.Dev2Interface.DB_CCList(WebUser.No));
+                break;
             case "0":
                 this.Bind(BP.WF.Dev2Interface.DB_CCList_UnRead(WebUser.No));
                 break;
@@ -92,7 +95,7 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
     }
     public string GenerMenu()
     {
-        string msg = "<a href='" + this.PageID + ".aspx?Sta=0' >未读</a> - <a href='" + this.PageID + ".aspx?Sta=1' >已读</a> - <a href='" + this.PageID + ".aspx?Sta=2' >删除</a>";
+        string msg = "<a href='" + this.PageID + ".aspx?Sta=-1&FK_Flow=" + this.FK_Flow + "' >全部</a> - <a href='" + this.PageID + ".aspx?Sta=0&FK_Flow=" + this.FK_Flow + "' >未读</a> - <a href='" + this.PageID + ".aspx?Sta=1&FK_Flow=" + this.FK_Flow + "' >已读</a> - <a href='" + this.PageID + ".aspx?Sta=2&FK_Flow=" + this.FK_Flow + "' >删除</a>";
         return msg;
     }
     /// <summary>
@@ -100,6 +103,7 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
     /// </summary>
     public void Bind(DataTable dt)
     {
+        string appPath = this.Request.ApplicationPath;
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
         {
@@ -112,24 +116,24 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
             this.Pub1.AddBR();
         int colspan = 9;
         this.Pub1.AddTable("width='960px' align=center");
-        this.Pub1.AddCaptionLeft("<img src='./Img/Runing.gif' >&nbsp;" + this.GenerMenu());
+        this.Pub1.AddCaptionLeft("<img src='" + appPath + "/WF/Img/CCSta/CC.gif' >&nbsp;" + this.GenerMenu());
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
-        this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
+        this.Pub1.AddTDTitle("流程标题");
         this.Pub1.AddTDTitle("内容");
 
         if (this.GroupBy != "FlowName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName&DoType=CC' >" + this.ToE("Flow", "流程") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=FlowName&DoType=CC&Sta=" + this.Sta + "&FK_Flow="+this.FK_Flow+"' >" + this.ToE("Flow", "流程") + "</a>");
 
         if (this.GroupBy != "NodeName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName&DoType=CC' >" + this.ToE("NodeName", "节点") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName&DoType=CC&Sta=" + this.Sta + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("NodeName", "节点") + "</a>");
 
         if (this.GroupBy != "Rec")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=Rec&DoType=CC' >" + this.ToE("Rec", "发起人") + "</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=Rec&DoType=CC&Sta=" + this.Sta + "&FK_Flow=" + this.FK_Flow + "' >抄送人</a>");
 
-        this.Pub1.AddTDTitle("抄送日期");
-        if (this.Sta=="1")
-        this.Pub1.AddTDTitle("删除");
+
+        if (this.Sta == "1")
+            this.Pub1.AddTDTitle("删除");
         this.Pub1.AddTREnd();
 
         int i = 0;
@@ -144,28 +148,27 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
 
             gIdx++;
             this.Pub1.AddTR();
-            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
+            this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('"+appPath+"','" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='"+appPath+"/WF/Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",", "") + "</b>");
             this.Pub1.AddTREnd();
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr[this.GroupBy].ToString() + "," != g)
                     continue;
-
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
-                bool isRead = false;
+                int Sta = (int)dr["Sta"];
 
                 this.Pub1.AddTDIdx(i);
-                if (isRead == false)
-                    this.Pub1.AddTDB("Class=TTD", "<a href=\"javascript:WinOpen('" + dr["MyPK"] + "','" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
+                if (Sta == 0)
+                    this.Pub1.AddTDB("Class=TTD onclick=\"SetImg('" + appPath + "','" + dr["MyPK"] + "')\"", "<a href=\"javascript:WinOpen('"+appPath+"','" + dr["MyPK"] + "','" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" ><img src='" + appPath + "/WF/Img/CCSta/0.png' id='I" + dr["MyPK"] + "' class=Icon >" + dr["Title"] + "</a><br>日期:" + dr["RDT"].ToString().Substring(5));
                 else
-                    this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpen('" + dr["MyPK"] + ",'" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" >" + dr["Title"] + "</a>");
+                    this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpen('"+appPath+"','" + dr["MyPK"] + "','" + dr["FK_Flow"] + "','" + dr["FK_Node"] + "','" + dr["RefWorkID"] + "','" + dr["FID"] + "','" + dr["Sta"] + "');\" ><img src='" + appPath + "/WF/Img/CCSta/" + dr["Sta"] + ".png' class=Icon >" + dr["Title"] + "</a><br>日期:" + dr["RDT"].ToString().Substring(5));
 
                 this.Pub1.AddTDBigDoc(DataType.ParseText2Html(dr["Doc"].ToString()));
 
                 if (this.GroupBy != "FlowName")
                 {
-                    if (isRead == false)
+                    if (Sta == 0)
                         this.Pub1.AddTDB(dr["FlowName"].ToString());
                     else
                         this.Pub1.AddTD(dr["FlowName"].ToString());
@@ -173,7 +176,7 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
 
                 if (this.GroupBy != "NodeName")
                 {
-                    if (isRead == false)
+                    if (Sta == 0)
                         this.Pub1.AddTDB(dr["NodeName"].ToString());
                     else
                         this.Pub1.AddTD(dr["NodeName"].ToString());
@@ -182,7 +185,6 @@ public partial class WF_UC_CC : BP.Web.UC.UCBase3
                 if (this.GroupBy != "Rec")
                     this.Pub1.AddTD(dr["Rec"].ToString());
 
-                this.Pub1.AddTD(dr["RDT"].ToString());
                 if (this.Sta == "1")
                     this.Pub1.AddTD("<a href=\"javascript:DoDelCC('" + dr["MyPK"] + "');\"><img src='" + this.Request.ApplicationPath + "/Images/Btn/Delete.gif' /></a>");
                 this.Pub1.AddTREnd();

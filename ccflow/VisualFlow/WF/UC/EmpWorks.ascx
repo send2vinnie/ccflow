@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="EmpWorks.ascx.cs" Inherits="WF_UC_EmpWorks" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-<%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
     <div style="width:100%;" >
     <uc1:Pub ID="Pub1" runat="server" />
     </div>
@@ -51,11 +50,11 @@
             return false;
         }
 
-        function SetImg(id) {
-            document.getElementById(id).src = './Img/Mail_Read.png';
+        function SetImg(appPath,id) {
+            document.getElementById(id).src = appPath + '/WF/Img/Mail_Read.png';
         }
 
-        function GroupBarClick(rowIdx) {
+        function GroupBarClick(appPath,rowIdx) {
             var alt = document.getElementById('Img' + rowIdx).alert;
             var sta = 'block';
             if (alt == 'Max') {
@@ -65,7 +64,7 @@
                 sta = 'none';
                 alt = 'Max';
             }
-            document.getElementById('Img' + rowIdx).src = './Img/' + alt + '.gif';
+            document.getElementById('Img' + rowIdx).src = appPath + '/WF/Img/' + alt + '.gif';
             document.getElementById('Img' + rowIdx).alert = alt;
             var i = 0
             for (i = 0; i <= 5000; i++) {
@@ -76,7 +75,8 @@
         }
 
         function WinOpenIt(url) {
-            var newWindow = window.open(url, 'newwindow', 'height=600,width=850,top=50,left=50,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no');
+           // alert(url);
+            var newWindow = window.open(url, '_blank', 'height=600,width=850,top=50,left=50,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no');
             newWindow.focus();
             return;
         }
@@ -87,10 +87,11 @@
           word-wrap: break-word; 
       　　word-break: normal; 
         }
-        .ImgPRI
+        .Icon
         {
-            width:20px;
-            height:20px;
+            width:16px;
+            height:16px;
             border:0px;
         }
+          
     </style>

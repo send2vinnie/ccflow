@@ -381,9 +381,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTD(dr[TrackAttr.EmpToT].ToString());
             ActionType at = (ActionType)int.Parse(dr[TrackAttr.ActionType].ToString());
 
-            this.AddTD(TrackTemp.GetActionTypeT(at));
+            this.AddTD("<img src='./../../Img/Action/" + at.ToString() + ".png' class='ActionType' border=0/>"  + TrackTemp.GetActionTypeT(at));
 
-            this.AddTD(DataType.ParseText2Html( dr[TrackAttr.Msg].ToString()));
+            this.AddTD(DataType.ParseText2Html(dr[TrackAttr.Msg].ToString()));
 
             //this.AddTD(item.NDToT);
             //this.AddTD(item.EmpToT);
@@ -757,12 +757,12 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             workid = wn.HisWork.OID;
             if (wn.HisWork.NodeState == 0)
             {
-                WorkerLists wls = new WorkerLists(workid,
+                GenerWorkerLists wls = new GenerWorkerLists(workid,
                     wn.HisNode.NodeID);
                 this.Add("<p align='left' style='line-height: 100%' >&nbsp;&nbsp;&nbsp;&nbsp;<a name='ND" + wn.HisNode.NodeID + "' >" + this.ToEP1("NStep", "@第{0}步", idx.ToString()) + "</a>" + wn.HisNode.Name + "，" + this.ToE("NodeState", "节点状态") + "：" + wn.HisWork.NodeStateText + "。");
                 string msg = this.ToE("WFRpt0", "当前操作人员:");
 
-                foreach (WorkerList wl in wls)
+                foreach (GenerWorkerList wl in wls)
                 {
                     if (wl.IsEnable)
                         msg += wl.FK_Emp + wl.FK_EmpText + "、";
