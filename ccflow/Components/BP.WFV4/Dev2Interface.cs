@@ -529,6 +529,28 @@ namespace BP.WF
         }
         #endregion 获取当前操作员的待办工作
 
+
+        #region 获取流程数据
+        /// <summary>
+        /// 根据流程状态获取指定流程数据
+        /// </summary>
+        /// <param name="fk_flow"></param>
+        /// <param name="sta"></param>
+        /// <returns></returns>
+        public static DataTable DB_NDxxRpt(string fk_flow, WFState sta)
+        {
+            string dbstr = BP.SystemConfig.AppCenterDBVarStr;
+            string sql = "SELECT OID,Title,RDT,FID FROM ND" + int.Parse(fk_flow) + "Rpt WHERE WFState=" + dbstr + "WFState AND Rec=" + dbstr + "Rec";
+            BP.DA.Paras ps = new BP.DA.Paras();
+            ps.SQL = sql;
+            ps.Add("Rec", BP.Web.WebUser.No);
+            ps.Add("WFState", (int)sta);
+            return DBAccess.RunSQLReturnTable(ps);
+        }
+             
+        #endregion
+
+
         #region 获取当前可以退回的节点。
         /// <summary>
         /// 获取当前节点可以退回的节点，以方便退回的二次开发。
