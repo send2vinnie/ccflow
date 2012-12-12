@@ -1306,7 +1306,7 @@ namespace BP.WF
                 sw.OID = workID;
                 sw.Retrieve();
                 sw.ResetDefaultVal();
-
+                sw.SetValByKey("Title", WorkNode.GenerTitle(sw));
                 if (htWork != null)
                 {
                     foreach (string str in htWork.Keys)
