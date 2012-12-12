@@ -3,15 +3,9 @@
     <%
     /*获取数据.*/
     string fk_flow = this.Request.QueryString["FK_Flow"];
-    string rptTable= "ND"+int.Parse(fk_flow)+"Rpt";
-    string nodeID = "ND" + int.Parse(fk_flow)+"01";
-    string fk_node =  int.Parse(fk_flow) + "01";
-    string dbStr = BP.SystemConfig.AppCenterDBVarStr;
-    string sql = "SELECT OID,Title,RDT FROM " + nodeID + " WHERE NodeState=0 AND Rec=" + dbStr + "Rec";
-    BP.DA.Paras ps =new BP.DA.Paras();
-    ps.SQL=sql;
-    ps.Add("Rec",BP.Web.WebUser.No);
-    System.Data.DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(ps);
+    string fk_node = int.Parse(fk_flow)+"01";
+        
+    System.Data.DataTable dt = BP.WF.Dev2Interface.DB_GenerDraftDataTable(fk_flow);
     %>
 <table  style="width:100%">
 <Caption class='Caption' align=left style="background:url('../../Comm/Style/BG_Title.png') repeat-x ; height:30px ; line-height:30px" >

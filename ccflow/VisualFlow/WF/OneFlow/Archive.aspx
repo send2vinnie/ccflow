@@ -5,7 +5,7 @@
     /*获取数据.*/
         /*获取数据.*/
         string fk_flow = this.Request.QueryString["FK_Flow"];
-        System.Data.DataTable dt = BP.WF.Dev2Interface.DB_NDxxRpt(fk_flow, BP.WF.WFState.Cancel);
+        System.Data.DataTable dt = BP.WF.Dev2Interface.DB_NDxxRpt(fk_flow, BP.WF.WFState.Complete);
     %>
 <table  style="width:100%">
 <Caption class='Caption' align=left style="background:url('../../Comm/Style/BG_Title.png') repeat-x ; height:30px ; line-height:30px" >
