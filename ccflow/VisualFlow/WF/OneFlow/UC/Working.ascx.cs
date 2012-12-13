@@ -14,23 +14,6 @@ using BP.Web;
 
 public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
 {
-    //public string _PageSamll = null;
-    //public string PageSmall
-    //{
-    //    get
-    //    {
-    //        if (_PageSamll == null)
-    //        {
-    //            if (this.PageID.ToLower().Contains("smallsingle"))
-    //                _PageSamll = "SmallSingle";
-    //            else if (this.PageID.ToLower().Contains("small"))
-    //                _PageSamll = "Small";
-    //            else
-    //                _PageSamll = "";
-    //        }
-    //        return _PageSamll;
-    //    }
-    //}
     public string FK_Flow
     {
         get
@@ -78,9 +61,7 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
             this.BindList_PRI();
             return;
         }
-
         string appPath = this.Request.ApplicationPath;
-
         bool isPRI = Glo.IsEnablePRI;
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
@@ -107,9 +88,6 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle("width=40%", "流程标题");
-
-        //if (this.GroupBy != "FlowName")
-        //    this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=FlowName" + extStr + "&FK_Flow="+this.FK_Flow+"' >" + this.ToE("Flow", "流程") + "</a>");
 
         if (this.GroupBy != "NodeName")
             this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=NodeName" + extStr + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("NodeName", "节点") + "</a>");
@@ -161,9 +139,6 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
                     this.Pub1.AddTD("Class=TTD width='50%' onclick=\"SetImg('" + appPath + "','I" + gIdx + "_" + i + "')\" ", "<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "&IsRead=0\" > <img class=Icon src='" + appPath + "/WF/Img/Mail_UnRead.png' id='I" + gIdx + "_" + i + "' />" + dr["Title"].ToString());
                 else
                     this.Pub1.AddTD("Class=TTD width='50%'", "<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" > <img class=Icon src='" + appPath + "/WF/Img/Mail_Read.png' id='I" + gIdx + "_" + i + "' />" + dr["Title"].ToString());
-
-                //if (this.GroupBy != "FlowName")
-                //    this.Pub1.AddTD(dr["FlowName"].ToString());
 
                 if (this.GroupBy != "NodeName")
                     this.Pub1.AddTD(dr["NodeName"].ToString());

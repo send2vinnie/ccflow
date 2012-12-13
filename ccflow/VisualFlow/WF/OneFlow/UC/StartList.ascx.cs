@@ -16,7 +16,7 @@ public partial class WF_OneFlow_UC_StartList : BP.Web.UC.UCBase3
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Page.Title = this.ToE("StartWork", "工作发起");
+        this.Page.Title = "工作发起";
         Flows fls = BP.WF.Dev2Interface.DB_GenerCanStartFlowsOfEntities();
         string appPath = this.Request.ApplicationPath;
 

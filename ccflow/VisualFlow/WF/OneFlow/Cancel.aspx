@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/OneFlow/MasterPage.master" AutoEventWireup="true" CodeFile="Cancel.aspx.cs" Inherits="WF_OneFlow_Cancel" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="Right" Runat="Server">
-    <%
+    <% 
     /*获取数据.*/
     string fk_flow = this.Request.QueryString["FK_Flow"];
     System.Data.DataTable dt = BP.WF.Dev2Interface.DB_NDxxRpt(fk_flow, BP.WF.WFState.Cancel);
@@ -10,7 +9,7 @@
 <Caption class='Caption' align="left" style="background:url('../../Comm/Style/BG_Title.png') repeat-x ; height:30px ; line-height:30px" >
 撤销</Caption>
 <tr>
-<th class="Title" width="1%">IDX </th>
+<th class="Title" width="1%">IDX</th>
 <th class="Title">流水号</th>
 <th class="Title">流程标题</th>
 <th class="Title">时间</th>
@@ -28,7 +27,7 @@
         rdt = dr["RDT"].ToString();
         fid = dr["FID"].ToString();
         idx++;
-    %>
+   %>
    <tr>
    <td class="Idx">
        <asp:CheckBox ID="CB"  Text=""  runat="server" /><%=idx %>
