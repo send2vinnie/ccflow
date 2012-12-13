@@ -24,7 +24,98 @@ namespace BP.WF
     /// </summary>
     public class SendReturnMsgFlag
     {
-        public const string a = "";
+        /// <summary>
+        /// 符合工作流程完成条件
+        /// </summary>
+        public const string MacthFlowOver = "MacthFlowOver";
+        /// <summary>
+        /// 当前工作[{0}]已经完成
+        /// </summary>
+        public const string CurrWorkOver = "CurrWorkOver";
+        /// <summary>
+        /// 符合完成条件,流程完成
+        /// </summary>
+        public const string FlowOverByCond = "FlowOverByCond";
+        /// <summary>
+        /// 到人员
+        /// </summary>
+        public const string ToEmps = "ToEmps";
+        /// <summary>
+        /// 合流结束
+        /// </summary>
+        public const string HeLiuOver = "HeLiuOver";
+        /// <summary>
+        /// 工作报告
+        /// </summary>
+        public const string WorkRpt = "WorkRpt";
+        /// <summary>
+        /// 启动节点
+        /// </summary>
+        public const string WorkStartNode = "WorkStartNode";
+        /// <summary>
+        /// 工作启动
+        /// </summary>
+        public const string WorkStart = "WorkStart";
+        /// <summary>
+        /// 流程结束
+        /// </summary>
+        public const string FlowOver = "FlowOver";
+        /// <summary>
+        /// 发送成功后的事件异常
+        /// </summary>
+        public const string SendSuccessMsgErr = "SendSuccessMsgErr";
+        /// <summary>
+        /// 发送成功信息
+        /// </summary>
+        public const string SendSuccessMsg = "SendSuccessMsg";
+        /// <summary>
+        /// 分流程信息
+        /// </summary>
+        public const string FenLiuInfo = "FenLiuInfo";
+        /// <summary>
+        /// 抄送消息
+        /// </summary>
+        public const string CCMsg = "CCMsg";
+        /// <summary>
+        /// 编辑接受者
+        /// </summary>
+        public const string EditAccepter = "EditAccepter";
+        /// <summary>
+        /// 新建流程
+        /// </summary>
+        public const string NewFlowUnSend = "NewFlowUnSend";
+        /// <summary>
+        /// 撤销发送
+        /// </summary>
+        public const string UnSend = "UnSend";
+        /// <summary>
+        /// 报表
+        /// </summary>
+        public const string Rpt = "Rpt";
+        /// <summary>
+        /// 发送时
+        /// </summary>
+        public const string SendWhen = "SendWhen";
+        /// <summary>
+        /// 当前流程结束
+        /// </summary>
+        public const string End = "End";
+        /// <summary>
+        /// 当前流程完成
+        /// </summary>
+        public const string OverCurr = "OverCurr";
+        /// <summary>
+        /// 流程方向信息
+        /// </summary>
+        public const string CondInfo = "CondInfo";
+        /// <summary>
+        /// 一个节点完成
+        /// </summary>
+        public const string OneNodeOver = "OneNodeOver";
+        /// <summary>
+        /// 单据信息
+        /// </summary>
+        public const string BillInfo = "BillInfo";
     }
     /// <summary>
     /// 工作发送返回对象
@@ -98,9 +189,9 @@ namespace BP.WF
                 if (item.HisSendReturnMsgType == SendReturnMsgType.SystemMsg)
                     continue;
 
-                if (item.Msg != null)
+                if (item.MsgOfText != null)
                 {
-                    msg += "@" + item.Msg;
+                    msg += "@" + item.MsgOfText;
                     continue;
                 }
             }
@@ -127,9 +218,9 @@ namespace BP.WF
                     continue;
                 }
 
-                if (item.Msg != null)
+                if (item.MsgOfText != null)
                 {
-                    msg += "@" + item.Msg;
+                    msg += "@" + item.MsgOfText;
                     continue;
                 }
             }

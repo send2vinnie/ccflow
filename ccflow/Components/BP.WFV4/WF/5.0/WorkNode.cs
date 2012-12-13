@@ -2169,9 +2169,9 @@ namespace BP.WF
                     if (this.HisNodeCompleteConditions.IsPass)
                     {
                         if (SystemConfig.IsDebug)
-                            this.addMsg("FlowOver","@当前工作[" + this.HisNode.Name + "]符合完成条件[" + this.HisNodeCompleteConditions.ConditionDesc + "],已经完成.");
+                            this.addMsg(SendReturnMsgFlag.FlowOverByCond,"@当前工作[" + this.HisNode.Name + "]符合完成条件[" + this.HisNodeCompleteConditions.ConditionDesc + "],已经完成.");
                         else
-                           this.addMsg("FlowOver", string.Format("当前工作{0}已经完成", this.HisNode.Name));
+                            this.addMsg(SendReturnMsgFlag.FlowOver, string.Format("当前工作{0}已经完成", this.HisNode.Name));
                     }
                     else
                     {
@@ -2208,7 +2208,7 @@ namespace BP.WF
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
                     string mymsg = "@符合工作流程完成条件" + stopMsg + "" + overMsg;
                     string mymsgHtml=mymsg+"@查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
-                    this.addMsg("FlowOver",mymsg,mymsgHtml, SendReturnMsgType.Info);
+                    this.addMsg(SendReturnMsgFlag.FlowOver, mymsg, mymsgHtml, SendReturnMsgType.Info);
                 }
             }
             catch (Exception ex)
@@ -2598,27 +2598,27 @@ namespace BP.WF
                 //@加入消息集合里。
                 this.AddIntoWacthDog(gwls);
 
-                this.addMsg("ToEmps", this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this.nextStationName,
+                this.addMsg(SendReturnMsgFlag.ToEmps, this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this.nextStationName,
                     this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt));
 
                 if (this._RememberMe.NumOfEmps >= 2)
                 {
                     if (WebUser.IsWap)
-                        this.addMsg("ToEmps", "<a href=\"" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>指定特定的同事处理</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "<a href=\"" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>指定特定的同事处理</a>。");
                     else
-                        this.addMsg("ToEmps", "<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>" + this.ToE("WN24", "指定特定的同事处理") + "</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>" + this.ToE("WN24", "指定特定的同事处理") + "</a>。");
                 }
 
 
                 if (WebUser.IsWap == false)
-                    this.addMsg("ToEmps",  "@<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "');\" ><img src='" + this.VirPath + "/WF/Img/SMS.gif' border=0 />" + this.ToE("WN21", "发手机短信提醒他(们)") + "</a>");
+                    this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "');\" ><img src='" + this.VirPath + "/WF/Img/SMS.gif' border=0 />" + this.ToE("WN21", "发手机短信提醒他(们)") + "</a>");
 
                 if (this.HisNode.HisFormType != FormType.SDKForm)
                 {
                     if (this.HisNode.IsStartNode)
-                        this.addMsg("ToEmps", "@<a href='" + this.VirPath + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toND.FK_Flow + "&FK_Node=" + toND.FK_Flow + "01'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href='" + this.VirPath + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toND.FK_Flow + "&FK_Node=" + toND.FK_Flow + "01'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。");
                     else
-                        this.addMsg("ToEmps", "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。");
                 }
 
                 ps = new Paras();
@@ -2633,11 +2633,11 @@ namespace BP.WF
                 }
                 else
                 {
-                    this.addMsg("WorkRpt", null,"@<img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + wk.OID + "&FID=" + wk.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >工作报告</a>。");
+                    this.addMsg(SendReturnMsgFlag.WorkRpt, null, "@<img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + wk.OID + "&FID=" + wk.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >工作报告</a>。");
                 }
                 #endregion
 
-                this.addMsg("ToEmps","@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + ".");
+                this.addMsg(SendReturnMsgFlag.WorkStartNode,"@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + ".");
             }
             catch (Exception ex)
             {
@@ -2709,7 +2709,7 @@ namespace BP.WF
             this.NodeSend_2X_GenerFH();
             foreach (Node nd in toNDs)
             {
-                this.addMsg("WorkStart","@" + nd.Name + "工作已经启动，处理工作者：");
+                this.addMsg(SendReturnMsgFlag.WorkStart,"@" + nd.Name + "工作已经启动，处理工作者：");
                 //产生一个工作信息。
                 Work wk = nd.HisWork;
                 wk.Copy(this.HisWork);
@@ -2726,7 +2726,7 @@ namespace BP.WF
                 GenerWorkerLists gwls = this.NodeSend_GenerWorkerLists(town);
                 foreach (GenerWorkerList wl in gwls)
                 {
-                      this.addMsg("ToEmps",wl.FK_Emp + "，" + wl.FK_EmpText + "、");
+                      this.addMsg(SendReturnMsgFlag.ToEmps,wl.FK_Emp + "，" + wl.FK_EmpText + "、");
 
                     // 产生工作的信息。
                     GenerWorkFlow gwf = new GenerWorkFlow();
@@ -2855,7 +2855,7 @@ namespace BP.WF
                 string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
                 this.AddToTrack(ActionType.ForwardHL, fk_emp1, myfh.ToEmpsMsg, toND.NodeID, toND.Name, null);
 
-                this.addMsg("HeLiuOver", "@流程已经运行到合流节点[" + toND.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, toND.NodeID) + numStr);
+                this.addMsg(SendReturnMsgFlag.HeLiuOver, "@流程已经运行到合流节点[" + toND.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, toND.NodeID) + numStr);
             }
 
             /* 已经有FID，说明：以前已经有分流或者合流节点。*/
@@ -3266,7 +3266,7 @@ namespace BP.WF
                 throw new Exception("@当前工作您已经处理完成，或者您没有处理当前工作的权限。");
 
             // 第1.2: 调用发起前的事件接口,处理用户定义的业务逻辑.
-            this.addMsg("SendWhen", this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork));
+            this.addMsg(SendReturnMsgFlag.SendWhen, this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork));
 
             // 第3: 如果是是合流点，有子线程未完成的情况.
             if (this.HisNode.IsHL)
@@ -3525,7 +3525,7 @@ namespace BP.WF
 
                     if (billInfo != "")
                         billInfo = "@" + billInfo;
-                    this.addMsg("BillInfo",billInfo);
+                    this.addMsg(SendReturnMsgFlag.BillInfo,billInfo);
                 }
                 #endregion
 
@@ -3616,7 +3616,7 @@ namespace BP.WF
                                 BP.TA.SMS.AddMsg(list.RefWorkID + "_" + list.FK_Node + "_" + wfemp.No, wfemp.No,
                                   title, title, mytemp);
                             }
-                            this.addMsg("CCMsg", ccMsg);
+                            this.addMsg(SendReturnMsgFlag.CCMsg, ccMsg);
                         }
                     }
                     catch (Exception ex)
@@ -3634,11 +3634,11 @@ namespace BP.WF
                 {
                     // 调起发送成功后的事务。
                     string SendSuccess=this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendSuccess, this.HisWork);
-                    this.addMsg("SendSuccessMsg", SendSuccess);
+                    this.addMsg(SendReturnMsgFlag.SendSuccessMsg, SendSuccess);
                 }
                 catch (Exception ex)
                 {
-                    this.addMsg("SendSuccessMsgErr", ex.Message);
+                    this.addMsg(SendReturnMsgFlag.SendSuccessMsgErr, ex.Message);
                 }
                 #endregion 处理发送成功后事件.
 
@@ -3674,7 +3674,7 @@ namespace BP.WF
                             if (item.MsgOfHtml != null)
                                 msgOfSend = msgOfSend.Replace("@" + item.MsgFlag, item.MsgOfHtml);
                             else
-                                msgOfSend = msgOfSend.Replace("@" + item.MsgFlag, item.Msg);
+                                msgOfSend = msgOfSend.Replace("@" + item.MsgFlag, item.MsgOfText);
                         }
 
                         this.HisMsgObjs.OutMessageHtml = msgOfSend;
@@ -4669,27 +4669,27 @@ namespace BP.WF
                 this._RememberMe.NumOfObjs.ToString(),
                 this._RememberMe.EmpsExt);
 
-            this.addMsg("FenLiuInfo", fenliuInfo);
+            this.addMsg(SendReturnMsgFlag.FenLiuInfo, fenliuInfo);
 
             // 如果是开始节点，就可以允许选择接受人。
             if (this.HisNode.IsStartNode)
             {
                 if (gwls.Count >= 2)
                 {
-                    this.addMsg("EditAccepter",null, "@<img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0 /><a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&FID=" + this.WorkID + "&NodeID=" + toNode.NodeID + "')\" >" + this.ToE("W29", "修改接受对象") + "</a>.", 
+                    this.addMsg(SendReturnMsgFlag.EditAccepter,null, "@<img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0 /><a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&FID=" + this.WorkID + "&NodeID=" + toNode.NodeID + "')\" >" + this.ToE("W29", "修改接受对象") + "</a>.", 
                         SendReturnMsgType.Info);
                 }
             }
 
             if (this.HisNode.IsStartNode)
             {
-                this.addMsg("NewFlowUnSend", null,
+                this.addMsg(SendReturnMsgFlag.NewFlowUnSend, null,
                     "@<a href='" + this.VirPath  + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toNode.FK_Flow + "&FK_Node="+toNode.FK_Flow+"01' ><img src=./Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。", 
                     SendReturnMsgType.Info);
             }
             else
             {
-                this.addMsg("UnSend",null,
+                this.addMsg(SendReturnMsgFlag.UnSend,null,
                     "@<a href='" + this.VirPath  + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。", 
                     SendReturnMsgType.Info);
             }
@@ -4699,7 +4699,7 @@ namespace BP.WF
             //更新节点状态。
             this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete);
 
-            this.addMsg("Rpt", null,"@<a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FID=" + wk.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>", SendReturnMsgType.Info);
+            this.addMsg(SendReturnMsgFlag.Rpt, null,"@<a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FID=" + wk.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>", SendReturnMsgType.Info);
         }
         #endregion
         /// <summary>
@@ -5242,7 +5242,7 @@ namespace BP.WF
             if (this.HisNode.IsEndNode)
             {
                 /* 如果流程完成 */
-                this.addMsg("End","@流程已经走到最后一个节点，流程成功结束。");
+                this.addMsg(SendReturnMsgFlag.End,"@流程已经走到最后一个节点，流程成功结束。");
                 this.HisWorkFlow.DoFlowOver(ActionType.FlowOver, "流程已经走到最后一个节点，流程成功结束。");
                 this.IsStopFlow = true;
                 return;
@@ -5254,7 +5254,7 @@ namespace BP.WF
                 // 如果没有条件,就说明了,保存为完成节点任务的条件.
                 if (this.HisNode.IsCCNode == false)
                 {
-                    this.addMsg("OverCurr", string.Format("当前工作[{0}]已经完成", this.HisNode.Name));
+                    this.addMsg(SendReturnMsgFlag.OverCurr, string.Format("当前工作[{0}]已经完成", this.HisNode.Name));
                 }
                 else
                 {
@@ -5272,7 +5272,7 @@ namespace BP.WF
                             CondInfo = "@当前工作[" + this.HisNode.Name + "]符合完成条件[" + this.HisNodeCompleteConditions.ConditionDesc + "],已经完成.";
                         else
                             CondInfo = string.Format(this.ToE("WN6", "当前工作{0}已经完成"), this.HisNode.Name);  //"@"; //当前工作[" + this.HisNode.Name + "],已经完成.
-                        this.addMsg("CondInfo", CondInfo);
+                        this.addMsg(SendReturnMsgFlag.CondInfo, CondInfo);
                     }
                     else
                     {
@@ -5295,7 +5295,7 @@ namespace BP.WF
                     /* 如果流程完成 */
                      this.HisWorkFlow.DoFlowOver(ActionType.FlowOver,"符合流程完成条件");
                     this.IsStopFlow = true;
-                    this.addMsg("OneNodeOver", "工作已经成功处理(一个流程的工作)。", 
+                    this.addMsg(SendReturnMsgFlag.OneNodeOver, "工作已经成功处理(一个流程的工作)。", 
                         "工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>", SendReturnMsgType.Info);
                     return; 
                 }
@@ -5308,7 +5308,7 @@ namespace BP.WF
                     this.IsStopFlow = true;
                      
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
-                      this.addMsg("MacthFlowOver","@符合工作流程完成条件" + stopMsg + "" + overMsg ,
+                      this.addMsg(SendReturnMsgFlag.MacthFlowOver,"@符合工作流程完成条件" + stopMsg + "" + overMsg ,
                           "@符合工作流程完成条件" + stopMsg + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>", SendReturnMsgType.Info);
 
                       return;

@@ -252,11 +252,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\RepariDB.cs" />
-    <Compile Include="WF\New\SendReturnObj.cs" />
-    <Compile Include="WF\New\WorkFlow.cs">
+    <Compile Include="WF\5.0\SendReturnObj.cs" />
+    <Compile Include="WF\5.0\WorkFlow.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WF\New\WorkNode.cs">
+    <Compile Include="WF\5.0\WorkNode.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WF\Personalize\GetTask.cs" />
