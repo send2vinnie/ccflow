@@ -1452,7 +1452,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             msg = firstwn.AfterNodeSave();
             // 2012-08-20 为上海修改.
-            msg += "@<a href='EmpWorks" + PageSmall + ".aspx' >进入待办流程列表</a>，<a href='Start" + PageSmall + ".aspx'>进入发起流程列表</a>。";
+            msg += "@<a href='EmpWorks" + PageSmall + ".aspx?FK_Flow=" + this.FK_Flow + "' >进入待办流程列表</a>，<a href='Start" + PageSmall + ".aspx?FK_Flow=" + this.FK_Flow + "'>进入发起流程列表</a>。";
         }
         catch(Exception exSend)
         {
