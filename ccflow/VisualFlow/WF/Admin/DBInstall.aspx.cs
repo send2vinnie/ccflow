@@ -42,6 +42,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             this.Pub1.AddFieldSet("提示");
             this.Pub1.Add("ccflow数据库初始化成功.");
             this.Pub1.AddBR("<a href='./XAP/Designer.aspx?IsCheckUpdate=1' >进入流程设计器.</a>");
+            this.Response.Redirect("./XAP/Designer.aspx?IsCheckUpdate=1",true);
             this.Pub1.AddFieldSetEnd();
             return;
         }
@@ -165,7 +166,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 
         Button btn = new Button();
         btn.ID = "Btn_s";
-        btn.Text = "下一步";
+        btn.Text = "下一步(估计在3-5分钟内安装完成)";
         btn.CssClass = "Btn";
         btn.UseSubmitBehavior = false;
         btn.OnClientClick = "this.disabled=true;";
