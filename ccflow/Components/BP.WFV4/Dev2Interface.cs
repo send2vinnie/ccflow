@@ -141,8 +141,8 @@ namespace BP.WF
                 try
                 {
                     WorkNode wn = new WorkNode(wk, nd);
-                    string msg = wn.AfterNodeSave();
-                    BP.DA.Log.DefaultLogWriteLineInfo(msg);
+                    string msg = wn.NodeSend().ToMsgOfHtml();
+                    //BP.DA.Log.DefaultLogWriteLineInfo(msg);
                 }
                 catch (Exception ex)
                 {
@@ -1125,9 +1125,9 @@ namespace BP.WF
 
             WorkNode wn = new WorkNode(wk, fl.HisStartNode);
             if (nextWorker != null && fk_nodeOfJumpTo != 0)
-                return wn.AfterNodeSave(new Node(fk_nodeOfJumpTo), nextWorker);
+                return wn.NodeSend(new Node(fk_nodeOfJumpTo), nextWorker).ToMsgOfHtml();
             else
-                return wn.AfterNodeSave();
+                return wn.NodeSend().ToMsgOfHtml();
         }
         /// <summary>
         /// 发送工作
@@ -1135,7 +1135,7 @@ namespace BP.WF
         /// <param name="nodeID">节点编号</param>
         /// <param name="workID">工作ID</param>
         /// <returns>返回执行信息</returns>
-        public static string Node_SendWork(string fk_flow, Int64 workID)
+        public static SendReturnObjs Node_SendWork(string fk_flow, Int64 workID)
         {
             return Node_SendWork(fk_flow, workID, new Hashtable(),null);
         }
@@ -1146,7 +1146,7 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="htWork">节点表单数据(Hashtable中的key与节点表单的字段名相同,value 就是字段值)</param>
         /// <returns>执行信息</returns>
-        public static string Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork)
+        public static SendReturnObjs Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork)
         {
             return Node_SendWork(fk_flow, workID, htWork, null);
         }
@@ -1158,7 +1158,7 @@ namespace BP.WF
         /// <param name="htWork">节点表单数据(Hashtable中的key与节点表单的字段名相同,value 就是字段值)</param>
         /// <param name="workDtls">节点表单明从表数据(dataset可以包含多个table，每个table的名称与从表名称相同，列名与从表的字段相同, OID,RefPK列需要为空或者null )</param>
         /// <returns>执行信息</returns>
-        public static string Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork, DataSet workDtls)
+        public static SendReturnObjs Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork, DataSet workDtls)
         {
             Node nd = new Node(Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
             Work sw = nd.HisWork;
@@ -1216,7 +1216,7 @@ namespace BP.WF
                 }
             }
             WorkNode wn = new WorkNode(sw, nd);
-            return wn.AfterNodeSave();
+            return wn.NodeSend();
         }
         /// <summary>
         /// 执行抄送
@@ -1709,7 +1709,7 @@ namespace BP.WF
             }
 
             WorkNode wn = new WorkNode(workid, fromNodeID);
-            string msg = wn.AfterNodeSave(new Node(tackToNodeID),BP.Web.WebUser.No);
+            string msg = wn.NodeSend(new Node(tackToNodeID),BP.Web.WebUser.No).ToMsgOfHtml();
             wn.AddToTrack(ActionType.Tackback, WebUser.No, WebUser.Name, tackToNodeID, nd.Name, "执行跳转审核的取回.");
             return msg;
         }

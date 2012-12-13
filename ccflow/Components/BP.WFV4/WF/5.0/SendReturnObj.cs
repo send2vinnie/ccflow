@@ -42,7 +42,7 @@ namespace BP.WF
         /// <summary>
         /// 消息内容
         /// </summary>
-        public string Msg = null;
+        public string MsgOfText = null;
         /// <summary>
         /// 消息内容Html
         /// </summary>
@@ -60,9 +60,12 @@ namespace BP.WF
     public class SendReturnObjs:System.Collections.CollectionBase
     {
         /// <summary>
-        /// 输出的消息
+        /// 输出text消息
         /// </summary>
         public string OutMessageText = null;
+        /// <summary>
+        /// 输出html信息
+        /// </summary>
         public string OutMessageHtml = null;
 
         /// <summary>
@@ -76,7 +79,7 @@ namespace BP.WF
         {
             SendReturnObj obj = new SendReturnObj();
             obj.MsgFlag = msgFlag;
-            obj.Msg = msg;
+            obj.MsgOfText = msg;
             obj.MsgOfHtml = msgOfHtml;
             obj.HisSendReturnMsgType = type;
             this.InnerList.Add(obj);

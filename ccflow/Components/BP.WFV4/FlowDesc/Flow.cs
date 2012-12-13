@@ -279,7 +279,7 @@ namespace BP.WF
                         jumpToEmp = WebUser.No;
 
                     WorkNode wn = new WorkNode(wk, nd);
-                    wn.AfterNodeSave(jumpNode, jumpToEmp);
+                    wn.NodeSend(jumpNode, jumpToEmp);
 
                     WorkFlow wf = new WorkFlow(this, wk.OID, wk.FID);
                     return wf.GetCurrentWorkNode().HisWork;
@@ -581,7 +581,7 @@ namespace BP.WF
                 try
                 {
                     WorkNode wn = new WorkNode(wk, nd);
-                    string infoSend = wn.AfterNodeSave();
+                    string infoSend = wn.NodeSend().ToMsgOfHtml();
                     BP.DA.Log.DefaultLogWriteLineInfo(msg);
                     msg+= "@" + this.Name + ",第" + idx + "条,发起人员:" + WebUser.No + "-" + WebUser.Name + "已完成.\r\n" + infoSend;
                     //this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "已经完成。\r\n" + msg);

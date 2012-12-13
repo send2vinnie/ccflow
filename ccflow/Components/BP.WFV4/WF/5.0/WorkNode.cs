@@ -2008,14 +2008,7 @@ namespace BP.WF
         }
         private Node JumpToNode = null;
         private string JumpToEmp = null;
-        /// <summary>
-        /// 保存后处理
-        /// </summary>
-        /// <returns></returns>
-        public string AfterNodeSave()
-        {
-            return AfterNodeSave(null, null);
-        }
+        
         #region NodeSend 的附属功能.
         /// <summary>
         /// 获取下一步骤的工作节点
@@ -3234,7 +3227,13 @@ namespace BP.WF
             addMsg(flag, msg, msgofHtml, SendReturnMsgType.Info);
         }
         #endregion 返回对象处理.
-
+        /// <summary>
+        /// 工作流发送业务处理
+        /// </summary>
+        public SendReturnObjs NodeSend()
+        {
+            return NodeSend(null, null);
+        }
         /// <summary>
         /// 工作流发送业务处理.
         /// 升级日期:2012-11-11.
@@ -3244,15 +3243,17 @@ namespace BP.WF
         /// ----------------------------------- 说明 -----------------------------
         /// 1，方法体分为三大部分: 发送前检查\5*5算法\发送后的业务处理.
         /// 2, 详细请参考代码体上的说明.
+        /// 3, 发送后可以直接获取它的 
         /// </summary>
         /// <param name="jumpToNode">要跳转的节点</param>
         /// <param name="jumpToEmp">要跳转的人</param>
         /// <returns>执行结构</returns>
-        public void NodeSend(Node jumpToNode, string jumpToEmp)
+        public SendReturnObjs NodeSend(Node jumpToNode, string jumpToEmp)
         {
             //设置跳转节点，如果有可以为null.
             this.JumpToNode = jumpToNode;
             this.JumpToEmp = jumpToEmp;
+
             string sql = null;
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
@@ -3668,7 +3669,7 @@ namespace BP.WF
                             if (msgOfSend.Contains("@") == false)
                                 continue;
 
-                            msgOfSendText = msgOfSendText.Replace("@" + item.MsgFlag, item.Msg);
+                            msgOfSendText = msgOfSendText.Replace("@" + item.MsgFlag, item.MsgOfText);
 
                             if (item.MsgOfHtml != null)
                                 msgOfSend = msgOfSend.Replace("@" + item.MsgFlag, item.MsgOfHtml);
@@ -3694,10 +3695,13 @@ namespace BP.WF
                 {
                     if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
                     {
-                        town.AfterNodeSave();
+                        town.NodeSend();
                         this.HisMsgObjs = town.HisMsgObjs;
                     }
                 }
+
+                //返回这个对象.
+                return this.HisMsgObjs;
             }
             catch (Exception ex)
             {
@@ -3706,17 +3710,7 @@ namespace BP.WF
                 throw ex;
             }
         }
-        /// <summary>
-        /// 调用发送
-        /// </summary>
-        /// <param name="jumpToNode">跳转到的节点，可以为null</param>
-        /// <param name="jumpToEmp">跳转到的人员，可以为null</param>
-        /// <returns></returns>
-        public string AfterNodeSave(Node jumpToNode, string jumpToEmp)
-        {
-             NodeSend(jumpToNode, jumpToEmp);
-             return this.HisMsgObjs.ToMsgOfHtml();
-        }
+        
         /// <summary>
         /// 手工的回滚提交失败信息.
         /// </summary>

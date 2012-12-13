@@ -208,7 +208,7 @@ namespace BP.WF
                 WorkNode wn = new WorkNode(wk, ndStart);
                 try
                 {
-                    info += "<hr>" + wn.AfterNodeSave(nd,executer);
+                    info += "<hr>" + wn.NodeSend(nd,executer).ToMsgOfHtml();
                 }
                 catch (Exception ex)
                 {
@@ -354,7 +354,7 @@ namespace BP.WF
                 WorkNode wn = new WorkNode(wk, ndStart);
                 try
                 {
-                    info += "<hr>" + wn.AfterNodeSave(ndOfEnd, executer);
+                    info += "<hr>" + wn.NodeSend(ndOfEnd, executer).ToMsgOfHtml();
                 }
                 catch (Exception ex)
                 {
@@ -383,7 +383,7 @@ namespace BP.WF
                 {
                     WorkNode wnEnd = new WorkNode(wkEnd, ndOfEnd);
                   //  wnEnd.AfterNodeSave();
-                    info += "<hr>" + wnEnd.AfterNodeSave();
+                    info += "<hr>" + wnEnd.NodeSend().ToMsgOfHtml();
                 }
                 catch (Exception ex)
                 {
