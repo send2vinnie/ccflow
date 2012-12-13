@@ -1397,7 +1397,13 @@ namespace BP.WF
                     if (BP.Web.WebUser.IsWap)
                         _AppType = "/WF/WAP";
                     else
-                        _AppType = "/WF";
+                    {
+                        bool b = System.Web.HttpContext.Current.Request.RawUrl.ToLower().Contains("oneflow");
+                        if (b)
+                            _AppType = "/WF/OneFlow";
+                        else
+                            _AppType = "/WF";
+                    }
                 }
                 return _AppType;
             }
@@ -1681,7 +1687,7 @@ namespace BP.WF
                         if (wnPri.HisNode.HisFormType != FormType.SDKForm)
                             return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FK_Node=" + gwf.FK_Node + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + this.AppType + "/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                         else
-                            return this.ToE("UnSendOK", "撤销成功.") + msg;
+                            return this.ToE("UnSendOK", "撤销成功.") + msg; 
                     }
                 }
             }

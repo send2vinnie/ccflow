@@ -49,7 +49,6 @@ namespace BP.WF
         public Work NewWork()
         {
             BP.WF.Node nd = new BP.WF.Node(this.StartNodeID);
-
             //从草稿里看看是否有新工作？
             StartWork wk = (StartWork)nd.HisWork;
             int num = 0;

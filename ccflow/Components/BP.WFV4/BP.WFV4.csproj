@@ -135,6 +135,7 @@
     <Compile Include="DemoData\CRM\SalesBill.cs" />
     <Compile Include="DTS\GenerTitle.cs" />
     <Compile Include="DTS\DynamicWebService.cs" />
+    <Compile Include="DTS\GenerDustbinData.cs" />
     <Compile Include="FlowData.cs" />
     <Compile Include="FlowDesc\FlowDescExt\Selector.cs" />
     <Compile Include="FlowDesc\HungUp.cs" />
@@ -251,6 +252,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\RepariDB.cs" />
+    <Compile Include="WF\New\SendReturnObj.cs" />
     <Compile Include="WF\New\WorkFlow.cs">
       <SubType>Code</SubType>
     </Compile>

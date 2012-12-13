@@ -92,7 +92,7 @@ namespace BP.WF
             get
             {
                 if (_VirPath == null && BP.SystemConfig.IsBSsystem)
-                    _VirPath = System.Web.HttpContext.Current.Request.ApplicationPath ;
+                    _VirPath = System.Web.HttpContext.Current.Request.ApplicationPath;
                 return _VirPath;
             }
         }
@@ -109,7 +109,13 @@ namespace BP.WF
                     if (BP.Web.WebUser.IsWap)
                         _AppType = "/WF/WAP";
                     else
-                        _AppType = "/WF";
+                    {
+                        bool b = System.Web.HttpContext.Current.Request.RawUrl.ToLower().Contains("oneflow");
+                        if (b)
+                            _AppType = "/WF/OneFlow";
+                        else
+                            _AppType = "/WF";
+                    }
                 }
                 return _AppType;
             }
@@ -2155,7 +2161,8 @@ namespace BP.WF
                 // 如果没有条件,就说明了,保存为完成节点任务的条件.
                 if (this.HisNode.IsCCNode == false)
                 {
-                    msg += string.Format(this.ToE("WN6", "当前工作[{0}]已经完成"), this.HisNode.Name);
+
+                    this.addMsg("CurrWorkOver",string.Format("当前工作[{0}]已经完成", this.HisNode.Name));
                 }
                 else
                 {
@@ -2169,14 +2176,14 @@ namespace BP.WF
                     if (this.HisNodeCompleteConditions.IsPass)
                     {
                         if (SystemConfig.IsDebug)
-                            msg += "@当前工作[" + this.HisNode.Name + "]符合完成条件[" + this.HisNodeCompleteConditions.ConditionDesc + "],已经完成.";
+                            this.addMsg("FlowOver","@当前工作[" + this.HisNode.Name + "]符合完成条件[" + this.HisNodeCompleteConditions.ConditionDesc + "],已经完成.");
                         else
-                            msg += string.Format(this.ToE("WN6", "当前工作{0}已经完成"), this.HisNode.Name);  //"@"; //当前工作[" + this.HisNode.Name + "],已经完成.
+                           this.addMsg("FlowOver", string.Format("当前工作{0}已经完成", this.HisNode.Name));
                     }
                     else
                     {
                         // "@当前工作[" + this.HisNode.Name + "]没有完成,下一步工作不能启动."
-                        throw new Exception(string.Format(this.ToE("WN7", "@当前工作{0}没有完成,下一步工作不能启动."), this.HisNode.Name));
+                        throw new Exception(string.Format("@当前工作{0}没有完成,下一步工作不能启动.", this.HisNode.Name));
                     }
                 }
             }
@@ -2194,7 +2201,8 @@ namespace BP.WF
                     /* 如果流程完成 */
                     string overMsg = this.HisWorkFlow.DoFlowOver(ActionType.FlowOver, "符合流程完成条件");
                     this.IsStopFlow = true;
-                    msg+="@工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
+                    this.addMsg("OneNodeFlowOver","@工作已经成功处理(一个流程的工作)。");
+                    //msg+="@工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
 
                 if (this.HisNode.IsCCFlow && this.HisFlowCompleteConditions.IsPass)
@@ -2205,7 +2213,9 @@ namespace BP.WF
                     this.IsStopFlow = true;
 
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
-                    msg += "@符合工作流程完成条件" + stopMsg + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
+                    string mymsg = "@符合工作流程完成条件" + stopMsg + "" + overMsg;
+                    string mymsgHtml=mymsg+"@查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
+                    this.addMsg("FlowOver",mymsg,mymsgHtml, SendReturnMsgType.Info);
                 }
             }
             catch (Exception ex)
@@ -2595,28 +2605,27 @@ namespace BP.WF
                 //@加入消息集合里。
                 this.AddIntoWacthDog(gwls);
 
-                msg += this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this.nextStationName,
-                    this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt);
+                this.addMsg("ToEmps", this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this.nextStationName,
+                    this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt));
 
                 if (this._RememberMe.NumOfEmps >= 2)
                 {
                     if (WebUser.IsWap)
-                        msg += "<a href=\"" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>" + this.ToE("WN24", "指定特定的同事处理") + "</a>。";
+                        this.addMsg("ToEmps", "<a href=\"" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>指定特定的同事处理</a>。");
                     else
-                        msg += "<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>" + this.ToE("WN24", "指定特定的同事处理") + "</a>。";
+                        this.addMsg("ToEmps", "<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>" + this.ToE("WN24", "指定特定的同事处理") + "</a>。");
                 }
 
-                msg += this.GenerWhySendToThem(this.HisNode.NodeID, toND.NodeID);
 
                 if (WebUser.IsWap == false)
-                    msg += "@<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "');\" ><img src='" + this.VirPath + "/WF/Img/SMS.gif' border=0 />" + this.ToE("WN21", "发手机短信提醒他(们)") + "</a>";
+                    this.addMsg("ToEmps",  "@<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "');\" ><img src='" + this.VirPath + "/WF/Img/SMS.gif' border=0 />" + this.ToE("WN21", "发手机短信提醒他(们)") + "</a>");
 
                 if (this.HisNode.HisFormType != FormType.SDKForm)
                 {
                     if (this.HisNode.IsStartNode)
-                        msg += "@<a href='" + this.VirPath + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toND.FK_Flow + "&FK_Node=" + toND.FK_Flow + "01'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。";
+                        this.addMsg("ToEmps", "@<a href='" + this.VirPath + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toND.FK_Flow + "&FK_Node=" + toND.FK_Flow + "01'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。");
                     else
-                        msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
+                        this.addMsg("ToEmps", "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。");
                 }
 
                 ps = new Paras();
@@ -2631,11 +2640,11 @@ namespace BP.WF
                 }
                 else
                 {
-                    msg += "@<img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + wk.OID + "&FID=" + wk.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >" + this.ToE("WorkRpt", "工作报告") + "</a>。";
+                    this.addMsg("WorkRpt", null,"@<img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + wk.OID + "&FID=" + wk.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >工作报告</a>。");
                 }
                 #endregion
 
-                msg += "@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + ".";
+                this.addMsg("ToEmps","@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + ".");
             }
             catch (Exception ex)
             {
@@ -2699,7 +2708,7 @@ namespace BP.WF
         /// 处理分流点向下发送 to 异表单.
         /// </summary>
         /// <returns></returns>
-        private string NodeSend_24_UnSameSheet(Nodes toNDs)
+        private void NodeSend_24_UnSameSheet(Nodes toNDs)
         {
             throw new Exception("@未实现的流程模式NodeSend_24_UnSameSheet ");
             /*首先要分析出来*/
@@ -2707,7 +2716,7 @@ namespace BP.WF
             this.NodeSend_2X_GenerFH();
             foreach (Node nd in toNDs)
             {
-                msg += "@" + nd.Name + "工作已经启动，处理工作者：";
+                this.addMsg("WorkStart","@" + nd.Name + "工作已经启动，处理工作者：");
                 //产生一个工作信息。
                 Work wk = nd.HisWork;
                 wk.Copy(this.HisWork);
@@ -2718,14 +2727,13 @@ namespace BP.WF
                 wk.OID = BP.DA.DBAccess.GenerOID();
                 wk.BeforeSave();
                 wk.DirectInsert();
-
              
                 //获得它的工作者。
                 WorkNode town = new WorkNode(wk, nd);
                 GenerWorkerLists gwls = this.NodeSend_GenerWorkerLists(town);
                 foreach (GenerWorkerList wl in gwls)
                 {
-                    msg += wl.FK_Emp + "，" + wl.FK_EmpText + "、";
+                      this.addMsg("ToEmps",wl.FK_Emp + "，" + wl.FK_EmpText + "、");
 
                     // 产生工作的信息。
                     GenerWorkFlow gwf = new GenerWorkFlow();
@@ -2757,7 +2765,6 @@ namespace BP.WF
                     DBAccess.RunSQL(ps);
                 }
             }
-            return msg;
         }
         /// <summary>
         /// 产生分流点
@@ -2805,7 +2812,7 @@ namespace BP.WF
                  */
 
                 ps = new Paras();
-                ps.SQL = "UPDATE WF_GenerWorkerlist SET IsPass=1  WHERE WorkID=" +dbStr + "WorkID AND FID=" +dbStr + "FID AND FK_Node=" + dbStr+"FK_Node";
+                ps.SQL = "UPDATE WF_GenerWorkerlist SET IsPass=1  WHERE WorkID=" + dbStr + "WorkID AND FID=" + dbStr + "FID AND FK_Node=" + dbStr + "FK_Node";
                 ps.Add("WorkID", this.WorkID);
                 ps.Add("FID", this.HisWork.FID);
                 ps.Add("FK_Node", this.HisNode.NodeID);
@@ -2825,9 +2832,8 @@ namespace BP.WF
                     WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
 
                 #region 处理完成率
-
                 ps = new Paras();
-                ps.SQL = "SELECT FK_Emp,FK_EmpText FROM WF_GenerWorkerList WHERE FK_Node=" + dbStr+ "FK_Node AND FID=" + dbStr+ "FID AND IsPass=1";
+                ps.SQL = "SELECT FK_Emp,FK_EmpText FROM WF_GenerWorkerList WHERE FK_Node=" + dbStr + "FK_Node AND FID=" + dbStr + "FID AND IsPass=1";
                 ps.Add("FK_Node", this.HisNode.NodeID);
                 ps.Add("FID", this.HisWork.FID);
                 DataTable dt_worker = BP.DA.DBAccess.RunSQLReturnTable(ps);
@@ -2837,28 +2843,26 @@ namespace BP.WF
                 decimal ok = (decimal)dt_worker.Rows.Count;
 
                 ps = new Paras();
-                ps.SQL="SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE   IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
+                ps.SQL = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE   IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
                 ps.Add("FID", this.HisWork.FID);
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(ps);
                 decimal passRate = ok / all * 100;
-                  numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
-                  if (toND.PassRate <= passRate)
+                numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
+                if (toND.PassRate <= passRate)
                 {
                     /*说明全部的人员都完成了，就让合流点显示它。*/
-                    DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0  WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" +dbStr+"WorkID",
+                    DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0  WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID",
                         "FK_Node", toND.NodeID, "WorkID", this.HisWork.FID);
                     numStr += "@下一步工作(" + toND.Name + ")已经启动。";
                 }
                 #endregion 处理完成率
 
-
                 // 产生合流汇总明细表数据.
-                  this.GenerHieLiuHuiZhongDtlData(toND);
-
+                this.GenerHieLiuHuiZhongDtlData(toND);
                 string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
                 this.AddToTrack(ActionType.ForwardHL, fk_emp1, myfh.ToEmpsMsg, toND.NodeID, toND.Name, null);
 
-                return "@流程已经运行到合流节点[" + toND.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, toND.NodeID) + numStr;
+                this.addMsg("HeLiuOver", "@流程已经运行到合流节点[" + toND.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, toND.NodeID) + numStr);
             }
 
             /* 已经有FID，说明：以前已经有分流或者合流节点。*/
@@ -3209,7 +3213,28 @@ namespace BP.WF
                     throw new Exception("@没有判断的类型:" + this.HisNode.HisNodeWorkTypeT);
             }
         }
-        public string msg = null;
+        #region 返回对象处理.
+        private SendReturnObjs HisMsgObjs = null;
+        public void addMsg(string flag, string msg)
+        {
+            addMsg(flag, msg, null, SendReturnMsgType.Info);
+        }
+        public void addMsg(string flag, string msg, SendReturnMsgType msgType)
+        {
+            addMsg(flag, msg, null, msgType);
+        }
+        public void addMsg(string flag, string msg, string msgofHtml, SendReturnMsgType msgType)
+        {
+            if (HisMsgObjs == null)
+                HisMsgObjs = new SendReturnObjs();
+            this.HisMsgObjs.AddMsg(flag, msg, msgofHtml, msgType);
+        }
+        public void addMsg(string flag, string msg, string msgofHtml)
+        {
+            addMsg(flag, msg, msgofHtml, SendReturnMsgType.Info);
+        }
+        #endregion 返回对象处理.
+
         /// <summary>
         /// 工作流发送业务处理.
         /// 升级日期:2012-11-11.
@@ -3223,12 +3248,11 @@ namespace BP.WF
         /// <param name="jumpToNode">要跳转的节点</param>
         /// <param name="jumpToEmp">要跳转的人</param>
         /// <returns>执行结构</returns>
-        public string NodeSend(Node jumpToNode, string jumpToEmp)
+        public void NodeSend(Node jumpToNode, string jumpToEmp)
         {
             //设置跳转节点，如果有可以为null.
             this.JumpToNode = jumpToNode;
             this.JumpToEmp = jumpToEmp;
-            msg = null;
             string sql = null;
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
@@ -3241,7 +3265,7 @@ namespace BP.WF
                 throw new Exception("@当前工作您已经处理完成，或者您没有处理当前工作的权限。");
 
             // 第1.2: 调用发起前的事件接口,处理用户定义的业务逻辑.
-            msg += this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
+            this.addMsg("SendWhen", this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork));
 
             // 第3: 如果是是合流点，有子线程未完成的情况.
             if (this.HisNode.IsHL)
@@ -3250,18 +3274,19 @@ namespace BP.WF
                 /*检查是否有子线程没有结束*/
                 sql = "SELECT * FROM WF_GenerWorkerList WHERE FID=" + this.WorkID + " AND IsPass=0";
                 DataTable dtWL = DBAccess.RunSQLReturnTable(sql);
+                string infoErr = "";
                 if (dtWL.Rows.Count != 0)
                 {
-                    msg += "@您不能向下发送，有如下子线程没有完成。";
+                    infoErr += "@您不能向下发送，有如下子线程没有完成。";
                     foreach (DataRow dr in dtWL.Rows)
                     {
-                        msg += "@操作员编号:" + dr["FK_Emp"] + "," + dr["FK_EmpText"] + ",停留节点:" + dr["FK_NodeText"];
+                        infoErr += "@操作员编号:" + dr["FK_Emp"] + "," + dr["FK_EmpText"] + ",停留节点:" + dr["FK_NodeText"];
                     }
                     if (this.HisNode.IsForceKill)
-                        msg += "@请通知它们处理完成,或者强制删除子流程您才能向下发送.";
+                        infoErr += "@请通知它们处理完成,或者强制删除子流程您才能向下发送.";
                     else
-                        msg += "@请通知它们处理完成,您才能向下发送.";
-                    throw new Exception(msg);
+                        infoErr += "@请通知它们处理完成,您才能向下发送.";
+                    throw new Exception(infoErr);
                 }
             }
             #endregion 第一步: 检查当前操作员是否可以发送
@@ -3287,7 +3312,6 @@ namespace BP.WF
                         this.NodeSend_Send_5_5();
                         // 处理当前工作结束.
                         this.Func_DoSetThisWorkOver();
-                       
                     }
 
                     if (this.HisNode.IsEndNode == true)
@@ -3451,7 +3475,7 @@ namespace BP.WF
                                 }
                                 catch (Exception ex)
                                 {
-                                    msg += ex.Message;
+                                    this.addMsg("RptError","产生报表数据错误:"+ex.Message);
                                 }
                             }
                             #endregion
@@ -3500,7 +3524,7 @@ namespace BP.WF
 
                     if (billInfo != "")
                         billInfo = "@" + billInfo;
-                    msg += billInfo;
+                    this.addMsg("BillInfo",billInfo);
                 }
                 #endregion
 
@@ -3541,7 +3565,7 @@ namespace BP.WF
                         DataTable ccers = cc.GenerCCers(this.rptGe);
                         if (ccers.Rows.Count > 0)
                         {
-                            msg += "@消息自动抄送给";
+                            string ccMsg  = "@消息自动抄送给";
                             string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
                             basePath += "/" + System.Web.HttpContext.Current.Request.ApplicationPath;
                             string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\CC_" + WebUser.SysLang + ".txt");
@@ -3572,7 +3596,7 @@ namespace BP.WF
                                     list.CheckPhysicsTable();
                                     list.Update();
                                 }
-                                msg += list.CCTo + "(" + dr[1].ToString() + ");";
+                                ccMsg += list.CCTo + "(" + dr[1].ToString() + ");";
 
                                 BP.WF.Port.WFEmp wfemp = new Port.WFEmp(list.CCTo);
 
@@ -3591,6 +3615,7 @@ namespace BP.WF
                                 BP.TA.SMS.AddMsg(list.RefWorkID + "_" + list.FK_Node + "_" + wfemp.No, wfemp.No,
                                   title, title, mytemp);
                             }
+                            this.addMsg("CCMsg", ccMsg);
                         }
                     }
                     catch (Exception ex)
@@ -3607,11 +3632,12 @@ namespace BP.WF
                 try
                 {
                     // 调起发送成功后的事务。
-                    msg += this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendSuccess, this.HisWork);
+                    string SendSuccess=this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendSuccess, this.HisWork);
+                    this.addMsg("SendSuccessMsg", SendSuccess);
                 }
                 catch (Exception ex)
                 {
-                    msg += ex.Message;
+                    this.addMsg("SendSuccessMsgErr", ex.Message);
                 }
                 #endregion 处理发送成功后事件.
 
@@ -3629,7 +3655,37 @@ namespace BP.WF
                             msgOfSend = msgOfSend.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
                         }
                     }
-                    return msgOfSend;
+
+                    if (msgOfSend.Contains("@") == true)
+                    {
+                        /*说明有一些变量在系统运行里面.*/
+                        string msgOfSendText = msgOfSend.Clone() as string;
+                        foreach (SendReturnObj item in this.HisMsgObjs)
+                        {
+                            if (string.IsNullOrEmpty(item.MsgFlag))
+                                continue;
+
+                            if (msgOfSend.Contains("@") == false)
+                                continue;
+
+                            msgOfSendText = msgOfSendText.Replace("@" + item.MsgFlag, item.Msg);
+
+                            if (item.MsgOfHtml != null)
+                                msgOfSend = msgOfSend.Replace("@" + item.MsgFlag, item.MsgOfHtml);
+                            else
+                                msgOfSend = msgOfSend.Replace("@" + item.MsgFlag, item.Msg);
+                        }
+
+                        this.HisMsgObjs.OutMessageHtml = msgOfSend;
+                        this.HisMsgObjs.OutMessageText = msgOfSendText;
+                    }
+                    else
+                    {
+                        this.HisMsgObjs.OutMessageHtml = msgOfSend;
+                        this.HisMsgObjs.OutMessageText = msgOfSend;
+                    }
+
+                    //return msgOfSend;
                 }
                 #endregion 处理发送成功后事件.
 
@@ -3637,9 +3693,11 @@ namespace BP.WF
                 if (town != null)
                 {
                     if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
-                        return town.AfterNodeSave();
+                    {
+                        town.AfterNodeSave();
+                        this.HisMsgObjs = town.HisMsgObjs;
+                    }
                 }
-                return msg;
             }
             catch (Exception ex)
             {
@@ -3656,148 +3714,8 @@ namespace BP.WF
         /// <returns></returns>
         public string AfterNodeSave(Node jumpToNode, string jumpToEmp)
         {
-            return NodeSend(jumpToNode, jumpToEmp);
-
-
-
-            //设置跳转节点，如果有可以为null.
-            this.JumpToNode = jumpToNode;
-            this.JumpToEmp = jumpToEmp;
-              msg = null;
-            string sql = null;
-
-            // 检查是否是当前节点，如果不是就可能存在sdk用户刷新的可能，导致数据重复提交。
-            //if (this.HisGenerWorkFlow.FK_Node != this.HisNode.NodeID)
-            //    throw new Exception("@您不能重复提交，或者刷新界面。");
-
-
-            #region  检查是否有发起流程的条件
-            if (this.HisNode.IsHL)
-            {
-                /*   检查当前是否是合流点如果是，则检查分流上的子线程是否完成。*/
-                /*检查是否有子线程没有结束*/
-                sql = "SELECT * FROM WF_GenerWorkerList WHERE FID=" + this.WorkID + " AND IsPass=0";
-                DataTable dtWL = DBAccess.RunSQLReturnTable(sql);
-                if (dtWL.Rows.Count != 0)
-                {
-                    msg += "@您不能向下发送，有如下子线程没有完成。";
-                    foreach (DataRow dr in dtWL.Rows)
-                    {
-                        msg += "@操作员编号:" + dr["FK_Emp"] + "," + dr["FK_EmpText"] + ",停留节点:" + dr["FK_NodeText"];
-                    }
-                    if (this.HisNode.IsForceKill)
-                        msg += "@请通知它们处理完成,或者强制删除子流程您才能向下发送.";
-                    else
-                        msg += "@请通知它们处理完成,您才能向下发送.";
-                    throw new Exception(msg);
-                }
-            }
-            #endregion
-
-
-            DBAccess.DoTransactionBegin();
-            DateTime dt = DateTime.Now;
-            this.HisWork.Rec = Web.WebUser.No;
-            this.WorkID = this.HisWork.OID;
-            msg += this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
-            // 调用发送前的接口。
-            try
-            {
-                #region 处理流程被调用.
-                if (this.HisNode.IsStartNode)
-                {
-                    /*如果是开始流程判断是不是被吊起的流程，如果是就要向父流程写日志。*/
-                    if (SystemConfig.IsBSsystem)
-                    {
-                        string fk_nodeFrom = System.Web.HttpContext.Current.Request.QueryString["FromNode"];
-                        if (string.IsNullOrEmpty(fk_nodeFrom) == false)
-                        {
-                            Node ndFrom = new Node(int.Parse(fk_nodeFrom));
-                            string fromWorkID = System.Web.HttpContext.Current.Request.QueryString["FromWorkID"];
-                            string pTitle = DBAccess.RunSQLReturnStringIsNull("SELECT Title FROM  ND" + int.Parse(ndFrom.FK_Flow) + "01 WHERE OID=" + fromWorkID,"");
-
-                            //记录当前流程被调起。
-                            this.AddToTrack(ActionType.StartSubFlow, WebUser.No,
-                                WebUser.Name, ndFrom.NodeID, ndFrom.FlowName + "\t\n" + ndFrom.FlowName, "被父流程(" + ndFrom.FlowName + ":" + pTitle + ")唤起.");
-
-                            //记录父流程被调起。
-                            TrackTemp tkParent = new TrackTemp();
-                            tkParent.WorkID = Int64.Parse(fromWorkID);
-                            tkParent.RDT = DataType.CurrentDataTimess;
-                            tkParent.HisActionType = ActionType.CallSubFlow;
-                            tkParent.EmpFrom = WebUser.No;
-                            tkParent.EmpFromT = WebUser.Name;
-
-                            tkParent.NDTo = this.HisNode.NodeID;
-                            tkParent.NDToT = this.HisNode.FlowName + " \t\n " + this.HisNode.Name;
-                            tkParent.FK_Flow = ndFrom.FK_Flow;
-                            tkParent.NDFrom = ndFrom.NodeID;
-                            tkParent.NDFromT = ndFrom.Name;
-                            tkParent.EmpTo = WebUser.No;
-                            tkParent.EmpToT = WebUser.Name;
-                            tkParent.Msg = "<a href='Track.aspx?FK_Flow=" + this.HisNode.FK_Flow + "&WorkID=" + this.HisWork.OID + "' target=_b >调起子流程(" + this.HisNode.FlowName + ")</a>";
-                            tkParent.MyPK = tkParent.WorkID + "_" + tkParent.FID + "_" + (int)tkParent.HisActionType + "_" + tkParent.NDFrom + "_" + DateTime.Now.ToString("yyMMddHHmmss");
-                            try
-                            {
-                                tkParent.Insert();
-                            }
-                            catch
-                            {
-                            }
-                        }
-                    }
-                }
-                #endregion 处理流程被调用.
-
-                #region 处理主要业务逻辑.
-              //  msg += AfterNodeSave_Do_del();
-                DBAccess.DoTransactionCommit(); //提交事务.
-                #endregion 处理主要业务逻辑.
-
-                #region 处理发送成功后事件.
-                try
-                {
-                    // 调起发送成功后的事务。
-                    msg += this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendSuccess, this.HisWork);
-                }
-                catch (Exception ex)
-                {
-                    msg += ex.Message;
-                }
-                #endregion 处理发送成功后事件.
-
-                #region 处理发送成功后的消息提示
-                if (this.HisNode.HisTurnToDeal == TurnToDeal.SpecMsg)
-                {
-                    string msgOfSend = this.HisNode.TurnToDealDoc;
-                    if (msgOfSend.Contains("@"))
-                    {
-                        Attrs attrs = this.HisWork.EnMap.Attrs;
-                        foreach (Attr attr in attrs)
-                        {
-                            if (msgOfSend.Contains("@") == false)
-                                continue;
-                            msgOfSend = msgOfSend.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-                        }
-                    }
-                    return msgOfSend;
-                }
-                #endregion 处理发送成功后事件.
-
-                // 如果需要跳转.
-                if (town != null)
-                {
-                    if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
-                        return town.AfterNodeSave();
-                }
-                return msg;
-            }
-            catch (Exception ex)
-            {
-                this.WhenTranscactionRollbackError(ex);
-                DBAccess.DoTransactionRollback();
-                throw ex;
-            }
+             NodeSend(jumpToNode, jumpToEmp);
+             return this.HisMsgObjs.ToMsgOfHtml();
         }
         /// <summary>
         /// 手工的回滚提交失败信息.
@@ -4471,6 +4389,7 @@ namespace BP.WF
         /// <returns>分流的返回的消息</returns>
         public string FeiLiuStartUp(Node toNode)
         {
+            return null;
             // 发起.
             Work wk = toNode.HisWork;
             WorkNode town = new WorkNode(wk, toNode);
@@ -4751,35 +4670,42 @@ namespace BP.WF
                     throw new Exception("没有处理的类型：" + this.HisNode.HisFLRole.ToString());
             }
             string info ="@分流节点:{0}已经发起。@任务自动下达给{1}如下{2}位同事,{3}.";
-            msg += string.Format(info, toNode.Name,
+            string fenliuInfo = string.Format(info, toNode.Name,
                 this.nextStationName,
                 this._RememberMe.NumOfObjs.ToString(),
                 this._RememberMe.EmpsExt);
+
+            this.addMsg("FenLiuInfo", fenliuInfo);
 
             // 如果是开始节点，就可以允许选择接受人。
             if (this.HisNode.IsStartNode)
             {
                 if (gwls.Count >= 2)
-                    msg += "@<img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0 /><a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&FID=" + this.WorkID + "&NodeID=" + toNode.NodeID + "')\" >" + this.ToE("W29", "修改接受对象") + "</a>.";
+                {
+                    this.addMsg("EditAccepter",null, "@<img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0 /><a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&FID=" + this.WorkID + "&NodeID=" + toNode.NodeID + "')\" >" + this.ToE("W29", "修改接受对象") + "</a>.", 
+                        SendReturnMsgType.Info);
+                }
             }
 
             if (this.HisNode.IsStartNode)
             {
-                msg += "@<a href='" + this.VirPath  + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toNode.FK_Flow + "&FK_Node="+toNode.FK_Flow+"01' ><img src=./Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。";
+                this.addMsg("NewFlowUnSend", null,
+                    "@<a href='" + this.VirPath  + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toNode.FK_Flow + "&FK_Node="+toNode.FK_Flow+"01' ><img src=./Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。", 
+                    SendReturnMsgType.Info);
             }
             else
             {
-                msg += "@<a href='" + this.VirPath  + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
-                //  msg += "@<a href=\"javascript:WinOpen('" + this.VirPath + "/" + this.AppType + "/" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
+                this.addMsg("UnSend",null,
+                    "@<a href='" + this.VirPath  + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。", 
+                    SendReturnMsgType.Info);
             }
 
-            msg += this.GenerWhySendToThem(this.HisNode.NodeID, toNode.NodeID);
+           // msg += this.GenerWhySendToThem(this.HisNode.NodeID, toNode.NodeID);
 
             //更新节点状态。
             this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete);
 
-            msg += "@<a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FID=" + wk.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
-            return msg;
+            this.addMsg("Rpt", null,"@<a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FID=" + wk.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>", SendReturnMsgType.Info);
         }
         #endregion
         /// <summary>
@@ -5322,7 +5248,7 @@ namespace BP.WF
             if (this.HisNode.IsEndNode)
             {
                 /* 如果流程完成 */
-                msg += "@流程已经走到最后一个节点，流程成功结束。";
+                this.addMsg("End","@流程已经走到最后一个节点，流程成功结束。");
                 this.HisWorkFlow.DoFlowOver(ActionType.FlowOver, "流程已经走到最后一个节点，流程成功结束。");
                 this.IsStopFlow = true;
                 return;
@@ -5334,7 +5260,7 @@ namespace BP.WF
                 // 如果没有条件,就说明了,保存为完成节点任务的条件.
                 if (this.HisNode.IsCCNode == false)
                 {
-                    msg += string.Format(this.ToE("WN6", "当前工作[{0}]已经完成"), this.HisNode.Name);
+                    this.addMsg("OverCurr", string.Format("当前工作[{0}]已经完成", this.HisNode.Name));
                 }
                 else
                 {
@@ -5347,10 +5273,12 @@ namespace BP.WF
 
                     if (this.HisNodeCompleteConditions.IsPass)
                     {
+                        string CondInfo = "";
                         if (SystemConfig.IsDebug)
-                            msg += "@当前工作[" + this.HisNode.Name + "]符合完成条件[" + this.HisNodeCompleteConditions.ConditionDesc + "],已经完成.";
+                            CondInfo = "@当前工作[" + this.HisNode.Name + "]符合完成条件[" + this.HisNodeCompleteConditions.ConditionDesc + "],已经完成.";
                         else
-                            msg += string.Format(this.ToE("WN6", "当前工作{0}已经完成"), this.HisNode.Name);  //"@"; //当前工作[" + this.HisNode.Name + "],已经完成.
+                            CondInfo = string.Format(this.ToE("WN6", "当前工作{0}已经完成"), this.HisNode.Name);  //"@"; //当前工作[" + this.HisNode.Name + "],已经完成.
+                        this.addMsg("CondInfo", CondInfo);
                     }
                     else
                     {
@@ -5373,7 +5301,8 @@ namespace BP.WF
                     /* 如果流程完成 */
                      this.HisWorkFlow.DoFlowOver(ActionType.FlowOver,"符合流程完成条件");
                     this.IsStopFlow = true;
-                    msg+="工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
+                    this.addMsg("OneNodeOver", "工作已经成功处理(一个流程的工作)。", 
+                        "工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>", SendReturnMsgType.Info);
                     return; 
                 }
 
@@ -5385,7 +5314,8 @@ namespace BP.WF
                     this.IsStopFlow = true;
                      
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
-                      msg += "@符合工作流程完成条件" + stopMsg + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
+                      this.addMsg("MacthFlowOver","@符合工作流程完成条件" + stopMsg + "" + overMsg ,
+                          "@符合工作流程完成条件" + stopMsg + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>", SendReturnMsgType.Info);
 
                       return;
                 }
