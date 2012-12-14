@@ -62,7 +62,7 @@ public partial class WF_Admin_CanReturnNodes : WebPage
             CheckBox cb = new CheckBox();
             cb.Text = nd.Name;
             cb.ID = "CB_" + nd.NodeID;
-            cb.Checked = rnds.IsExits(NodeReturnAttr.ReturnN, nd.NodeID);
+            cb.Checked = rnds.IsExits(NodeReturnAttr.ReturnTo, nd.NodeID);
 
             this.Pub1.AddTR();
             this.Pub1.AddTD("第"+nd.Step+"步");
@@ -103,7 +103,7 @@ public partial class WF_Admin_CanReturnNodes : WebPage
 
             NodeReturn nr = new NodeReturn();
             nr.FK_Node = this.FK_Node;
-            nr.ReturnN = nd.NodeID;
+            nr.ReturnTo = nd.NodeID;
             nr.Insert();
             i++;
         }
