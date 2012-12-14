@@ -196,7 +196,9 @@
     <Compile Include="FlowDesc\FlowDescExt\NodeSheet.cs" />
     <Compile Include="FlowDesc\LabNote.cs" />
     <Compile Include="FlowDesc\NodeEmp.cs" />
-    <Compile Include="FlowDesc\NodeReturn.cs" />
+    <Compile Include="FlowDesc\NodeReturn.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FlowDesc\Task.cs" />
     <Compile Include="FlowDesc\SelectAccper.cs" />
     <Compile Include="FlowDesc\NodeDept.cs" />

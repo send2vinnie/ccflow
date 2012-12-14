@@ -3391,18 +3391,10 @@ namespace BP.WF
                 DBAccess.RunSQL(ps);
                 #endregion 设置父流程状态
 
-                this.addMsg("InfoToHeLiu", "@当前工作已经完成，流程已经运行到合流节点[" + toNode.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toNode.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事.");
+                this.addMsg("InfoToHeLiu", "@当前工作["+this.HisNode.Name+"]已经完成，流程已经运行到合流节点[" + toNode.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toNode.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事.");
             }
         }
         private string NodeSend_53_UnSameSheet(Node toNode)
-        {
-            return null;
-        }
-        /// <summary>
-        /// 子线程向分合流点
-        /// </summary>
-        /// <returns></returns>
-        private string NodeSend_54(Node toNode)
         {
             return null;
         }
@@ -3549,13 +3541,11 @@ namespace BP.WF
                         case RunModel.FL: /*5.2 分流点 */
                             throw new Exception("@流程设计错误:请检查流程获取详细信息, 子线程点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND5.Name + ").");
                         case RunModel.HL: /*5.3 合流点 */
+                        case RunModel.FHL: /*5.4 分合流点 */
                             if (toND5.HisSubThreadType == SubThreadType.SameSheet)
                                 this.NodeSend_53_SameSheet(toND5);
                             else
                                 this.NodeSend_53_UnSameSheet(toND5);
-                            break;
-                        case RunModel.FHL:
-                            this.NodeSend_54(toND5);
                             break;
                         case RunModel.SubThread: /*5.5 子线程*/
                             if (toND5.HisSubThreadType == this.HisNode.HisSubThreadType)
@@ -6211,7 +6201,6 @@ namespace BP.WF
             #endregion 复制附件。
 
             /* 合流点需要等待各个分流点全部处理完后才能看到它。*/
-
             string sql1 = "";
             // "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
             // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;

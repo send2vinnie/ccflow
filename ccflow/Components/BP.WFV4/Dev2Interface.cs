@@ -224,7 +224,7 @@ namespace BP.WF
             return DB_GenerCanStartFlowsOfEntities(WebUser.No);
         }
         /// <summary>
-        /// 
+        /// 获取能够发起流程的集合.
         /// </summary>
         /// <param name="userNo"></param>
         /// <returns></returns>
@@ -291,7 +291,7 @@ namespace BP.WF
             return qo.DoQueryToTable();
         }
         /// <summary>
-        /// For lizheng: 2012-10-17 
+        /// For:中船lizheng: 2012-10-17
         /// 获取能够发起流程的sql
         /// </summary>
         /// <param name="userNo">操作人员编号</param>
@@ -381,7 +381,6 @@ namespace BP.WF
         }
         #endregion 获取当前操作员可以发起的流程集合
 
-
         #region 流程草稿
         /// <summary>
         /// 产生数据
@@ -399,7 +398,6 @@ namespace BP.WF
             return BP.DA.DBAccess.RunSQLReturnTable(ps);
         }
         #endregion 流程草稿
-
 
         #region 获取当前操作员的待办工作
         /// <summary>
@@ -529,7 +527,6 @@ namespace BP.WF
         }
         #endregion 获取当前操作员的待办工作
 
-
         #region 获取流程数据
         /// <summary>
         /// 根据流程状态获取指定流程数据
@@ -549,7 +546,6 @@ namespace BP.WF
         }
              
         #endregion
-
 
         #region 获取当前可以退回的节点。
         /// <summary>
