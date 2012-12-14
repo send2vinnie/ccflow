@@ -3,7 +3,6 @@ using System.Collections;
 using BP.DA;
 using BP.En;
 using BP.En;
-//using BP.ZHZS.Base;
 
 namespace BP.WF
 {
@@ -20,6 +19,22 @@ namespace BP.WF
 		/// 转向的节点
 		/// </summary>
 		public const string ToNode="ToNode";
+        /// <summary>
+        /// 流程编号
+        /// </summary>
+        public const string FK_Flow = "FK_Flow";
+        /// <summary>
+        /// 方向类型
+        /// </summary>
+        public const string DirType = "DirType";
+        /// <summary>
+        /// 是否可以原路返回
+        /// </summary>
+        public const string IsCanBack = "IsCanBack";
+        /// <summary>
+        /// 折线信息
+        /// </summary>
+        public const string Dots = "Dots";
 	}
 	/// <summary>
 	/// 节点方向
@@ -79,8 +94,13 @@ namespace BP.WF
 				
 				Map map = new Map("WF_Direction");				 
 				map.EnDesc="节点方向信息";
+                map.AddTBString(DirectionAttr.FK_Flow, null, "流程", true, true, 0, 3, 0, false);
 				map.AddTBIntPK( DirectionAttr.Node,0,"FromNode",false,true);
 				map.AddTBIntPK( DirectionAttr.ToNode,0,"ToNode",false,true);
+                map.AddTBInt(DirectionAttr.DirType, 0, "类型0前进1返回", false, true);
+                map.AddTBInt(DirectionAttr.IsCanBack, 0, "是否可以原路返回(对后退线有效)", false, true);
+                map.AddTBString(NodeReturnAttr.Dots, null, "轨迹信息", true, true, 0, 300, 0, false);
+
 				this._enMap=map;
 				return this._enMap;
 			}
