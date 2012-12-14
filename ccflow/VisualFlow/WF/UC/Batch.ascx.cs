@@ -118,7 +118,7 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
 
             msg += "@对工作(" + dr["Title"] + ")处理情况如下。<br>";
             WorkNode wn = new WorkNode(workid, this.FK_Node);
-            msg += wn.AfterNodeSave();
+            msg += wn.NodeSend().ToMsgOfHtml();
             msg += "<hr>";
         }
 

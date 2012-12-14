@@ -196,7 +196,7 @@ public class CCFlowAPI : CCForm {
             {
                 htMain.Add(dr[0].ToString(), dr[1].ToString());
             }
-            return BP.WF.Dev2Interface.Node_SendWork(fk_flow, workID, htMain, ds);
+            return BP.WF.Dev2Interface.Node_SendWork(fk_flow, workID, htMain, ds).ToMsgOfHtml();
             //return "保存成功";
         }
         catch (Exception ex)

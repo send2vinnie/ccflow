@@ -1450,7 +1450,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         WorkNode firstwn = new WorkNode(this.currWK, this.currND);
         try
         {
-            msg = firstwn.AfterNodeSave();
+            msg = firstwn.NodeSend().ToMsgOfHtml();
             // 2012-08-20 为上海修改.
             msg += "@<a href='EmpWorks" + PageSmall + ".aspx?FK_Flow=" + this.FK_Flow + "' >进入待办流程列表</a>，<a href='Start" + PageSmall + ".aspx?FK_Flow=" + this.FK_Flow + "'>进入发起流程列表</a>。";
         }

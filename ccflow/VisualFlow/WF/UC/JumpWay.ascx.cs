@@ -56,7 +56,7 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
         {
             Node ndJump = new Node(this.GoNode);
             BP.WF.WorkNode wn = new BP.WF.WorkNode(this.WorkID, this.FK_Node);
-            string msg = wn.AfterNodeSave(ndJump, null);
+            string msg = wn.NodeSend(ndJump, null).ToMsgOfHtml();
             this.AddFieldSet("发送提示");
             this.Add(msg.Replace("@", "<br>@"));
             this.AddFieldSetEnd();

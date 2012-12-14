@@ -1151,7 +1151,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
         WorkNode firstwn = new WorkNode(this.currWK, this.currND);
         try
         {
-            msg = firstwn.AfterNodeSave();
+            msg = firstwn.NodeSend().ToMsgOfHtml();
         }
         catch(Exception exSend)
         {
