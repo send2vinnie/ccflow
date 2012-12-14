@@ -61,7 +61,20 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             msg = "@在检查数据库连接出现错误。";
-            
+
+            #region 2012-12-15 升级退回规则. for boco.
+            NodeReturn nr = new NodeReturn();
+            nr.CheckPhysicsTable();
+            try
+            {
+                sql = "update WF_NodeReturn set ReturnTo=ReturnN where ReturnN is not null ";
+                DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
+            #endregion 
+
 
             #region 2012-12-06 升级投递规则 与退回规则. for 亿阳信通.
 
