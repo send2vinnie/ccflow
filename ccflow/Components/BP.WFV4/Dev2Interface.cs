@@ -642,7 +642,7 @@ namespace BP.WF
                         if (mywn.HisNode.NodeID == fk_node)
                             continue;
 
-                        if (rnds.Contains(NodeReturnAttr.ReturnN,
+                        if (rnds.Contains(NodeReturnAttr.ReturnTo,
                             mywn.HisNode.NodeID) == false)
                             continue;
 

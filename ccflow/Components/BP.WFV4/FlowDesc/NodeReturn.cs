@@ -18,13 +18,17 @@ namespace BP.WF
         /// </summary>
         public const string FK_Node = "FK_Node";
         /// <summary>
-        /// 工作节点
+        /// 退回到
         /// </summary>
-        public const string ReturnN = "ReturnN";
+        public const string ReturnTo = "ReturnTo";
+        /// <summary>
+        /// 中间点
+        /// </summary>
+        public const string Dots = "Dots";
     }
     /// <summary>
     /// 流程岗位属性
-    /// 节点的工作节点有两部分组成.	 
+    /// 节点的退回到有两部分组成.	 
     /// 记录了从一个节点到其他的多个节点.
     /// 也记录了到这个节点的其他的节点.
     /// </summary>
@@ -44,17 +48,17 @@ namespace BP.WF
             }
         }
         /// <summary>
-        ///节点
+        ///退回到
         /// </summary>
-        public int ReturnN
+        public int ReturnTo
         {
             get
             {
-                return this.GetValIntByKey(NodeReturnAttr.ReturnN);
+                return this.GetValIntByKey(NodeReturnAttr.ReturnTo);
             }
             set
             {
-                this.SetValByKey(NodeReturnAttr.ReturnN, value);
+                this.SetValByKey(NodeReturnAttr.ReturnTo, value);
             }
         }
         /// <summary>
@@ -95,7 +99,8 @@ namespace BP.WF
                 map.DepositaryOfMap = Depositary.Application;
 
                 map.AddTBIntPK(NodeReturnAttr.FK_Node, 0, "节点", true, true);
-                map.AddTBIntPK(NodeReturnAttr.ReturnN, 0, "节点", true, true);
+                map.AddTBIntPK(NodeReturnAttr.ReturnTo, 0, "退回到", true, true);
+                map.AddTBString(NodeReturnAttr.Dots, null, "轨迹信息", true, true,0,300,0,false);
 
                 this._enMap = map;
                 return this._enMap;
@@ -109,7 +114,7 @@ namespace BP.WF
     public class NodeReturns : EntitiesMM
     {
         /// <summary>
-        /// 他的工作节点
+        /// 他的退回到
         /// </summary>
         public Nodes HisNodes
         {
@@ -118,7 +123,7 @@ namespace BP.WF
                 Nodes ens = new Nodes();
                 foreach (NodeReturn ns in this)
                 {
-                    ens.AddEntity(new Node(ns.ReturnN));
+                    ens.AddEntity(new Node(ns.ReturnTo));
                 }
                 return ens;
             }
@@ -144,7 +149,7 @@ namespace BP.WF
         public NodeReturns(string NodeNo)
         {
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(NodeReturnAttr.ReturnN, NodeNo);
+            qo.AddWhere(NodeReturnAttr.ReturnTo, NodeNo);
             qo.DoQuery();
         }
         /// <summary>
@@ -181,12 +186,12 @@ namespace BP.WF
         /// <summary>
         /// 可退回的节点
         /// </summary>
-        /// <param name="NodeNo">工作节点编号</param>
+        /// <param name="NodeNo">退回到编号</param>
         /// <returns>节点s</returns>
         public Nodes GetHisNodes(string NodeNo)
         {
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(NodeReturnAttr.ReturnN, NodeNo);
+            qo.AddWhere(NodeReturnAttr.ReturnTo, NodeNo);
             qo.DoQuery();
 
             Nodes ens = new Nodes();
@@ -210,7 +215,7 @@ namespace BP.WF
             Nodes ens = new Nodes();
             foreach (NodeReturn en in this)
             {
-                ens.AddEntity(new Node(en.ReturnN));
+                ens.AddEntity(new Node(en.ReturnTo));
             }
             return ens;
         }
