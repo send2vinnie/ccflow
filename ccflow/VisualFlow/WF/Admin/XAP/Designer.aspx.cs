@@ -98,6 +98,15 @@ public partial class Designer : System.Web.UI.Page
             msg = "@更新视图出现错误。";
             try
             {
+                GenerFH fh = new GenerFH();
+                fh.CheckPhysicsTable();
+
+                GenerWorkFlow gwf = new GenerWorkFlow();
+                gwf.CheckPhysicsTable();
+
+                GenerWorkerList gwls = new GenerWorkerList();
+                gwls.CheckPhysicsTable();
+
                 sql = "DROP VIEW WF_EmpWorks";
                 BP.DA.DBAccess.RunSQLs(sql);
             }
