@@ -3407,6 +3407,7 @@ namespace BP.WF
         /// </summary>
         private void NodeSend_Send_5_5()
         {
+
             switch (this.HisNode.HisRunModel)
             {
                 case RunModel.Ordinary: /* 1： 普通节点向下发送的*/
@@ -3526,7 +3527,13 @@ namespace BP.WF
                         case RunModel.FHL:
                             throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接合流节点(" + toND4.Name + ").");
                         case RunModel.SubThread:/*4.5 子线程*/
-                            throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接子线程节点(" + toND4.Name + ").");
+                            if (toND4.HisSubThreadType == SubThreadType.SameSheet)
+                                NodeSend_24_SameSheet(toND4);
+
+                            //else
+                            //    NodeSend_24_UnSameSheet(toNDs); /*可能是只发送1个异表单*/
+                            break;
+                        //throw new Exception("@流程设计错误:请检查流程获取详细信息, 合流点(" + this.HisNode.Name + ")下面不能连接子线程节点(" + toND4.Name + ").");
                         default:
                             throw new Exception("@没有判断的节点类型(" + toND4.Name + ")");
                     }
