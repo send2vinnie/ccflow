@@ -444,14 +444,16 @@ public partial class WF_MapDef_MapDef : WebPage
         MapExts mes = new MapExts(this.FK_MapData);
         if (mes.Count != 0)
         {
+            string appPath = this.Request.ApplicationPath;
+
             this.Page.RegisterClientScriptBlock("s",
-          "<script language='JavaScript' src='./../Scripts/jquery-1.4.1.min.js' ></script>");
+          "<script language='JavaScript' src='" + appPath + "/WF/Scripts/jquery-1.4.1.min.js' ></script>");
 
             this.Page.RegisterClientScriptBlock("b",
-         "<script language='JavaScript' src='./../Scripts/MapExt.js' ></script>");
+         "<script language='JavaScript' src='" + appPath + "/WF/Scripts/MapExt.js' ></script>");
 
             this.Page.RegisterClientScriptBlock("dC",
-     "<script language='JavaScript' src='./../../DataUser/JSLibData/" + this.FK_MapData + ".js' ></script>");
+     "<script language='JavaScript' src='" + appPath + "/DataUser/JSLibData/" + this.FK_MapData + ".js' ></script>");
 
             this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
         }

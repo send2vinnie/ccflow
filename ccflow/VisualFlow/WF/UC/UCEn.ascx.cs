@@ -9,6 +9,7 @@
 //===========================================================================
 namespace BP.Web.Comm.UC.WF
 {
+
     using System;
     using System.IO;
     using System.Data;
@@ -1122,7 +1123,10 @@ namespace BP.Web.Comm.UC.WF
                     if (dtl.IsUpdate == true || dtl.IsInsert == true)
                     {
                         scriptSaveDtl += "\t\n try{  ";
-                        scriptSaveDtl += "\t\n  SaveDtl('" + dtl.No + "'); ";
+
+                        if (dtl.HisDtlShowModel == DtlShowModel.Table)
+                            scriptSaveDtl += "\t\n  SaveDtl('" + dtl.No + "'); ";
+
                         scriptSaveDtl += "\t\n } catch(e) { ";
                         scriptSaveDtl += "\t\n  alert(e.name  + e.message);  return false;";
                         scriptSaveDtl += "\t\n } ";
@@ -1163,13 +1167,13 @@ namespace BP.Web.Comm.UC.WF
             {
                 #region load js.
                 this.Page.RegisterClientScriptBlock("s4",
-              "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
+              "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/WF/Scripts/jquery-1.4.1.min.js' ></script>");
 
                 this.Page.RegisterClientScriptBlock("b7",
-             "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
+             "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/WF/Scripts/MapExt.js' ></script>");
 
                 this.Page.RegisterClientScriptBlock("y7",
-            "<script language='JavaScript' src='./../DataUser/JSLibData/" + enName + ".js' ></script>");
+            "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/DataUser/JSLibData/" + enName + ".js' ></script>");
 
                 this.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
                 #endregion load js.

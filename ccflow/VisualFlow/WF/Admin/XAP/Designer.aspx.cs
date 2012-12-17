@@ -67,8 +67,9 @@ public partial class Designer : System.Web.UI.Page
             dir.CheckPhysicsTable();
             try
             {
-                sql = "update WF_Direction set DirType=0  WHERE DirType is null ";
-                sql += "@UPDATE WF_Direction SET FK_FLOW = (SELECT FK_FLOW FROM WF_Node WHERE NodeID=WF_Direction.Node)";
+                sql = "UPDATE WF_Direction set DirType=0  WHERE DirType is null ";
+                sql += "@UPDATE WF_Direction SET FK_Flow = (SELECT FK_FLOW FROM WF_Node WHERE NodeID=WF_Direction.Node)";
+                sql += "@UPDATE WF_Direction SET MyPK = CAST(Node as varchar)+'_'+CAST(ToNode as varchar)+'_'+CAST(DirType as varchar)";
                 DBAccess.RunSQLs(sql);
             }
             catch

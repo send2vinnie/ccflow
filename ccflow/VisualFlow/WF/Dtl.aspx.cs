@@ -221,6 +221,13 @@ public partial class Comm_Dtl : WebPage
             return _MainMapAttrs;
         }
     }
+    public string AppPath
+    {
+        get
+        {
+            return this.Request.ApplicationPath;
+        }
+    }
     public string FK_MapData = null;
     public void Bind(MapDtl mdtl)
     {
@@ -688,15 +695,15 @@ public partial class Comm_Dtl : WebPage
             if (this.IsReadonly == 0 && mes.Count != 0)
             {
                 this.Page.RegisterClientScriptBlock("s81",
-              "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
+              "<script language='JavaScript' src='"+this.Application+"/Scripts/jquery-1.4.1.min.js' ></script>");
 
                 this.Page.RegisterClientScriptBlock("b81",
-             "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
+             "<script language='JavaScript' src='"+this.AppPath+"/WF/Scripts/MapExt.js' ></script>");
 
                 this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
 
                 this.Page.RegisterClientScriptBlock("dCd",
-"<script language='JavaScript' src='./../DataUser/JSLibData/" + mdtl.No + ".js' ></script>");
+"<script language='JavaScript' src='"+this.AppPath+"/WF/DataUser/JSLibData/" + mdtl.No + ".js' ></script>");
 
                 foreach (BP.Sys.GEDtl mydtl in dtls)
                 {

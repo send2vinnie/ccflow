@@ -23,10 +23,10 @@ public partial class WF_MapDef_FreeFrm_ViewFrm :BP.Web.WebPage
         BP.DA.Cash.Map_Cash.Clear();
 
         this.Page.RegisterClientScriptBlock("s",
-          "<script language='JavaScript' src='./../Scripts/jquery-1.4.1.min.js' ></script>");
+          "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/WF/Scripts/jquery-1.4.1.min.js' ></script>");
 
         this.Page.RegisterClientScriptBlock("b",
-     "<script language='JavaScript' src='./../Scripts/MapExt.js' ></script>");
+     "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/WF/Scripts/MapExt.js' ></script>");
 
         this.UCEn1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
 
