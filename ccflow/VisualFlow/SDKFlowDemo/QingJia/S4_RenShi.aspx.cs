@@ -33,7 +33,7 @@ public partial class Demo_QingJia_S4_RenShi : FlowPage
     protected void Btn_Send_Click(object sender, EventArgs e)
     { 
         string msg = BP.WF.Dev2Interface.Node_SendWork(this.FK_Flow,
-            this.WorkID, this.GenerWorkInfo());
+            this.WorkID, this.GenerWorkInfo()).ToMsgOfHtml();
         msg = msg.Replace("@@", "@");
         msg = msg.Replace("@", "<BR>@");
         this.Alert("发送提示", msg);

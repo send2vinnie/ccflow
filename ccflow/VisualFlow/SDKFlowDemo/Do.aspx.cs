@@ -9,7 +9,6 @@ public partial class SDKFlows_Do : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         switch (this.Request.QueryString["DoType"])
         {
             case "DelInfo":

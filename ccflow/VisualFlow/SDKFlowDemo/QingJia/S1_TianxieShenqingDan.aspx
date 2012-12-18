@@ -28,7 +28,6 @@
             <br />
             请假天数:<asp:TextBox ID="TB_qingjiatian" runat="server" Text="1" ></asp:TextBox> 天
      </fieldset>
-
        </td>
     </tr>
 </asp:Content>

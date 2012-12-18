@@ -31,14 +31,15 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
     }
     protected void Btn_Send_Click(object sender, EventArgs e)
     {
-        //书写您的表单保存逻辑。
+        // 书写您的表单保存逻辑。
         // 处理ccflow的业务逻辑，仅把关键字段传递给ccflow的节点表单中去，用户判断方向。
         Hashtable ht = new Hashtable();
         ht.Add("Title", this.TB_Title.Text);
         ht.Add("qingjiatian", float.Parse(this.TB_qingjiatian.Text));
 
         string msg = BP.WF.Dev2Interface.Node_SendWork(this.FK_Flow,
-            this.WorkID, ht);
+            this.WorkID, ht).ToMsgOfHtml();
+
         msg = msg.Replace("@@", "@");
         msg = msg.Replace("@", "<BR>@");
         this.Alert("发送提示", msg);
@@ -61,7 +62,7 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
 
         /* 编写您的表单保存业务逻辑 */
         string msg = BP.WF.Dev2Interface.Node_SaveWork(this.FK_Flow,
-            this.WorkID, ht);
+            this.WorkID, ht,null);
         this.Alert("保存提示信息", msg);
     }
 

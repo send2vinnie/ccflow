@@ -38,7 +38,7 @@ public partial class Demo_QingJia_S2_BumenJingliShenpi : FlowPage
 
         string msg = BP.WF.Dev2Interface.Node_SendWork(this.FK_Flow, 
             this.WorkID,
-            this.GenerWorkInfo());
+            this.GenerWorkInfo()).ToMsgOfHtml();
         msg = msg.Replace("@@", "@");
         msg = msg.Replace("@", "<BR>@");
 
