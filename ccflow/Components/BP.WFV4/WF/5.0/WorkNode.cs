@@ -259,7 +259,6 @@ namespace BP.WF
 
             if (town.HisNode.HisDeliveryWay == DeliveryWay.ByDeptAndStation)
             {
-
                 /* 如果还设置了岗位的集合的话，就按两个的交集计算。 */
                 sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
                 sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
@@ -1573,7 +1572,7 @@ namespace BP.WF
             if (dt.Rows.Count == 0)
             {
                 //string msg = "接受人员列表为空: 流程设计或者组织结构维护错误,节点的访问规则是("+town.HisNode.RecipientSQL+")";
-                throw new Exception(this.ToE("WN4", "接受人员列表为空.")); // 接受人员列表为空
+                throw new Exception("接受人员列表为空"); // 接受人员列表为空
             }
 
             Int64 workID = fid;
@@ -1887,6 +1886,33 @@ namespace BP.WF
                 }
                 this.AddToTrack(at, WebUser.No, WebUser.Name, town.HisNode.NodeID, town.HisNode.Name, info);
             }
+
+            #region 把数据加入变量中.
+            string ids = "";
+            string names = "";
+            string idNames = "";
+            if (this.HisWorkerLists.Count == 1)
+            {
+                GenerWorkerList gwl = (GenerWorkerList)this.HisWorkerLists[0];
+                ids = gwl.FK_Emp;
+                names = gwl.FK_EmpText;
+                idNames = gwl.FK_Emp + "," + gwl.FK_EmpText;
+            }
+            else
+            {
+                foreach (GenerWorkerList gwl in this.HisWorkerLists)
+                {
+                    ids += gwl.FK_Emp + ",";
+                    names += gwl.FK_EmpText + ",";
+                    idNames += gwl.FK_Emp + " " + gwl.FK_EmpText + ",";
+                }
+            }
+
+            this.addMsg(SendReturnMsgFlag.VarAcceptersID, ids, ids, SendReturnMsgType.SystemMsg);
+            this.addMsg(SendReturnMsgFlag.VarAcceptersName, names, names, SendReturnMsgType.SystemMsg);
+            this.addMsg(SendReturnMsgFlag.VarAcceptersNID, idNames, idNames, SendReturnMsgType.SystemMsg);
+            #endregion
+
             return this.HisWorkerLists;
         }
         #endregion
@@ -2636,7 +2662,11 @@ namespace BP.WF
                 }
                 #endregion
 
-                this.addMsg(SendReturnMsgFlag.WorkStartNode,"@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + ".");
+                this.addMsg(SendReturnMsgFlag.WorkStartNode, "@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + ".");
+
+                //加入系统变量.
+                this.addMsg(SendReturnMsgFlag.VarToNodeID, this.HisNode.NodeID.ToString(), this.HisNode.NodeID.ToString(), SendReturnMsgType.SystemMsg);
+                this.addMsg(SendReturnMsgFlag.VarToNodeName, this.HisNode.Name, this.HisNode.Name, SendReturnMsgType.SystemMsg);
             }
             catch (Exception ex)
             {
@@ -2702,51 +2732,94 @@ namespace BP.WF
         /// <returns></returns>
         private void NodeSend_24_UnSameSheet(Nodes toNDs)
         {
-            throw new Exception("@未实现的流程模式NodeSend_24_UnSameSheet ");
-            /*首先要分析出来*/
+            NodeSend_2X_GenerFH();
+            /*分别启动每个节点的信息.*/
+            string msg = "";
 
-            this.NodeSend_2X_GenerFH();
+            //查询出来上一个节点的附件信息来。
+            FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
+                       this.WorkID.ToString());
+            //查询出来上一个Ele信息来。
+            FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
+                       this.WorkID.ToString());
+
             foreach (Node nd in toNDs)
             {
-                this.addMsg(SendReturnMsgFlag.WorkStart,"@" + nd.Name + "工作已经启动，处理工作者：");
+                msg += "@" + nd.Name + "工作已经启动，处理工作者：";
                 //产生一个工作信息。
                 Work wk = nd.HisWork;
                 wk.Copy(this.HisWork);
                 wk.FID = this.HisWork.OID;
-                wk.NodeState = NodeState.Init;
-
-                // 查找以前是否出现此人的工作ID.
                 wk.OID = BP.DA.DBAccess.GenerOID();
+                wk.NodeState = NodeState.Init;
                 wk.BeforeSave();
                 wk.DirectInsert();
-             
+
+                if (athDBs.Count > 0)
+                {
+                    /*说明当前节点有附件数据*/
+                    int idx = 0;
+                    foreach (FrmAttachmentDB athDB in athDBs)
+                    {
+                        idx++;
+                        FrmAttachmentDB athDB_N = new FrmAttachmentDB();
+                        athDB_N.Copy(athDB);
+                        athDB_N.FK_MapData = "ND" + nd.NodeID;
+                        athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                        athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                            "ND" + nd.NodeID) + "_" + idx;
+                        athDB_N.RefPKVal = wk.OID.ToString();
+                        athDB_N.Insert();
+                    }
+                }
+
+                if (eleDBs.Count > 0)
+                {
+                    /*说明当前节点有附件数据*/
+                    int idx = 0;
+                    foreach (FrmEleDB eleDB in eleDBs)
+                    {
+                        idx++;
+                        FrmEleDB eleDB_N = new FrmEleDB();
+                        eleDB_N.Copy(eleDB);
+                        eleDB_N.FK_MapData = "ND" + nd.NodeID;
+                        eleDB_N.Insert();
+                    }
+                }
+
                 //获得它的工作者。
                 WorkNode town = new WorkNode(wk, nd);
-                GenerWorkerLists gwls = this.NodeSend_GenerWorkerLists(town);
+                GenerWorkerLists gwls = this.Func_GenerWorkerLists(town);
                 foreach (GenerWorkerList wl in gwls)
                 {
-                      this.addMsg(SendReturnMsgFlag.ToEmps,wl.FK_Emp + "，" + wl.FK_EmpText + "、");
-
+                    msg += wl.FK_Emp + "，" + wl.FK_EmpText + "、";
                     // 产生工作的信息。
                     GenerWorkFlow gwf = new GenerWorkFlow();
                     gwf.WorkID = wk.OID;
                     if (gwf.IsExits)
                         continue;
+
                     gwf.FID = this.WorkID;
-                    gwf.Title = WorkNode.GenerTitle(this.HisWork);
+
+#warning 需要修改成标题生成规则。
+
+#warning 让子流程的Titlte与父流程的一样.
+                    gwf.Title = this.HisGenerWorkFlow.Title; // WorkNode.GenerTitle(this.rptGe);
+
                     gwf.WFState = 0;
                     gwf.RDT = DataType.CurrentDataTime;
                     gwf.Rec = Web.WebUser.No;
                     gwf.RecName = Web.WebUser.Name;
                     gwf.FK_Flow = nd.FK_Flow;
                     gwf.FlowName = nd.FlowName;
+
                     gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
+
                     gwf.FK_Node = nd.NodeID;
                     gwf.NodeName = nd.Name;
                     gwf.FK_Dept = wl.FK_Dept;
                     gwf.DeptName = wl.FK_DeptT;
                     gwf.DirectInsert();
-
                     ps = new Paras();
                     ps.SQL = "UPDATE WF_GenerWorkerlist SET WorkID=" + dbStr + "WorkID1,FID=" + dbStr + "FID WHERE FK_Emp=" + dbStr + "FK_Emp AND WorkID=" + dbStr + "WorkID2 AND FK_Node=" + dbStr + "FK_Node ";
                     ps.Add("WorkID1", wk.OID);
@@ -2757,6 +2830,10 @@ namespace BP.WF
                     DBAccess.RunSQL(ps);
                 }
             }
+            this.HisWork.NodeState = NodeState.Complete;
+            this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete);
+
+            this.addMsg("FenLiuUnSameSheet", msg);
         }
         /// <summary>
         /// 产生分流点
@@ -2829,7 +2906,7 @@ namespace BP.WF
             WorkNode town = new WorkNode(wk, toNode);
 
             // 产生下一步骤要执行的人员.
-            GenerWorkerLists gwls = this.GenerWorkerLists(town);
+            GenerWorkerLists gwls = this.Func_GenerWorkerLists(town);
 
             //清除以前的数据，比如两次发送。
             wk.Delete(WorkAttr.FID, this.HisWork.OID);
@@ -2873,7 +2950,6 @@ namespace BP.WF
                         Work mywk = toNode.HisWork;
                         mywk.Copy(this.rptGe);
                         mywk.Copy(this.HisWork);  //复制过来信息。
-
                         bool isHaveEmp = false;
                         if (IsHaveFH)
                         {
@@ -3162,12 +3238,12 @@ namespace BP.WF
         /// 子线程向合流点
         /// </summary>
         /// <returns></returns>
-        private void NodeSend_53_SameSheet(Node toNode)
+        private void NodeSend_53_SameSheet_To_HeLiu(Node toNode)
         {
             string spanNodes = this.SpanSubTheadNodes(toNode);
             if (toNode.FromNodes.Count != 1)
             {
-                  StartNextWorkNodeHeLiu_WithFID_YiBu(toNode);
+                NodeSend_53_UnSameSheet_To_HeLiu(toNode);
                   return;
             }
 
@@ -3240,7 +3316,7 @@ namespace BP.WF
                 this.AddToTrack(ActionType.ForwardHL, fk_emp1, myfh.ToEmpsMsg, toNode.NodeID, toNode.Name, null);
 
                 this.addMsg("ToHeLiuEmp",
-                    "@流程已经运行到合流节点[" + toNode.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toNode.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, toNode.NodeID) + numStr);
+                    "@流程已经运行到合流节点[" + toNode.Name + "].@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toNode.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, toNode.NodeID) + numStr);
             }
             else
             {
@@ -3391,12 +3467,8 @@ namespace BP.WF
                 DBAccess.RunSQL(ps);
                 #endregion 设置父流程状态
 
-                this.addMsg("InfoToHeLiu", "@当前工作["+this.HisNode.Name+"]已经完成，流程已经运行到合流节点[" + toNode.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toNode.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事.");
+                this.addMsg("InfoToHeLiu", "@流程已经运行到合流节点[" + toNode.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toNode.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事.");
             }
-        }
-        private string NodeSend_53_UnSameSheet(Node toNode)
-        {
-            return null;
         }
         private string NodeSend_55(Node toNode)
         {
@@ -3407,11 +3479,14 @@ namespace BP.WF
         /// </summary>
         private void NodeSend_Send_5_5()
         {
-
             switch (this.HisNode.HisRunModel)
             {
                 case RunModel.Ordinary: /* 1： 普通节点向下发送的*/
                     Node toND = this.NodeSend_GenerNextStepNode();
+                    //加入系统变量.
+                    this.addMsg(SendReturnMsgFlag.VarToNodeID, toND.NodeID.ToString(), toND.NodeID.ToString(), SendReturnMsgType.SystemMsg);
+                    this.addMsg(SendReturnMsgFlag.VarToNodeName, toND.Name, toND.Name, SendReturnMsgType.SystemMsg);
+
                     switch (toND.HisRunModel)
                     {
                         case RunModel.Ordinary:   /*1-1 普通节to普通节点 */
@@ -3437,6 +3512,10 @@ namespace BP.WF
                     if (toNDs.Count == 1)
                     {
                         Node toND2 = toNDs[0] as Node;
+                        //加入系统变量.
+                        this.addMsg(SendReturnMsgFlag.VarToNodeID, toND2.NodeID.ToString(), toND2.NodeID.ToString(), SendReturnMsgType.SystemMsg);
+                        this.addMsg(SendReturnMsgFlag.VarToNodeName, toND2.Name, toND2.Name, SendReturnMsgType.SystemMsg);
+
                         switch (toND2.HisRunModel)
                         {
                             case RunModel.Ordinary:    /*2.1 分流点to普通节点 */
@@ -3498,6 +3577,10 @@ namespace BP.WF
                     break;
                 case RunModel.HL:  /* 3: 合流节点向下发送 */
                     Node toND3 = this.NodeSend_GenerNextStepNode();
+                    //加入系统变量.
+                    this.addMsg(SendReturnMsgFlag.VarToNodeID, toND3.NodeID.ToString(), toND3.NodeID.ToString(), SendReturnMsgType.SystemMsg);
+                    this.addMsg(SendReturnMsgFlag.VarToNodeName, toND3.Name, toND3.Name, SendReturnMsgType.SystemMsg);
+
                     switch (toND3.HisRunModel)
                     {
                         case RunModel.Ordinary: /*3.1 普通工作节点 */
@@ -3516,6 +3599,10 @@ namespace BP.WF
                     break;
                 case RunModel.FHL:  /* 4: 分流节点向下发送的 */
                     Node toND4 = this.NodeSend_GenerNextStepNode();
+                    //加入系统变量.
+                    this.addMsg(SendReturnMsgFlag.VarToNodeID, toND4.NodeID.ToString(), toND4.NodeID.ToString(), SendReturnMsgType.SystemMsg);
+                    this.addMsg(SendReturnMsgFlag.VarToNodeName, toND4.Name, toND4.Name, SendReturnMsgType.SystemMsg);
+
                     switch (toND4.HisRunModel)
                     {
                         case RunModel.Ordinary: /*4.1 普通工作节点 */
@@ -3529,7 +3616,6 @@ namespace BP.WF
                         case RunModel.SubThread:/*4.5 子线程*/
                             if (toND4.HisSubThreadType == SubThreadType.SameSheet)
                                 NodeSend_24_SameSheet(toND4);
-
                             //else
                             //    NodeSend_24_UnSameSheet(toNDs); /*可能是只发送1个异表单*/
                             break;
@@ -3537,9 +3623,14 @@ namespace BP.WF
                         default:
                             throw new Exception("@没有判断的节点类型(" + toND4.Name + ")");
                     }
-                    throw new Exception("@没有判断的类型:" + this.HisNode.HisNodeWorkTypeT);
+                    break;
+                   // throw new Exception("@没有判断的类型:" + this.HisNode.HisNodeWorkTypeT);
                 case RunModel.SubThread:  /* 5: 子线程节点向下发送的 */
                     Node toND5 = this.NodeSend_GenerNextStepNode();
+                    //加入系统变量.
+                    this.addMsg(SendReturnMsgFlag.VarToNodeID, toND5.NodeID.ToString(), toND5.NodeID.ToString(), SendReturnMsgType.SystemMsg);
+                    this.addMsg(SendReturnMsgFlag.VarToNodeName, toND5.Name, toND5.Name, SendReturnMsgType.SystemMsg);
+
                     switch (toND5.HisRunModel)
                     {
                         case RunModel.Ordinary: /*5.1 普通工作节点 */
@@ -3549,10 +3640,10 @@ namespace BP.WF
                             throw new Exception("@流程设计错误:请检查流程获取详细信息, 子线程点(" + this.HisNode.Name + ")下面不能连接分流节点(" + toND5.Name + ").");
                         case RunModel.HL: /*5.3 合流点 */
                         case RunModel.FHL: /*5.4 分合流点 */
-                            if (toND5.HisSubThreadType == SubThreadType.SameSheet)
-                                this.NodeSend_53_SameSheet(toND5);
+                            if (this.HisNode.HisSubThreadType == SubThreadType.SameSheet)
+                                this.NodeSend_53_SameSheet_To_HeLiu(toND5);
                             else
-                                this.NodeSend_53_UnSameSheet(toND5);
+                                this.NodeSend_53_UnSameSheet_To_HeLiu(toND5);
                             break;
                         case RunModel.SubThread: /*5.5 子线程*/
                             if (toND5.HisSubThreadType == this.HisNode.HisSubThreadType)
@@ -3605,13 +3696,17 @@ namespace BP.WF
         /// ----------------------------------- 说明 -----------------------------
         /// 1，方法体分为三大部分: 发送前检查\5*5算法\发送后的业务处理.
         /// 2, 详细请参考代码体上的说明.
-        /// 3, 发送后可以直接获取它的 
+        /// 3, 发送后可以直接获取它的
         /// </summary>
         /// <param name="jumpToNode">要跳转的节点</param>
         /// <param name="jumpToEmp">要跳转的人</param>
         /// <returns>执行结构</returns>
         public SendReturnObjs NodeSend(Node jumpToNode, string jumpToEmp)
         {
+            //加入系统变量.
+            this.addMsg(SendReturnMsgFlag.VarCurrNodeID, this.HisNode.NodeID.ToString(), this.HisNode.NodeID.ToString(), SendReturnMsgType.SystemMsg);
+            this.addMsg(SendReturnMsgFlag.VarCurrNodeName, this.HisNode.Name, this.HisNode.Name, SendReturnMsgType.SystemMsg);
+
             //设置跳转节点，如果有可以为null.
             this.JumpToNode = jumpToNode;
             this.JumpToEmp = jumpToEmp;
@@ -3631,7 +3726,7 @@ namespace BP.WF
             this.addMsg(SendReturnMsgFlag.SendWhen, this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork));
 
             // 第3: 如果是是合流点，有子线程未完成的情况.
-            if (this.HisNode.IsHL)
+            if (this.HisNode.IsHL || this.HisNode.IsFLHL)
             {
                 /*   如果是合流点 检查当前是否是合流点如果是，则检查分流上的子线程是否完成。*/
                 /*检查是否有子线程没有结束*/
@@ -4145,7 +4240,7 @@ namespace BP.WF
                 throw new Exception(ex.Message + "@回滚发送失败数据出现错误：" + ex1.Message + "@有可能系统已经自动修复错误，请您在重新执行一次。");
             }
         }
-        public GenerWorkerLists GenerWorkerLists(WorkNode town)
+        public GenerWorkerLists Func_GenerWorkerLists(WorkNode town)
         {
             this.town = town;
 
@@ -4369,7 +4464,6 @@ namespace BP.WF
                     {
                         return WorkerListWayOfDept(town, dt);
                     }
-
                     dt = DBAccess.RunSQLReturnTable(ps);
                     if (dt.Rows.Count > 0)
                         return WorkerListWayOfDept(town, dt);
@@ -4378,7 +4472,6 @@ namespace BP.WF
             #endregion 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
 
             #region 按指定的节点人员，做为下一步骤的流程接受人。
-
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeEmp)
             {
                 /* 按指定节点岗位上的人员计算 */
@@ -4396,9 +4489,6 @@ namespace BP.WF
                 throw new Exception("@流程设计错误，到达的节点（" + town.HisNode.Name + "）在指定的节点中没有数据，无法找到工作的人员。");
             }
             #endregion 按指定的节点人员，做为下一步骤的流程接受人。
-
-
-
 
             #region 按节点岗位与人员部门集合两个纬度计算.
             if (town.HisNode.HisDeliveryWay == DeliveryWay.ByStationAndEmpDept)
@@ -4423,7 +4513,6 @@ namespace BP.WF
             }
             #endregion
 
-
             string empNo = WebUser.No;
             string empDept = WebUser.FK_Dept;
 
@@ -4446,7 +4535,6 @@ namespace BP.WF
                 empDept = dt.Rows[0][1].ToString();
             }
             #endregion 按指定的节点人员，做为下一步骤的流程接受人。
-
 
             #region 最后判断 - 按照岗位来执行。
             if (this.HisNode.IsStartNode == false)
@@ -4641,11 +4729,8 @@ namespace BP.WF
                 return WorkerListWayOfDept(town, dt);
             }
 
-
             /* 没有查询到的情况下, 按照最大匹配数 提高一个级别 计算，递归算法未完成，不过现在已经满足大部分需要。
-             * 
              * 因为:以上已经做的岗位的判断，就没有必要在判断其它类型的流程处理了。
-             * 
              * */
 
             int lengthStep = 0; //增长步骤。
@@ -4751,7 +4836,7 @@ namespace BP.WF
             WorkNode town = new WorkNode(wk, toNode);
 
             // 产生下一步骤要执行的人员.
-            GenerWorkerLists gwls = this.GenerWorkerLists(town);
+            GenerWorkerLists gwls = this.Func_GenerWorkerLists(town);
             this.AddIntoWacthDog(gwls);  //@加入消息集合里。
 
             //清除以前的数据，比如两次发送。
@@ -5708,7 +5793,11 @@ namespace BP.WF
         {
             throw new Exception("未完成:StartNextWorkNodeHeLiu_WithOutFID");
         }
-        private string StartNextWorkNodeHeLiu_WithFID_YiBu(Node nd)
+        /// <summary>
+        /// 异表单子线程向合流点运动
+        /// </summary>
+        /// <param name="nd"></param>
+        private void NodeSend_53_UnSameSheet_To_HeLiu(Node nd)
         {
             GenerFH myfh = new GenerFH(this.HisWork.FID);
             if (myfh.FK_Node == nd.NodeID)
@@ -5723,8 +5812,9 @@ namespace BP.WF
                  * 首先:更新它的节点 worklist 信息, 说明当前节点已经完成了.
                  * 不让当前的操作员能看到自己的工作。
                  */
+
                 ps = new Paras();
-                ps.SQL = "UPDATE WF_GenerWorkerlist SET IsPass=1  WHERE WorkID=" + dbStr + "WorkID AND FID=" + dbStr + "FID AND FK_Node=" + dbStr+ "FK_Node";
+                ps.SQL = "UPDATE WF_GenerWorkerlist SET IsPass=1  WHERE WorkID=" + dbStr + "WorkID AND FID=" + dbStr + "FID AND FK_Node=" + dbStr + "FK_Node";
                 ps.Add("WorkID", this.WorkID);
                 ps.Add("FID", this.HisWork.FID);
                 ps.Add("FK_Node", this.HisNode.NodeID);
@@ -5732,8 +5822,8 @@ namespace BP.WF
 
                 ps = new Paras();
                 ps.SQL = "UPDATE WF_GenerWorkFlow  SET FK_Node=" + dbStr + "FK_Node,NodeName=" + dbStr + "NodeName WHERE WorkID=" + dbStr + "WorkID";
-                ps.Add("FK_Node",nd.NodeID);
-                ps.Add("NodeName",nd.Name);
+                ps.Add("FK_Node", nd.NodeID);
+                ps.Add("NodeName", nd.Name);
                 ps.Add("WorkID", this.HisWork.OID);
                 DBAccess.RunSQL(ps);
 
@@ -5766,17 +5856,17 @@ namespace BP.WF
                 decimal ok = (decimal)dt_worker.Rows.Count;
 
                 ps = new Paras();
-                ps.SQL="SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
-                ps.Add("FID",this.HisWork.FID);
+                ps.SQL = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
+                ps.Add("FID", this.HisWork.FID);
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(ps);
                 decimal passRate = ok / all * 100;
-                 numStr += "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
+                numStr += "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
                 if (nd.PassRate <= passRate)
                 {
                     /*说明全部的人员都完成了，就让合流点显示它。*/
                     ps = new Paras();
                     ps.SQL = "UPDATE WF_GenerWorkerList SET IsPass=0  WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID ";
-                    ps.Add("FK_Node",nd.NodeID);
+                    ps.Add("FK_Node", nd.NodeID);
                     ps.Add("WorkID", this.HisWork.FID);
                     DBAccess.RunSQL(ps);
                     numStr += "@下一步工作(" + nd.Name + ")已经启动。";
@@ -5785,7 +5875,8 @@ namespace BP.WF
 
                 string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
                 this.AddToTrack(ActionType.ForwardHL, fk_emp1, myfh.ToEmpsMsg, nd.NodeID, nd.Name, null);
-                return "@流程已经运行到合流节点[" + nd.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, nd.NodeID) + numStr;
+                this.addMsg("ToHeLiuInfo",
+                    "@流程已经运行到合流节点[" + nd.Name + "]，@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, nd.NodeID) + numStr);
             }
 
             /* 已经有FID，说明：以前已经有分流或者合流节点。*/
@@ -5836,7 +5927,7 @@ namespace BP.WF
 
             #region 复制报表上面的数据到合流点上去。
             ps = new Paras();
-            ps.SQL = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID="+dbStr+"OID";
+            ps.SQL = "SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID=" + dbStr + "OID";
             ps.Add("OID", this.HisWork.FID);
             DataTable dt = DBAccess.RunSQLReturnTable(ps);
             foreach (DataColumn dc in dt.Columns)
@@ -5909,7 +6000,7 @@ namespace BP.WF
             string sql1 = "";
 #warning 对于多个分合流点可能会有问题。
             ps = new Paras();
-            ps.SQL= "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + dbStr + "FID AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
+            ps.SQL = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + dbStr + "FID AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
             ps.Add("FID", this.HisWork.FID);
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(ps);
             decimal passRate1 = 1 / numAll1 * 100;
@@ -5930,13 +6021,6 @@ namespace BP.WF
                 ps.Add("FK_Node", nd.NodeID);
                 ps.Add("WorkID", this.HisWork.OID);
                 DBAccess.RunSQL(ps);
-
-                //  ps = new Paras();
-                //  ps.SQL = "UPDATE WF_GenerWorkerList SET IsPass=3  WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID2";
-                ////  ps.Add("WorkID1", this.HisWork.FID);
-                //  ps.Add("FK_Node", nd.NodeID);
-                //  ps.Add("WorkID2", this.HisWork.OID);
-                //  DBAccess.RunSQL(ps);
             }
             ps = new Paras();
             ps.SQL = "UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + ",NodeName='" + nd.Name + "' WHERE WorkID=" + this.HisWork.FID;
@@ -5944,7 +6028,10 @@ namespace BP.WF
             ps.Add("NodeName", nd.Name);
             ps.Add("WorkID", this.HisWork.FID);
             DBAccess.RunSQL(ps);
-            return "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事."+info;
+
+            if (myfh.FK_Node != nd.NodeID)
+                this.addMsg("HeLiuInfo",
+                    "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事." + info);
         }
         /// <summary>
         /// 产生合流汇总数据
@@ -6030,7 +6117,8 @@ namespace BP.WF
             string spanNodes = this.SpanSubTheadNodes(nd);
             if (nd.FromNodes.Count != 1)
             {
-                return StartNextWorkNodeHeLiu_WithFID_YiBu(nd);
+                NodeSend_53_UnSameSheet_To_HeLiu(nd);
+                return null;
             }
 
             GenerFH myfh = new GenerFH(this.HisWork.FID);

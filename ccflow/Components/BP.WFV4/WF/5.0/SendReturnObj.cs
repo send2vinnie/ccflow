@@ -116,6 +116,37 @@ namespace BP.WF
         /// 单据信息
         /// </summary>
         public const string BillInfo = "BillInfo";
+        #region 系统变量
+        /// <summary>
+        /// 当前节点ID
+        /// </summary>
+        public const string VarCurrNodeID = "VarCurrNodeID";
+        /// <summary>
+        /// 当前节点名称
+        /// </summary>
+        public const string VarCurrNodeName = "VarCurrNodeName";
+        /// <summary>
+        /// 到达节点ID
+        /// </summary>
+        public const string VarToNodeID = "VarToNodeID";
+        /// <summary>
+        /// 到达节点名称
+        /// </summary>
+        public const string VarToNodeName = "VarToNodeName";
+        /// <summary>
+        /// 接受人集合的名称(用逗号分开)
+        /// </summary>
+        public const string VarAcceptersName = "VarAcceptersName";
+        /// <summary>
+        /// 接受人集合的ID(用逗号分开)
+        /// </summary>
+        public const string VarAcceptersID = "VarAcceptersID";
+        /// <summary>
+        /// 接受人集合的ID&Name(用逗号分开)
+        /// </summary>
+        public const string VarAcceptersNID = "VarAcceptersNID";
+        #endregion 系统变量
+
     }
     /// <summary>
     /// 工作发送返回对象
@@ -224,6 +255,8 @@ namespace BP.WF
                     continue;
                 }
             }
+            msg = msg.Replace("@@", "@");
+            msg = msg.Replace("@@", "@");
             return msg;
         }
     }
