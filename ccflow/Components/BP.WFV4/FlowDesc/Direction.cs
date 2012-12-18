@@ -92,13 +92,21 @@ namespace BP.WF
 				if (this._enMap!=null) 
 					return this._enMap;
 				
-				Map map = new Map("WF_Direction");				 
+				Map map = new Map("WF_Direction");			 
 				map.EnDesc="节点方向信息";
+
+                /*
+                 * MyPK 是一个复合主键 是由 Node+'_'+ToNode+'_'+DirType 组合的. 比如: 101_102_1
+                 */
+                map.AddMyPK();
                 map.AddTBString(DirectionAttr.FK_Flow, null, "流程", true, true, 0, 3, 0, false);
-				map.AddTBIntPK( DirectionAttr.Node,0,"FromNode",false,true);
-				map.AddTBIntPK( DirectionAttr.ToNode,0,"ToNode",false,true);
+                map.AddTBInt(DirectionAttr.Node, 0, "Node", false, true);
+				map.AddTBInt( DirectionAttr.ToNode,0,"ToNode",false,true);
                 map.AddTBInt(DirectionAttr.DirType, 0, "类型0前进1返回", false, true);
                 map.AddTBInt(DirectionAttr.IsCanBack, 0, "是否可以原路返回(对后退线有效)", false, true);
+                /*
+                 * Dots 存储格式为: @x1,y1@x2,y2
+                 */
                 map.AddTBString(NodeReturnAttr.Dots, null, "轨迹信息", true, true, 0, 300, 0, false);
 
 				this._enMap=map;
@@ -111,7 +119,7 @@ namespace BP.WF
 	 /// <summary>
 	 /// 节点方向
 	 /// </summary>
-	public class Directions :En.EntitiesNoName
+	public class Directions :En.Entities
 	{
 		/// <summary>
 		/// 节点方向
