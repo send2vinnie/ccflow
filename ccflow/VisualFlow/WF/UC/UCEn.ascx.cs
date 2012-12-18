@@ -2546,6 +2546,32 @@ namespace BP.Web.Comm.UC.WF
                         this.Alert("请选择上传的文件.");
                         return;
                     }
+                    
+                    //检查格式是否符合要求.
+                    if (frmAth.Exts == "" || frmAth.Exts == "*.*")
+                    {
+                    }
+                    else
+                    {
+                        string fileExt = fu.FileName.Substring(fu.FileName.LastIndexOf('.') + 1);
+                        fileExt = fileExt.ToLower();
+                        string[] exts = frmAth.Exts.ToLower().Split(',');
+                        bool isHave = false;
+                        foreach (string s in exts)
+                        {
+                            if (s == fileExt)
+                            {
+                                isHave = true;
+                                break;
+                            }
+                        }
+                        if (isHave == false)
+                        {
+                            this.Alert("您上传的文件格式不符合要求,要求格式为:" + frmAth.Exts);
+                            return;
+                        }
+                    }
+
 
                     if (System.IO.Directory.Exists(frmAth.SaveTo) == false)
                         System.IO.Directory.CreateDirectory(frmAth.SaveTo);

@@ -294,6 +294,10 @@ function DDLAnsc(e, ddlChild, fk_mapExt) {
             //alert(oldVal);
 
             $("#" + ddlChild).empty();
+
+            if (data == "")
+                return;
+
             var dataObj = eval("(" + data + ")"); //转换为json对象.
 
             $.each(dataObj.Head, function (idx, item) {

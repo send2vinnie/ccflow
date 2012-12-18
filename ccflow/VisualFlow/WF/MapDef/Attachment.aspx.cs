@@ -81,7 +81,17 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         tb.ID = "TB_" + FrmAttachmentAttr.Name;
         tb.Text = ath.Name;
         this.Pub1.AddTD(tb);
-        this.Pub1.AddTD("附件名称.");
+        this.Pub1.AddTD("附件的中文名称.");
+        this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("文件格式");
+        tb = new TextBox();
+        tb.ID = "TB_" + FrmAttachmentAttr.Exts;
+        tb.Text = ath.Exts;
+        this.Pub1.AddTD(tb);
+        this.Pub1.AddTD("实例:doc,docx,xls,多种格式用逗号分开.");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
