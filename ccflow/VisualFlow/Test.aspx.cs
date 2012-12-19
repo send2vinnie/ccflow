@@ -235,7 +235,7 @@ public partial class TestFrm : BP.Web.PageBase
             }
 
             WorkNode wn = new WorkNode(workid, fk_node);
-            info += wn.AfterNodeSave();
+            info += wn.NodeSend().ToMsgOfHtml();
         }
 
         this.Response.Write(info);
