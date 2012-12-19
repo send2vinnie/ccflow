@@ -99,6 +99,11 @@ namespace BP
 
         #region 属性
         /// <summary>
+        /// 当前是否为添加回退连线状态
+        /// </summary>
+        public bool IsReturnTypeDir { get; set; }
+
+        /// <summary>
         /// 当前是否有节点在编辑状态
         /// </summary>
         public bool IsSomeChildEditing { get; set; }
@@ -553,7 +558,8 @@ namespace BP
             WSDesignerSoapClient da = Glo.GetDesignerServiceInstance();
             string sqls = "";
             sqls += "SELECT NodeID,Name,X,Y,NodePosType,HisToNDs, RunModel FROM WF_Node WHERE FK_Flow='" + flowID + "'";
-            sqls += "@SELECT Node ,ToNode FROM WF_Direction WHERE Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + flowID + "')";
+            //sqls += "@SELECT Node,ToNode FROM WF_Direction WHERE Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + flowID + "')";
+            sqls += "@SELECT Node,ToNode,DirType,IsCanBack,Dots FROM WF_Direction WHERE FK_Flow='" + flowID + "'";
             sqls += "@SELECT * FROM WF_LabNote WHERE FK_Flow='" + flowID + "'";
             da.RunSQLReturnTableSAsync(sqls);
             da.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(da_RunSQLReturnTableSCompleted); 
@@ -624,6 +630,31 @@ namespace BP
                             if (efn.NodeID == dr["ToNode"].ToString())
                             {
                                 Direction d = new Direction((IContainer)this);
+                                d.IsReturnType = (int.Parse(dr["DirType"]) == 0) ? false : true;
+                                d.IsCanBack = (int.Parse(dr["IsCanBack"]) == 0) ? false : true;
+                                
+                                if (dr["Dots"]!= null)
+                                {
+                                    string[] strs = dr["Dots"].ToString().Split('@');
+                                    IList<double> dots = new List<double>();
+
+                                    foreach (string str in strs)
+                                    {
+                                        if (str == null || str == "")
+                                            continue;
+                                        string[] mystr = str.Split(',');
+                                        if (mystr.Length == 2)
+                                        {
+                                            dots.Add(double.Parse(mystr[0]));
+                                            dots.Add(double.Parse(mystr[1]));
+                                        }
+                                    }
+
+                                    d.LineType = DirectionLineType.Polyline;
+                                    d.DirectionTurnPoint1.CenterPosition = new Point(dots[0], dots[1]);
+                                    d.DirectionTurnPoint2.CenterPosition = new Point(dots[2], dots[3]);
+                                }
+
                                 d.FlowID = FlowID;
                                 d.BeginFlowNode = bfn;
                                 d.EndFlowNode = efn;
@@ -645,7 +676,11 @@ namespace BP
                 AddLabel(r);
             }
             #endregion 画标签
+
+            //画线中会将此设置为true.
+            IsNeedSave = false;
         }
+
         public void DrawFlows()
         {
             DrawFlows(this.FlowID);
@@ -1047,9 +1082,10 @@ namespace BP
             sbContainerCoverClose.Begin();
         }
 
-        public void AddDirection()
+        public void AddDirection(bool isReturnType)
         {
             var r = new Direction((IContainer)this);
+            r.IsReturnType = isReturnType;
             r.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
             r.DirectionName = "New Direction" + NextNewDirectionIndex.ToString();
             AddDirection(r);
@@ -1121,7 +1157,12 @@ namespace BP
                             Direction d = ele as Direction;
                             if (d.EndFlowNode != null)
                             {
-                                dirs += "~@Node=" + int.Parse(d.BeginFlowNode.NodeID) + "@ToNode=" + int.Parse(d.EndFlowNode.NodeID);
+                                dirs += "~@Node=" + int.Parse(d.BeginFlowNode.NodeID) + "@ToNode=" + int.Parse(d.EndFlowNode.NodeID)
+                                    + "@DirType=" + (d.IsReturnType ? 1 : 0) + "@IsCanBack=" + (d.IsCanBack ? 1 : 0)
+                                    + "@Dots=" + (d.LineType == DirectionLineType.Polyline 
+                                    ? ("#" + d.DirectionTurnPoint1.CenterPosition.X + "," + d.DirectionTurnPoint1.CenterPosition.Y
+                                    + "#" + d.DirectionTurnPoint2.CenterPosition.X + "," + d.DirectionTurnPoint2.CenterPosition.Y) : string.Empty)
+                                    + "@MyPK=" + (d.BeginFlowNode.NodeID + "_" + d.EndFlowNode.NodeID + "_" + (d.IsReturnType ? 1 : 0));
                             }
                         }
                         else if (ele.ElementType == WorkFlowElementType.Label)

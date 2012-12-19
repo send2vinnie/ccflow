@@ -35,16 +35,39 @@ namespace BP.Picture
                 _repeatDirection = value;
                 if (_repeatDirection == MergePictureRepeatDirection.Vertical)
                 {
-                    picRect.Height = 60.0;
-                    picRect.Width = 20.0;
+                    picRect.Height = 120.0;
+                    picRect.Width = 40.0;
                 }
                 else
                 {
-                    picRect.Height = 20.0;
-                    picRect.Width = 60.0;
+                    picRect.Height = 40.0;
+                    picRect.Width = 120.0;
                 }
             }
+        } 
+        
+        PointCollection _thisPointCollection;
+        public PointCollection ThisPointCollection
+        {
+            get
+            {
+                if (true)//(_thisPointCollection == null)
+                {
+                    _thisPointCollection = new PointCollection();
+
+
+                    PathGeometry pg = (PathGeometry)picRect.GetValue(Path.DataProperty);
+
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[0]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[1]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[2]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[3]).Point);
+                }
+
+                return _thisPointCollection;
+            }
         }
+
         public HeLiuNode()
         {
             InitializeComponent();
@@ -56,13 +79,13 @@ namespace BP.Picture
         }
         public double PictureWidth
         {
-            set { picRect.Width = value; }
-            get { return picRect.Width; }
+            set { picRect.Width = value - 4; }
+            get { return picRect.Width + 4; }
         }
         public double PictureHeight
         {
-            set { picRect.Height = value; }
-            get { return picRect.Height; }
+            set { picRect.Height = value - 4; }
+            get { return picRect.Height + 4; }
         }
         public new Brush Background
         {
@@ -105,10 +128,6 @@ namespace BP.Picture
         public void SetBorderColor(Brush brush)
         {
             picRect.Stroke = brush;
-        }
-        public PointCollection ThisPointCollection
-        {
-            get { return null; }
         }
     }
 }

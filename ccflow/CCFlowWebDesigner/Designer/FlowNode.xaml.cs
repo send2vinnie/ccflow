@@ -1165,6 +1165,7 @@ namespace BP
                         //if (this.Type != FlowNodeType.COMPLETION)
                         //{
                         _container.CurrentTemporaryDirection = new Direction(_container, true);
+                        _container.CurrentTemporaryDirection.IsReturnType = _container.IsReturnTypeDir;
                         _container.AddDirection(_container.CurrentTemporaryDirection);
                         _container.CurrentTemporaryDirection.BeginFlowNode = this;
                         _container.CurrentTemporaryDirection.BeginPointPosition = this.CenterPoint;

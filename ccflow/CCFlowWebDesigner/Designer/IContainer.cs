@@ -33,7 +33,7 @@ namespace BP
         bool IsContainerRefresh { get; set; }
         bool MouseIsInContainer { get; set; }
         bool IsMouseSelecting { get; }
-
+        bool IsReturnTypeDir { get; set; }
        
         List<FlowNode> FlowNodeCollections { get; }
         List<Direction> DirectionCollections { get; }

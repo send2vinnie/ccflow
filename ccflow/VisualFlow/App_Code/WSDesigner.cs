@@ -575,12 +575,15 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     /// <param name="dirs"></param>
     /// <param name="labes"></param>
     [WebMethod(EnableSession = true)]
-    public string DoSaveFlow(string fk_flow,string nodes,string dirs,string labes)
+    public string DoSaveFlow(string fk_flow, string nodes, string dirs, string labes)
     {
         LetAdminLogin("CH", true);
         try
         {
             //处理方向。
+            string sql = "Delete FROM WF_Direction WHERE FK_Flow='" + fk_flow + "'";
+            DBAccess.RunSQL(sql);
+
             string[] mydirs = dirs.Split('~');
             foreach (string dir in mydirs)
             {
@@ -588,12 +591,13 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     continue;
 
                 AtPara ap = new AtPara(dir);
-                string sql = "SELECT * FROM WF_Direction WHERE Node=" + ap.GetValIntByKey("Node") + " AND ToNode=" + ap.GetValIntByKey("ToNode");
-                if (DBAccess.RunSQLReturnTable(sql).Rows.Count == 0)
-                {
-                    sql = "INSERT INTO WF_Direction (Node,ToNode) VALUES (" + ap.GetValIntByKey("Node") + "," + ap.GetValIntByKey("ToNode") + ")";
-                    DBAccess.RunSQL(sql);
-                }
+
+                string dots = ap.GetValStrByKey("Dots").Replace('#', '@');
+                sql = "INSERT INTO WF_Direction (Node,ToNode,FK_Flow,DirType,IsCanBack,Dots,MyPK) VALUES ("
+                    + ap.GetValIntByKey("Node") + "," + ap.GetValIntByKey("ToNode") + ",'" + fk_flow
+                    + "'," + ap.GetValIntByKey("DirType") + "," + ap.GetValIntByKey("IsCanBack")
+                    + "," + (dots == string.Empty ? "null" : "'" + dots + "'") + ",'" + ap.GetValStrByKey("MyPK") + "')";
+                DBAccess.RunSQL(sql);
             }
 
             //处理节点。
@@ -631,12 +635,13 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 ln.Save();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return ex.Message;
         }
         return null;
     }
+
     private void SetNodeProperties(Node n, string nodeName, int x, int y, int nodeType)
     {
         n.Name = nodeName;

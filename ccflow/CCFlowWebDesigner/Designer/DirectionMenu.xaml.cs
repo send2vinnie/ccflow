@@ -140,6 +140,35 @@ namespace BP
 
             this.Visibility = Visibility.Visible;
 
+            #region 设置菜单可见性和选中状态
+            //方向条件
+            var menu = MuContentMenu.Items[0] as MenuItem;
+
+            if (null != menu)
+            {
+                menu.Visibility = relatedDirection.IsReturnType ?
+                    System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            }
+
+            //原路返回
+            menu = MuContentMenu.Items[1] as MenuItem;
+
+            if (null != menu)
+            {
+                menu.Visibility = relatedDirection.IsReturnType ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                menu.IsChecked = relatedDirection.IsCanBack;
+            }
+
+            //是否折线
+            menu = MuContentMenu.Items[2] as MenuItem;
+
+            if (null != menu)
+            {
+                menu.IsChecked = relatedDirection.LineType == DirectionLineType.Polyline;
+            } 
+            #endregion
+
             MuContentMenu.Show();
         }
        
@@ -150,20 +179,36 @@ namespace BP
             _container.IsContainerRefresh = false;
 
         }
+
         private void Menu_ItemSelected(object sender, MenuEventArgs e)
         {
             if (e.Tag == null)
             {
                 return;
             }
+
             switch (e.Tag.ToString())
             {
-                case "menuDeleteDirection":
-                    deleteDirection();
-                    break;
                 case "menuSetDirectionCondition":
                   //  _Service.GetRelativeUrlAsync("", "Dir", FlowID, r.BeginFlowNode.NodeID, r.EndFlowNode.NodeID, true);
                     showDirectionSetting();
+                    break;
+                case "menuIsCanBack":
+                    this.Visibility = Visibility.Collapsed;
+                    var subMenu = MuContentMenu.Items[1] as MenuItem;
+                    subMenu.IsChecked = !subMenu.IsChecked;
+                    relatedDirection.IsCanBack = subMenu.IsChecked;
+                    _container.IsNeedSave = true;
+                    break;
+                case "menuIsPolyline":
+                    this.Visibility = Visibility.Collapsed;
+                    subMenu = MuContentMenu.Items[2] as MenuItem;
+                    subMenu.IsChecked = !subMenu.IsChecked;
+                    relatedDirection.LineType = subMenu.IsChecked ? DirectionLineType.Polyline : DirectionLineType.Line;
+                    _container.IsNeedSave = true;   
+                    break;
+                case "menuDeleteDirection":
+                    deleteDirection();
                     break;
             }
             MuContentMenu.Hide();

@@ -27,7 +27,8 @@ namespace BP
         {
             InitializeComponent();
             Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
-            SetGridLines();
+            SetGridLines(); 
+            dicReturnTrackTips = new Dictionary<Direction, IList<string>>();
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
@@ -84,6 +85,12 @@ namespace BP
         public string FK_Flow { get; set; }
         public string WorkID { get; set; }
         public bool IsNeedSave { get; set; }
+
+        /// <summary>
+        /// 当前是否为添加回退连线状态
+        /// </summary>
+        public bool IsReturnTypeDir { get; set; }
+
         /// <summary>
         /// 当前是否有节点在编辑状态
         /// </summary>
@@ -268,6 +275,7 @@ namespace BP
         private DataSet trackDataSet;
         private double DesignerHeight = 50;
         private double DesignerWdith = 50;
+        private Dictionary<Direction, IList<string>> dicReturnTrackTips;
         #endregion
         
         #region 加载流程相关
@@ -371,7 +379,9 @@ namespace BP
                  * 1,流程在运行过程中WF_Track 忠实的记录了每个操作动作.这个表的数据只增加不会减少更不修改它.
                  * 2,每个事件都一个事件类型ActionType, 它是一个枚举类型的.
                  */
+                this.dicReturnTrackTips.Clear();
                 DataTable dt = trackDataSet.Tables["WF_Track"];
+
                 foreach (DataRow dr in dt.Rows)
                 {
                     string begin = dr["NDFrom"].ToString();
@@ -392,6 +402,7 @@ namespace BP
                             {
                                 if (dir.BeginFlowNode.NodeID == begin && dir.EndFlowNode.NodeID == to)
                                 {
+                                    dir.IsTrackingLine = true;
                                     SolidColorBrush brush = new SolidColorBrush();
                                     brush.Color = Colors.Red;
                                     dir.begin.Fill = brush;
@@ -403,6 +414,8 @@ namespace BP
                                     dir.EndFlowNode.sdPicture.SetBorderColor(brush);
                                     //(dir.EndFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
                                     //(dir.BeginFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
+                                    
+                                    break;
                                 }
                             }
                             #endregion
@@ -410,6 +423,27 @@ namespace BP
                             break;
                         case ActionType.Return: /*退回*/
 #warning 如何标示退回请与马工商量.
+                            foreach (Direction dir in DirectionCollections)
+                            {
+                                if (dir.BeginFlowNode.NodeID == begin && dir.EndFlowNode.NodeID == to && dir.IsReturnType)
+                                {
+                                    if (this.dicReturnTrackTips.ContainsKey(dir))
+                                    {
+                                        dicReturnTrackTips[dir].Add(dr["Msg"].ToString());
+                                        continue;
+                                    }
+
+                                    SolidColorBrush brush = new SolidColorBrush();
+                                    brush.Color = Colors.Red;
+                                    dir.IsTrackingLine = true;
+                                    dir.begin.Fill = brush;
+                                    dir.endArrow.Stroke = brush;
+                                    dir.line.Stroke = brush;
+
+                                    dicReturnTrackTips.Add(dir, new List<string>());
+                                    dicReturnTrackTips[dir].Add(dr["Msg"].ToString());
+                                }
+                            }
                             break;
                         case ActionType.HungUp: /*挂起*/
 #warning 如何标示退回请与马工商量.
@@ -927,7 +961,12 @@ namespace BP
 
         public void ShowDirectionSetting(Direction r)
         {
-            throw new NotImplementedException();
+            if (this.dicReturnTrackTips.ContainsKey(r))
+            {
+                string tip = "未知原因";
+                tip = string.Join("\n-------------------------\n", this.dicReturnTrackTips[r]);
+                MessageBox.Show(tip, "退回原因", MessageBoxButton.OK);
+            }
         }
 
         public void PreviousAction()

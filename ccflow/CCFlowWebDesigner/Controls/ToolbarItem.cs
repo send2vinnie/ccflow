@@ -34,6 +34,7 @@ namespace BP.Controls
                 new ToolbarItem(){No="ToolBarLogin", Name = " 登录", IsEnable = true},
                 new ToolbarItem(){No="ToolBarNewNode", Name="添加节点"},
                 new ToolbarItem(){No="ToolBarNewLine", Name="添加连线"},
+                new ToolbarItem(){No="ToolBarNewReturnLine", Name="添加回线"},
                 new ToolbarItem(){No="ToolBarNewLabel", Name="添加标签"},
                 new ToolbarItem(){No="ToolBarSave", Name="保存"},
                 new ToolbarItem(){No="ToolBarDesignReport", Name="设计报表"},
@@ -42,7 +43,7 @@ namespace BP.Controls
                 new ToolbarItem(){No="ToolBarEditFlow", Name="属性"},
                 new ToolbarItem(){No="ToolBarDeleteFlow", Name="删除"},
                 new ToolbarItem(){No="ToolBarGenerateModel", Name="导出"},
-                  new ToolbarItem(){No="ToolBarShareModel", Name="模板库"},
+                new ToolbarItem(){No="ToolBarShareModel", Name="模板库"},
                 new ToolbarItem(){No="ToolBarFrmLab", Name="表单库"},
                 new ToolbarItem(){No="ToolBarReleaseToFTP", Name="发布到FTP"},
                 new ToolbarItem(){No="ToolBarHelp", Name="帮助", IsEnable = true}

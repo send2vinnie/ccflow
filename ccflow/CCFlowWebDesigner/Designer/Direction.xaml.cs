@@ -26,6 +26,45 @@ namespace BP
         Point origTurnPoint2Point; 
         bool positionIsChange = true;
 
+        /// <summary>
+        /// 轨迹线
+        /// </summary>
+        private bool isTrackingLine = false;
+        public bool IsTrackingLine
+        {
+            get { return isTrackingLine; }
+            set { isTrackingLine = value; }
+        }
+
+        /// <summary>
+        /// 是否为回退线
+        /// </summary>
+        private bool isReturnType = false;
+        public bool IsReturnType
+        {
+            get { return isReturnType; }
+            set
+            {
+                isReturnType = value;
+                if (value)
+                {
+                    line.StrokeDashArray = new DoubleCollection() { 3, 1 };
+                    //d.line.StrokeDashCap = PenLineCap.Flat;
+                    //d.line.StrokeDashOffset = 1;
+                    //d.line.StrokeThickness = 1;
+                }
+                else
+                {
+                    line.StrokeDashArray = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 是否可原路返回
+        /// </summary>
+        public bool IsCanBack { get; set; }
+
         public void Zoom(double zoomDeep)
         {
             if (positionIsChange)
@@ -90,7 +129,9 @@ namespace BP
             }
             tbDirectionName.SetValue(Canvas.TopProperty, top - 15);
             tbDirectionName.SetValue(Canvas.LeftProperty, left - 10);
+            _container.IsNeedSave = true;
         }
+
         public CheckResult CheckSave()
         {
             CheckResult cr = new CheckResult();
@@ -1059,8 +1100,18 @@ namespace BP
                     line.StrokeDashArray = d;
                 }
                 else
-                    line.StrokeDashArray = null;
-
+                {
+                    if (IsReturnType)
+                    {
+                        line.StrokeDashArray = new DoubleCollection() { 3, 1 };
+                        //line.StrokeDashCap = PenLineCap.Flat;
+                        //line.StrokeDashOffset = 1;
+                    }
+                    else
+                    {
+                        line.StrokeDashArray = null;
+                    }
+                }
             }
         }
         bool pointHadActualMove = false;
@@ -1221,9 +1272,7 @@ namespace BP
 
             endArrow.SetAngleByPoint(p3, p4);
             setDirectionNameControlPosition();
-
         }
-        
 
         void ruleTurnPoint1_DirectionTurnPointMove(object sender, MouseEventArgs e, Point newPoint)
         {
@@ -1302,10 +1351,6 @@ namespace BP
 
                     ruleTurnPoint1.DirectionTurnPointMove += new DirectionTurnPoint.DirectionTurnPointMoveDelegate(ruleTurnPoint1_DirectionTurnPointMove);
                     ruleTurnPoint1.OnDoubleClick += new DirectionTurnPoint.DoubleClickDelegate(ruleTurnPoint1_OnDoubleClick);
-                    
-
-
-                   
                 }
                 return ruleTurnPoint1;
             }
@@ -1427,44 +1472,51 @@ namespace BP
             set
             {
                 isSelectd = value;
-               
 
+                //if ((this.line.Stroke as SolidColorBrush).Color.ToString() == Colors.Red.ToString())
+                //    return;
 
-                if ((this.line.Stroke as SolidColorBrush).Color.ToString() == Colors.Red.ToString())
-                    return;
-                if (isSelectd)
+                SolidColorBrush brush = new SolidColorBrush();
+
+                if (IsTrackingLine)
                 {
-                    SolidColorBrush brush = new SolidColorBrush();
-                    brush.Color = Color.FromArgb(255, 255, 181, 0);
-                    begin.Fill = brush;
-                    endArrow.Stroke = brush;
-                    line.Stroke = brush;
-                    if (!_container.CurrentSelectedControlCollection.Contains(this))
-                        _container.AddSelectedControl(this);
-                    if (LineType == DirectionLineType.Polyline)
+                    if (isSelectd)
                     {
-                        ruleTurnPoint1.Fill = brush;
-                        ruleTurnPoint2.Fill = brush;
+                        brush.Color = Color.FromArgb(255, 255, 0, 255);
+                        if (!_container.CurrentSelectedControlCollection.Contains(this))
+                            _container.AddSelectedControl(this);
                     }
-
+                    else
+                    {
+                        brush.Color = Colors.Red;
+                    }
                 }
                 else
                 {
-                   
-                    SolidColorBrush brush = new SolidColorBrush();
-                    brush.Color = Color.FromArgb(255, 0, 128, 0);
-                    begin.Fill = brush;
-                    endArrow.Stroke = brush;
-                    line.Stroke = brush;
-                    if (LineType == DirectionLineType.Polyline)
+                    if (isSelectd)
                     {
-                        ruleTurnPoint1.Fill = brush;
-                        ruleTurnPoint2.Fill = brush;
-                    } 
+                        brush.Color = Color.FromArgb(255, 255, 181, 0);
+                        if (!_container.CurrentSelectedControlCollection.Contains(this))
+                            _container.AddSelectedControl(this);
+                    }
+                    else
+                    {
+                        brush.Color = Color.FromArgb(255, 0, 128, 0);
+                    }
+
+                }
+
+                begin.Fill = brush;
+                endArrow.Stroke = brush;
+                line.Stroke = brush;
+                if (LineType == DirectionLineType.Polyline)
+                {
+                    ruleTurnPoint1.Fill = brush;
+                    ruleTurnPoint2.Fill = brush;
                 }
             }
-
         }
+
         bool trackingPointMouseMove = false;
         private void Point_MouseMove(object sender, MouseEventArgs e)
         {
@@ -1575,8 +1627,10 @@ namespace BP
             {
                 _doubleClickTimer.Stop();
                 //spContentMenu.Visibility = Visibility.Collapsed;
-                _container.ShowDirectionSetting(this);
-
+                if (!this.IsReturnType)
+                {
+                    _container.ShowDirectionSetting(this);
+                }
             }
             else
             {

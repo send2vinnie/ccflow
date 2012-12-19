@@ -58,11 +58,11 @@ namespace BP.Picture
         public void ResetInitColor()
         {
             SolidColorBrush brush = new SolidColorBrush();
-            brush.Color = Colors.Red;
+            brush.Color = Colors.White;
             picRect.Fill = brush;
             brush = new SolidColorBrush();
-            brush.Color = Color.FromArgb(255, 0, 0, 0); 
-           // picCenter.Fill = brush;
+            brush.Color = Colors.Green;
+            picRect.Stroke = brush;
         }
 
         public void SetWarningColor()
@@ -80,9 +80,28 @@ namespace BP.Picture
         {
             picRect.Stroke = brush;
         }
+
+        PointCollection _thisPointCollection;
         public PointCollection ThisPointCollection
         {
-            get { return null; }
+            get
+            {
+                if (true)//(_thisPointCollection == null)
+                {
+                    _thisPointCollection = new PointCollection();
+
+
+                    PathGeometry pg = (PathGeometry)picRect.GetValue(Path.DataProperty);
+
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[0]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[1]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[2]).Point);
+                    _thisPointCollection.Add(((LineSegment)pg.Figures[0].Segments[3]).Point);
+                }
+
+                return _thisPointCollection;
+            }
         }
+
     }
 }

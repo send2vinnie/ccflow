@@ -300,6 +300,7 @@
     <Resource Include="Images\Icons\CCFlowWelcome.jpg" />
     <Resource Include="Images\Icons\Flow.jpg" />
     <Resource Include="Images\Icons\FlowWelcome.jpg" />
+    <Resource Include="Images\ToolBarNewReturnLine.png" />
     <Content Include="Library\System.Windows.Controls.Layout.Toolkit.dll" />
     <Content Include="Library\System.Windows.Controls.Toolkit.dll" />
     <None Include="Service References\WSFtp\CYFtp.disco" />
