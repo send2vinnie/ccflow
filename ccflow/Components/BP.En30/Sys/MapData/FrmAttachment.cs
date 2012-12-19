@@ -52,7 +52,7 @@ namespace BP.Sys
         /// </summary>
         public const string H = "H";
         /// <summary>
-        /// Exts
+        /// 要求上传的格式
         /// </summary>
         public const string Exts = "Exts";
         /// <summary>
@@ -204,6 +204,9 @@ namespace BP.Sys
                 this.SetValByKey(FrmAttachmentAttr.Name, value);
             }
         }
+        /// <summary>
+        /// 类别
+        /// </summary>
         public string Sort
         {
             get
@@ -216,7 +219,7 @@ namespace BP.Sys
             }
         }
         /// <summary>
-        /// Exts
+        /// 要求的格式
         /// </summary>
         public string Exts
         {
@@ -386,9 +389,8 @@ namespace BP.Sys
 
                 map.AddTBString(FrmAttachmentAttr.FK_MapData, null,"FK_MapData", true, false, 1, 30, 20);
                 map.AddTBString(FrmAttachmentAttr.NoOfObj, null, "附件编号", true, false, 0, 50, 20);
-
                 map.AddTBString(FrmAttachmentAttr.Name, null,"名称", true, false, 0, 50, 20);
-                map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展名", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.Exts, null, "要求上传的格式", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.SaveTo, null, "保存到", true, false, 0, 150, 20);
                 map.AddTBString(FrmAttachmentAttr.Sort, null, "类别(可为空)", true, false, 0, 500, 20);
 
