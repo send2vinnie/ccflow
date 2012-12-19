@@ -2601,7 +2601,7 @@ namespace BP.Web.Comm.UC.WF
                     myBtnDel.Visible = true;
 
                     Label lab = this.GetLabelByID("Lab" + frmAth.MyPK);
-                    lab.Text = "<a href='"+this.Request.ApplicationPath+"/DataUser/UploadFile/" + dbUpload.FilePathName + "' target=_blank ><img src='"+this.Request.ApplicationPath+"/Images/FileType/" + dbUpload.FileExts + ".gif' border=0/>" + dbUpload.FileName + "</a>";
+                    lab.Text = "<a href='" + this.Request.ApplicationPath + "/DataUser/UploadFile/" + dbUpload.FilePathName + "' target=_blank ><img src='" + this.Request.ApplicationPath + "/Images/FileType/" + dbUpload.FileExts + ".gif' alt='" + dbUpload.FileName + "' ID='" + frmAth.NoOfObj+ "'  border=0/>" + dbUpload.FileName + "</a>";
                     return;
                 case "Download":
                     FrmAttachmentDB dbDown = new FrmAttachmentDB();

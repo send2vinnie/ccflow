@@ -3,7 +3,8 @@
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc5" %>
 <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
 <script language=javascript>
-    // 获取DDL值
+    // ccform 为开发者提供的内置函数.
+    // 获取DDL值 
     function ReqDDL(ddlID) {
         var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_DDL_' + ddlID).value;
         if (v == null) {
@@ -27,6 +28,16 @@
         }
         return v;
     }
+    // 获取附件文件名称,如果附件没有上传就返回null.
+    function ReqAthFileName(athID) {
+        var v = document.getElementById(athID);
+        if (v == null) {
+            return null;
+        }
+        var fileName = v.alt;
+        return fileName;
+    }
+
     /// 获取DDL Obj
     function ReqDDLObj(ddlID) {
         var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_DDL_' + ddlID);
