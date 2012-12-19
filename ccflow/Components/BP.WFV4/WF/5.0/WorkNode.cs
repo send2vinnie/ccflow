@@ -2626,12 +2626,12 @@ namespace BP.WF
                 this.addMsg(SendReturnMsgFlag.ToEmps, this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this.nextStationName,
                     this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt));
 
-                if (this._RememberMe.NumOfEmps >= 2)
+                if (this._RememberMe.NumOfEmps >= 2 && this.HisNode.IsTask)
                 {
                     if (WebUser.IsWap)
-                        this.addMsg(SendReturnMsgFlag.ToEmps, "<a href=\"" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>指定特定的同事处理</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "<a href=\"" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0/>指定特定的同事处理</a>。");
                     else
-                        this.addMsg(SendReturnMsgFlag.ToEmps, "<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='./Img/AllotTask.gif' border=0/>" + this.ToE("WN24", "指定特定的同事处理") + "</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0/>指定特定的同事处理</a>。");
                 }
 
 
