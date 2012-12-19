@@ -3193,7 +3193,7 @@ namespace BP.WF
             // 如果是开始节点，就可以允许选择接受人。
             if (this.HisNode.IsStartNode)
             {
-                if (gwls.Count >= 2)
+                if (gwls.Count >= 2 && this.HisNode.IsTask)
                     this.addMsg("AllotTask", "@<img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0 /><a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&FID=" + this.WorkID + "&NodeID=" + toNode.NodeID + "')\" >修改接受对象</a>.");
             }
 

@@ -199,8 +199,6 @@ namespace BP.WF.Ext
                 map.AddBoolean(NodeAttr.IsBackTracking, false, "是否可以在退回后原路返回(只有启用退回功能才有效)", true, true, true);
 
 
-
-
                 // map.AddTBInt(NodeAttr.PassRate, 100, "通过率(对于合流节点有效)", true, true);
                 map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率(对合流点有效)", true, false);
 

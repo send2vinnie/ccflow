@@ -1379,6 +1379,20 @@ namespace BP.WF
                 this.SetValByKey(NodeAttr.PassRate, value);
             }
         }
+        /// <summary>
+        /// 是否允许分配工作
+        /// </summary>
+        public bool IsTask
+        {
+            get
+            {
+                return this.GetValBooleanByKey(NodeAttr.IsTask);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.IsTask, value);
+            }
+        }
         public bool IsCanOver
         {
             get
@@ -1751,6 +1765,8 @@ namespace BP.WF
                 //map.AddBoolean(NodeAttr.IsCanReturn, true, "是否可以退回", true, true);
                 //map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true);
                 //map.AddBoolean(NodeAttr.CCRole, true, "是否可以抄送", true, true);
+
+
 
                 map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, true);
                 map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true);
