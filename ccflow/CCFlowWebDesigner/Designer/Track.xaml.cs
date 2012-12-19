@@ -285,7 +285,7 @@ namespace BP
             string sqls = "";
             sqls += "SELECT NodeID,Name,X,Y,NodePosType,RunModel,HisToNDs FROM WF_Node WHERE FK_Flow='" + flowID + "'";
             sqls += "@SELECT MyPK,Name,X,Y FROM WF_LabNote WHERE FK_Flow='" + flowID + "'";
-            sqls += "@SELECT Node,ToNode FROM WF_Direction ";
+            sqls += "@SELECT Node,ToNode,DirType,IsCanBack,Dots FROM WF_Direction WHERE FK_Flow='" + flowID + "'";
             WSDesignerSoapClient ws = BP.Glo.GetDesignerServiceInstance();
             ws.RunSQLReturnTableSAsync(sqls);
             ws.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(ws_RunSQLReturnTableSCompleted);
@@ -358,8 +358,32 @@ namespace BP
                             if (efn.NodeID == dr["ToNode"].ToString())
                             {
                                 var d = new Direction((IContainer)this);
-                                d.FlowID = FlowID;
+                                d.IsReturnType = (int.Parse(dr["DirType"]) == 0) ? false : true;
+                                d.IsCanBack = (int.Parse(dr["IsCanBack"]) == 0) ? false : true;
 
+                                if (dr["Dots"] != null)
+                                {
+                                    string[] strs = dr["Dots"].ToString().Split('@');
+                                    IList<double> dots = new List<double>();
+
+                                    foreach (string str in strs)
+                                    {
+                                        if (str == null || str == "")
+                                            continue;
+                                        string[] mystr = str.Split(',');
+                                        if (mystr.Length == 2)
+                                        {
+                                            dots.Add(double.Parse(mystr[0]));
+                                            dots.Add(double.Parse(mystr[1]));
+                                        }
+                                    }
+
+                                    d.LineType = DirectionLineType.Polyline;
+                                    d.DirectionTurnPoint1.CenterPosition = new Point(dots[0], dots[1]);
+                                    d.DirectionTurnPoint2.CenterPosition = new Point(dots[2], dots[3]);
+                                }
+
+                                d.FlowID = FlowID;
                                 d.BeginFlowNode = bfn; //开始节点.
                                 d.EndFlowNode = efn; //结束节点.
 
@@ -403,23 +427,10 @@ namespace BP
                                 if (dir.BeginFlowNode.NodeID == begin && dir.EndFlowNode.NodeID == to)
                                 {
                                     dir.IsTrackingLine = true;
-                                    SolidColorBrush brush = new SolidColorBrush();
-                                    brush.Color = Colors.Red;
-                                    dir.begin.Fill = brush;
-                                    dir.endArrow.Stroke = brush;
-                                    dir.line.Stroke = brush;
-
-#warning 从这里把路过的节点的边框设置成红色。
-                                    dir.BeginFlowNode.sdPicture.SetBorderColor(brush);
-                                    dir.EndFlowNode.sdPicture.SetBorderColor(brush);
-                                    //(dir.EndFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
-                                    //(dir.BeginFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
-                                    
                                     break;
                                 }
                             }
                             #endregion
-
                             break;
                         case ActionType.Return: /*退回*/
 #warning 如何标示退回请与马工商量.
@@ -433,13 +444,7 @@ namespace BP
                                         continue;
                                     }
 
-                                    SolidColorBrush brush = new SolidColorBrush();
-                                    brush.Color = Colors.Red;
                                     dir.IsTrackingLine = true;
-                                    dir.begin.Fill = brush;
-                                    dir.endArrow.Stroke = brush;
-                                    dir.line.Stroke = brush;
-
                                     dicReturnTrackTips.Add(dir, new List<string>());
                                     dicReturnTrackTips[dir].Add(dr["Msg"].ToString());
                                 }

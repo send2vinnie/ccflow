@@ -33,7 +33,30 @@ namespace BP
         public bool IsTrackingLine
         {
             get { return isTrackingLine; }
-            set { isTrackingLine = value; }
+            set
+            {
+                isTrackingLine = value;
+
+                if (value)
+                {
+                    SolidColorBrush brush = new SolidColorBrush();
+                    brush.Color = Colors.Red;
+                    begin.Fill = brush;
+                    endArrow.Stroke = brush;
+                    line.Stroke = brush;
+                    if (LineType == DirectionLineType.Polyline)
+                    {
+                        ruleTurnPoint1.Fill = brush;
+                        ruleTurnPoint2.Fill = brush;
+                    }
+
+#warning 从这里把路过的节点的边框设置成红色。
+                    BeginFlowNode.sdPicture.SetBorderColor(brush);
+                    EndFlowNode.sdPicture.SetBorderColor(brush);
+                    //(EndFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
+                    //(BeginFlowNode.sdPicture.currentPic as BP.Picture.OrdinaryNode).picRect.Stroke = brush;
+                }
+            }
         }
 
         /// <summary>
@@ -92,27 +115,31 @@ namespace BP
         {
             set
             {
+                Color color = Colors.Transparent;
+
                 if (value)
                 {
-
-
-                    SolidColorBrush brush = new SolidColorBrush();
-                    brush.Color = Color.FromArgb(255, 0, 128, 0);
-                    begin.Fill = brush;
-                    endArrow.Stroke = brush;
-                    line.Stroke = brush;
+                    color = Color.FromArgb(255, 0, 128, 0);
                 }
                 else
                 {
+                    color = Color.FromArgb(255, 255, 0, 0);
+                } 
+                
+                SolidColorBrush brush = new SolidColorBrush();
+                brush.Color = color;
+                begin.Fill = brush;
+                endArrow.Stroke = brush;
+                line.Stroke = brush;
 
-                    SolidColorBrush brush = new SolidColorBrush();
-                    brush.Color = Color.FromArgb(255, 255, 0, 0);
-                    begin.Fill = brush;
-                    endArrow.Stroke = brush;
-                    line.Stroke = brush;
+                if (LineType == DirectionLineType.Polyline)
+                {
+                    ruleTurnPoint1.Fill = brush;
+                    ruleTurnPoint2.Fill = brush;
                 }
             }
         }
+
         void setDirectionNameControlPosition()
         {
             double top = 0;

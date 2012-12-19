@@ -2031,6 +2031,11 @@ namespace BP
                     CurrentTemporaryDirection.CanShowMenu = false;
                     CurrentTemporaryDirection.BeginFlowNode.CanShowMenu = false;
                     CurrentTemporaryDirection.EndFlowNode.CanShowMenu = true;
+                    CurrentTemporaryDirection.IsReturnType = this.IsReturnTypeDir;
+                    if (this.IsReturnTypeDir)
+                    {
+                        CurrentTemporaryDirection.LineType = DirectionLineType.Polyline;
+                    }
                     CurrentTemporaryDirection.IsTemporaryDirection = false;
                     CurrentTemporaryDirection.IsSelectd = false;
                     RemoveSelectedControl(CurrentTemporaryDirection);
