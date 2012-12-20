@@ -44,7 +44,7 @@ namespace BP.WF
 	/// 记录了从一个节点到其他的多个节点.
 	/// 也记录了到这个节点的其他的节点.
 	/// </summary>
-	public class Direction :Entity
+	public class Direction :EntityMyPK
 	{
 		#region 基本属性
 		/// <summary>
@@ -61,6 +61,18 @@ namespace BP.WF
                 this.SetValByKey(DirectionAttr.Node, value);
             }
         }
+        public int DirType
+        {
+            get
+            {
+                return this.GetValIntByKey(DirectionAttr.DirType);
+            }
+            set
+            {
+                this.SetValByKey(DirectionAttr.DirType, value);
+            }
+        }
+        
 		/// <summary>
 		/// 转向的节点
 		/// </summary>
@@ -114,6 +126,12 @@ namespace BP.WF
 			}
 		}
 		#endregion
+
+        protected override bool beforeInsert()
+        {
+            this.MyPK = this.Node + "_" + this.ToNode + "_" + this.DirType;
+            return base.beforeInsert();
+        }
 
 	}
 	 /// <summary>

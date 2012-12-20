@@ -709,14 +709,7 @@ namespace BP.WF
             }
             return;
         }
-        public virtual string BeforeSave()
-        {
-            this.AutoFull(); /*处理自动计算。*/
-           
-            // 执行保存前的事件。
-            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SaveBefore, this);
-            return "";
-        }
+      
         #endregion
 
         #region  重写基类的方法。
@@ -860,15 +853,18 @@ namespace BP.WF
         /// <summary>
         /// 直接的保存前要做的工作
         /// </summary>
-        protected virtual void BeforeDirectSave()
+        public virtual void BeforeSave()
         {
+            //执行自动计算.
+            this.AutoFull();
+            // 执行保存前的事件。
+            this.HisNode.MapData.FrmEvents.DoEventNode(EventListOfNode.SaveBefore, this);
         }
         /// <summary>
         /// 直接的保存
         /// </summary>
         public new void DirectSave()
         {
-            this.BeforeDirectSave();
             this.beforeUpdateInsertAction();
             if (this.DirectUpdate() == 0)
             {

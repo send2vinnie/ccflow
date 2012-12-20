@@ -1377,7 +1377,7 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(NodeAttr.PassRate, value);
-            }
+            }  
         }
         /// <summary>
         /// 是否允许分配工作
