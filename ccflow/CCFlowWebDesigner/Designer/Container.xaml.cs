@@ -633,7 +633,7 @@ namespace BP
                                 d.IsReturnType = (int.Parse(dr["DirType"]) == 0) ? false : true;
                                 d.IsCanBack = (int.Parse(dr["IsCanBack"]) == 0) ? false : true;
                                 
-                                if (dr["Dots"]!= null)
+                                if (string.IsNullOrEmpty(dr["Dots"]) ==false)
                                 {
                                     string[] strs = dr["Dots"].ToString().Split('@');
                                     IList<double> dots = new List<double>();
