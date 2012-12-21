@@ -821,7 +821,7 @@ namespace BP.WF
                         if (nd.NodeDepts.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按部门，但是您没有为节点绑定部门。</font>";
                         break;
-                    case DeliveryWay.ByEmp:
+                    case DeliveryWay.ByBindEmp:
                         if (nd.NodeEmps.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按人员，但是您没有为节点绑定人员。</font>";
                         break;

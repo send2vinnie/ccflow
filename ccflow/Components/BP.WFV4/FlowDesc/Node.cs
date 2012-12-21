@@ -489,7 +489,7 @@ namespace BP.WF
                     //if (nd.HisDepts.Count == 0)
                     //    rpt += "<font color=red>您设置了该节点的访问规则是按部门，但是您没有为节点绑定部门。</font>";
                     break;
-                case DeliveryWay.ByEmp:
+                case DeliveryWay.ByBindEmp:
                     //if (nd.HisNodeEmps.Count == 0)
                     //    rpt += "<font color=red>您设置了该节点的访问规则是按人员，但是您没有为节点绑定人员。</font>";
                     break;
@@ -499,7 +499,6 @@ namespace BP.WF
                     //    rpt += "<font color=red>开始节点不支持按SQL 设置访问规则。</font>";
                     //    break;
                     //}
-
                     //if (nd.RecipientSQL.Trim().Length == 0)
                     //    rpt += "<font color=red>您设置了该节点的访问规则是按SQL查询，但是您没有在节点属性里设置查询sql，此sql的要求是查询必须包含No,Name两个列，sql表达式里支持@+字段变量，详细参考开发手册 。</font>";
                     //else
