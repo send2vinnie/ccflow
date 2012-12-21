@@ -330,9 +330,9 @@ namespace BP.WF
         /// </summary>
         BySQL = 2,
         /// <summary>
-        /// 按本节点设置的指定人员
+        /// 按本节点绑定的人员
         /// </summary>
-        ByEmp = 3,
+        ByBindEmp = 3,
         /// <summary>
         /// 由上一步发送人选择
         /// </summary>
