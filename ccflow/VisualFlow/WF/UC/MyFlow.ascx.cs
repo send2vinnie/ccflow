@@ -392,7 +392,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
-
         #region 判断是否有 workid
         if (this.WorkID == 0)
         {
@@ -459,7 +458,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 判断是否有workid
 
-
         #region 判断权限
         if (this.IsPostBack == false)
         {
@@ -524,8 +522,14 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                         Btn_Send.Style.Add("display", "none");
                         this.Btn_Send.UseSubmitBehavior = false;
-                        this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
-                     //   this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+
+
+                        if (this.currND.HisFormType == FormType.DisableIt)
+                            this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                        else
+                            this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+
+                        //   this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                         this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                     }
                     else
@@ -538,9 +542,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         else
                         {
                             this.Btn_Send.UseSubmitBehavior = false;
-                             this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
-                         //   this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
-
+                            if (this.currND.HisFormType == FormType.DisableIt)
+                                this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                            else
+                                this.Btn_Send.OnClientClick = "this.disabled=true;SaveDtlAll();"; //this.disabled='disabled'; return true;";
+                            //   this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                         }
                         this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                     }
@@ -795,7 +801,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wk.SetValByKey(attr.KeyOfEn, attr.DefVal);
         }
         #endregion 设置默认值。
-       
 
         if (nd.HisFormType == FormType.DisableIt)
             wk.DirectUpdate();
@@ -832,6 +837,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     if (nd.HisFormType != FormType.DisableIt)
                         wk.DirectUpdate();
 
+                    
                     /*涉及到多个表单的情况...*/
                     if (nd.HisFormType != FormType.DisableIt)
                     {
@@ -861,6 +867,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         myfrm.HisFrmNode = fnNode;
                         frms.AddEntity(myfrm, 0);
                     }
+                  
 
                     Int64 fid = this.FID;
                     if (this.FID == 0)
