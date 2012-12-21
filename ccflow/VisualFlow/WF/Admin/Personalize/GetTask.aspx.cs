@@ -99,7 +99,7 @@ public partial class WF_Admin_Personalize_GetTask : WebPage
 
                 switch (jc.HisDeliveryWay)
                 {
-                    case DeliveryWay.ByEmp:
+                    case DeliveryWay.ByBindEmp:
                     case DeliveryWay.ByStation:
                         if (jc.CheckNodes.Length > 2)
                             this.Pub1.AddTD("<a href=\"javascript:EditIt('" + this.RefNo + "','" + jc.NodeID + "');\" >编辑</a>");

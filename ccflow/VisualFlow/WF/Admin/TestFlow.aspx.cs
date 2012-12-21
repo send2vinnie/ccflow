@@ -186,13 +186,12 @@ public partial class WF_Admin_TestFlow : WebPage
         {
             is1 = this.Ucsys1.AddTR(is1);
             this.Ucsys1.AddTD(emp.No + "," + emp.Name);
-           // this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start5&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
+            // this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start5&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
             this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=Start&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
             this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmall&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
             this.Ucsys1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmallSingle&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
-           // this.Ucsys1.AddTD("<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  ><img src='./../Img/Mobile.gif' border=0 width=25px height=18px />Mobile</a> ");
-            this.Ucsys1.AddTD("<a href=\"javascript:WinOpen('TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1','470px','600px','"+emp.No+"');\"  ><img src='./../Img/Mobile.gif' border=0 width=25px height=18px />Mobile</a> ");
-
+            // this.Ucsys1.AddTD("<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  ><img src='./../Img/Mobile.gif' border=0 width=25px height=18px />Mobile</a> ");
+            this.Ucsys1.AddTD("<a href=\"javascript:WinOpen('TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1','470px','600px','" + emp.No + "');\"  ><img src='./../Img/Mobile.gif' border=0 width=25px height=18px />Mobile</a> ");
             this.Ucsys1.AddTD(emp.FK_DeptText);
             this.Ucsys1.AddTD("<a href='TestSDK.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  >SDK</a> ");
             this.Ucsys1.AddTREnd();
