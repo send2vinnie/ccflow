@@ -122,7 +122,7 @@ namespace BP.WF
         }
         private string nextStationName = "";
         private WorkNode town = null;
-        public GenerWorkerLists GenerWorkerLists_WidthFID(WorkNode town)
+        public GenerWorkerLists Func_GenerWorkerLists_WidthFID(WorkNode town)
         {
             this.town = town;
             DataTable dt = new DataTable();
@@ -451,7 +451,7 @@ namespace BP.WF
             #endregion  按照岗位来执行。
         }
 
-       public GenerWorkerLists NodeSend_GenerWorkerLists(WorkNode town)
+        public GenerWorkerLists Func_GenerWorkerLists(WorkNode town)
        {
            this.town = town;
 
@@ -525,15 +525,26 @@ namespace BP.WF
                return WorkerListWayOfDept(town, dt);
            }
 
-           // 按照节点指定的人员处理。
+           // 按照节点绑定的人员处理。
            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeEmp)
            {
+               /* 按指定节点岗位上的人员计算 */
+               string fk_node = town.HisNode.RecipientSQL;
+               if (DataType.IsNumStr(fk_node) == false)
+                   throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点岗位投递，但是您没有在访问规则设置中设置节点编号。");
                ps = new Paras();
-               ps.Add("FK_Node", town.HisNode.NodeID);
-               ps.SQL = "SELECT FK_Emp FROM WF_NodeEmp WHERE FK_Node=" + dbStr + "FK_Node ";
+               ps.Add("OID", this.WorkID);
+               ps.SQL = "SELECT Rec FROM ND" + fk_node + " WHERE OID=" + dbStr + "OID ";
                dt = DBAccess.RunSQLReturnTable(ps);
-               if (dt.Rows.Count == 0)
-                   throw new Exception("@您设置的当前节点按照节点绑定人员，但是你没有为(" + town.HisNode.NodeID + "," + town.HisNode.Name + ")节点绑定人员。");
+               if (dt.Rows.Count == 1)
+                   return WorkerListWayOfDept(town, dt);
+
+               //ps = new Paras();
+               //ps.Add("FK_Node", town.HisNode.NodeID);
+               //ps.SQL = "SELECT FK_Emp FROM WF_NodeEmp WHERE FK_Node=" + dbStr + "FK_Node ";
+               //dt = DBAccess.RunSQLReturnTable(ps);
+               //if (dt.Rows.Count == 0)
+               //    throw new Exception("@您设置的当前节点按照节点绑定人员，但是你没有为(" + town.HisNode.NodeID + "," + town.HisNode.Name + ")节点绑定人员。");
 
                //fk_emp = this.HisWork.GetValStringByKey("FK_Emp");
                //DataRow dr = dt.NewRow();
@@ -2293,35 +2304,35 @@ namespace BP.WF
                 #region  初始化发起的工作节点。
 
                 #region 主表数据copy.
-                Work wk = toND.HisWork;
-                wk.SetValByKey("OID", this.HisWork.OID); //设定它的ID.
+                Work toWK = toND.HisWork;
+                toWK.SetValByKey("OID", this.HisWork.OID); //设定它的ID.
                 if (this.HisNode.IsStartNode == false)
-                    wk.Copy(this.rptGe);
+                    toWK.Copy(this.rptGe);
 
-                wk.FID = 0;
-                wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
-                wk.NodeState = NodeState.Init; //节点状态。
-                wk.Rec = BP.Web.WebUser.No;
+                //toWK.FID = 0;
+                toWK.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
+                toWK.NodeState = NodeState.Init; //节点状态。
+                toWK.Rec = BP.Web.WebUser.No;
                 try
                 {
                     //判断是不是MD5流程？
                     if (this.HisFlow.IsMD5)
-                        wk.SetValByKey("MD5", Glo.GenerMD5(wk));
-                    wk.Insert();
+                        toWK.SetValByKey("MD5", Glo.GenerMD5(toWK));
+                    toWK.Insert();
                 }
                 catch (Exception ex)
                 {
-                    wk.CheckPhysicsTable();
+                    toWK.CheckPhysicsTable();
                     try
                     {
-                        wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
-                        wk.NodeState = NodeState.Init; //节点状态。
-                        wk.Rec = BP.Web.WebUser.No;
-                        wk.SaveAsOID(wk.OID);
+                        toWK.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
+                        toWK.NodeState = NodeState.Init; //节点状态。
+                        toWK.Rec = BP.Web.WebUser.No;
+                        toWK.SaveAsOID(toWK.OID);
                     }
                     catch (Exception ex11)
                     {
-                        if (wk.Update() == 0)
+                        if (toWK.Update() == 0)
                             throw new Exception(ex.Message + " == " + ex11.Message);
                         //  throw new Exception(ex.Message + " == " + ex11.Message);
                     }
@@ -2579,46 +2590,37 @@ namespace BP.WF
                 #endregion 初始化发起的工作节点.
 
                 #region 保存目标节点数据.
-                try
-                {
-                    wk.BeforeSave();
-                }
-                catch
-                {
-                }
+             
 
                 try
                 {
-                    wk.DirectSave();
+                    toWK.DirectSave();
                 }
                 catch
                 {
-                    #region 解决工作节点字段修复问题
                     try
                     {
-                        wk.CheckPhysicsTable();
-                        wk.DirectSave();
+                        toWK.CheckPhysicsTable();
+                        toWK.DirectSave();
                     }
                     catch (Exception ex)
                     {
                         Log.DefaultLogWriteLineInfo("@保存工作错误：" + ex.Message);
-                        throw new Exception("@保存工作错误：" + wk.EnDesc + ex.Message);
+                        throw new Exception("@保存工作错误：" + toWK.EnDesc + ex.Message);
                     }
-                    #endregion 解决字段修复问题
                 }
                 #endregion 保存目标节点数据.
 
                 #region 执行数据初始化
                 /*
-                 * 1, 
-                 * 
+                 * 1,
                  */
 
                 // town.
-                WorkNode town = new WorkNode(wk, toND);
+                WorkNode town = new WorkNode(toWK, toND);
 
                 // 初试化他们的工作人员．
-                GenerWorkerLists gwls = this.NodeSend_GenerWorkerLists(town);
+                GenerWorkerLists gwls = this.Func_GenerWorkerLists(town);
 
                 //@加入消息集合里。
                 this.AddIntoWacthDog(gwls);
@@ -2634,16 +2636,15 @@ namespace BP.WF
                         this.addMsg(SendReturnMsgFlag.ToEmps, "<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/AllotTask.aspx?WorkID=" + this.WorkID + "&NodeID=" + toND.NodeID + "&FK_Flow=" + toND.FK_Flow + "')\"><img src='" + this.VirPath + "/WF/Img/AllotTask.gif' border=0/>指定特定的同事处理</a>。");
                 }
 
-
                 if (WebUser.IsWap == false)
                     this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + toND.NodeID + "');\" ><img src='" + this.VirPath + "/WF/Img/SMS.gif' border=0 />" + this.ToE("WN21", "发手机短信提醒他(们)") + "</a>");
 
                 if (this.HisNode.HisFormType != FormType.SDKForm)
                 {
                     if (this.HisNode.IsStartNode)
-                        this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href='" + this.VirPath + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toND.FK_Flow + "&FK_Node=" + toND.FK_Flow + "01'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href='" + this.VirPath + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + toWK.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toND.FK_Flow + "&FK_Node=" + toND.FK_Flow + "01'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。");
                     else
-                        this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。");
+                        this.addMsg(SendReturnMsgFlag.ToEmps, "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + toWK.OID + "&FK_Flow=" + toND.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。");
                 }
 
                 ps = new Paras();
@@ -2658,10 +2659,11 @@ namespace BP.WF
                 }
                 else
                 {
-                    this.addMsg(SendReturnMsgFlag.WorkRpt, null, "@<img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + wk.OID + "&FID=" + wk.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >工作报告</a>。");
+                    this.addMsg(SendReturnMsgFlag.WorkRpt, null, "@<img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + toWK.OID + "&FID=" + toWK.FID + "&FK_Flow=" + toND.FK_Flow + "'target='_blank' >工作报告</a>。");
                 }
                 #endregion
 
+                //
                 this.addMsg(SendReturnMsgFlag.WorkStartNode, "@" + string.Format("@第{0}步", toND.Step.ToString()) + "<font color=blue>" + toND.Name + "</font>工作成功启动" + ".");
 
                 //加入系统变量.
@@ -3334,7 +3336,7 @@ namespace BP.WF
                 WorkNode town = new WorkNode(toNode.HisWork, toNode);
 
                 // 初试化他们的工作人员．
-                GenerWorkerLists gwls = this.GenerWorkerLists_WidthFID(town);
+                GenerWorkerLists gwls = this.Func_GenerWorkerLists_WidthFID(town);
                 string fk_emp = "";
                 string toEmpsStr = "";
                 string emps = "";
@@ -4240,559 +4242,7 @@ namespace BP.WF
                 throw new Exception(ex.Message + "@回滚发送失败数据出现错误：" + ex1.Message + "@有可能系统已经自动修复错误，请您在重新执行一次。");
             }
         }
-        public GenerWorkerLists Func_GenerWorkerLists(WorkNode town)
-        {
-            this.town = town;
-
-            DataTable dt = new DataTable();
-            dt.Columns.Add("No", typeof(string));
-            string sql;
-            string fk_emp;
-
-            // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
-            ps = new Paras();
-            ps.Add("WorkID", this.HisWork.OID);
-            ps.Add("FK_Node", town.HisNode.NodeID);
-            ps.SQL = "DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + dbStr + "WorkID AND FK_Node =" + dbStr + "FK_Node";
-            DBAccess.RunSQL(ps);
-
-            // 如果指定特定的人员处理。
-            if (JumpToEmp != null)
-            {
-                DataRow dr = dt.NewRow();
-                dr[0] = JumpToEmp;
-                dt.Rows.Add(dr);
-                return WorkerListWayOfDept(town, dt);
-            }
-
-            // 按上一节点发送人处理。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOper
-                || town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
-            {
-                DataRow dr = dt.NewRow();
-                dr[0] = Web.WebUser.No;
-                dt.Rows.Add(dr);
-                return WorkerListWayOfDept(town, dt);
-            }
-            //首先判断是否配置了获取下一步接受人员的sql.
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySQL)
-            {
-                if (town.HisNode.RecipientSQL.Length < 4)
-                    throw new Exception("@您设置的当前节点按照sql，决定下一步的接受人员，但是你没有设置sql.");
-
-                Attrs attrs = this.HisWork.EnMap.Attrs;
-                sql = town.HisNode.RecipientSQL;
-                sql = Glo.DealExp(sql, this.HisWork, "按SQL获取人员,所在节点" + town.HisNode.NodeID + ".");
-
-                //foreach (Attr attr in attrs)
-                //{
-                //    if (attr.MyDataType == DataType.AppString)
-                //        sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
-                //    else
-                //        sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-                //}
-                //sql = sql.Replace("~", "'");
-                //sql = sql.Replace("@WebUser.No", "'" + WebUser.No + "'");
-                //sql = sql.Replace("@WebUser.Name", "'" + WebUser.Name + "'");
-                //sql = sql.Replace("@WebUser.FK_Dept", "'" + WebUser.FK_Dept + "'");
-                //if (sql.Contains("@"))
-                //    throw new Exception("@接受人sql表达式错误，一些字段没有替换下来，请确认这些字段是否被删除:" + sql);
-
-                dt = DBAccess.RunSQLReturnTable(sql);
-                if (dt.Rows.Count == 0)
-                    throw new Exception("@没有找到可接受的工作人员。@技术信息：执行的sql没有发现人员:" + sql);
-                return WorkerListWayOfDept(town, dt);
-            }
-
-            // 按照选择的人员处理。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
-            {
-                ps = new Paras();
-                ps.Add("FK_Node", this.HisNode.NodeID);
-                ps.Add("WorkID", this.HisWork.OID);
-                ps.SQL = "SELECT FK_Emp FROM WF_SelectAccper WHERE FK_Node=" + dbStr + "FK_Node AND WorkID=" + dbStr + "WorkID";
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count == 0)
-                    throw new Exception("请选择下一步骤工作(" + town.HisNode.Name + ")接受人员。");
-                return WorkerListWayOfDept(town, dt);
-            }
-
-            // 按照节点指定的人员处理。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByEmp)
-            {
-                ps = new Paras();
-                ps.Add("FK_Node", town.HisNode.NodeID);
-                ps.SQL = "SELECT FK_Emp FROM WF_NodeEmp WHERE FK_Node=" + dbStr + "FK_Node ";
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count == 0)
-                    throw new Exception("@您设置的当前节点按照节点绑定人员，但是你没有为(" + town.HisNode.NodeID + "," + town.HisNode.Name + ")节点绑定人员。");
-
-                //fk_emp = this.HisWork.GetValStringByKey("FK_Emp");
-                //DataRow dr = dt.NewRow();
-                //dr[0] = fk_emp;
-                //dt.Rows.Add(dr);
-                return WorkerListWayOfDept(town, dt);
-            }
-
-            // 按照上一个节点表单指定字段的人员处理。 
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousNodeFormEmpsField)
-            {
-                // 检查接受人员规则,是否符合设计要求.
-                string specEmpFields = town.HisNode.RecipientSQL;
-                if (string.IsNullOrEmpty(specEmpFields))
-                    specEmpFields = "FK_Emp";
-
-                if (this.HisWork.EnMap.Attrs.Contains(specEmpFields) == false)
-                    throw new Exception("@您设置的当前节点按照指定的人员，决定下一步的接受人员，但是你没有在节点表单中设置该表单" + specEmpFields + "字段。");
-
-                //获取接受人并格式化接受人, 
-                fk_emp = this.HisWork.GetValStringByKey(specEmpFields);
-                fk_emp = fk_emp.Replace(";", ",");
-                fk_emp = fk_emp.Replace("；", ",");
-                fk_emp = fk_emp.Replace("，", ",");
-                fk_emp = fk_emp.Replace("、", ",");
-                fk_emp = fk_emp.Replace(" ", "");
-                if (string.IsNullOrEmpty(fk_emp))
-                    throw new Exception("@没有在字段[" + this.HisWork.EnMap.Attrs.GetAttrByKey(specEmpFields).Desc + "]中指定接受人，工作无法向下发送。");
-
-                // 把它加入接受人员列表中.
-                string[] myemps = fk_emp.Split(',');
-                foreach (string s in myemps)
-                {
-                    if (string.IsNullOrEmpty(s))
-                        continue;
-                    DataRow dr = dt.NewRow();
-                    dr[0] = s;
-                    dt.Rows.Add(dr);
-                }
-                return WorkerListWayOfDept(town, dt);
-            }
-
-
-            string prjNo = "";
-            FlowAppType flowAppType = this.HisNode.HisFlow.HisFlowAppType;
-            sql = "";
-            if (this.HisNode.HisFlow.HisFlowAppType == FlowAppType.PRJ)
-            {
-                prjNo = "";
-                try
-                {
-                    prjNo = this.HisWork.GetValStrByKey("PrjNo");
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("@当前流程是工程类流程，但是在节点表单中没有PrjNo字段(注意区分大小写)，请确认。@异常信息:" + ex.Message);
-                }
-            }
-
-            #region 按部门与岗位的交集计算.
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByDeptAndStation)
-            {
-                sql = "SELECT No FROM Port_Emp WHERE No IN ";
-                sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
-                sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + dbStr + "FK_Node1)";
-                sql += ")";
-                sql += "AND No IN ";
-                sql += "(";
-                sql += "SELECT FK_Emp FROM Port_EmpStation WHERE FK_Station IN ";
-                sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node1 )";
-                sql += ")";
-
-                ps = new Paras();
-                ps.Add("FK_Node1", town.HisNode.NodeID);
-                ps.Add("FK_Node2", town.HisNode.NodeID);
-                ps.SQL = sql;
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count > 0)
-                    return WorkerListWayOfDept(town, dt);
-                else
-                    throw new Exception("@节点访问规则错误:节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + "), 按照岗位与部门的交集确定接受人的范围错误，没有找到人员:SQL=" + sql);
-            }
-            #endregion 按部门与岗位的交集计算.
-
-            #region 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByDept)
-            {
-                if (flowAppType == FlowAppType.Normal)
-                {
-                    ps = new Paras();
-                    ps.Add("FK_Node", town.HisNode.NodeID);
-                    ps.SQL = "SELECT DISTINCT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + dbStr + "FK_Node )";
-                    dt = DBAccess.RunSQLReturnTable(ps);
-                    if (dt.Rows.Count > 0)
-                        return WorkerListWayOfDept(town, dt);
-                }
-
-                if (flowAppType == FlowAppType.PRJ)
-                {
-                    sql = "SELECT No FROM Port_Emp WHERE No IN ";
-                    sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
-                    sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + dbStr + "FK_Node1)";
-                    sql += ")";
-                    sql += "AND NO IN ";
-                    sql += "(";
-                    sql += "SELECT FK_Emp FROM Prj_EmpPrjStation WHERE FK_Station IN ";
-                    sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node2) AND FK_Prj=" + dbStr + "FK_Prj ";
-                    sql += ")";
-
-                    ps = new Paras();
-                    ps.Add("FK_Node1", town.HisNode.NodeID);
-                    ps.Add("FK_Node2", town.HisNode.NodeID);
-                    ps.Add("FK_Prj", prjNo);
-                    ps.SQL = sql;
-
-                    dt = DBAccess.RunSQLReturnTable(ps);
-                    if (dt.Rows.Count == 0)
-                    {
-                        /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
-                        sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
-                        sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
-                        sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + dbStr + "FK_Node1)";
-                        sql += ")";
-                        sql += "AND NO IN ";
-                        sql += "(";
-                        sql += "SELECT FK_Emp FROM Port_EmpStation WHERE FK_Station IN ";
-                        sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node2)";
-                        sql += ")";
-
-                        ps = new Paras();
-                        ps.Add("FK_Node1", town.HisNode.NodeID);
-                        ps.Add("FK_Node2", town.HisNode.NodeID);
-                        ps.SQL = sql;
-                    }
-                    else
-                    {
-                        return WorkerListWayOfDept(town, dt);
-                    }
-                    dt = DBAccess.RunSQLReturnTable(ps);
-                    if (dt.Rows.Count > 0)
-                        return WorkerListWayOfDept(town, dt);
-                }
-            }
-            #endregion 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
-
-            #region 按指定的节点人员，做为下一步骤的流程接受人。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeEmp)
-            {
-                /* 按指定节点岗位上的人员计算 */
-                string fk_node = town.HisNode.RecipientSQL;
-                if (DataType.IsNumStr(fk_node) == false)
-                    throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点人员投递，但是您没有在访问规则设置中设置节点编号。");
-
-                ps = new Paras();
-                ps.SQL = "SELECT Rec FROM ND" + fk_node + " WHERE OID=" + dbStr + "OID";
-                ps.Add("OID", this.WorkID);
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count == 1)
-                    return WorkerListWayOfDept(town, dt);
-
-                throw new Exception("@流程设计错误，到达的节点（" + town.HisNode.Name + "）在指定的节点中没有数据，无法找到工作的人员。");
-            }
-            #endregion 按指定的节点人员，做为下一步骤的流程接受人。
-
-            #region 按节点岗位与人员部门集合两个纬度计算.
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByStationAndEmpDept)
-            {
-                sql = "SELECT No FROM Port_Emp WHERE NO IN "
-                      + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node) )"
-                      + " AND  FK_Dept IN "
-                      + "(SELECT  FK_Dept  FROM Port_EmpDept WHERE FK_Emp =" + dbStr + "FK_Emp)";
-
-                ps = new Paras();
-                ps.Add("FK_Node", town.HisNode.NodeID);
-                ps.Add("FK_Emp", WebUser.No);
-                ps.SQL = sql;
-                //2012.7.16李健修改
-                //+" AND  NO IN "
-                //+ "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Emp = '" + WebUser.No + "')";
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count > 0)
-                    return WorkerListWayOfDept(town, dt);
-                else
-                    throw new Exception("@节点访问规则错误:节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + "), 按节点岗位与人员部门集合两个纬度计算，没有找到人员:SQL=" + sql);
-            }
-            #endregion
-
-            string empNo = WebUser.No;
-            string empDept = WebUser.FK_Dept;
-
-            #region 按指定的节点的人员岗位，做为下一步骤的流程接受人。
-            if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpecNodeEmpStation)
-            {
-                /* 按指定的节点的人员岗位 */
-                string fk_node = town.HisNode.RecipientSQL;
-                if (DataType.IsNumStr(fk_node) == false)
-                    throw new Exception("流程设计错误:您设置的节点(" + town.HisNode.Name + ")的接收方式为按指定的节点人员岗位投递，但是您没有在访问规则设置中设置节点编号。");
-
-                ps = new Paras();
-                ps.SQL = "SELECT Rec,FK_Dept FROM ND" + fk_node + " WHERE OID=" + dbStr + "OID";
-                ps.Add("OID", this.WorkID);
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count != 1)
-                    throw new Exception("@流程设计错误，到达的节点（" + town.HisNode.Name + "）在指定的节点中没有数据，无法找到工作的人员。");
-
-                empNo = dt.Rows[0][0].ToString();
-                empDept = dt.Rows[0][1].ToString();
-            }
-            #endregion 按指定的节点人员，做为下一步骤的流程接受人。
-
-            #region 最后判断 - 按照岗位来执行。
-            if (this.HisNode.IsStartNode == false)
-            {
-                ps = new Paras();
-                if (flowAppType == FlowAppType.Normal)
-                {
-                    // 如果当前的节点不是开始节点， 从轨迹里面查询。
-                    sql = "SELECT DISTINCT FK_Emp  FROM Port_EmpStation WHERE FK_Station IN "
-                       + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") "
-                       + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + dbStr + "WorkID AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
-                    ps.SQL = sql;
-                    ps.Add("WorkID", this.WorkID);
-                }
-
-                if (flowAppType == FlowAppType.PRJ)
-                {
-                    // 如果当前的节点不是开始节点， 从轨迹里面查询。
-                    sql = "SELECT DISTINCT FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Station IN "
-                       + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node ) AND FK_Prj=" + dbStr + "FK_Prj "
-                       + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + dbStr + "WorkID AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
-
-                    ps = new Paras();
-                    ps.SQL = sql;
-                    ps.Add("FK_Node", town.HisNode.NodeID);
-                    ps.Add("FK_Prj", prjNo);
-                    ps.Add("WorkID", this.WorkID);
-
-                    dt = DBAccess.RunSQLReturnTable(ps);
-                    if (dt.Rows.Count == 0)
-                    {
-                        /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
-                        sql = "SELECT DISTINCT FK_Emp  FROM Port_EmpStation WHERE FK_Station IN "
-                         + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node ) "
-                         + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + dbStr + "WorkID AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
-                        ps = new Paras();
-                        ps.SQL = sql;
-                        ps.Add("FK_Node", town.HisNode.NodeID);
-                        ps.Add("WorkID", this.WorkID);
-                    }
-                    else
-                    {
-                        return WorkerListWayOfDept(town, dt);
-                    }
-                }
-
-                dt = DBAccess.RunSQLReturnTable(ps);
-                // 如果能够找到.
-                if (dt.Rows.Count >= 1)
-                {
-                    if (dt.Rows.Count == 1)
-                    {
-                        /*如果人员只有一个的情况，说明他可能要 */
-                    }
-                    return WorkerListWayOfDept(town, dt);
-                }
-            }
-
-            /* 如果执行节点 与 接受节点岗位集合一致 */
-            if (this.HisNode.GroupStaNDs == town.HisNode.GroupStaNDs)
-            {
-                /* 说明，就把当前人员做为下一个节点处理人。*/
-                DataRow dr = dt.NewRow();
-                dr[0] = WebUser.No;
-                dt.Rows.Add(dr);
-                return WorkerListWayOfDept(town, dt);
-            }
-
-            /* 如果执行节点 与 接受节点岗位集合不一致 */
-            if (this.HisNode.GroupStaNDs != town.HisNode.GroupStaNDs)
-            {
-                /* 没有查询到的情况下, 先按照本部门计算。*/
-                if (flowAppType == FlowAppType.Normal)
-                {
-                    sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                       + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node) )"
-                       + " AND  NO IN "
-                       + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept =" + dbStr + "FK_Dept)";
-                    ps = new Paras();
-                    ps.SQL = sql;
-                    ps.Add("FK_Node", town.HisNode.NodeID);
-                    ps.Add("FK_Dept", empDept);
-                }
-                if (flowAppType == FlowAppType.PRJ)
-                {
-                    sql = "SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj=" + dbStr + "FK_Prj1 AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node)"
-                    + " AND  FK_Prj=" + dbStr + "FK_Prj2 ";
-                    ps = new Paras();
-                    ps.SQL = sql;
-                    ps.Add("FK_Prj1", prjNo);
-                    ps.Add("FK_Node", town.HisNode.NodeID);
-                    ps.Add("FK_Prj2", prjNo);
-                    dt = DBAccess.RunSQLReturnTable(ps);
-                    if (dt.Rows.Count == 0)
-                    {
-                        /* 如果项目组里没有工作人员就提交到公共部门里去找。 */
-                        sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                      + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node))"
-                      + " AND  NO IN "
-                      + "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept =" + dbStr + "FK_Dept)";
-
-                        ps = new Paras();
-                        ps.SQL = sql;
-                        ps.Add("FK_Node", town.HisNode.NodeID);
-                        ps.Add("FK_Dept", empDept);
-                        dt = DBAccess.RunSQLReturnTable(ps);
-                    }
-                    else
-                    {
-                        return WorkerListWayOfDept(town, dt);
-                    }
-                }
-
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count == 0)
-                {
-                    NodeStations nextStations = town.HisNode.NodeStations;
-                    if (nextStations.Count == 0)
-                        throw new Exception(this.ToE("WN19", "节点没有岗位:") + town.HisNode.NodeID + "  " + town.HisNode.Name);
-                }
-                else
-                {
-                    bool isInit = false;
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        if (dr[0].ToString() == Web.WebUser.No)
-                        {
-                            /* 如果岗位分组不一样，并且结果集合里还有当前的人员，就说明了出现了当前操作员，拥有本节点上的岗位也拥有下一个节点的工作岗位
-                             导致：节点的分组不同，传递到同一个人身上。 */
-                            isInit = true;
-                        }
-                    }
-#warning edit by peng, 用来确定不同岗位集合的传递包含同一个人的处理方式。
-                    if (isInit == false || isInit == true)
-                        return WorkerListWayOfDept(town, dt);
-                }
-            }
-
-            // 没有查询到的情况下, 执行查询隶属本部门的下级部门人员。
-            if (flowAppType == FlowAppType.Normal)
-            {
-                sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
-                   + " AND  NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + empDept + "%')"
-                   + " AND No!=" + dbStr + "FK_Emp";
-
-                ps = new Paras();
-                ps.SQL = sql;
-                ps.Add("FK_Emp", empNo);
-
-            }
-
-            if (flowAppType == FlowAppType.PRJ)
-            {
-                sql = "SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj=" + dbStr + "FK_Prj1 AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node )"
-                    + " AND  FK_Prj=" + dbStr + "FK_Prj2 ";
-                ps = new Paras();
-                ps.SQL = sql;
-                ps.Add("FK_Prj1", prjNo);
-                ps.Add("FK_Node", town.HisNode.NodeID);
-                ps.Add("FK_Prj2", prjNo);
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count == 0)
-                {
-                    /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
-                    sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node) )"
-                   + " AND  NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + empDept + "%')"
-                   + " AND No!=" + dbStr + "FK_Emp";
-                    ps = new Paras();
-                    ps.SQL = sql;
-                    ps.Add("FK_Node", town.HisNode.NodeID);
-                    ps.Add("FK_Emp", empNo);
-                }
-                else
-                {
-                    return WorkerListWayOfDept(town, dt);
-                }
-            }
-
-            dt = DBAccess.RunSQLReturnTable(ps);
-            if (dt.Rows.Count == 0)
-            {
-                NodeStations nextStations = town.HisNode.NodeStations;
-                if (nextStations.Count == 0)
-                    throw new Exception(this.ToE("WN19", "节点没有岗位:") + town.HisNode.NodeID + "  " + town.HisNode.Name);
-            }
-            else
-            {
-                return WorkerListWayOfDept(town, dt);
-            }
-
-            /* 没有查询到的情况下, 按照最大匹配数 提高一个级别 计算，递归算法未完成，不过现在已经满足大部分需要。
-             * 因为:以上已经做的岗位的判断，就没有必要在判断其它类型的流程处理了。
-             * */
-
-            int lengthStep = 0; //增长步骤。
-            while (true)
-            {
-                lengthStep += 2;
-                sql = "SELECT NO FROM Port_Emp WHERE No IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node ) )"
-                   + " AND  NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + empDept.Substring(0, empDept.Length - lengthStep) + "%')"
-                   + " AND No!=" + dbStr + "FK_Emp";
-
-                ps = new Paras();
-                ps.SQL = sql;
-                ps.Add("FK_Node", town.HisNode.NodeID);
-                ps.Add("FK_Emp", empNo);
-                dt = DBAccess.RunSQLReturnTable(ps);
-                if (dt.Rows.Count == 0)
-                {
-                    NodeStations nextStations = town.HisNode.NodeStations;
-                    if (nextStations.Count == 0)
-                        throw new Exception(this.ToE("WN19", "节点没有岗位:") + town.HisNode.NodeID + "  " + town.HisNode.Name);
-
-                    sql = "SELECT No FROM Port_Emp WHERE NO IN ";
-                    sql += "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node ) )";
-                    sql += " AND  No IN ";
-                    if (empDept.Length == 2)
-                        sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE   FK_Emp!=" + dbStr + "FK_Emp1 ) ";
-                    else
-                        sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Emp!=" + dbStr + "FK_Emp2 AND FK_Dept LIKE '" + empDept.Substring(0, empDept.Length - 4) + "%')";
-
-                    ps = new Paras();
-                    ps.SQL = sql;
-                    ps.Add("FK_Node", town.HisNode.NodeID);
-                    ps.Add("FK_Emp1", empNo);
-                    ps.Add("FK_Emp2", empNo);
-
-                    dt = DBAccess.RunSQLReturnTable(ps);
-                    if (dt.Rows.Count == 0)
-                    {
-                        sql = "SELECT No FROM Port_Emp WHERE No!=" + dbStr + "FK_Emp AND No IN ";
-                        sql += "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + dbStr + "FK_Node ) )";
-                        ps = new Paras();
-                        ps.SQL = sql;
-                        ps.Add("FK_Emp", empNo);
-                        ps.Add("FK_Node", town.HisNode.NodeID);
-                        dt = DBAccess.RunSQLReturnTable(ps);
-                        if (dt.Rows.Count == 0)
-                        {
-                            throw new Exception(this.ToE("WF3", "岗位(" + town.HisNode.HisStationsStr + ")下没有人员，对应节点:") + town.HisNode.Name);
-                            //"维护错误，请检查[" + town.HisNode.Name + "]维护的岗位中是否有人员？"
-                        }
-                    }
-                    return WorkerListWayOfDept(town, dt);
-                }
-                else
-                {
-                    return WorkerListWayOfDept(town, dt);
-                }
-            }
-            #endregion  按照岗位来执行。
-        }
+         
 
         #region 用户到的变量
         public GenerWorkerLists HisWorkerLists = null;
@@ -5892,7 +5342,7 @@ namespace BP.WF
             WorkNode town = new WorkNode(nd.HisWork, nd);
 
             // 初试化他们的工作人员．
-            GenerWorkerLists gwls = this.GenerWorkerLists_WidthFID(town);
+            GenerWorkerLists gwls = this.Func_GenerWorkerLists_WidthFID(town);
             string fk_emp = "";
             string toEmpsStr = "";
             string emps = "";
@@ -6205,7 +5655,7 @@ namespace BP.WF
             WorkNode town = new WorkNode(nd.HisWork, nd);
 
             // 初试化他们的工作人员．
-            GenerWorkerLists gwls = this.GenerWorkerLists_WidthFID(town);
+            GenerWorkerLists gwls = this.Func_GenerWorkerLists_WidthFID(town);
             string fk_emp = "";
             string toEmpsStr = "";
             string emps = "";
