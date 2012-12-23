@@ -200,8 +200,6 @@ namespace BP.DA
             }
 
             this.Add(_name, obj.ToString());
-
-            //throw new Exception("@没有涉及到的类型。typeof(obj)=" + obj);
         }
 		private void Add(string _name, string _val )
 		{

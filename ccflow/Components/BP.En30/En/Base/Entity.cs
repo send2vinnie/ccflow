@@ -3981,7 +3981,7 @@ namespace BP.En
             return qo.DoQuery();
         }
         /// <summary>
-        /// 查询全部。
+        /// 查询全部
         /// </summary>
         /// <returns></returns>
         public virtual int RetrieveAll(string orderBy)
