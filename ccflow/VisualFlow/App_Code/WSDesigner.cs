@@ -556,17 +556,14 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         try
         {
             LetAdminLogin("CH", islogin);
-            var result = Flow.DoLoadFlowTemplate(fk_flowSort, path);
+            var result = Flow.DoLoadFlowTemplate(fk_flowSort, path, ImpFlowTempleteModel.AsTempleteFlowNo);
             return string.Format("{0},{1},{2}", fk_flowSort, result.No, result.Name);
         }
-         catch (Exception ex)
+        catch (Exception ex)
         {
             return ex.Message;
         }
     }
-    
-
-    
     /// <summary>
     /// 保存流程
     /// </summary>
