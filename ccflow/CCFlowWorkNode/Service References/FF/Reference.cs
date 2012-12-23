@@ -28,7 +28,7 @@ namespace WorkNode.FF {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginPort_Login(string userNo, string pass, System.AsyncCallback callback, object asyncState);
         
-        void EndPort_Login(System.IAsyncResult result);
+        int EndPort_Login(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GenerWorkNode", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -325,6 +325,25 @@ namespace WorkNode.FF {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class Port_LoginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public Port_LoginCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
             }
         }
     }
@@ -1024,7 +1043,7 @@ namespace WorkNode.FF {
         
         public event System.EventHandler<AlertStringCompletedEventArgs> AlertStringCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> Port_LoginCompleted;
+        public event System.EventHandler<Port_LoginCompletedEventArgs> Port_LoginCompleted;
         
         public event System.EventHandler<GenerWorkNodeCompletedEventArgs> GenerWorkNodeCompleted;
         
@@ -1132,8 +1151,8 @@ namespace WorkNode.FF {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void WorkNode.FF.CCFlowAPISoap.EndPort_Login(System.IAsyncResult result) {
-            base.Channel.EndPort_Login(result);
+        int WorkNode.FF.CCFlowAPISoap.EndPort_Login(System.IAsyncResult result) {
+            return base.Channel.EndPort_Login(result);
         }
         
         private System.IAsyncResult OnBeginPort_Login(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -1143,14 +1162,15 @@ namespace WorkNode.FF {
         }
         
         private object[] OnEndPort_Login(System.IAsyncResult result) {
-            ((WorkNode.FF.CCFlowAPISoap)(this)).EndPort_Login(result);
-            return null;
+            int retVal = ((WorkNode.FF.CCFlowAPISoap)(this)).EndPort_Login(result);
+            return new object[] {
+                    retVal};
         }
         
         private void OnPort_LoginCompleted(object state) {
             if ((this.Port_LoginCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.Port_LoginCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.Port_LoginCompleted(this, new Port_LoginCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
@@ -2532,9 +2552,10 @@ namespace WorkNode.FF {
                 return _result;
             }
             
-            public void EndPort_Login(System.IAsyncResult result) {
+            public int EndPort_Login(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("Port_Login", _args, result);
+                int _result = ((int)(base.EndInvoke("Port_Login", _args, result)));
+                return _result;
             }
             
             public System.IAsyncResult BeginGenerWorkNode(string fk_flow, int fk_node, long workID, string userNo, System.AsyncCallback callback, object asyncState) {

@@ -124,6 +124,7 @@ namespace WorkNode
             #region 获取参数
             FF.CCFlowAPISoapClient da = Glo.GetCCFlowAPISoapClientServiceInstance();
             da.GenerWorkNodeAsync(Glo.FK_Flow, Glo.FK_Node, Glo.WorkID, Glo.UserNo);
+
             da.GenerWorkNodeCompleted += new EventHandler<FF.GenerWorkNodeCompletedEventArgs>(da_GenerWorkNodeCompleted);
             #endregion 获取参数
         }

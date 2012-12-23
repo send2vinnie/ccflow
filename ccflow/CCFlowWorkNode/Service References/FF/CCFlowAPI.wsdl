@@ -25,7 +25,11 @@
         </s:complexType>
       </s:element>
       <s:element name="Port_LoginResponse">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Port_LoginResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="GenerWorkNode">
         <s:complexType>
@@ -600,7 +604,9 @@
     <wsdl:part name="userNo" type="s:string" />
     <wsdl:part name="pass" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="Port_LoginHttpGetOut" />
+  <wsdl:message name="Port_LoginHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
   <wsdl:message name="GenerWorkNodeHttpGetIn">
     <wsdl:part name="fk_flow" type="s:string" />
     <wsdl:part name="fk_node" type="s:string" />
@@ -795,7 +801,9 @@
     <wsdl:part name="userNo" type="s:string" />
     <wsdl:part name="pass" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="Port_LoginHttpPostOut" />
+  <wsdl:message name="Port_LoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
   <wsdl:message name="GenerWorkNodeHttpPostIn">
     <wsdl:part name="fk_flow" type="s:string" />
     <wsdl:part name="fk_node" type="s:string" />
@@ -1818,7 +1826,9 @@
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
-      <wsdl:output />
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GenerWorkNode">
       <http:operation location="/GenerWorkNode" />
@@ -2062,7 +2072,9 @@
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
-      <wsdl:output />
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GenerWorkNode">
       <http:operation location="/GenerWorkNode" />
