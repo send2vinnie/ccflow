@@ -399,9 +399,9 @@ namespace BP.WF
                     strs += "@" + ndp.FK_Flow;
                 nd.HisSubFlows = strs;
 
-                // 节点
+                // 节点方向.
                 strs = "";
-                Directions dirs = new Directions(nd.NodeID);
+                Directions dirs = new Directions(nd.NodeID,0);
                 foreach (Direction dir in dirs)
                     strs += "@" + dir.ToNode;
 

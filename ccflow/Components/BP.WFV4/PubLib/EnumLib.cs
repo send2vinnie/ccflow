@@ -5,6 +5,28 @@ using System.Text;
 
 namespace BP.WF
 {
+    /// <summary>
+    /// 导入流程的模式
+    /// </summary>
+    public enum ImpFlowTempleteModel
+    {
+        /// <summary>
+        /// 按新的流程
+        /// </summary>
+        AsNewFlow,
+        /// <summary>
+        /// 按原来的流程编号
+        /// </summary>
+        AsTempleteFlowNo,
+        /// <summary>
+        /// 按原来的流程编号如果存在该编号就覆盖它
+        /// </summary>
+        AsTempleteFlowNoOvrewaiteWhenExit,
+        /// <summary>
+        /// 按指定的流程编号导入
+        /// </summary>
+        AsSpecFlowNo
+    }
     public enum ActionType
     {
         /// <summary>
@@ -82,7 +104,15 @@ namespace BP.WF
         /// <summary>
         /// 催办
         /// </summary>
-        Press
+        Press,
+        /// <summary>
+        /// 逻辑删除流程(撤销流程)
+        /// </summary>
+        DeleteFlowByFlag,
+        /// <summary>
+        /// 恢复删除流程(撤销流程)
+        /// </summary>
+        UnDeleteFlowByFlag
     }
     /// <summary>
     /// 挂起方式
@@ -234,15 +264,11 @@ namespace BP.WF
     public enum WFState
     {
         /// <summary>
-        /// 草稿
-        /// </summary>
-        Draft = 4,
-        /// <summary>
         /// 运行中
         /// </summary>
         Runing = 0,
         /// <summary>
-        /// 正常完成
+        /// 正常完成(永远不会出现在WF_GenerWorkFlow的.WFState中)
         /// </summary>
         Complete = 1,
         /// <summary>
@@ -250,9 +276,13 @@ namespace BP.WF
         /// </summary>
         HungUp = 2,
         /// <summary>
-        /// 强制完成
+        /// 逻辑删除(或者称为工单撤销状态)
         /// </summary>
-        Cancel = 3
+        Delete = 3,
+        /// <summary>
+        /// 草稿
+        /// </summary>
+        Draft = 4
     }
     /// <summary>
     /// 流程启动类型
@@ -412,7 +442,11 @@ namespace BP.WF
         /// <summary>
         /// 可退回指定的节点
         /// </summary>
-        ReturnSpecifiedNodes
+        ReturnSpecifiedNodes,
+        /// <summary>
+        /// 由流程图设计的退回路线来决定
+        /// </summary>
+        ByReturnLine
     }
     /// <summary>
     /// 附件开放类型
@@ -502,31 +536,31 @@ namespace BP.WF
         /// <summary>
         /// 初始化
         /// </summary>
-        Init,
+        Init=0,
         /// <summary>
         /// 已经完成
         /// </summary>
-        Complete,
+        Complete=1,
         /// <summary>
         /// 扣分状态
         /// </summary>
-        CutCent,
+        CutCent=2,
         /// <summary>
-        /// 强制终止
+        /// 强制终止(非正常完成)
         /// </summary>
-        Stop,
+        Stop=3,
         /// <summary>
-        /// 删除
+        /// 删除(逻辑删除状态)
         /// </summary>
-        Delete,
+        Delete=4,
         /// <summary>
         /// 退回
         /// </summary>
-        Back,
+        Back=5,
         /// <summary>
         /// 转发
         /// </summary>
-        Forward
+        Forward=6
     }
     /// <summary>
     /// 节点工作类型

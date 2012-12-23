@@ -8,7 +8,7 @@ using BP.En;
 namespace BP.WF
 {
 	/// <summary>
-	/// 产生的工作
+    /// 流程实例
 	/// </summary>
     public class GenerWorkFlowAttr
     {
@@ -104,7 +104,7 @@ namespace BP.WF
         #endregion
     }
 	/// <summary>
-	/// 产生的工作
+    /// 流程实例
 	/// </summary>
 	public class GenerWorkFlow : Entity
 	{	
@@ -355,20 +355,6 @@ namespace BP.WF
                 }
             }
         }
-        /// <summary>
-        /// 流程是否启用？
-        /// </summary>
-        public bool IsEnable_del
-        {
-            get
-            {
-                return this.GetValBooleanByKey(GenerWorkFlowAttr.IsEnable);
-            }
-            set
-            {
-                SetValByKey(GenerWorkFlowAttr.IsEnable, value);
-            }
-        }
 		#endregion
 
 		#region 构造函数
@@ -402,7 +388,7 @@ namespace BP.WF
                     return this._enMap;
 
                 Map map = new Map("WF_GenerWorkFlow");
-                map.EnDesc = "流程注册表";
+                map.EnDesc = "流程实例";
 
                 map.AddTBIntPK(GenerWorkFlowAttr.WorkID, 0, "WorkID", true, true);
                 map.AddTBInt(GenerWorkFlowAttr.FID, 0, "流程ID", true, true);
@@ -462,7 +448,6 @@ namespace BP.WF
 
             WorkFlow wf = new WorkFlow(new Flow(this.FK_Flow), this.WorkID,this.FID);
             wf.DoDeleteWorkFlowByReal(); /* 删除下面的工作。*/
-
             base.afterDelete();
         }
 		#endregion 
@@ -558,12 +543,12 @@ namespace BP.WF
 		#endregion
 	}
 	/// <summary>
-	/// 产生的工作s
+    /// 流程实例s
 	/// </summary>
 	public class GenerWorkFlows : Entities
 	{
 		/// <summary>
-		/// 根据工作流程,工作人员ID 查询出来他当前的能做的工作.
+		/// 根据工作流程,工作人员 ID 查询出来他当前的能做的工作.
 		/// </summary>
 		/// <param name="flowNo">流程编号</param>
 		/// <param name="empId">工作人员ID</param>
@@ -573,7 +558,6 @@ namespace BP.WF
 			string sql="SELECT a.WorkID FROM WF_GenerWorkFlow a, WF_GenerWorkerlist b WHERE a.WorkID=b.WorkID   AND b.FK_Node=a.FK_Node  AND b.FK_Emp='"+empId.ToString()+"' AND a.FK_Flow='"+flowNo+"'";
 			return DBAccess.RunSQLReturnTable(sql);
 		}
-
 		#region 方法
 		/// <summary>
 		/// 得到它的 Entity 
@@ -586,7 +570,7 @@ namespace BP.WF
 			}
 		}
 		/// <summary>
-		/// 产生工作流程集合
+		/// 流程实例集合
 		/// </summary>
 		public GenerWorkFlows(){}
 		#endregion

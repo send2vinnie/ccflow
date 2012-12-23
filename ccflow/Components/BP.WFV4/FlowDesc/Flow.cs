@@ -3242,1091 +3242,1114 @@ namespace BP.WF
             }
             return "删除成功...";
         }
+         
         /// <summary>
         /// 装载流程模板
         /// </summary>
         /// <param name="fk_flowSort">流程类别</param>
         /// <param name="path">流程名称</param>
         /// <returns></returns>
-        public static Flow DoLoadFlowTemplate(string fk_flowSort, string path)
+        public static Flow DoLoadFlowTemplate(string fk_flowSort, string path, ImpFlowTempleteModel model)
         {
             FileInfo info = new FileInfo(path);
             DataSet ds = new DataSet();
             ds.ReadXml(path);
 
             if (ds.Tables.Contains("WF_Flow") == false)
-                throw new Exception( "导入错误，非流程模版文件。");
+                throw new Exception("导入错误，非流程模版文件。");
 
             DataTable dtFlow = ds.Tables["WF_Flow"];
             Flow fl = new Flow();
-            fl.No = fl.GenerNewNo;
-
             string oldFlowNo = dtFlow.Rows[0]["No"].ToString();
             int oldFlowID = int.Parse(oldFlowNo);
-              string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
-           // string timeKey = fl.No;
+            string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
+            switch (model)
+            {
+                case ImpFlowTempleteModel.AsNewFlow: /*做为一个新流程.*/
+                    fl.No = fl.GenerNewNo;
+                    fl.DoDelData();
+                    fl.DoDelete(); /*删除可能存在的垃圾.*/
+                    break;
+                case ImpFlowTempleteModel.AsTempleteFlowNo: /*用流程模版中的编号*/
+                    fl.No = oldFlowNo;
+                    if (fl.IsExits)
+                    {
+                        throw new Exception("导入错误:流程模版中的编号(" + oldFlowNo + ")在系统中已经存在。");
+                    }
+                    else
+                    {
+                        fl.No = oldFlowNo;
+                        fl.DoDelData();
+                        fl.DoDelete(); /*删除可能存在的垃圾.*/
+                    }
+                    break;
+                case ImpFlowTempleteModel.AsTempleteFlowNoOvrewaiteWhenExit: /*用流程模版中的编号，如果有并覆盖它.*/
+                    fl.No = oldFlowNo;
+                    fl.DoDelData();
+                    fl.DoDelete(); /*删除可能存在的垃圾.*/
+                    break;
+                default:
+                    throw new Exception("@没有判断");
+            }
+
+            // string timeKey = fl.No;
             int idx = 0;
             string infoErr = "";
             string infoTable = "";
-            //try
-            //{
-                fl.DoDelData();
-                fl.DoDelete();
+            int flowID = int.Parse(fl.No);
 
-                int flowID = int.Parse(fl.No);
-
-                #region 处理流程表数据
-                foreach (DataColumn dc in dtFlow.Columns)
+            #region 处理流程表数据
+            foreach (DataColumn dc in dtFlow.Columns)
+            {
+                string val = dtFlow.Rows[0][dc.ColumnName] as string;
+                switch (dc.ColumnName.ToLower())
                 {
-                    string val = dtFlow.Rows[0][dc.ColumnName] as string;
-                    switch (dc.ColumnName.ToLower())
-                    {
-                        case "no":
-                        case "fk_flowsort":
-                            continue;
-                        case "name":
-                            val = "CopyOf" + val + "_" + DateTime.Now.ToString("MM月dd日HH时mm分");
-                            break;
-                        default:
-                            break;
-                    }
-                    fl.SetValByKey(dc.ColumnName, val);
+                    case "no":
+                    case "fk_flowsort":
+                        continue;
+                    case "name":
+                        val = "CopyOf" + val + "_" + DateTime.Now.ToString("MM月dd日HH时mm分");
+                        break;
+                    default:
+                        break;
                 }
-                fl.FK_FlowSort = fk_flowSort;
-                fl.Insert();
-                #endregion 处理流程表数据
+                fl.SetValByKey(dc.ColumnName, val);
+            }
+            fl.FK_FlowSort = fk_flowSort;
+            fl.Insert();
+            #endregion 处理流程表数据
 
-                #region 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
-                DataTable mydtGF = ds.Tables["Sys_GroupField"];
-                DataTable myDTAttr = ds.Tables["Sys_MapAttr"];
-                DataTable myDTAth = ds.Tables["Sys_FrmAttachment"];
-                DataTable myDTDtl = ds.Tables["Sys_MapDtl"];
-                DataTable myDFrm = ds.Tables["Sys_MapFrame"];
-                DataTable myDM2M = ds.Tables["Sys_MapM2M"];
-                foreach (DataRow dr in mydtGF.Rows)
+            #region 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
+            DataTable mydtGF = ds.Tables["Sys_GroupField"];
+            DataTable myDTAttr = ds.Tables["Sys_MapAttr"];
+            DataTable myDTAth = ds.Tables["Sys_FrmAttachment"];
+            DataTable myDTDtl = ds.Tables["Sys_MapDtl"];
+            DataTable myDFrm = ds.Tables["Sys_MapFrame"];
+            DataTable myDM2M = ds.Tables["Sys_MapM2M"];
+            foreach (DataRow dr in mydtGF.Rows)
+            {
+                Sys.GroupField gf = new Sys.GroupField();
+                foreach (DataColumn dc in mydtGF.Columns)
                 {
-                    Sys.GroupField gf = new Sys.GroupField();
-                    foreach (DataColumn dc in mydtGF.Columns)
+                    string val = dr[dc.ColumnName] as string;
+                    gf.SetValByKey(dc.ColumnName, val);
+                }
+                int oldID = gf.OID;
+                gf.OID = DBAccess.GenerOID();
+                dr["OID"] = gf.OID;
+
+                // 属性。
+                if (myDTAttr != null && myDTAttr.Columns.Contains("GroupID"))
+                {
+                    foreach (DataRow dr1 in myDTAttr.Rows)
                     {
-                        string val = dr[dc.ColumnName] as string;
-                        gf.SetValByKey(dc.ColumnName, val);
-                    }
-                    int oldID = gf.OID;
-                    gf.OID = DBAccess.GenerOID();
-                    dr["OID"] = gf.OID;
+                        if (dr1["GroupID"] == null)
+                            dr1["GroupID"] = 0;
 
-                    // 属性。
-                    if (myDTAttr != null && myDTAttr.Columns.Contains("GroupID"))
-                    {
-                        foreach (DataRow dr1 in myDTAttr.Rows)
-                        {
-                            if (dr1["GroupID"] == null)
-                                dr1["GroupID"] = 0;
-
-                            if (dr1["GroupID"].ToString() == oldID.ToString())
-                                dr1["GroupID"] = gf.OID;
-                        }
-                    }
-
-                    if (myDTAth != null && myDTAth.Columns.Contains("GroupID"))
-                    {
-                        // 附件。
-                        foreach (DataRow dr1 in myDTAth.Rows)
-                        {
-                            if (dr1["GroupID"] == null)
-                                dr1["GroupID"] = 0;
-
-                            if (dr1["GroupID"].ToString() == oldID.ToString())
-                                dr1["GroupID"] = gf.OID;
-                        }
-                    }
-
-                    if (myDTDtl != null && myDTDtl.Columns.Contains("GroupID"))
-                    {
-                        // 从表。
-                        foreach (DataRow dr1 in myDTDtl.Rows)
-                        {
-                            if (dr1["GroupID"] == null)
-                                dr1["GroupID"] = 0;
-
-                            if (dr1["GroupID"].ToString() == oldID.ToString())
-                                dr1["GroupID"] = gf.OID;
-                        }
-                    }
-
-                    if (myDFrm != null && myDFrm.Columns.Contains("GroupID"))
-                    {
-                        // frm.
-                        foreach (DataRow dr1 in myDFrm.Rows)
-                        {
-                            if (dr1["GroupID"] == null)
-                                dr1["GroupID"] = 0;
-
-                            if (dr1["GroupID"].ToString() == oldID.ToString())
-                                dr1["GroupID"] = gf.OID;
-                        }
-                    }
-
-                    if (myDM2M != null && myDM2M.Columns.Contains("GroupID"))
-                    {
-                        // m2m.
-                        foreach (DataRow dr1 in myDM2M.Rows)
-                        {
-                            if (dr1["GroupID"] == null)
-                                dr1["GroupID"] = 0;
-
-                            if (dr1["GroupID"].ToString() == oldID.ToString())
-                                dr1["GroupID"] = gf.OID;
-                        }
+                        if (dr1["GroupID"].ToString() == oldID.ToString())
+                            dr1["GroupID"] = gf.OID;
                     }
                 }
-                #endregion 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
 
-                int timeKeyIdx = 0;
-                foreach (DataTable dt in ds.Tables)
+                if (myDTAth != null && myDTAth.Columns.Contains("GroupID"))
                 {
-                    timeKeyIdx++;
-                    timeKey = timeKey + timeKeyIdx.ToString();
-
-                    infoTable = "@导入:" + dt.TableName + " 出现异常。";
-                    switch (dt.TableName)
+                    // 附件。
+                    foreach (DataRow dr1 in myDTAth.Rows)
                     {
-                        case "WF_Flow": //模版文件。
-                            continue;
-                        case "WF_BillTemplate":
-                            continue; /*因为省掉了 打印模板的处理。*/
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                BillTemplate bt = new BillTemplate();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_flow":
-                                            val = flowID.ToString();
-                                            break;
-                                        case "nodeid":
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4) 
-                                                val = flowID + val.Substring(2);
-                                              else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    bt.SetValByKey(dc.ColumnName, val);
-                                }
-                                int i = 0;
-                                string no = bt.No;
-                                while (bt.IsExits)
-                                {
-                                    bt.No = no + i.ToString();
-                                    i++;
-                                }
+                        if (dr1["GroupID"] == null)
+                            dr1["GroupID"] = 0;
 
-                                try
+                        if (dr1["GroupID"].ToString() == oldID.ToString())
+                            dr1["GroupID"] = gf.OID;
+                    }
+                }
+
+                if (myDTDtl != null && myDTDtl.Columns.Contains("GroupID"))
+                {
+                    // 从表。
+                    foreach (DataRow dr1 in myDTDtl.Rows)
+                    {
+                        if (dr1["GroupID"] == null)
+                            dr1["GroupID"] = 0;
+
+                        if (dr1["GroupID"].ToString() == oldID.ToString())
+                            dr1["GroupID"] = gf.OID;
+                    }
+                }
+
+                if (myDFrm != null && myDFrm.Columns.Contains("GroupID"))
+                {
+                    // frm.
+                    foreach (DataRow dr1 in myDFrm.Rows)
+                    {
+                        if (dr1["GroupID"] == null)
+                            dr1["GroupID"] = 0;
+
+                        if (dr1["GroupID"].ToString() == oldID.ToString())
+                            dr1["GroupID"] = gf.OID;
+                    }
+                }
+
+                if (myDM2M != null && myDM2M.Columns.Contains("GroupID"))
+                {
+                    // m2m.
+                    foreach (DataRow dr1 in myDM2M.Rows)
+                    {
+                        if (dr1["GroupID"] == null)
+                            dr1["GroupID"] = 0;
+
+                        if (dr1["GroupID"].ToString() == oldID.ToString())
+                            dr1["GroupID"] = gf.OID;
+                    }
+                }
+            }
+            #endregion 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
+
+            int timeKeyIdx = 0;
+            foreach (DataTable dt in ds.Tables)
+            {
+                timeKeyIdx++;
+                timeKey = timeKey + timeKeyIdx.ToString();
+
+                infoTable = "@导入:" + dt.TableName + " 出现异常。";
+                switch (dt.TableName)
+                {
+                    case "WF_Flow": //模版文件。
+                        continue;
+                    case "WF_BillTemplate":
+                        continue; /*因为省掉了 打印模板的处理。*/
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            BillTemplate bt = new BillTemplate();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                switch (dc.ColumnName.ToLower())
                                 {
-                                    File.Copy(info.DirectoryName + "\\" + no + ".rtf", BP.SystemConfig.PathOfWebApp + @"\DataUser\CyclostyleFile\" + bt.No + ".rtf", true);
+                                    case "fk_flow":
+                                        val = flowID.ToString();
+                                        break;
+                                    case "nodeid":
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                catch (Exception ex)
-                                {
-                                    // infoErr += "@恢复单据模板时出现错误：" + ex.Message + ",有可能是您在复制流程模板时没有复制同目录下的单据模板文件。";
-                                }
-                                bt.Insert();
+                                bt.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "WF_FrmNode": //Conds.xml。
-                            DBAccess.RunSQL("DELETE WF_FrmNode WHERE FK_Flow='" + fl.No + "'");
-                            foreach (DataRow dr in dt.Rows)
+                            int i = 0;
+                            string no = bt.No;
+                            while (bt.IsExits)
                             {
-                                FrmNode fn = new FrmNode();
-                                fn.FK_Flow = fl.No;
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        case "fk_flow":
-                                            val = fl.No;
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    fn.SetValByKey(dc.ColumnName, val);
-                                }
-                                // 开始插入。
-                                fn.MyPK = fn.FK_Frm + "_" + fn.FK_Node;
-                                fn.Insert();
+                                bt.No = no + i.ToString();
+                                i++;
                             }
-                            break;
-                        case "WF_Cond": //Conds.xml。
-                            foreach (DataRow dr in dt.Rows)
+
+                            try
                             {
-                                Cond cd = new Cond();
-                                cd.FK_Flow = fl.No;
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "tonodeid":
-                                        case "fk_node":
-                                        case "nodeid":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        case "fk_flow":
-                                            val = fl.No;
-                                            break;
-                                        default:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                    }
-                                    cd.SetValByKey(dc.ColumnName, val);
-                                }
-
-                                cd.FK_Flow = fl.No;
-
-                                //  return this.FK_MainNode + "_" + this.ToNodeID + "_" + this.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
-                                // ，开始插入。 
-                                if (cd.MyPK.Contains("Stas"))
-                                {
-                                    cd.MyPK = cd.FK_Node + "_" + cd.ToNodeID + "_" + cd.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
-                                }
-                                else if (cd.MyPK.Contains("Dept"))
-                                {
-                                    cd.MyPK = cd.FK_Node + "_" + cd.ToNodeID + "_" + cd.HisCondType.ToString() + "_" + ConnDataFrom.Depts.ToString();
-                                }
-                                else
-                                {
-                                    cd.MyPK = DA.DBAccess.GenerOID().ToString();
-                                }
-
-                                try
-                                {
-                                    cd.Insert();
-                                }
-                                catch
-                                {
-                                    cd.Update();
-                                }
+                                File.Copy(info.DirectoryName + "\\" + no + ".rtf", BP.SystemConfig.PathOfWebApp + @"\DataUser\CyclostyleFile\" + bt.No + ".rtf", true);
                             }
-                            break;
-                        case "WF_NodeReturn"://可退回的节点。
-                            foreach (DataRow dr in dt.Rows)
+                            catch (Exception ex)
                             {
-                                NodeReturn cd = new NodeReturn();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                        case "returnn":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    cd.SetValByKey(dc.ColumnName, val);
-                                }
-
-                                //开始插入。
-                                try
-                                {
-                                    cd.Insert();
-                                }
-                                catch
-                                {
-                                    cd.Update();
-                                }
+                                // infoErr += "@恢复单据模板时出现错误：" + ex.Message + ",有可能是您在复制流程模板时没有复制同目录下的单据模板文件。";
                             }
-                            break;
-                        case "WF_Direction": //FAppSets.xml。
-                            foreach (DataRow dr in dt.Rows)
+                            bt.Insert();
+                        }
+                        break;
+                    case "WF_FrmNode": //Conds.xml。
+                        DBAccess.RunSQL("DELETE WF_FrmNode WHERE FK_Flow='" + fl.No + "'");
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            FrmNode fn = new FrmNode();
+                            fn.FK_Flow = fl.No;
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                Direction dir = new Direction();
-                                foreach (DataColumn dc in dt.Columns)
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                switch (dc.ColumnName.ToLower())
                                 {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "node":
-                                        case "tonode":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    dir.SetValByKey(dc.ColumnName, val);
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    case "fk_flow":
+                                        val = fl.No;
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                try
-                                {
-                                    dir.Insert();
-                                }
-                                catch
-                                {
-                                }
+                                fn.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "WF_TurnTo": //转向规则.
-                            foreach (DataRow dr in dt.Rows)
+                            // 开始插入。
+                            fn.MyPK = fn.FK_Frm + "_" + fn.FK_Node;
+                            fn.Insert();
+                        }
+                        break;
+                    case "WF_Cond": //Conds.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Cond cd = new Cond();
+                            cd.FK_Flow = fl.No;
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                TurnTo fs = new TurnTo();
-
-                                foreach (DataColumn dc in dt.Columns)
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                switch (dc.ColumnName.ToLower())
                                 {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    fs.SetValByKey(dc.ColumnName, val);
+                                    case "tonodeid":
+                                    case "fk_node":
+                                    case "nodeid":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    case "fk_flow":
+                                        val = fl.No;
+                                        break;
+                                    default:
+                                        val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                        break;
                                 }
-                                fs.FK_Flow = fl.No;
-                                fs.Save();
+                                cd.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "WF_FAppSet": //FAppSets.xml。
-                            continue;
-                            //foreach (DataRow dr in dt.Rows)
-                            //{
-                            //    FAppSet fs = new FAppSet();
-                            //    fs.FK_Flow = fl.No;
-                            //    foreach (DataColumn dc in dt.Columns)
-                            //    {
-                            //        string val = dr[dc.ColumnName] as string;
-                            //        if (val == null)
-                            //            continue;
 
-                            //        switch (dc.ColumnName.ToLower())
-                            //        {
-                            //            case "fk_node":
-                            //                if (val.Length == 3)
-                            //                    val = flowID + val.Substring(1);
-                            //                else if (val.Length == 4)
-                            //                    val = flowID + val.Substring(2);
-                            //                else if (val.Length == 5)
-                            //                    val = flowID + val.Substring(3);
-                            //                break;
-                            //            default:
-                            //                break;
-                            //        }
-                            //        fs.SetValByKey(dc.ColumnName, val);
-                            //    }
-                            //    fs.OID = 0;
-                            //    fs.Insert();
-                            //}
-                        case "WF_LabNote": //LabNotes.xml。
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
+                            cd.FK_Flow = fl.No;
+
+                            //  return this.FK_MainNode + "_" + this.ToNodeID + "_" + this.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
+                            // ，开始插入。 
+                            if (cd.MyPK.Contains("Stas"))
                             {
-                                LabNote ln = new LabNote();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    ln.SetValByKey(dc.ColumnName, val);
-                                }
-                                idx++;
-                                ln.FK_Flow = fl.No;
-                                ln.MyPK = ln.FK_Flow + "_" + ln.X + "_" + ln.Y + "_" + idx;
-                                ln.DirectInsert();
+                                cd.MyPK = cd.FK_Node + "_" + cd.ToNodeID + "_" + cd.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
                             }
-                            break;
-                        case "WF_NodeDept": //FAppSets.xml。
-                            foreach (DataRow dr in dt.Rows)
+                            else if (cd.MyPK.Contains("Dept"))
                             {
-                                NodeDept dir = new NodeDept();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
+                                cd.MyPK = cd.FK_Node + "_" + cd.ToNodeID + "_" + cd.HisCondType.ToString() + "_" + ConnDataFrom.Depts.ToString();
+                            }
+                            else
+                            {
+                                cd.MyPK = DA.DBAccess.GenerOID().ToString();
+                            }
 
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    dir.SetValByKey(dc.ColumnName, val);
+                            try
+                            {
+                                cd.Insert();
+                            }
+                            catch
+                            {
+                                cd.Update();
+                            }
+                        }
+                        break;
+                    case "WF_NodeReturn"://可退回的节点。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            NodeReturn cd = new NodeReturn();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "fk_node":
+                                    case "returnn":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
                                 }
+                                cd.SetValByKey(dc.ColumnName, val);
+                            }
+
+                            //开始插入。
+                            try
+                            {
+                                cd.Insert();
+                            }
+                            catch
+                            {
+                                cd.Update();
+                            }
+                        }
+                        break;
+                    case "WF_Direction": //FAppSets.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Direction dir = new Direction();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "node":
+                                    case "tonode":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                dir.SetValByKey(dc.ColumnName, val);
+                            }
+                            try
+                            {
                                 dir.Insert();
                             }
-
-                            break;
-                        case "WF_Node": //LabNotes.xml。
-                            foreach (DataRow dr in dt.Rows)
+                            catch
                             {
-                                BP.WF.Ext.NodeO nd = new BP.WF.Ext.NodeO();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "nodeid":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        case "fk_flow":
-                                        case "fk_flowsort":
-                                            continue;
-                                        case "showsheets":
-                                        case "histonds":
-                                        case "groupstands":
-                                            string key = "@" + flowID;
-                                            val = val.Replace(key, "");
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    nd.SetValByKey(dc.ColumnName, val);
-                                }
-
-                                nd.FK_Flow = fl.No;
-                                nd.FlowName = fl.Name;
-                                nd.DirectInsert();
-
-                                //删除mapdata.
-                                DBAccess.RunSQL("DELETE FROM Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'");
                             }
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Node nd = new Node();
-                                nd.NodeID = int.Parse(dr[NodeAttr.NodeID].ToString());
-                                nd.RetrieveFromDBSources();
-                                nd.FK_Flow = fl.No;
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "nodeid":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        case "fk_flow":
-                                        case "fk_flowsort":
-                                            continue;
-                                        case "showsheets":
-                                        case "histonds":
-                                        case "groupstands":
-                                            string key = "@" + flowID;
-                                            val = val.Replace(key, "");
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    nd.SetValByKey(dc.ColumnName, val);
-                                }
+                        }
+                        break;
+                    case "WF_TurnTo": //转向规则.
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            TurnTo fs = new TurnTo();
 
-                                nd.FK_Flow = fl.No;
-                                nd.FlowName = fl.Name;
-                                nd.DirectUpdate();
-                            }
-                            break;
-                        case "WF_NodeStation": //FAppSets.xml。
-                            DBAccess.RunSQL("DELETE WF_NodeStation WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + fl.No + "')");
-                            foreach (DataRow dr in dt.Rows)
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                NodeStation ns = new NodeStation();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ns.SetValByKey(dc.ColumnName, val);
-                                }
-                                ns.Insert();
-                            }
-                            break;
-                        case "WF_Listen": // 信息侦听。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Listen li = new Listen();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "oid":
-                                            continue;
-                                            break;
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        case "nodes":
-                                            string[] nds = val.Split('@');
-                                            string valExt = "";
-                                            foreach (string nd in nds)
-                                            {
-                                                if (nd == "" || nd == null)
-                                                    continue;
-                                                string ndExt = nd.Clone() as string;
-                                                if (ndExt.Length == 3)
-                                                    ndExt = flowID + ndExt.Substring(1);
-                                                else if (val.Length == 4)
-                                                    ndExt = flowID + ndExt.Substring(2);
-                                                else if (val.Length == 5)
-                                                    ndExt = flowID + ndExt.Substring(3);
-                                                ndExt = "@" + ndExt;
-                                                valExt += ndExt;
-                                            }
-                                            val = valExt;
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    li.SetValByKey(dc.ColumnName, val);
-                                }
-                                li.Insert();
-                            }
-                            break;
-                        case "Sys_Enum": //RptEmps.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Sys.SysEnum se = new Sys.SysEnum();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    se.SetValByKey(dc.ColumnName, val);
-                                }
-                                se.MyPK = se.EnumKey + "_" + se.Lang + "_" + se.IntKey;
-                                if (se.IsExits)
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
                                     continue;
-                                se.Insert();
-                            }
-                            break;
-                        case "Sys_EnumMain": //RptEmps.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Sys.SysEnumMain sem = new Sys.SysEnumMain();
-                                foreach (DataColumn dc in dt.Columns)
+                                switch (dc.ColumnName.ToLower())
                                 {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-                                    sem.SetValByKey(dc.ColumnName, val);
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                if (sem.IsExits)
-                                    continue;
-                                sem.Insert();
+                                fs.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "Sys_MapAttr": //RptEmps.xml。
-                            foreach (DataRow dr in dt.Rows)
+                            fs.FK_Flow = fl.No;
+                            fs.Save();
+                        }
+                        break;
+                    case "WF_FAppSet": //FAppSets.xml。
+                        continue;
+                    //foreach (DataRow dr in dt.Rows)
+                    //{
+                    //    FAppSet fs = new FAppSet();
+                    //    fs.FK_Flow = fl.No;
+                    //    foreach (DataColumn dc in dt.Columns)
+                    //    {
+                    //        string val = dr[dc.ColumnName] as string;
+                    //        if (val == null)
+                    //            continue;
+
+                    //        switch (dc.ColumnName.ToLower())
+                    //        {
+                    //            case "fk_node":
+                    //                if (val.Length == 3)
+                    //                    val = flowID + val.Substring(1);
+                    //                else if (val.Length == 4)
+                    //                    val = flowID + val.Substring(2);
+                    //                else if (val.Length == 5)
+                    //                    val = flowID + val.Substring(3);
+                    //                break;
+                    //            default:
+                    //                break;
+                    //        }
+                    //        fs.SetValByKey(dc.ColumnName, val);
+                    //    }
+                    //    fs.OID = 0;
+                    //    fs.Insert();
+                    //}
+                    case "WF_LabNote": //LabNotes.xml。
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            LabNote ln = new LabNote();
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                Sys.MapAttr ma = new Sys.MapAttr();
-                                foreach (DataColumn dc in dt.Columns)
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                ln.SetValByKey(dc.ColumnName, val);
+                            }
+                            idx++;
+                            ln.FK_Flow = fl.No;
+                            ln.MyPK = ln.FK_Flow + "_" + ln.X + "_" + ln.Y + "_" + idx;
+                            ln.DirectInsert();
+                        }
+                        break;
+                    case "WF_NodeDept": //FAppSets.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            NodeDept dir = new NodeDept();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
                                 {
-                                    string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_mapdata":
-                                        case "keyofen":
-                                        case "autofulldoc":
-                                            if (val == null)
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                dir.SetValByKey(dc.ColumnName, val);
+                            }
+                            dir.Insert();
+                        }
+
+                        break;
+                    case "WF_Node": //LabNotes.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            BP.WF.Ext.NodeO nd = new BP.WF.Ext.NodeO();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "nodeid":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    case "fk_flow":
+                                    case "fk_flowsort":
+                                        continue;
+                                    case "showsheets":
+                                    case "histonds":
+                                    case "groupstands":
+                                        string key = "@" + flowID;
+                                        val = val.Replace(key, "");
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                nd.SetValByKey(dc.ColumnName, val);
+                            }
+
+                            nd.FK_Flow = fl.No;
+                            nd.FlowName = fl.Name;
+                            nd.DirectInsert();
+
+                            //删除mapdata.
+                            DBAccess.RunSQL("DELETE FROM Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'");
+                        }
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Node nd = new Node();
+                            nd.NodeID = int.Parse(dr[NodeAttr.NodeID].ToString());
+                            nd.RetrieveFromDBSources();
+                            nd.FK_Flow = fl.No;
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "nodeid":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    case "fk_flow":
+                                    case "fk_flowsort":
+                                        continue;
+                                    case "showsheets":
+                                    case "histonds":
+                                    case "groupstands":
+                                        string key = "@" + flowID;
+                                        val = val.Replace(key, "");
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                nd.SetValByKey(dc.ColumnName, val);
+                            }
+
+                            nd.FK_Flow = fl.No;
+                            nd.FlowName = fl.Name;
+                            nd.DirectUpdate();
+                        }
+                        break;
+                    case "WF_NodeStation": //FAppSets.xml。
+                        DBAccess.RunSQL("DELETE WF_NodeStation WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + fl.No + "')");
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            NodeStation ns = new NodeStation();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ns.SetValByKey(dc.ColumnName, val);
+                            }
+                            ns.Insert();
+                        }
+                        break;
+                    case "WF_Listen": // 信息侦听。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Listen li = new Listen();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "oid":
+                                        continue;
+                                        break;
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    case "nodes":
+                                        string[] nds = val.Split('@');
+                                        string valExt = "";
+                                        foreach (string nd in nds)
+                                        {
+                                            if (nd == "" || nd == null)
                                                 continue;
-
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ma.SetValByKey(dc.ColumnName, val);
-                                }
-                                bool b = ma.IsExit(Sys.MapAttrAttr.FK_MapData, ma.FK_MapData,
-                                    Sys.MapAttrAttr.KeyOfEn, ma.KeyOfEn);
-
-                                ma.MyPK = ma.FK_MapData + "_" + ma.KeyOfEn;
-                                if (b == true)
-                                    ma.DirectUpdate();
-                                else
-                                    ma.DirectInsert();
-                            }
-                            break;
-                        case "Sys_MapData": //RptEmps.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Sys.MapData md = new Sys.MapData();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + int.Parse(fl.No));
-                                    md.SetValByKey(dc.ColumnName, val);
-                                }
-                                md.Save();
-                            }
-                            break;
-                        case "Sys_MapDtl": //RptEmps.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Sys.MapDtl md = new Sys.MapDtl();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    md.SetValByKey(dc.ColumnName, val);
-                                }
-                                md.Save();
-                            }
-                            break;
-                        case "Sys_MapExt":
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Sys.MapExt md = new Sys.MapExt();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    md.SetValByKey(dc.ColumnName, val);
-                                }
-                                md.Save();
-                            }
-                            break;
-                        case "Sys_FrmLine":
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmLine en = new FrmLine();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.MyPK = "LIE" + timeKey + "_" + idx;
-                                en.Insert();
-                            }
-                            break;
-                        case "Sys_FrmEle":
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmEle en = new FrmEle();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.Insert();
-                            }
-                            break;
-                        case "Sys_FrmImg":
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmImg en = new FrmImg();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.MyPK = "Img" + timeKey + "_" + idx;
-                                en.Insert();
-                            }
-                            break;
-                        case "Sys_FrmLab":
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmLab en = new FrmLab();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.MyPK = "Lab" + timeKey + "_" + idx;
-                                en.Insert();
-                            }
-                            break;
-                        case "Sys_FrmLink":
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmLink en = new FrmLink();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    if (val == null)
-                                        continue;
-
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.MyPK = "LK" + timeKey + "_" + idx;
-                                en.Insert();
-                            }
-                            break;
-                        case "Sys_FrmAttachment":
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmAttachment en = new FrmAttachment();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.MyPK = en.FK_MapData + "_" + en.NoOfObj;
-                                en.Save();
-                            }
-                            break;
-                        case "Sys_FrmEvent": //事件.
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmEvent en = new FrmEvent();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.Save();
-                            }
-                            break;
-                        case "Sys_MapM2M": //Sys_MapM2M.
-                            idx = 0;
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                MapM2M en = new MapM2M();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.Save();
-                            }
-                            break;
-                        case "Sys_FrmRB": //Sys_FrmRB.
-                            idx = 0;
-
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                idx++;
-                                FrmRB en = new FrmRB();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                    en.SetValByKey(dc.ColumnName, val);
-                                }
-                                en.Save();
-                            }
-                            break;
-                        case "WF_NodeEmp": //FAppSets.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                NodeEmp ne = new NodeEmp();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
+                                            string ndExt = nd.Clone() as string;
+                                            if (ndExt.Length == 3)
+                                                ndExt = flowID + ndExt.Substring(1);
                                             else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
+                                                ndExt = flowID + ndExt.Substring(2);
                                             else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ne.SetValByKey(dc.ColumnName, val);
+                                                ndExt = flowID + ndExt.Substring(3);
+                                            ndExt = "@" + ndExt;
+                                            valExt += ndExt;
+                                        }
+                                        val = valExt;
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                ne.Insert();
+                                li.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "Sys_GroupField": // 
-                            foreach (DataRow dr in dt.Rows)
+                            li.Insert();
+                        }
+                        break;
+                    case "Sys_Enum": //RptEmps.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.SysEnum se = new Sys.SysEnum();
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                Sys.GroupField gf = new Sys.GroupField();
-                                foreach (DataColumn dc in dt.Columns)
+                                string val = dr[dc.ColumnName] as string;
+                                switch (dc.ColumnName.ToLower())
                                 {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "enname":
-                                        case "keyofen":
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    gf.SetValByKey(dc.ColumnName, val);
+                                    case "fk_node":
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                //  int oid = DBAccess.GenerOID();
-                                //  DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + gf.OID + " WHERE FK_MapData='" + gf.EnName + "' AND GroupID=" + gf.OID);
-                                gf.InsertAsOID(gf.OID);
+                                se.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "WF_CCDept": // 抄送.
-                            foreach (DataRow dr in dt.Rows)
+                            se.MyPK = se.EnumKey + "_" + se.Lang + "_" + se.IntKey;
+                            if (se.IsExits)
+                                continue;
+                            se.Insert();
+                        }
+                        break;
+                    case "Sys_EnumMain": //RptEmps.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.SysEnumMain sem = new Sys.SysEnumMain();
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                CCDept ne = new CCDept();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
-
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ne.SetValByKey(dc.ColumnName, val);
-                                }
-                                ne.Insert();
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                sem.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "WF_CCEmp": // 抄送.
-                            foreach (DataRow dr in dt.Rows)
+                            if (sem.IsExits)
+                                continue;
+                            sem.Insert();
+                        }
+                        break;
+                    case "Sys_MapAttr": //RptEmps.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.MapAttr ma = new Sys.MapAttr();
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                CCEmp ne = new CCEmp();
-                                foreach (DataColumn dc in dt.Columns)
+                                string val = dr[dc.ColumnName] as string;
+                                switch (dc.ColumnName.ToLower())
                                 {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
+                                    case "fk_mapdata":
+                                    case "keyofen":
+                                    case "autofulldoc":
+                                        if (val == null)
+                                            continue;
 
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ne.SetValByKey(dc.ColumnName, val);
+                                        val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                ne.Insert();
+                                ma.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        case "WF_CCStation": // 抄送.
-                            foreach (DataRow dr in dt.Rows)
+                            bool b = ma.IsExit(Sys.MapAttrAttr.FK_MapData, ma.FK_MapData,
+                                Sys.MapAttrAttr.KeyOfEn, ma.KeyOfEn);
+
+                            ma.MyPK = ma.FK_MapData + "_" + ma.KeyOfEn;
+                            if (b == true)
+                                ma.DirectUpdate();
+                            else
+                                ma.DirectInsert();
+                        }
+                        break;
+                    case "Sys_MapData": //RptEmps.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.MapData md = new Sys.MapData();
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                CCStation ne = new CCStation();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    if (val == null)
-                                        continue;
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
 
-                                    switch (dc.ColumnName.ToLower())
-                                    {
-                                        case "fk_node":
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            else if (val.Length == 5)
-                                                val = flowID + val.Substring(3);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ne.SetValByKey(dc.ColumnName, val);
-                                }
-                                ne.Insert();
+                                val = val.Replace("ND" + oldFlowID, "ND" + int.Parse(fl.No));
+                                md.SetValByKey(dc.ColumnName, val);
                             }
-                            break;
-                        default:
-                            // infoErr += "Error:" + dt.TableName;
-                            break;
-                        //    throw new Exception("@unhandle named " + dt.TableName);
-                    }
+                            md.Save();
+                        }
+                        break;
+                    case "Sys_MapDtl": //RptEmps.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.MapDtl md = new Sys.MapDtl();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                md.SetValByKey(dc.ColumnName, val);
+                            }
+                            md.Save();
+                        }
+                        break;
+                    case "Sys_MapExt":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.MapExt md = new Sys.MapExt();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                md.SetValByKey(dc.ColumnName, val);
+                            }
+                            md.Save();
+                        }
+                        break;
+                    case "Sys_FrmLine":
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmLine en = new FrmLine();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.MyPK = "LIE" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmEle":
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmEle en = new FrmEle();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmImg":
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmImg en = new FrmImg();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.MyPK = "Img" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmLab":
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmLab en = new FrmLab();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.MyPK = "Lab" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmLink":
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmLink en = new FrmLink();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                if (val == null)
+                                    continue;
+
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.MyPK = "LK" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmAttachment":
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmAttachment en = new FrmAttachment();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.MyPK = en.FK_MapData + "_" + en.NoOfObj;
+                            en.Save();
+                        }
+                        break;
+                    case "Sys_FrmEvent": //事件.
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmEvent en = new FrmEvent();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.Save();
+                        }
+                        break;
+                    case "Sys_MapM2M": //Sys_MapM2M.
+                        idx = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            MapM2M en = new MapM2M();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.Save();
+                        }
+                        break;
+                    case "Sys_FrmRB": //Sys_FrmRB.
+                        idx = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmRB en = new FrmRB();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.Save();
+                        }
+                        break;
+                    case "WF_NodeEmp": //FAppSets.xml。
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            NodeEmp ne = new NodeEmp();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ne.SetValByKey(dc.ColumnName, val);
+                            }
+                            ne.Insert();
+                        }
+                        break;
+                    case "Sys_GroupField": // 
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.GroupField gf = new Sys.GroupField();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "enname":
+                                    case "keyofen":
+                                        val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                gf.SetValByKey(dc.ColumnName, val);
+                            }
+                            //  int oid = DBAccess.GenerOID();
+                            //  DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + gf.OID + " WHERE FK_MapData='" + gf.EnName + "' AND GroupID=" + gf.OID);
+                            gf.InsertAsOID(gf.OID);
+                        }
+                        break;
+                    case "WF_CCDept": // 抄送.
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            CCDept ne = new CCDept();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ne.SetValByKey(dc.ColumnName, val);
+                            }
+                            ne.Insert();
+                        }
+                        break;
+                    case "WF_CCEmp": // 抄送.
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            CCEmp ne = new CCEmp();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ne.SetValByKey(dc.ColumnName, val);
+                            }
+                            ne.Insert();
+                        }
+                        break;
+                    case "WF_CCStation": // 抄送.
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            CCStation ne = new CCStation();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
+                                switch (dc.ColumnName.ToLower())
+                                {
+                                    case "fk_node":
+                                        if (val.Length == 3)
+                                            val = flowID + val.Substring(1);
+                                        else if (val.Length == 4)
+                                            val = flowID + val.Substring(2);
+                                        else if (val.Length == 5)
+                                            val = flowID + val.Substring(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ne.SetValByKey(dc.ColumnName, val);
+                            }
+                            ne.Insert();
+                        }
+                        break;
+                    default:
+                        // infoErr += "Error:" + dt.TableName;
+                        break;
+                    //    throw new Exception("@unhandle named " + dt.TableName);
                 }
+            }
 
-                #region 处理数据完整性。
-                DBAccess.RunSQL("DELETE FROM WF_Cond WHERE ToNodeID NOT IN (SELECT NodeID FROM WF_Node)");
-                DBAccess.RunSQL("DELETE FROM WF_Cond WHERE FK_Node NOT IN (SELECT NodeID FROM WF_Node)");
-                DBAccess.RunSQL("DELETE FROM WF_Cond WHERE NodeID NOT IN (SELECT NodeID FROM WF_Node)");
-                #endregion
+            #region 处理数据完整性。
+            DBAccess.RunSQL("DELETE FROM WF_Cond WHERE ToNodeID NOT IN (SELECT NodeID FROM WF_Node)");
+            DBAccess.RunSQL("DELETE FROM WF_Cond WHERE FK_Node NOT IN (SELECT NodeID FROM WF_Node)");
+            DBAccess.RunSQL("DELETE FROM WF_Cond WHERE NodeID NOT IN (SELECT NodeID FROM WF_Node)");
+            #endregion
 
-                if (infoErr == "")
-                {
-                    infoTable = "";
-                    //try
-                    //{
-                        fl.DoCheck();
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    throw new Exception("@装载完成后,检查流程时出现错误." + ex.Message);
-                    //}
-                    return fl; // "完全成功。";
-                }
+            if (infoErr == "")
+            {
+                infoTable = "";
+                //try
+                //{
+                fl.DoCheck();
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw new Exception("@装载完成后,检查流程时出现错误." + ex.Message);
+                //}
+                return fl; // "完全成功。";
+            }
 
-                infoErr = "@执行期间出现如下非致命的错误：\t\r" + infoErr + "@ " + infoTable;
-                throw new Exception(infoErr);
+            infoErr = "@执行期间出现如下非致命的错误：\t\r" + infoErr + "@ " + infoTable;
+            throw new Exception(infoErr);
             //}
             //catch (Exception ex)
             //{

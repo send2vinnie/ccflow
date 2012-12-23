@@ -261,7 +261,7 @@
     <Compile Include="WF\5.0\WorkNode.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WF\Personalize\GetTask.cs" />
+    <Compile Include="WF\GetTask.cs" />
     <Compile Include="WF\ReturnWork.cs">
       <SubType>Code</SubType>
     </Compile>

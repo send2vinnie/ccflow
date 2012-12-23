@@ -143,14 +143,17 @@ namespace BP.WF
 		/// 节点方向
 		/// </summary>
 		public Directions(){}
-		/// <summary>
-		/// 节点方向
-		/// </summary>
-		/// <param name="NodeID">节点ID</param>
-		public Directions(int NodeID)
+        /// <summary>
+        /// 节点方向
+        /// </summary>
+        /// <param name="NodeID">节点ID</param>
+        /// <param name="dirType">类型</param>
+        public Directions(int NodeID, int dirType)
 		{
 			QueryObject qo = new QueryObject(this);
 			qo.AddWhere(DirectionAttr.Node,NodeID);
+            qo.addAnd();
+            qo.AddWhere(DirectionAttr.DirType, dirType);
 		    qo.DoQuery();			
 		}
 		/// <summary>

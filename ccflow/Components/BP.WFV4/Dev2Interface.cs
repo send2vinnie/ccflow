@@ -154,8 +154,7 @@ namespace BP.WF
         }
         #endregion
 
-        #region 数据接口
-
+        #region 数据集合接口(如果您想获取一个结果集合的接口，都是以DB_开头的.)
         #region 获取流程事例的轨迹图
         /// <summary>
         /// 获取流程事例的轨迹图
@@ -173,7 +172,6 @@ namespace BP.WF
             return DBAccess.RunSQLReturnTable(sql);
         }
         #endregion 获取流程事例的轨迹图
-
 
         #region 获取操送列表
         /// <summary>
@@ -409,7 +407,6 @@ namespace BP.WF
         {
             Paras ps = new Paras();
             string dbstr = BP.SystemConfig.AppCenterDBVarStr;
-         //   int wfState = (int)WFState.Runing;
             string sql;
             if (WebUser.IsAuthorize == false)
             {
@@ -471,29 +468,87 @@ namespace BP.WF
             }
             return BP.DA.DBAccess.RunSQLReturnTable(ps);
         }
+        /// <summary>
+        /// 获取当前操作人员的待办信息
+        /// 数据内容请参考试图:WF_EmpWorks
+        /// </summary>
+        /// <returns>返回从视图WF_EmpWorks查询出来的数据.</returns>
         public static DataTable DB_GenerEmpWorksOfDataTable()
         {
             return DB_GenerEmpWorksOfDataTable((int)WFState.Runing, null);
         }
         /// <summary>
-        /// 挂起工作列表
+        /// 获得挂起工作列表
         /// </summary>
-        /// <returns></returns>
-        public static DataTable DB_GenerEmpWorkshHungUpOfDataTable()
+        /// <returns>返回从视图WF_EmpWorks查询出来的数据.</returns>
+        public static DataTable DB_GenerHungUpList()
         {
-            return DB_GenerEmpWorksOfDataTable((int)WFState.HungUp,null);
-        }
-        public static DataTable DB_GenerEmpWorkshHungUpOfDataTable(string fk_flow)
-        {
-            return DB_GenerEmpWorksOfDataTable((int)WFState.HungUp, fk_flow);
+            return DB_GenerHungUpList(null);
         }
         /// <summary>
-        /// 撤销(强制结束)
+        /// 获得挂起工作列表:根据流程编号
         /// </summary>
-        /// <returns></returns>
-        public static DataTable DB_GenerEmpWorkshOverByCoercionOfDataTable()
+        /// <param name="fk_flow">流程编号</param>
+        /// <returns>返回从视图WF_EmpWorks查询出来的数据.</returns>
+        public static DataTable DB_GenerHungUpList(string fk_flow)
         {
-            return DB_GenerEmpWorksOfDataTable((int)WFState.Cancel,null);
+            string sql;
+            int state = (int)WFState.HungUp;
+            if (WebUser.IsAuthorize)
+            {
+                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+                if (string.IsNullOrEmpty(fk_flow))
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE  A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+                else
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.FK_Flow='" + fk_flow + "'  AND A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND  B.IsPass=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(fk_flow))
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE  A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1   ";
+                else
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.FK_Flow='" + fk_flow + "'  AND A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 ";
+            }
+            GenerWorkFlows gwfs = new GenerWorkFlows();
+            gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
+            return gwfs.ToDataTableField();
+        }
+        /// <summary>
+        /// 获得逻辑删除的流程
+        /// </summary>
+        /// <returns>返回从视图WF_EmpWorks查询出来的数据.</returns>
+        public static DataTable DB_GenerDeleteWorkList()
+        {
+            return DB_GenerDeleteWorkList(WebUser.No,null);
+        }
+        /// <summary>
+        /// 获得逻辑删除的流程:根据流程编号
+        /// </summary>
+        /// <param name="userNo">操作员编号</param>
+        /// <param name="fk_flow">流程编号(可以为空)</param>
+        /// <returns>WF_GenerWorkFlow数据结构的集合</returns>
+        public static DataTable DB_GenerDeleteWorkList(string userNo, string fk_flow)
+        {
+            string sql;
+            int state = (int)WFState.Delete;
+            if (WebUser.IsAuthorize)
+            {
+                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+                if (string.IsNullOrEmpty(fk_flow))
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE  A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+                else
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.FK_Flow='" + fk_flow + "'  AND A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND  B.IsPass=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(fk_flow))
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE  A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1   ";
+                else
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.FK_Flow='" + fk_flow + "'  AND A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 ";
+            }
+            GenerWorkFlows gwfs = new GenerWorkFlows();
+            gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
+            return gwfs.ToDataTableField();
         }
         /// <summary>
         /// For Lizheng: 2012-10-17
@@ -537,28 +592,40 @@ namespace BP.WF
         public static DataTable DB_NDxxRpt(string fk_flow, WFState sta)
         {
             string dbstr = BP.SystemConfig.AppCenterDBVarStr;
-            string sql = "SELECT OID,Title,RDT,FID FROM ND" + int.Parse(fk_flow) + "Rpt WHERE WFState=" + dbstr + "WFState AND Rec=" + dbstr + "Rec";
+            string sql = "SELECT OID,Title,RDT,FID FROM ND" + int.Parse(fk_flow) + "Rpt WHERE WFState="+(int)sta+" AND Rec=" + dbstr + "Rec";
             BP.DA.Paras ps = new BP.DA.Paras();
             ps.SQL = sql;
             ps.Add("Rec", BP.Web.WebUser.No);
-            ps.Add("WFState", (int)sta);
             return DBAccess.RunSQLReturnTable(ps);
+
+
+            //string dbstr = BP.SystemConfig.AppCenterDBVarStr;
+            //string sql = "SELECT OID,Title,RDT,FID FROM ND" + int.Parse(fk_flow) + "Rpt WHERE WFState=" + dbstr + "WFState AND Rec=" + dbstr + "Rec";
+            //BP.DA.Paras ps = new BP.DA.Paras();
+            //ps.SQL = sql;
+            //ps.Add("Rec", BP.Web.WebUser.No);
+
+            //int s = (int)sta;
+            //ps.Add("WFState", s);
+            //return DBAccess.RunSQLReturnTable(ps);
         }
-             
         #endregion
 
         #region 获取当前可以退回的节点。
         /// <summary>
-        /// 获取当前节点可以退回的节点，以方便退回的二次开发。
+        /// 获取当前节点可以退回的节点
         /// </summary>
-        /// <param name="fk_node">当前节点</param>
+        /// <param name="fk_node">节点ID</param>
         /// <param name="workid">工作ID</param>
-        /// <returns></returns>
+        /// <param name="fid">FID</param>
+        /// <returns>No节点编号,Name节点名称,Rec记录人,RecName记录人名称</returns>
         public static DataTable DB_GenerWillReturnNodes(int fk_node, Int64 workid, Int64 fid)
         {
             DataTable dt = new DataTable("obt");
-            dt.Columns.Add("No");
-            dt.Columns.Add("Name");
+            dt.Columns.Add("No"); // 节点ID
+            dt.Columns.Add("Name"); // 节点名称.
+            dt.Columns.Add("Rec"); // 被退回节点上的操作员编号.
+            dt.Columns.Add("RecName"); // 被退回节点上的操作员名称.
 
             Node nd = new Node(fk_node);
             if (nd.HisRunModel == RunModel.SubThread)
@@ -605,7 +672,6 @@ namespace BP.WF
                 case ReturnRole.ReturnAnyNodes:
                     if (wns.Count == 0)
                         wns.GenerByWorkID(wn.HisNode.HisFlow, workid);
-
                     foreach (WorkNode mywn in wns)
                     {
                         if (mywn.HisNode.NodeID == fk_node)
@@ -613,7 +679,9 @@ namespace BP.WF
 
                         DataRow dr = dt.NewRow();
                         dr["No"] = mywn.HisNode.NodeID.ToString();
-                        dr["Name"] = mywn.HisWork.RecText + "=>" + mywn.HisNode.Name;
+                        dr["Name"] = mywn.HisNode.Name;
+                        dr["Rec"] = mywn.HisWork.Rec;
+                        dr["RecName"] = mywn.HisWork.RecText;
                         dt.Rows.Add(dr);
                     }
                     break;
@@ -622,7 +690,9 @@ namespace BP.WF
                     //  turnTo = mywnP.HisWork.Rec + mywnP.HisWork.RecText;
                     DataRow dr1 = dt.NewRow();
                     dr1["No"] = mywnP.HisNode.NodeID.ToString();
-                    dr1["Name"] = mywnP.HisWork.RecText + "=>" + mywnP.HisNode.Name;
+                    dr1["Name"] =mywnP.HisNode.Name;
+                    dr1["Rec"] = mywnP.HisWork.Rec;
+                    dr1["RecName"] = mywnP.HisWork.RecText;
                     dt.Rows.Add(dr1);
                     break;
                 case ReturnRole.ReturnSpecifiedNodes: //退回指定的节点。
@@ -644,7 +714,35 @@ namespace BP.WF
 
                         DataRow dr = dt.NewRow();
                         dr["No"] = mywn.HisNode.NodeID.ToString();
-                        dr["Name"] = mywn.HisWork.RecText + "=>" + mywn.HisNode.Name;
+                        dr["Name"] = mywn.HisNode.Name;
+                        dr["Rec"] = mywn.HisWork.Rec;
+                        dr["RecName"] = mywn.HisWork.RecText;
+                        dt.Rows.Add(dr);
+                    }
+                    break;
+                case ReturnRole.ByReturnLine: //按照流程图画的退回线执行退回.
+                    if (wns.Count == 0)
+                        wns.GenerByWorkID(wn.HisNode.HisFlow, workid);
+                   
+                    Directions dirs = new Directions();
+                    dirs.Retrieve(DirectionAttr.ToNode, fk_node, DirectionAttr.DirType,1);
+                    if (dirs.Count == 0)
+                        throw new Exception("@流程设计错误:当前节点没有画向后退回的退回线,更多的信息请参考退回规则.");
+
+                    foreach (WorkNode mywn in wns)
+                    {
+                        if (mywn.HisNode.NodeID == fk_node)
+                            continue;
+
+                        if (dirs.Contains(DirectionAttr.ToNode,
+                            mywn.HisNode.NodeID) == false)
+                            continue;
+
+                        DataRow dr = dt.NewRow();
+                        dr["No"] = mywn.HisNode.NodeID.ToString();
+                        dr["Name"] = mywn.HisNode.Name;
+                        dr["Rec"] = mywn.HisWork.Rec;
+                        dr["RecName"] = mywn.HisWork.RecText;
                         dt.Rows.Add(dr);
                     }
                     break;
@@ -660,41 +758,13 @@ namespace BP.WF
         #endregion 获取当前可以退回的节点
 
         #region 获取当前操作员的在途工作
-        /// <summary>m
-        /// 获取当前操作员的在途工作
-        /// </summary>
-        /// <returns>在途工作</returns>
-        public static GenerWorkFlows DB_GenerRuningOfEntities()
-        {
-            return DB_GenerRuningOfEntities(WebUser.No);
-        }
-        /// <summary>
-        /// 获取指定人员当前运行的工作
-        /// </summary>
-        /// <param name="userNo"></param>
-        /// <returns></returns>
-        public static GenerWorkFlows DB_GenerRuningOfEntities(string userNo)
-        {
-            string sql;
-            if (WebUser.IsAuthorize)
-            {
-                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
-                sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 AND A.FK_Flow IN " + emp.AuthorFlows;
-            }
-            else
-            {
-                sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 ";
-            }
-            GenerWorkFlows gwfs = new GenerWorkFlows();
-            gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
-            return gwfs;
-        }
+        
         /// <summary>
         /// For Lizheng: 2012-10-12
         /// 获取指定人员在途工作
         /// </summary>
         /// <param name="userNo">指定人员编号</param>
-        /// <returns></returns>
+        /// <returns>查询SQL</returns>
         public static string DB_GenerRuningOfSQL(string userNo)
         {
             string sql;
@@ -710,16 +780,40 @@ namespace BP.WF
             return sql;
         }
         /// <summary>
-        /// 获取当前操作员的在途工作
+        /// 获取未完成的流程(也称为在途流程:我参与的但是此流程未完成)
         /// </summary>
-        /// <returns>在途工作</returns>
-        public static DataTable DB_GenerRuningOfDataTable()
+        /// <param name="fk_flow">流程编号</param>
+        /// <returns>返回从数据视图WF_GenerWorkflow查询出来的数据.</returns>
+        public static DataTable DB_GenerRuning(string fk_flow)
         {
-            return DB_GenerRuningOfEntities().ToDataTableField();
+            string sql;
+            int state = (int)WFState.Runing;
+            if (WebUser.IsAuthorize)
+            {
+                WF.Port.WFEmp emp = new Port.WFEmp(WebUser.No);
+                if (string.IsNullOrEmpty(fk_flow))
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE  A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 AND B.IsPass=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+                else
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.FK_Flow='" + fk_flow + "'  AND A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 AND B.IsPass=1 AND A.FK_Flow IN " + emp.AuthorFlows;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(fk_flow))
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE  A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 AND B.IsPass=1 ";
+                else
+                    sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.FK_Flow='" + fk_flow + "'  AND A.WFState=" + state + " AND A.WorkID=B.WorkID AND B.FK_EMP='" + WebUser.No + "' AND B.IsEnable=1 AND B.IsPass=1 ";
+            }
+            GenerWorkFlows gwfs = new GenerWorkFlows();
+            gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
+            return gwfs.ToDataTableField();
         }
-        public static DataTable DB_GenerRuningOfDataTable(string userNo)
+        /// <summary>
+        /// 获取未完成的流程(也称为在途流程:我参与的但是此流程未完成)
+        /// </summary>
+        /// <returns>返回从数据视图WF_GenerWorkflow查询出来的数据.</returns>
+        public static DataTable DB_GenerRuning()
         {
-            return DB_GenerRuningOfEntities(userNo).ToDataTableField();
+            return DB_GenerRuning(null);
         }
         #endregion 获取当前操作员的待办工作
 
@@ -855,19 +949,43 @@ namespace BP.WF
             wf.DoComeBackWrokFlow(msg);
         }
         /// <summary>
-        /// 执行删除流程
+        /// 执行删除流程:彻底的删除流程.
+        /// 清除的内容如下:
+        /// 1, 流程引擎中的数据.
+        /// 2, 节点数据,NDxxRpt数据.
+        /// 3, 轨迹表数据.
         /// </summary>
         /// <param name="flowNo">流程编号</param>
         /// <param name="workID">工作ID</param>
         /// <returns>执行信息</returns>
-        public static string Flow_DoDeleteFlow(string flowNo, Int64 workID)
+        public static string Flow_DoDeleteFlowByReal(string flowNo, Int64 workID)
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
             wf.DoDeleteWorkFlowByReal();
             return "删除成功";
         }
         /// <summary>
-        /// 执行撤销发送
+        /// 执行逻辑删除流程:此流程并非真正的删除仅做了流程删除标记
+        /// 比如:撤销的工单.
+        /// </summary>
+        /// <param name="flowNo">流程编号</param>
+        /// <param name="workID">工作ID</param>
+        /// <param name="msg">撤销的原因</param>
+        /// <returns>执行信息</returns>
+        public static string Flow_DoDeleteFlowByFlag(string flowNo, Int64 workID,string msg)
+        {
+            WorkFlow wf = new WorkFlow(flowNo, workID);
+            wf.DoDeleteWorkFlowByFlag(msg);
+            return "删除成功";
+        }
+        public static string Flow_DoUnDeleteFlowByFlag(string flowNo, Int64 workID, string msg)
+        {
+            WorkFlow wf = new WorkFlow(flowNo, workID);
+            wf.DoUnDeleteWorkFlowByFlag(msg);
+            return "撤销删除成功.";
+        }
+        /// <summary>
+        /// 执行-撤销发送
         /// </summary>
         /// <param name="flowNo">流程编号</param>
         /// <param name="workID">工作ID</param>
@@ -878,7 +996,7 @@ namespace BP.WF
             return wf.DoUnSend();
         }
         /// <summary>
-        /// 执行流程结束
+        /// 执行流程结束:正常的流程结束.
         /// </summary>
         /// <param name="flowNo">流程编号</param>
         /// <param name="workID">工作ID</param>
@@ -888,6 +1006,18 @@ namespace BP.WF
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
             return wf.DoFlowOver(ActionType.FlowOver,msg);
+        }
+        /// <summary>
+        /// 执行流程结束:强制的流程结束.
+        /// </summary>
+        /// <param name="flowNo">流程编号</param>
+        /// <param name="workID">工作ID</param>
+        /// <param name="msg">强制流程结束的原因</param>
+        /// <returns></returns>
+        public static string Flow_DoFlowOverByCoercion(string flowNo, Int64 workID, string msg)
+        {
+            WorkFlow wf = new WorkFlow(flowNo, workID);
+            return wf.DoFlowOver(ActionType.FlowOverByCoercion, msg);
         }
         /// <summary>
         /// 获取指定的workid 在运行到的节点编号
@@ -1027,15 +1157,14 @@ namespace BP.WF
             GenerWorkerLists wls = new GenerWorkerLists(workID, gwf.FK_Node);
 
             string toEmp = "", toEmpName = "";
-
-            string mailTitle = "催办:" + gwf.Title + ". 发送人:" + WebUser.Name;
+            string mailTitle = "催办:" + gwf.Title + ", 发送人:" + WebUser.Name;
             if (wls.Count == 1)
             {
                 GenerWorkerList gwl = (GenerWorkerList)wls[0];
                 toEmp = gwl.FK_Emp;
                 toEmpName = gwl.FK_EmpText;
                 TA.SMS.AddMsg(workID + DataType.CurrentDataTime, toEmp, mailTitle + msg, mailTitle, msg);
-                gwl.PressTimes = gwl.PressTimes++;
+                gwl.PressTimes = gwl.PressTimes+1;
                 gwl.Update();
                 //gwl.PRI = 1;
             }
@@ -1051,7 +1180,7 @@ namespace BP.WF
 
                     TA.SMS.AddMsg(workID + DataType.CurrentDataTime, wl.FK_Emp, mailTitle + msg, mailTitle, msg);
                     //   wl.PressTimes = wl.PressTimes++;
-                    wl.Update(GenerWorkerListAttr.PressTimes, wl.PressTimes++);
+                    wl.Update(GenerWorkerListAttr.PressTimes, wl.PressTimes+1);
                 }
             }
 
@@ -1489,7 +1618,7 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 节点工作挂起(或者取消挂起)
+        /// 节点工作挂起
         /// </summary>
         /// <param name="fk_flow">流程编号</param>
         /// <param name="workid">工作ID</param>
@@ -1497,14 +1626,23 @@ namespace BP.WF
         /// <param name="reldata">解除挂起日期(可以为空)</param>
         /// <param name="msg">挂起原因</param>
         /// <returns>返回执行信息</returns>
-        public static string Node_HungUp_Or_UnHungUp(string fk_flow, Int64 workid, int wayInt, string reldata, string msg)
+        public static string Node_HungUpWork(string fk_flow, Int64 workid, int wayInt, string reldata, string msg)
         {
             HungUpWay way = (HungUpWay)wayInt;
             BP.WF.WorkFlow wf = new WorkFlow(fk_flow, workid);
-            if (wf.HisGenerWorkFlow.WFState == WFState.HungUp)
-                return wf.DoUnHungUp();
-            else
-                return wf.DoHungUp(way, reldata, msg);
+            return wf.DoHungUp(way, reldata, msg);
+        }
+        /// <summary>
+        /// 节点工作取消挂起
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="workid">工作ID</param>
+        /// <param name="msg">取消挂起原因</param>
+        /// <returns>执行信息</returns>
+        public static void Node_UnHungUpWork(string fk_flow, Int64 workid, string msg)
+        {
+            BP.WF.WorkFlow wf = new WorkFlow(fk_flow, workid);
+            wf.DoUnHungUp();
         }
         /// <summary>
         /// 工作移交
@@ -1724,12 +1862,59 @@ namespace BP.WF
         /// <returns>执行结果</returns>
         public static string ChangeAttr_Flow(string fk_flow, bool isEnableFlow)
         {
+            return ChangeAttr_Flow(fk_flow, FlowAttr.IsOK, isEnableFlow,null,null);
+        }
+        /// <summary>
+        /// 更改流程属性
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="attr1">字段1</param>
+        /// <param name="v1">值1</param>
+        /// <param name="attr2">字段2(可为null)</param>
+        /// <param name="v2">值2(可为null)</param>
+        /// <returns>执行结果</returns>
+        public static string ChangeAttr_Flow(string fk_flow, string attr1, object v1, string attr2, object v2)
+        {
             Flow fl = new Flow(fk_flow);
-            fl.IsOK = isEnableFlow;
+            if (attr1 != null)
+                fl.SetValByKey(attr1, v1);
+            if (attr2 != null)
+                fl.SetValByKey(attr2, v2);
             fl.Update();
             return "修改成功";
         }
+        /// <summary>
+        /// 获取数据接口 For boco 2012-12-22
+        /// 标记不同获得的数据也不同.
+        /// Flow=流程数据
+        /// </summary>
+        /// <param name="flag">标记</param>
+        /// <returns></returns>
+        public static DataSet DS_GetDataByFlag(string flag)
+        {
+            DataSet ds = new DataSet();
+            switch (flag)
+            {
+                case "Flow":
+                    Flows fls = new Flows();
+                    fls.RetrieveAll();
+                    DataTable dt = fls.ToDataTableField();
+                    dt.TableName = "WF_Flow";
+                    dt.Columns.Add(new DataColumn("IsEnableText", typeof(string)));
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (dr[FlowAttr.IsOK].ToString() == "1")
+                            dr["IsEnableText"] = "启用";
+                        else
+                            dr["IsEnableText"] = "禁用";
+                    }
+                    ds.Tables.Add(dt);
+                    return ds;
+                default:
+                    break;
+            }
+            throw new Exception("标记错误:"+flag);
+        }
         #endregion 流程属性与节点属性变更接口.
-
     }
 }

@@ -62,22 +62,17 @@ namespace BP.WF.DTS
                 fs.No = dir.Name.Substring(0, 2);
                 fs.Name = dir.Name.Substring(3);
                 fs.Insert();
-                foreach (string f in fls)
+                foreach (string filePath in fls)
                 {
-                    //try
-                    //{
-                    msg += "@开始调度流程模板文件:" + f;
-                    Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fs.No, f);
+                    msg += "@开始调度流程模板文件:" + filePath;
+                    Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fs.No, filePath, ImpFlowTempleteModel.AsNewFlow);
                     msg += "@流程:" + myflow.Name + "装载成功。";
 
-                    System.IO.FileInfo info = new System.IO.FileInfo(f);
+                    System.IO.FileInfo info = new System.IO.FileInfo(filePath);
                     myflow.Name = info.Name.Replace(".xml", "");
+                    if (myflow.Name.Substring(2, 1) == ".")
+                        myflow.Name = myflow.Name.Substring(3);
                     myflow.DirectUpdate();
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    msg += "@调度失败" + ex.Message;
-                    //}
                 }
             }
 

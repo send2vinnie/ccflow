@@ -137,6 +137,66 @@ namespace BP.WF
             // wl.HisNode
         }
         /// <summary>
+        /// 逻辑删除流程
+        /// </summary>
+        /// <param name="msg">逻辑删除流程原因，可以为空。</param>
+        public void DoDeleteWorkFlowByFlag(string msg)
+        {
+            try
+            {
+                //设置流程的状态为强制终止状态
+                WorkNode nd = GetCurrentWorkNode();
+                nd.HisWork.NodeState = NodeState.Delete;
+                nd.HisWork.DirectUpdate();
+
+                //设置产生的工作流程为.
+                GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+                gwf.WFState = BP.WF.WFState.Delete;
+                gwf.Update();
+
+                //记录日志 感谢 itdos and 888 , 提出了这个bug.
+                WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
+                wn.AddToTrack(ActionType.DeleteFlowByFlag, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                        msg);
+
+                string sql = "UPDATE SET  ND" + int.Parse(this.HisFlow.No) + "Rpt SET WFState="+(int)WFState.Delete+" WHERE OID="+this.WorkID;
+                DBAccess.RunSQL(sql);
+            }
+            catch (Exception ex)
+            {
+                Log.DefaultLogWriteLine(LogType.Error, "@逻辑删除出现错误:" + ex.Message);
+                throw new Exception("@逻辑删除出现错误:" + ex.Message);
+            }
+        }
+        /// <summary>
+        /// 恢复逻辑删除流程
+        /// </summary>
+        /// <param name="msg">回复原因,可以为空.</param>
+        public void DoUnDeleteWorkFlowByFlag(string msg)
+        {
+            try
+            {
+                //设置流程的状态为强制终止状态
+                WorkNode nd = GetCurrentWorkNode();
+                nd.HisWork.NodeState = NodeState.Init;
+                nd.HisWork.DirectUpdate();
+
+                //设置产生的工作流程为.
+                GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+                gwf.WFState = BP.WF.WFState.Runing;
+                gwf.Update();
+              
+                WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
+                wn.AddToTrack(ActionType.UnDeleteFlowByFlag, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name,
+                        msg);
+            }
+            catch (Exception ex)
+            {
+                Log.DefaultLogWriteLine(LogType.Error, "@逻辑删除出现错误:" + ex.Message);
+                throw new Exception("@逻辑删除出现错误:" + ex.Message);
+            }
+        }
+        /// <summary>
         /// 真正的删除工作流程
         /// </summary>
         public string DoDeleteWorkFlowByReal()
@@ -171,14 +231,14 @@ namespace BP.WF
                 DBAccess.RunSQL("DELETE FROM WF_Bill WHERE WorkID=" + this.WorkID);
 
                 // 删除track.
-                DBAccess.RunSQL("DELETE FROM wf_track WHERE WorkID=" + this.WorkID);
-
+                DBAccess.RunSQL("DELETE FROM WF_Track WHERE WorkID=" + this.WorkID);
 
                 //删除它的工作.
                 DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE  FID=" + this.WorkID + " AND FK_Flow='" + this.HisFlow.No + "'");
                 DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + " ) AND FK_Flow='" + this.HisFlow.No + "'");
                 DBAccess.RunSQL("DELETE FROM WF_GenerWorkerList WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + " ) AND FK_Flow='" + this.HisFlow.No + "'");
 
+                //删除所有节点上的数据.
                 Nodes nds = this.HisFlow.HisNodes;
                 foreach (Node nd in nds)
                 {
@@ -189,7 +249,6 @@ namespace BP.WF
                     catch (Exception ex)
                     {
                         msg += "@ delete data error " + ex.Message;
-                        // Log.DefaultLogWriteLineError(ex.Message);
                     }
                 }
                 if (msg != "")
@@ -518,6 +577,7 @@ namespace BP.WF
         {
             if (string.IsNullOrEmpty(stopMsg))
                 stopMsg = "流程结束";
+
             string msg = "";
             if (this.IsMainFlow == false)
             {
