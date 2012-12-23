@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title>无标题页</title>
-    <base target=_blank />
+    <base target="_blank" />
     <style type="text/css">
         .style1
         {

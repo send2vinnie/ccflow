@@ -18,6 +18,8 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        //BP.PubClass.WinOpen("http://sina.com.cn");
+        //return;
         //DataSet ds =new DataSet();
         //ds.ReadXml(@"D:\ccflow\VisualFlow\Data\FlowDemo\Form\02.企业资质申请表单\01.企业基本情况.xml");
         //MapData.ImpMapData("Demo_Inc01", ds);
