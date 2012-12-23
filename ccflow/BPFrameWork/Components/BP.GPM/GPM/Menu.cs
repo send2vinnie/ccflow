@@ -50,7 +50,7 @@ namespace BP.GPM
     /// <summary>
     /// 菜单
     /// </summary>
-    public class MenuAttr : EntityNoNameAttr
+    public class MenuAttr : EntityTreeAttr
     {
         /// <summary>
         /// 系统类型
@@ -88,9 +88,18 @@ namespace BP.GPM
     /// <summary>
     /// 菜单
     /// </summary>
-    public class Menu : EntityOID
+    public class Menu : EntityTree
     {
         #region 属性
+
+        public override UAC HisUAC
+        {
+            get
+            {
+            //    UAC uac = new UAC();
+                return base.HisUAC;
+            }
+        }
         public string CtrlObjs
         {
             get
@@ -246,60 +255,43 @@ namespace BP.GPM
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "系统";
                 map.EnType = EnType.Sys;
+
+                #region 与树有关的必备属性.
+                map.AddTBStringPK(MenuAttr.ID, null, "编号", true, true, 1, 10, 10);
+                map.AddTBString(MenuAttr.Name, null, "名称", true, false, 0, 60, 400);
+                map.AddTBString(MenuAttr.PID, null, "父节点编号", true, true, 0, 10, 10);
+                map.AddTBString(MenuAttr.TreeNo, null, "树编号", true, true, 0, 60, 400);
+                map.AddTBInt(MenuAttr.Idx, 0, "顺序号", false, false);
+                #endregion 与树有关的必备属性.
+
                 // 类的字段属性.
-                map.AddTBIntPKOID(); //增加一个int类型的PK. OID
-                map.AddTBString(MenuAttr.TreeNo, null, "编号", true, false, 2, 30, 20);
-                map.AddTBString(MenuAttr.Name, null, "名称", true, false, 0, 3900, 20);
-
-                map.AddDDLSysEnum(MenuAttr.MenuType, 0, "菜单类型", true, true,MenuAttr.MenuType, 
+                map.AddDDLSysEnum(MenuAttr.MenuType, 0, "菜单类型", true, true, MenuAttr.MenuType,
                     "@0=目录@1=功能@2=功能控制点");
-                
                 map.AddDDLEntities(MenuAttr.FK_STem, null, "系统", new STems(), true);
-
-                map.AddDDLSysEnum(STemAttr.CtrlWay, 1, "控制方式", true, true,STemAttr.CtrlWay, 
+                map.AddDDLSysEnum(STemAttr.CtrlWay, 1, "控制方式", true, true, STemAttr.CtrlWay,
                     "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
                 map.AddTBString(MenuAttr.CtrlObjs, null, "控制内容", false, false, 0, 4000, 20);
                 map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
                 map.AddMyFile("图标");  // 附件属性.
 
                 // 一对多的关系.
-                map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, 
+                map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station,
                     StationAttr.Name, StationAttr.No, "可访问的岗位");
                 map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept,
                     DeptAttr.Name, DeptAttr.No, "可访问的部门");
                 map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp,
                     EmpAttr.Name, EmpAttr.No, "可访问的人员");
-
                 map.AddSearchAttr(MenuAttr.FK_STem); // 查询属性.
-
-
- 
-
-
                 this._enMap = map;
                 return this._enMap;
             }
         }
         #endregion
-
-        public string DoIt()
-        {
-            PubClass.WinOpen("http://sina.com.cn?OID=" + this.OID, 100, 100);
-            return null;
-        }
-
-        public string DoItPara(decimal je)
-        {
-            string sql = "";
-            DBAccess.RunSQL(sql);
-            return "您对"+this.Name+"已经冲成功。"+je;
-            //return "执行成功能"+this.OID+" , "+this.Name;
-        }
     }
     /// <summary>
     /// 菜单s
     /// </summary>
-    public class Menus : EntitiesOID
+    public class Menus : EntitiesTree
     {
         #region 构造
         /// <summary>

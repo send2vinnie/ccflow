@@ -183,7 +183,7 @@ namespace BP.GPM
                 map.AddTBString(STemAttr.Name, null, "名称", true, false, 0, 3900, 20);
                 map.AddDDLSysEnum(STemAttr.XieYi, 0, "连接协议", true,true,
                     STemAttr.XieYi, "@0=基于SID@1=基于SSL@2=基于ACL@3=基于LDAP@4=基于http");
-                map.AddDDLSysEnum(STemAttr.CtrlWay, 0, "控制方式", true, true,STemAttr.CtrlWay, "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
+                map.AddDDLSysEnum(STemAttr.CtrlWay, 0, "控制方式", true, true,STemAttr.CtrlWay, "@0=游客@1=所有系统人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
                 map.AddTBString(STemAttr.CtrlWay, null, "SQL表达式", true, false, 0, 3900, 20);
                 map.AddDDLSysEnum(STemAttr.AppModel, 0, "应用类型", true, true,STemAttr.AppModel, "@0=BS系统@1=CS系统");
                 map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);

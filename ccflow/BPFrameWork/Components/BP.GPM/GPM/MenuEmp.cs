@@ -43,11 +43,11 @@ namespace BP.GPM
                 this.SetValByKey(MenuEmpAttr.FK_Emp, value);
             }
         }
-        public int FK_Menu
+        public string FK_Menu
         {
             get
             {
-                return this.GetValIntByKey(MenuEmpAttr.FK_Menu);
+                return this.GetValStringByKey(MenuEmpAttr.FK_Menu);
             }
             set
             {
@@ -232,13 +232,13 @@ namespace BP.GPM
             foreach (Menu en in ens)
             {
                 /* 把此人能看到的菜单init 里面去。*/
-                if (Glo.IsCanDoIt(en.OID, en.HisCtrlWay) == false)
+                if (Glo.IsCanDoIt(en.ID, en.HisCtrlWay) == false)
                     continue;
 
                 MenuEmp me = new MenuEmp();
                 me.Copy(en);
                 me.FK_Emp = WebUser.No;
-                me.FK_Menu = en.OID;
+                me.FK_Menu = en.ID;
                 me.MyPK = me.FK_Menu + "_" + me.FK_Emp;
                 me.Insert();
             }
