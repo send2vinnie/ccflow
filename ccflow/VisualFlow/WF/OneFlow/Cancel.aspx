@@ -3,7 +3,9 @@
     <% 
     /*获取数据.*/
     string fk_flow = this.Request.QueryString["FK_Flow"];
-    System.Data.DataTable dt = BP.WF.Dev2Interface.DB_NDxxRpt(fk_flow, BP.WF.WFState.Cancel);
+   // System.Data.DataTable dt = BP.WF.Dev2Interface.DB_NDxxRpt(fk_flow, BP.WF.WFState.Delete);
+    System.Data.DataTable dt = BP.WF.Dev2Interface.DB_GenerDeleteWorkList(BP.Web.WebUser.No,fk_flow);
+        
     %>
 <table  style="width:100%">
 <Caption class='Caption' align="left" style="background:url('../../Comm/Style/BG_Title.png') repeat-x ; height:30px ; line-height:30px" >
@@ -22,7 +24,7 @@
     string appPath = this.Request.ApplicationPath;
     foreach (System.Data.DataRow dr in dt.Rows)
     {
-        workid = int.Parse(dr["OID"].ToString());
+        workid = int.Parse(dr["WorkID"].ToString());
         title = dr["Title"].ToString();
         rdt = dr["RDT"].ToString();
         fid = dr["FID"].ToString();

@@ -471,15 +471,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.FlowMsg.AddB(this.ToE("Note", "提示"));
                 this.FlowMsg.AddHR();
 
-                this.FlowMsg.Add(this.ToE("FW1", "@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。"));
+                this.FlowMsg.Add(this.ToE("FW1", "@当前的工作已经被处理，或者您没有执行此工作的权限。"));
 
                 this.FlowMsg.AddUL();
                 if (WebUser.IsWap)
+                {
                     this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");
-                this.FlowMsg.AddLi("<a href='Start" + this.PageSmall + ".aspx'><img src='./Img/Start.gif' border=0/>" + this.ToE("StartWork", "发起流程") + "</a>");
-                this.FlowMsg.AddLi("<a href='Runing" + this.PageSmall + ".aspx'><img src='./Img/Runing.gif' border=0/>" + this.ToE("OnTheWayWork", "在途工作") + "</a>");
+                    this.FlowMsg.AddLi("<a href='Start" + this.PageSmall + ".aspx'><img src='./Img/Start.gif' border=0/>" + this.ToE("StartWork", "发起流程") + "</a>");
+                    this.FlowMsg.AddLi("<a href='Runing" + this.PageSmall + ".aspx'><img src='./Img/Runing.gif' border=0/>" + this.ToE("OnTheWayWork", "在途工作") + "</a>");
+                }
                 this.FlowMsg.AddULEnd();
-
                 this.FlowMsg.DivInfoBlockEnd();
                 return;
             }

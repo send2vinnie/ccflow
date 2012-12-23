@@ -73,7 +73,7 @@ public partial class WF_WorkOpt_OneWork_OP : BP.Web.WebPage
                 this.UnSend(); /*撤销发送*/
                 break;
             case WFState.Complete: // 完成.
-            case WFState.Cancel: // 完成.
+            case WFState.Delete: // 逻辑删除..
                 this.RollBack(); /*恢复使用流程*/
                 break;
             case WFState.HungUp: // 挂起.
@@ -109,7 +109,7 @@ public partial class WF_WorkOpt_OneWork_OP : BP.Web.WebPage
         this.Pub2.AddFieldSetEnd();
     }
     /// <summary>
-    /// 删除流程
+    /// 强制删除流程
     /// </summary>
     public void FlowOverByCoercion()
     {

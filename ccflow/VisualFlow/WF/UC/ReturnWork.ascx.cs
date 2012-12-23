@@ -118,7 +118,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID, this.FID);
         foreach (DataRow dr in dt.Rows)
         {
-            this.DDL1.Items.Add(new ListItem(dr["Name"].ToString(), dr["No"].ToString()));
+            this.DDL1.Items.Add(new ListItem( dr["RecName"]+"=>"+dr["Name"].ToString(), dr["No"].ToString()));
         }
 
         TB tb = new TB();
@@ -222,7 +222,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID,this.FID);
                 foreach (DataRow dr in dt.Rows)
                 {
-                    this.DDL1.Items.Add(new ListItem(dr["Name"].ToString(), dr["No"].ToString()));
+                    this.DDL1.Items.Add(new ListItem(dr["RecName"] + "=>" + dr["Name"].ToString(), dr["No"].ToString()));
                 }
 
                 WorkNode pwn = wn.GetPreviousWorkNode();

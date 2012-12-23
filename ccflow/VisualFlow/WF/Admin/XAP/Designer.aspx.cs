@@ -62,6 +62,10 @@ public partial class Designer : System.Web.UI.Page
         {
             msg = "@在检查数据库连接出现错误。";
 
+            #region 2012-12-21 升级退回规则, 增加按轨迹图设置退回.
+            DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='ReturnRole'");
+            #endregion
+
             #region 2012-12-15 升级退回规则. for boco.
             Direction dir = new Direction();
             dir.CheckPhysicsTable();
@@ -70,7 +74,10 @@ public partial class Designer : System.Web.UI.Page
                 sql = "UPDATE WF_Direction SET DirType=0  WHERE DirType is null ";
                 sql += "@UPDATE WF_Direction SET  IsCanBack=0 WHERE IsCanBack IS NULL ";
                 sql += "@UPDATE WF_Direction SET FK_Flow = (SELECT FK_FLOW FROM WF_Node WHERE NodeID=WF_Direction.Node)";
-                sql += "@UPDATE WF_Direction SET MyPK = CAST(Node as varchar)+'_'+CAST(ToNode as varchar)+'_'+CAST(DirType as varchar)";
+                if (BP.SystemConfig.AppCenterDBType == DBType.Informix)
+                    sql += "@UPDATE WF_Direction SET MyPK =  to_char(Node) || '_' || to_char(ToNode) || '_' || to_char(DirType)";
+                else
+                    sql += "@UPDATE WF_Direction SET MyPK = CAST(Node as varchar)+'_'+CAST(ToNode as varchar)+'_'+CAST(DirType as varchar)";
                 DBAccess.RunSQLs(sql);
             }
             catch
@@ -133,7 +140,6 @@ public partial class Designer : System.Web.UI.Page
             }
             BP.DA.DBAccess.RunSQLs(sql);
             #endregion 更新 WF_EmpWorks. 2011-11-09
-
 
             #region 增加是否只读.
             BP.WF.GenerWorkerList wl8 = new GenerWorkerList();

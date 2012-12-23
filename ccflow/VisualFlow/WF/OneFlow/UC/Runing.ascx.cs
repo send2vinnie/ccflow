@@ -41,10 +41,18 @@ public partial class WF_OneFlow_UC_Runing : BP.Web.UC.UCBase3
             return s;
         }
     }
+    public string FK_Flow
+    {
+        get
+        {
+            string s = this.Request.QueryString["FK_Flow"];
+            return s;
+        }
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        DataTable dt = BP.WF.Dev2Interface.DB_GenerRuningOfDataTable();
+        DataTable dt = BP.WF.Dev2Interface.DB_GenerRuning(this.FK_Flow);
         this.Page.Title = this.ToE("OnTheWayWork", "在途工作");
         if (WebUser.IsWap)
         {
@@ -53,7 +61,6 @@ public partial class WF_OneFlow_UC_Runing : BP.Web.UC.UCBase3
         }
 
         string appPath = this.Request.ApplicationPath;
-        string fk_flow = this.Request.QueryString["FK_Flow"];
         int colspan = 6;
         this.Pub1.AddTable("border=1px align=center width='100%'");
         if (WebUser.IsWap)
@@ -65,10 +72,10 @@ public partial class WF_OneFlow_UC_Runing : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("nowarp=true", "序");
         this.Pub1.AddTDTitle("nowarp=true", "标题");
         if (this.GroupBy != "NodeName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName&FK_Flow=" + fk_flow + "' >当前节点</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName&FK_Flow=" + this.FK_Flow + "' >当前节点</a>");
 
         if (this.GroupBy != "RecName")
-            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=RecName&FK_Flow=" + fk_flow + "' >发起人</a>");
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=RecName&FK_Flow=" + this.FK_Flow + "' >发起人</a>");
 
         this.Pub1.AddTDTitle("nowarp=true", "发起日期");
         this.Pub1.AddTDTitle("nowarp=true", "操作");
@@ -86,7 +93,7 @@ public partial class WF_OneFlow_UC_Runing : BP.Web.UC.UCBase3
         bool is1 = false;
         string title = null;
         string workid = null;
-        fk_flow = null;
+        string fk_flow = null;
         int gIdx = 0;
         string[] gVals = groupVals.Split('@');
         foreach (string g in gVals)

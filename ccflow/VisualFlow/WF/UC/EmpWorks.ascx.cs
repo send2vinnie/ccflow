@@ -149,7 +149,6 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             {
                 if (dr[this.GroupBy].ToString() + "," != g)
                     continue;
-
                 string sdt = dr["SDT"] as string;
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
@@ -159,9 +158,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 if (Glo.IsWinOpenEmpWorks == true)
                 {
                     if (isRead == 0)
-                        this.Pub1.AddTD("Class=TTD onclick=\"SetImg('" + appPath + "','I" + gIdx + "_" + i + "')\"", "<a href=\"javascript:WinOpenIt('" + appPath + "/WF/MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "&IsRead=0');\" ><img class=Icon src='" + appPath + "/WF/Img/Mail_UnRead.png' id='I" + gIdx + "_" + i + "' />" + dr["Title"].ToString());
+                        this.Pub1.AddTD("Class=TTD onclick=\"SetImg('" + appPath + "','I" + gIdx + "_" + i + "')\"", "<a href=\"javascript:WinOpenIt('" + appPath + "/WF/MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "&IsRead=0');\" ><img class=Icon src='" + appPath + "/WF/Img/Mail_UnRead.png' id='I" + gIdx + "_" + i + "' />" + dr["Title"].ToString()+"</a>");
                     else
-                        this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('"+appPath+"/WF/MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  ><img src='"+appPath+"/WF/Img/Mail_Read.png' id='I" + gIdx + "_" + i + "' class=Icon />" + dr["Title"].ToString());
+                        this.Pub1.AddTD("Class=TTD", "<a href=\"javascript:WinOpenIt('"+appPath+"/WF/MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  ><img src='"+appPath+"/WF/Img/Mail_Read.png' id='I" + gIdx + "_" + i + "' class=Icon />" + dr["Title"].ToString()+"</a>");
                 }
                 else
                 {
@@ -263,9 +262,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 i++;
                 this.Pub1.AddTDIdx(i);
                 if (Glo.IsWinOpenEmpWorks == true)
-                    this.Pub1.AddTD("Class=TTD width='38%'", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  >" + dr["Title"].ToString());
+                    this.Pub1.AddTD("Class=TTD width='38%'", "<a href=\"javascript:WinOpenIt('MyFlowSmall.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "');\"  >" + dr["Title"].ToString()+"</a>");
                 else
-                    this.Pub1.AddTD("Class=TTD width='38%'", "<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+                    this.Pub1.AddTD("Class=TTD width='38%'", "<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString() + "</a>");
 
                 if (this.GroupBy != "FlowName")
                     this.Pub1.AddTD(dr["FlowName"].ToString());
@@ -306,7 +305,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     {
         this.FK_Flow = this.Request.QueryString["FK_Flow"];
         if (this.IsHungUp)
-            dt = BP.WF.Dev2Interface.DB_GenerEmpWorkshHungUpOfDataTable();
+            dt = BP.WF.Dev2Interface.DB_GenerHungUpList();
         else
             dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
         this.BindList();

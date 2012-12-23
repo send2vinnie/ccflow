@@ -96,7 +96,6 @@ public partial class WF_Admin_Personalize_GetTask : WebPage
             }
             else
             {
-
                 switch (jc.HisDeliveryWay)
                 {
                     case DeliveryWay.ByBindEmp:

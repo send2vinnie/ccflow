@@ -201,7 +201,7 @@ public partial class WF_UC_HungUp : BP.Web.UC.UCBase3
     public DataTable dt = null;
     protected void Page_Load(object sender, EventArgs e)
     {
-        dt = BP.WF.Dev2Interface.DB_GenerEmpWorkshHungUpOfDataTable();
+        dt = BP.WF.Dev2Interface.DB_GenerHungUpList();
         this.BindList();
     }
 }

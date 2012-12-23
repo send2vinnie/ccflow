@@ -48,7 +48,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        DataTable dt = BP.WF.Dev2Interface.DB_GenerRuningOfDataTable();
+        DataTable dt = BP.WF.Dev2Interface.DB_GenerRuning();
         this.Page.Title = this.ToE("OnTheWayWork", "在途工作");
         if (WebUser.IsWap)
         {

@@ -92,15 +92,14 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
         if (this.GroupBy != "NodeName")
             this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=NodeName" + extStr + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("NodeName", "节点") + "</a>");
 
-        if (this.GroupBy != "StarterName")
-            this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=StarterName" + extStr + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("Starter", "发起人") + "</a>");
+        if (this.GroupBy != "RecName")
+            this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=RecName" + extStr + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("Starter", "发起人") + "</a>");
 
         if (isPRI)
             this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=PRI" + extStr + "&FK_Flow=" + this.FK_Flow + "' >优先级</a>");
 
         this.Pub1.AddTDTitle("发起日期");
-        this.Pub1.AddTDTitle("接受日期");
-        this.Pub1.AddTDTitle("期限");
+        this.Pub1.AddTDTitle("应完成日期");
         this.Pub1.AddTDTitle("状态");
         this.Pub1.AddTREnd();
 
@@ -128,30 +127,26 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
                 if (dr[this.GroupBy].ToString() + "," != g)
                     continue;
 
-                string sdt = dr["SDT"] as string;
+                string sdt = dr["SDTOfFlow"] as string;
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
 
-                int isRead = int.Parse(dr["IsRead"].ToString());
                 this.Pub1.AddTDIdx(i);
 
-                if (isRead == 0)
-                    this.Pub1.AddTD("Class=TTD width='50%' onclick=\"SetImg('" + appPath + "','I" + gIdx + "_" + i + "')\" ", "<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "&IsRead=0\" > <img class=Icon src='" + appPath + "/WF/Img/Mail_UnRead.png' id='I" + gIdx + "_" + i + "' />" + dr["Title"].ToString());
-                else
                     this.Pub1.AddTD("Class=TTD width='50%'", "<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" > <img class=Icon src='" + appPath + "/WF/Img/Mail_Read.png' id='I" + gIdx + "_" + i + "' />" + dr["Title"].ToString());
 
                 if (this.GroupBy != "NodeName")
                     this.Pub1.AddTD(dr["NodeName"].ToString());
 
-                if (this.GroupBy != "StarterName")
-                    this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
+                if (this.GroupBy != "RecName")
+                    this.Pub1.AddTD(dr["Rec"].ToString() + " " + dr["RecName"]);
 
                 if (isPRI)
                     this.Pub1.AddTD("<img src='" + appPath + "/WF/Img/PRI/" + dr["PRI"].ToString() + ".png' class=Icon />");
 
                 this.Pub1.AddTD("width='9%' nowarp", dr["RDT"].ToString().Substring(5));
-                this.Pub1.AddTD("width='9%' nowarp", dr["ADT"].ToString().Substring(5));
-                this.Pub1.AddTD("width='5%' nowarp", dr["SDT"].ToString().Substring(5));
+              //  this.Pub1.AddTD("width='9%' nowarp", dr["ADT"].ToString().Substring(5));
+                this.Pub1.AddTD("width='5%' nowarp", dr["SDTOfFlow"].ToString().Substring(5));
 
                 DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
                 if (cdt >= mysdt)
@@ -202,14 +197,13 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
         if (this.GroupBy != "NodeName")
             this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=NodeName" + extStr + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("NodeName", "节点") + "</a>");
 
-        if (this.GroupBy != "StarterName")
-            this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=StarterName" + extStr + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("Starter", "发起人") + "</a>");
+        if (this.GroupBy != "RecName")
+            this.Pub1.AddTDTitle("<a href='Working.aspx?GroupBy=RecName" + extStr + "&FK_Flow=" + this.FK_Flow + "' >" + this.ToE("Starter", "发起人") + "</a>");
 
         //  this.Pub1.AddTDTitle("优先级");
-        this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
-        this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
-        this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
-        this.Pub1.AddTDTitle(this.ToE("Sta", "状态"));
+        this.Pub1.AddTDTitle("发起日期");
+        this.Pub1.AddTDTitle("应完成日期");
+        this.Pub1.AddTDTitle("状态");
         this.Pub1.AddTREnd();
 
         int i = 0;
@@ -219,7 +213,6 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
         SysEnums ses = new SysEnums("PRI");
         foreach (SysEnum se in ses)
         {
-
             gIdx++;
             this.Pub1.AddTR();
             this.Pub1.AddTD("colspan=" + colspan + " class=Sum onclick=\"GroupBarClick('" + appPath + "','" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='" + appPath + "/WF/Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<img src='" + appPath + "/WF/Img/PRI/" + se.IntKey + ".png' class=ImgPRI />");
@@ -231,7 +224,7 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
                 if (dr["PRI"].ToString() != pri)
                     continue;
 
-                string sdt = dr["SDT"] as string;
+                string sdt = dr["SDTOfFlow"] as string;
                 this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
                 this.Pub1.AddTDIdx(i);
@@ -243,8 +236,8 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
                 if (this.GroupBy != "NodeName")
                     this.Pub1.AddTD(dr["NodeName"].ToString());
 
-                if (this.GroupBy != "StarterName")
-                    this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
+                if (this.GroupBy != "RecName")
+                    this.Pub1.AddTD(dr["RecName"].ToString() + " " + dr["RecName"]);
 
                 this.Pub1.AddTD(dr["RDT"].ToString().Substring(5));
                 this.Pub1.AddTD(dr["ADT"].ToString().Substring(5));
@@ -276,9 +269,9 @@ public partial class WF_OneFlow_UC_Working : BP.Web.UC.UCBase3
     {
         this.FK_Flow = this.Request.QueryString["FK_Flow"];
         if (this.IsHungUp)
-            dt = BP.WF.Dev2Interface.DB_GenerEmpWorkshHungUpOfDataTable(this.FK_Flow);
+            dt = BP.WF.Dev2Interface.DB_GenerHungUpList(this.FK_Flow);
         else
-            dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable((int)WFState.Runing,this.FK_Flow);
+            dt = BP.WF.Dev2Interface.DB_GenerRuning(this.FK_Flow);
         this.BindList();
     }
 }

@@ -127,8 +127,13 @@ public partial class WF_Hurry : BP.Web.WebPage
 
             string reldata = this.Pub1.GetTBByID("TB_RelData").Text;
             string note = this.Pub1.GetTBByID("TB_Note").Text;
-            string msg = BP.WF.Dev2Interface.Node_HungUp_Or_UnHungUp(this.FK_Flow, this.WorkID, (int)way, reldata, note);
-            this.WinClose(msg);
+            GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+            if (gwf.WFState == WFState.HungUp)
+                BP.WF.Dev2Interface.Node_UnHungUpWork(this.FK_Flow, this.WorkID, note);
+            else
+                BP.WF.Dev2Interface.Node_HungUpWork(this.FK_Flow, this.WorkID, (int)way, reldata, note);
+
+            this.WinClose();
         }
         catch (Exception ex)
         {
