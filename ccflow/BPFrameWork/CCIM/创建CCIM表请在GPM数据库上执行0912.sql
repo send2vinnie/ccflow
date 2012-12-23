@@ -1536,7 +1536,11 @@ BEGIN
 
 END
 
-
 GO
 
+-- add by peng
+UPDATE users SET DepsCount=(select count(*) from plDepartment),
+UsersCount=( select count(a.UserID) from Users a,Staff b where a.StaffID=b.StaffID and b.FIred='ÔÚÖ°' ),
+DepsVersion='0',UsersVersion='0'
+go
 
