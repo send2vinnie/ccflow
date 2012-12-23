@@ -19,10 +19,8 @@ namespace CCForm
         public SelectRB()
         {
             InitializeComponent();
-
-           //this.listBox1.SelectionMode = SelectionMode.Single;
-           //this.listBox2.SelectionMode = SelectionMode.Single;
-
+            //this.listBox1.SelectionMode = SelectionMode.Single;
+            //this.listBox2.SelectionMode = SelectionMode.Single;
         }
         protected override void OnOpened()
         {
@@ -99,8 +97,6 @@ namespace CCForm
                 return;
             }
             this.DialogResult = true;
-
-             
         }
 
         //void da_NewFieldsCompleted(object sender, NewFieldsCompletedEventArgs e)
@@ -217,6 +213,9 @@ namespace CCForm
         void da_SaveEnumCompleted(object sender, SaveEnumCompletedEventArgs e)
         {
             this.BindData();
+
+            //this.listBox1.SelectedIndex = 0;
+
             MessageBox.Show("保存成功");
             // this.tabItem1.IsSelected = true;
             //this.listBox1.see
