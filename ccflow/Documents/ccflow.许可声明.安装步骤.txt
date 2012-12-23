@@ -201,7 +201,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 
 6. 出现用户名及密码错误，请在web.config 文件中.
     <identity impersonate="true" userName="administrator" password="jiaozi"/>
-   中的 impersonate="true" 修改成 impersonate="false". 
+   中的 impersonate="true" 修改成 impersonate="false" 或者填写正确的密码.
 
 7. silverlight 版本不是 4.0以及4.0以上，请先卸了，重新安装。
 
