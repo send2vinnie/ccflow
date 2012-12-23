@@ -1,9 +1,0 @@
-﻿<UserControl x:Class="BP.Picture.InteractoinAcitivity"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    >
-    <Grid x:Name="LayoutRoot" >
-<Rectangle  Name="picINTERACTION" Fill="White" Stroke="Green" StrokeThickness="2" RadiusX="10" RadiusY="10"  Width="100" Height="40" 
-                     ></Rectangle>
-    </Grid>
-</UserControl>
