@@ -6,7 +6,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl1</PTable>
     <RowIdx>3</RowIdx>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -41,7 +41,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl2</PTable>
     <RowIdx>0</RowIdx>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <RowsOfList>3</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -76,7 +76,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl3</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -111,7 +111,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl4</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -146,7 +146,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl5</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>0</GroupID>
+    <GroupID>331</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -182,20 +182,25 @@
     <SearchKeys />
     <PTable>Demo_03</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>2000</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>1</FrmType>
     <FK_FrmSort>01</FK_FrmSort>
     <AttrsInTable />
     <AppType>0</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer>ccflow</Designer>
     <DesignerUnit>ccflow.org</DesignerUnit>
     <DesignerContact>0531-88553730</DesignerContact>
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>2000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl1</No>
@@ -204,20 +209,25 @@
     <SearchKeys />
     <PTable>Demo_03Dtl1</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
     <AppType>1</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl2</No>
@@ -226,20 +236,25 @@
     <SearchKeys />
     <PTable>Demo_03Dtl2</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
     <AppType>1</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl3</No>
@@ -248,20 +263,25 @@
     <SearchKeys />
     <PTable>Demo_03Dtl3</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
     <AppType>1</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl4</No>
@@ -270,20 +290,25 @@
     <SearchKeys />
     <PTable>Demo_03Dtl4</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
     <AppType>1</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl5</No>
@@ -292,20 +317,25 @@
     <SearchKeys />
     <PTable>Demo_03Dtl5</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
     <AppType>1</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_FrmLine>
     <MyPK>LE_1_Demo_03</MyPK>
@@ -324,102 +354,6 @@
     <FK_MapData>Demo_03</FK_MapData>
     <X>0</X>
     <Y>0</Y>
-    <X1>40</X1>
-    <Y1>1482</Y1>
-    <X2>721</X2>
-    <Y2>1482</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_2_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>40</X1>
-    <Y1>39</Y1>
-    <X2>717</X2>
-    <Y2>39</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_3_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>718</X1>
-    <Y1>39</Y1>
-    <X2>718</X2>
-    <Y2>582</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_4_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>41</X1>
-    <Y1>558</Y1>
-    <X2>718</X2>
-    <Y2>558</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_5_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>53</X1>
-    <Y1>120</Y1>
-    <X2>695</X2>
-    <Y2>120</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_6_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>40</X1>
-    <Y1>320</Y1>
-    <X2>717</X2>
-    <Y2>320</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_7_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>63</X1>
-    <Y1>394</Y1>
-    <X2>540</X2>
-    <Y2>394</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_8_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>44</X1>
-    <Y1>876</Y1>
-    <X2>709</X2>
-    <Y2>876</Y2>
-    <BorderWidth>2</BorderWidth>
-    <BorderColor>Black</BorderColor>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MyPK>LE_9_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <X>0</X>
-    <Y>0</Y>
     <X1>721</X1>
     <Y1>1202</Y1>
     <X2>721</X2>
@@ -428,7 +362,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120608150807</MyPK>
+    <MyPK>LE_11_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -440,7 +374,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120608150850</MyPK>
+    <MyPK>LE_12_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -451,8 +385,104 @@
     <BorderWidth>2</BorderWidth>
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_2_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>40</X1>
+    <Y1>1482</Y1>
+    <X2>721</X2>
+    <Y2>1482</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_3_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>40</X1>
+    <Y1>39</Y1>
+    <X2>717</X2>
+    <Y2>39</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_4_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>718</X1>
+    <Y1>39</Y1>
+    <X2>718</X2>
+    <Y2>582</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_5_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>41</X1>
+    <Y1>558</Y1>
+    <X2>718</X2>
+    <Y2>558</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_6_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>53</X1>
+    <Y1>120</Y1>
+    <X2>695</X2>
+    <Y2>120</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_7_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>40</X1>
+    <Y1>320</Y1>
+    <X2>717</X2>
+    <Y2>320</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_8_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>63</X1>
+    <Y1>394</Y1>
+    <X2>540</X2>
+    <Y2>394</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>LE_9_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>44</X1>
+    <Y1>876</Y1>
+    <X2>709</X2>
+    <Y2>876</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+  </Sys_FrmLine>
   <Sys_FrmLab>
-    <MyPK>Lab120614092347</MyPK>
+    <MyPK>LB_1_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>人员</Text>
     <X>49.05</X>
@@ -461,119 +491,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
-    <IsBold>0</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>Lab120614092429</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>电话</Text>
-    <X>207.14</X>
-    <Y>1252.95</Y>
-    <FontSize>11</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
-    <IsBold>0</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>Lab120614092507</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>邮件</Text>
-    <X>374.67</X>
-    <Y>1254.85</Y>
-    <FontSize>11</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
-    <IsBold>0</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>Lab120615085615</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>利用下拉框来填充主表与从表</Text>
-    <X>51.9</X>
-    <Y>1208.95</Y>
-    <FontSize>16</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
-    <IsBold>1</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>Lab120615090526</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>部门</Text>
-    <X>560.48</X>
-    <Y>1254.29</Y>
-    <FontSize>11</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
-    <IsBold>0</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>LB_1_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>成员简历:涉及到WF_Emp与Frm_EmpResume两个表.</Text>
-    <X>50</X>
-    <Y>43</Y>
-    <FontSize>16</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
     <FontWeight />
-    <IsBold>1</IsBold>
+    <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LB_10_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>结算部门</Text>
-    <X>217</X>
-    <Y>371</Y>
-    <FontSize>11</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
-    <FontWeight />
-    <IsBold>0</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>LB_11_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>费用合计</Text>
-    <X>381</X>
-    <Y>371</Y>
-    <FontSize>11</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
-    <FontWeight />
-    <IsBold>0</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>LB_12_Demo_03</MyPK>
-    <FK_MapData>Demo_03</FK_MapData>
-    <Text>利用字段的扩展功能获取费用合计,只能在保存后才能反映出来.</Text>
-    <X>61</X>
-    <Y>329</Y>
-    <FontSize>15</FontSize>
-    <FontColor>#FF000000</FontColor>
-    <FontName>Portable User Interface</FontName>
-    <FontStyle>Normal</FontStyle>
-    <FontWeight />
-    <IsBold>1</IsBold>
-    <IsItalic>0</IsItalic>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MyPK>LB_13_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>实现列之间的JS计算公式设置.</Text>
     <X>507</X>
@@ -587,7 +510,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_14_Demo_03</MyPK>
+    <MyPK>LB_11_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>下拉框联动其它控件的自动完成方式的数据采集</Text>
     <X>51</X>
@@ -601,7 +524,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_15_Demo_03</MyPK>
+    <MyPK>LB_12_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>具有自动完成功能-从表的数据采集</Text>
     <X>53</X>
@@ -615,7 +538,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_16_Demo_03</MyPK>
+    <MyPK>LB_13_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>制作工资单</Text>
     <X>421</X>
@@ -629,7 +552,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_17_Demo_03</MyPK>
+    <MyPK>LB_14_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>制作工资单</Text>
     <X>412</X>
@@ -643,7 +566,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_2_Demo_03</MyPK>
+    <MyPK>LB_15_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>主从表的基础功能</Text>
     <X>45</X>
@@ -657,7 +580,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_3_Demo_03</MyPK>
+    <MyPK>LB_16_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>人员</Text>
     <X>54</X>
@@ -671,7 +594,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_4_Demo_03</MyPK>
+    <MyPK>LB_17_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>名称</Text>
     <X>164</X>
@@ -685,7 +608,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_5_Demo_03</MyPK>
+    <MyPK>LB_18_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>电话</Text>
     <X>281</X>
@@ -699,7 +622,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_6_Demo_03</MyPK>
+    <MyPK>LB_19_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>邮件</Text>
     <X>408</X>
@@ -713,7 +636,21 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_7_Demo_03</MyPK>
+    <MyPK>LB_2_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <Text>电话</Text>
+    <X>207.14</X>
+    <Y>1252.95</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>LB_20_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>部门</Text>
     <X>565</X>
@@ -727,7 +664,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_8_Demo_03</MyPK>
+    <MyPK>LB_21_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>输入人员编号后,自动填充其它相关控件与从表数据.</Text>
     <X>57</X>
@@ -741,7 +678,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LB_9_Demo_03</MyPK>
+    <MyPK>LB_22_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <Text>报销人</Text>
     <X>64</X>
@@ -754,69 +691,104 @@
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
-  <Sys_MapAttr>
-    <MyPK>Demo_03_DH</MyPK>
+  <Sys_FrmLab>
+    <MyPK>LB_3_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
-    <KeyOfEn>DH</KeyOfEn>
-    <Name>电话</Name>
-    <UIContralType>0</UIContralType>
-    <MyDataType>1</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>114</UIWidth>
-    <UIHeight>23</UIHeight>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <X>246.19</X>
-    <Y>1250.05</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>Demo_03_YJ</MyPK>
+    <Text>邮件</Text>
+    <X>374.67</X>
+    <Y>1254.85</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>LB_4_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
-    <KeyOfEn>YJ</KeyOfEn>
-    <Name>邮件</Name>
-    <UIContralType>0</UIContralType>
-    <MyDataType>1</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>136</UIWidth>
-    <UIHeight>23</UIHeight>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <X>404.29</X>
-    <Y>1250.95</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>Demo_03_YouJian</MyPK>
+    <Text>利用下拉框来填充主表与从表</Text>
+    <X>51.9</X>
+    <Y>1208.95</Y>
+    <FontSize>16</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>1</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>LB_5_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
-    <KeyOfEn>YouJian</KeyOfEn>
-    <Name>邮件</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>1</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>126</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>0</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>0</IDX>
-    <GroupID>332</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>436</X>
-    <Y>91</Y>
-  </Sys_MapAttr>
+    <Text>部门</Text>
+    <X>560.48</X>
+    <Y>1254.29</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>LB_6_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <Text>成员简历:涉及到WF_Emp与Frm_EmpResume两个表.</Text>
+    <X>50</X>
+    <Y>43</Y>
+    <FontSize>16</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>1</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>LB_7_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <Text>结算部门</Text>
+    <X>217</X>
+    <Y>371</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>LB_8_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <Text>费用合计</Text>
+    <X>381</X>
+    <Y>371</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>LB_9_Demo_03</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <Text>利用字段的扩展功能获取费用合计,只能在保存后才能反映出来.</Text>
+    <X>61</X>
+    <Y>329</Y>
+    <FontSize>15</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>1</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
   <Sys_MapAttr>
     <MyPK>Demo_03_BaoXiaoRen</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
@@ -841,24 +813,24 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
     <X>107</X>
     <Y>368</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>Demo_03_RenYuan</MyPK>
+    <MyPK>Demo_03_DH</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
-    <KeyOfEn>RenYuan</KeyOfEn>
-    <Name>人员</Name>
+    <KeyOfEn>DH</KeyOfEn>
+    <Name>电话</Name>
     <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
-    <UIWidth>73</UIWidth>
+    <UIWidth>114</UIWidth>
     <UIHeight>23</UIHeight>
     <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
+    <MaxLen>300</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
@@ -870,10 +842,10 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>332</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
-    <X>83</X>
-    <Y>91</Y>
+    <X>246.19</X>
+    <Y>1250.05</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
     <MyPK>Demo_03_DianHua</MyPK>
@@ -899,7 +871,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>332</GroupID>
+    <GroupID>335</GroupID>
     <IsSigan>0</IsSigan>
     <X>310</X>
     <Y>91</Y>
@@ -928,7 +900,7 @@
     <AutoFullDoc>@Table=Demo_03Dtl2@Field=XiaoJi@Way=SUM</AutoFullDoc>
     <AutoFullWay>4</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
     <X>427</X>
     <Y>367</Y>
@@ -957,7 +929,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>332</GroupID>
+    <GroupID>335</GroupID>
     <IsSigan>0</IsSigan>
     <X>601</X>
     <Y>89</Y>
@@ -986,7 +958,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
     <X>590.1</X>
     <Y>1250.29</Y>
@@ -1015,7 +987,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
     <X>82.52</X>
     <Y>1250.24</Y>
@@ -1044,7 +1016,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
     <X>270</X>
     <Y>368</Y>
@@ -1073,9 +1045,96 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>332</GroupID>
+    <GroupID>335</GroupID>
     <IsSigan>0</IsSigan>
     <X>192</X>
+    <Y>91</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>Demo_03_RenYuan</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <KeyOfEn>RenYuan</KeyOfEn>
+    <Name>人员</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>73</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>335</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>83</X>
+    <Y>91</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>Demo_03_YJ</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <KeyOfEn>YJ</KeyOfEn>
+    <Name>邮件</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>136</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>300</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>331</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>404.29</X>
+    <Y>1250.95</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>Demo_03_YouJian</MyPK>
+    <FK_MapData>Demo_03</FK_MapData>
+    <KeyOfEn>YouJian</KeyOfEn>
+    <Name>邮件</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>126</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>335</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>436</X>
     <Y>91</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
@@ -1102,7 +1161,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1131,7 +1190,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>328</GroupID>
+    <GroupID>331</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -2976,7 +3035,7 @@
     <GroupID>0</GroupID>
   </Sys_FrmAttachment>
   <Sys_MapExt>
-    <MyPK>Demo_03_DDLFullCtrl_FK_Emp</MyPK>
+    <MyPK>Ext_1_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <ExtType>DDLFullCtrl</ExtType>
     <DoWay>0</DoWay>
@@ -2986,11 +3045,14 @@
     <Tag />
     <Tag1>$Demo_03Dtl5:SELECT OID,NianYue,GongZuoDanWei, ZhengMingRen,BeiZhu FROM Demo_Resume WHERE FK_Emp=~@Key~</Tag1>
     <Tag2 />
+    <Tag3 />
+    <AtPara />
+    <DBSrc />
     <H>500</H>
     <W>400</W>
   </Sys_MapExt>
   <Sys_MapExt>
-    <MyPK>Ext_1_Demo_03</MyPK>
+    <MyPK>Ext_2_Demo_03</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <ExtType>TBFullCtrl</ExtType>
     <DoWay>0</DoWay>
@@ -3000,11 +3062,14 @@
     <Tag />
     <Tag1>$Demo_03Dtl1:SELECT OID,NianYue,GongZuoDanWei, ZhengMingRen,BeiZhu FROM Demo_Resume WHERE FK_Emp=~@Key~</Tag1>
     <Tag2 />
+    <Tag3 />
+    <AtPara />
+    <DBSrc />
     <H>500</H>
     <W>400</W>
   </Sys_MapExt>
   <Sys_MapExt>
-    <MyPK>Ext_2_Demo_03</MyPK>
+    <MyPK>Ext_3_Demo_03</MyPK>
     <FK_MapData>Demo_03Dtl3</FK_MapData>
     <ExtType>TBFullCtrl</ExtType>
     <DoWay>0</DoWay>
@@ -3014,11 +3079,14 @@
     <Tag />
     <Tag1 />
     <Tag2 />
+    <Tag3 />
+    <AtPara />
+    <DBSrc />
     <H>500</H>
     <W>400</W>
   </Sys_MapExt>
   <Sys_MapExt>
-    <MyPK>Ext_3_Demo_03</MyPK>
+    <MyPK>Ext_4_Demo_03</MyPK>
     <FK_MapData>Demo_03Dtl4</FK_MapData>
     <ExtType>DDLFullCtrl</ExtType>
     <DoWay>0</DoWay>
@@ -3028,47 +3096,50 @@
     <Tag />
     <Tag1 />
     <Tag2 />
+    <Tag3 />
+    <AtPara />
+    <DBSrc />
     <H>500</H>
     <W>400</W>
   </Sys_MapExt>
   <Sys_GroupField>
-    <OID>326</OID>
+    <OID>329</OID>
     <Lab>Demo_03Dtl1</Lab>
     <EnName>Demo_03Dtl1</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>328</OID>
+    <OID>331</OID>
     <Lab>03.主从表基础功能</Lab>
     <EnName>Demo_03</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>330</OID>
+    <OID>333</OID>
     <Lab>Demo_03Dtl2</Lab>
     <EnName>Demo_03Dtl2</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>332</OID>
+    <OID>335</OID>
     <Lab>填充从表</Lab>
     <EnName>Demo_03</EnName>
     <Idx>1</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>334</OID>
+    <OID>337</OID>
     <Lab>Demo_03Dtl3</Lab>
     <EnName>Demo_03Dtl3</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>336</OID>
+    <OID>339</OID>
     <Lab>Demo_03Dtl4</Lab>
     <EnName>Demo_03Dtl4</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>565</OID>
+    <OID>341</OID>
     <Lab>Demo_03Dtl5</Lab>
     <EnName>Demo_03Dtl5</EnName>
     <Idx>0</Idx>

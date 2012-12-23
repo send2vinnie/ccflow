@@ -6,7 +6,7 @@
     <FK_MapData>Demo_Inc09</FK_MapData>
     <PTable>MANAGE_MUME</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>174</GroupID>
+    <GroupID>365</GroupID>
     <RowsOfList>35</RowsOfList>
     <IsShowSum>0</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -25,7 +25,7 @@
     <IsEnableM2M>0</IsEnableM2M>
     <IsEnableM2MM>0</IsEnableM2MM>
     <WhenOverSize>1</WhenOverSize>
-    <DtlOpenType>0</DtlOpenType>
+    <DtlOpenType>1</DtlOpenType>
     <DtlShowModel>0</DtlShowModel>
     <X>46</X>
     <Y>68</Y>
@@ -33,6 +33,7 @@
     <W>721</W>
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
+    <MTR />
   </Sys_MapDtl>
   <Sys_MapData>
     <No>Demo_Inc09</No>
@@ -41,23 +42,28 @@
     <SearchKeys />
     <PTable>info9_JZSMD</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
     <AppType>0</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc09_1</MyPK>
+    <MyPK>LE_1_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -69,7 +75,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc09_2</MyPK>
+    <MyPK>LE_2_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -81,7 +87,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc09_3</MyPK>
+    <MyPK>LE_3_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -93,7 +99,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc09_4</MyPK>
+    <MyPK>LE_4_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -105,7 +111,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc09_5</MyPK>
+    <MyPK>LE_5_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -117,7 +123,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc09_6</MyPK>
+    <MyPK>LE_6_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -129,7 +135,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc09_1</MyPK>
+    <MyPK>LB_1_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <Text>九、企业项目经理名单</Text>
     <X>330</X>
@@ -143,7 +149,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc09_2</MyPK>
+    <MyPK>LB_2_Demo_Inc09</MyPK>
     <FK_MapData>Demo_Inc09</FK_MapData>
     <Text>注：1.本表按项目经理的级别顺序进行分级后填写；&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;2.本表可复制加页。</Text>
     <X>40</X>
@@ -180,7 +186,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>34</IDX>
-    <GroupID>174</GroupID>
+    <GroupID>365</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -209,7 +215,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>53</IDX>
-    <GroupID>174</GroupID>
+    <GroupID>365</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -238,7 +244,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>174</GroupID>
+    <GroupID>365</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -595,7 +601,7 @@
     <GroupID>0</GroupID>
   </Sys_FrmAttachment>
   <Sys_GroupField>
-    <OID>174</OID>
+    <OID>365</OID>
     <Lab>九、企业注册建造师名单</Lab>
     <EnName>Demo_Inc09</EnName>
     <Idx>0</Idx>

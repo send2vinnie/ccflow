@@ -7,23 +7,28 @@
     <SearchKeys />
     <PTable>info_QYFRSM</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
     <AppType>0</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc14_1</MyPK>
+    <MyPK>LE_1_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -35,7 +40,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc14_2</MyPK>
+    <MyPK>LE_2_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -47,7 +52,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc14_3</MyPK>
+    <MyPK>LE_3_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -59,7 +64,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc14_4</MyPK>
+    <MyPK>LE_4_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -71,7 +76,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc14_5</MyPK>
+    <MyPK>LE_5_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -83,7 +88,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc14_6</MyPK>
+    <MyPK>LE_6_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -95,7 +100,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc14_7</MyPK>
+    <MyPK>LE_7_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -107,7 +112,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc14_1</MyPK>
+    <MyPK>LB_1_Demo_Inc14</MyPK>
     <FK_MapData>Demo_Inc14</FK_MapData>
     <Text>企业法定代表人声明</Text>
     <X>326</X>
@@ -144,7 +149,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>4</IDX>
-    <GroupID>179</GroupID>
+    <GroupID>375</GroupID>
     <IsSigan>0</IsSigan>
     <X>110</X>
     <Y>93</Y>
@@ -173,7 +178,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>39</IDX>
-    <GroupID>179</GroupID>
+    <GroupID>375</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -202,7 +207,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>48</IDX>
-    <GroupID>179</GroupID>
+    <GroupID>375</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -231,13 +236,13 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>179</GroupID>
+    <GroupID>375</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>179</OID>
+    <OID>375</OID>
     <Lab>企业法定代表人声明</Lab>
     <EnName>Demo_Inc14</EnName>
     <Idx>0</Idx>

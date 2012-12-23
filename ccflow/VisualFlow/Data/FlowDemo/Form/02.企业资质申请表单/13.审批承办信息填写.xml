@@ -7,23 +7,28 @@
     <SearchKeys />
     <PTable>manage_pop</PTable>
     <Dtls />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
     <DBURL>0</DBURL>
     <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
     <AppType>0</AppType>
+    <IsSearchKey>0</IsSearchKey>
+    <DTSearchWay>0</DTSearchWay>
+    <DTSearchKey />
+    <Note />
     <Designer />
     <DesignerUnit />
     <DesignerContact />
+    <AtParas />
     <FK_Flow />
     <FormType>0</FormType>
     <URL />
-    <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_1</MyPK>
+    <MyPK>LE_1_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -35,7 +40,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_2</MyPK>
+    <MyPK>LE_2_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -47,7 +52,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_3</MyPK>
+    <MyPK>LE_3_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -59,7 +64,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_4</MyPK>
+    <MyPK>LE_4_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -71,7 +76,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_5</MyPK>
+    <MyPK>LE_5_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -83,7 +88,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_6</MyPK>
+    <MyPK>LE_6_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -95,7 +100,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_7</MyPK>
+    <MyPK>LE_7_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -107,7 +112,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_8</MyPK>
+    <MyPK>LE_8_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -119,7 +124,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>LEDemo_Inc13_9</MyPK>
+    <MyPK>LE_9_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -131,7 +136,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc13_1</MyPK>
+    <MyPK>LB_1_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <Text>科（室）负责人：</Text>
     <X>72</X>
@@ -145,7 +150,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc13_2</MyPK>
+    <MyPK>LB_2_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <Text>分管厅领导:</Text>
     <X>74</X>
@@ -159,7 +164,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc13_3</MyPK>
+    <MyPK>LB_3_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <Text>检验人：</Text>
     <X>71</X>
@@ -173,7 +178,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc13_4</MyPK>
+    <MyPK>LB_4_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <Text>承办人：</Text>
     <X>72</X>
@@ -187,7 +192,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc13_5</MyPK>
+    <MyPK>LB_5_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <Text>承包负责人</Text>
     <X>97</X>
@@ -201,7 +206,7 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>LBDemo_Inc13_6</MyPK>
+    <MyPK>LB_6_Demo_Inc13</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
     <Text>姓&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;名</Text>
     <X>337</X>
@@ -214,6 +219,35 @@
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
+  <Sys_MapAttr>
+    <MyPK>Demo_Inc13_charge_</MyPK>
+    <FK_MapData>Demo_Inc13</FK_MapData>
+    <KeyOfEn>charge_</KeyOfEn>
+    <Name>科（室）负责人：</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>270</UIWidth>
+    <UIHeight>31</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>1</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>373</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>254</X>
+    <Y>174</Y>
+  </Sys_MapAttr>
   <Sys_MapAttr>
     <MyPK>Demo_Inc13_checker_</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
@@ -238,45 +272,16 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>178</GroupID>
+    <GroupID>373</GroupID>
     <IsSigan>0</IsSigan>
     <X>253</X>
     <Y>83</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>Demo_Inc13_manage_</MyPK>
+    <MyPK>Demo_Inc13_FID</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
-    <KeyOfEn>manage_</KeyOfEn>
-    <Name>承办人：</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>1</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>270</UIWidth>
-    <UIHeight>31</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>1</UIIsEnable>
-    <UIIsLine>1</UIIsLine>
-    <Tag />
-    <EditType>0</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>178</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>254</X>
-    <Y>130</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>Demo_Inc13_OID</MyPK>
-    <FK_MapData>Demo_Inc13</FK_MapData>
-    <KeyOfEn>OID</KeyOfEn>
-    <Name>WorkID</Name>
+    <KeyOfEn>FID</KeyOfEn>
+    <Name>FID</Name>
     <DefVal>0</DefVal>
     <UIContralType>0</UIContralType>
     <MyDataType>2</MyDataType>
@@ -296,7 +301,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>178</GroupID>
+    <GroupID>373</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -325,45 +330,16 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>178</GroupID>
+    <GroupID>373</GroupID>
     <IsSigan>0</IsSigan>
     <X>253</X>
     <Y>215</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>Demo_Inc13_FID</MyPK>
+    <MyPK>Demo_Inc13_manage_</MyPK>
     <FK_MapData>Demo_Inc13</FK_MapData>
-    <KeyOfEn>FID</KeyOfEn>
-    <Name>FID</Name>
-    <DefVal>0</DefVal>
-    <UIContralType>0</UIContralType>
-    <MyDataType>2</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>0</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>2</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>178</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>Demo_Inc13_charge_</MyPK>
-    <FK_MapData>Demo_Inc13</FK_MapData>
-    <KeyOfEn>charge_</KeyOfEn>
-    <Name>科（室）负责人：</Name>
+    <KeyOfEn>manage_</KeyOfEn>
+    <Name>承办人：</Name>
     <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
@@ -383,10 +359,39 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>178</GroupID>
+    <GroupID>373</GroupID>
     <IsSigan>0</IsSigan>
     <X>254</X>
-    <Y>174</Y>
+    <Y>130</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>Demo_Inc13_OID</MyPK>
+    <FK_MapData>Demo_Inc13</FK_MapData>
+    <KeyOfEn>OID</KeyOfEn>
+    <Name>WorkID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>2</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>373</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
     <MyPK>Demo_Inc13_RDT</MyPK>
@@ -412,13 +417,13 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>178</GroupID>
+    <GroupID>373</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>178</OID>
+    <OID>373</OID>
     <Lab>manage_pop</Lab>
     <EnName>Demo_Inc13</EnName>
     <Idx>0</Idx>
