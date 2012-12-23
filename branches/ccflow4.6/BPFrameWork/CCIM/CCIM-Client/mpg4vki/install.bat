@@ -1,1 +1,0 @@
-rundll32 syssetup,SetupInfObjectInstallAction DefaultInstall 128 %CD%\MPG4VKI.inf
