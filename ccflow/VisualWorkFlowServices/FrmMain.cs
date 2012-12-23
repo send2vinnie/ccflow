@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.Common;
 using System.Net;
 using System.Net.Mail;
 using System.Drawing;
@@ -28,8 +31,137 @@ namespace SMSServices
     public partial class FrmMain : Form
     {
         delegate void SetTextCallback(string text);
+
+        public void Test_Insert_Model1()
+        {
+            DBAccess.RunSQL("DELETE CN_Area");
+            int i = 0;
+            DateTime dtNow = DateTime.Now;
+            while (i != 100000)
+            {
+                i++;
+                string sql = " INSERT CN_Area (No,Name) VALUES ('" + i + "' , '" + i + "')";
+                DBAccess.RunSQL(sql);
+            }
+            DateTime dtEnd = DateTime.Now;
+
+            TimeSpan ts = dtEnd - dtNow;
+            MessageBox.Show(ts.TotalSeconds.ToString() + " - " + ts.TotalMilliseconds.ToString());
+        }
+
+        public void Test_Insert_Model2()
+        {
+            DBAccess.RunSQL("DELETE CN_Area");
+            SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
+            if (conn.State != System.Data.ConnectionState.Open)
+            {
+                conn.ConnectionString = SystemConfig.AppCenterDSN;
+                conn.Open();
+            }
+            try
+            {
+
+                int i = 0;
+                DateTime dtNow = DateTime.Now;
+                while (i != 100000)
+                {
+                    i++;
+                    string sql = " INSERT CN_Area (No,Name) VALUES ('" + i + "' , '" + i + "')";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.CommandType = CommandType.Text;
+                     cmd.ExecuteNonQuery();
+
+                }
+                DateTime dtEnd = DateTime.Now;
+
+                TimeSpan ts = dtEnd - dtNow;
+                MessageBox.Show(ts.TotalSeconds.ToString() + " - " + ts.TotalMilliseconds.ToString());
+                conn.Close();
+            }
+            catch (System.Exception ex)
+            {
+                conn.Close();
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+        public void Test_T_1()
+        {
+            DBAccess.RunSQL("DELETE CN_Area");
+            int i = 0;
+            DateTime dtNow = DateTime.Now;
+
+            DBAccess.DoTransactionBegin();
+            while (i != 10)
+            {
+                i++;
+                string sql = " INSERT CN_Area (No,Name) VALUES ('" + i + "' , '" + i + "')";
+                DBAccess.RunSQL(sql);
+            }
+            DBAccess.DoTransactionCommit();
+
+            DateTime dtEnd = DateTime.Now;
+            TimeSpan ts = dtEnd - dtNow;
+            MessageBox.Show(ts.TotalSeconds.ToString() + " - " + ts.TotalMilliseconds.ToString());
+
+        }
+
+        public void Test_T_2()
+        {
+            DBAccess.RunSQL("DELETE CN_Area");
+            SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
+            if (conn.State != System.Data.ConnectionState.Open)
+            {
+                conn.ConnectionString = SystemConfig.AppCenterDSN;
+                conn.Open();
+            }
+            SqlCommand cmd = new SqlCommand("BEGIN TRANSACTION", conn);
+            try
+            {
+                cmd.ExecuteNonQuery();
+
+                int i = 0;
+                DateTime dtNow = DateTime.Now;
+                while (i != 10)
+                {
+                    i++;
+                    string sql = " INSERT CN_Area (No,Name) VALUES ('" + i + "' , '" + i + "')";
+
+                    cmd = new SqlCommand(sql, conn);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                }
+                DateTime dtEnd = DateTime.Now;
+                TimeSpan ts = dtEnd - dtNow;
+
+                cmd.CommandText = "commit transaction";
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch
+            {
+                cmd.CommandText = "rollback transaction";
+                cmd.ExecuteNonQuery();
+                //DBAccess.DoTransactionRollback();
+                conn.Close();
+            }
+        }
         public FrmMain()
         {
+            //Test_T_1();
+            //return;
+            //Test_T_2();
+            //return;
+            ///* 两者相差在 20% 左右.*/
+            //this.Test_Insert_Model1();
+            //this.Test_Insert_Model2();
+            //return;
+
             InitializeComponent();
         }
 
@@ -164,7 +296,7 @@ namespace SMSServices
                     wk.Update();
 
                     WorkNode wn = new WorkNode(wk, fl.HisStartNode);
-                    string msg = wn.AfterNodeSave();
+                    string msg = wn.NodeSend().ToMsgOfText();
                     msg = msg.Replace("'", "~");
                     DBAccess.RunSQL("UPDATE WF_Task SET TaskSta=1,Msg='" + msg + "' WHERE MyPK='" + mypk + "'");
                 }
@@ -293,7 +425,7 @@ namespace SMSServices
                         WebUser.SignInOfGener(emp);
                     }
 
-                    string msg = BP.WF.Dev2Interface.Node_SendWork(fk_flow, workid, null);
+                    string msg = BP.WF.Dev2Interface.Node_SendWork(fk_flow, workid, null).ToMsgOfText();
                     this.SetText("@处理:" + WebUser.No + ",WorkID=" + workid + ",正确处理:" + msg);
                 }
                 catch (Exception ex)
@@ -409,8 +541,9 @@ namespace SMSServices
                             continue;
                         }
                         BP.Web.WebUser.SignInOfGener(emp);
-                       string info_send= BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
-                       this.SetText(info_send);
+#warning 尚未实现。
+                       //string info_send= BP.WF.Dev2Interface.Node_StartWork(fl.No,);
+                       //this.SetText(info_send);
                         continue;
                     case BP.WF.FlowRunWay.DataModel: //按数据集合驱动的模式执行。
                         this.SetText("@开始执行数据驱动流程调度:" + fl.Name);
@@ -561,7 +694,7 @@ namespace SMSServices
                 try
                 {
                     WorkNode wn = new WorkNode(wk, nd);
-                    string msg = wn.AfterNodeSave();
+                    string msg = wn.NodeSend().ToMsgOfText();
                     BP.DA.Log.DefaultLogWriteLineInfo(msg);
                     this.SetText("@" + fl.Name + ",第" + idx + "条,发起人员:" + WebUser.No + "-" + WebUser.Name + "已完成.\r\n" + msg);
                     //this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "已经完成。\r\n" + msg);
@@ -592,6 +725,13 @@ namespace SMSServices
                     MessageBox.Show(ex.Message, "错误");
                     return;
                 }
+            }
+
+            if (string.IsNullOrEmpty(sms.Email))
+            {
+                BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(sms.FK_Emp);
+                sms.Tel = emp.Tel;
+                sms.Email = emp.Email;
             }
 
             System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
