@@ -62,20 +62,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ColorPicker">
-      <HintPath>..\..\..\ccflow\DLL\ColorPicker.dll</HintPath>
+      <HintPath>..\DLL\ColorPicker.dll</HintPath>
     </Reference>
     <Reference Include="Liquid.Menu">
-      <HintPath>..\..\..\ccflow\DLL\Liquid.Menu.dll</HintPath>
+      <HintPath>..\DLL\Liquid.Menu.dll</HintPath>
     </Reference>
     <Reference Include="Liquid.TreeView">
-      <HintPath>..\..\..\ccflow\DLL\Liquid.TreeView.dll</HintPath>
+      <HintPath>..\DLL\Liquid.TreeView.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\DLL\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Silverlight.DataSet">
-      <HintPath>..\..\..\ccflow\DLL\Silverlight.DataSet.dll</HintPath>
+      <HintPath>..\DLL\Silverlight.DataSet.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Net" />
@@ -506,12 +506,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\FF\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Components\BP.SL\BP.SL.csproj">
-      <Project>{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}</Project>
-      <Name>BP.SL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
