@@ -1,1 +1,0 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ToolBar.ascx.cs" Inherits="Comm_UC_ToolBar" %>
