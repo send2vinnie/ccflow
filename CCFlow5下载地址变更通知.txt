@@ -1,0 +1,6 @@
+各位ccflow5爱好者:
+
+因为google服务器不稳定, 测试版的CCFlow5下载地址为:
+
+http://svn.ccflow.org:88/svn/ccflow
+UserName: ccflowlover  Password: ccflowlover
