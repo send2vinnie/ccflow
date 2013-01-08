@@ -1,6 +1,11 @@
-各位ccflow5爱好者:
+各位ccflow爱好者:
 
-因为google服务器不稳定, 测试版的CCFlow5下载地址为:
+    请阅读代码下载变更通知 http://bbs.ccflow.org/showtopic-1333.aspx
+ 
+    如上面有变更，会另行通知.
 
-http://svn.ccflow.org:88/svn/ccflow
-UserName: ccflowlover  Password: ccflowlover
+
+感谢您关注ccflow
+
+
+     ccflow.org 11:02 2013/1/8
